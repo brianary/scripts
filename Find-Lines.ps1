@@ -1,11 +1,11 @@
 ﻿<#
 .Synopsis
-Searches files for pattern, displays matches, opens in text editor.
+Searches a specific subset of files for lines matching a pattern.
 .Parameter Pattern
 Specifies the text to find. Type a string or regular expression. 
 If you type a string, use the SimpleMatch parameter.
 .Parameter Filters
-Specifies wildcard filters that files must match one of.
+Specifies wildcard filters that file names must match.
 .Parameter Path
 Specifies a path to one or more locations. Wildcards are permitted. 
 The default location is the current directory (.).
@@ -26,26 +26,65 @@ In a simple match, Select-String searches the input for the text in the Pattern 
 It does not interpret the value of the Pattern parameter as a regular expression statement.
 .Parameter NoRecurse
 Disables searching subdirectories.
+.Parameter ChooseMatches
+Displays a grid of matches to select a subset from.
+.Parameter Open
+Invokes files that contain matches.
+.Parameter Blame
+Returns git blame info for matching lines.
 .Example
 C:\PS> Find-Lines 'using System;' *.cs "$env:USERPROFILE\Documents\Visual Studio*\Projects" -CaseSensitive -List
 
 This command searches all of the .cs files in the Projects directory (or directories) and subdirectories,
-displays the first matching line of each file with a match, then opens the file to the correct line in the editor.
+returning the matches.
 #>
-[CmdletBinding()]Param(
-  [Parameter(Position=0,Mandatory=$true)][string[]]$Pattern,
-  [Parameter(Position=1)][string[]]$Filters,
-  [Parameter(Position=2)][string[]]$Path,
-  [string[]]$Include,
-  [string[]]$Exclude,
-  [switch]$CaseSensitive,
-  [switch]$List,
-  [switch]$NotMatch,
-  [switch]$SimpleMatch,
-  [switch]$NoRecurse
+
+#requires -version 3
+[CmdletBinding(DefaultParameterSetName='Default')]Param(
+    [Parameter(Position=0,Mandatory=$true)][string[]]$Pattern,
+    [Parameter(Position=1)][string[]]$Filters,
+    [Parameter(Position=2)][string[]]$Path,
+    [string[]]$Include,
+    [string[]]$Exclude,
+    [switch]$CaseSensitive,
+    [switch]$List,
+    [switch]$NotMatch,
+    [switch]$SimpleMatch,
+    [switch]$NoRecurse,
+    [Alias('Pick')][switch]$ChooseMatches,
+    [Parameter(ParameterSetName='Open')][Alias('View')][switch]$Open,
+    [Parameter(ParameterSetName='Blame')][Alias('Who')][switch]$Blame
 )
+
+function ConvertTo-DateTimeOffset([Parameter(Position=0)][int]$UnixTime,[Parameter(Position=1)][string]$TimeZone)
+{
+    [DateTimeOffset]::Parse(([DateTime]'1970-01-01Z').AddSeconds($UnixTime).ToString('s')+$TimeZone)
+}
+
+$culturetextinfo = (Get-Culture).TextInfo
+function Get-LineBlameInfo([Parameter(Position=0)][string]$Path,[Parameter(Position=1)][int]$LineNumber)
+{
+    pushd "$([IO.Path]::GetDirectoryName($Path))"
+    $lineinfo = [Collections.Generic.List[string]]@(git blame -l -p -L "$LineNumber,$LineNumber" -- $Path)
+    popd
+    ($sha1,$linetext) = ($lineinfo[0],$lineinfo[$lineinfo.Count -1])
+    $lineinfo.RemoveAt($lineinfo.Count -1)
+    $lineinfo.RemoveAt(0)
+    $linehash = @{SHA1 = $sha1; Line = $linetext}
+    $lineinfo |
+        % {
+            ($k,$v)= $_ -split ' ',2
+            $linehash.Add(($culturetextinfo.ToTitleCase($k) -replace '-',''),$v)
+        }
+    $linehash['AuthorTime'] = ConvertTo-DateTimeOffset $linehash['AuthorTime'] $linehash['AuthorTz']
+    $linehash.Remove('AuthorTz')
+    $linehash['CommitterTime'] = ConvertTo-DateTimeOffset $linehash['CommitterTime'] $linehash['CommitterTz']
+    $linehash.Remove('CommitterTz')
+    New-Object psobject -Property $linehash
+}
+
 # set up splatting
-$lsopt = @{Recurse=!$NoRecurse}
+$lsopt = @{Recurse=!$NoRecurse;File=$true}
 if($Path) { $lsopt.Path=$Path }
 if($Include) { $lsopt.Include=$Include }
 if($Exclude) { $lsopt.Exclude=$Exclude }
@@ -55,7 +94,13 @@ if($List) { $ssopt.List=$true }
 if($NotMatch) { $ssopt.NotMatch=$true }
 if($SimpleMatch) { $ssopt.SimpleMatch=$true }
 # the filter parameter is much faster than the include parameter
-Select-String -Path ($( if($Filters) { $Filters|% {ls @lsopt -Filter $_} } else { ls @lsopt } ) |
-    ? {Test-Path $_.FullName -PathType Leaf}) @ssopt |
-  ogv -p -t "Search: '$Pattern' $Filters" |
-  % {emeditor $_.Path /l $_.LineNumber} #TODO: customize editor
+$lookin = if($Filters) { $Filters|% {ls @lsopt -Filter $_} } else { ls @lsopt }
+# TODO: Manually handle Include and Exclude for the FullName.
+$found = Select-String -Path $lookin @ssopt
+if($ChooseMatches) { $found = $found |ogv -Title "Select matches: $Pattern $Filters $Path" -PassThru }
+if($Open) 
+{ $found |ii }
+elseif($Blame)
+{ $found |% {Get-LineBlameInfo $_.Path $_.LineNumber} }
+else
+{ $found }
