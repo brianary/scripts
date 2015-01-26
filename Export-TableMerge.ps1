@@ -78,6 +78,8 @@ if(!$Connection)
 }
 $cb = [Data.Common.DbProviderFactories]::GetFactory($ProviderName).CreateCommandBuilder()
 $fqtn = '{0}.{1}' -f $cb.QuoteIdentifier($Schema),$cb.QuoteIdentifier($Table)
+$schemaname = "'" + ($Schema -replace "'","''") + "'"
+$tablename = "'" + ($Table -replace "'","''") + "'"
 
 $pk = Invoke-DbCommand.ps1 $Connection -params @{schema=$Schema;table=$Table} -q @'
 select kcu.COLUMN_NAME
@@ -115,7 +117,10 @@ function Format-SqlValue($value)
 $data = ($data |% {($_.ItemArray |% {Format-SqlValue $_}) -join ','} |% {"($_)"}) -join ",`n"
 
 @"
--- Requires enabling identity insert where applicable.
+if exists (select * from information_schema.columns where table_schema = $schemaname and table_name = $tablename
+and columnproperty(object_id(table_name), column_name,'IsIdentity') = 1)
+set identity_insert $fqtn on;
+
 merge $fqtn as target
 using ( values
 $data
@@ -126,5 +131,9 @@ update set $dataupdates
 when not matched by target then
 insert ($targetlist)
 values ($sourcelist)
-when not matched by source then delete 
+when not matched by source then delete ;
+
+if exists (select * from information_schema.columns where table_schema = $schemaname and table_name = $tablename
+and columnproperty(object_id(table_name), column_name,'IsIdentity') = 1)
+set identity_insert $fqtn off;
 "@
