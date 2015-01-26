@@ -55,28 +55,31 @@ The database provider to use. System.Data.SqlClient by default.
 Add-Type -AN System.Configuration
 Add-Type -AN System.Data
 
-$conn =
-    if($ConnectionName)
-    {
-        Connect-Database.ps1 -ConnectionName $ConnectionName
-        $ProviderName = [Configuration.ConfigurationManager]::ConnectionStrings[$ConnectionName].ProviderName
-    }
-    elseif($ConnectionString)
-    {
-        Connect-Database.ps1 -ConnectionString $ConnectionString -ProviderName $ProviderName
-    }
-    else
-    {
-        $connargs = @{Server=$Server}
-        if($Database) {$connargs.Add('Database',$Database)}
-        if($Database) {$connargs.Add('Credential',$Credential)}
-        if($Database) {$connargs.Add('Properties',$ConnectionProperties)}
-        Connect-Database.ps1 @connargs
-    }
+if(!$Connection)
+{
+    $Connection =
+        if($ConnectionName)
+        {
+            Connect-Database.ps1 -ConnectionName $ConnectionName
+            $ProviderName = [Configuration.ConfigurationManager]::ConnectionStrings[$ConnectionName].ProviderName
+        }
+        elseif($ConnectionString)
+        {
+            Connect-Database.ps1 -ConnectionString $ConnectionString -ProviderName $ProviderName
+        }
+        else
+        {
+            $connargs = @{Server=$Server}
+            if($Database) {$connargs.Add('Database',$Database)}
+            if($Database) {$connargs.Add('Credential',$Credential)}
+            if($Database) {$connargs.Add('Properties',$ConnectionProperties)}
+            Connect-Database.ps1 @connargs
+        }
+}
 $cb = [Data.Common.DbProviderFactories]::GetFactory($ProviderName).CreateCommandBuilder()
 $fqtn = '{0}.{1}' -f $cb.QuoteIdentifier($Schema),$cb.QuoteIdentifier($Table)
 
-$pk = Invoke-DbCommand.ps1 $conn -params @{schema=$Schema;table=$Table} -q @'
+$pk = Invoke-DbCommand.ps1 $Connection -params @{schema=$Schema;table=$Table} -q @'
 select kcu.COLUMN_NAME
   from INFORMATION_SCHEMA.TABLE_CONSTRAINTS as tc
   join INFORMATION_SCHEMA.KEY_COLUMN_USAGE as kcu
@@ -92,8 +95,8 @@ select kcu.COLUMN_NAME
 Write-Verbose "Primary key: $pk"
 $pkjoin = ($pk |% {"source.{0} = target.{0}" -f $_}) -join ' AND '
 
-$data = Invoke-DbCommand.ps1 $conn -q "select * from $fqtn"
-Disconnect-Database.ps1 $conn
+$data = Invoke-DbCommand.ps1 $Connection -q "select * from $fqtn"
+Disconnect-Database.ps1 $Connection
 if(!$data) {Write-Warning "No data in table."; return}
 $columns = $data[0].Table.Columns |% {$cb.QuoteIdentifier($_.ColumnName)}
 $dataupdates = ($columns |? {$pk -notcontains $_} |% {"{0} = source.{0}" -f $_}) -join ",`n"
