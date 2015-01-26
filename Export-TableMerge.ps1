@@ -55,7 +55,8 @@ The database provider to use. System.Data.SqlClient by default.
 Add-Type -AN System.Configuration
 Add-Type -AN System.Data
 
-if(!$Connection)
+$tempconn = !$Connection
+if($tempconn)
 {
     $Connection =
         if($ConnectionName)
@@ -98,7 +99,7 @@ Write-Verbose "Primary key: $pk"
 $pkjoin = ($pk |% {"source.{0} = target.{0}" -f $_}) -join ' AND '
 
 $data = Invoke-DbCommand.ps1 $Connection -q "select * from $fqtn"
-Disconnect-Database.ps1 $Connection
+if($tempconn) {Disconnect-Database.ps1 $Connection}
 if(!$data) {Write-Warning "No data in table."; return}
 $columns = $data[0].Table.Columns |% {$cb.QuoteIdentifier($_.ColumnName)}
 $dataupdates = ($columns |? {$pk -notcontains $_} |% {"{0} = source.{0}" -f $_}) -join ",`n"
