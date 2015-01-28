@@ -21,7 +21,15 @@ A complete connection string to create a connection to use for the query.
 .Parameter ProviderName
 The database provider to use. System.Data.SqlClient by default.
 .Parameter Schema
+The name of the table's schema.
 .Parameter Table
+The name of the table to export.
+.Example
+Export-TableMerge -ConnectionName pubs -Table authors |Out-File authors.sql
+.Example
+Export-TableMerge $conn -Table employee |Out-File employee.sql
+.Example
+Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -Schema Production -Table Product |Out-File -Encoding utf8 Data\Production.Product.sql
 #>
 
 #requires -version 3
