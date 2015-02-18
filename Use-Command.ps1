@@ -159,11 +159,9 @@ elseif($DownloadZip)
         $zippath = Join-Path $env:TEMP $filename
         Write-Verbose "Downloading $DownloadZip to $path"
         (New-Object System.Net.WebClient).DownloadFile($DownloadZip,$zippath)
-        $shell = New-Object -ComObject Shell.Application
+        Add-Type -AN System.IO.Compression.FileSystem
         Write-Verbose "Copying zipped items from $zippath to $dir"
-        $zip = $shell.NameSpace($path)
-        $zip.Items() |% {Write-Verbose "Copying $(Split-Path $_.Path -Leaf)" ; $shell.Namespace($dir).CopyHere($_)}
-        $shell = $null
+        [IO.Compression.ZipFile]::ExtractToDirectory($zippath,$dir)
         Set-ResolvedAlias $Name $Path
     }
     else { Write-Error "Download of $Name was cancelled." }
