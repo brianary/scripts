@@ -29,6 +29,8 @@ Default is 32767
 The location (file or URL) of an .exe installer to use if the command is missing.
 .Parameter InstallerParameters
 Parameters to pass to the .exe installer.
+.Parameter ExecutePS
+The URL or file path of a PowerShell script to download and execute to install the command if it is missing.
 .Parameter DownloadZip
 The URL to download a .zip file containing the command if it is missing.
 .Parameter DownloadUrl
@@ -67,6 +69,7 @@ Param([Parameter(Position=0,Mandatory=$true)]$Name,
 [Alias('exe')][string]$ExecutableInstaller,
 [Parameter(ParameterSetName='ExecutableInstaller')]
 [Alias('params')][string[]]$InstallerParameters = @(),
+[Parameter(ParameterSetName='ExecutePS')][Alias('iex')][uri]$ExecutePS,
 [Parameter(ParameterSetName='DownloadZip')][Alias('zip')][uri]$DownloadZip,
 [Parameter(ParameterSetName='DownloadUrl')][Alias('url')][uri]$DownloadUrl,
 [Parameter(ParameterSetName='WarnOnly')]
@@ -147,9 +150,23 @@ elseif($ExecutableInstaller)
     }
     else { Write-Error "Installation of $WindowsInstaller was cancelled." }
 }
+elseif($ExecutePS)
+{
+    if($PSCmdlet.ShouldProcess("This will execute $ExecutePS.",
+        "Are you sure you wish to execute $ExecutePS ?",
+        "Execute PowerShell Script"))
+    {
+        switch($ExecutePS.Scheme)
+        {
+            file    { Invoke-Expression (gc $ExecutePS.OriginalString -raw) }
+            default { Invoke-Expression ((new-object net.webclient).DownloadString($ExecutePS)) }
+        }
+    }
+    else { Write-Error "Execution of $ExecutePS was cancelled." }
+}
 elseif($DownloadZip)
 {
-    if($PSCmdlet.ShouldProcess("This will download $DownloadUrl to $Path.",
+    if($PSCmdlet.ShouldProcess("This will download and unzip $DownloadZip to $Path.",
         "Are you sure you wish to download $Name ?",
         "Download $Name"))
     {
@@ -164,11 +181,11 @@ elseif($DownloadZip)
         [IO.Compression.ZipFile]::ExtractToDirectory($zippath,$dir)
         Set-ResolvedAlias $Name $Path
     }
-    else { Write-Error "Download of $Name was cancelled." }
+    else { Write-Error "Download/unzip of $Name was cancelled." }
 }
 elseif($DownloadUrl)
 {
-    if($PSCmdlet.ShouldProcess("This will download and unzip $DownloadZip to $Path.",
+    if($PSCmdlet.ShouldProcess("This will download $DownloadUrl to $Path.",
         "Are you sure you wish to download $Name ?",
         "Download $Name"))
     {
