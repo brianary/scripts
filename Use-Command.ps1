@@ -66,7 +66,7 @@ Param([Parameter(Position=0,Mandatory=$true)]$Name,
 [Parameter(ParameterSetName='WindowsInstaller')]
 [int]$InstallLevel = 32767,
 [Parameter(ParameterSetName='ExecutableInstaller')]
-[Alias('exe')][string]$ExecutableInstaller,
+[Alias('exe')][uri]$ExecutableInstaller,
 [Parameter(ParameterSetName='ExecutableInstaller')]
 [Alias('params')][string[]]$InstallerParameters = @(),
 [Parameter(ParameterSetName='ExecutePS')][Alias('iex')][uri]$ExecutePS,
@@ -131,14 +131,14 @@ elseif($WindowsInstaller)
 }
 elseif($ExecutableInstaller)
 {
-    $file = $ExecutableInstaller.Segments[$WindowsInstaller.Segments.Length-1]
+    $file = $ExecutableInstaller.Segments[$ExecutableInstaller.Segments.Length-1]
     if($PSCmdlet.ShouldProcess("This will install $file $InstallerParameters.",
         "Are you sure you wish to install $file ?",
         "Install $file"))
     {
         $exe =
             if($ExecutableInstaller.IsUnc)
-            { Copy-Item $ExecutableInstaller $env:TEMP; "$env:TEMP\$file" }
+            { Copy-Item $ExecutableInstaller.OriginalString $env:TEMP; "$env:TEMP\$file" }
             elseif($ExecutableInstaller.IsFile)
             { [string]$ExecutableInstaller }
             else
@@ -148,7 +148,7 @@ elseif($ExecutableInstaller)
             "The file $Path was still not found. Continue waiting for installation?","Await Installation")) { Start-Sleep 5 }
         if(Test-Path $Path) { Set-ResolvedAlias $Name $Path }
     }
-    else { Write-Error "Installation of $WindowsInstaller was cancelled." }
+    else { Write-Error "Installation of $ExecutableInstaller was cancelled." }
 }
 elseif($ExecutePS)
 {
