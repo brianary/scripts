@@ -3,6 +3,7 @@
 ' any indentation of only one space, you'll want to add two spaces to the
 ' each line (adding one will not appear for text that isn't indented).
 ' This Outlook script will paste formatted text, and indent it.
+' Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work)
 
 Sub PasteTextFormattedIndented()
     Dim doc As Word.Document

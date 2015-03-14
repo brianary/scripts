@@ -1,5 +1,6 @@
 ' This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive,
 ' formatted table. -BL
+' Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work)
 
 Sub PasteFormattedTable()
     Dim doc As Word.Document
