@@ -1,0 +1,26 @@
+html { font: small Verdana,sans-serif; }
+body { background-color: window; color: windowtext; }
+h1 { clear: both; }
+h2 { border-top: 4px double; clear: both; }
+div.operation { clear: both; padding-top: 1em; }
+h3 { margin: 1ex 0 0; border-top: 1px dotted graytext; }
+p { margin: 0; }
+table { border: none; border-collapse: collapse; margin-bottom: 1ex; }
+caption { font: caption; background-color: inactivecaption; color: captiontext; }
+table:hover caption { background-color: activecaption; color: captiontext; }
+table.input, table.output { width: 48%; min-width: 42em; }
+table.input { float: left; }
+table.output, table.output caption { border-left: 1px dotted graytext; }
+th { text-align: left; }
+th.occurs, td.occurs { width: 2em; text-align: center; }
+th.direction { font: caption; font-style: italic; }
+td { vertical-align: top; }
+ul { padding-top: 0; padding-bottom: 0; margin-top: 0; margin-bottom: 0; }
+div.index ul { list-style-type: none; margin: 0 0 0 1em; padding: 0; }
+div.index li { list-style-type: none; margin: 0; padding: 0; }
+ul.typefields { -moz-column-width: 18em; -moz-column-gap: 1em; column-width: 18em; column-gap: 1em; }
+@media screen
+{
+	html { background-color: appworkspace; }
+	body { margin: 1ex 3%; padding: 1ex; border: 1px solid activeborder; }
+}
