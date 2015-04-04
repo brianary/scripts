@@ -51,7 +51,7 @@ mkdir $Database -EA:SilentlyContinue |Out-Null ; pushd $Database
 $opts = New-Object Microsoft.SqlServer.Management.Smo.ScriptingOptions
 'ExtendedProperties,Permissions,DriAll,Indexes,Triggers'.Trim() -split '\W+' |% {$opts.$_ = $true}
 
-$type = @{
+$folder = @{
     # Property           = # Folder
     Assemblies           = 'Assemblies'
     Triggers             = 'Database Triggers'
@@ -89,10 +89,27 @@ $brkr = @{ # not something we currently use
 
 function ConvertTo-FileName($Name) { $Name -replace '[<>\\/"|\t]+','_' }
 
+$folder.Keys |
+    ? {($db.$_ -isnot [Microsoft.SqlServer.Management.Smo.DatabaseRoleCollection]) -or ($db.$_ |? IsFixedRole -eq $false)} |
+    ? {!($db.$_ |gm IsSystemObject) -or ($db.$_ |? IsSystemObject -eq $false)} |
+    % {
+        mkdir $folder.$_ -EA:SilentlyContinue |Out-Null ; pushd $folder.$_
+        $db.$_ |
+            ? {!($_|gm IsSystemObject) -or !($_.IsSystemObject)} |
+            % {
+                $filename = 
+                    if($_|gm Schema) {"$(ConvertTo-FileName $_.Schema).$(ConvertTo-FileName $_.Name).sql"}
+                    else {"$(ConvertTo-FileName $_.Name).sql"}
+                Write-Verbose "Export $($_.GetType().Name) $_ to $filename"
+                $_.Script($opts) |Out-File $filename
+            }
+        popd
+    }
+
 'UserDefinedFunctions StoredProcedures Tables Views' -split ' ' |
     ? {$db.$_ |? IsSystemObject -eq $false} |
     % {
-        mkdir $type.$_ -EA:SilentlyContinue |Out-Null ; pushd $type.$_
+        mkdir $folder.$_ -EA:SilentlyContinue |Out-Null ; pushd $folder.$_
         $db.$_ |
             ? IsSystemObject -eq $false |
             % {
@@ -109,7 +126,7 @@ function ConvertTo-FileName($Name) { $Name -replace '[<>\\/"|\t]+','_' }
     ? {$db.$_ |? IsSystemObject -eq $false} |
     % {
         "__ $_ __"
-        mkdir $type.$_ -EA:SilentlyContinue |Out-Null ; pushd $type.$_
+        mkdir $folder.$_ -EA:SilentlyContinue |Out-Null ; pushd $folder.$_
         $db.$_ |
             ? IsSystemObject -eq $false |
             % {
@@ -122,7 +139,7 @@ function ConvertTo-FileName($Name) { $Name -replace '[<>\\/"|\t]+','_' }
 
 if($db.Users)
 {
-    mkdir $type.Users -EA:SilentlyContinue |Out-Null ; pushd $type.Users
+    mkdir $folder.Users -EA:SilentlyContinue |Out-Null ; pushd $folder.Users
     $db.Users |
         ? IsSystemObject -eq $false |
         % {
@@ -134,7 +151,7 @@ if($db.Users)
 
 if($db.Roles)
 {
-    mkdir $type.Roles -EA:SilentlyContinue |Out-Null ; pushd $type.Roles
+    mkdir $folder.Roles -EA:SilentlyContinue |Out-Null ; pushd $folder.Roles
     $db.Roles |
         ? IsFixedRole -eq $false |
         % {
