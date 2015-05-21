@@ -16,11 +16,12 @@ if(1 -eq ($Element.SelectNodes('*') |group Name |measure |% Count))
 else
 {
     $properties = @{}
+    $Element.Attributes |% {[void]$properties.Add($_.Name,$_.Value)}
     foreach($node in $Element.ChildNodes |? {$_.Name -and $_.Name -ne '#whitespace'})
     {
         $subelements = $node.SelectNodes('*') |group Name
         $value = 
-            if(!$subelements)
+            if($node.InnerText -and !$subelements)
             {
                 $node.InnerText
             }
