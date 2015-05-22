@@ -33,7 +33,17 @@ else
             {
                 ConvertFrom-XmlElement.ps1 $node
             }
-        [void]$properties.Add($node.Name,$value)
+        if(!$properties.Contains($node.Name))
+        { # new property
+            [void]$properties.Add($node.Name,$value)
+        }
+        else
+        { # property name collision!
+            if($properties[$node.Name] -isnot [Collections.Generic.List[object]])
+            { $properties[$node.Name] = ([Collections.Generic.List[object]]@($properties[$node.Name],$value)) }
+            else
+            { $properties[$node.Name].Add($value) }
+        }
     }
     New-Object PSObject -Property $properties
 }
