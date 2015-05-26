@@ -9,7 +9,7 @@ The element to convert to a PSObject.
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true)][Xml.XmlElement] $Element
 )
-if(1 -eq ($Element.SelectNodes('*') |group Name |measure |% Count))
+if(($Element.SelectNodes('*') |group Name |measure).Count -eq 1)
 {
     @($Element.SelectNodes('*') |% {ConvertFrom-XmlElement.ps1 $_})
 }
@@ -25,7 +25,7 @@ else
             {
                 $node.InnerText
             }
-            elseif(1 -eq ($subelements |measure |% Count))
+            elseif(($subelements |measure).Count -eq 1)
             {
                 @($node.SelectNodes('*') |% {ConvertFrom-XmlElement.ps1 $_})
             }
