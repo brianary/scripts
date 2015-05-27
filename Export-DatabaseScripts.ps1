@@ -117,7 +117,7 @@ function ConvertTo-FileName($Name) { $Name -replace '[<>\\/"|\t]+','_' }
 # skip collections that are empty, only system objects, and only fixed roles
 # skip system objects and fixed roles
 $folder.Keys |
-    ? {$db.$_.Count} |
+    ? {$db.$_ -and $db.$_.Count} |
     ? {$db.$_ -isnot [Microsoft.SqlServer.Management.Smo.DatabaseRoleCollection] -or ($db.$_ |? IsFixedRole -eq $false)} |
     ? {!($db.$_ |Get-Member IsSystemObject) -or ($db.$_ |? IsSystemObject -eq $false)} |
     % {
