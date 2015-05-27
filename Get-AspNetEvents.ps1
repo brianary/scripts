@@ -3,65 +3,89 @@
 Parses ASP.NET errors from the event log on the given server.
 .Parameter ComputerName
 The name of the server on which the error occurred.
-.Parameter EntryType
-Gets only events with the specified entry type. Valid values are Error, Information, and Warning. The default is all events.
 .Parameter After
 Skip events older than this datetime.
+Defaults to 00:00 today.
 .Parameter Before
 Skip events newer than this datetime.
-.Parameter Newest
-The maximum number of the most recent events to return.
+Defaults to now.
 #>
 
 #requires -version 3
 [CmdletBinding()] Param(
-[Parameter(Mandatory=$true,Position=0)][Alias('CN','Server')][string[]]$ComputerName,
-[ValidateSet('Information','Warning','Error')][string[]]$EntryType,
-[DateTime]$After,
-[DateTime]$Before,
-[int]$Newest
+[Parameter(Position=0,Mandatory=$true)][Alias('Server')][string[]]$ComputerName,
+[Parameter(Position=1)][DateTime]$After = ([DateTime]::Today),
+[Parameter(Position=2)][DateTime]$Before = ([DateTime]::Now)
 )
-$FieldNames= @(
-    @('EventCode','EventMessage','EventTime','EventTimeUtc','EventId','EventSequence','EventOccurrence',
+$IdFields = @{
+    # 5, 9, 21 (1) Classic ASP errors, no fields
+    # 1020 (0) IIS config failure, no fields
+    # 1309 (30) late runtime issues
+    1309 = @('EventCode','EventMessage','EventTime','EventTimeUtc','EventId','EventSequence','EventOccurrence',
         'EventDetailCode','AppDomain','TrustLevel','AppPath','AppLocalPath','MachineName','_','ProcessId','ProcessName',
         'AccountName','ExceptionType','ExceptionMessage','RequestUrl','RequestPath','UserHostAddress','User','IsAuthenticated',
-        'AuthenticationType','ReqThreadAccountName','ThreadId','ThreadAccountName','IsImpersonating','StackTrace','CustomEventDetails'),
-    @('EventCode','EventMessage','EventTime','EventTimeUtc','EventId','EventSequence','EventOccurrence',
+        'AuthenticationType','ReqThreadAccountName','ThreadId','ThreadAccountName','IsImpersonating','StackTrace','CustomEventDetails')
+    # 1310 (30) early configuration-type issues
+    1310 = @('EventCode','EventMessage','EventTime','EventTimeUtc','EventId','EventSequence','EventOccurrence',
+        'EventDetailCode','AppDomain','TrustLevel','AppPath','AppLocalPath','MachineName','_','ProcessId','ProcessName',
+        'AccountName','ExceptionType','ExceptionMessage','RequestUrl','RequestPath','UserHostAddress','User','IsAuthenticated',
+        'AuthenticationType','ReqThreadAccountName','ThreadId','ThreadAccountName','IsImpersonating','StackTrace','CustomEventDetails')
+    # 1314 (24) access issues
+    1314 = @('EventCode','EventMessage','EventTime','EventTimeUtc','EventId','EventSequence','EventOccurrence',
         'EventDetailCode','AppDomain','TrustLevel','AppPath','AppLocalPath','MachineName','_','ProcessId','ProcessName',
         'AccountName','RequestUrl','RequestPath','UserHostAddress','User','IsAuthenticated','AuthenticationType',
         'ThreadAccountName','CustomEventDetails')
-) |sort Length
+    # 1315 (25) forms authentication failure
+    1315 = @('EventCode','EventMessage','EventTime','EventTimeUtc','EventId','EventSequence','EventOccurrence',
+        'EventDetailCode','AppDomain','TrustLevel','AppPath','AppLocalPath','MachineName','_','ProcessId','ProcessName',
+        'AccountName','RequestUrl','RequestPath','UserHostAddress','User','IsAuthenticated','AuthenticationType',
+        'ThreadAccountName','CustomEventDetails')
+    # 1316 (31) session state failure
+    1316 = @('EventCode','EventMessage','EventTime','EventTimeUtc','EventId','EventSequence','EventOccurrence',
+        'EventDetailCode','AppDomain','TrustLevel','AppPath','AppLocalPath','MachineName','_','ProcessId','ProcessName',
+        'AccountName','ExceptionType','ExceptionMessage','RequestUrl','RequestPath','UserHostAddress','User','IsAuthenticated',
+        'AuthenticationType','ReqThreadAccountName','ThreadId','ThreadAccountName','IsImpersonating','StackTrace','CustomEventDetails')
+    # 1325 (1) serious low-level stuff, no fields
+}
 $RemoveFields= '_','ThreadAccountName','ReqThreadAccountName' # blank or redundant fields
 $BoolFields= 'IsAuthenticated','IsImpersonating'
 $IntFields= 'EventOccurrence','EventSequence','EventCode','EventDetailCode','ProcessId','ThreadId'
-$EventQuery = @{
-    ComputerName = $ComputerName
-    LogName      = 'Application'
-    Source       = 'ASP.NET 4.0.30319.0','ASP.NET 2.0.50727.0','ASP.NET 1.1.4322.0'
-}
-if($After){$EventQuery.After=$After}
-if($Before){$EventQuery.Before=$Before}
-if($Newest){$EventQuery.Newest=$Newest}
-if($EntryType){$EventQuery.EntryType=$EntryType}
-Get-EventLog @EventQuery |
-    ? {1017,1019,1023,1025 -notcontains $_.EventID} | # don't want ASP.NET registration events
+$query = [xml](@'
+<QueryList>
+    <Query Id="0" Path="Application">
+        <Select Path="Application">*[System[Provider[@Name='Active Server Pages' 
+                                                     or @Name='ASP.NET 2.0.50727.0' 
+                                                     or @Name='ASP.NET 4.0.30319.0']
+                                            and TimeCreated[@SystemTime &gt;= '{0:yyyy-MM-ddTHH:mm:ss.000Z}' 
+                                                            and @SystemTime &lt;= '{1:yyyy-MM-ddTHH:mm:ss.999Z}']]]</Select>
+        <Suppress Path="Application">*[System[EventID=1017 
+                                              or EventID=1019 
+                                              or EventID=1023 
+                                              or EventID=1025 
+                                              or EventID=1076 
+                                              or EventID=1077]]</Suppress>
+    </Query>
+</QueryList>
+'@ -f $After.ToUniversalTime(),$Before.ToUniversalTime())
+Write-Verbose $query.OuterXml
+$ComputerName |
+    % {Get-WinEvent $query -CN $_} |
     % {
-        [string]$type = $_.EntryType
-        $fields = @{EntryType=$type;Source=$_.Source;EventTime=$_.TimeGenerated}
-        if($type -eq 'Error')
-        { # errors aren't structured nicely
-            if($_.Message -match '(?m)^Application ID: (?.+)$'){$fields.AppId=$Matches.AppId.TrimEnd()}
-            if($_.Message -match '(?m)^Process ID: (?.+)$'){$fields.ProcessId=[int]$Matches.ProcessId.TrimEnd()}
-            if($_.Message -match '(?m)^Exception: (\w+\.)*(?\w+)\s*$'){$fields.ExceptionType=$Matches.ExceptionType}
-            if($_.Message -match '(?m)^Message: (?.+)$'){$fields.ExceptionMessage=$Matches.ExceptionMessage.TrimEnd()}
-            if($_.Message -match '(?ms)^StackTrace: (?.+)$'){$fields.StackTrace=$Matches.StackTrace.TrimEnd()}
+        $fields = [ordered]@{LogTime=$_.TimeCreated;EntryType=$_.LevelDisplayName;Source=$_.ProviderName}
+        if($_.Properties.Count -lt 2 -or !$IdFields.Contains($_.Id))
+        { # not structured nicely
+            if($_.Message -match '(?m)^Application ID: (?<AppId>.+)$'){$fields.AppId=$Matches.AppId.TrimEnd()}
+            if($_.Message -match '(?m)^Process ID: (?<ProcessId>.+)$'){$fields.ProcessId=[int]$Matches.ProcessId.TrimEnd()}
+            if($_.Message -match '(?m)^Exception: (\w+\.)*(?<ExceptionType>\w+)\s*$'){$fields.ExceptionType=$Matches.ExceptionType}
+            if($_.Message -match '(?m)^Message: (?<ExceptionMessage>.+)$'){$fields.ExceptionMessage=$Matches.ExceptionMessage.TrimEnd()}
+            if($_.Message -match '(?ms)^StackTrace: (?<StackTrace>.+)$'){$fields.StackTrace=$Matches.StackTrace.TrimEnd()}
         }
-        elseif($_.ReplacementStrings.Length)
+        else
         {
-            $values = $_.ReplacementStrings
-            $names = $FieldNames |? Length -ge $values.Length |select -f 1
+            $values = $_.Properties |% Value
+            $names = $IdFields[$_.Id]
             if($values.Length -gt $names.Length) { Write-Warning ('Unexpected field values: {0} > {1}' -f $values.Length,$names.Length) }
-            for($i=0; $i -lt $values.Length; $i++) {$fields[$names[$i]]= $values[$i].TrimEnd()}
+            0..($values.Length-1) |% {[void]$fields.Add($names[$_],$values[$_].TrimEnd())}
             $RemoveFields |% {$fields.Remove($_)}
             $BoolFields |% {$fields[$_]=[bool]$fields[$_]}
             $IntFields |% {$fields[$_]=[int]$fields[$_]}
@@ -71,7 +95,7 @@ Get-EventLog @EventQuery |
             if($fields.ExceptionMessage -and $fields.StackTrace)
             { $fields.ExceptionMessage= $fields.ExceptionMessage.Replace($fields.StackTrace,'').TrimEnd() } # don't need stack trace twice
         }
-        $event = New-Object PSObject -p $fields
+        $event = New-Object PSObject -Property $fields
         $event.PSObject.TypeNames.Insert(0,'AspNetApplicationEventLogEntry')
         $event
     }
