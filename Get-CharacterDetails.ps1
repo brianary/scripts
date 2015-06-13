@@ -7,6 +7,35 @@ Returns filterable categorical information about a range of characters.
 [CmdletBinding()] Param(
 [Parameter(ParameterSetName='Range',Position=0)][int]$StartValue = [char]::MinValue,
 [Parameter(ParameterSetName='Range',Position=1)][int]$StopValue  = [char]::MaxValue,
+[Parameter(ParameterSetName='Block',Position=0,Mandatory=$true)]
+[ValidateSet('ASCII','0x2xxx','BasicLatin','Latin1Supplement',
+'LatinExtendedA','LatinExtendedB','IPAExtensions','SpacingModifierLetters','CombiningDiacriticalMarks',
+'GreekandCoptic','Cyrillic','CyrillicSupplement','Armenian','Hebrew','Arabic','Syriac','ArabicSupplement',
+'Thaana','NKo','Samaritan','Mandaic','ArabicExtendedA','Devanagari','Bengali','Gurmukhi','Gujarati','Oriya',
+'Tamil','Telugu','Kannada','Malayalam','Sinhala','Thai','Lao','Tibetan','Myanmar','Georgian','HangulJamo',
+'Ethiopic','EthiopicSupplement','Cherokee','UnifiedCanadianAboriginalSyllabics','Ogham','Runic','Tagalog',
+'Hanunoo','Buhid','Tagbanwa','Khmer','Mongolian','UnifiedCanadianAboriginalSyllabicsExtended','Limbu','TaiLe',
+'NewTaiLue','KhmerSymbols','Buginese','TaiTham','CombiningDiacriticalMarksExtended','Balinese','Sundanese',
+'Batak','Lepcha','OlChiki','SundaneseSupplement','VedicExtensions','PhoneticExtensions',
+'PhoneticExtensionsSupplement','CombiningDiacriticalMarksSupplement','LatinExtendedAdditional','GreekExtended',
+'GeneralPunctuation','SuperscriptsandSubscripts','CurrencySymbols','CombiningDiacriticalMarksforSymbols',
+'LetterlikeSymbols','NumberForms','Arrows','MathematicalOperators','MiscellaneousTechnical','ControlPictures',
+'OpticalCharacterRecognition','EnclosedAlphanumerics','BoxDrawing','BlockElements','GeometricShapes',
+'MiscellaneousSymbols','Dingbats','MiscellaneousMathematicalSymbolsA','SupplementalArrowsA','BraillePatterns',
+'SupplementalArrowsB','MiscellaneousMathematicalSymbolsB','SupplementalMathematicalOperators',
+'MiscellaneousSymbolsandArrows','Glagolitic','LatinExtendedC','Coptic','GeorgianSupplement','Tifinagh',
+'EthiopicExtended','CyrillicExtendedA','SupplementalPunctuation','CJKRadicalsSupplement','KangxiRadicals',
+'IdeographicDescriptionCharacters','CJKSymbolsandPunctuation','Hiragana','Katakana','Bopomofo',
+'HangulCompatibilityJamo','Kanbun','BopomofoExtended','CJKStrokes','KatakanaPhoneticExtensions',
+'EnclosedCJKLettersandMonths','CJKCompatibility','CJKUnifiedIdeographsExtensionA','YijingHexagramSymbols',
+'CJKUnifiedIdeographs','YiSyllables','YiRadicals','Lisu','Vai','CyrillicExtendedB','Bamum','ModifierToneLetters',
+'LatinExtendedD','SylotiNagri','CommonIndicNumberForms','Phagspa','Saurashtra','DevanagariExtended','KayahLi',
+'Rejang','HangulJamoExtendedA','Javanese','MyanmarExtendedB','Cham','MyanmarExtendedA','TaiViet',
+'MeeteiMayekExtensions','EthiopicExtendedA','LatinExtendedE','MeeteiMayek','HangulSyllables',
+'HangulJamoExtendedB','HighSurrogates','HighPrivateUseSurrogates','LowSurrogates','PrivateUseArea',
+'CJKCompatibilityIdeographs','AlphabeticPresentationForms','ArabicPresentationFormsA','VariationSelectors',
+'VerticalForms','CombiningHalfMarks','CJKCompatibilityForms','SmallFormVariants','ArabicPresentationFormsB',
+'HalfwidthandFullwidthForms','Specials')][string]$Block,
 [switch]$IsControl,      [switch]$NotControl,
 [switch]$IsDigit,        [switch]$NotDigit,
 [switch]$IsHighSurrogate,[switch]$NotHighSurrogate,
@@ -23,328 +52,173 @@ Returns filterable categorical information about a range of characters.
 [switch]$IsSurrogate,    [switch]$NotSurrogate,
 [switch]$IsSymbol,       [switch]$NotSymbol,
 [switch]$IsUpper,        [switch]$NotUpper,
-[switch]$IsWhiteSpace,   [switch]$NotWhiteSpace,
-[Parameter(ParameterSetName='ASCII',Mandatory=$true)][switch]$IsASCII,
-[Parameter(ParameterSetName='BasicLatin')][switch]$IsBasicLatin,
-[Parameter(ParameterSetName='Latin1Supplement')][switch]$IsLatin1Supplement,
-[Parameter(ParameterSetName='LatinExtendedA')][switch]$IsLatinExtendedA,
-[Parameter(ParameterSetName='LatinExtendedB')][switch]$IsLatinExtendedB,
-[Parameter(ParameterSetName='IPAExtensions')][switch]$IsIPAExtensions,
-[Parameter(ParameterSetName='SpacingModifierLetters')][switch]$IsSpacingModifierLetters,
-[Parameter(ParameterSetName='CombiningDiacriticalMarks')][switch]$IsCombiningDiacriticalMarks,
-[Parameter(ParameterSetName='GreekandCoptic')][switch]$IsGreekandCoptic,
-[Parameter(ParameterSetName='Cyrillic')][switch]$IsCyrillic,
-[Parameter(ParameterSetName='CyrillicSupplement')][switch]$IsCyrillicSupplement,
-[Parameter(ParameterSetName='Armenian')][switch]$IsArmenian,
-[Parameter(ParameterSetName='Hebrew')][switch]$IsHebrew,
-[Parameter(ParameterSetName='Arabic')][switch]$IsArabic,
-[Parameter(ParameterSetName='Syriac')][switch]$IsSyriac,
-[Parameter(ParameterSetName='ArabicSupplement')][switch]$IsArabicSupplement,
-[Parameter(ParameterSetName='Thaana')][switch]$IsThaana,
-[Parameter(ParameterSetName='NKo')][switch]$IsNKo,
-[Parameter(ParameterSetName='Samaritan')][switch]$IsSamaritan,
-[Parameter(ParameterSetName='Mandaic')][switch]$IsMandaic,
-[Parameter(ParameterSetName='ArabicExtendedA')][switch]$IsArabicExtendedA,
-[Parameter(ParameterSetName='Devanagari')][switch]$IsDevanagari,
-[Parameter(ParameterSetName='Bengali')][switch]$IsBengali,
-[Parameter(ParameterSetName='Gurmukhi')][switch]$IsGurmukhi,
-[Parameter(ParameterSetName='Gujarati')][switch]$IsGujarati,
-[Parameter(ParameterSetName='Oriya')][switch]$IsOriya,
-[Parameter(ParameterSetName='Tamil')][switch]$IsTamil,
-[Parameter(ParameterSetName='Telugu')][switch]$IsTelugu,
-[Parameter(ParameterSetName='Kannada')][switch]$IsKannada,
-[Parameter(ParameterSetName='Malayalam')][switch]$IsMalayalam,
-[Parameter(ParameterSetName='Sinhala')][switch]$IsSinhala,
-[Parameter(ParameterSetName='Thai')][switch]$IsThai,
-[Parameter(ParameterSetName='Lao')][switch]$IsLao,
-[Parameter(ParameterSetName='Tibetan')][switch]$IsTibetan,
-[Parameter(ParameterSetName='Myanmar')][switch]$IsMyanmar,
-[Parameter(ParameterSetName='Georgian')][switch]$IsGeorgian,
-[Parameter(ParameterSetName='HangulJamo')][switch]$IsHangulJamo,
-[Parameter(ParameterSetName='Ethiopic')][switch]$IsEthiopic,
-[Parameter(ParameterSetName='EthiopicSupplement')][switch]$IsEthiopicSupplement,
-[Parameter(ParameterSetName='Cherokee')][switch]$IsCherokee,
-[Parameter(ParameterSetName='UnifiedCanadianAboriginalSyllabics')][switch]$IsUnifiedCanadianAboriginalSyllabics,
-[Parameter(ParameterSetName='Ogham')][switch]$IsOgham,
-[Parameter(ParameterSetName='Runic')][switch]$IsRunic,
-[Parameter(ParameterSetName='Tagalog')][switch]$IsTagalog,
-[Parameter(ParameterSetName='Hanunoo')][switch]$IsHanunoo,
-[Parameter(ParameterSetName='Buhid')][switch]$IsBuhid,
-[Parameter(ParameterSetName='Tagbanwa')][switch]$IsTagbanwa,
-[Parameter(ParameterSetName='Khmer')][switch]$IsKhmer,
-[Parameter(ParameterSetName='Mongolian')][switch]$IsMongolian,
-[Parameter(ParameterSetName='UnifiedCanadianAboriginalSyllabicsExtended')][switch]$IsUnifiedCanadianAboriginalSyllabicsExtended,
-[Parameter(ParameterSetName='Limbu')][switch]$IsLimbu,
-[Parameter(ParameterSetName='TaiLe')][switch]$IsTaiLe,
-[Parameter(ParameterSetName='NewTaiLue')][switch]$IsNewTaiLue,
-[Parameter(ParameterSetName='KhmerSymbols')][switch]$IsKhmerSymbols,
-[Parameter(ParameterSetName='Buginese')][switch]$IsBuginese,
-[Parameter(ParameterSetName='TaiTham')][switch]$IsTaiTham,
-[Parameter(ParameterSetName='CombiningDiacriticalMarksExtended')][switch]$IsCombiningDiacriticalMarksExtended,
-[Parameter(ParameterSetName='Balinese')][switch]$IsBalinese,
-[Parameter(ParameterSetName='Sundanese')][switch]$IsSundanese,
-[Parameter(ParameterSetName='Batak')][switch]$IsBatak,
-[Parameter(ParameterSetName='Lepcha')][switch]$IsLepcha,
-[Parameter(ParameterSetName='OlChiki')][switch]$IsOlChiki,
-[Parameter(ParameterSetName='SundaneseSupplement')][switch]$IsSundaneseSupplement,
-[Parameter(ParameterSetName='VedicExtensions')][switch]$IsVedicExtensions,
-[Parameter(ParameterSetName='PhoneticExtensions')][switch]$IsPhoneticExtensions,
-[Parameter(ParameterSetName='PhoneticExtensionsSupplement')][switch]$IsPhoneticExtensionsSupplement,
-[Parameter(ParameterSetName='CombiningDiacriticalMarksSupplement')][switch]$IsCombiningDiacriticalMarksSupplement,
-[Parameter(ParameterSetName='LatinExtendedAdditional')][switch]$IsLatinExtendedAdditional,
-[Parameter(ParameterSetName='GreekExtended')][switch]$IsGreekExtended,
-[Parameter(ParameterSetName='GeneralPunctuation')][switch]$IsGeneralPunctuation,
-[Parameter(ParameterSetName='SuperscriptsandSubscripts')][switch]$IsSuperscriptsandSubscripts,
-[Parameter(ParameterSetName='CurrencySymbols')][switch]$IsCurrencySymbols,
-[Parameter(ParameterSetName='CombiningDiacriticalMarksforSymbols')][switch]$IsCombiningDiacriticalMarksforSymbols,
-[Parameter(ParameterSetName='LetterlikeSymbols')][switch]$IsLetterlikeSymbols,
-[Parameter(ParameterSetName='NumberForms')][switch]$IsNumberForms,
-[Parameter(ParameterSetName='Arrows')][switch]$IsArrows,
-[Parameter(ParameterSetName='MathematicalOperators')][switch]$IsMathematicalOperators,
-[Parameter(ParameterSetName='MiscellaneousTechnical')][switch]$IsMiscellaneousTechnical,
-[Parameter(ParameterSetName='ControlPictures')][switch]$IsControlPictures,
-[Parameter(ParameterSetName='OpticalCharacterRecognition')][switch]$IsOpticalCharacterRecognition,
-[Parameter(ParameterSetName='EnclosedAlphanumerics')][switch]$IsEnclosedAlphanumerics,
-[Parameter(ParameterSetName='BoxDrawing')][switch]$IsBoxDrawing,
-[Parameter(ParameterSetName='BlockElements')][switch]$IsBlockElements,
-[Parameter(ParameterSetName='GeometricShapes')][switch]$IsGeometricShapes,
-[Parameter(ParameterSetName='MiscellaneousSymbols')][switch]$IsMiscellaneousSymbols,
-[Parameter(ParameterSetName='Dingbats')][switch]$IsDingbats,
-[Parameter(ParameterSetName='MiscellaneousMathematicalSymbolsA')][switch]$IsMiscellaneousMathematicalSymbolsA,
-[Parameter(ParameterSetName='SupplementalArrowsA')][switch]$IsSupplementalArrowsA,
-[Parameter(ParameterSetName='BraillePatterns')][switch]$IsBraillePatterns,
-[Parameter(ParameterSetName='SupplementalArrowsB')][switch]$IsSupplementalArrowsB,
-[Parameter(ParameterSetName='MiscellaneousMathematicalSymbolsB')][switch]$IsMiscellaneousMathematicalSymbolsB,
-[Parameter(ParameterSetName='SupplementalMathematicalOperators')][switch]$IsSupplementalMathematicalOperators,
-[Parameter(ParameterSetName='MiscellaneousSymbolsandArrows')][switch]$IsMiscellaneousSymbolsandArrows,
-[Parameter(ParameterSetName='Glagolitic')][switch]$IsGlagolitic,
-[Parameter(ParameterSetName='LatinExtendedC')][switch]$IsLatinExtendedC,
-[Parameter(ParameterSetName='Coptic')][switch]$IsCoptic,
-[Parameter(ParameterSetName='GeorgianSupplement')][switch]$IsGeorgianSupplement,
-[Parameter(ParameterSetName='Tifinagh')][switch]$IsTifinagh,
-[Parameter(ParameterSetName='EthiopicExtended')][switch]$IsEthiopicExtended,
-[Parameter(ParameterSetName='CyrillicExtendedA')][switch]$IsCyrillicExtendedA,
-[Parameter(ParameterSetName='SupplementalPunctuation')][switch]$IsSupplementalPunctuation,
-[Parameter(ParameterSetName='CJKRadicalsSupplement')][switch]$IsCJKRadicalsSupplement,
-[Parameter(ParameterSetName='KangxiRadicals')][switch]$IsKangxiRadicals,
-[Parameter(ParameterSetName='IdeographicDescriptionCharacters')][switch]$IsIdeographicDescriptionCharacters,
-[Parameter(ParameterSetName='CJKSymbolsandPunctuation')][switch]$IsCJKSymbolsandPunctuation,
-[Parameter(ParameterSetName='Hiragana')][switch]$IsHiragana,
-[Parameter(ParameterSetName='Katakana')][switch]$IsKatakana,
-[Parameter(ParameterSetName='Bopomofo')][switch]$IsBopomofo,
-[Parameter(ParameterSetName='HangulCompatibilityJamo')][switch]$IsHangulCompatibilityJamo,
-[Parameter(ParameterSetName='Kanbun')][switch]$IsKanbun,
-[Parameter(ParameterSetName='BopomofoExtended')][switch]$IsBopomofoExtended,
-[Parameter(ParameterSetName='CJKStrokes')][switch]$IsCJKStrokes,
-[Parameter(ParameterSetName='KatakanaPhoneticExtensions')][switch]$IsKatakanaPhoneticExtensions,
-[Parameter(ParameterSetName='EnclosedCJKLettersandMonths')][switch]$IsEnclosedCJKLettersandMonths,
-[Parameter(ParameterSetName='CJKCompatibility')][switch]$IsCJKCompatibility,
-[Parameter(ParameterSetName='CJKUnifiedIdeographsExtensionA')][switch]$IsCJKUnifiedIdeographsExtensionA,
-[Parameter(ParameterSetName='YijingHexagramSymbols')][switch]$IsYijingHexagramSymbols,
-[Parameter(ParameterSetName='CJKUnifiedIdeographs')][switch]$IsCJKUnifiedIdeographs,
-[Parameter(ParameterSetName='YiSyllables')][switch]$IsYiSyllables,
-[Parameter(ParameterSetName='YiRadicals')][switch]$IsYiRadicals,
-[Parameter(ParameterSetName='Lisu')][switch]$IsLisu,
-[Parameter(ParameterSetName='Vai')][switch]$IsVai,
-[Parameter(ParameterSetName='CyrillicExtendedB')][switch]$IsCyrillicExtendedB,
-[Parameter(ParameterSetName='Bamum')][switch]$IsBamum,
-[Parameter(ParameterSetName='ModifierToneLetters')][switch]$IsModifierToneLetters,
-[Parameter(ParameterSetName='LatinExtendedD')][switch]$IsLatinExtendedD,
-[Parameter(ParameterSetName='SylotiNagri')][switch]$IsSylotiNagri,
-[Parameter(ParameterSetName='CommonIndicNumberForms')][switch]$IsCommonIndicNumberForms,
-[Parameter(ParameterSetName='Phagspa')][switch]$IsPhagspa,
-[Parameter(ParameterSetName='Saurashtra')][switch]$IsSaurashtra,
-[Parameter(ParameterSetName='DevanagariExtended')][switch]$IsDevanagariExtended,
-[Parameter(ParameterSetName='KayahLi')][switch]$IsKayahLi,
-[Parameter(ParameterSetName='Rejang')][switch]$IsRejang,
-[Parameter(ParameterSetName='HangulJamoExtendedA')][switch]$IsHangulJamoExtendedA,
-[Parameter(ParameterSetName='Javanese')][switch]$IsJavanese,
-[Parameter(ParameterSetName='MyanmarExtendedB')][switch]$IsMyanmarExtendedB,
-[Parameter(ParameterSetName='Cham')][switch]$IsCham,
-[Parameter(ParameterSetName='MyanmarExtendedA')][switch]$IsMyanmarExtendedA,
-[Parameter(ParameterSetName='TaiViet')][switch]$IsTaiViet,
-[Parameter(ParameterSetName='MeeteiMayekExtensions')][switch]$IsMeeteiMayekExtensions,
-[Parameter(ParameterSetName='EthiopicExtendedA')][switch]$IsEthiopicExtendedA,
-[Parameter(ParameterSetName='LatinExtendedE')][switch]$IsLatinExtendedE,
-[Parameter(ParameterSetName='MeeteiMayek')][switch]$IsMeeteiMayek,
-[Parameter(ParameterSetName='HangulSyllables')][switch]$IsHangulSyllables,
-[Parameter(ParameterSetName='HangulJamoExtendedB')][switch]$IsHangulJamoExtendedB,
-[Parameter(ParameterSetName='HighSurrogates')][switch]$IsHighSurrogates,
-[Parameter(ParameterSetName='HighPrivateUseSurrogates')][switch]$IsHighPrivateUseSurrogates,
-[Parameter(ParameterSetName='LowSurrogates')][switch]$IsLowSurrogates,
-[Parameter(ParameterSetName='PrivateUseArea')][switch]$IsPrivateUseArea,
-[Parameter(ParameterSetName='CJKCompatibilityIdeographs')][switch]$IsCJKCompatibilityIdeographs,
-[Parameter(ParameterSetName='AlphabeticPresentationForms')][switch]$IsAlphabeticPresentationForms,
-[Parameter(ParameterSetName='ArabicPresentationFormsA')][switch]$IsArabicPresentationFormsA,
-[Parameter(ParameterSetName='VariationSelectors')][switch]$IsVariationSelectors,
-[Parameter(ParameterSetName='VerticalForms')][switch]$IsVerticalForms,
-[Parameter(ParameterSetName='CombiningHalfMarks')][switch]$IsCombiningHalfMarks,
-[Parameter(ParameterSetName='CJKCompatibilityForms')][switch]$IsCJKCompatibilityForms,
-[Parameter(ParameterSetName='SmallFormVariants')][switch]$IsSmallFormVariants,
-[Parameter(ParameterSetName='ArabicPresentationFormsB')][switch]$IsArabicPresentationFormsB,
-[Parameter(ParameterSetName='HalfwidthandFullwidthForms')][switch]$IsHalfwidthandFullwidthForms,
-[Parameter(ParameterSetName='Specials')][switch]$IsSpecials
+[switch]$IsWhiteSpace,   [switch]$NotWhiteSpace
 )
-if($IsASCII) {$StartValue = 0x0000; $StopValue = 0x007F}
-elseif($IsBasicLatin) {$StartValue = 0x0000; $StopValue = 0x007F}
-elseif($IsLatin1Supplement) {$StartValue = 0x0080; $StopValue = 0x00FF}
-elseif($IsLatinExtendedA) {$StartValue = 0x0100; $StopValue = 0x017F}
-elseif($IsLatinExtendedB) {$StartValue = 0x0180; $StopValue = 0x024F}
-elseif($IsIPAExtensions) {$StartValue = 0x0250; $StopValue = 0x02AF}
-elseif($IsSpacingModifierLetters) {$StartValue = 0x02B0; $StopValue = 0x02FF}
-elseif($IsCombiningDiacriticalMarks) {$StartValue = 0x0300; $StopValue = 0x036F}
-elseif($IsGreekandCoptic) {$StartValue = 0x0370; $StopValue = 0x03FF}
-elseif($IsCyrillic) {$StartValue = 0x0400; $StopValue = 0x04FF}
-elseif($IsCyrillicSupplement) {$StartValue = 0x0500; $StopValue = 0x052F}
-elseif($IsArmenian) {$StartValue = 0x0530; $StopValue = 0x058F}
-elseif($IsHebrew) {$StartValue = 0x0590; $StopValue = 0x05FF}
-elseif($IsArabic) {$StartValue = 0x0600; $StopValue = 0x06FF}
-elseif($IsSyriac) {$StartValue = 0x0700; $StopValue = 0x074F}
-elseif($IsArabicSupplement) {$StartValue = 0x0750; $StopValue = 0x077F}
-elseif($IsThaana) {$StartValue = 0x0780; $StopValue = 0x07BF}
-elseif($IsNKo) {$StartValue = 0x07C0; $StopValue = 0x07FF}
-elseif($IsSamaritan) {$StartValue = 0x0800; $StopValue = 0x083F}
-elseif($IsMandaic) {$StartValue = 0x0840; $StopValue = 0x085F}
-elseif($IsArabicExtendedA) {$StartValue = 0x08A0; $StopValue = 0x08FF}
-elseif($IsDevanagari) {$StartValue = 0x0900; $StopValue = 0x097F}
-elseif($IsBengali) {$StartValue = 0x0980; $StopValue = 0x09FF}
-elseif($IsGurmukhi) {$StartValue = 0x0A00; $StopValue = 0x0A7F}
-elseif($IsGujarati) {$StartValue = 0x0A80; $StopValue = 0x0AFF}
-elseif($IsOriya) {$StartValue = 0x0B00; $StopValue = 0x0B7F}
-elseif($IsTamil) {$StartValue = 0x0B80; $StopValue = 0x0BFF}
-elseif($IsTelugu) {$StartValue = 0x0C00; $StopValue = 0x0C7F}
-elseif($IsKannada) {$StartValue = 0x0C80; $StopValue = 0x0CFF}
-elseif($IsMalayalam) {$StartValue = 0x0D00; $StopValue = 0x0D7F}
-elseif($IsSinhala) {$StartValue = 0x0D80; $StopValue = 0x0DFF}
-elseif($IsThai) {$StartValue = 0x0E00; $StopValue = 0x0E7F}
-elseif($IsLao) {$StartValue = 0x0E80; $StopValue = 0x0EFF}
-elseif($IsTibetan) {$StartValue = 0x0F00; $StopValue = 0x0FFF}
-elseif($IsMyanmar) {$StartValue = 0x1000; $StopValue = 0x109F}
-elseif($IsGeorgian) {$StartValue = 0x10A0; $StopValue = 0x10FF}
-elseif($IsHangulJamo) {$StartValue = 0x1100; $StopValue = 0x11FF}
-elseif($IsEthiopic) {$StartValue = 0x1200; $StopValue = 0x137F}
-elseif($IsEthiopicSupplement) {$StartValue = 0x1380; $StopValue = 0x139F}
-elseif($IsCherokee) {$StartValue = 0x13A0; $StopValue = 0x13FF}
-elseif($IsUnifiedCanadianAboriginalSyllabics) {$StartValue = 0x1400; $StopValue = 0x167F}
-elseif($IsOgham) {$StartValue = 0x1680; $StopValue = 0x169F}
-elseif($IsRunic) {$StartValue = 0x16A0; $StopValue = 0x16FF}
-elseif($IsTagalog) {$StartValue = 0x1700; $StopValue = 0x171F}
-elseif($IsHanunoo) {$StartValue = 0x1720; $StopValue = 0x173F}
-elseif($IsBuhid) {$StartValue = 0x1740; $StopValue = 0x175F}
-elseif($IsTagbanwa) {$StartValue = 0x1760; $StopValue = 0x177F}
-elseif($IsKhmer) {$StartValue = 0x1780; $StopValue = 0x17FF}
-elseif($IsMongolian) {$StartValue = 0x1800; $StopValue = 0x18AF}
-elseif($IsUnifiedCanadianAboriginalSyllabicsExtended) {$StartValue = 0x18B0; $StopValue = 0x18FF}
-elseif($IsLimbu) {$StartValue = 0x1900; $StopValue = 0x194F}
-elseif($IsTaiLe) {$StartValue = 0x1950; $StopValue = 0x197F}
-elseif($IsNewTaiLue) {$StartValue = 0x1980; $StopValue = 0x19DF}
-elseif($IsKhmerSymbols) {$StartValue = 0x19E0; $StopValue = 0x19FF}
-elseif($IsBuginese) {$StartValue = 0x1A00; $StopValue = 0x1A1F}
-elseif($IsTaiTham) {$StartValue = 0x1A20; $StopValue = 0x1AAF}
-elseif($IsCombiningDiacriticalMarksExtended) {$StartValue = 0x1AB0; $StopValue = 0x1AFF}
-elseif($IsBalinese) {$StartValue = 0x1B00; $StopValue = 0x1B7F}
-elseif($IsSundanese) {$StartValue = 0x1B80; $StopValue = 0x1BBF}
-elseif($IsBatak) {$StartValue = 0x1BC0; $StopValue = 0x1BFF}
-elseif($IsLepcha) {$StartValue = 0x1C00; $StopValue = 0x1C4F}
-elseif($IsOlChiki) {$StartValue = 0x1C50; $StopValue = 0x1C7F}
-elseif($IsSundaneseSupplement) {$StartValue = 0x1CC0; $StopValue = 0x1CCF}
-elseif($IsVedicExtensions) {$StartValue = 0x1CD0; $StopValue = 0x1CFF}
-elseif($IsPhoneticExtensions) {$StartValue = 0x1D00; $StopValue = 0x1D7F}
-elseif($IsPhoneticExtensionsSupplement) {$StartValue = 0x1D80; $StopValue = 0x1DBF}
-elseif($IsCombiningDiacriticalMarksSupplement) {$StartValue = 0x1DC0; $StopValue = 0x1DFF}
-elseif($IsLatinExtendedAdditional) {$StartValue = 0x1E00; $StopValue = 0x1EFF}
-elseif($IsGreekExtended) {$StartValue = 0x1F00; $StopValue = 0x1FFF}
-elseif($IsGeneralPunctuation) {$StartValue = 0x2000; $StopValue = 0x206F}
-elseif($IsSuperscriptsandSubscripts) {$StartValue = 0x2070; $StopValue = 0x209F}
-elseif($IsCurrencySymbols) {$StartValue = 0x20A0; $StopValue = 0x20CF}
-elseif($IsCombiningDiacriticalMarksforSymbols) {$StartValue = 0x20D0; $StopValue = 0x20FF}
-elseif($IsLetterlikeSymbols) {$StartValue = 0x2100; $StopValue = 0x214F}
-elseif($IsNumberForms) {$StartValue = 0x2150; $StopValue = 0x218F}
-elseif($IsArrows) {$StartValue = 0x2190; $StopValue = 0x21FF}
-elseif($IsMathematicalOperators) {$StartValue = 0x2200; $StopValue = 0x22FF}
-elseif($IsMiscellaneousTechnical) {$StartValue = 0x2300; $StopValue = 0x23FF}
-elseif($IsControlPictures) {$StartValue = 0x2400; $StopValue = 0x243F}
-elseif($IsOpticalCharacterRecognition) {$StartValue = 0x2440; $StopValue = 0x245F}
-elseif($IsEnclosedAlphanumerics) {$StartValue = 0x2460; $StopValue = 0x24FF}
-elseif($IsBoxDrawing) {$StartValue = 0x2500; $StopValue = 0x257F}
-elseif($IsBlockElements) {$StartValue = 0x2580; $StopValue = 0x259F}
-elseif($IsGeometricShapes) {$StartValue = 0x25A0; $StopValue = 0x25FF}
-elseif($IsMiscellaneousSymbols) {$StartValue = 0x2600; $StopValue = 0x26FF}
-elseif($IsDingbats) {$StartValue = 0x2700; $StopValue = 0x27BF}
-elseif($IsMiscellaneousMathematicalSymbolsA) {$StartValue = 0x27C0; $StopValue = 0x27EF}
-elseif($IsSupplementalArrowsA) {$StartValue = 0x27F0; $StopValue = 0x27FF}
-elseif($IsBraillePatterns) {$StartValue = 0x2800; $StopValue = 0x28FF}
-elseif($IsSupplementalArrowsB) {$StartValue = 0x2900; $StopValue = 0x297F}
-elseif($IsMiscellaneousMathematicalSymbolsB) {$StartValue = 0x2980; $StopValue = 0x29FF}
-elseif($IsSupplementalMathematicalOperators) {$StartValue = 0x2A00; $StopValue = 0x2AFF}
-elseif($IsMiscellaneousSymbolsandArrows) {$StartValue = 0x2B00; $StopValue = 0x2BFF}
-elseif($IsGlagolitic) {$StartValue = 0x2C00; $StopValue = 0x2C5F}
-elseif($IsLatinExtendedC) {$StartValue = 0x2C60; $StopValue = 0x2C7F}
-elseif($IsCoptic) {$StartValue = 0x2C80; $StopValue = 0x2CFF}
-elseif($IsGeorgianSupplement) {$StartValue = 0x2D00; $StopValue = 0x2D2F}
-elseif($IsTifinagh) {$StartValue = 0x2D30; $StopValue = 0x2D7F}
-elseif($IsEthiopicExtended) {$StartValue = 0x2D80; $StopValue = 0x2DDF}
-elseif($IsCyrillicExtendedA) {$StartValue = 0x2DE0; $StopValue = 0x2DFF}
-elseif($IsSupplementalPunctuation) {$StartValue = 0x2E00; $StopValue = 0x2E7F}
-elseif($IsCJKRadicalsSupplement) {$StartValue = 0x2E80; $StopValue = 0x2EFF}
-elseif($IsKangxiRadicals) {$StartValue = 0x2F00; $StopValue = 0x2FDF}
-elseif($IsIdeographicDescriptionCharacters) {$StartValue = 0x2FF0; $StopValue = 0x2FFF}
-elseif($IsCJKSymbolsandPunctuation) {$StartValue = 0x3000; $StopValue = 0x303F}
-elseif($IsHiragana) {$StartValue = 0x3040; $StopValue = 0x309F}
-elseif($IsKatakana) {$StartValue = 0x30A0; $StopValue = 0x30FF}
-elseif($IsBopomofo) {$StartValue = 0x3100; $StopValue = 0x312F}
-elseif($IsHangulCompatibilityJamo) {$StartValue = 0x3130; $StopValue = 0x318F}
-elseif($IsKanbun) {$StartValue = 0x3190; $StopValue = 0x319F}
-elseif($IsBopomofoExtended) {$StartValue = 0x31A0; $StopValue = 0x31BF}
-elseif($IsCJKStrokes) {$StartValue = 0x31C0; $StopValue = 0x31EF}
-elseif($IsKatakanaPhoneticExtensions) {$StartValue = 0x31F0; $StopValue = 0x31FF}
-elseif($IsEnclosedCJKLettersandMonths) {$StartValue = 0x3200; $StopValue = 0x32FF}
-elseif($IsCJKCompatibility) {$StartValue = 0x3300; $StopValue = 0x33FF}
-elseif($IsCJKUnifiedIdeographsExtensionA) {$StartValue = 0x3400; $StopValue = 0x4DBF}
-elseif($IsYijingHexagramSymbols) {$StartValue = 0x4DC0; $StopValue = 0x4DFF}
-elseif($IsCJKUnifiedIdeographs) {$StartValue = 0x4E00; $StopValue = 0x9FFF}
-elseif($IsYiSyllables) {$StartValue = 0xA000; $StopValue = 0xA48F}
-elseif($IsYiRadicals) {$StartValue = 0xA490; $StopValue = 0xA4CF}
-elseif($IsLisu) {$StartValue = 0xA4D0; $StopValue = 0xA4FF}
-elseif($IsVai) {$StartValue = 0xA500; $StopValue = 0xA63F}
-elseif($IsCyrillicExtendedB) {$StartValue = 0xA640; $StopValue = 0xA69F}
-elseif($IsBamum) {$StartValue = 0xA6A0; $StopValue = 0xA6FF}
-elseif($IsModifierToneLetters) {$StartValue = 0xA700; $StopValue = 0xA71F}
-elseif($IsLatinExtendedD) {$StartValue = 0xA720; $StopValue = 0xA7FF}
-elseif($IsSylotiNagri) {$StartValue = 0xA800; $StopValue = 0xA82F}
-elseif($IsCommonIndicNumberForms) {$StartValue = 0xA830; $StopValue = 0xA83F}
-elseif($IsPhagspa) {$StartValue = 0xA840; $StopValue = 0xA87F}
-elseif($IsSaurashtra) {$StartValue = 0xA880; $StopValue = 0xA8DF}
-elseif($IsDevanagariExtended) {$StartValue = 0xA8E0; $StopValue = 0xA8FF}
-elseif($IsKayahLi) {$StartValue = 0xA900; $StopValue = 0xA92F}
-elseif($IsRejang) {$StartValue = 0xA930; $StopValue = 0xA95F}
-elseif($IsHangulJamoExtendedA) {$StartValue = 0xA960; $StopValue = 0xA97F}
-elseif($IsJavanese) {$StartValue = 0xA980; $StopValue = 0xA9DF}
-elseif($IsMyanmarExtendedB) {$StartValue = 0xA9E0; $StopValue = 0xA9FF}
-elseif($IsCham) {$StartValue = 0xAA00; $StopValue = 0xAA5F}
-elseif($IsMyanmarExtendedA) {$StartValue = 0xAA60; $StopValue = 0xAA7F}
-elseif($IsTaiViet) {$StartValue = 0xAA80; $StopValue = 0xAADF}
-elseif($IsMeeteiMayekExtensions) {$StartValue = 0xAAE0; $StopValue = 0xAAFF}
-elseif($IsEthiopicExtendedA) {$StartValue = 0xAB00; $StopValue = 0xAB2F}
-elseif($IsLatinExtendedE) {$StartValue = 0xAB30; $StopValue = 0xAB6F}
-elseif($IsMeeteiMayek) {$StartValue = 0xABC0; $StopValue = 0xABFF}
-elseif($IsHangulSyllables) {$StartValue = 0xAC00; $StopValue = 0xD7AF}
-elseif($IsHangulJamoExtendedB) {$StartValue = 0xD7B0; $StopValue = 0xD7FF}
-elseif($IsHighSurrogates) {$StartValue = 0xD800; $StopValue = 0xDB7F}
-elseif($IsHighPrivateUseSurrogates) {$StartValue = 0xDB80; $StopValue = 0xDBFF}
-elseif($IsLowSurrogates) {$StartValue = 0xDC00; $StopValue = 0xDFFF}
-elseif($IsPrivateUseArea) {$StartValue = 0xE000; $StopValue = 0xF8FF}
-elseif($IsCJKCompatibilityIdeographs) {$StartValue = 0xF900; $StopValue = 0xFAFF}
-elseif($IsAlphabeticPresentationForms) {$StartValue = 0xFB00; $StopValue = 0xFB4F}
-elseif($IsArabicPresentationFormsA) {$StartValue = 0xFB50; $StopValue = 0xFDFF}
-elseif($IsVariationSelectors) {$StartValue = 0xFE00; $StopValue = 0xFE0F}
-elseif($IsVerticalForms) {$StartValue = 0xFE10; $StopValue = 0xFE1F}
-elseif($IsCombiningHalfMarks) {$StartValue = 0xFE20; $StopValue = 0xFE2F}
-elseif($IsCJKCompatibilityForms) {$StartValue = 0xFE30; $StopValue = 0xFE4F}
-elseif($IsSmallFormVariants) {$StartValue = 0xFE50; $StopValue = 0xFE6F}
-elseif($IsArabicPresentationFormsB) {$StartValue = 0xFE70; $StopValue = 0xFEFF}
-elseif($IsHalfwidthandFullwidthForms) {$StartValue = 0xFF00; $StopValue = 0xFFEF}
-elseif($IsSpecials) {$StartValue = 0xFFF0; $StopValue = 0xFFFF}
+($StartValue,$StopValue) = switch($Block)
+{
+    ASCII {0x0000,0x007F}
+    0x2xxx {0x2000,0x2FFF}
+    BasicLatin {0x0000,0x007F}
+    Latin1Supplement {0x0080,0x00FF}
+    LatinExtendedA {0x0100,0x017F}
+    LatinExtendedB {0x0180,0x024F}
+    IPAExtensions {0x0250,0x02AF}
+    SpacingModifierLetters {0x02B0,0x02FF}
+    CombiningDiacriticalMarks {0x0300,0x036F}
+    GreekandCoptic {0x0370,0x03FF}
+    Cyrillic {0x0400,0x04FF}
+    CyrillicSupplement {0x0500,0x052F}
+    Armenian {0x0530,0x058F}
+    Hebrew {0x0590,0x05FF}
+    Arabic {0x0600,0x06FF}
+    Syriac {0x0700,0x074F}
+    ArabicSupplement {0x0750,0x077F}
+    Thaana {0x0780,0x07BF}
+    NKo {0x07C0,0x07FF}
+    Samaritan {0x0800,0x083F}
+    Mandaic {0x0840,0x085F}
+    ArabicExtendedA {0x08A0,0x08FF}
+    Devanagari {0x0900,0x097F}
+    Bengali {0x0980,0x09FF}
+    Gurmukhi {0x0A00,0x0A7F}
+    Gujarati {0x0A80,0x0AFF}
+    Oriya {0x0B00,0x0B7F}
+    Tamil {0x0B80,0x0BFF}
+    Telugu {0x0C00,0x0C7F}
+    Kannada {0x0C80,0x0CFF}
+    Malayalam {0x0D00,0x0D7F}
+    Sinhala {0x0D80,0x0DFF}
+    Thai {0x0E00,0x0E7F}
+    Lao {0x0E80,0x0EFF}
+    Tibetan {0x0F00,0x0FFF}
+    Myanmar {0x1000,0x109F}
+    Georgian {0x10A0,0x10FF}
+    HangulJamo {0x1100,0x11FF}
+    Ethiopic {0x1200,0x137F}
+    EthiopicSupplement {0x1380,0x139F}
+    Cherokee {0x13A0,0x13FF}
+    UnifiedCanadianAboriginalSyllabics {0x1400,0x167F}
+    Ogham {0x1680,0x169F}
+    Runic {0x16A0,0x16FF}
+    Tagalog {0x1700,0x171F}
+    Hanunoo {0x1720,0x173F}
+    Buhid {0x1740,0x175F}
+    Tagbanwa {0x1760,0x177F}
+    Khmer {0x1780,0x17FF}
+    Mongolian {0x1800,0x18AF}
+    UnifiedCanadianAboriginalSyllabicsExtended {0x18B0,0x18FF}
+    Limbu {0x1900,0x194F}
+    TaiLe {0x1950,0x197F}
+    NewTaiLue {0x1980,0x19DF}
+    KhmerSymbols {0x19E0,0x19FF}
+    Buginese {0x1A00,0x1A1F}
+    TaiTham {0x1A20,0x1AAF}
+    CombiningDiacriticalMarksExtended {0x1AB0,0x1AFF}
+    Balinese {0x1B00,0x1B7F}
+    Sundanese {0x1B80,0x1BBF}
+    Batak {0x1BC0,0x1BFF}
+    Lepcha {0x1C00,0x1C4F}
+    OlChiki {0x1C50,0x1C7F}
+    SundaneseSupplement {0x1CC0,0x1CCF}
+    VedicExtensions {0x1CD0,0x1CFF}
+    PhoneticExtensions {0x1D00,0x1D7F}
+    PhoneticExtensionsSupplement {0x1D80,0x1DBF}
+    CombiningDiacriticalMarksSupplement {0x1DC0,0x1DFF}
+    LatinExtendedAdditional {0x1E00,0x1EFF}
+    GreekExtended {0x1F00,0x1FFF}
+    GeneralPunctuation {0x2000,0x206F}
+    SuperscriptsandSubscripts {0x2070,0x209F}
+    CurrencySymbols {0x20A0,0x20CF}
+    CombiningDiacriticalMarksforSymbols {0x20D0,0x20FF}
+    LetterlikeSymbols {0x2100,0x214F}
+    NumberForms {0x2150,0x218F}
+    Arrows {0x2190,0x21FF}
+    MathematicalOperators {0x2200,0x22FF}
+    MiscellaneousTechnical {0x2300,0x23FF}
+    ControlPictures {0x2400,0x243F}
+    OpticalCharacterRecognition {0x2440,0x245F}
+    EnclosedAlphanumerics {0x2460,0x24FF}
+    BoxDrawing {0x2500,0x257F}
+    BlockElements {0x2580,0x259F}
+    GeometricShapes {0x25A0,0x25FF}
+    MiscellaneousSymbols {0x2600,0x26FF}
+    Dingbats {0x2700,0x27BF}
+    MiscellaneousMathematicalSymbolsA {0x27C0,0x27EF}
+    SupplementalArrowsA {0x27F0,0x27FF}
+    BraillePatterns {0x2800,0x28FF}
+    SupplementalArrowsB {0x2900,0x297F}
+    MiscellaneousMathematicalSymbolsB {0x2980,0x29FF}
+    SupplementalMathematicalOperators {0x2A00,0x2AFF}
+    MiscellaneousSymbolsandArrows {0x2B00,0x2BFF}
+    Glagolitic {0x2C00,0x2C5F}
+    LatinExtendedC {0x2C60,0x2C7F}
+    Coptic {0x2C80,0x2CFF}
+    GeorgianSupplement {0x2D00,0x2D2F}
+    Tifinagh {0x2D30,0x2D7F}
+    EthiopicExtended {0x2D80,0x2DDF}
+    CyrillicExtendedA {0x2DE0,0x2DFF}
+    SupplementalPunctuation {0x2E00,0x2E7F}
+    CJKRadicalsSupplement {0x2E80,0x2EFF}
+    KangxiRadicals {0x2F00,0x2FDF}
+    IdeographicDescriptionCharacters {0x2FF0,0x2FFF}
+    CJKSymbolsandPunctuation {0x3000,0x303F}
+    Hiragana {0x3040,0x309F}
+    Katakana {0x30A0,0x30FF}
+    Bopomofo {0x3100,0x312F}
+    HangulCompatibilityJamo {0x3130,0x318F}
+    Kanbun {0x3190,0x319F}
+    BopomofoExtended {0x31A0,0x31BF}
+    CJKStrokes {0x31C0,0x31EF}
+    KatakanaPhoneticExtensions {0x31F0,0x31FF}
+    EnclosedCJKLettersandMonths {0x3200,0x32FF}
+    CJKCompatibility {0x3300,0x33FF}
+    CJKUnifiedIdeographsExtensionA {0x3400,0x4DBF}
+    YijingHexagramSymbols {0x4DC0,0x4DFF}
+    CJKUnifiedIdeographs {0x4E00,0x9FFF}
+    YiSyllables {0xA000,0xA48F}
+    YiRadicals {0xA490,0xA4CF}
+    Lisu {0xA4D0,0xA4FF}
+    Vai {0xA500,0xA63F}
+    CyrillicExtendedB {0xA640,0xA69F}
+    Bamum {0xA6A0,0xA6FF}
+    ModifierToneLetters {0xA700,0xA71F}
+    LatinExtendedD {0xA720,0xA7FF}
+    SylotiNagri {0xA800,0xA82F}
+    CommonIndicNumberForms {0xA830,0xA83F}
+    Phagspa {0xA840,0xA87F}
+    Saurashtra {0xA880,0xA8DF}
+    DevanagariExtended {0xA8E0,0xA8FF}
+    KayahLi {0xA900,0xA92F}
+    Rejang {0xA930,0xA95F}
+    HangulJamoExtendedA {0xA960,0xA97F}
+    Javanese {0xA980,0xA9DF}
+    MyanmarExtendedB {0xA9E0,0xA9FF}
+    Cham {0xAA00,0xAA5F}
+    MyanmarExtendedA {0xAA60,0xAA7F}
+    TaiViet {0xAA80,0xAADF}
+    MeeteiMayekExtensions {0xAAE0,0xAAFF}
+    EthiopicExtendedA {0xAB00,0xAB2F}
+    LatinExtendedE {0xAB30,0xAB6F}
+    MeeteiMayek {0xABC0,0xABFF}
+    HangulSyllables {0xAC00,0xD7AF}
+    HangulJamoExtendedB {0xD7B0,0xD7FF}
+    HighSurrogates {0xD800,0xDB7F}
+    HighPrivateUseSurrogates {0xDB80,0xDBFF}
+    LowSurrogates {0xDC00,0xDFFF}
+    PrivateUseArea {0xE000,0xF8FF}
+    CJKCompatibilityIdeographs {0xF900,0xFAFF}
+    AlphabeticPresentationForms {0xFB00,0xFB4F}
+    ArabicPresentationFormsA {0xFB50,0xFDFF}
+    VariationSelectors {0xFE00,0xFE0F}
+    VerticalForms {0xFE10,0xFE1F}
+    CombiningHalfMarks {0xFE20,0xFE2F}
+    CJKCompatibilityForms {0xFE30,0xFE4F}
+    SmallFormVariants {0xFE50,0xFE6F}
+    ArabicPresentationFormsB {0xFE70,0xFEFF}
+    HalfwidthandFullwidthForms {0xFF00,0xFFEF}
+    Specials {0xFFF0,0xFFFF}
+    default {[char]::MinValue,[char]::MaxValue}
+}
 $invalidUserNameChars = '"/\[]:;|=,+*?<>'.ToCharArray() # https://technet.microsoft.com/en-us/library/bb726984.aspx
 function Get-UnicodeRangeBlock([int]$c)
 {
@@ -542,7 +416,6 @@ Tifinagh
 EthiopicExtended
 CyrillicExtended-A
 SupplementalPunctuation
-Invalid
 CJKStrokes
 Lisu
 Vai
@@ -580,7 +453,6 @@ for($_ = $StartValue; $_ -le $StopValue; $_++)
         UnicodeBlock    = ''
         UnicodeCategory = [char]::GetUnicodeCategory($c)
         MatchesBlock    = ''
-        IsASCII         = $_ -le 127
         IsControl       = [char]::IsControl($c)
         IsDigit         = [char]::IsDigit($c)
         IsHighSurrogate = [char]::IsHighSurrogate($c)
