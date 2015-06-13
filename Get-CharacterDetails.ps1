@@ -1,6 +1,12 @@
 ﻿<#
 .Synopsis
-Returns filterable categorical information about a range of characters.
+Returns filterable categorical information about a range of characters in the Unicode Basic Multilingual Plane.
+.Parameter StartValue
+The minimum character in the range to return.
+.Parameter StopValue
+The maximum character in the range to return.
+.Parameter Block
+A specific Unicode block (or named range) of characters to return.
 #>
 
 #requires -version 2
