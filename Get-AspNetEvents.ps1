@@ -15,7 +15,8 @@ Defaults to now.
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true)][Alias('Server')][string[]]$ComputerName,
 [Parameter(Position=1)][DateTime]$After = ([DateTime]::Today),
-[Parameter(Position=2)][DateTime]$Before = ([DateTime]::Now)
+[Parameter(Position=2)][DateTime]$Before = ([DateTime]::Now),
+[switch]$AllProperties
 )
 $IdFields = @{
     # 5, 9, 21 (1) Classic ASP errors, no fields
@@ -47,6 +48,14 @@ $IdFields = @{
         'AuthenticationType','ReqThreadAccountName','ThreadId','ThreadAccountName','IsImpersonating','StackTrace','CustomEventDetails')
     # 1325 (1) serious low-level stuff, no fields
 }
+$order = 
+    if($AllProperties) { @('MachineName','EventTime','EventTimeUtc','LogTime','EntryType','AppPath','ExceptionType',
+        'ExceptionMessage','AccountName','UserHostAddress','IsImpersonating','IsAuthenticated','AuthenticationType','User','TrustLevel',
+        'CustomEventDetails','AppLocalPath','RequestUrl','RequestPath','AppDomain','Source','EventCode','EventDetailCode','EventMessage',
+        'EventOccurrence','EventSequence','EventId','ProcessName','ProcessId','ThreadId','ThreadAccountName','ReqThreadAccountName',
+        'StackTrace') }
+    else {  @('MachineName','EventTime','EventTimeUtc','LogTime','EntryType','AppPath','ExceptionType','ExceptionMessage','AccountName',
+        'UserHostAddress','IsImpersonating','IsAuthenticated','CustomEventDetails') }
 $RemoveFields= '_','ThreadAccountName','ReqThreadAccountName' # blank or redundant fields
 $BoolFields= 'IsAuthenticated','IsImpersonating'
 $IntFields= 'EventOccurrence','EventSequence','EventCode','EventDetailCode','ProcessId','ThreadId'
@@ -71,7 +80,7 @@ Write-Verbose $query.OuterXml
 $ComputerName |
     % {Get-WinEvent $query -CN $_} |
     % {
-        $fields = [ordered]@{LogTime=$_.TimeCreated;EntryType=$_.LevelDisplayName;Source=$_.ProviderName}
+        $fields = @{EntryType=$_.LevelDisplayName;Source=$_.ProviderName}
         if($_.Properties.Count -lt 2 -or !$IdFields.Contains($_.Id))
         { # not structured nicely
             if($_.Message -match '(?m)^Application ID: (?<AppId>.+)$'){$fields.AppId=$Matches.AppId.TrimEnd()}
@@ -91,11 +100,15 @@ $ComputerName |
             $IntFields |% {$fields[$_]=[int]$fields[$_]}
             $fields.RequestUrl= [uri]$fields.RequestUrl
             $fields.EventTime= [datetime]::Parse($fields.EventTime,$null,[Globalization.DateTimeStyles]::AssumeLocal)
+            if($AllProperties -or $fields.EventTime -ne $_.TimeCreated) {$fields.LogTime = $_.TimeCreated}
             $fields.EventTimeUtc= [datetime]::Parse($fields.EventTimeUtc,$null,[Globalization.DateTimeStyles]::AssumeUniversal)
+            if(!$AllProperties -and $fields.EventTime -eq $fields.EventTimeUtc) {$fields.Remove('EventTimeUtc')}
             if($fields.ExceptionMessage -and $fields.StackTrace)
             { $fields.ExceptionMessage= $fields.ExceptionMessage.Replace($fields.StackTrace,'').TrimEnd() } # don't need stack trace twice
         }
-        $event = New-Object PSObject -Property $fields
+        $ordered = [ordered]@{}
+        $order |? {$fields.ContainsKey($_)} |% {[void]$ordered.Add($_,$fields.$_)}
+        $event = New-Object PSObject -Property $ordered
         $event.PSObject.TypeNames.Insert(0,'AspNetApplicationEventLogEntry')
         $event
     }
