@@ -1,6 +1,15 @@
 ﻿<#
 .Synopsis
-Exports MS SQL database structures from the given server and database as files, into a consistent folder structure.
+Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+.Description
+This script exports all database objects as scripts into a subdirectory with the same name as the database, 
+and further subdirectories by object type. The directory is deleted and recreated each time this script is
+run, to clean up objects that have been deleted from the database.
+
+There are a default set of SMO scripting options set to do a typical export, though these may be overridden
+(see the link below for a list of these options).
+
+This does require SMO to be installed on the machine (it comes with SQL Management Studio).
 .Parameter Server
 The name of the server (and instance) to connect to.
 .Parameter Database
@@ -58,6 +67,7 @@ $srv = New-Object Microsoft.SqlServer.Management.Smo.Server($Server)
 $db = $srv.Databases[$Database]
 if(!$db) {return}
 Write-Verbose "Connected to $srv.$db $($srv.Product) $($srv.Edition) $($srv.VersionString) $($srv.ProductLevel) (Windows $($srv.OSVersion))"
+if((Test-Path $Database -PathType Container)) { Remove-Item -Force -Recurse $Database } # to reflect removed items
 mkdir $Database -EA:SilentlyContinue |Out-Null ; pushd $Database
 
 # set up scripting options

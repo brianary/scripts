@@ -1,6 +1,11 @@
 ﻿<#
 .Synopsis
-Exports MS SQL scripts to drop an object and its dependencies.
+Exports MS SQL script for an object from the given server.
+.Description
+This allows exporting a single database object to a SQL script, rather than 
+a whole database as Export-DatabaseScripts.ps1 does.
+
+It can be particularly useful for creating an object-drop script, with all dependencies.
 .Parameter Server
 The name of the server (and instance) to connect to.
 .Parameter Database
@@ -35,6 +40,8 @@ Microsoft.SqlServer.ConnectionInfo
 Microsoft.SqlServer.Smo
 .Component
 Microsoft.SqlServer.SqlEnum
+.Link
+Export-DatabaseScripts.ps1
 .Link
 https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.aspx
 .Link
