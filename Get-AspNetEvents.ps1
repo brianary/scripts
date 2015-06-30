@@ -13,7 +13,7 @@ Defaults to now.
 
 #requires -version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][Alias('Server')][string[]]$ComputerName,
+[Parameter(Position=0,Mandatory=$true)][Alias('CN','Server')][string[]]$ComputerName,
 [Parameter(Position=1)][DateTime]$After = ([DateTime]::Today),
 [Parameter(Position=2)][DateTime]$Before = ([DateTime]::Now),
 [switch]$AllProperties
