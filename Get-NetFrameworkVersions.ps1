@@ -31,17 +31,27 @@ $ndp.GetSubKeyNames() |
 
 # get v4.x
 $v4 = $ndp.OpenSubKey('v4\Full')
-if(!$v4){return}
-switch($v4.GetValue('Release'))
-{ # see https://msdn.microsoft.com/en-us/library/hh925568.aspx
-    378389 {ConvertTo-ComplexVersion 'v4.5' $v4.GetValue('Version')}
-    378675 {ConvertTo-ComplexVersion 'v4.5.1' $v4.GetValue('Version')}
-    378758 {ConvertTo-ComplexVersion 'v4.5.1' $v4.GetValue('Version')}
-    379893 {ConvertTo-ComplexVersion 'v4.5.2' $v4.GetValue('Version')}
-    393295 {ConvertTo-ComplexVersion 'v4.6' $v4.GetValue('Version')}
-    393297 {ConvertTo-ComplexVersion 'v4.6' $v4.GetValue('Version')}
+try
+{
+    switch($v4.GetValue('Release'))
+    { # see https://msdn.microsoft.com/en-us/library/hh925568.aspx
+        378389 {ConvertTo-ComplexVersion 'v4.5' $v4.GetValue('Version')}
+        378675 {ConvertTo-ComplexVersion 'v4.5.1' $v4.GetValue('Version')}
+        378758 {ConvertTo-ComplexVersion 'v4.5.1' $v4.GetValue('Version')}
+        379893 {ConvertTo-ComplexVersion 'v4.5.2' $v4.GetValue('Version')}
+        393295 {ConvertTo-ComplexVersion 'v4.6' $v4.GetValue('Version')}
+        393297 {ConvertTo-ComplexVersion 'v4.6' $v4.GetValue('Version')}
+    }    
+}
+catch [ArgumentNullException]
+{
+    "Unable to open the version sub key"
+}
+finally
+{
+    if(!!$v4) {[void]$v4.Dispose(); $v4 = $null}
+    [void]$hklm.Dispose(); $hklm = $null
+    [void]$ndp.Dispose(); $ndp = $null
 }
 
-[void]$v4.Dispose(); $v4 = $null
-[void]$hklm.Dispose(); $hklm = $null
-[void]$ndp.Dispose(); $ndp = $null
+
