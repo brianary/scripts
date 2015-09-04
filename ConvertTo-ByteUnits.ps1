@@ -1,31 +1,40 @@
 ﻿<#
 .Synopsis
-Converts bytes to largest possible units, to improve readability.
+    Converts bytes to largest possible units, to improve readability.
+    
 .Parameter Bytes
-The number of bytes to express in larger units.
+    The number of bytes to express in larger units.
+    
 .Parameter Precision
-The maximum number of digits after the decimal to keep.
-The default is 16 (the maximum).
+    The maximum number of digits after the decimal to keep.
+    The default is 16 (the maximum).
+    
 .Parameter UseSI
-Displays unambiguous SI units (with a space).
-By default, native PowerShell units are used
-(without a space, to allow round-tripping the value,
-though there may be significant rounding loss depending on precision).
+    Displays unambiguous SI units (with a space).
+    By default, native PowerShell units are used
+    (without a space, to allow round-tripping the value,
+    though there may be significant rounding loss depending on precision).
+    
 .Example
-ConvertTo-ByteUnits 65536
-64KB
+    ConvertTo-ByteUnits 65536
+    64KB
+    
 .Example
-ConvertTo-ByteUnits 9685059 -dot 1 -si
-9.2 MiB
+    ConvertTo-ByteUnits 9685059 -dot 1 -si
+    9.2 MiB
+    
 .Example
-ls *.log |measure -sum Length |select -exp Sum |ConvertTo-ByteUnits -dot 2 -si
-302.39 MiB
+    ls *.log |measure -sum Length |select -exp Sum |ConvertTo-ByteUnits -dot 2 -si
+    302.39 MiB
+    
 .Inputs
-A integer (up to 64-bit) representing a number of bytes.
+    A integer (up to 64-bit) representing a number of bytes.
+    
 .Link
-http://en.wikipedia.org/wiki/Binary_prefix
+    http://en.wikipedia.org/wiki/Binary_prefix
+    
 .Link
-http://physics.nist.gov/cuu/Units/binary.html
+    http://physics.nist.gov/cuu/Units/binary.html
 #>
 
 #requires -version 2

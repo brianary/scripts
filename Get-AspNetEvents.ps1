@@ -1,14 +1,17 @@
 ﻿<#
 .Synopsis
-Parses ASP.NET errors from the event log on the given server.
+    Parses ASP.NET errors from the event log on the given server.
+
 .Parameter ComputerName
-The name of the server on which the error occurred.
+    The name of the server on which the error occurred.
+
 .Parameter After
-Skip events older than this datetime.
-Defaults to 00:00 today.
+    Skip events older than this datetime.
+    Defaults to 00:00 today.
+
 .Parameter Before
-Skip events newer than this datetime.
-Defaults to now.
+    Skip events newer than this datetime.
+    Defaults to now.
 #>
 
 #requires -version 3

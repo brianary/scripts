@@ -1,10 +1,12 @@
 ﻿<#
 .Synopsis
-Parse escaped XML into XML and serialize it.
+    Parse escaped XML into XML and serialize it.
+
 .Parameter EscapedXml
-The escaped XML text.
+    The escaped XML text.
+
 .Parameter NoIndent
-Outputs the XML without indentation.
+    Outputs the XML without indentation.
 #>
 
 #request -version 2
@@ -12,7 +14,7 @@ Outputs the XML without indentation.
 [Parameter(Mandatory=$true,Position=0)][string]$EscapedXml,
 [switch]$NoIndent
 )
-Add-Type -as System.Web
+try{[void][Web.HttpUtility]}catch{Add-Type -as System.Web}
 [xml] $xml = [Web.HttpUtility]::HtmlDecode($EscapedXml)
 $sw = New-Object IO.StringWriter
 [Xml.XmlWriterSettings] $saveopts = New-Object Xml.XmlWriterSettings -Property @{ Indent = $true }
