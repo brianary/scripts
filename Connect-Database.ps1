@@ -1,26 +1,35 @@
 ﻿<#
 .Synopsis
-Creates a SqlConnection from a connection string name, server name, or connection string, and opens it.
+    Creates a SqlConnection from a connection string name, server name, or connection string, and opens it.
+
 .Parameter ConnectionName
-The name of the connection string to use, from System.Configuration.ConfigurationManager's ConnectionStrings.
+    The name of the connection string to use, from System.Configuration.ConfigurationManager's ConnectionStrings.
+
 .Parameter Server
-The name of the server (and instance) to connect to.
-May be used with optional Database, Credential, and Properties parameters.
+    The name of the server (and instance) to connect to.
+    May be used with optional Database, Credential, and Properties parameters.
+
 .Parameter Database
-The name of the database to connect to on the server.
+    The name of the database to connect to on the server.
+
 .Parameter Credential
-The credential to use to connect to the server.
-If no credential is specified, a trusted connection is used.
+    The credential to use to connect to the server.
+    If no credential is specified, a trusted connection is used.
+
 .Parameter Properties
-Additional connection properties to use when connecting to the server, such as Timeout.
+    Additional connection properties to use when connecting to the server, such as Timeout.
+
 .Parameter ConnectionString
-A complete connection string to create the connection.
+    A complete connection string to create the connection.
+
 .Parameter ProviderName
-The database provider to use. System.Data.SqlClient by default.
+    The database provider to use. System.Data.SqlClient by default.
+
 .Component
-System.Configuration
+    System.Configuration
+
 .Component
-System.Data
+    System.Data
 #>
 
 #requires -version 3
@@ -38,8 +47,8 @@ System.Data
 [Parameter(ParameterSetName='ConnectionString')]
 [string]$ProviderName = 'System.Data.SqlClient'
 )
-Add-Type -AN System.Configuration
-Add-Type -AN System.Data
+try{[void][Configuration.ConfigurationManager]}catch{Add-Type -AN System.Configuration}
+try{[void][Data.Common.DbProviderFactories]}catch{Add-Type -AN System.Data}
 
 if($ConnectionName)
 {

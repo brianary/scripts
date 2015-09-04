@@ -1,8 +1,9 @@
 ﻿<#
 .Synopsis
-Converts named nodes of an element to properties of a PSObject, recursively.
+    Converts named nodes of an element to properties of a PSObject, recursively.
+    
 .Parameter Element
-The element to convert to a PSObject.
+    The element to convert to a PSObject.
 #>
 
 #requires -version 3

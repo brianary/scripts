@@ -1,42 +1,56 @@
 ﻿<#
 .Synopsis
-Searches a specific subset of files for lines matching a pattern.
+    Searches a specific subset of files for lines matching a pattern.
+    
 .Parameter Pattern
-Specifies the text to find. Type a string or regular expression. 
-If you type a string, use the SimpleMatch parameter.
+    Specifies the text to find. Type a string or regular expression. 
+    If you type a string, use the SimpleMatch parameter.
+    
 .Parameter Filters
-Specifies wildcard filters that file names must match.
+    Specifies wildcard filters that file names must match.
+    
 .Parameter Path
-Specifies a path to one or more locations. Wildcards are permitted. 
-The default location is the current directory (.).
+    Specifies a path to one or more locations. Wildcards are permitted. 
+    The default location is the current directory (.).
+    
 .Parameter Include
-Wildcard patterns files must match one of (slower than Filter).
+    Wildcard patterns files must match one of (slower than Filter).
+    
 .Parameter Exclude
-Wildcard patterns files must not match any of.
+    Wildcard patterns files must not match any of.
+    
 .Parameter CaseSensitive
-Makes matches case-sensitive. By default, matches are not case-sensitive. 
+    Makes matches case-sensitive. By default, matches are not case-sensitive. 
+    
 .Parameter List
-Returns only the first match in each input file. 
-By default, Select-String returns a MatchInfo object for each match it finds.
+    Returns only the first match in each input file. 
+    By default, Select-String returns a MatchInfo object for each match it finds.
+    
 .Parameter NotMatch
-Finds text that does not match the specified pattern.
+    Finds text that does not match the specified pattern.
+    
 .Parameter SimpleMatch
-Uses a simple match rather than a regular expression match. 
-In a simple match, Select-String searches the input for the text in the Pattern parameter. 
-It does not interpret the value of the Pattern parameter as a regular expression statement.
+    Uses a simple match rather than a regular expression match. 
+    In a simple match, Select-String searches the input for the text in the Pattern parameter. 
+    It does not interpret the value of the Pattern parameter as a regular expression statement.
+    
 .Parameter NoRecurse
-Disables searching subdirectories.
+    Disables searching subdirectories.
+    
 .Parameter ChooseMatches
-Displays a grid of matches to select a subset from.
+    Displays a grid of matches to select a subset from.
+    
 .Parameter Open
-Invokes files that contain matches.
+    Invokes files that contain matches.
+    
 .Parameter Blame
-Returns git blame info for matching lines.
+    Returns git blame info for matching lines.
+    
 .Example
-C:\PS> Find-Lines 'using System;' *.cs "$env:USERPROFILE\Documents\Visual Studio*\Projects" -CaseSensitive -List
-
-This command searches all of the .cs files in the Projects directory (or directories) and subdirectories,
-returning the matches.
+    C:\PS> Find-Lines 'using System;' *.cs "$env:USERPROFILE\Documents\Visual Studio*\Projects" -CaseSensitive -List
+    
+    This command searches all of the .cs files in the Projects directory (or directories) and subdirectories,
+    returning the matches.
 #>
 
 #requires -version 3
@@ -45,8 +59,8 @@ returning the matches.
     [Parameter(Position=1)][string[]]$Filters,
     [Parameter(Position=2)][string[]]$Path,
     [string[]]$Include,
-    [string[]]$Exclude = @('*.dll','*.exe','*.pdb','*.bin','*.cache','*.png','*.gif','*.jpg','*.ico','*.psd',
-        '*.docx','*.xls','*.xlsx','*.pdf','*.rtf','*.swf','*.chm','*.ttf','*.woff','*.eot','*.otf','*.mdf','*.ldf',
+    [string[]]$Exclude = @('*.dll','*.exe','*.pdb','*.bin','*.cache','*.png','*.gif','*.jpg','*.ico','*.psd','*.obj','*.iso',
+        '*.docx','*.xls','*.xlsx','*.pdf','*.rtf','*.swf','*.chm','*.ttf','*.woff','*.eot','*.otf','*.mdf','*.ldf','*.pack',
         '*.zip','*.gz','*.tgz','*.jar','*.nupkg','*.vspscc','*.vsmdi','*.vssscc','*.vsd','*.vscontent','*.vssettings','*.suo'),
     [switch]$CaseSensitive,
     [switch]$List,

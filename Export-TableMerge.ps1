@@ -1,35 +1,48 @@
 ﻿<#
 .Synopsis
-Exports table data as a T-SQL MERGE statement.
+    Exports table data as a T-SQL MERGE statement.
+
 .Parameter Connection
-A DbConnection object used for the query.
+    A DbConnection object used for the query.
+
 .Parameter ConnectionName
-The name of a connection string from the ConfigurationManager's ConnectionStrings,
-used to create a connection for the query.
+    The name of a connection string from the ConfigurationManager's ConnectionStrings,
+    used to create a connection for the query.
+
 .Parameter Server
-The name of a server (and optional instance) to connect and use for the query.
-May be used with optional Database, Credential, and ConnectionProperties parameters.
+    The name of a server (and optional instance) to connect and use for the query.
+    May be used with optional Database, Credential, and ConnectionProperties parameters.
+
 .Parameter Database
-The the database to connect to on the server.
+    The the database to connect to on the server.
+
 .Parameter Credential
-The credential to use when connecting to the server.
-If no credential is specified, a trusted connection is used.
+    The credential to use when connecting to the server.
+    If no credential is specified, a trusted connection is used.
+
 .Parameter ConnectionProperties
-Additional connection properties to use when connecting to the server, such as Timeout.
+    Additional connection properties to use when connecting to the server, such as Timeout.
+
 .Parameter ConnectionString
-A complete connection string to create a connection to use for the query.
+    A complete connection string to create a connection to use for the query.
+
 .Parameter ProviderName
-The database provider to use. System.Data.SqlClient by default.
+    The database provider to use. System.Data.SqlClient by default.
+
 .Parameter Schema
-The name of the table's schema.
+    The name of the table's schema.
+
 .Parameter Table
-The name of the table to export.
+    The name of the table to export.
+
 .Example
-Export-TableMerge -ConnectionName pubs -Table authors |Out-File authors.sql
+    Export-TableMerge -ConnectionName pubs -Table authors |Out-File authors.sql
+
 .Example
-Export-TableMerge $conn -Table employee |Out-File employee.sql
+    Export-TableMerge $conn -Table employee |Out-File employee.sql
+
 .Example
-Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -Schema Production -Table Product |Out-File -Encoding utf8 Data\Production.Product.sql
+    Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -Schema Production -Table Product |Out-File -Encoding utf8 Data\Production.Product.sql
 #>
 
 #requires -version 3
@@ -60,8 +73,8 @@ Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -S
 [Parameter(ParameterSetName='ConnectionString')]
 [string]$Table
 )
-Add-Type -AN System.Configuration
-Add-Type -AN System.Data
+try{[void][Configuration.ConfigurationManager]}catch{Add-Type -AN System.Configuration}
+try{[void][Data.Common.DbProviderFactories]}catch{Add-Type -AN System.Data}
 
 $tempconn = !$Connection
 if($tempconn)

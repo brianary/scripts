@@ -1,36 +1,47 @@
 ﻿<#
 .Synopsis
-Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+    Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+
 .Description
-This script exports all database objects as scripts into a subdirectory with the same name as the database, 
-and further subdirectories by object type. The directory is deleted and recreated each time this script is
-run, to clean up objects that have been deleted from the database.
+    This script exports all database objects as scripts into a subdirectory with the same name as the database, 
+    and further subdirectories by object type. The directory is deleted and recreated each time this script is
+    run, to clean up objects that have been deleted from the database.
 
-There are a default set of SMO scripting options set to do a typical export, though these may be overridden
-(see the link below for a list of these options).
+    There are a default set of SMO scripting options set to do a typical export, though these may be overridden
+    (see the link below for a list of these options).
 
-This does require SMO to be installed on the machine (it comes with SQL Management Studio).
+    This does require SMO to be installed on the machine (it comes with SQL Management Studio).
+
 .Parameter Server
-The name of the server (and instance) to connect to.
+    The name of the server (and instance) to connect to.
+
 .Parameter Database
-The name of the database to connect to on the server.
+    The name of the database to connect to on the server.
+
 .Parameter Encoding
-The file encoding to use for the SQL scripts.
+    The file encoding to use for the SQL scripts.
+
 .Parameter ScriptingOptions
-Provides a list of boolean SMO ScriptingOptions properties to set to true.
+    Provides a list of boolean SMO ScriptingOptions properties to set to true.
+
 .Component
-Microsoft.SqlServer.ConnectionInfo
+    Microsoft.SqlServer.ConnectionInfo
+
 .Component
-Microsoft.SqlServer.Smo
+    Microsoft.SqlServer.Smo
+
 .Component
-Microsoft.SqlServer.SqlEnum
+    Microsoft.SqlServer.SqlEnum
+
 .Example
-Export-SqlScripts.ps1 ServerName\instance AdventureWorks2014
-(outputs SQL scripts to files)
+    Export-SqlScripts.ps1 ServerName\instance AdventureWorks2014
+    (outputs SQL scripts to files)
+
 .Link
-https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.aspx
+    https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.aspx
+
 .Link
-https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
+    https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
 #>
 
 #requires -version 3
@@ -46,8 +57,8 @@ EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers S
 # load SMO
 try
 {
-    [Microsoft.SqlServer.Management.Smo.Server]|Out-Null
-    [Microsoft.SqlServer.Management.Smo.ScriptingOptions]|Out-Null
+    [void][Microsoft.SqlServer.Management.Smo.Server]
+    [void][Microsoft.SqlServer.Management.Smo.ScriptingOptions]
     Write-Verbose "Types already loaded."
 }
 catch

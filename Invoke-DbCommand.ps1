@@ -1,46 +1,62 @@
 ﻿<#
 .Synopsis
-Queries a database and returns the results.
+    Queries a database and returns the results.
+    
 .Parameter Connection
-A DbConnection object used for the query.
+    A DbConnection object used for the query.
+    
 .Parameter ConnectionName
-The name of a connection string from the ConfigurationManager's ConnectionStrings,
-used to create a connection for the query.
+    The name of a connection string from the ConfigurationManager's ConnectionStrings,
+    used to create a connection for the query.
+    
 .Parameter Server
-The name of a server (and optional instance) to connect and use for the query.
-May be used with optional Database, Credential, and ConnectionProperties parameters.
+    The name of a server (and optional instance) to connect and use for the query.
+    May be used with optional Database, Credential, and ConnectionProperties parameters.
+    
 .Parameter Database
-The the database to connect to on the server.
+    The the database to connect to on the server.
+    
 .Parameter Credential
-The credential to use when connecting to the server.
-If no credential is specified, a trusted connection is used.
+    The credential to use when connecting to the server.
+    If no credential is specified, a trusted connection is used.
+    
 .Parameter ConnectionProperties
-Additional connection properties to use when connecting to the server, such as Timeout.
+    Additional connection properties to use when connecting to the server, such as Timeout.
+    
 .Parameter ConnectionString
-A complete connection string to create a connection to use for the query.
+    A complete connection string to create a connection to use for the query.
+    
 .Parameter ProviderName
-The database provider to use. System.Data.SqlClient by default.
+    The database provider to use. System.Data.SqlClient by default.
+    
 .Parameter CommandText
-Depending on the CommandType value, this is the text of the query, the name of a
-stored procedure, or the name of a table.
+    Depending on the CommandType value, this is the text of the query, the name of a
+    stored procedure, or the name of a table.
+    
 .Parameter CommandType
-How to interpret and use the CommandText.
-Text by default (for a query).
-TableDirect to get the contents of the named table.
-StoredProcedure to execute a stored procedure.
+    How to interpret and use the CommandText.
+    Text by default (for a query).
+    TableDirect to get the contents of the named table.
+    StoredProcedure to execute a stored procedure.
+    
 .Parameter Parameters
-A hashtable of query (or stored procedure) parameters names and values.
+    A hashtable of query (or stored procedure) parameters names and values.
+    
 .Parameter ScalarValue
-Indicates the query should return a single value, rather than a result set.
+    Indicates the query should return a single value, rather than a result set.
+    
 .Parameter NonQuery
-Indicates the query is not expected to return data, but affect the database.
-The number of rows affected will be retured.
+    Indicates the query is not expected to return data, but affect the database.
+    The number of rows affected will be retured.
+    
 .Component
-System.Data
+    System.Data
+    
 .Link
-Connect-Database
+    Connect-Database
+    
 .Link
-Disconnect-Database
+    Disconnect-Database
 #>
 
 #requires -version 3

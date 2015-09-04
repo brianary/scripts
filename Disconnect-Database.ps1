@@ -1,10 +1,12 @@
 ﻿<#
 .Synopsis
-Disposes a database connection, such as opened by Connect-Database.
+    Disposes a database connection, such as opened by Connect-Database.
+    
 .Parameter Connection
-The DbConnection to close.
+    The DbConnection to close.
+    
 .Component
-System.Data
+    System.Data
 #>
 
 #require -version 3
