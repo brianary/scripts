@@ -43,6 +43,8 @@
 [Alias('Digits','dot')][ValidateRange(0,16)][byte]$Precision = 16,
 [Alias('si')][switch]$UseSI
 )
+Process
+{
 $pfmt = New-Object String '#',$Precision
 if($bytes -gt 1PB)     {"{0:0.$pfmt}{1}" -f ($bytes / 1PB),@("PB"," PiB")[$UseSI.IsPresent]}
 elseif($bytes -gt 1TB) {"{0:0.$pfmt}{1}" -f ($bytes / 1TB),@("TB"," TiB")[$UseSI.IsPresent]}
@@ -50,3 +52,4 @@ elseif($bytes -gt 1GB) {"{0:0.$pfmt}{1}" -f ($bytes / 1GB),@("GB"," GiB")[$UseSI
 elseif($bytes -gt 1MB) {"{0:0.$pfmt}{1}" -f ($bytes / 1MB),@("MB"," MiB")[$UseSI.IsPresent]}
 elseif($bytes -gt 1KB) {"{0:0.$pfmt}{1}" -f ($bytes / 1KB),@("KB"," KiB")[$UseSI.IsPresent]}
 else                   {"{0} bytes" -f  $bytes}
+}
