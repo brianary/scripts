@@ -25,9 +25,16 @@
 .Link
     https://msdn.microsoft.com/en-us/library/ms148581.aspx
 
+.Link
+    https://msdn.microsoft.com/en-us/library/system.security.cryptography.x509certificates.x509certificate2.aspx
+
 .Example
     Find-Certificate.ps1 -FindValue ExampleCert -FindType FindBySubjectName -StoreName TrustedPeople -StoreLocation LocalMachine
     Searches Cert:\LocalMachine\TrustedPeople for a certificate with a subject name of "ExampleCert".
+
+.Example
+    Find-Certificate.ps1 ExampleCert FindBySubjectName TrustedPeople LocalMachine
+    Uses positional parameters to search Cert:\LocalMachine\TrustedPeople for a cert with subject of "ExampleCert".
 #>
 
 #requires -version 3
