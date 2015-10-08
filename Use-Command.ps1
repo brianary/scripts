@@ -97,7 +97,7 @@ Param([Parameter(Position=0,Mandatory=$true)]$Name,
 [switch]$Fail
 )
 function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Position=1)][string]$Path)
-{ Set-Alias $Name (Resolve-Path $Path |select -Last 1 -ExpandProperty Path) -Scope Global }
+{ Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |select -Last 1 -ExpandProperty Path) -Scope Global }
 Get-Command $Name -EA SilentlyContinue -EV cmerr |Out-Null
 if(!$cmerr) { Write-Verbose "$Name command found." ; return }
 if($Path -and (Test-Path $Path)) { Set-ResolvedAlias $Name $Path ; return }
@@ -162,7 +162,7 @@ elseif($ExecutableInstaller)
             { [string]$ExecutableInstaller }
             else
             { (New-Object System.Net.WebClient).DownloadFile($ExecutableInstaller,"$env:TEMP\$file"); "$env:TEMP\$file" }
-        & $exe @InstallerParameters
+        Start-Process $exe $InstallerParameters -NoNewWindow -Wait
         while(!(Test-Path $Path) -and $PSCmdlet.ShouldContinue(
             "The file $Path was still not found. Continue waiting for installation?","Await Installation")) { Start-Sleep 5 }
         if(Test-Path $Path) { Set-ResolvedAlias $Name $Path }
