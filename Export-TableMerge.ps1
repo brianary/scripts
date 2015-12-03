@@ -124,6 +124,9 @@ if($tempconn) {Disconnect-Database.ps1 $Connection}
 if(!$data) {Write-Warning "No data in table."; return}
 $columns = $data[0].Table.Columns |% {$cb.QuoteIdentifier($_.ColumnName)}
 $dataupdates = ($columns |? {$pk -notcontains $_} |% {"{0} = source.{0}" -f $_}) -join ",`n"
+$dataupdates =
+    if($dataupdates) {"when matched then`nupdate set $dataupdates"}
+    else {"-- skip 'matched' condition (no non-key columns to update)"}
 $targetlist = $columns -join ','
 $sourcelist = ($columns |% {"source.{0}" -f $_}) -join ','
 
@@ -148,8 +151,7 @@ using ( values
 $data
 ) as source ($targetlist)
 on $pkjoin
-when matched then
-update set $dataupdates
+$dataupdates
 when not matched by target then
 insert ($targetlist)
 values ($sourcelist)
