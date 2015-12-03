@@ -18,6 +18,8 @@
 [ValidatePattern('\s')][char]$IndentChar = ' ',
 [int]$Indentation = 2
 )
+Process
+{
 $ms = New-Object IO.MemoryStream
 $xw = New-Object Xml.XmlTextWriter $ms,(New-Object Text.UTF8Encoding $false)
 $xw.Formatting = 
@@ -30,3 +32,4 @@ $xw.IndentChar = $IndentChar
 [Text.Encoding]::UTF8.GetString($ms.ToArray())
 [void]$xw.Dispose() ; $xw = $null
 [void]$ms.Dispose() ; $ms = $null
+}
