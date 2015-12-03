@@ -68,9 +68,9 @@
 [Parameter(ParameterSetName='ConnectionString')]
 [string]$Schema = 'dbo',
 [Parameter(ParameterSetName='Connection',Mandatory=$true)]
-[Parameter(ParameterSetName='ConnectionName')]
-[Parameter(ParameterSetName='Server')]
-[Parameter(ParameterSetName='ConnectionString')]
+[Parameter(ParameterSetName='ConnectionName',Mandatory=$true)]
+[Parameter(ParameterSetName='Server',Mandatory=$true)]
+[Parameter(ParameterSetName='ConnectionString',Mandatory=$true)]
 [string]$Table
 )
 try{[void][Configuration.ConfigurationManager]}catch{Add-Type -AN System.Configuration}
