@@ -1,12 +1,276 @@
 ﻿<#
 .Synopsis
-Returns filterable categorical information about a range of characters in the Unicode Basic Multilingual Plane.
+    Returns filterable categorical information about a range of characters in the Unicode Basic Multilingual Plane.
+
 .Parameter StartValue
-The minimum character in the range to return.
+    The minimum character in the range to return.
+
 .Parameter StopValue
-The maximum character in the range to return.
+    The maximum character in the range to return.
+
 .Parameter Block
-A specific Unicode block (or named range) of characters to return.
+    A specific Unicode block (or named range) of characters to return.
+
+.Outputs
+    A PSObject with the following properties:
+
+    Character
+        The character these details apply to.
+
+    Value
+        The integer codepoint value of the character.
+
+    CodePoint
+        The Unicode code point, U+9999 formatted.
+
+    UnicodeBlock
+        The Unicode (not .NET) block the character falls into.
+
+    UnicodeCategory
+        The .NET UnicodeCategory returned by System.Char.GetUnicodeCategory().
+
+    MatchesBlock
+        True if the character matches the \p{IsUnicodeBlock} regular expression
+        (where "UnicodeBlock" is the character's UnicodeBlock property).
+
+        Error if the character's UnicodeBlock property is not supported by .NET.
+
+    HtmlEncode
+        The result of HTML-encoding the character using 
+        System.Net.WebUtility.HtmlEncode().
+
+    HtmlAttributeEncode
+        The result of HTML-encoding the character using
+        System.Web.HttpUtility.HtmlAttributeEncode().
+
+    UrlEncode
+        The result of URL-encoding the character using
+        System.Net.WebUtility.UrlEncode().
+
+    HttpUrlEncode
+        The result of URL-encoding a string containing the character using the venerable
+        System.Web.HttpUtility.UrlEncode().
+
+    UrlEncodeUnicode
+        The result of URL-encoding the character using the deprecated
+        System.Web.HttpUtility.UrlEncodeUnicode().
+
+        This is the only URL-encoding method in .NET that seems to support encoding
+        characters to the %uFFFF syntax, rather than trying to encode characters into
+        individual UTF-8 bytes and URL-encoding each of those.
+
+    EscapeDataString
+        The result of URL-encoding the character using System.Uri.EscapeDataString(),
+        or the name of the exception thrown, usually MethodInvocationException for surrogates.
+
+    EscapeUriString
+        The result of URL-encoding the character using System.Uri.EscapeUriString(),
+        or the name of the exception thrown, usually MethodInvocationException for surrogates.
+
+    UrlPathEncode
+        The result of URL-encoding the character using
+        System.Web.HttpUtility.UrlPathEncode().
+
+    IsControl
+        The value returned by System.Char.IsControl().
+
+        Indicates whether the specified Unicode character is categorized as a control character.
+
+        When true, the character should match \p{C} in regular expressions.
+
+    IsDigit
+        The value returned by System.Char.IsDigit().
+
+        Indicates whether the specified Unicode character is categorized as a decimal digit.
+
+        When true, the character should match \p{Nd} or \d in regular expressions.
+
+    IsHighSurrogate
+        The value returned by System.Char.IsHighSurrogate().
+
+        Indicates whether the specified Char object is a high surrogate.
+
+        Surrogates are used to compose supplementary characters outside the Basic Multilingual
+        Plane (BMP, the first 65,536 Unicode codepoints).
+
+    IsLegalUserName
+        True if the character is valid in a Windows username.
+
+    IsLegalFileName
+        True if the character is valid in a Windows path.
+
+    IsLetter
+        The value returned by System.Char.IsLetter().
+
+        Indicates whether the specified Unicode character is categorized as a Unicode letter.
+
+        When true, the character should match \p{L} in regular expressions.
+
+    IsLetterOrDigit
+        The value returned by System.Char.IsLetterOrDigit().
+
+        Indicates whether the specified Unicode character is categorized as a letter or a decimal digit.
+
+    IsLower
+        The value returned by System.Char.IsLower().
+
+        Indicates whether the specified Unicode character is categorized as a lowercase letter.
+
+        When true, the character should match \p{Ll} in regular expressions.
+
+    IsLowSurrogate
+        The value returned by System.Char.IsLowSurrogate().
+
+        Indicates whether the specified Char object is a low surrogate.
+
+        Surrogates are used to compose supplementary characters outside the Basic Multilingual
+        Plane (BMP, the first 65,536 Unicode codepoints).
+
+    IsMark
+        True if the character matches the regular expression \p{M}.
+
+        This indicates the character is categorized as a diacritic mark.
+
+    IsNumber
+        The value returned by System.Char.IsNumber().
+
+        Indicates whether the specified Unicode character is categorized as a number.
+
+        When true, the character should match \p{N} in regular expressions.
+
+    IsPunctuation
+        The value returned by System.Char.IsPunctuation().
+
+        Indicates whether the specified Unicode character is categorized as a punctuation mark.
+
+        When true, the character should match \p{P} in regular expressions.
+
+    IsSeparator
+        The value returned by System.Char.IsSeparator().
+
+        Indicates whether the specified Unicode character is categorized as a separator character.
+
+        When true, the character should match \p{Z} in regular expressions.
+
+    IsSurrogate
+        The value returned by System.Char.IsSurrogate().
+
+        Indicates whether the specified character has a surrogate code unit.
+
+        Surrogates are used to compose supplementary characters outside the Basic Multilingual
+        Plane (BMP, the first 65,536 Unicode codepoints).
+
+        When true, the character should match \p{Cs} in regular expressions.
+
+    IsSymbol
+        The value returned by System.Char.IsSymbol().
+
+        Indicates whether the specified Unicode character is categorized as a symbol character.
+
+        When true, the character should match \p{S} in regular expressions.
+
+    IsUpper
+        The value returned by System.Char.IsUpper().
+
+        Indicates whether the specified Unicode character is categorized as an uppercase letter.
+
+        When true, the character should match \p{Lu} in regular expressions.
+
+    IsWhiteSpace
+        The value returned by System.Char.IsWhiteSpace().
+
+        Indicates whether the specified Unicode character is categorized as white space.
+
+        When true, the character should match \p{Zs} or \s in regular expressions.
+
+    IsWord
+        True if the character matches the regular expression \w.
+
+        This indicates the character is categorized as a "word" (alphanumeric) character,
+        including:
+
+            * L   All letters, including:
+                * Ll  Letter, lowercase
+                * Lu  Letter, uppercase
+                * Lt  Letter, titlecase
+                * Lo  Letter, other
+                * Lm  Letter, modifier
+            * Nd  Number, decimal digit
+            * Pc  Punctuation, connector (includes _)
+
+.Link
+    http://unicode.org/
+
+.Link
+    https://msdn.microsoft.com/library/system.char.aspx
+
+.Link
+    https://msdn.microsoft.com/library/system.uri.aspx
+
+.Link
+    https://msdn.microsoft.com/library/system.globalization.unicodecategory.aspx
+
+.Link
+    https://msdn.microsoft.com/library/system.net.webutility.aspx
+
+.Link
+    https://msdn.microsoft.com/library/system.web.httputility.aspx
+
+.Link
+    https://msdn.microsoft.com/library/20bw873z.aspx
+
+.Link
+    https://msdn.microsoft.com/library/windows/desktop/dd374069.aspx
+
+.Link
+    https://technet.microsoft.com/en-us/library/bb726984.aspx
+
+.Example
+    Get-CharacterDetails.ps1 ASCII |Out-GridView
+
+    Learn everything about 7-bit ASCII, the first 127 characters in the Unicode standard.
+
+.Example
+    Get-CharacterDetails.ps1 GeneralPunctuation -IsSymbol
+
+    Returns the two characters in the GeneralPunctuation block categorized as symbols.
+
+.Example
+    Get-CharacterDetails.ps1 ASCII -IsWord -NotLetter -NotDigit
+
+
+    Character           : _
+    Value               : 95
+    CodePoint           : U+005F
+    UnicodeBlock        : BasicLatin
+    UnicodeCategory     : ConnectorPunctuation
+    MatchesBlock        : True
+    HtmlEncode          : _
+    HtmlAttributeEncode : _
+    UrlEncode           : _
+    HttpUrlEncode       : _
+    UrlEncodeUnicode    : _
+    EscapeDataString    : _
+    EscapeUriString     : _
+    UrlPathEncode       : _
+    IsControl           : False
+    IsDigit             : False
+    IsHighSurrogate     : False
+    IsLegalUserName     : True
+    IsLegalFileName     : True
+    IsLetter            : False
+    IsLetterOrDigit     : False
+    IsLower             : False
+    IsLowSurrogate      : False
+    IsMark              : False
+    IsNumber            : False
+    IsPunctuation       : True
+    IsSeparator         : False
+    IsSurrogate         : False
+    IsSymbol            : False
+    IsUpper             : False
+    IsWhiteSpace        : False
+    IsWord              : True
 #>
 
 #requires -version 2
@@ -59,8 +323,10 @@ A specific Unicode block (or named range) of characters to return.
 [switch]$IsSurrogate,    [switch]$NotSurrogate,
 [switch]$IsSymbol,       [switch]$NotSymbol,
 [switch]$IsUpper,        [switch]$NotUpper,
-[switch]$IsWhiteSpace,   [switch]$NotWhiteSpace
+[switch]$IsWhiteSpace,   [switch]$NotWhiteSpace,
+[switch]$IsWord,         [switch]$NotWord
 )
+try{[void][Web.HttpUtility]}catch{Add-Type -AN System.Web}
 if(!$StopValue)
 {
     ($StartValue,$StopValue) = switch($Block)
@@ -458,29 +724,38 @@ VerticalForms
 function Get-CharacterDetail([char]$c)
 {
     $properties = [ordered]@{
-        Character       = $c
-        Value           = $_
-        CodePoint       = 'U+{0:X4}' -f $_
-        UnicodeBlock    = ''
-        UnicodeCategory = [char]::GetUnicodeCategory($c)
-        MatchesBlock    = ''
-        IsControl       = [char]::IsControl($c)
-        IsDigit         = [char]::IsDigit($c)
-        IsHighSurrogate = [char]::IsHighSurrogate($c)
-        IsLegalUserName = $invalidUserNameChars -notcontains [char]$_
-        IsLegalFileName = [IO.Path]::InvalidPathChars -notcontains [char]$_
-        IsLetter        = [char]::IsLetter($c)
-        IsLetterOrDigit = [char]::IsLetterOrDigit($c)
-        IsLower         = [char]::IsLower($c)
-        IsLowSurrogate  = [char]::IsLowSurrogate($c)
-        IsMark          = $c -match '\p{M}'
-        IsNumber        = [char]::IsNumber($c)
-        IsPunctuation   = [char]::IsPunctuation($c)
-        IsSeparator     = [char]::IsSeparator($c)
-        IsSurrogate     = [char]::IsSurrogate($c)
-        IsSymbol        = [char]::IsSymbol($c)
-        IsUpper         = [char]::IsUpper($c)
-        IsWhiteSpace    = [char]::IsWhiteSpace($c)
+        Character           = $c
+        Value               = [int]$c
+        CodePoint           = 'U+{0:X4}' -f $c
+        UnicodeBlock        = ''
+        UnicodeCategory     = [char]::GetUnicodeCategory($c)
+        MatchesBlock        = ''
+        HtmlEncode          = [Net.WebUtility]::HtmlEncode($c)
+        HtmlAttributeEncode = [Web.HttpUtility]::HtmlAttributeEncode($c)
+        UrlEncode           = [Net.WebUtility]::UrlEncode($c)
+        HttpUrlEncode       = [Web.HttpUtility]::UrlEncode("$c")
+        UrlEncodeUnicode    = [Web.HttpUtility]::UrlEncodeUnicode($c)
+        EscapeDataString    = $(try{[uri]::EscapeDataString($c)}catch{$_.Exception.GetType().Name})
+        EscapeUriString     = $(try{[uri]::EscapeUriString($c)}catch{$_.Exception.GetType().Name})
+        UrlPathEncode       = [Web.HttpUtility]::UrlPathEncode($c)
+        IsControl           = [char]::IsControl($c)
+        IsDigit             = [char]::IsDigit($c)
+        IsHighSurrogate     = [char]::IsHighSurrogate($c)
+        IsLegalUserName     = $invalidUserNameChars -notcontains [char]$c
+        IsLegalFileName     = [IO.Path]::InvalidPathChars -notcontains [char]$c
+        IsLetter            = [char]::IsLetter($c)
+        IsLetterOrDigit     = [char]::IsLetterOrDigit($c)
+        IsLower             = [char]::IsLower($c)
+        IsLowSurrogate      = [char]::IsLowSurrogate($c)
+        IsMark              = $c -match '\p{M}'
+        IsNumber            = [char]::IsNumber($c)
+        IsPunctuation       = [char]::IsPunctuation($c)
+        IsSeparator         = [char]::IsSeparator($c)
+        IsSurrogate         = [char]::IsSurrogate($c)
+        IsSymbol            = [char]::IsSymbol($c)
+        IsUpper             = [char]::IsUpper($c)
+        IsWhiteSpace        = [char]::IsWhiteSpace($c)
+        IsWord              = $c -match '\w'
     }
     if( ($IsControl -and !$properties.IsControl) -or
         ($NotControl -and $properties.IsControl) -or
@@ -515,9 +790,11 @@ function Get-CharacterDetail([char]$c)
         ($IsUpper -and !$properties.IsUpper) -or
         ($NotUpper -and $properties.IsUpper) -or
         ($IsWhiteSpace -and !$properties.IsWhiteSpace) -or
-        ($NotWhiteSpace -and $properties.IsWhiteSpace) )
+        ($NotWhiteSpace -and $properties.IsWhiteSpace) -or
+        ($IsWord -and !$properties.IsWord) -or
+        ($NotWord -and $properties.IsWord) )
         {return}
-    $b = Get-UnicodeRangeBlock $_
+    $b = Get-UnicodeRangeBlock $c
     $properties.UnicodeBlock = $b
     $properties.MatchesBlock = if($notablock -contains $b) {'Error'} else {$c -match "\p{Is$b}"}
     New-Object PSObject -Property $properties
@@ -529,5 +806,13 @@ if($Char)
 }
 else
 {
-    for($_ = $StartValue; $_ -le $StopValue; $_++) {[char]$c = $_; Get-CharacterDetail $c}
+    for($_ = $StartValue; $_ -le $StopValue; $_++)
+    {
+        [char]$c = $_
+        Get-CharacterDetail $c
+        Write-Progress 'Gathering Character Details' `
+            -CurrentOperation ('Character: U+{0:X4} {1}' -f $_,$c) `
+            -PercentComplete (100*($_ - $StartValue)/($StopValue - $StartValue))
+    }
+    Write-Progress 'Gathering Character Details' -Completed
 }
