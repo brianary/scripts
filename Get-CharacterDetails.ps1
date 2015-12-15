@@ -2,6 +2,12 @@
 .Synopsis
     Returns filterable categorical information about a range of characters in the Unicode Basic Multilingual Plane.
 
+.Parameter Char
+    A string containing one or more characters to get details for.
+
+.Parameter Value
+    A codepoint to get details for.
+
 .Parameter StartValue
     The minimum character in the range to return.
 
@@ -305,6 +311,7 @@
 'VerticalForms','CombiningHalfMarks','CJKCompatibilityForms','SmallFormVariants','ArabicPresentationFormsB',
 'HalfwidthandFullwidthForms','Specials')][string]$Block = 'BasicMultilingualPlane',
 [Parameter(ParameterSetName='Char',Mandatory=$true)][string]$Char,
+[Parameter(ParameterSetName='Value',Position=0,Mandatory=$true)][int][Alias('CodePoint')]$Value,
 [Parameter(ParameterSetName='Range',Position=0,Mandatory=$true)][int]$StartValue,
 [Parameter(ParameterSetName='Range',Position=1,Mandatory=$true)][int]$StopValue,
 [switch]$IsControl,      [switch]$NotControl,
@@ -726,7 +733,7 @@ function Get-CharacterDetail([char]$c)
     $properties = [ordered]@{
         Character           = $c
         Value               = [int]$c
-        CodePoint           = 'U+{0:X4}' -f $c
+        CodePoint           = 'U+{0:X4}' -f [int]$c
         UnicodeBlock        = ''
         UnicodeCategory     = [char]::GetUnicodeCategory($c)
         MatchesBlock        = ''
@@ -800,7 +807,11 @@ function Get-CharacterDetail([char]$c)
     New-Object PSObject -Property $properties
 }
 
-if($Char)
+if($Value)
+{
+    Get-CharacterDetail $Value
+}
+elseif($Char)
 {
     foreach($c in $Char.GetEnumerator()) {Get-CharacterDetail $c}
 }
