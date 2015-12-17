@@ -25,9 +25,8 @@
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
 )
+Begin{try{Get-Command icacls -CommandType Application |Out-Null}catch{throw 'The icacls command is missing.'}}
 Process
 {
-    "$env:ProgramData\Microsoft\Crypto\RSA\MachineKeys","$env:APPDATA\Microsoft\Crypto\RSA" |
-        ls -Recurse -Filter $Certificate.PrivateKey.CspKeyContainerInfo.UniqueKeyContainerName -EA SilentlyContinue |
-        % {icacls $_.FullName}
+    icacls (Get-CertificatePath.ps1 $Certificate)
 }
