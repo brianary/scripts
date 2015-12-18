@@ -56,3 +56,4 @@ $cert = $store.Certificates.Find($FindType,$FindValue,$true)
 $store = $null
 if($Current) { $now = [DateTime]::Now ; $cert = $cert |where NotAfter -gt $now |where NotBefore -lt $now }
 if($Require -and !$cert) {throw "Could not find certificate $FindType $FindValue in $StoreLocation $StoreName"}
+$cert
