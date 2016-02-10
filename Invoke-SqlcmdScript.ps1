@@ -1,6 +1,6 @@
 ﻿<#
 .Synopsis
-    Runs a SQL script with verbose output and without changing the directory.
+    Implements SQL script with verbose output.
 
 .Description
     This is a wrapper around the SQLPS module's Invoke-Sqlcmd cmdlet, with protection against
@@ -9,10 +9,6 @@
     It'll also attempt to use Install-Sqlps.ps1 to automatically install SQLPS if it is missing.
 
     For full description of parameters and examples, see Invoke-Sqlcmd.
-
-    Much of the implementation of these features comes from another script,
-    Invoke-SqlcmdScript.ps1 to allow early catching of PSDrive changes that would be
-    triggered by direct references to SQLPS and Invoke-Sqlcmd.
 
 .Example
     Invoke-Sql -Query "SELECT GETDATE() AS TimeOfQuery;" -ServerInstance "MyComputer\MyInstance"
@@ -24,9 +20,6 @@
 
 .Component
     SQLPS
-
-.Link
-    Invoke-SqlcmdScript.ps1
 
 .Link
     Invoke-Sqlcmd
@@ -69,11 +62,30 @@
 [string[]]$Variable
 )
 
-# store current directory
-$oldpwd = $PWD # store the current location (importing SQLPS changes it)
+# See https://connect.microsoft.com/SQLServer/feedback/details/1871239/requires-module-sqlps-or-import-module-sqlps-changes-pwd-to-sqlserver
+try{Get-Command Invoke-Sqlcmd -EA Stop |Out-Null}
+catch
+{
+    try{Import-Module SQLPS -EA Stop}
+    catch
+    {
+        $installer = ls $PSScriptRoot -Recurse -Filter Install-Sqlps.ps1 |select -First 1 -ExpandProperty FullName
+        if(!$installer) {Write-Error "You need to install SQLPS."}
+        else {Start-Process -FilePath powershell.exe -ArgumentList '-NonInteractive','-NoProfile','-File',$installer -Verb RunAs}
+    }
+}
+
+# show what's being used
+$script:OFS = ", " # format verbose lists
+@('ServerInstance','Database','HostName','InputFile','Variable','ConnectionTimeout',
+    'ErrorLevel','MaxBinaryLength','MaxCharLength','QueryTimeout','SeverityLevel') |
+    Get-Variable |? Value |% {Write-Verbose "$($_.Name): $($_.Value)"}
+Write-Verbose "Query:`n$Query"
+$switches = @('AbortOnError','DedicatedAdministratorConnection','DisableCommands',
+    'DisableVariables','EncryptConnection','IgnoreProviderContext','IncludeSqlUserErrors',
+    'OutputSqlErrors','SuppressProviderContextWarning') |? {Get-Variable $_ -ValueOnly}
+if($switches) {Write-Verbose "Active switches: $switches"}
+Remove-Variable OFS -Scope script # restore Output Field Separator
 
 # run core cmdlet
-& "$PSScriptRoot\Invoke-SqlcmdScript.ps1" @PSBoundParameters # splat-thru
-
-# restore current directory if changed
-if($oldpwd -ne $PWD) {Set-Location $oldpwd} # restore location if changed
+Invoke-Sqlcmd @PSBoundParameters # splat-thru
