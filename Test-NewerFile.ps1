@@ -11,12 +11,12 @@
 
 #requires -version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][IO.FileInfo]$ReferenceFile,
-[Parameter(Position=1,Mandatory=$true)][IO.FileInfo]$DifferenceFile
+[Parameter(Position=0)][IO.FileInfo]$ReferenceFile,
+[Parameter(Position=1)][IO.FileInfo]$DifferenceFile
 )
 
-if(!($ReferenceFile.Exists)) {Write-Verbose 'Reference file does not exist.'; return $DifferenceFile.Exists}
-if(!($DifferenceFile.Exists)) {Write-Verbose 'Difference file does not exist.'; return $false}
+if(!$ReferenceFile -or !$ReferenceFile.Exists) {Write-Verbose 'Reference file does not exist.'; return $DifferenceFile.Exists}
+if(!$DifferenceFile -or !$DifferenceFile.Exists) {Write-Verbose 'Difference file does not exist.'; return $false}
 if($ReferenceFile.VersionInfo.FileVersionRaw -lt $DifferenceFile.VersionInfo.FileVersionRaw) {Write-Verbose 'Newer file version.'; return $true}
 elseif($ReferenceFile.VersionInfo.FileVersionRaw -gt $DifferenceFile.VersionInfo.FileVersionRaw) {Write-Verbose 'Older file version.'; return $false}
 if($ReferenceFile.VersionInfo.ProductVersionRaw -lt $DifferenceFile.VersionInfo.ProductVersionRaw) {Write-Verbose 'Newer product version.'; return $true}
