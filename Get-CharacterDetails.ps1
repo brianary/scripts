@@ -32,14 +32,17 @@
     UnicodeBlock
         The Unicode (not .NET) block the character falls into.
 
-    UnicodeCategory
-        The .NET UnicodeCategory returned by System.Char.GetUnicodeCategory().
-
     MatchesBlock
         True if the character matches the \p{IsUnicodeBlock} regular expression
         (where "UnicodeBlock" is the character's UnicodeBlock property).
 
         Error if the character's UnicodeBlock property is not supported by .NET.
+
+    UnicodeCategory
+        The .NET UnicodeCategory returned by System.Char.GetUnicodeCategory().
+
+    CategoryClasses
+        The list of Unicode general category classes that will match the character.
 
     HtmlEncode
         The result of HTML-encoding the character using 
@@ -249,8 +252,9 @@
     Value               : 95
     CodePoint           : U+005F
     UnicodeBlock        : BasicLatin
-    UnicodeCategory     : ConnectorPunctuation
     MatchesBlock        : True
+    UnicodeCategory     : ConnectorPunctuation
+    CategoryClasses     : {Pc, P}
     HtmlEncode          : _
     HtmlAttributeEncode : _
     UrlEncode           : _
@@ -728,6 +732,12 @@ MeeteiMayek
 HangulJamoExtended-B
 VerticalForms
 '@ -split '\s+'
+function Get-UnicodeCategoryClasses([char]$c)
+{
+    @('Lu','Ll','Lt','Lm','Lo','L','Mn','Mc','Me','M','Nd','Nl','No','N','Pc','Pd','Ps','Pe','Pi',
+      'Pf','Po','P','Sm','Sc','Sk','So','S','Zs','Zl','Zp','Z','Cc','Cf','Cs','Co','Cn','C') |
+        ? {$c -match "\p{$_}"}
+}
 function Get-CharacterDetail([char]$c)
 {
     $properties = [ordered]@{
@@ -735,8 +745,9 @@ function Get-CharacterDetail([char]$c)
         Value               = [int]$c
         CodePoint           = 'U+{0:X4}' -f [int]$c
         UnicodeBlock        = ''
-        UnicodeCategory     = [char]::GetUnicodeCategory($c)
         MatchesBlock        = ''
+        UnicodeCategory     = [char]::GetUnicodeCategory($c)
+        CategoryClasses     = Get-UnicodeCategoryClasses($c)
         HtmlEncode          = [Net.WebUtility]::HtmlEncode($c)
         HtmlAttributeEncode = [Web.HttpUtility]::HtmlAttributeEncode($c)
         UrlEncode           = [Net.WebUtility]::UrlEncode($c)
