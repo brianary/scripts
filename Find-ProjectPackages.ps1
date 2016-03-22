@@ -2,8 +2,8 @@
 .Synopsis
     Find modules used in projects.
 
-.Parameter ModuleName
-    The name of a module to search for.
+.Parameter PackageName
+    The name of a package to search for.
     Wildcards (as supported by -like) are allowed.
 
 .Parameter Path
