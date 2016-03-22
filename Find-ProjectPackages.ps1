@@ -10,6 +10,12 @@
     The path of a folder to search within.
     Uses the current working directory ($PWD) by default.
 
+.Parameter MinVersion
+    The minimum (inclusive) version of the package to return.
+
+.Parameter MaxVersion
+    The maximum (inclusive) version of the package to return.
+
 .Link
     Select-Xml
 
@@ -18,12 +24,21 @@
 
 .Example
     Find-ProjectModule.ps1 jQuery*
+
+
+    Name               Version File
+    ----               ------- ----
+    jquery.datatables  1.10.9  C:\Repo\packages.config
+    jQuery             1.7     C:\Repo\packages.config
+    jQuery             1.8.3   C:\OtherRepo\packages.config
 #>
 
 #requires -version 3
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$ModuleName,
-[string]$Path = $PWD
+[string]$Path = $PWD,
+[version]$MinVersion,
+[version]$MaxVersion
 )
 Begin
 {
@@ -36,6 +51,7 @@ Begin
     [string[]]$npmFiles   = Get-ChildItem $Path -Recurse -Filter package.json |% FullName
     if(!$npmFiles) {[string[]]$npmFiles = @()}
     Write-Verbose "Found $($npmFiles.Length) package.json files."
+    #TODO: Also search paket.dependencies and/or paket.lock
     $max = $nugetFiles.Length + $npmFiles.Length
     Write-Verbose "Found $max package files."
     if(!$max) {Write-Error "No package lists found!"; return}
@@ -63,7 +79,15 @@ Begin
         $count += $packages.$file.Count
     }
     $max = $packages.Count
-    Write-Progress 'Parsing packages' -Completed
+    function Compare-Version([string]$version)
+    {
+        if(!$MinVersion -and !$MaxVersion) {return $true}
+        if(!($version -match '(?<Version>\b\d+\.\d+(?:\.\d+)?)')) {Write-Warning "Can't parse version $version"; return $true}
+        $v = [version]$Matches.Version
+        if(!$MaxVersion) {return $v -ge $MinVersion}
+        elseif(!$MinVersion) {return $v -le $MaxVersion}
+        else {return ($v -ge $MinVersion) -and ($v -le $MaxVersion)}
+    }
 }
 Process
 {
@@ -74,6 +98,7 @@ Process
         Write-Progress $action 'Searching packages' -CurrentOperation "$file ($($packages.$file.Count) packages)" -PercentComplete (25*$i++/$max+75)
         $packages.$file.Keys |
             ? {$_ -like $ModuleName} |
+            ? {Compare-Version $packages.$file.$_} |
             % {New-Object psobject -Property ([ordered]@{Name=$_;Version=$packages.$file.$_;File=$file})}
     }
     Write-Progress $action -Completed
