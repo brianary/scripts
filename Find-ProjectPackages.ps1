@@ -35,7 +35,7 @@
 
 #requires -version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$ModuleName,
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$PackageName,
 [string]$Path = $PWD,
 [version]$MinVersion,
 [version]$MaxVersion
@@ -97,7 +97,7 @@ Process
         Write-Verbose "Searching $file ($($packages.$file.Count) packages)"
         Write-Progress $action 'Searching packages' -CurrentOperation "$file ($($packages.$file.Count) packages)" -PercentComplete (25*$i++/$max+75)
         $packages.$file.Keys |
-            ? {$_ -like $ModuleName} |
+            ? {$_ -like $PackageName} |
             ? {Compare-Version $packages.$file.$_} |
             % {New-Object psobject -Property ([ordered]@{Name=$_;Version=$packages.$file.$_;File=$file})}
     }
