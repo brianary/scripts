@@ -42,6 +42,12 @@ Begin {$Script:OFS = "`n"}
 Process
 {
     if($Value -eq $null) {}
+    elseif($Value -is [int])
+    { "$Value" }
+    elseif($Value -is [string])
+    { [Net.WebUtility]::HtmlEncode($Value) }
+    elseif($Value -is [datetime])
+    { '{0:yyyy-MM-dd\THH:mm:ss}' -f $Value }
     elseif($Value -is [PSObject])
     {
         $Value.PSObject.Properties |
@@ -52,10 +58,6 @@ Process
     { $Value.Keys |? {$_ -match '^\w+$'} |% {"<$_>$(Format-XmlElements.ps1 $Value.$_)</$_>"} }
     elseif($Value -is [xml])
     { $Value.OuterXml }
-    elseif($Value -is [string] -or $Value -is [int])
-    { [Net.WebUtility]::HtmlEncode($Value) }
-    elseif($Value -is [datetime])
-    { '{0:yyyy-MM-dd\THH:mm:ss}' -f $Value }
     else
     {
         Get-Member -InputObject $Value.PSObject.Properties -MemberType Properties |
