@@ -26,7 +26,7 @@ function ConvertFrom-Credential([Parameter(Mandatory=$true,Position=0,ValueFromP
 { $Credential.GetNetworkCredential().Password }
 schtasks /query /s $ComputerName /v /fo csv |
     ConvertFrom-Csv |
-    ogv -PassThru -Title 'Select jobs to copy' |
+    Out-GridView -PassThru -Title 'Select jobs to copy' |
     select TaskName,'Run As User' -Unique |
     % {
         schtasks /query /s $ComputerName /tn $_.TaskName /xml ONE |Out-File -Encoding unicode $TempXml

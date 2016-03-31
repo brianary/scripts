@@ -16,15 +16,15 @@
     though there may be significant rounding loss depending on precision).
     
 .Example
-    ConvertTo-ByteUnits 65536
+    Format-ByteUnits 65536
     64KB
     
 .Example
-    ConvertTo-ByteUnits 9685059 -dot 1 -si
+    Format-ByteUnits 9685059 -dot 1 -si
     9.2 MiB
     
 .Example
-    ls *.log |measure -sum Length |select -exp Sum |ConvertTo-ByteUnits -dot 2 -si
+    ls *.log |measure -sum Length |select -exp Sum |Format-ByteUnits -dot 2 -si
     302.39 MiB
     
 .Inputs

@@ -113,7 +113,7 @@ if($SimpleMatch) { $ssopt.SimpleMatch=$true }
 $lookin = if($Filters) { $Filters|% {ls @lsopt -Filter $_} } else { ls @lsopt }
 # TODO: Manually handle Include and Exclude for the FullName.
 $found = Select-String -Path $lookin @ssopt
-if($ChooseMatches) { $found = $found |ogv -Title "Select matches: $Pattern $Filters $Path" -PassThru }
+if($ChooseMatches) { $found = $found |Out-GridView -Title "Select matches: $Pattern $Filters $Path" -PassThru }
 if($Open) 
 { $found |ii }
 elseif($Blame)
