@@ -6,7 +6,7 @@
     The certificate to display permissions for.
 
 .Link
-    Find-Certificate.ps1
+    Get-CertificatePermissions.ps1
 
 .Example
     Show-CertificatePermissions.ps1 -Certificate $cert
@@ -25,8 +25,9 @@
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
 )
-Begin{try{Get-Command icacls -CommandType Application |Out-Null}catch{throw 'The icacls command is missing.'}}
 Process
 {
-    icacls (Get-CertificatePath.ps1 $Certificate)
+    Get-CertificatePermissions.ps1 -Certificate $Certificate |
+        select IdentityReference,AccessControlType,FileSystemRights |
+        Format-Table -AutoSize
 }

@@ -12,7 +12,19 @@
     The certificate to grant access to.
 
 .Link
+    Get-Acl
+
+.Link
+    Set-Acl
+
+.Link
     Find-Certificate.ps1
+
+.Link
+    Get-CertificatePermissions.ps1
+
+.Link
+    Show-CertificatePermissions.ps1
     
 .Link
     http://stackoverflow.com/a/21713869/54323
@@ -42,10 +54,14 @@
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
 )
-Begin{try{Get-Command icacls -CommandType Application |Out-Null}catch{throw 'The icacls command is missing.'}}
+Begin{try{Get-Command Get-Acl -CommandType Cmdlet |Out-Null}catch{throw 'The Get-Acl command is missing.'}}
 Process
 {
     if(!$UserName) {$UserName="IIS AppPool\${AppPool}"}
     if($UserName -notlike '*\*') {$UserName = "$env:USERDOMAIN\$UserName"}
-    icacls (Get-CertificatePath.ps1 $Certificate) /grant "${UserName}:R"
+    $path = Get-CertificatePath.ps1 $Certificate
+    $acl = Get-Acl $path
+    $acl.SetAccessRule((New-Object Security.AccessControl.FileSystemAccessRule $UserName,'Read','Allow'))
+    Set-Acl $path $acl
+    Show-CertificatePermissions.ps1 $Certificate
 }
