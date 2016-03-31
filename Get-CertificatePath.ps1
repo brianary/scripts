@@ -27,7 +27,7 @@ Process
         }
         Write-Verbose "Certificate path: $path"
         if($Certificate.PSObject.Properties.Match('Path').Count) {$Certificate.Path = $path}
-        else {Add-Member -InputObject $Certificate -MemberType ScriptProperty -Name Path -Value {$path}}
+        else {Add-Member -InputObject $Certificate -MemberType NoteProperty -Name Path -Value $path}
         $path
     }
 }
