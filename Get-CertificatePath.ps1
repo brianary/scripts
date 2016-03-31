@@ -12,7 +12,7 @@
 )
 Process
 {
-    if($Certificate.PSObject.Properties.Match('Path')) {$Certificate.Path}
+    if($Certificate.PSObject.Properties.Match('Path').Count -and $Certificate.Path) {$Certificate.Path}
     else
     {
         $file = $Certificate.PrivateKey.CspKeyContainerInfo.UniqueKeyContainerName
@@ -20,11 +20,14 @@ Process
         $path = "$env:ProgramData\Microsoft\crypto\rsa\machinekeys\$file"
         if(!(Test-Path $path -PathType Leaf))
         {
+            Write-Verbose "Machine key path not found: $path"
             $sid = ([Security.Principal.NTAccount]$env:USERNAME).Translate([Security.Principal.SecurityIdentifier]).Value
-            $path = "$env:APPDATA\Roaming\Microsoft\Crypto\RSA\$sid\$file"
+            $path = "$env:APPDATA\Microsoft\Crypto\RSA\$sid\$file"
+            if(!(Test-Path $path -PathType Leaf)) {throw "Could not find certificate path: $path"}
         }
         Write-Verbose "Certificate path: $path"
-        Add-Member -InputObject $Certificate -MemberType ScriptProperty -Name Path -Value {$path}
+        if($Certificate.PSObject.Properties.Match('Path').Count) {$Certificate.Path = $path}
+        else {Add-Member -InputObject $Certificate -MemberType ScriptProperty -Name Path -Value {$path}}
         $path
     }
 }
