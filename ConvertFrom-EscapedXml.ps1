@@ -14,8 +14,7 @@
 [Parameter(Mandatory=$true,Position=0)][string]$EscapedXml,
 [switch]$NoIndent
 )
-try{[void][Web.HttpUtility]}catch{Add-Type -as System.Web}
-[xml] $xml = [Web.HttpUtility]::HtmlDecode($EscapedXml)
+[xml] $xml = [Net.WebUtility]::HtmlDecode($EscapedXml)
 $sw = New-Object IO.StringWriter
 [Xml.XmlWriterSettings] $saveopts = New-Object Xml.XmlWriterSettings -Property @{ Indent = $true }
 [Xml.XmlWriter] $xo = [Xml.XmlWriter]::Create($sw, $saveopts)

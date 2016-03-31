@@ -60,13 +60,13 @@
     Export-DatabaseScripts.ps1
 
 .Link
-    https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.aspx
+    https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
 
 .Link
-    https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
+    https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
 
 .Link
-    https://msdn.microsoft.com/en-us/library/cc646021.aspx
+    https://msdn.microsoft.com/library/cc646021.aspx
 
 .Example
     Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath Sales.Customer.sql

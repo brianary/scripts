@@ -97,7 +97,7 @@ Param([Parameter(Position=0,Mandatory=$true)]$Name,
 [switch]$Fail
 )
 function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Position=1)][string]$Path)
-{ Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |select -Last 1 -ExpandProperty Path) -Scope Global }
+{ Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |% Path |Find-NewestFile.ps1 |% FullName) -Scope Global }
 Get-Command $Name -EA SilentlyContinue -EV cmerr |Out-Null
 if(!$cmerr) { Write-Verbose "$Name command found." ; return }
 if($Path -and (Test-Path $Path)) { Set-ResolvedAlias $Name $Path ; return }

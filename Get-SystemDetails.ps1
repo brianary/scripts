@@ -24,7 +24,7 @@ foreach($computer in $ComputerName)
     {
         $cs.PSObject.Properties |? {!($value.Contains($_.Name)) -and $_.Name -notlike '__*'} |% {$value.Add($_.Name,$_.Value)}
         $os.PSObject.Properties |? {!($value.Contains($_.Name)) -and $_.Name -notlike '__*'} |% {$value.Add($_.Name,$_.Value)}
-        $value.TotalPhysicalMemory = ConvertTo-ByteUnits $value.TotalPhysicalMemory -si -dot 2 + 
+        $value.TotalPhysicalMemory = Format-ByteUnits $value.TotalPhysicalMemory -si -dot 2 + 
             " ($('{0:p}' -f (1KB*$os.FreePhysicalMemory/$cs.TotalPhysicalMemory)) free)"
         $value.Processors= (gwmi Win32_Processor @wmiargs |
             % Name |
@@ -32,7 +32,7 @@ foreach($computer in $ComputerName)
         $value.Drives= (gwmi Win32_Volume @wmiargs |
             ? {$_.DriveType -eq 3 -and $_.DriveLetter -and $_.Capacity} |
             sort DriveLetter |
-            % {"$($_.DriveLetter) $(ConvertTo-ByteUnits $_.Capacity -si -dot 2) ($('{0:p}' -f ($_.FreeSpace/$_.Capacity)) free)"})
+            % {"$($_.DriveLetter) $(Format-ByteUnits $_.Capacity -si -dot 2) ($('{0:p}' -f ($_.FreeSpace/$_.Capacity)) free)"})
         $value.Shares= (gwmi Win32_Share @wmiargs |
             ? {$_.Type -eq 0} |
             % {"$($_.Name)=$($_.Path)"})
@@ -46,7 +46,7 @@ foreach($computer in $ComputerName)
             Manufacturer = $cs.Manufacturer
             Model = $cs.Model
             PrimaryOwnerName = $cs.PrimaryOwnerName
-            Memory = (ConvertTo-ByteUnits $cs.TotalPhysicalMemory -si -dot 2) + 
+            Memory = (Format-ByteUnits $cs.TotalPhysicalMemory -si -dot 2) + 
                 " ($('{0:p}' -f (1KB*$os.FreePhysicalMemory/$cs.TotalPhysicalMemory)) free)"
             OperatingSystem = $os.Caption + $(try{ $os.OSArchitecture }catch{''}) + ' ' + $os.CSDVersion + ' (' + $os.Version + ')'
             Processors = (gwmi Win32_Processor @wmiargs |
@@ -55,7 +55,7 @@ foreach($computer in $ComputerName)
             Drives = (gwmi Win32_Volume @wmiargs |
                 ? {$_.DriveType -eq 3 -and $_.DriveLetter -and $_.Capacity} |
                 sort DriveLetter |
-                % {"$($_.DriveLetter) $(ConvertTo-ByteUnits $_.Capacity -si -dot 2) ($('{0:p}' -f ($_.FreeSpace/$_.Capacity)) free)"})
+                % {"$($_.DriveLetter) $(Format-ByteUnits $_.Capacity -si -dot 2) ($('{0:p}' -f ($_.FreeSpace/$_.Capacity)) free)"})
             Shares= (gwmi Win32_Share @wmiargs |
                 ? {$_.Type -eq 0} |
                 % {"$($_.Name)=$($_.Path)"})

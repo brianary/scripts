@@ -38,10 +38,10 @@
     (outputs SQL scripts to files)
 
 .Link
-    https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.aspx
+    https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
 
 .Link
-    https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
+    https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
 #>
 
 #requires -version 3
