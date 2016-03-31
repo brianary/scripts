@@ -26,5 +26,6 @@
 )
 $cmd = Get-Command $ApplicationName
 if($cmd -is [Management.Automation.ApplicationInfo]) {$cmd.Path}
+elseif($cmd -is [Management.Automation.ExternalScriptInfo]) {$cmd.Path}
 elseif($cmd -is [Management.Automation.AliasInfo]) {$cmd.Definition}
 else {Write-Error "$ApplicationName is $($cmd.GetType().FullName)"}
