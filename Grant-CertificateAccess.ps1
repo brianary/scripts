@@ -30,7 +30,7 @@
     http://stackoverflow.com/a/21713869/54323
 
 .Link
-    https://technet.microsoft.com/en-us/library/ee909471.aspx
+    https://technet.microsoft.com/library/ee909471.aspx
 
 .Example
     Grant-AppPoolCertAccess.ps1 -AppPool ExampleAppPool -Certificate $cert
