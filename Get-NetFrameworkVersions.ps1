@@ -42,6 +42,10 @@ try
         379893 {$versions += Add-Version 'v4.5.2' $v4.GetValue('Version')}
         393295 {$versions += Add-Version 'v4.6' $v4.GetValue('Version')}
         393297 {$versions += Add-Version 'v4.6' $v4.GetValue('Version')}
+        394254 {$versions += Add-Version 'v4.6.1' $v4.GetValue('Version')}
+        394271 {$versions += Add-Version 'v4.6.1' $v4.GetValue('Version')}
+        394747 {$versions += Add-Version 'v4.6.2+preview' $v4.GetValue('Version')}
+        394748 {$versions += Add-Version 'v4.6.2+preview' $v4.GetValue('Version')}
     }    
 }
 catch [ArgumentNullException]
