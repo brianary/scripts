@@ -42,12 +42,12 @@ Begin {$Script:OFS = "`n"}
 Process
 {
     if($Value -eq $null) {}
-    elseif($Value -is [int])
-    { "$Value" }
-    elseif($Value -is [string])
-    { [Net.WebUtility]::HtmlEncode($Value) }
+    elseif([bool],[byte],[DateTimeOffset],[decimal],[double],[float],[guid],[int],[int16],[long],[sbyte],[timespan],[uint16],[uint32],[uint64] -contains $Value.GetType())
+    { [Xml.XmlConvert]::ToString($Value) }
     elseif($Value -is [datetime])
-    { '{0:yyyy-MM-dd\THH:mm:ss}' -f $Value }
+    { [Xml.XmlConvert]::ToString($Value,'yyyy-MM-dd\THH:mm:ss') }
+    elseif($Value -is [string] -or $Value -is [char])
+    { [Net.WebUtility]::HtmlEncode($Value) }
     elseif($Value -is [PSObject])
     {
         $Value.PSObject.Properties |
