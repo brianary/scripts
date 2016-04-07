@@ -57,7 +57,7 @@
 [switch]$IncludeSqlUserErrors,
 [string]$InputFile,
 [int]$MaxBinaryLength,
-[int]$MaxCharLength,
+[int]$MaxCharLength = 2147483647,
 [string]$NewPassword,
 [bool]$OutputSqlErrors,
 [string]$Password,
@@ -71,6 +71,13 @@
 
 # store current directory
 $oldpwd = $PWD # store the current location (importing SQLPS changes it)
+
+# add defaults to bound params
+foreach($key in $MyInvocation.MyCommand.Parameters.Keys)
+{
+    $value = Get-Variable $key -ValueOnly -EA SilentlyContinue
+    if($value -and !$PSBoundParameters.ContainsKey($key)) {$PSBoundParameters[$key] = $value}
+}
 
 # run core cmdlet
 & "$PSScriptRoot\Invoke-SqlcmdScript.ps1" @PSBoundParameters # splat-thru
