@@ -71,7 +71,7 @@ $cert =
         Write-Verbose "Find '$FindValue'"
         ls Cert:\CurrentUser,Cert:\LocalMachine |
             % {ls "Cert:\$($_.Location)\$($_.Name)"} |
-            ? {$_.Subject,$_.Issuer,$_.Thumbprint |? {$_ -like "*$Search*"}}
+            ? {$_.Subject,$_.Issuer,$_.Thumbprint |? {$_ -like "*$FindValue*"}}
     }
     else
     {
