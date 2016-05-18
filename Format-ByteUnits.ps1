@@ -28,7 +28,7 @@
     302.39 MiB
     
 .Inputs
-    A integer (up to 64-bit) representing a number of bytes.
+    A bigint representing a number of bytes.
     
 .Link
     http://en.wikipedia.org/wiki/Binary_prefix
