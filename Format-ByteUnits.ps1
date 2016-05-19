@@ -38,18 +38,16 @@
 #>
 
 #requires -version 2
-[CmdletBinding(DefaultParameterSetName='SI')] Param(
+[CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][bigint]$Bytes,
 [Alias('Digits','dot')][ValidateRange(0,16)][byte]$Precision = 16,
-[Parameter(ParameterSetName='SI')][Alias('si')][switch]$UseSI,
-[Parameter(ParameterSetName='Java')][Alias('UseJava','java')][switch]$ForJava
+[Alias('si')][switch]$UseSI
 )
 Process
 {
 $units =
     if($UseSI)       {[ordered]@{1073741824PB=' YiB'; 1048576PB=' ZiB'; 1024PB=' EiB';
                                  1PB=' PiB';1TB=' TiB';1GB=' GiB';1MB=' MiB';1KB=' KiB';1=' B'}}
-    elseif($ForJava) {[ordered]@{           1TB= 'T';  1GB= 'G';  1MB= 'M';  1KB= 'K'}}
     else             {[ordered]@{1PB= 'PB'; 1TB= 'TB'; 1GB= 'GB'; 1MB= 'MB'; 1KB= 'KB'}}
 $pfmt = New-Object String '#',$Precision
 foreach($magnitude in $units.Keys)
