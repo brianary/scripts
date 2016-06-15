@@ -23,6 +23,15 @@ Process
             Write-Verbose "Machine key path not found: $path"
             $sid = ([Security.Principal.NTAccount]$env:USERNAME).Translate([Security.Principal.SecurityIdentifier]).Value
             $path = "$env:APPDATA\Microsoft\Crypto\RSA\$sid\$file"
+            if(!(Test-Path $path -PathType Leaf))
+            { # flail wildly
+                $path = Get-ChildItem $env:USERPROFILE\.. -Directory |
+                    % {"$($_.FullName)\AppData\Roaming\Microsoft\Crypto\RSA"} |
+                    ? {Test-Path $_ -PathType Container} |
+                    Get-ChildItem -Directory |
+                    % {Join-Path $_.FullName $file} |
+                    ? {Test-Path $_ -PathType Leaf}
+            }
             if(!(Test-Path $path -PathType Leaf)) {throw "Could not find certificate path: $path"}
         }
         Write-Verbose "Certificate path: $path"
