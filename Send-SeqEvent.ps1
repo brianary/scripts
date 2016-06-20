@@ -48,7 +48,6 @@
 [switch] $LiteralMessage
 )
 
-$Properties += @{Url=$Server;ApiKey=$ApiKey}
 if($LiteralMessage) { $Properties += @{Message=$Message}; $Message = "{Message}" }
 
 @{
