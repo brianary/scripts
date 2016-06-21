@@ -25,6 +25,7 @@ Process
             $path = "$env:APPDATA\Microsoft\Crypto\RSA\$sid\$file"
             if(!(Test-Path $path -PathType Leaf))
             { # flail wildly
+                Write-Warning "Searching more desperately for the certificate file."
                 $path = Get-ChildItem $env:USERPROFILE\.. -Directory |
                     % {"$($_.FullName)\AppData\Roaming\Microsoft\Crypto\RSA"} |
                     ? {Test-Path $_ -PathType Container} |
