@@ -21,4 +21,11 @@
 [string] $ApiKey
 )
 
-Set-Variable PSDefaultParameterValues @{ 'Send-SeqEvent.ps1:Server' = $Server; 'Send-SeqEvent.ps1:ApiKey' = $ApiKey } -Scope 1
+Write-Verbose "Using Seq at $Server"
+$value = @{
+    'Send-SeqEvent.ps1:Server' = $Server
+    'Send-SeqEvent.ps1:ApiKey' = $ApiKey
+}
+$defaults = Get-Variable -Scope 1 -Name PSDefaultParameterValues -EA SilentlyContinue
+if($defaults) {$defaults.Value += $value}
+else {Set-Variable -Scope 1 -Name PSDefaultParameterValues -Value $value}
