@@ -9,7 +9,7 @@
     The type of object to create.
 
 .Parameter InitialValue
-    A value initialize the object with, such as CommandText for a Command object, or 
+    A value to initialize the object with, such as CommandText for a Command object, or 
     a ConnectionString for a Connection or ConnectionStringBuilder.
 
 .Parameter StoredProcedure
