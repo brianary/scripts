@@ -1,3 +1,13 @@
+(**
+ExampleEmailReport.fsx
+======================
+Builds a chart and attaches it to an email, then sends it. 
+
+Namespaces & References
+-----------------------
+Tip: Create a paket.dependencies file to install FSharp.Data.SqlClient and FSharp.Charting.
+see http://fsprojects.github.io/Paket/
+*)
 open System
 // Needed to send an email with the charts.
 open System.Net.Mail
@@ -5,8 +15,6 @@ open System.Net.Mime
 // Needed for FSharp.Charting's ShowChart() method.
 #r "System.Windows.Forms.DataVisualization"
 
-// Tip: Create a paket.dependencies file to install FSharp.Data.SqlClient and FSharp.Charting.
-//   see http://fsprojects.github.io/Paket/
 #I @".\packages\FSharp.Data.SqlClient\lib\net40"
 #r "FSharp.Data.SqlClient"
 open FSharp.Data
@@ -14,15 +22,18 @@ open FSharp.Data
 #r "FSharp.Charting"
 open FSharp.Charting
 
-// Install the AdventureWorks2014 database from 
-// https://msftdbprodsamples.codeplex.com/releases/view/125550
-// With VS installed, you should be able to unzip 
-// Adventure Works 2014 OLTP Script.zip into
-// C:\Program Files\Microsoft SQL Server\120\Tools\Samples\Adventure Works 2014 OLTP Script
-// (depending on version) then run something like
-// sqlcmd.exe -E -S "(localdb)\ProjectV12" -i instawdb.sql
-// (from that directory, running in a PowerShell or cmd prompt as admin).
-
+(**
+Database
+--------
+Install the AdventureWorks2014 database from 
+https://msftdbprodsamples.codeplex.com/releases/view/125550
+With VS installed, you should be able to unzip 
+Adventure Works 2014 OLTP Script.zip into
+C:\Program Files\Microsoft SQL Server\120\Tools\Samples\Adventure Works 2014 OLTP Script
+(depending on version) then run something like
+sqlcmd.exe -E -S "(localdb)\ProjectV12" -i instawdb.sql
+(from that directory, running in a PowerShell or cmd prompt as admin).
+*)
 /// Use the SQL Server Type Provider to define a type-safe query for the top products (by $ amount)
 /// summary order amount statistics by date.
 type OrderCmd = SqlCommandProvider<"
@@ -44,6 +55,10 @@ select p.Name, p.ProductID, o.OrderDate, sum(od.LineTotal) Total,
 /// An instance of the query type.
 let getOrders = new OrderCmd()
 
+(**
+Manipulate Data
+---------------
+*)
 /// Converts a product name, record sequence tuple into a product name, sum total amount tuple.
 let productTotal (n,p:OrderCmd.Record seq) = 
     n, Seq.sumBy (fun (d:OrderCmd.Record) -> d.Total.Value) p
@@ -75,8 +90,12 @@ let saveChart (c:ChartTypes.GenericChart) =
     c.SaveChartAs(file,ChartTypes.ChartImageFormat.Png)
     new LinkedResource(file,"image/png")
 
-// For each product, build a compound chart, then append those to a list containing the 
-// summary pie chart, and save them all for emailing.
+(**
+Charts
+------
+For each product, build a compound chart, then append those to a list containing the 
+summary pie chart, and save them all for emailing.
+*)
 /// The collection of charts, as LinkResource objects for emailing.
 let charts =
     products 
@@ -95,6 +114,10 @@ let charts =
                 data=Seq.map productTotal products)]
         |> List.map saveChart
 
+(**
+Attach Chart to Email
+---------------------
+*)
 /// Sends an email to the given address, with the given subject, using the LinkedResource 
 /// objects as inline images in the body of the message.
 let sendCharts (t:string) s c =
@@ -119,5 +142,8 @@ let sendCharts (t:string) s c =
     use send = new SmtpClient()
     send.Send(email)
 
-// Send the email.
+(**
+Send Email
+----------
+*)
 sendCharts "test@example.net" "Top Products Charts" charts
