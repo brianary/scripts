@@ -4,6 +4,7 @@ This repo contains a collection of generally useful scripts (mostly Windows, mos
 
 PowerShell Scripts
 ------------------
+- **Add-Xml.ps1**: Insert XML into an XML file as a child of an XPath-specified node.
 - **Connect-Database.ps1**: Creates a SqlConnection from a connection string name, server name, or connection string, and opens it.
 - **ConvertFrom-EscapedXml.ps1**: Parse escaped XML into XML and serialize it.
 - **ConvertFrom-XmlElement.ps1**: Converts named nodes of an element to properties of a PSObject, recursively.
@@ -26,6 +27,7 @@ PowerShell Scripts
 - **Get-CertificatePermissions.ps1**: Returns the permissions of a certificate's private key file.
 - **Get-CharacterDetails.ps1**: Returns filterable categorical information about a range of characters in the Unicode Basic Multilingual Plane.
 - **Get-CommandPath.ps1**: Locates a command.
+- **Get-ConfigConnectionStringBuilders.ps1**: Return named connection string builders for connection strings in a config file.
 - **Get-EnumValues.ps1**: Returns the possible values of the specified enumeration.
 - **Get-NetFrameworkVersions.ps1**: Determine which .NET Frameworks are installed on the requested system.
 - **Get-SystemDetails.ps1**: Collects some useful system hardware and operating system details via WMI.
@@ -35,8 +37,11 @@ PowerShell Scripts
 - **Invoke-DbCommand.ps1**: Queries a database and returns the results.
 - **Invoke-Sql.ps1**: Runs a SQL script with verbose output and without changing the directory.
 - **Invoke-SqlcmdScript.ps1**: Implements SQL script with verbose output.
+- **Measure-Indents.ps1**: Measures the indentation characters used in a text file.
 - **New-DbProviderObject.ps1**: Create a common database object.
 - **Optimize-Path.ps1**: Sorts, prunes, and normalizes both user and system Path entries.
+- **Read-Choice.ps1**: Returns choice selected from a list of options.
+- **Remove-Xml.ps1**: Removes a node specified by XPath from an XML file.
 - **Repair-DatabaseConstraintNames.ps1**: Finds database constraints with system-generated names and gives them deterministic names.
 - **Select-XmlNodeValue.ps1**: Returns the node value in XML using a given XPath expression.
 - **Send-SeqEvent.ps1**: Send an event to a Seq server.
@@ -50,4 +55,4 @@ PowerShell Scripts
 - **Use-NamedMatches.ps1**: Creates local variables from named matches in $Matches.
 - **Use-SeqServer.ps1**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 
-<!-- generated 07/17/2016 00:42:40 -->
+<!-- generated 08/14/2016 22:45:14 -->
