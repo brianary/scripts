@@ -5,9 +5,22 @@
 .Parameter Version
     The version number to install.
     Used to determine which installed versions are too old.
+    Defaults to the latest SQLPS.
 
 .Parameter Source
     A file directory or base URI to download the required MSI files from.
+    Defaults to the latest SQLPS.
+
+.Notes
+    SQL Server Feature Pack Versions
+    SQL Name 	  Version        Source
+    2016          13.0.1601.5    https://www.microsoft.com/download/details.aspx?id=52676
+    2014          12.0.2000.8    https://www.microsoft.com/download/details.aspx?id=42295
+    2012          11.0.2100.60   https://www.microsoft.com/download/details.aspx?id=29065
+    2008sp2       10.00.4000.00  https://www.microsoft.com/download/details.aspx?id=6375
+    2005/Feb2007  9.00.3042 *    https://www.microsoft.com/download/details.aspx?id=24793
+    
+    * no SQLPS/SMO/SQLCLR
 
 .Link
     Start-Process
@@ -85,6 +98,9 @@ function Update-PSModulePathProcess
 
 function Uninstall-OldSqlPs
 {
+    # Win32_Product slowly reconfigures each entry, Win32Reg_AddRemovePrograms is faster
+    # see https://sdmsoftware.com/group-policy-blog/wmi/why-win32_product-is-bad-news/
+    # see also http://support.microsoft.com/kb/974524
     Get-WmiObject Win32Reg_AddRemovePrograms -Filter "DisplayName like 'Windows PowerShell Extensions for SQL Server %'" |
         ? {$Version -gt [version]$_.Version} |
         ? {$PSCmdlet.ShouldProcess($_.DisplayName,'Uninstall')} |
