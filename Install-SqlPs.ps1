@@ -54,12 +54,12 @@
 [uri]$Source = 'https://download.microsoft.com/download/8/7/2/872BCECA-C849-4B40-8EBE-21D48CDF1456/ENU/x64/'
 )
 
-function Test-OldSnapin([IO.FileInfo]$Path)
+function Test-WrongSnapin([IO.FileInfo]$Path)
 {
     $old = 
         if($Version -gt [version]$Path.VersionInfo.ProductVersion) {$true}
-        elseif(!([Environment]::Is64BitProcess)) {$true}
-        else {$Path.FullName.StartsWith((Join-Path ${env:ProgramFiles(x86)} ''))}
+        elseif(!([Environment]::Is64BitProcess)) {$false} # 32-bit PowerShell, don't check SQLPS bits
+        else {$Path.FullName.StartsWith((Join-Path ${env:ProgramFiles(x86)} ''))} # 32-bit SQLPS vs. 64-bit PS
     Write-Verbose "'$Path' old? $old"
     $old
 }
@@ -68,14 +68,14 @@ function Test-OldSqlPs([Management.Automation.PSModuleInfo]$module)
 {
     Join-Path $module.Path ..\Microsoft.SqlServer.Management.PSSnapins.dll |
         Get-ChildItem |
-        % {Test-OldSnapin $_.FullName}
+        % {Test-WrongSnapin $_.FullName}
 }
 
 function Test-OldSqlPsPath([string]$Path)
 {
     $snapin = Join-Path $Path SQLPS\Microsoft.SqlServer.Management.PSSnapins.dll
     if(!(Test-Path $snapin -PathType Leaf)) {return $false}
-    Get-ChildItem $snapin |% {Test-OldSnapin $_.FullName}
+    Get-ChildItem $snapin |% {Test-WrongSnapin $_.FullName}
 }
 
 function Update-PSModulePath([EnvironmentVariableTarget]$Target)
@@ -83,7 +83,7 @@ function Update-PSModulePath([EnvironmentVariableTarget]$Target)
     if(!$PSCmdlet.ShouldProcess("$Target PSModulePath",'Update')) {return}
     $modulepath = [Environment]::GetEnvironmentVariable('PSModulePath',$Target)
     Write-Verbose "Initial $Target PSModulePath: $modulepath"
-    $modulepath = ($modulepath -split ';' |? {!(Test-OldSqlPsPath $_)}) -join ';'
+    $modulepath = ($modulepath -split ';' |? {$_} |? {!(Test-OldSqlPsPath $_)}) -join ';'
     Write-Verbose "Updated $Target PSModulePath: $modulepath"
     [Environment]::SetEnvironmentVariable('PSModulePath',$modulepath,$Target)
 }
