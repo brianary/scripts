@@ -112,7 +112,6 @@ catch
         Find-NewestFile.ps1 |
         Split-Path
     Write-Verbose "Found SQL SDK DLLs in $sqlsdk"
-    if(Test-Path "$sqlsdk\Microsoft.SqlServer.ConnectionInfo.dll") {Add-Type -Path "$sqlsdk\Microsoft.SqlServer.ConnectionInfo.dll"}
     Add-Type -Path "$sqlsdk\Microsoft.SqlServer.Smo.dll"
     Add-Type -Path "$sqlsdk\Microsoft.SqlServer.SqlEnum.dll"
 }
