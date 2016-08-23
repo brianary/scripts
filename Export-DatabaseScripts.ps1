@@ -68,7 +68,6 @@ catch
         Select-Object -Last 1 |
         Split-Path
     Write-Verbose "Found SQL SDK DLLs in $sqlsdk"
-    Add-Type -Path "$sqlsdk\Microsoft.SqlServer.ConnectionInfo.dll"
     Add-Type -Path "$sqlsdk\Microsoft.SqlServer.Smo.dll"
     Add-Type -Path "$sqlsdk\Microsoft.SqlServer.SqlEnum.dll"
 }
