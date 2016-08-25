@@ -26,10 +26,9 @@
 Process
 {
     [Xml.XmlNode]$node = $SelectXmlInfo.Node
-    if(!$node) { Write-Error "Could not locate $XPath to set value" ; return }
     [xml]$doc = $node.OwnerDocument
 
-    Write-Verbose "Setting $($node.OuterXml) in $XPath to $Value"
+    Write-Verbose "Setting $($node.OuterXml) in $($SelectXmlInfo.Pattern) to $Value"
     if($node.NodeType -eq 'Element')
     {
         [void]$node.RemoveAll()
@@ -52,10 +51,6 @@ Process
         $doc.Save($xw)
         $xw.Dispose()
         $xw = $null
-    }
-    elseif($Content)
-    {
-        $doc.OuterXml
     }
     else
     {

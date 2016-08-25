@@ -36,7 +36,6 @@ Process
     if($SelectXmlInfo.Node.NodeType -ne 'Element')
     {throw "Node at '$($SelectXmlInfo.Pattern)' is '$($SelectXmlInfo.Node.NodeType)', not 'Element'."}
     [Xml.XmlElement]$node = $SelectXmlInfo.Node
-    if(!$node) {throw "Could not locate $XPath to append child"}
     [xml]$doc = $node.OwnerDocument
 
     if($NamespaceUri) { [void]$node.SetAttribute($Name,$NamespaceUri,$Value) }
@@ -50,10 +49,6 @@ Process
         $doc.Save($xw)
         $xw.Dispose()
         $xw = $null
-    }
-    elseif($Content)
-    {
-        $doc.OuterXml
     }
     else
     {
