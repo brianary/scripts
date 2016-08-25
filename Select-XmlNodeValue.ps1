@@ -37,7 +37,7 @@ Process
     }
     elseif($node.NodeType -in 'Document','DocumentFragment','DocumentType','Entity','EntityReference','Notation')
     {
-        Write-Warning "Cannot set value for $($node.NodeType) node."
+        Write-Warning "Cannot get value for $($node.NodeType) node."
     }
     else
     {
