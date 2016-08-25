@@ -22,7 +22,6 @@
 Process
 {
     [Xml.XmlNode]$node = $SelectXmlInfo.Node
-    if(!$node) { Write-Error "Could not locate $XPath to append child" ; return }
     [xml]$doc = $node.OwnerDocument
     Write-Verbose "Removing $($node.OuterXml)"
 
@@ -36,10 +35,6 @@ Process
         $doc.Save($xw)
         $xw.Dispose()
         $xw = $null
-    }
-    elseif($Content)
-    {
-        $doc.OuterXml
     }
     else
     {
