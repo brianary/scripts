@@ -1,26 +1,48 @@
 ﻿<#
 .Synopsis
-    Removes a node specified by XPath from an XML file.
+    Removes a node found by Select-Xml from its XML document.
 
-.Parameter XPath
-    An XPath expression that specifies the node to remove.
+.Parameter SelectXmlInfo
+    Output from the Select-Xml cmdlet.
 
-.Parameter Path
-    The XML file to modify.
+.Link
+    Select-Xml
 
 .Example
-    Remove-Xml.ps1 '/configuration/appSettings/add[@name="Version"]' app.config
+    Select-Xml '/configuration/appSettings/add[@key="Version"]' app.config |Remove-Xml.ps1
+
+
+    (Removes the specified node from the file.)
 #>
 
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][string]$XPath,
-[Parameter(Position=1,Mandatory=$true)][string]$Path
+[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
+[Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
 )
-$node = Select-Xml $XPath $Path |% Node
-if(!$node) { Write-Verbose "XPath $XPath not found in $Path" ; return }
-Write-Verbose "Found $XPath in Path $Path"
-Write-Verbose "Removing $($node.OuterXml)"
-$xw = New-Object Xml.XmlTextWriter (Resolve-Path $Path |% Path),([Text.Encoding]::UTF8)
-$node.ParentNode.RemoveChild($node).OwnerDocument.Save($xw)
-$xw.Dispose()
-$xw = $null
+Process
+{
+    [Xml.XmlNode]$node = $SelectXmlInfo.Node
+    if(!$node) { Write-Error "Could not locate $XPath to append child" ; return }
+    [xml]$doc = $node.OwnerDocument
+    Write-Verbose "Removing $($node.OuterXml)"
+
+    [void]$node.ParentNode.RemoveChild($node)
+
+    if($SelectXmlInfo.Path -and $SelectXmlInfo.Path -ne 'InputStream')
+    {
+        $file = $SelectXmlInfo.Path
+        Write-Verbose "Saving '$file'"
+        $xw = New-Object Xml.XmlTextWriter $file,([Text.Encoding]::UTF8)
+        $doc.Save($xw)
+        $xw.Dispose()
+        $xw = $null
+    }
+    elseif($Content)
+    {
+        $doc.OuterXml
+    }
+    else
+    {
+        $doc
+    }
+}
