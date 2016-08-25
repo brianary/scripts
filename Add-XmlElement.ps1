@@ -5,6 +5,14 @@
 .Parameter XmlElement
     The XML element to insert.
 
+.Parameter UnlessXPath
+    An XPath, rooted from the node found by Select-Xml, that will cancel the insert if it exists.
+    Used to prevent inserting XML already in the document.
+
+.Parameter Namespace
+    Specifies a hash table of the namespaces used in UnlessXPath.
+    Use the format @{prefix = 'uri'}.
+
 .Parameter SelectXmlInfo
     Output from the Select-Xml cmdlet.
 
@@ -31,7 +39,8 @@ Process
     {throw "Node at '$($SelectXmlInfo.Pattern)' is '$($SelectXmlInfo.Node.NodeType)', not 'Element'."}
     [Xml.XmlElement]$node = $SelectXmlInfo.Node
     if(!$node) {throw "Could not locate $XPath to append child"}
-    if($UnlessXPath -and (Select-Xml $UnlessXPath $node)) { Write-Verbose "Found $UnlessXPath in $($SelectXmlInfo.Pattern)"; return }
+    $ns = if($Namespace){@{Namespace=$ns}}else{@{}}
+    if($UnlessXPath -and (Select-Xml $UnlessXPath $node @ns)) { Write-Verbose "Found $UnlessXPath in $($SelectXmlInfo.Pattern)"; return }
     [xml]$doc = $node.OwnerDocument
 
     foreach($element in ($XmlElement |% DocumentElement))
