@@ -4,7 +4,7 @@ This repo contains a collection of generally useful scripts (mostly Windows, mos
 
 PowerShell Scripts
 ------------------
-- **Add-XmlElement.ps1**: Insert an XML element into an XML document as a child of a node found by Select-Xml.
+- **Add-Xml.ps1**: Insert XML into an XML document relative to a node found by Select-Xml.
 - **Connect-Database.ps1**: Creates a SqlConnection from a connection string name, server name, or connection string, and opens it.
 - **ConvertFrom-EscapedXml.ps1**: Parse escaped XML into XML and serialize it.
 - **ConvertFrom-XmlElement.ps1**: Converts named nodes of an element to properties of a PSObject, recursively.
@@ -33,6 +33,7 @@ PowerShell Scripts
 - **Get-NetFrameworkVersions.ps1**: Determine which .NET Frameworks are installed on the requested system.
 - **Get-SystemDetails.ps1**: Collects some useful system hardware and operating system details via WMI.
 - **Grant-CertificateAccess.ps1**: Grants certificate file read access to an app pool or user.
+- **Import-Variables.ps1**: Creates local variables from records or hashtables.
 - **Install-PsAd.ps1**: Installs the PowerShell ActiveDirectory module.
 - **Install-SqlPs.ps1**: Installs SQLPS module and dependencies.
 - **Invoke-DbCommand.ps1**: Queries a database and returns the results.
@@ -55,7 +56,6 @@ PowerShell Scripts
 - **Test-NewerFile.ps1**: Returns true if the difference file is newer than the reference file.
 - **Test-Xml.ps1**: Try parsing text as XML.
 - **Use-Command.ps1**: Checks for the existence of the given command, and adds if missing and a source is defined.
-- **Use-NamedMatches.ps1**: Creates local variables from named matches in $Matches.
 - **Use-SeqServer.ps1**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 
-<!-- generated 08/24/2016 23:26:08 -->
+<!-- generated 08/29/2016 16:27:51 -->
