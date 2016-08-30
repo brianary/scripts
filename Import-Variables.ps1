@@ -1,6 +1,6 @@
 ﻿<#
 .Synopsis
-    Creates local variables from records or hashtables.
+    Creates local variables from a data row or hashtable.
 
 .Parameter DataRow
     DataRows may be piped into this script from the SQLPS Import-Sqlcmd cmdlet to create variables from record fields.
@@ -30,13 +30,15 @@ Process
 {
     if($Hashtable)
     {
+        Write-Verbose "Importing $($Hashtable.Count) Hashtable entries"
         $Hashtable.Keys |
             ? {$_ -is [string]} |
             % {Set-Variable $_ $Hashtable.$_ -Scope 1}
     }
     elseif($DataRow)
     {
-        $row=$_
+        Write-Verbose "Importing $($DataRow.Table.Columns.Count) DataRow columns"
+        $row = $_
         Get-Member -InputObject $DataRow -MemberType Properties |
             % {Set-Variable $_.Name $row[$_.Name] -Scope 1}
     }
