@@ -33,7 +33,7 @@ PowerShell Scripts
 - **Get-NetFrameworkVersions.ps1**: Determine which .NET Frameworks are installed on the requested system.
 - **Get-SystemDetails.ps1**: Collects some useful system hardware and operating system details via WMI.
 - **Grant-CertificateAccess.ps1**: Grants certificate file read access to an app pool or user.
-- **Import-Variables.ps1**: Creates local variables from records or hashtables.
+- **Import-Variables.ps1**: Creates local variables from a data row or hashtable.
 - **Install-PsAd.ps1**: Installs the PowerShell ActiveDirectory module.
 - **Install-SqlPs.ps1**: Installs SQLPS module and dependencies.
 - **Invoke-DbCommand.ps1**: Queries a database and returns the results.
@@ -58,4 +58,4 @@ PowerShell Scripts
 - **Use-Command.ps1**: Checks for the existence of the given command, and adds if missing and a source is defined.
 - **Use-SeqServer.ps1**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 
-<!-- generated 08/29/2016 16:27:51 -->
+<!-- generated 08/30/2016 09:43:55 -->
