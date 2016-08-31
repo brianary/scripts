@@ -49,7 +49,7 @@ Process
     [Xml.XmlNode]$node = $SelectXmlInfo.Node
     if(!$node.ParentNode -and $Position -in 'InsertAfter','InsertBefore')
     {throw "Unable to $Position node without parent: $($node.OuterXml)"}
-    $ns = if($Namespace){@{Namespace=$ns}}else{@{}}
+    $ns = if($Namespace){@{Namespace=$Namespace}}else{@{}}
     if($UnlessXPath -and (Select-Xml $UnlessXPath $node @ns)) { Write-Verbose "Found $UnlessXPath in $($SelectXmlInfo.Pattern)"; return }
     [xml]$doc = $node.OwnerDocument
 
