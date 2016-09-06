@@ -25,6 +25,7 @@ Process
     [xml]$doc = $node.OwnerDocument
     Write-Verbose "Removing $($node.OuterXml)"
 
+    if($node.ParentNode -eq $null) {throw 'Unable to remove root node.'}
     [void]$node.ParentNode.RemoveChild($node)
 
     if($SelectXmlInfo.Path -and $SelectXmlInfo.Path -ne 'InputStream')
