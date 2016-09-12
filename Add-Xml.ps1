@@ -44,8 +44,6 @@
 )
 Process
 {
-    if($SelectXmlInfo.Node.NodeType -ne 'Element')
-    {throw "Node at '$($SelectXmlInfo.Pattern)' is '$($SelectXmlInfo.Node.NodeType)', not 'Element'."}
     [Xml.XmlNode]$node = $SelectXmlInfo.Node
     if(!$node.ParentNode -and $Position -in 'InsertAfter','InsertBefore')
     {throw "Unable to $Position node without parent: $($node.OuterXml)"}
