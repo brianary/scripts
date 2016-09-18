@@ -17,6 +17,7 @@
     2016          13.0.1601.5    https://www.microsoft.com/download/details.aspx?id=52676
     2014          12.0.2000.8    https://www.microsoft.com/download/details.aspx?id=42295
     2012          11.0.2100.60   https://www.microsoft.com/download/details.aspx?id=29065
+    2008R2        10.50.1600.1   https://www.microsoft.com/download/details.aspx?id=16978
     2008sp2       10.00.4000.00  https://www.microsoft.com/download/details.aspx?id=6375
     2005/Feb2007  9.00.3042 *    https://www.microsoft.com/download/details.aspx?id=24793
     
