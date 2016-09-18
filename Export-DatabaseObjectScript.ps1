@@ -48,9 +48,6 @@
     Provides a list of boolean SMO ScriptingOptions properties to set to true.
 
 .Component
-    Microsoft.SqlServer.ConnectionInfo
-
-.Component
     Microsoft.SqlServer.Smo
 
 .Component
@@ -70,10 +67,12 @@
 
 .Example
     Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath Sales.Customer.sql
+
     Exports table creation script to Sales.Customer.sql as UTF8.
 
 .Example
     Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath DropCustomer.sql ScriptDrops WithDependencies SchemaQualify IncludeDatabaseContext
+
     Exports drop script of Sales.Customer and dependencies to DropCustomer.sql.
 #>
 
