@@ -54,23 +54,7 @@ EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers S
 '@.Trim() -split '\W+')
 )
 
-# load SMO
-try
-{
-    [void][Microsoft.SqlServer.Management.Smo.Server]
-    [void][Microsoft.SqlServer.Management.Smo.ScriptingOptions]
-    Write-Verbose "Types already loaded."
-}
-catch
-{
-    $sqlsdk = Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft SQL Server\Microsoft.SqlServer.Smo.dll","$env:ProgramFiles\Microsoft SQL Server\Microsoft.SqlServer.Smo.dll" -Recurse |
-        ForEach-Object FullName |
-        Select-Object -Last 1 |
-        Split-Path
-    Write-Verbose "Found SQL SDK DLLs in $sqlsdk"
-    Add-Type -Path "$sqlsdk\Microsoft.SqlServer.Smo.dll"
-    Add-Type -Path "$sqlsdk\Microsoft.SqlServer.SqlEnum.dll"
-}
+Use-SqlSmo.ps1
 
 # connect to database
 $srv = New-Object Microsoft.SqlServer.Management.Smo.Server($Server)
