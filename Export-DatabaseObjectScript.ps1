@@ -54,6 +54,9 @@
     Microsoft.SqlServer.SqlEnum
 
 .Link
+    Use-SqlSmo.ps1
+
+.Link
     Export-DatabaseScripts.ps1
 
 .Link
