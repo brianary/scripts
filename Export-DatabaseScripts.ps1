@@ -38,6 +38,9 @@
     (outputs SQL scripts to files)
 
 .Link
+    Use-SqlSmo.ps1
+
+.Link
     https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
 
 .Link
