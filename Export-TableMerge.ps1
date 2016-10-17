@@ -2,133 +2,63 @@
 .Synopsis
     Exports table data as a T-SQL MERGE statement.
 
-.Parameter Connection
-    A DbConnection object used for the query.
-
-.Parameter ConnectionName
-    The name of a connection string from the ConfigurationManager's ConnectionStrings,
-    used to create a connection for the query.
-
-.Parameter Server
+.Parameter ServerInstance
     The name of a server (and optional instance) to connect and use for the query.
     May be used with optional Database, Credential, and ConnectionProperties parameters.
 
 .Parameter Database
     The the database to connect to on the server.
 
-.Parameter Credential
-    The credential to use when connecting to the server.
-    If no credential is specified, a trusted connection is used.
-
-.Parameter ConnectionProperties
-    Additional connection properties to use when connecting to the server, such as Timeout.
-
-.Parameter ConnectionString
-    A complete connection string to create a connection to use for the query.
-
-.Parameter ProviderName
-    The database provider to use. System.Data.SqlClient by default.
-
-.Parameter Schema
-    The name of the table's schema.
-
 .Parameter Table
     The name of the table to export.
 
-.Example
-    Export-TableMerge -ConnectionName pubs -Table authors |Out-File authors.sql
+.Parameter Schema
+    Optional name of the table's schema.
+    By default, uses the user's default schema defined in the database (typically dbo).
+
+.Parameter UseIdentityAsKey
+    Treat a non-key identity column as part of the key, since it can't be updated as a data column.
+
+    Non-key identity columns are very rare, but if one is detected and this switch is not specified,
+    a warning will be generated and the column will be ignored entirely for updates, and not used as
+    either a key to match on or a data column to update.
+
+.Link
+    Invoke-Sqlcmd
+
+.Link
+    SQLPS
+
+.Link
+    https://msdn.microsoft.com/library/hh245198.aspx
 
 .Example
-    Export-TableMerge $conn -Table employee |Out-File employee.sql
+    Export-TableMerge $server pubs employee |Out-File employee.sql
 
 .Example
     Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -Schema Production -Table Product |Out-File -Encoding utf8 Data\Production.Product.sql
 #>
 
-#requires -version 3
+#Requires -Version 3
+#Requires -Module SQLPS
 [CmdletBinding()] Param(
-[Parameter(ParameterSetName='Connection',Position=0,Mandatory=$true)]
-[Data.Common.DbConnection]$Connection,
-[Parameter(ParameterSetName='ConnectionName',Position=0,Mandatory=$true)]
-[Alias('Name','N')][string]$ConnectionName,
-[Parameter(ParameterSetName='Server',Position=0,Mandatory=$true)]
-[Alias('ComputerName','CN','S')][string]$Server,
-[Parameter(ParameterSetName='Server',Position=1)][Alias('D')][string]$Database,
-[Parameter(ParameterSetName='Server')][PSCredential]$Credential,
-[Parameter(ParameterSetName='Server')]
-[Alias('ConnProps','CP')][Collections.Hashtable]$ConnectionProperties = @{},
-[Parameter(ParameterSetName='ConnectionString',Position=0,Mandatory=$true)]
-[Alias('CS')][string]$ConnectionString,
-[Parameter(ParameterSetName='Server')]
-[Parameter(ParameterSetName='ConnectionString')]
-[string]$ProviderName = 'System.Data.SqlClient',
-[Parameter(ParameterSetName='Connection')]
-[Parameter(ParameterSetName='ConnectionName')]
-[Parameter(ParameterSetName='Server')]
-[Parameter(ParameterSetName='ConnectionString')]
-[string]$Schema = 'dbo',
-[Parameter(ParameterSetName='Connection',Mandatory=$true)]
-[Parameter(ParameterSetName='ConnectionName',Mandatory=$true)]
-[Parameter(ParameterSetName='Server',Mandatory=$true)]
-[Parameter(ParameterSetName='ConnectionString',Mandatory=$true)]
-[string]$Table
+[Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string]$ServerInstance,
+[Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string]$Database,
+[Parameter(Position=2,Mandatory=$true)][string]$Table,
+[Parameter(Position=3)][string]$Schema,
+[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
+[switch]$UseIdentityInKey
 )
-try{[void][Configuration.ConfigurationManager]}catch{Add-Type -AN System.Configuration}
-try{[void][Data.Common.DbProviderFactories]}catch{Add-Type -AN System.Data}
 
-$tempconn = !$Connection
-if($tempconn)
-{
-    $Connection =
-        if($ConnectionName)
-        {
-            Connect-Database.ps1 -ConnectionName $ConnectionName
-            $ProviderName = [Configuration.ConfigurationManager]::ConnectionStrings[$ConnectionName].ProviderName
-        }
-        elseif($ConnectionString)
-        {
-            Connect-Database.ps1 -ConnectionString $ConnectionString -ProviderName $ProviderName
-        }
-        else
-        {
-            $connargs = @{Server=$Server}
-            if($Database) {$connargs.Add('Database',$Database)}
-            if($Database) {$connargs.Add('Credential',$Credential)}
-            if($Database) {$connargs.Add('Properties',$ConnectionProperties)}
-            Connect-Database.ps1 @connargs
-        }
-}
-$cb = [Data.Common.DbProviderFactories]::GetFactory($ProviderName).CreateCommandBuilder()
-$fqtn = '{0}.{1}' -f $cb.QuoteIdentifier($Schema),$cb.QuoteIdentifier($Table)
-$schemaname = "'" + ($Schema -replace "'","''") + "'"
-$tablename = "'" + ($Table -replace "'","''") + "'"
-
-$pk = Invoke-DbCommand.ps1 $Connection -params @{schema=$Schema;table=$Table} -q @'
-select kcu.COLUMN_NAME
-  from INFORMATION_SCHEMA.TABLE_CONSTRAINTS as tc
-  join INFORMATION_SCHEMA.KEY_COLUMN_USAGE as kcu
-    on kcu.CONSTRAINT_SCHEMA = tc.CONSTRAINT_SCHEMA
-   and kcu.CONSTRAINT_NAME = tc.CONSTRAINT_NAME
-   and kcu.TABLE_SCHEMA = tc.TABLE_SCHEMA
-   and kcu.TABLE_NAME = tc.TABLE_NAME
- where tc.TABLE_SCHEMA = @schema
-   and tc.TABLE_NAME = @table
-   and tc.CONSTRAINT_TYPE = 'PRIMARY KEY' -- UNIQUE?
- order by kcu.ORDINAL_POSITION;
-'@ |% {$cb.QuoteIdentifier($_.COLUMN_NAME)}
-Write-Verbose "Primary key: $pk"
-$pkjoin = ($pk |% {"source.{0} = target.{0}" -f $_}) -join ' AND '
-
-$data = Invoke-DbCommand.ps1 $Connection -q "select * from $fqtn"
-if($tempconn) {Disconnect-Database.ps1 $Connection}
-if(!$data) {Write-Warning "No data in table."; return}
-$columns = $data[0].Table.Columns |% {$cb.QuoteIdentifier($_.ColumnName)}
-$dataupdates = ($columns |? {$pk -notcontains $_} |% {"{0} = source.{0}" -f $_}) -join ",`n"
-$dataupdates =
-    if($dataupdates) {"when matched then`nupdate set $dataupdates"}
-    else {"-- skip 'matched' condition (no non-key columns to update)"}
-$targetlist = $columns -join ','
-$sourcelist = ($columns |% {"source.{0}" -f $_}) -join ','
+$EOL = "
+"
+$PSDefaultParameterValues = 
+    if($ConnectionString) {@{'Invoke-Sqlcmd:ConnectionString'=$ConnectionString}}
+    else
+    {@{
+        'Invoke-Sqlcmd:ServerInstance' = $ServerInstance
+        'Invoke-Sqlcmd:Database'       = $Database
+    }}
 
 function Format-SqlValue($value)
 {
@@ -139,7 +69,81 @@ function Format-SqlValue($value)
     elseif($value -is [guid]) {"'{0}'" -f $value}
     else {$value}
 }
-$data = ($data |% {($_.ItemArray |% {Format-SqlValue $_}) -join ','} |% {"($_)"}) -join ",`n"
+
+$tablename = Format-SqlValue $Table
+if(!$Schema){$Schema = Invoke-Sqlcmd "select object_schema_name(object_id($tablename)) as schema_name" |% schema_name}
+$schemaname = Format-SqlValue $Schema
+$fqtn = Invoke-Sqlcmd "select quotename($schemaname) + '.' + quotename($tablename) as fqtn" |% fqtn
+$rowcount = Invoke-Sqlcmd "select count(*) rows from $fqtn" |% rows
+if($rowcount -gt 10000) {Write-Warning "The table $fqtn contains $rowcount rows, which may not export well as a merge script."}
+else {Write-Verbose "Exporting $rowcount rows from table $fqtn."}
+
+$pk = Invoke-Sqlcmd @"
+select quotename(kcu.COLUMN_NAME) as COLUMN_NAME
+  from INFORMATION_SCHEMA.TABLE_CONSTRAINTS as tc
+  join INFORMATION_SCHEMA.KEY_COLUMN_USAGE as kcu
+    on kcu.CONSTRAINT_SCHEMA = tc.CONSTRAINT_SCHEMA
+   and kcu.CONSTRAINT_NAME = tc.CONSTRAINT_NAME
+   and kcu.TABLE_SCHEMA = tc.TABLE_SCHEMA
+   and kcu.TABLE_NAME = tc.TABLE_NAME
+ where tc.TABLE_SCHEMA = $schemaname
+   and tc.TABLE_NAME = $tablename
+   and tc.CONSTRAINT_TYPE = 'PRIMARY KEY' -- UNIQUE?
+ order by kcu.ORDINAL_POSITION;
+"@ |% COLUMN_NAME
+$nonkeyidentity = Invoke-Sqlcmd @"
+  with PrimaryKeyColumns as (
+select kcu.COLUMN_NAME
+  from INFORMATION_SCHEMA.TABLE_CONSTRAINTS as tc
+  join INFORMATION_SCHEMA.KEY_COLUMN_USAGE as kcu
+    on kcu.CONSTRAINT_SCHEMA = tc.CONSTRAINT_SCHEMA
+   and kcu.CONSTRAINT_NAME = tc.CONSTRAINT_NAME
+   and kcu.TABLE_SCHEMA = tc.TABLE_SCHEMA
+   and kcu.TABLE_NAME = tc.TABLE_NAME
+ where tc.TABLE_SCHEMA = $schemaname
+   and tc.TABLE_NAME = $tablename
+   and tc.CONSTRAINT_TYPE = 'PRIMARY KEY'
+)
+select quotename(c.COLUMN_NAME) as COLUMN_NAME
+  from INFORMATION_SCHEMA.COLUMNS c
+ where c.TABLE_SCHEMA = $schemaname
+   and c.TABLE_NAME = $tablename
+   and c.COLUMN_NAME not in (select COLUMN_NAME from PrimaryKeyColumns)
+   and columnproperty(object_id(c.TABLE_NAME), c.COLUMN_NAME,'IsIdentity') = 1;
+"@ |% COLUMN_NAME
+if($nonkeyidentity)
+{
+    Write-Verbose "Non-primary-key identity column detected: $nonkeyidentity"
+    $altkey = $pk + $nonkeyidentity
+    if($UseIdentityInKey) {$pk = $altkey}
+    else
+    {
+        Write-Warning @"
+Non-key IDENTITY column $nonkeyidentity cannot be updated and will be ignored.
+Specify -UseIdentityInKey to include it in the primary key.
+"@
+    }
+}
+Write-Verbose "Primary key: $pk"
+$pkjoin = ($pk |% {"source.{0} = target.{0}" -f $_}) -join ' AND '
+
+$data = Invoke-Sqlcmd "select * from $fqtn"
+if(!$data) {throw "No data in table."}
+$columns = Invoke-Sqlcmd @"
+select quotename(COLUMN_NAME) as COLUMN_NAME
+  from INFORMATION_SCHEMA.COLUMNS
+ where TABLE_SCHEMA = $schemaname
+   and TABLE_NAME = $tablename
+ order by ORDINAL_POSITION;
+"@ |% COLUMN_NAME
+$dataupdates = ($columns |? {$_ -notin $altkey} |% {"{0} = source.{0}" -f $_}) -join ",$EOL"
+$dataupdates =
+    if($dataupdates) {"when matched then${EOL}update set $dataupdates"}
+    else {"-- skip 'matched' condition (no non-key columns to update)"}
+$targetlist = $columns -join ','
+$sourcelist = ($columns |% {"source.{0}" -f $_}) -join ','
+
+$data = ($data |% {($_.ItemArray |% {Format-SqlValue $_}) -join ','} |% {"($_)"}) -join ",$EOL"
 
 @"
 if exists (select * from information_schema.columns where table_schema = $schemaname and table_name = $tablename
