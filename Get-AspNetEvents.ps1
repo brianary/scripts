@@ -62,14 +62,14 @@ $order =
 $RemoveFields= '_','ThreadAccountName','ReqThreadAccountName' # blank or redundant fields
 $BoolFields= 'IsAuthenticated','IsImpersonating'
 $IntFields= 'EventOccurrence','EventSequence','EventCode','EventDetailCode','ProcessId','ThreadId'
-$query = [xml](@'
+$query = [xml]@"
 <QueryList>
     <Query Id="0" Path="Application">
         <Select Path="Application">*[System[Provider[@Name='Active Server Pages' 
                                                      or @Name='ASP.NET 2.0.50727.0' 
                                                      or @Name='ASP.NET 4.0.30319.0']
-                                            and TimeCreated[@SystemTime &gt;= '{0:yyyy-MM-ddTHH:mm:ss.000Z}' 
-                                                            and @SystemTime &lt;= '{1:yyyy-MM-ddTHH:mm:ss.999Z}']]]</Select>
+                                            and TimeCreated[@SystemTime &gt;= '$(Get-Date $After.ToUniversalTime() -Format yyyy-MM-ddTHH:mm:ss.000Z)' 
+                                                            and @SystemTime &lt;= '$(Get-Date $Before.ToUniversalTime() -Format yyyy-MM-ddTHH:mm:ss.999Z)']]]</Select>
         <Suppress Path="Application">*[System[EventID=1017 
                                               or EventID=1019 
                                               or EventID=1023 
@@ -78,7 +78,7 @@ $query = [xml](@'
                                               or EventID=1077]]</Suppress>
     </Query>
 </QueryList>
-'@ -f $After.ToUniversalTime(),$Before.ToUniversalTime())
+"@
 Write-Verbose $query.OuterXml
 $ComputerName |
     % {Get-WinEvent $query -CN $_} |
@@ -86,6 +86,7 @@ $ComputerName |
         $fields = @{EntryType=$_.LevelDisplayName;Source=$_.ProviderName}
         if($_.Properties.Count -lt 2 -or !$IdFields.Contains($_.Id))
         { # not structured nicely
+            Write-Verbose "Unstructured:`n$($_.Message)"
             if($_.Message -match '(?m)^Application ID: (?<AppId>.+)$'){$fields.AppId=$Matches.AppId.TrimEnd()}
             if($_.Message -match '(?m)^Process ID: (?<ProcessId>.+)$'){$fields.ProcessId=[int]$Matches.ProcessId.TrimEnd()}
             if($_.Message -match '(?m)^Exception: (\w+\.)*(?<ExceptionType>\w+)\s*$'){$fields.ExceptionType=$Matches.ExceptionType}
@@ -109,6 +110,7 @@ $ComputerName |
             if($fields.ExceptionMessage -and $fields.StackTrace)
             { $fields.ExceptionMessage= $fields.ExceptionMessage.Replace($fields.StackTrace,'').TrimEnd() } # don't need stack trace twice
         }
+        if($fields.Count -eq 2) {return}
         $ordered = [ordered]@{}
         $order |? {$fields.ContainsKey($_)} |% {[void]$ordered.Add($_,$fields.$_)}
         $event = New-Object PSObject -Property $ordered

@@ -62,7 +62,7 @@ Begin
         Write-Progress $action "Parsing package files: found $count" -CurrentOperation $file -PercentComplete (25*$i++/$max+50)
         $p = Select-Xml /packages/package $file |% Node
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        $packages.Add($file,@{})
+        [void]$packages.Add($file,@{})
         $p |% {[void]$packages.$file.Add($_.id,$_.version)}
         $count += $packages.$file.Count
     }
@@ -74,7 +74,7 @@ Begin
         if(!(Get-Member -InputObject $j -Name dependencies)) {Write-Verbose "No dependencies found in $file"; continue}
         $p = Get-Member -InputObject $j.dependencies -MemberType NoteProperty |% Name
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        $packages.Add($file,@{})
+        [void]$packages.Add($file,@{})
         $p |% {[void]$packages.$file.Add($_,$j.dependencies.$_)}
         $count += $packages.$file.Count
     }
