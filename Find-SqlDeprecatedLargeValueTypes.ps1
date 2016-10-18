@@ -67,13 +67,7 @@
       * TODO
 
 .Link
-    SQLPS
-
-.Link
     Invoke-Sqlcmd
-
-.Link
-    Install-SqlPs.ps1
 
 .Example
     Find-SqlDeprecatedLargeValueTypes.ps1 '(localdb)\ProjectsV13' pubs
@@ -84,7 +78,7 @@
 #>
 
 #requires -Version 3
-#requires -Module SQLPS
+#requires -Module SqlServer
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $ServerInstance,
 [Parameter(Position=1,Mandatory=$true)][string] $Database
