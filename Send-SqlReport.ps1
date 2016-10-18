@@ -16,15 +16,19 @@
 
 .Parameter From
     The from address to use for the email.
-    The default is to use the value from the configuration value:
+    The default is to use $PSEmailServer.
+    If that is missing, it will be populated by the value from the 
+    configuration value:
 
     <system.net>
         <mailSettings>
           <smtp from="source@example.org" deliveryMethod="network">
-		      <network host="mail.example.org" />
+		      <network host="mail.example.org" enableSsl="true" />
           </smtp>
         </mailSettings>
     </system.net>
+
+    (If enableSsl is set to true, SSL will be used to send the report.)
 
 .Parameter Timeout
     The timeout to use for the query, in seconds. The default is 90.
@@ -43,6 +47,14 @@
 
 .Parameter Priority
     The priority of the email, one of: High, Low, Normal
+
+.Parameter UseSsl
+    Indicates that SSL should be used when sending the message.
+
+    (See the From parameter for an alternate SSL flag.)
+
+.Link
+    Send-MailMessage
 #>
 
 #requires -version 2
@@ -58,6 +70,7 @@
 [string[]]$Cc,
 [string[]]$Bcc,
 [Net.Mail.MailPriority]$Priority,
+[switch]$UseSsl,
 [uri]$SeqUrl = 'https://seqlog/'
 )
 try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration} # get access to the config connection strings
@@ -89,8 +102,13 @@ if(!$From)
 }
 if(!$PSEmailServer)
 {
-    try{$PSEmailServer=[Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp/network').Host}
+    try{$PSEmailServer=[Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp').Network.Host}
     catch{Send-SeqScriptEvent.ps1 'Getting email server' $_ Warning -InvocationScope 2}
+}
+if(!$UseSsl)
+{
+    try{$UseSsl=[Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp').Network.EnableSsl}
+    catch{Send-SeqScriptEvent.ps1 'Getting EnableSsl setting ' $_ Warning -InvocationScope 2}
 }
 try
 {
@@ -125,6 +143,7 @@ try
         if($Cc) { $Msg.Cc= $Cc }
         if($Bcc) { $Msg.Bcc= $Bcc }
         if($Priority) { $Msg.Priority= $Priority }
+        if($UseSsl) { $Msg.UseSsl = $true }
         if($PSCmdlet.ShouldProcess("Message:`n$(New-Object PSObject -Property $Msg|Format-List|Out-String)`n",'Send message'))
         { Send-MailMessage @Msg } # splat the arguments hashtable
     }
