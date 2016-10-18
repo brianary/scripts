@@ -23,6 +23,11 @@
     
     * no SqlServer module/SQLPS/SMO/SQLCLR
 
+    Starting with version 13.0.15900.1, the module is installed with SSMS 2016 16.4.1.
+    This puts the SqlServer module in C:\Program Files\WindowsPowerShell\Modules,
+    which may need to be prepended to the PSModulePath environment variable after
+    installation. (This is not yet automated.)
+
 .Link
     Start-Process
 
@@ -34,6 +39,9 @@
 
 .Link
     https://www.microsoft.com/download/details.aspx?id=52676
+
+.Link
+    https://msdn.microsoft.com/library/mt238290.aspx
 
 .Example
     Install-SqlServerModule.ps1
