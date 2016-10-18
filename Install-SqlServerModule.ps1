@@ -26,7 +26,7 @@
     Starting with version 13.0.15900.1, the module is installed with SSMS 2016 16.4.1.
     This puts the SqlServer module in C:\Program Files\WindowsPowerShell\Modules,
     which may need to be prepended to the PSModulePath environment variable after
-    installation. (This is not yet automated.)
+    installation.
 
 .Link
     Start-Process
@@ -60,7 +60,8 @@
 #requires -RunAsAdministrator
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)]Param(
 [version]$Version = '13.0.1601.5',
-[uri]$Source = 'https://download.microsoft.com/download/8/7/2/872BCECA-C849-4B40-8EBE-21D48CDF1456/ENU/x64/'
+[uri]$Source = 'https://download.microsoft.com/download/8/7/2/872BCECA-C849-4B40-8EBE-21D48CDF1456/ENU/x64/',
+[uri]$SsmsDownload = 'http://download.microsoft.com/download/7/8/0/7808D223-499D-4577-812B-9A2A60048841/SSMS-Setup-ENU.exe'
 )
 
 function Test-WrongSnapin([IO.FileInfo]$Path)
@@ -142,9 +143,9 @@ function Download-Installer([string]$msi)
     else {Invoke-WebRequest $msiurl.AbsoluteUri -OutFile $msi}
 }
 
-function Install-NewModule
+function Install-NewSqlPs
 {
-    if(Get-Module SqlServer -ListAvailable -Refresh)
+    if(Get-Module SQLPS -ListAvailable -Refresh |? {!(Test-OldModule $_)})
     {
         Write-Host "You already have the latest SqlServer module." -ForegroundColor Green -BackgroundColor DarkMagenta
         return
@@ -158,8 +159,29 @@ function Install-NewModule
         Remove-Item $msi
     }
     Pop-Location
+}
+
+function Install-NewSqlServerModule
+{
+    $modulesdir = "$env:ProgramFiles\WindowsPowerShell\Modules"
+    if(Test-Path $modulesdir\SqlServer -PathType Container)
+    {
+        $installedversion = Get-ChildItem $modulesdir\SqlServer\Microsoft.SqlServer.Management.PSSnapins.dll |% VersionInfo |% FileVersion
+        if($installedversion -ge [version]'13.0.15900.1')
+        {
+            Write-Host "You already have the latest SqlServer module." -ForegroundColor Green -BackgroundColor DarkMagenta
+            return
+        }
+    }
+    if(!($PSCmdlet.ShouldProcess(${setup.exe},'Install'))) {return}
+    ${setup.exe} = Join-Path "$env:USERPROFILE\Downloads" ($SsmsDownload.Segments |select -Last 1)
+    Invoke-WebRequest $SsmsDownload.AbsoluteUri -OutFile ${setup.exe}
+    Start-Process ${setup.exe} '/install','/passive' -NoNewWindow -Wait
+    [Environment]::SetEnvironmentVariable('PSModulePath',
+        $modulesdir +';'+ [Environment]::GetEnvironmentVariable('PSModulePath','Machine'))
     Import-Module SqlServer
 }
 
 Remove-AnyOldModule
-Install-NewModule
+Install-NewSqlPs
+Install-NewSqlServerModule
