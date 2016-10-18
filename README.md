@@ -5,11 +5,9 @@ This repo contains a collection of generally useful scripts (mostly Windows, mos
 PowerShell Scripts
 ------------------
 - **Add-Xml.ps1**: Insert XML into an XML document relative to a node found by Select-Xml.
-- **Connect-Database.ps1**: Creates a SqlConnection from a connection string name, server name, or connection string, and opens it.
 - **ConvertFrom-EscapedXml.ps1**: Parse escaped XML into XML and serialize it.
 - **ConvertFrom-XmlElement.ps1**: Converts named nodes of an element to properties of a PSObject, recursively.
 - **Copy-SchTasks.ps1**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
-- **Disconnect-Database.ps1**: Disposes a database connection, such as opened by Connect-Database.
 - **Export-DatabaseObjectScript.ps1**: Exports MS SQL script for an object from the given server.
 - **Export-DatabaseScripts.ps1**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **Export-Readme.ps1**: Generate README.md file for the scripts repo.
@@ -36,9 +34,6 @@ PowerShell Scripts
 - **Import-Variables.ps1**: Creates local variables from a data row or hashtable.
 - **Install-PsAd.ps1**: Installs the PowerShell ActiveDirectory module.
 - **Install-SqlPs.ps1**: Installs SQLPS module and dependencies.
-- **Invoke-DbCommand.ps1**: Queries a database and returns the results.
-- **Invoke-Sql.ps1**: Runs a SQL script with verbose output and without changing the directory.
-- **Invoke-SqlcmdScript.ps1**: Implements SQL script with verbose output.
 - **Measure-Indents.ps1**: Measures the indentation characters used in a text file.
 - **New-DbProviderObject.ps1**: Create a common database object.
 - **Optimize-Path.ps1**: Sorts, prunes, and normalizes both user and system Path entries.
@@ -57,5 +52,6 @@ PowerShell Scripts
 - **Test-Xml.ps1**: Try parsing text as XML.
 - **Use-Command.ps1**: Checks for the existence of the given command, and adds if missing and a source is defined.
 - **Use-SeqServer.ps1**: Set the default Server and ApiKey for Send-SeqEvent.ps1
+- **Use-SqlSmo.ps1**: Find and load installed SQL SMO types.
 
-<!-- generated 08/30/2016 09:43:55 -->
+<!-- generated 10/18/2016 07:05:01 -->
