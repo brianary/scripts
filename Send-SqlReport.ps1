@@ -57,12 +57,16 @@
     Send-MailMessage
 #>
 
-#requires -version 2
+#Requires -Version 3
+#Requires -Module SqlServer
 [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='None')] Param(
 [Parameter(Position=0,Mandatory=$true)][string]$Subject,
 [Parameter(Position=1,Mandatory=$true)][string[]]$To,
-[Parameter(Position=2,Mandatory=$true)][string]$ConnectionName,
-[Parameter(Position=3,Mandatory=$true)][string]$Sql,
+[Parameter(Position=2,Mandatory=$true)][string]$Sql,
+[Parameter(ParameterSetName='ServerInstance',Position=3,Mandatory=$true)][string]$ServerInstance,
+[Parameter(ParameterSetName='ServerInstance',Position=4,Mandatory=$true)][string]$Database,
+[Parameter(ParameterSetName='ConnectionString',Position=3,Mandatory=$true)][string]$ConnectionString,
+[Parameter(ParameterSetName='ConnectionName',Position=3,Mandatory=$true)][string]$ConnectionName,
 [string]$From,
 [int]$Timeout= 90,
 [string]$PreContent= ' ',
@@ -73,53 +77,33 @@
 [switch]$UseSsl,
 [uri]$SeqUrl = 'https://seqlog/'
 )
-try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration} # get access to the config connection strings
+
 Use-SeqServer.ps1 $SeqUrl
+Use-NetMailConfig.ps1
+
+# use the default From host for emails without a host
+$mailhost = ([Net.Mail.MailAddress]$PSDefaultParameterValues['Send-MailMessage:From']).Host |Out-String
+if($mailhost)
+{
+    $To = $To |% { if($_ -like '*@*'){$_}else{"$_@$mailhost"} } # allow username-only emails
+    $Cc = $Cc |% { if($_ -like '*@*'){$_}elseif($_){"$_@$mailhost"} } # allow username-only emails
+    if($Bcc) { $Bcc = $Bcc |% { if($_ -like '*@*'){$_}else{"$_@$mailhost"} } } # allow username-only emails
+}
+
 try
 {
-    $at =
-        if(Get-Command Get-ADUser -ErrorAction SilentlyContinue)
-        {
-            [Net.Mail.MailAddress]$email = Get-ADUser -Properties mail |% mail
-            if($email.Host) {'@' + $email.Host}
-        }
-    if($at)
+    $query = @{ Query = $Sql }
+    if($ServerInstance) {$query += @{ServerInstance=$ServerInstance;Database=$Database}}
+    elseif($ConnectionString) {[void]$query.Add('ConnectionString',$ConnectionString)}
+    elseif($ConnectionName)
     {
-        $To = $To |% { if($_ -like '*@*'){$_}else{"$_$at"} } # allow username-only emails
-        $Cc = $Cc |% { if($_ -like '*@*'){$_}elseif($_){"$_$at"} } # allow username-only emails
-        if($Bcc) { $Bcc = $Bcc |% { if($_ -like '*@*'){$_}else{"$_$at"} } } # allow username-only emails
+        try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration} # get access to the config connection strings
+        [void]$query.Add('ConnectionString',([Configuration.ConfigurationManager]::ConnectionStrings[$ConnectionName].ConnectionString))
     }
-}
-catch
-{
-    Send-SeqScriptEvent.ps1 'Getting email address' $_ Warning -InvocationScope 2
-}
-if(!$From)
-{
-    try{[Configuration.ConfigurationManager]|Out-Null}catch{Add-Type -AN System.Configuration}
-    try{$From=[Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp').From}
-    catch{Send-SeqScriptEvent.ps1 'Getting from address' $_ Warning -InvocationScope 2}
-}
-if(!$PSEmailServer)
-{
-    try{$PSEmailServer=[Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp').Network.Host}
-    catch{Send-SeqScriptEvent.ps1 'Getting email server' $_ Warning -InvocationScope 2}
-}
-if(!$UseSsl)
-{
-    try{$UseSsl=[Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp').Network.EnableSsl}
-    catch{Send-SeqScriptEvent.ps1 'Getting EnableSsl setting ' $_ Warning -InvocationScope 2}
-}
-try
-{
-    $cmd = New-Object Data.SqlClient.SqlCommand $Sql,(New-Object Data.SqlClient.SqlConnection ([Configuration.ConfigurationManager]::ConnectionStrings[$ConnectionName].ConnectionString))
-    $cmd.CommandTimeout = $Timeout
-    $cmd.Connection.Open() # open the database connection
-    $data = New-Object Data.DataTable
-    $data.Load($cmd.ExecuteReader()) # read the results into a table
-    $cmd.Connection.Dispose() ; $cmd.Dispose() # release all database resources
+    if($Timeout) {[void]$query.Add('QueryTimeout',$Timeout)}
+    [Data.DataRow[]]$data = Invoke-Sqlcmd @query
     $data |Format-Table |Out-String |Write-Verbose
-    if($data.Rows.Count -eq 0) # no rows
+    if($data.Count -eq 0) # no rows
     {
         Write-Verbose "No rows returned."
         Write-EventLog -LogName Application -Source Reporting -EventId 100 -Message "No rows returned for $Subject"
@@ -127,23 +111,24 @@ try
     else
     { # convert the table into HTML (select away the add'l properties the DataTable adds), add some Outlook 2007-compat CSS, email it
         $odd = $false
+        $body = ($data |
+            select ($data[0].Table.Columns |% ColumnName) |
+            ConvertTo-Html -PreContent $PreContent -PostContent $PostContent -Head '<style type="text/css">th,td {padding:2px 1ex 0 2px}</style>' |
+            % {if($odd=!$odd){$_ -replace '^<tr>','<tr style="background:#EEE">'}else{$_}} |
+            % {$_ -replace '<td>(\d+(\.\d+)?)</td>','<td align="right">$1</td>'} |
+            Out-String) -replace '<table>','<table cellpadding="2" cellspacing="0" style="font:x-small ''Lucida Console'',monospace">'
         $Msg = @{
-            To = $To
-            Subject = $Subject
+            To         = $To
+            Subject    = $Subject
             BodyAsHtml = $true
             SmtpServer = $PSEmailServer
-            Body = ($(( `
-                        $data |select ($data.Columns|%{$_.ColumnName}) |ConvertTo-Html -PreContent $PreContent -PostContent $PostContent `
-                -Head '<style type="text/css">th,td {padding:2px 1ex 0 2px}</style>' |
-                        % {if($odd=!$odd){$_ -replace '^<tr>','<tr style="background:#EEE">'}else{$_}} ) -join '' `
-                                -replace '<td>(\d+(\.\d+)?)</td>','<td align="right">$1</td>') `
-                                -replace '<table>','<table cellpadding="2" cellspacing="0" style="font:x-small ''Lucida Console'',monospace">')
+            Body       = $body
         }
-        if($From) { $Msg.From= $From }
-        if($Cc) { $Msg.Cc= $Cc }
-        if($Bcc) { $Msg.Bcc= $Bcc }
+        if($From)     { $Msg.From= $From }
+        if($Cc)       { $Msg.Cc= $Cc }
+        if($Bcc)      { $Msg.Bcc= $Bcc }
         if($Priority) { $Msg.Priority= $Priority }
-        if($UseSsl) { $Msg.UseSsl = $true }
+        if($UseSsl)   { $Msg.UseSsl = $true }
         if($PSCmdlet.ShouldProcess("Message:`n$(New-Object PSObject -Property $Msg|Format-List|Out-String)`n",'Send message'))
         { Send-MailMessage @Msg } # splat the arguments hashtable
     }
@@ -155,11 +140,11 @@ catch # report problems
     if($SeqUrl) { Send-SeqScriptEvent.ps1 'Reporting' $_ Error -InvocationScope 2 }
     # consciously omitting Cc & Bcc
     $Msg = @{
-        To = $To
-        Subject = "$Subject [Error]"
+        To         = $To
+        Subject    = "$Subject [Error]"
         BodyAsHtml = $false
         SmtpServer = $PSEmailServer
-        Body = $_
+        Body       = $_
     }
     if($From) { $Msg.From= $From }
     if($Priority) { $Msg.Priority= $Priority }

@@ -27,9 +27,6 @@
     Invoke-Sqlcmd
 
 .Link
-    SQLPS
-
-.Link
     https://msdn.microsoft.com/library/hh245198.aspx
 
 .Example
@@ -40,7 +37,7 @@
 #>
 
 #Requires -Version 3
-#Requires -Module SQLPS
+#Requires -Module SqlServer
 [CmdletBinding()] Param(
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string]$ServerInstance,
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string]$Database,

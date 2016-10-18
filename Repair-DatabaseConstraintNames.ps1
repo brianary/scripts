@@ -22,7 +22,7 @@
 #>
 
 #Requires -Version 3
-#Requires -Module SQLPS
+#Requires -Module SqlServer
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $ServerInstance,
 [Parameter(Position=1,Mandatory=$true)][string] $Database,

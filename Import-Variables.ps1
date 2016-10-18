@@ -3,7 +3,7 @@
     Creates local variables from a data row or hashtable.
 
 .Parameter DataRow
-    DataRows may be piped into this script from the SQLPS Import-Sqlcmd cmdlet to create variables from record fields.
+    DataRows may be piped into this script from the Import-Sqlcmd cmdlet to create variables from record fields.
 
 .Parameter Hashtable
     A hash of string names to any values to create as variables.
