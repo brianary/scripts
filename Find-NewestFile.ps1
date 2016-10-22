@@ -5,6 +5,12 @@
 .Parameter Files
     The list of files to search.
 
+.Inputs
+    System.IO.FileSystemInfo
+
+.Outputs
+    System.IO.FileSystemInfo
+
 .Link
     Test-NewerFile.ps1
 #>
