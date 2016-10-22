@@ -1,38 +1,84 @@
 ﻿<#
 .Synopsis
-    Insert XML into an XML file as a child of an XPath-specified node.
+    Insert XML into an XML document relative to a node found by Select-Xml.
 
 .Parameter Xml
-    The XML to insert.
+    The XML node(s) to insert.
 
-.Parameter XPath
-    The XML file node to append the XML as a child of.
+.Parameter Position
+    Where to insert the new node(s), relative to the node found by Select-Xml.
 
-.Parameter Path
-    The XML file to modify.
+    * AppendChild: At the end of the node's children. This is the default.
+    * InsertAfter: Following the node.
+    * InsertBefore: Preceding the node.
+    * PrependChild: At the beginning of the node's children.
 
 .Parameter UnlessXPath
-    An XPath that will cancel the insert if it exists.
-    Used to prevent inserting XML that already exists.
+    An XPath, rooted from the node found by Select-Xml, that will cancel the insert if it exists.
+    Used to prevent inserting XML already in the document.
+
+.Parameter Namespace
+    Specifies a hash table of the namespaces used in UnlessXPath.
+    Use the format @{prefix = 'uri'}.
+
+.Parameter SelectXmlInfo
+    Output from the Select-Xml cmdlet.
+
+.Link
+    Select-Xml
 
 .Example
-    Add-Xml.ps1 '<add name="Version" value="2.0"/>' '/configuration/appSettings' app.config '/configuration/appSettings/add[@name="Version"]'
+    Select-Xml /configuration/appSettings app.config |Add-Xml.ps1 '<add key="Version" value="2.0"/>' -UnlessXPath 'add[@key="Version"]'
+
+
+    (Adds element to document file if it is not already there.)
 #>
 
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][xml]$Xml,
-[Parameter(Position=1,Mandatory=$true)][string]$XPath,
-[Parameter(Position=2,Mandatory=$true)][string]$Path,
-[Parameter(Position=3)][Alias('IfMissing')][string]$UnlessXPath
+[Parameter(Position=0,Mandatory=$true)][Alias('Node','Element')][xml[]]$Xml,
+[ValidateSet('AppendChild','InsertAfter','InsertBefore','PrependChild')][string]$Position = 'AppendChild',
+[Parameter(Position=1)][Alias('IfMissing')][string]$UnlessXPath,
+[Parameter(Position=2)][Hashtable]$Namespace,
+[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
+[Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
 )
-if($UnlessXPath -and (Select-Xml $UnlessXPath $Path)) { Write-Verbose "Found $UnlessXPath in $Path" ; return }
-Write-Verbose "XPath $UnlessXPath not found in file $Path"
-$node = Select-Xml $XPath $Path |% Node
-if(!$node) { Write-Error "Could not locate $XPath to append child" ; return }
-Write-Verbose "Appending $($Xml.OuterXml) as child of $XPath in $Path"
-$doc = $node.OwnerDocument
-$xw = New-Object Xml.XmlTextWriter (Resolve-Path $Path |% Path),([Text.Encoding]::UTF8)
-[void]$node.AppendChild($doc.CreateTextNode("`n"))
-$node.AppendChild($doc.ImportNode($Xml.DocumentElement,$true)).OwnerDocument.Save($xw)
-$xw.Dispose()
-$xw = $null
+Process
+{
+    [Xml.XmlNode]$node = $SelectXmlInfo.Node
+    if(!$node.ParentNode -and $Position -in 'InsertAfter','InsertBefore')
+    {throw "Unable to $Position node without parent: $($node.OuterXml)"}
+    $ns = if($Namespace){@{Namespace=$Namespace}}else{@{}}
+    if($UnlessXPath -and (Select-Xml $UnlessXPath $node @ns)) { Write-Verbose "Found $UnlessXPath in $($SelectXmlInfo.Pattern)"; return }
+    [xml]$doc = $node.OwnerDocument
+
+    foreach($adddoc in $Xml)
+    {
+        [Xml.XmlNode[]]$addnodes = $adddoc.ChildNodes
+        if($Position -in 'InsertAfter','PrependChild') {[Array]::Reverse($addnodes)}
+        foreach($addnode in ($addnodes |% {$doc.ImportNode($_,$true)}))
+        {
+            Write-Verbose "$Position $($addnode.OuterXml) to $($SelectXmlInfo.Pattern)"
+            switch($Position)
+            {
+                AppendChild  {[void]$node.AppendChild($addnode)}
+                InsertAfter  {[void]$node.ParentNode.InsertAfter($addnode,$node)}
+                InsertBefore {[void]$node.ParentNode.InsertBefore($addnode,$node)}
+                PrependChild {[void]$node.PrependChild($addnode)}
+            }
+        }
+    }
+
+    if($SelectXmlInfo.Path -and $SelectXmlInfo.Path -ne 'InputStream')
+    {
+        $file = $SelectXmlInfo.Path
+        Write-Verbose "Saving '$file'"
+        $xw = New-Object Xml.XmlTextWriter $file,([Text.Encoding]::UTF8)
+        $doc.Save($xw)
+        $xw.Dispose()
+        $xw = $null
+    }
+    else
+    {
+        $doc
+    }
+}
