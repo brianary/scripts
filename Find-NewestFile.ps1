@@ -21,5 +21,5 @@
 [IO.FileInfo[]]$Files
 )
 Begin   { $NewestFile = $null }
-Process { $Files |% {if(Test-NewerFile.ps1 $NewestFile $_){$NewestFile=$_;Write-Verbose "Newest: $($_.FullName)"}} }
+Process { $Files |% {if(Test-NewerFile.ps1 $NewestFile $_){$NewestFile=$_}} }
 End     { $NewestFile }
