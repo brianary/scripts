@@ -5,6 +5,8 @@ This repo contains a collection of generally useful scripts (mostly Windows, mos
 PowerShell Scripts
 ------------------
 - **Add-Xml.ps1**: Insert XML into an XML document relative to a node found by Select-Xml.
+- **Backup-File.ps1**: Create a backup as a sibling to a file, with date and time values in the name.
+- **ConvertFrom-DataRow.ps1**: Converts a DataRow object to a PSObject.
 - **ConvertFrom-EscapedXml.ps1**: Parse escaped XML into XML and serialize it.
 - **ConvertFrom-XmlElement.ps1**: Converts named nodes of an element to properties of a PSObject, recursively.
 - **Copy-SchTasks.ps1**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
@@ -38,6 +40,7 @@ PowerShell Scripts
 - **New-DbProviderObject.ps1**: Create a common database object.
 - **Optimize-Path.ps1**: Sorts, prunes, and normalizes both user and system Path entries.
 - **Read-Choice.ps1**: Returns choice selected from a list of options.
+- **Remove-LockyFile.ps1**: Removes a file that may be prone to locking.
 - **Remove-Xml.ps1**: Removes a node found by Select-Xml from its XML document.
 - **Repair-DatabaseConstraintNames.ps1**: Finds database constraints with system-generated names and gives them deterministic names.
 - **Select-XmlNodeValue.ps1**: Returns the value of an XML node found by Select-Xml.
@@ -55,4 +58,4 @@ PowerShell Scripts
 - **Use-SeqServer.ps1**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 - **Use-SqlSmo.ps1**: Find and load installed SQL SMO types.
 
-<!-- generated 10/18/2016 14:57:54 -->
+<!-- generated 10/24/2016 16:29:36 -->
