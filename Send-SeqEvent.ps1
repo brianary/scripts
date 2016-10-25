@@ -7,7 +7,8 @@
     By default, the value of the Message property will be used.
 
 .Parameter Properties
-    A hashtable of structured logging properties to record in Seq.
+    Logging properties to record in Seq, as an OrderedDictionary, Hashtable, DataRow,
+    or any object with properties to use.
 
 .Parameter Level
     The type of event to record.
@@ -21,6 +22,12 @@
 
 .Parameter LiteralMessage
     When present, indicates the Message parameter is to be used verbatim, not as a Seq template.
+
+.Inputs
+    System.Collections.Hashtable
+    or System.Collections.Specialized.OrderedDictionary
+    or System.Data.DataRow
+    or an object
 
 .Link
     Invoke-RestMethod
@@ -41,12 +48,17 @@
 #requires -Version 4
 [CmdletBinding()] Param(
 [Parameter(Position=0)][Alias('Text')][string] $Message = '{Message}',
-[Parameter(Mandatory=$true,Position=1)][Alias('Parameters')][hashtable] $Properties,
+[Parameter(Mandatory=$true,Position=1,ValueFromPipeline=$true)][Alias('Parameters')] $Properties,
 [ValidateSet('Verbose','Debug','Information','Warning','Error','Fatal')][string] $Level = 'Information',
 [uri] $Server,
 [string] $ApiKey,
 [switch] $LiteralMessage
 )
+
+if($Properties -is [hashtable]) {}
+elseif($Properties -is [Collections.Specialized.OrderedDictionary]) {}
+elseif($Properties -is [Data.DataRow]) {$Properties = ConvertFrom-DataRow.ps1 $Properties -AsHashtable}
+else {$Properties = ConvertTo-OrderedDictionary.ps1 $Properties}
 
 if($LiteralMessage) { $Properties += @{Message=$Message}; $Message = "{Message}" }
 
