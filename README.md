@@ -9,6 +9,7 @@ PowerShell Scripts
 - **ConvertFrom-DataRow.ps1**: Converts a DataRow object to a PSObject.
 - **ConvertFrom-EscapedXml.ps1**: Parse escaped XML into XML and serialize it.
 - **ConvertFrom-XmlElement.ps1**: Converts named nodes of an element to properties of a PSObject, recursively.
+- **ConvertTo-OrderedDictionary.ps1**: Converts an object to an ordered dictionary of properties and values.
 - **Copy-SchTasks.ps1**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
 - **Export-DatabaseObjectScript.ps1**: Exports MS SQL script for an object from the given server.
 - **Export-DatabaseScripts.ps1**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
@@ -58,4 +59,4 @@ PowerShell Scripts
 - **Use-SeqServer.ps1**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 - **Use-SqlSmo.ps1**: Find and load installed SQL SMO types.
 
-<!-- generated 10/24/2016 16:29:36 -->
+<!-- generated 10/24/2016 17:34:14 -->
