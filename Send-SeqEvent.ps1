@@ -54,26 +54,28 @@
 [string] $ApiKey,
 [switch] $LiteralMessage
 )
+Process
+{
+    if($Properties -is [hashtable]) {}
+    elseif($Properties -is [Collections.Specialized.OrderedDictionary]) {}
+    elseif($Properties -is [Data.DataRow]) {$Properties = ConvertFrom-DataRow.ps1 $Properties -AsHashtable}
+    else {$Properties = ConvertTo-OrderedDictionary.ps1 $Properties}
 
-if($Properties -is [hashtable]) {}
-elseif($Properties -is [Collections.Specialized.OrderedDictionary]) {}
-elseif($Properties -is [Data.DataRow]) {$Properties = ConvertFrom-DataRow.ps1 $Properties -AsHashtable}
-else {$Properties = ConvertTo-OrderedDictionary.ps1 $Properties}
+    if($LiteralMessage) { $Properties += @{Message=$Message}; $Message = "{Message}" }
 
-if($LiteralMessage) { $Properties += @{Message=$Message}; $Message = "{Message}" }
-
-@{
-    Uri         = New-Object uri ([uri]$Server,"/api/events/raw?apiKey=$ApiKey")
-    Method      = 'POST'
-    ContentType = 'application/json'
-    Body        = @{
-        Events  = @(
-            @{
-                Timestamp       = Get-Date -Format o
-                Level           = $Level
-                MessageTemplate = $Message
-                Properties      = $Properties
-            }
-        )
-    } |ConvertTo-Json -Depth 5 -Compress
-} |% {Invoke-RestMethod @_}
+    @{
+        Uri         = New-Object uri ([uri]$Server,"/api/events/raw?apiKey=$ApiKey")
+        Method      = 'POST'
+        ContentType = 'application/json'
+        Body        = @{
+            Events  = @(
+                @{
+                    Timestamp       = Get-Date -Format o
+                    Level           = $Level
+                    MessageTemplate = $Message
+                    Properties      = $Properties
+                }
+            )
+        } |ConvertTo-Json -Depth 5 -Compress
+    } |% {Invoke-RestMethod @_}
+}
