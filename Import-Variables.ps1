@@ -31,15 +31,15 @@ Process
     if($Hashtable)
     {
         Write-Verbose "Importing $($Hashtable.Count) Hashtable entries"
-        $Hashtable.Keys |
-            ? {$_ -is [string]} |
-            % {Set-Variable $_ $Hashtable.$_ -Scope 1}
+        $vars = $Hashtable.Keys |? {$_ -is [string]}
+        Write-Verbose "Importing: $vars"
+        foreach($var in $vars) {Set-Variable $var $Hashtable.$var -Scope 1}
     }
     elseif($DataRow)
     {
         Write-Verbose "Importing $($DataRow.Table.Columns.Count) DataRow columns"
-        $row = $_
-        Get-Member -InputObject $DataRow -MemberType Properties |
-            % {Set-Variable $_.Name $row[$_.Name] -Scope 1}
+        $vars = Get-Member -InputObject $DataRow -MemberType Properties |% Name
+        Write-Verbose "Importing: $vars"
+        foreach($var in $vars) {Set-Variable $var $DataRow[$var] -Scope 1}
     }
 }
