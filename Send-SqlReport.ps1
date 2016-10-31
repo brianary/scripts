@@ -8,11 +8,20 @@
 .Parameter To
     The email address(es) to send the results to.
 
-.Parameter ConnectionName
-    The connection string name to use when executing the query.
-
 .Parameter Sql
     The SQL statement to execute.
+
+.Parameter ServerInstance
+    The name of a server (and optional instance) to connect and use for the query.
+
+.Parameter Database
+    The the database to connect to on the server.
+
+.Parameter ConnectionString
+    Specifies a connection string to connect to the server.
+
+.Parameter ConnectionName
+    The connection string name from the ConfigurationManager to use when executing the query.
 
 .Parameter From
     The from address to use for the email.
@@ -21,11 +30,11 @@
     configuration value:
 
     <system.net>
-        <mailSettings>
-          <smtp from="source@example.org" deliveryMethod="network">
-		      <network host="mail.example.org" enableSsl="true" />
-          </smtp>
-        </mailSettings>
+      <mailSettings>
+        <smtp from="source@example.org" deliveryMethod="network">
+          <network host="mail.example.org" enableSsl="true" />
+        </smtp>
+      </mailSettings>
     </system.net>
 
     (If enableSsl is set to true, SSL will be used to send the report.)
@@ -63,10 +72,10 @@
 [Parameter(Position=0,Mandatory=$true)][string]$Subject,
 [Parameter(Position=1,Mandatory=$true)][string[]]$To,
 [Parameter(Position=2,Mandatory=$true)][string]$Sql,
-[Parameter(ParameterSetName='ServerInstance',Position=3,Mandatory=$true)][string]$ServerInstance,
-[Parameter(ParameterSetName='ServerInstance',Position=4,Mandatory=$true)][string]$Database,
-[Parameter(ParameterSetName='ConnectionString',Position=3,Mandatory=$true)][string]$ConnectionString,
-[Parameter(ParameterSetName='ConnectionName',Position=3,Mandatory=$true)][string]$ConnectionName,
+[Parameter(ParameterSetName='ByConnectionParameters',Position=3,Mandatory=$true)][string]$ServerInstance,
+[Parameter(ParameterSetName='ByConnectionParameters',Position=4,Mandatory=$true)][string]$Database,
+[Parameter(ParameterSetName='ByConnectionString',Position=3,Mandatory=$true)][string]$ConnectionString,
+[Parameter(ParameterSetName='ByConnectionName',Position=3,Mandatory=$true)][string]$ConnectionName,
 [string]$From,
 [int]$Timeout= 90,
 [string]$PreContent= ' ',
@@ -93,14 +102,17 @@ if($mailhost)
 try
 {
     $query = @{ Query = $Sql }
-    if($ServerInstance) {$query += @{ServerInstance=$ServerInstance;Database=$Database}}
-    elseif($ConnectionString) {[void]$query.Add('ConnectionString',$ConnectionString)}
-    elseif($ConnectionName)
+    switch($PSCmdlet.ParameterSetName)
     {
-        try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration} # get access to the config connection strings
-        [void]$query.Add('ConnectionString',([Configuration.ConfigurationManager]::ConnectionStrings[$ConnectionName].ConnectionString))
+        ByConnectionParameters {$query += @{ServerInstance=$ServerInstance;Database=$Database}}
+        ByConnectionString     {$query += @{ConnectionString=$ConnectionString}}
+        ByConnectionName
+        {
+            try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration} # get access to the config connection strings
+            $query += @{ConnectionString=[Configuration.ConfigurationManager]::ConnectionStrings[$ConnectionName].ConnectionString}
+        }
     }
-    if($Timeout) {[void]$query.Add('QueryTimeout',$Timeout)}
+    if($Timeout) {$query += @{QueryTimeout=$Timeout}}
     [Data.DataRow[]]$data = Invoke-Sqlcmd @query
     $data |Format-Table |Out-String |Write-Verbose
     if($data.Count -eq 0) # no rows
