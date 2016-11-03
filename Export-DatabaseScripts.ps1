@@ -25,29 +25,27 @@
     Provides a list of boolean SMO ScriptingOptions properties to set to true.
 
 .Component
-    Microsoft.SqlServer.ConnectionInfo
+    Microsoft.SqlServer.Smo.Server
 
 .Component
-    Microsoft.SqlServer.Smo
-
-.Component
-    Microsoft.SqlServer.SqlEnum
-
-.Example
-    Export-SqlScripts.ps1 ServerName\instance AdventureWorks2014
-    (outputs SQL scripts to files)
-
-.Link
-    Use-SqlSmo.ps1
+    Microsoft.SqlServer.Management.Smo.ScriptingOptions
 
 .Link
     https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
 
 .Link
     https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
+
+.Link
+    Install-SqlServerModule.ps1
+
+.Example
+    Export-SqlScripts.ps1 ServerName\instance AdventureWorks2014
+    Outputs SQL scripts to files.
 #>
 
-#requires -version 3
+#Requires -Version 3
+#Requires -Module SqlServer
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $Server,
 [Parameter(Position=1,Mandatory=$true)][string] $Database,
@@ -56,8 +54,6 @@
 EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers ScriptBatchTerminator
 '@.Trim() -split '\W+')
 )
-
-Use-SqlSmo.ps1
 
 # connect to database
 $srv = New-Object Microsoft.SqlServer.Management.Smo.Server($Server)

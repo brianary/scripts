@@ -23,7 +23,7 @@
     
     * no SqlServer module/SQLPS/SMO/SQLCLR
 
-    Starting with version 13.0.15900.1, the module is installed with SSMS 2016 16.4.1.
+    Starting after version 13.0.1601.5, the SqlServer module is installed with SSMS 2016 16.4.1.
     This puts the SqlServer module in C:\Program Files\WindowsPowerShell\Modules,
     which may need to be prepended to the PSModulePath environment variable after
     installation.
@@ -35,10 +35,10 @@
     Invoke-WebRequest
 
 .Link
-    Import-Module
+    Get-Module
 
 .Link
-    https://www.microsoft.com/download/details.aspx?id=52676
+    Import-Module
 
 .Link
     https://msdn.microsoft.com/library/mt238290.aspx
@@ -47,45 +47,19 @@
     Install-SqlServerModule.ps1
 
 
-    Removes old versions and installs the latest, as needed.
-
-.Example
-    Install-SqlServerModule.ps1 -Source $env:USERPROFILE\Downloads
-
-
-    Uses already downloaded versions of the installers.
+    Removes old SQLPS modules and installs the latest, as needed.
 #>
 
 #requires -version 3
 #requires -RunAsAdministrator
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)]Param(
 [version]$Version = '13.0.16000.28',
-[uri]$Source = 'https://download.microsoft.com/download/8/7/2/872BCECA-C849-4B40-8EBE-21D48CDF1456/ENU/x64/',
 [uri]$SsmsDownload = 'https://download.microsoft.com/download/C/B/C/CBCFAAD1-2348-4119-B093-199EE7AADCBC/SSMS-Setup-ENU.exe'
 )
 
-function Test-WrongSnapin([IO.FileInfo]$Path)
-{
-    $old = 
-        if($Version -gt [version]$Path.VersionInfo.ProductVersion) {$true}
-        elseif(!([Environment]::Is64BitProcess)) {$false} # 32-bit PowerShell, don't check bits
-        else {$Path.FullName.StartsWith((Join-Path ${env:ProgramFiles(x86)} ''))} # 32-bit vs. 64-bit PS
-    Write-Verbose "'$Path' old? $old"
-    $old
-}
-
-function Test-OldModule([Management.Automation.PSModuleInfo]$module)
-{
-    Join-Path $module.Path ..\Microsoft.SqlServer.Management.PSSnapins.dll |
-        Get-ChildItem |
-        % {Test-WrongSnapin $_.FullName}
-}
-
 function Test-OldModulePath([string]$Path)
 {
-    $snapin = Join-Path $Path SQLPS\Microsoft.SqlServer.Management.PSSnapins.dll
-    if(!(Test-Path $snapin -PathType Leaf)) {return $false}
-    Get-ChildItem $snapin |% {Test-WrongSnapin $_.FullName}
+    Test-Path (Join-Path $Path SQLPS\Microsoft.SqlServer.Management.PSSnapins.dll) -PathType Leaf
 }
 
 function Update-PSModulePath([EnvironmentVariableTarget]$Target)
@@ -106,7 +80,7 @@ function Update-PSModulePathProcess
     Write-Verbose "Updated Process PSModulePath: $env:PSModulePath"
 }
 
-function Uninstall-OldModule
+function Uninstall-OldModules
 {
     # Win32_Product slowly reconfigures each entry, Win32Reg_AddRemovePrograms is faster
     # see https://sdmsoftware.com/group-policy-blog/wmi/why-win32_product-is-bad-news/
@@ -114,14 +88,12 @@ function Uninstall-OldModule
     try
     {
         Get-WmiObject Win32Reg_AddRemovePrograms -Filter "DisplayName like '%PowerShell Extensions for SQL Server %'" -EA Stop |
-            ? {$Version -gt [version]$_.Version} |
             ? {$PSCmdlet.ShouldProcess($_.DisplayName,'Uninstall')} |
             % {Start-Process -FilePath msiexec.exe -ArgumentList '/x',$_.ProdID,'/passive','/norestart' -Wait -NoNewWindow}
     }
     catch
     {
         Get-WmiObject Win32_Product -Filter "Name like '%PowerShell Extensions for SQL Server %'" |
-            ? {$Version -gt [version]$_.Version} |
             ? {$PSCmdlet.ShouldProcess($_.Name,'Uninstall')} |
             % {Start-Process -FilePath msiexec.exe -ArgumentList '/x',$_.IdentifyingNumber,'/passive','/norestart' -Wait -NoNewWindow}
     }
@@ -129,46 +101,18 @@ function Uninstall-OldModule
 
 function Remove-AnyOldModule
 {
-    if(!(Get-Module SQLPS -ListAvailable |? {Test-OldModule $_}))
+    if(!(Get-Module SQLPS -ListAvailable))
     { Write-Host 'Found no old SQLPS modules.' -ForegroundColor Green -BackgroundColor DarkMagenta }
     else
     {
         Write-Verbose 'Found old SQLPS modules.'
         Get-Command msiexec.exe -CommandType Application -ErrorAction Stop |Out-Null
         Remove-Module SQLPS -ErrorAction SilentlyContinue
-        Uninstall-OldModule
+        Uninstall-OldModules
         Update-PSModulePath User
         Update-PSModulePath Machine
         Update-PSModulePathProcess
     }
-}
-
-function Download-Installer([string]$msi)
-{
-    $msiurl = New-Object uri $Source,$msi
-    $sibling = Join-Path $PSScriptRoot $msi
-    if(Test-Path $msi -PathType Leaf) {}
-    elseif(($PSScriptRoot -ne $env:Temp) -and (Test-Path $sibling -PathType Leaf)) {Copy-Item $sibling}
-    elseif(($Source.Scheme -eq 'file') -and (Test-Path $msiurl.LocalPath)) {Copy-Item $msiurl.LocalPath}
-    else {Invoke-WebRequest $msiurl.AbsoluteUri -OutFile $msi}
-}
-
-function Install-NewSqlPs
-{
-    if(Get-Module SQLPS -ListAvailable -Refresh |? {!(Test-OldModule $_)})
-    {
-        Write-Host "You already have the latest SQLPS module." -ForegroundColor Green -BackgroundColor DarkMagenta
-        return
-    }
-    Push-Location $env:Temp
-    foreach($msi in @('SQLSysClrTypes.msi','SharedManagementObjects.msi','PowerShellTools.msi'))
-    {
-        if(!($PSCmdlet.ShouldProcess($msi,'Install'))) {continue}
-        Download-Installer $msi
-        Start-Process -FilePath msiexec.exe -ArgumentList '/i',$msi,'/passive','/norestart','INSTALLLEVEL=32767' -Wait -NoNewWindow
-        Remove-Item $msi
-    }
-    Pop-Location
 }
 
 function Install-NewSqlServerModule
@@ -177,7 +121,7 @@ function Install-NewSqlServerModule
     if(Test-Path $modulesdir\SqlServer -PathType Container)
     {
         $installedversion = Get-ChildItem $modulesdir\SqlServer\Microsoft.SqlServer.Management.PSSnapins.dll |% VersionInfo |% FileVersion
-        if($installedversion -ge [version]'13.0.16000.28')
+        if($installedversion -ge $Version)
         {
             Write-Host "You already have the latest SqlServer module." -ForegroundColor Green -BackgroundColor DarkMagenta
             return

@@ -48,16 +48,16 @@
     Provides a list of boolean SMO ScriptingOptions properties to set to true.
 
 .Component
-    Microsoft.SqlServer.Smo
+    Microsoft.SqlServer.Smo.Server
 
 .Component
-    Microsoft.SqlServer.SqlEnum
-
-.Link
-    Use-SqlSmo.ps1
+    Microsoft.SqlServer.Management.Smo.ScriptingOptions
 
 .Link
     Export-DatabaseScripts.ps1
+
+.Link
+    Install-SqlServerModule.ps1
 
 .Link
     https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
@@ -70,16 +70,15 @@
 
 .Example
     Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath Sales.Customer.sql
-
     Exports table creation script to Sales.Customer.sql as UTF8.
 
 .Example
     Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath DropCustomer.sql ScriptDrops WithDependencies SchemaQualify IncludeDatabaseContext
-
     Exports drop script of Sales.Customer and dependencies to DropCustomer.sql.
 #>
 
-#requires -version 3
+#Requires -Version 3
+#Requires -Module SqlServer
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $Server,
 [Parameter(Position=1,Mandatory=$true)][string] $Database,
@@ -100,8 +99,6 @@
 EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers ScriptBatchTerminator
 '@.Trim() -split '\W+')
 )
-
-Use-SqlSmo.ps1
 
 # connect to database
 $srv = New-Object Microsoft.SqlServer.Management.Smo.Server($Server)
