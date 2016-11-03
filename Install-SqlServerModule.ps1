@@ -59,9 +59,9 @@
 #requires -version 3
 #requires -RunAsAdministrator
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)]Param(
-[version]$Version = '13.0.1601.5',
+[version]$Version = '13.0.16000.28',
 [uri]$Source = 'https://download.microsoft.com/download/8/7/2/872BCECA-C849-4B40-8EBE-21D48CDF1456/ENU/x64/',
-[uri]$SsmsDownload = 'http://download.microsoft.com/download/7/8/0/7808D223-499D-4577-812B-9A2A60048841/SSMS-Setup-ENU.exe'
+[uri]$SsmsDownload = 'https://download.microsoft.com/download/C/B/C/CBCFAAD1-2348-4119-B093-199EE7AADCBC/SSMS-Setup-ENU.exe'
 )
 
 function Test-WrongSnapin([IO.FileInfo]$Path)
@@ -111,10 +111,20 @@ function Uninstall-OldModule
     # Win32_Product slowly reconfigures each entry, Win32Reg_AddRemovePrograms is faster
     # see https://sdmsoftware.com/group-policy-blog/wmi/why-win32_product-is-bad-news/
     # see also http://support.microsoft.com/kb/974524
-    Get-WmiObject Win32Reg_AddRemovePrograms -Filter "DisplayName like 'Windows PowerShell Extensions for SQL Server %'" |
-        ? {$Version -gt [version]$_.Version} |
-        ? {$PSCmdlet.ShouldProcess($_.DisplayName,'Uninstall')} |
-        % {Start-Process -FilePath msiexec.exe -ArgumentList '/x',$_.ProdID,'/passive','/norestart' -Wait -NoNewWindow}
+    try
+    {
+        Get-WmiObject Win32Reg_AddRemovePrograms -Filter "DisplayName like '%PowerShell Extensions for SQL Server %'" -EA Stop |
+            ? {$Version -gt [version]$_.Version} |
+            ? {$PSCmdlet.ShouldProcess($_.DisplayName,'Uninstall')} |
+            % {Start-Process -FilePath msiexec.exe -ArgumentList '/x',$_.ProdID,'/passive','/norestart' -Wait -NoNewWindow}
+    }
+    catch
+    {
+        Get-WmiObject Win32_Product -Filter "Name like '%PowerShell Extensions for SQL Server %'" |
+            ? {$Version -gt [version]$_.Version} |
+            ? {$PSCmdlet.ShouldProcess($_.Name,'Uninstall')} |
+            % {Start-Process -FilePath msiexec.exe -ArgumentList '/x',$_.IdentifyingNumber,'/passive','/norestart' -Wait -NoNewWindow}
+    }
 }
 
 function Remove-AnyOldModule
@@ -147,7 +157,7 @@ function Install-NewSqlPs
 {
     if(Get-Module SQLPS -ListAvailable -Refresh |? {!(Test-OldModule $_)})
     {
-        Write-Host "You already have the latest SqlServer module." -ForegroundColor Green -BackgroundColor DarkMagenta
+        Write-Host "You already have the latest SQLPS module." -ForegroundColor Green -BackgroundColor DarkMagenta
         return
     }
     Push-Location $env:Temp
@@ -167,14 +177,14 @@ function Install-NewSqlServerModule
     if(Test-Path $modulesdir\SqlServer -PathType Container)
     {
         $installedversion = Get-ChildItem $modulesdir\SqlServer\Microsoft.SqlServer.Management.PSSnapins.dll |% VersionInfo |% FileVersion
-        if($installedversion -ge [version]'13.0.15900.1')
+        if($installedversion -ge [version]'13.0.16000.28')
         {
             Write-Host "You already have the latest SqlServer module." -ForegroundColor Green -BackgroundColor DarkMagenta
             return
         }
     }
     if(!($PSCmdlet.ShouldProcess(${setup.exe},'Install'))) {return}
-    ${setup.exe} = Join-Path "$env:USERPROFILE\Downloads" ($SsmsDownload.Segments |select -Last 1)
+    ${setup.exe} = Join-Path $env:TEMP ($SsmsDownload.Segments |select -Last 1)
     Invoke-WebRequest $SsmsDownload.AbsoluteUri -OutFile ${setup.exe}
     Start-Process ${setup.exe} '/install','/passive' -NoNewWindow -Wait
     [Environment]::SetEnvironmentVariable('PSModulePath',
@@ -183,5 +193,4 @@ function Install-NewSqlServerModule
 }
 
 Remove-AnyOldModule
-Install-NewSqlPs
 Install-NewSqlServerModule
