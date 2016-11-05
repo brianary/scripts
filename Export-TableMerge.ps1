@@ -9,6 +9,12 @@
 .Parameter Database
     The the database to connect to on the server.
 
+.Parameter ConnectionString
+    Specifies a connection string to connect to the server.
+
+.Parameter ConnectionName
+    The connection string name from the ConfigurationManager to use.
+
 .Parameter Table
     The name of the table to export.
 
@@ -39,23 +45,19 @@
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding()] Param(
-[Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string]$ServerInstance,
-[Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string]$Database,
+[Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
+[Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
+[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
+[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,
 [Parameter(Position=2,Mandatory=$true)][string]$Table,
 [Parameter(Position=3)][string]$Schema,
-[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
 [switch]$UseIdentityInKey
 )
 
+Use-SqlcmdParams.ps1
+
 $EOL = "
 "
-$PSDefaultParameterValues = 
-    if($ConnectionString) {@{'Invoke-Sqlcmd:ConnectionString'=$ConnectionString}}
-    else
-    {@{
-        'Invoke-Sqlcmd:ServerInstance' = $ServerInstance
-        'Invoke-Sqlcmd:Database'       = $Database
-    }}
 
 function Format-SqlValue($value)
 {

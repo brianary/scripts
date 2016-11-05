@@ -11,6 +11,13 @@
     A string specifying the name of a database on the server specified
     by the ServerInstance parameter.
 
+.Parameter ConnectionString
+    Specifies a connection string to connect to the server.
+
+.Parameter ConnectionName
+    The connection string name from the ConfigurationManager to use to 
+    connect to the server.
+
 .Outputs
     System.Data.DataRow objects, each with an ObjectType property that
     indicates what other properties are available:
@@ -80,16 +87,12 @@
 #requires -Version 3
 #requires -Module SqlServer
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][string] $ServerInstance,
-[Parameter(Position=1,Mandatory=$true)][string] $Database
+[Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
+[Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
+[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
+[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
 )
-Begin
-{
-    $Script:PSDefaultParameterValues = @{
-        'Invoke-Sqlcmd:ServerInstance' = $ServerInstance
-        'Invoke-Sqlcmd:Database'       = $Database
-    }
-}
+Begin { Use-SqlcmdParams.ps1 }
 Process
 {
     $depricols = Invoke-Sqlcmd @"

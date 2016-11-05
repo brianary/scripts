@@ -64,6 +64,9 @@
 
 .Link
     Send-MailMessage
+
+.Link
+    Invoke-Sqlcmd
 #>
 
 #Requires -Version 3
@@ -89,6 +92,7 @@
 
 Use-SeqServer.ps1 $SeqUrl
 Use-NetMailConfig.ps1
+Use-SqlcmdParams.ps1
 
 # use the default From host for emails without a host
 $mailhost = ([Net.Mail.MailAddress]$PSDefaultParameterValues['Send-MailMessage:From']).Host |Out-String
@@ -102,16 +106,6 @@ if($mailhost)
 try
 {
     $query = @{ Query = $Sql }
-    switch($PSCmdlet.ParameterSetName)
-    {
-        ByConnectionParameters {$query += @{ServerInstance=$ServerInstance;Database=$Database}}
-        ByConnectionString     {$query += @{ConnectionString=$ConnectionString}}
-        ByConnectionName
-        {
-            try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration} # get access to the config connection strings
-            $query += @{ConnectionString=[Configuration.ConfigurationManager]::ConnectionStrings[$ConnectionName].ConnectionString}
-        }
-    }
     if($Timeout) {$query += @{QueryTimeout=$Timeout}}
     [Data.DataRow[]]$data = Invoke-Sqlcmd @query
     $data |Format-Table |Out-String |Write-Verbose

@@ -57,8 +57,9 @@
 Begin{try{Get-Command Get-Acl -CommandType Cmdlet |Out-Null}catch{throw 'The Get-Acl command is missing.'}}
 Process
 {
-    if(!$UserName) {$UserName="IIS AppPool\${AppPool}"}
+    if($AppPool) {$UserName="IIS AppPool\${AppPool}"}
     elseif($UserName -notlike '*\*') {$UserName = "$env:USERDOMAIN\$UserName"}
+    Write-Verbose "UserName: $UserName"
     $path = Get-CertificatePath.ps1 $Certificate
     $acl = Get-Acl $path
     $acl.SetAccessRule((New-Object Security.AccessControl.FileSystemAccessRule $UserName,'Read','Allow'))

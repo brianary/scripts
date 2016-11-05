@@ -127,10 +127,10 @@ function Install-NewSqlServerModule
             return
         }
     }
-    if(!($PSCmdlet.ShouldProcess(${setup.exe},'Install'))) {return}
     ${setup.exe} = Join-Path $env:TEMP ($SsmsDownload.Segments |select -Last 1)
+    if(!($PSCmdlet.ShouldProcess(${setup.exe},'Install'))) {return}
     Invoke-WebRequest $SsmsDownload.AbsoluteUri -OutFile ${setup.exe}
-    Start-Process ${setup.exe} '/install','/passive' -NoNewWindow -Wait
+    Start-Process ${setup.exe} '/install','/passive' -Wait
     [Environment]::SetEnvironmentVariable('PSModulePath',
         $modulesdir +';'+ [Environment]::GetEnvironmentVariable('PSModulePath','Machine'))
     Import-Module SqlServer

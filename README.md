@@ -27,16 +27,17 @@ PowerShell Scripts
 - **Get-CertificateExpiration.ps1**: Returns HTTPS certificate expiration and other cert info for a host.
 - **Get-CertificatePath.ps1**: Gets the physical path on disk of a certificate.
 - **Get-CertificatePermissions.ps1**: Returns the permissions of a certificate's private key file.
-- **Get-CharacterDetails.ps1**: Returns filterable categorical information about a range of characters in the Unicode Basic Multilingual Plane.
+- **Get-CharacterDetails.ps1**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **Get-CommandPath.ps1**: Locates a command.
 - **Get-ConfigConnectionStringBuilders.ps1**: Return named connection string builders for connection strings in a config file.
 - **Get-EnumValues.ps1**: Returns the possible values of the specified enumeration.
 - **Get-NetFrameworkVersions.ps1**: Determine which .NET Frameworks are installed on the requested system.
 - **Get-SystemDetails.ps1**: Collects some useful system hardware and operating system details via WMI.
 - **Grant-CertificateAccess.ps1**: Grants certificate file read access to an app pool or user.
-- **Import-Variables.ps1**: Creates local variables from a data row or hashtable.
+- **Import-Variables.ps1**: Creates local variables from a data row or dictionary (hashtable).
 - **Install-ActiveDirectoryModule.ps1**: Installs the PowerShell ActiveDirectory module.
 - **Install-SqlServerModule.ps1**: Installs SqlServer module and dependencies.
+- **Join-FileName.ps1**: Combines a filename with a string.
 - **Measure-Indents.ps1**: Measures the indentation characters used in a text file.
 - **New-DbProviderObject.ps1**: Create a common database object.
 - **Optimize-Path.ps1**: Sorts, prunes, and normalizes both user and system Path entries.
@@ -51,12 +52,15 @@ PowerShell Scripts
 - **Set-XmlAttribute.ps1**: Adds an XML attribute to an XML element found by Select-Xml.
 - **Set-XmlNodeValue.ps1**: Sets the value of a node found by Select-Xml.
 - **Show-CertificatePermissions.ps1**: Shows the permissions of a certificate's private key file.
+- **Split-FileName.ps1**: Split-FileName.ps1 [-Path] <string> [-HasExtension] [-Extension] [<CommonParameters>]
+
 - **Test-Interactive.ps1**: Determines whether both the user and process are interactive.
 - **Test-NewerFile.ps1**: Returns true if the difference file is newer than the reference file.
+- **Test-USFederalHoliday.ps1**: Returns the name of the holiday of a date, if it is a U.S. federal holiday.
 - **Test-Xml.ps1**: Try parsing text as XML.
 - **Use-Command.ps1**: Checks for the existence of the given command, and adds if missing and a source is defined.
 - **Use-NetMailConfig.ps1**: Use .NET configuration to set defaults for Send-MailMessage.
 - **Use-SeqServer.ps1**: Set the default Server and ApiKey for Send-SeqEvent.ps1
-- **Use-SqlSmo.ps1**: Find and load installed SQL SMO types.
+- **Use-SqlcmdParams.ps1**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
-<!-- generated 10/24/2016 17:34:14 -->
+<!-- generated 11/04/2016 23:01:01 -->

@@ -3,10 +3,16 @@
     Finds database constraints with system-generated names and gives them deterministic names.
 
 .Parameter ServerInstance
-    The server and instance to connect to.
+    The name of a server (and optional instance) to connect to.
 
 .Parameter Database
-    The database to use.
+    The the database to connect to on the server.
+
+.Parameter ConnectionString
+    Specifies a connection string to connect to the server.
+
+.Parameter ConnectionName
+    The connection string name from the ConfigurationManager to use.
 
 .Parameter Update
     Update the database when present, otherwise simply outputs the changes as script.
@@ -24,15 +30,14 @@
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][string] $ServerInstance,
-[Parameter(Position=1,Mandatory=$true)][string] $Database,
+[Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
+[Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
+[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
+[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,
 [switch] $Update
 )
 
-$Script:PSDefaultParameterValues = @{
-    "Invoke-Sqlcmd:ServerInstance" = $ServerInstance
-    "Invoke-Sqlcmd:Database"       = $Database
-}
+Use-SqlcmdParams.ps1
 
 function Repair-DefaultNames
 {
