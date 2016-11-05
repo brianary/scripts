@@ -46,18 +46,22 @@
 
 #requires -Version 3
 [CmdletBinding()] Param(
-[Parameter(ParameterSetName='ChoicesArray',Position=0,Mandatory=$true)][string[]]$Choices,
+[Parameter(ParameterSetName='ChoicesArray',Position=0,Mandatory=$true)]
+[Alias('Options')][string[]]$Choices,
 [Parameter(ParameterSetName='ChoicesHash',Position=0,Mandatory=$true)]
-[Collections.Specialized.OrderedDictionary]$ChoiceHash,
+[Alias('Menu')][Collections.IDictionary]$ChoiceHash,
 [string]$Caption,
 [string]$Message = 'Please select:',
 [int]$DefaultIndex
 )
 $choicelist =
-    if($Choices) {$Choices |% {New-Object System.Management.Automation.Host.ChoiceDescription $_}}
-    else
+    switch($PSCmdlet.ParameterSetName)
     {
-        $Choices = @($ChoiceHash.Keys)
-        $Choices |% {New-Object System.Management.Automation.Host.ChoiceDescription $_,$ChoiceHash.$_}
+        ChoicesArray {$Choices |% {New-Object System.Management.Automation.Host.ChoiceDescription $_}}
+        ChoicesHash
+        {
+            $Choices = @($ChoiceHash.Keys)
+            $Choices |% {New-Object System.Management.Automation.Host.ChoiceDescription $_,$ChoiceHash[$_]}
+        }
     }
 $Choices[$Host.UI.PromptForChoice($Caption,$Message,$choicelist,$DefaultIndex)]

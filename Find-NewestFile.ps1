@@ -17,7 +17,7 @@
 
 #requires -version 3
 [CmdletBinding()] Param(
-[Parameter(ParameterSetName='Pipeline',ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
+[Parameter(ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
 [IO.FileInfo[]]$Files
 )
 Begin   { $NewestFile = $null }

@@ -88,7 +88,7 @@ Param([Parameter(Position=0,Mandatory=$true)]$Name,
 [Alias('exe')][uri]$ExecutableInstaller,
 [Parameter(ParameterSetName='ExecutableInstaller')]
 [Alias('params')][string[]]$InstallerParameters = @(),
-[Parameter(ParameterSetName='ExecutePS')][Alias('iex')][uri]$ExecutePS,
+[Parameter(ParameterSetName='ExecutePowerShell')][Alias('iex')][uri]$ExecutePowerShell,
 [Parameter(ParameterSetName='DownloadZip')][Alias('zip')][uri]$DownloadZip,
 [Parameter(ParameterSetName='DownloadUrl')][Alias('url')][uri]$DownloadUrl,
 [Parameter(ParameterSetName='WarnOnly')]
@@ -101,125 +101,137 @@ function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Posit
 Get-Command $Name -EA SilentlyContinue -EV cmerr |Out-Null
 if(!$cmerr) { Write-Verbose "$Name command found." ; return }
 if($Path -and (Test-Path $Path)) { Set-ResolvedAlias $Name $Path ; return }
-if($NugetPackage)
+
+switch($PSCmdlet.ParameterSetName)
 {
-    if($PSCmdlet.ShouldProcess("This will use NuGet to install $NugetPackage to $InstallDir.",
-        "Are you sure you wish to install $Name ?",
-        "NuGet Install $NugetPackage"))
+    NugetPackage
     {
-        nuget install $NugetPackage -x -o $InstallDir -NonInteractive
-        Set-ResolvedAlias $Name $Path
-    }
-    else { Write-Error "Installation of $NugetPackage was cancelled." }
-}
-elseif($NodePackage)
-{
-    if(!(Test-Path "$env:USERPROFILE\AppData\Roaming\npm" -PathType Container)) 
-    { mkdir "$env:USERPROFILE\AppData\Roaming\npm" |Out-Null }
-    if($PSCmdlet.ShouldProcess("This will use Node NPM to install $NodePackage to $InstallDir.",
-        "Are you sure you wish to install $Name ?",
-        "Node Install $NodePackage"))
-    {
-        pushd $InstallDir
-        npm install $NodePackage
-        popd
-        Set-ResolvedAlias $Name $Path
-    }
-    else { Write-Error "Installation of $NodePackage was cancelled." }
-}
-elseif($WindowsInstaller)
-{
-    $file = $WindowsInstaller.Segments[$WindowsInstaller.Segments.Length-1]
-    if($PSCmdlet.ShouldProcess("This will use Windows Installer to install $file hands-free with INSTALLLEVEL set to $InstallLevel.",
-        "Are you sure you wish to install $file ?",
-        "Windows Install $file"))
-    {
-        $msi =
-            if($WindowsInstaller.IsUnc)
-            { Copy-Item $WindowsInstaller $env:TEMP; "$env:TEMP\$file" }
-            elseif($WindowsInstaller.IsFile)
-            { [string]$WindowsInstaller }
-            else
-            { (New-Object System.Net.WebClient).DownloadFile($WindowsInstaller,"$env:TEMP\$file"); "$env:TEMP\$file" }
-        msiexec /i $msi /passive /qb INSTALLLEVEL=$InstallLevel
-        while(!(Test-Path $Path) -and $PSCmdlet.ShouldContinue(
-            "The file $Path was still not found. Continue waiting for installation?","Await Installation")) { Start-Sleep 5 }
-        if(Test-Path $Path) { Set-ResolvedAlias $Name $Path }
-    }
-    else { Write-Error "Installation of $WindowsInstaller was cancelled." }
-}
-elseif($ExecutableInstaller)
-{
-    $file = $ExecutableInstaller.Segments[$ExecutableInstaller.Segments.Length-1]
-    if($PSCmdlet.ShouldProcess("This will install $file $InstallerParameters.",
-        "Are you sure you wish to install $file ?",
-        "Install $file"))
-    {
-        $exe =
-            if($ExecutableInstaller.IsUnc)
-            { Copy-Item $ExecutableInstaller.OriginalString $env:TEMP; "$env:TEMP\$file" }
-            elseif($ExecutableInstaller.IsFile)
-            { [string]$ExecutableInstaller }
-            else
-            { (New-Object System.Net.WebClient).DownloadFile($ExecutableInstaller,"$env:TEMP\$file"); "$env:TEMP\$file" }
-        Start-Process $exe $InstallerParameters -NoNewWindow -Wait
-        while(!(Test-Path $Path) -and $PSCmdlet.ShouldContinue(
-            "The file $Path was still not found. Continue waiting for installation?","Await Installation")) { Start-Sleep 5 }
-        if(Test-Path $Path) { Set-ResolvedAlias $Name $Path }
-    }
-    else { Write-Error "Installation of $ExecutableInstaller was cancelled." }
-}
-elseif($ExecutePS)
-{
-    if($PSCmdlet.ShouldProcess("This will execute $ExecutePS.",
-        "Are you sure you wish to execute $ExecutePS ?",
-        "Execute PowerShell Script"))
-    {
-        switch($ExecutePS.Scheme)
+        if($PSCmdlet.ShouldProcess("This will use NuGet to install $NugetPackage to $InstallDir.",
+            "Are you sure you wish to install $Name ?",
+            "NuGet Install $NugetPackage"))
         {
-            file    { Invoke-Expression (gc $ExecutePS.OriginalString -raw) }
-            default { Invoke-Expression ((new-object net.webclient).DownloadString($ExecutePS)) }
+            nuget install $NugetPackage -x -o $InstallDir -NonInteractive
+            Set-ResolvedAlias $Name $Path
         }
+        else { Write-Error "Installation of $NugetPackage was cancelled." }
     }
-    else { Write-Error "Execution of $ExecutePS was cancelled." }
-}
-elseif($DownloadZip)
-{
-    if($PSCmdlet.ShouldProcess("This will download and unzip $DownloadZip to $Path.",
-        "Are you sure you wish to download $Name ?",
-        "Download $Name"))
+
+    NodePackage
     {
-        $dir = Split-Path $Path
-        $filename = [IO.Path]::GetFileName($DownloadZip.LocalPath)
-        if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
-        $zippath = Join-Path $env:TEMP $filename
-        Write-Verbose "Downloading $DownloadZip to $path"
-        (New-Object System.Net.WebClient).DownloadFile($DownloadZip,$zippath)
-        try{[void][IO.Compression.ZipFile]}catch{Add-Type -AN System.IO.Compression.FileSystem}
-        Write-Verbose "Copying zipped items from $zippath to $dir"
-        [IO.Compression.ZipFile]::ExtractToDirectory($zippath,$dir)
-        Set-ResolvedAlias $Name $Path
+        if(!(Test-Path "$env:USERPROFILE\AppData\Roaming\npm" -PathType Container)) 
+        { mkdir "$env:USERPROFILE\AppData\Roaming\npm" |Out-Null }
+        if($PSCmdlet.ShouldProcess("This will use Node NPM to install $NodePackage to $InstallDir.",
+            "Are you sure you wish to install $Name ?",
+            "Node Install $NodePackage"))
+        {
+            pushd $InstallDir
+            npm install $NodePackage
+            popd
+            Set-ResolvedAlias $Name $Path
+        }
+        else { Write-Error "Installation of $NodePackage was cancelled." }
     }
-    else { Write-Error "Download/unzip of $Name was cancelled." }
-}
-elseif($DownloadUrl)
-{
-    if($PSCmdlet.ShouldProcess("This will download $DownloadUrl to $Path.",
-        "Are you sure you wish to download $Name ?",
-        "Download $Name"))
+
+    WindowsInstaller
     {
-        $dir = Split-Path $Path
-        if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
-        (New-Object System.Net.WebClient).DownloadFile($DownloadUrl,$Path)
-        Set-ResolvedAlias $Name $Path
+        $file = $WindowsInstaller.Segments[$WindowsInstaller.Segments.Length-1]
+        if($PSCmdlet.ShouldProcess("This will use Windows Installer to install $file hands-free with INSTALLLEVEL set to $InstallLevel.",
+            "Are you sure you wish to install $file ?",
+            "Windows Install $file"))
+        {
+            $msi =
+                if($WindowsInstaller.IsUnc)
+                { Copy-Item $WindowsInstaller $env:TEMP; "$env:TEMP\$file" }
+                elseif($WindowsInstaller.IsFile)
+                { [string]$WindowsInstaller }
+                else
+                { (New-Object System.Net.WebClient).DownloadFile($WindowsInstaller,"$env:TEMP\$file"); "$env:TEMP\$file" }
+            msiexec /i $msi /passive /qb INSTALLLEVEL=$InstallLevel
+            while(!(Test-Path $Path) -and $PSCmdlet.ShouldContinue(
+                "The file $Path was still not found. Continue waiting for installation?","Await Installation")) { Start-Sleep 5 }
+            if(Test-Path $Path) { Set-ResolvedAlias $Name $Path }
+        }
+        else { Write-Error "Installation of $WindowsInstaller was cancelled." }
     }
-    else { Write-Error "Download of $Name was cancelled." }
-}
-elseif($Message)
-{
-    Write-Warning $Message
-}
-else
-{
-    throw "$Name command not found!"
+
+    ExecutableInstaller
+    {
+        $file = $ExecutableInstaller.Segments[$ExecutableInstaller.Segments.Length-1]
+        if($PSCmdlet.ShouldProcess("This will install $file $InstallerParameters.",
+            "Are you sure you wish to install $file ?",
+            "Install $file"))
+        {
+            $exe =
+                if($ExecutableInstaller.IsUnc)
+                { Copy-Item $ExecutableInstaller.OriginalString $env:TEMP; "$env:TEMP\$file" }
+                elseif($ExecutableInstaller.IsFile)
+                { [string]$ExecutableInstaller }
+                else
+                { (New-Object System.Net.WebClient).DownloadFile($ExecutableInstaller,"$env:TEMP\$file"); "$env:TEMP\$file" }
+            Start-Process $exe $InstallerParameters -NoNewWindow -Wait
+            while(!(Test-Path $Path) -and $PSCmdlet.ShouldContinue(
+                "The file $Path was still not found. Continue waiting for installation?","Await Installation")) { Start-Sleep 5 }
+            if(Test-Path $Path) { Set-ResolvedAlias $Name $Path }
+        }
+        else { Write-Error "Installation of $ExecutableInstaller was cancelled." }
+    }
+    
+    ExecutePowerShell
+    {
+        if($PSCmdlet.ShouldProcess("This will execute $ExecutePowerShell.",
+            "Are you sure you wish to execute $ExecutePowerShell ?",
+            "Execute PowerShell Script"))
+        {
+            switch($ExecutePowerShell.Scheme)
+            {
+                file    { Invoke-Expression (gc $ExecutePowerShell.OriginalString -raw) }
+                default { Invoke-Expression ((new-object net.webclient).DownloadString($ExecutePowerShell)) }
+            }
+        }
+        else { Write-Error "Execution of $ExecutePowerShell was cancelled." }
+    }
+    
+    DownloadZip
+    {
+        if($PSCmdlet.ShouldProcess("This will download and unzip $DownloadZip to $Path.",
+            "Are you sure you wish to download $Name ?",
+            "Download $Name"))
+        {
+            $dir = Split-Path $Path
+            $filename = [IO.Path]::GetFileName($DownloadZip.LocalPath)
+            if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
+            $zippath = Join-Path $env:TEMP $filename
+            Write-Verbose "Downloading $DownloadZip to $path"
+            (New-Object System.Net.WebClient).DownloadFile($DownloadZip,$zippath)
+            try{[void][IO.Compression.ZipFile]}catch{Add-Type -AN System.IO.Compression.FileSystem}
+            Write-Verbose "Copying zipped items from $zippath to $dir"
+            [IO.Compression.ZipFile]::ExtractToDirectory($zippath,$dir)
+            Set-ResolvedAlias $Name $Path
+        }
+        else { Write-Error "Download/unzip of $Name was cancelled." }
+    }
+    
+    DownloadUrl
+    {
+        if($PSCmdlet.ShouldProcess("This will download $DownloadUrl to $Path.",
+            "Are you sure you wish to download $Name ?",
+            "Download $Name"))
+        {
+            $dir = Split-Path $Path
+            if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
+            (New-Object System.Net.WebClient).DownloadFile($DownloadUrl,$Path)
+            Set-ResolvedAlias $Name $Path
+        }
+        else { Write-Error "Download of $Name was cancelled." }
+    }
+    
+    WarnOnly
+    {
+        Write-Warning $Message
+    }
+
+    Fail
+    {
+        throw "$Name command not found!"
+    }
 }

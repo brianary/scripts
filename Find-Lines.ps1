@@ -47,7 +47,7 @@
     Returns git blame info for matching lines.
     
 .Example
-    C:\PS> Find-Lines 'using System;' *.cs "$env:USERPROFILE\Documents\Visual Studio*\Projects" -CaseSensitive -List
+    Find-Lines 'using System;' *.cs "$env:USERPROFILE\Documents\Visual Studio*\Projects" -CaseSensitive -List
     
     This command searches all of the .cs files in the Projects directory (or directories) and subdirectories,
     returning the matches.
@@ -110,13 +110,13 @@ if($List) { $ssopt.List=$true }
 if($NotMatch) { $ssopt.NotMatch=$true }
 if($SimpleMatch) { $ssopt.SimpleMatch=$true }
 # the filter parameter is much faster than the include parameter
-$lookin = if($Filters) { $Filters|% {ls @lsopt -Filter $_} } else { ls @lsopt }
+$lookin = if($Filters) { $Filters|% {Get-ChildItem @lsopt -Filter $_} } else { Get-ChildItem @lsopt }
 # TODO: Manually handle Include and Exclude for the FullName.
 $found = Select-String -Path $lookin @ssopt
 if($ChooseMatches) { $found = $found |Out-GridView -Title "Select matches: $Pattern $Filters $Path" -PassThru }
-if($Open) 
-{ $found |ii }
-elseif($Blame)
-{ $found |% {Get-LineBlameInfo $_.Path $_.LineNumber} }
-else
-{ $found }
+switch($PSCmdlet.ParameterSetName)
+{
+    Default { $found }
+    Open    { $found |Invoke-Item }
+    Blame   { $found |% {Get-LineBlameInfo $_.Path $_.LineNumber} }
+}
