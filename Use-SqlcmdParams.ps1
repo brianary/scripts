@@ -7,23 +7,15 @@
     which set of the calling script's parameters to set as defaults for the
     Invoke-Sqlcmd cmdlet.
 
-    The same ParameterSetNames as Invoke-Sqlcmd are used, with one additional:
+    The same ParameterSetNames as Invoke-Sqlcmd are used, plus ConnectionName to
+    pull a connection string from the .NET configuration.
+    
+    To use this script, add any of these parameters:
 
-    * ByConnectionParameter: ServerInstance and Database
-    * ByConnectionString: ConnectionString
-    * ByConnectionName: ConnectionName (sets ConnectionString default from config)
-
-.Link
-    Export-TableMerge.ps1
-
-.Link
-    Send-SqlReport.ps1
-
-.Link
-    Repair-DatabaseConstraintNames.ps1
-
-.Link
-    Find-SqlDeprecatedLargeValueTypes.ps1
+    [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string]$ServerInstance,
+    [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string]$Database,
+    [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
+    [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
 
 .Link
     Import-Variables.ps1
