@@ -117,12 +117,11 @@ try
     else
     { # convert the table into HTML (select away the add'l properties the DataTable adds), add some Outlook 2007-compat CSS, email it
         $odd = $false
-        $body = ($data |
+        $body = $data |
             select ($data[0].Table.Columns |% ColumnName) |
             ConvertTo-Html -PreContent $PreContent -PostContent $PostContent -Head '<style type="text/css">th,td {padding:2px 1ex 0 2px}</style>' |
-            % {if($odd=!$odd){$_ -replace '^<tr>','<tr style="background:#EEE">'}else{$_}} |
-            % {$_ -replace '<td>(\d+(\.\d+)?)</td>','<td align="right">$1</td>'} |
-            Out-String) -replace '<table>','<table cellpadding="2" cellspacing="0" style="font:x-small ''Lucida Console'',monospace">'
+            Format-HtmlDataTable.ps1 '#EEE' |
+            Out-String
         $Msg = @{
             To         = $To
             Subject    = $Subject
