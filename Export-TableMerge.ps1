@@ -113,8 +113,7 @@ select quotename(c.COLUMN_NAME) as COLUMN_NAME
 if($nonkeyidentity)
 {
     Write-Verbose "Non-primary-key identity column detected: $nonkeyidentity"
-    $altkey = $pk + $nonkeyidentity
-    if($UseIdentityInKey) {$pk = $altkey}
+    if($UseIdentityInKey) {$pk += $nonkeyidentity}
     else
     {
         Write-Warning @"
@@ -122,10 +121,6 @@ Non-key IDENTITY column $nonkeyidentity cannot be updated and will be ignored.
 Specify -UseIdentityInKey to include it in the primary key.
 "@
     }
-}
-else
-{
-    $altkey = @()
 }
 Write-Verbose "Primary key: $pk"
 $pkjoin = ($pk |% {"source.{0} = target.{0}" -f $_}) -join ' AND '
@@ -139,7 +134,7 @@ select quotename(COLUMN_NAME) as COLUMN_NAME
    and TABLE_NAME = $tablename
  order by ORDINAL_POSITION;
 "@ |% COLUMN_NAME
-$dataupdates = ($columns |? {$_ -notin $altkey} |% {"{0} = source.{0}" -f $_}) -join ",$EOL"
+$dataupdates = ($columns |? {$_ -notin $pk} |% {"{0} = source.{0}" -f $_}) -join ",$EOL"
 $dataupdates =
     if($dataupdates) {"when matched then${EOL}update set $dataupdates"}
     else {"-- skip 'matched' condition (no non-key columns to update)"}
