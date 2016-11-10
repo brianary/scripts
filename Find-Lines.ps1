@@ -116,7 +116,7 @@ $found = Select-String -Path $lookin @ssopt
 if($ChooseMatches) { $found = $found |Out-GridView -Title "Select matches: $Pattern $Filters $Path" -PassThru }
 switch($PSCmdlet.ParameterSetName)
 {
-    Default { $found }
-    Open    { $found |Invoke-Item }
-    Blame   { $found |% {Get-LineBlameInfo $_.Path $_.LineNumber} }
+    'Default' { $found }
+    Open      { $found |Invoke-Item }
+    Blame     { $found |% {Get-LineBlameInfo $_.Path $_.LineNumber} }
 }
