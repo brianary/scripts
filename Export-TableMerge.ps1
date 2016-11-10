@@ -123,6 +123,10 @@ Specify -UseIdentityInKey to include it in the primary key.
 "@
     }
 }
+else
+{
+    $altkey = @()
+}
 Write-Verbose "Primary key: $pk"
 $pkjoin = ($pk |% {"source.{0} = target.{0}" -f $_}) -join ' AND '
 
