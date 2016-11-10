@@ -36,7 +36,7 @@ Process
 {
     switch($PSCmdlet.ParameterSetName)
     {
-        SelectXmlInfo { @($SelectXmlInfo |% Node |ConvertFrom-XmlElement.ps1) }
+        SelectXmlInfo { @($SelectXmlInfo |% {[Xml.XmlElement]$_.Node} |ConvertFrom-XmlElement.ps1) }
         Element
         {
             if(($Element.SelectNodes('*') |group Name |measure).Count -eq 1)
