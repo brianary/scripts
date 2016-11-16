@@ -39,6 +39,9 @@
 
     (If enableSsl is set to true, SSL will be used to send the report.)
 
+.Parameter Caption
+    The optional table caption to add.
+
 .Parameter Timeout
     The timeout to use for the query, in seconds. The default is 90.
 
@@ -80,6 +83,7 @@
 [Parameter(ParameterSetName='ByConnectionString',Position=3,Mandatory=$true)][string]$ConnectionString,
 [Parameter(ParameterSetName='ByConnectionName',Position=3,Mandatory=$true)][string]$ConnectionName,
 [string]$From,
+[string]$Caption,
 [int]$Timeout= 90,
 [string]$PreContent= ' ',
 [string]$PostContent= ' ',
@@ -117,10 +121,12 @@ try
     else
     { # convert the table into HTML (select away the add'l properties the DataTable adds), add some Outlook 2007-compat CSS, email it
         $odd = $false
+        $tableFormat = @{OddRowBackground='#EEE'}
+        if($Caption){$tableFormat.Add('Caption',$Caption)}
         $body = $data |
             select ($data[0].Table.Columns |% ColumnName) |
             ConvertTo-Html -PreContent $PreContent -PostContent $PostContent -Head '<style type="text/css">th,td {padding:2px 1ex 0 2px}</style>' |
-            Format-HtmlDataTable.ps1 '#EEE' |
+            Format-HtmlDataTable.ps1 @tableFormat |
             Out-String
         $Msg = @{
             To         = $To
