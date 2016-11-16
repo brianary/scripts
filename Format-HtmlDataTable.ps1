@@ -36,9 +36,11 @@
 
 #Requires -Version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0)][string]$OddRowBackground,
-[Parameter(Position=1)][string]$EvenRowBackground,
-[string]$TableAttributes = 'cellpadding="2" cellspacing="0" style="font:x-small ''Lucida Console'',monospace"',
+[Parameter(Position=0)][string]$Caption,
+[Parameter(Position=1)][string]$OddRowBackground,
+[Parameter(Position=2)][string]$EvenRowBackground,
+[Alias('TableAtts')][string]$TableAttributes = 'cellpadding="2" cellspacing="0" style="font:x-small ''Lucida Console'',monospace"',
+[Alias('CaptionAtts','CapAtts')][string]$CaptionAttributes = 'style="font:bold small serif;border:1px inset #DDD;padding:1ex 0;background:#FFF"',
 [Parameter(ValueFromPipeline=$true)][string]$Html
 )
 Begin
@@ -51,7 +53,11 @@ Process
 {
     $odd = !$odd
     $Html = $Html -replace '<td>(-?\d+(\.\d+)?)</td>','<td align="right">$1</td>'
-    if($TableAttributes) {$Html = $Html -replace '<table>',"<table $TableAttributes>"}
+    if($Html -like '*<table>*')
+    {
+        if($Caption) {$Html = $Html -replace '<table>',"<table><caption $CaptionAttributes>$([Net.WebUtility]::HtmlEncode($Caption))</caption>"}
+        if($TableAttributes) {$Html = $Html -replace '<table>',"<table $TableAttributes>"}
+    }
     if($odd -and $OddRowBackground) {$Html -replace '^<tr>',"<tr style=`"background:$OddRowBackground`">"}
     elseif(!$odd -and $EvenRowBackground) {$Html -replace '^<tr>',"<tr style=`"background:$EvenRowBackground`">"}
     else {$Html}
