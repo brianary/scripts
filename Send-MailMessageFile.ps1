@@ -43,13 +43,13 @@ Process
         {
             $cc = New-Object Net.Mail.MailAddressCollection
             $cc.Add($eml.CC)
-            [void]$msg.Add('Cc',$cc)
+            [void]$msg.Add('Cc',($cc |% {"$_"}))
         }
         if($eml.BCC)
         {
             $bcc = New-Object Net.Mail.MailAddressCollection
             $bcc.Add($eml.BCC)
-            [void]$msg.Add('Bcc',$bcc)
+            [void]$msg.Add('Bcc',($bcc |% {"$_"}))
         }
         $priority = try{$msg.Fields('urn:schemas:mailheader:importance').Value}catch{}
         if($priority) {[void]$msg.Add('Priority',$priority)}
