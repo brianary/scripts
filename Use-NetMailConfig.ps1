@@ -27,12 +27,17 @@
     values from the ConfigurationManager.
 #>
 
+#Requires -Version 3
+[CmdletBinding()] Param()
 try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration}
 $smtp = [Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp')
-$value = @{
-    'Send-MailMessage:From'       = $smtp.From
-    'Send-MailMessage:SmtpServer' = $smtp.Network.Host
-    'Send-MailMessage:UseSsl'     = $smtp.Network.EnableSsl
+$value = @{ 'Send-MailMessage:From' = $smtp.From }
+if($smtp.DeliveryMethod -eq 'Network')
+{
+    $value += @{
+        'Send-MailMessage:SmtpServer' = $smtp.Network.Host
+        'Send-MailMessage:UseSsl'     = $smtp.Network.EnableSsl
+    }
 }
 $defaults = Get-Variable -Scope 1 -Name PSDefaultParameterValues -EA SilentlyContinue
 if($defaults) {$value.Keys |? {$value.$_ -and $defaults.Value.Contains($_)} |% {$defaults.Value.Remove($_)}; $defaults.Value += $value}
