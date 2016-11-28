@@ -33,6 +33,7 @@
 [CmdletBinding(SupportsShouldProcess=$true)] Param(
 [Parameter(Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
 [Alias('Eml')][IO.FileInfo[]]$MailFile = (Get-ChildItem *.eml),
+[string]$From,
 [switch]$Delete
 )
 Begin { Use-NetMailConfig.ps1 }
@@ -50,7 +51,7 @@ Process
         $stream.Close()
         $to = New-Object Net.Mail.MailAddressCollection
         $to.Add($eml.To)
-        $msg = @{ To = $to |% {"$_"}; Subject = $eml.Subject }
+        $msg = @{ From = $eml.From; To = $to |% {"$_"}; Subject = $eml.Subject }
         if($eml.CC)
         {
             $cc = New-Object Net.Mail.MailAddressCollection
