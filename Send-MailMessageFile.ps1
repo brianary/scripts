@@ -17,6 +17,9 @@
 .Link
     Send-MailMessage
 
+.Link
+    Use-NetMailConfig.ps1
+
 .Example
     Send-MailMessageFiles.ps1
     Sends all .eml files in the current directory.
@@ -26,7 +29,7 @@
     Sends emails from drop directory.
 #>
 
-#Requires -Version 4
+#Requires -Version 3
 [CmdletBinding(SupportsShouldProcess=$true)] Param(
 [Parameter(Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
 [Alias('Eml')][IO.FileInfo[]]$MailFile = (Get-ChildItem *.eml),
