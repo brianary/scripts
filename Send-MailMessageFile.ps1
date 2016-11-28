@@ -8,6 +8,15 @@
 .Parameter Delete
     Indicates sent files should be deleted.
 
+.Component
+    ADODB.Stream
+
+.Component
+    CDO.Message
+
+.Link
+    Send-MailMessage
+
 .Example
     Send-MailMessageFiles.ps1
     Sends all .eml files in the current directory.
