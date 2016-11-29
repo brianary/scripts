@@ -1,6 +1,6 @@
 ﻿<#
 .Synopsis
-    Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
+    Right-aligns numeric data in an HTML table for emailing, with some additional styling options.
 
 .Parameter OddRowBackground
     The background CSS value for odd rows.
@@ -29,6 +29,9 @@
 .Link
     https://www.w3.org/Bugs/Public/show_bug.cgi?id=18026
 
+.Link
+    https://www.campaignmonitor.com/css/
+
 .Example
     Invoke-Sqlcmd "..." |ConvertFrom-DataRow.ps1 |ConvertTo-Html |Format-HtmlDataTable.ps1
     Runs the query, parses each row into an HTML row, then fixes the alignment of numeric cells.
@@ -51,13 +54,13 @@ Begin
 }
 Process
 {
-    $odd = !$odd
-    $Html = $Html -replace '<td>(-?\d+(\.\d+)?)</td>','<td align="right">$1</td>'
+    $Html = $Html -replace '<td>(\(\p{Sc}?\d+(?:[., ]\d+)*\)|(?:[-−﹣－+＋±]\p{Sc}|[-−﹣－+＋±]?\p{Sc}?)\d+(?:[., ]\d+)*[\p{Sc}%‰‱]?)</td>','<td align="right">$1</td>'
     if($Html -like '*<table>*')
     {
         if($Caption) {$Html = $Html -replace '<table>',"<table><caption $CaptionAttributes>$([Net.WebUtility]::HtmlEncode($Caption))</caption>"}
         if($TableAttributes) {$Html = $Html -replace '<table>',"<table $TableAttributes>"}
     }
+    $odd = !$odd
     if($odd -and $OddRowBackground) {$Html -replace '^<tr>',"<tr style=`"background:$OddRowBackground`">"}
     elseif(!$odd -and $EvenRowBackground) {$Html -replace '^<tr>',"<tr style=`"background:$EvenRowBackground`">"}
     else {$Html}
