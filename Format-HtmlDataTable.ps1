@@ -2,6 +2,9 @@
 .Synopsis
     Right-aligns numeric data in an HTML table for emailing, with some additional styling options.
 
+.Parameter Caption
+    The text of the title (HTML <caption> element) for the table.
+
 .Parameter OddRowBackground
     The background CSS value for odd rows.
 
@@ -20,7 +23,7 @@
 .Outputs
     System.String (data-formatted HTML)
 
-.Note
+.Notes
     Assumes only one <tr> element per string piped in, as produced by ConvertTo-Html.
 
 .Link

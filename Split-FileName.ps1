@@ -9,20 +9,15 @@
 
 .Example
     Split-FileName.ps1 readme.txt
-
-
     readme
 
 .Example
     Split-FileName.ps1 readme.txt -Extension
-
-
-    .txt
+    ․txt
+    (the leading . is included, but can't be entered as such in this example)
 
 .Example
     Split-FileName.ps1 readme.txt -HasExtension
-
-
     True
 #>
 
