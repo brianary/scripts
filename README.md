@@ -21,6 +21,8 @@ PowerShell Scripts
 - **Find-ProjectPackages.ps1**: Find modules used in projects.
 - **Find-SqlDeprecatedLargeValueTypes.ps1**: Reports text, ntext, and image datatypes found in a given database.
 - **Format-ByteUnits.ps1**: Converts bytes to largest possible units, to improve readability.
+- **Format-HtmlDataTable.ps1**: Format-HtmlDataTable.ps1 [[-Caption] <string>] [[-OddRowBackground] <string>] [[-EvenRowBackground] <string>] [-TableAttributes <string>] [-CaptionAttributes <string>] [-Html <string>] [<CommonParameters>]
+
 - **Format-Xml.ps1**: Pretty-print XML.
 - **Format-XmlElements.ps1**: Serializes complex content into XML elements.
 - **Get-AspNetEvents.ps1**: Parses ASP.NET errors from the event log on the given server.
@@ -46,6 +48,7 @@ PowerShell Scripts
 - **Remove-Xml.ps1**: Removes a node found by Select-Xml from its XML document.
 - **Repair-DatabaseConstraintNames.ps1**: Finds database constraints with system-generated names and gives them deterministic names.
 - **Select-XmlNodeValue.ps1**: Returns the value of an XML node found by Select-Xml.
+- **Send-MailMessageFile.ps1**: Sends emails from a drop folder using .NET config defaults.
 - **Send-SeqEvent.ps1**: Send an event to a Seq server.
 - **Send-SeqScriptEvent.ps1**: Sends an event from a script to a Seq server, including script info.
 - **Send-SqlReport.ps1**: Execute a SQL statement and email the results.
@@ -63,4 +66,4 @@ PowerShell Scripts
 - **Use-SeqServer.ps1**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 - **Use-SqlcmdParams.ps1**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
-<!-- generated 11/04/2016 23:01:01 -->
+<!-- generated 11/30/2016 07:37:51 -->
