@@ -21,8 +21,7 @@ PowerShell Scripts
 - **Find-ProjectPackages.ps1**: Find modules used in projects.
 - **Find-SqlDeprecatedLargeValueTypes.ps1**: Reports text, ntext, and image datatypes found in a given database.
 - **Format-ByteUnits.ps1**: Converts bytes to largest possible units, to improve readability.
-- **Format-HtmlDataTable.ps1**: Format-HtmlDataTable.ps1 [[-Caption] <string>] [[-OddRowBackground] <string>] [[-EvenRowBackground] <string>] [-TableAttributes <string>] [-CaptionAttributes <string>] [-Html <string>] [<CommonParameters>]
-
+- **Format-HtmlDataTable.ps1**: Right-aligns numeric data in an HTML table for emailing, with some additional styling options.
 - **Format-Xml.ps1**: Pretty-print XML.
 - **Format-XmlElements.ps1**: Serializes complex content into XML elements.
 - **Get-AspNetEvents.ps1**: Parses ASP.NET errors from the event log on the given server.
@@ -55,8 +54,7 @@ PowerShell Scripts
 - **Set-XmlAttribute.ps1**: Adds an XML attribute to an XML element found by Select-Xml.
 - **Set-XmlNodeValue.ps1**: Sets the value of a node found by Select-Xml.
 - **Show-CertificatePermissions.ps1**: Shows the permissions of a certificate's private key file.
-- **Split-FileName.ps1**: Split-FileName.ps1 [-Path] <string> [-HasExtension] [-Extension] [<CommonParameters>]
-
+- **Split-FileName.ps1**: Returns the specified part of the filename.
 - **Test-Interactive.ps1**: Determines whether both the user and process are interactive.
 - **Test-NewerFile.ps1**: Returns true if the difference file is newer than the reference file.
 - **Test-USFederalHoliday.ps1**: Returns the name of the holiday of a date, if it is a U.S. federal holiday.
@@ -66,4 +64,4 @@ PowerShell Scripts
 - **Use-SeqServer.ps1**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 - **Use-SqlcmdParams.ps1**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
-<!-- generated 11/30/2016 07:37:51 -->
+<!-- generated 11/30/2016 07:53:02 -->
