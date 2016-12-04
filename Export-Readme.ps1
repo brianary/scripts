@@ -16,7 +16,7 @@ function Format-PSScripts
         % {Get-Help $_.FullName} |
         % {
             $name = Split-Path $_.Name -Leaf
-            "- **[$name](blob/master/$name)**: $($_.Synopsis)"
+            "- **[$name]($name)**: $($_.Synopsis)"
         }
 }
 
