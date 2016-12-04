@@ -12,7 +12,12 @@
 
 function Format-PSScripts
 {
-    ls $PSScriptRoot\*.ps1 |% {Get-Help $_.FullName} |% {"- **$(Split-Path $_.Name -Leaf)**: $($_.Synopsis)"}
+    ls $PSScriptRoot\*.ps1 |
+        % {Get-Help $_.FullName} |
+        % {
+            $name = Split-Path $_.Name -Leaf
+            "- **[$name](blob/master/$name)**: $($_.Synopsis)"
+        }
 }
 
 function Format-Dependencies
