@@ -62,4 +62,4 @@ Use-Command.ps1 dot ${env:ProgramFiles(x86)}\Graphviz*\bin\dot.exe -msi http://g
 Format-Dependencies |Out-File $PSScriptRoot\dependencies.gv -Encoding ascii
 dot -Tpng -o $PSScriptRoot\dependencies.png $PSScriptRoot\dependencies.gv
 rm dependencies.gv
-Format-Readme |Out-File $PSScriptRoot\README.md
+Format-Readme |Out-File $PSScriptRoot\README.md -Encoding utf8
