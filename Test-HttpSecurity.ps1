@@ -86,13 +86,24 @@
 Process
 {
     $scan = @{}
-    $Hosts |% {$scan.Add($_,(Invoke-RestMethod "$Endpoint/analyze?host=$_" -Body @{hidden=!$Public;rescan=$Rescan} -Method Post))}
-
-    while($pending = $scan.Keys |? {$scan.$_.state -like '*ING'})
-    {
-        sleep -Milliseconds $PollingInterval
-        $pending |% {$scan.$_ = Invoke-RestMethod "$Endpoint/analyze?host=$_"}
+    Write-Progress 'Mozilla Observatory Scan' 'Initiating scans'
+    $i,$max = 0,($Hosts.Count/99.99)
+    $Hosts |% {
+        Write-Progress 'Mozilla Observatory Scan' 'Initiating scans' -CurrentOperation $_ -PercentComplete ($i++/$max)
+        $scan.Add($_,(Invoke-RestMethod "$Endpoint/analyze?host=$_" -Body @{hidden=!$Public;rescan=$Force} -Method Post))
     }
+
+    while([string[]]$pending = $scan.Keys |? {$scan.$_.state -like '*ING' -or 
+        !(Get-Member state -InputObject $scan.$_ -MemberType Properties)})
+    {
+        Write-Progress 'Mozilla Observatory Scan' "Waiting $PollingInterval ms" -PercentComplete ($pending.Count/$max)
+        Start-Sleep -Milliseconds $PollingInterval
+        $pending |% {
+            Write-Progress 'Mozilla Observatory Scan' "Checking $_" -PercentComplete ($pending.Count/$max)
+            $scan.$_ = Invoke-RestMethod "$Endpoint/analyze?host=$_"
+        }
+    }
+    Write-Progress 'Mozilla Observatory Scan' -Completed
 
     $scan.Keys |% {
         $results = "$Endpoint/getScanResults?scan=$($scan.$_.scan_id)"
