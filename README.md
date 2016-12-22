@@ -58,6 +58,7 @@ PowerShell Scripts
 - **[Set-XmlNodeValue.ps1](Set-XmlNodeValue.ps1)**: Sets the value of a node found by Select-Xml.
 - **[Show-CertificatePermissions.ps1](Show-CertificatePermissions.ps1)**: Shows the permissions of a certificate's private key file.
 - **[Split-FileName.ps1](Split-FileName.ps1)**: Returns the specified part of the filename.
+- **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1)**: Scan sites using Mozilla's Observatory.
 - **[Test-Interactive.ps1](Test-Interactive.ps1)**: Determines whether both the user and process are interactive.
 - **[Test-NewerFile.ps1](Test-NewerFile.ps1)**: Returns true if the difference file is newer than the reference file.
 - **[Test-USFederalHoliday.ps1](Test-USFederalHoliday.ps1)**: Returns the name of the holiday of a date, if it is a U.S. federal holiday.
@@ -67,4 +68,4 @@ PowerShell Scripts
 - **[Use-SeqServer.ps1](Use-SeqServer.ps1)**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 - **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
-<!-- generated 12/04/2016 18:50:24 -->
+<!-- generated 12/22/2016 08:40:58 -->
