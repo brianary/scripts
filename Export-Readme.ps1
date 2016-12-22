@@ -22,7 +22,6 @@ function Format-PSScripts
 
 function Format-Dependencies
 {
-    if($PSScriptRoot -notin ($env:Path -split ';')) {$env:Path += ";$PSScriptRoot"}
     @'
 digraph ScriptDependencies
 {
@@ -30,13 +29,20 @@ digraph ScriptDependencies
     node [shape=note style=filled fontname="Lucida Console" fontcolor=azure fillcolor=mediumblue color=azure]
     edge [color=goldenrod]
 '@
+    $path = $env:Path
+    $env:Path = $PSScriptRoot
     foreach($help in Get-Help *.ps1)
     {
-        if($help.Name -notlike "$PSScriptRoot\*" -or !$help.relatedLinks) {continue}
-        $help.relatedLinks.navigationLink.linkText |
+        Write-Verbose $help.Name
+        if($help.Name -notlike "$PSScriptRoot\*" -or 
+            !(Get-Member relatedLinks -InputObject $help -MemberType Properties)) {continue}
+        $help.relatedLinks.navigationLink |
+            ? {Get-Member linkText -InputObject $_ -MemberType Properties} |
+            % {$_.linkText} |
             ? {$_ -like '*.ps1'} |
             % {"    `"$(Split-Path $help.Name -Leaf)`" -> `"$_`" "}
     }
+    $env:Path = $path
     @'
 }
 '@
