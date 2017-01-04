@@ -5,8 +5,7 @@ Builds a chart and attaches it to an email, then sends it.
 
 Namespaces & References
 -----------------------
-Tip: Create a paket.dependencies file to install FSharp.Data.SqlClient and FSharp.Charting.
-see http://fsprojects.github.io/Paket/
+Declare CLR library usage.
 *)
 open System
 // Needed to send an email with the charts.
@@ -15,10 +14,30 @@ open System.Net.Mime
 // Needed for FSharp.Charting's ShowChart() method.
 #r "System.Windows.Forms.DataVisualization"
 
-#I @".\packages\FSharp.Data.SqlClient\lib\net40"
+(**
+Packages
+--------
+Download Paket if missing, then install NuGet packages using Paket, then reference and open package libraries.
+*)
+#I __SOURCE_DIRECTORY__
+let ``paket.exe`` = IO.Path.Combine(__SOURCE_DIRECTORY__,"paket.exe")
+if not (IO.File.Exists ``paket.exe``) then
+    use wc = new Net.WebClient()
+    wc.DownloadFile(wc.DownloadString("http://fsprojects.github.io/Paket/stable"),``paket.exe``)
+let ``paket.dependencies`` = IO.Path.Combine(__SOURCE_DIRECTORY__,"paket.dependencies")
+if not (IO.File.Exists ``paket.dependencies``) then
+    IO.File.WriteAllLines(``paket.dependencies``,["source https://nuget.org/api/v2"])
+#r "paket.exe"
+open Paket
+let dependencies = Dependencies.Locate(__SOURCE_DIRECTORY__)
+dependencies.Add "FSharp.Data.SqlClient"
+dependencies.Add "FSharp.Charting"
+dependencies.Restore()
+
+#I @"packages\FSharp.Data.SqlClient\lib\net40"
 #r "FSharp.Data.SqlClient"
 open FSharp.Data
-#I @".\packages\FSharp.Charting\lib\net40"
+#I @"packages\FSharp.Charting\lib\net40"
 #r "FSharp.Charting"
 open FSharp.Charting
 
@@ -36,6 +55,8 @@ sqlcmd.exe -E -S "(localdb)\ProjectV12" -i instawdb.sql
 *)
 /// Use the SQL Server Type Provider to define a type-safe query for the top products (by $ amount)
 /// summary order amount statistics by date.
+[<Literal>]
+let ConnStr = "server=(localdb)\ProjectsV13;database=AdventureWorks2014;integrated security=SSPI"
 type OrderCmd = SqlCommandProvider<"
 select p.Name, p.ProductID, o.OrderDate, sum(od.LineTotal) Total, 
        min(od.LineTotal) MinAmt, max(od.LineTotal) MaxAmt, 
@@ -51,9 +72,9 @@ select p.Name, p.ProductID, o.OrderDate, sum(od.LineTotal) Total,
    and o.OrderDate between '2014-03-01' and '2014-03-31'
  group by p.ProductID, p.Name, o.OrderDate
  order by p.ProductID, o.OrderDate
-","server=(localdb)\ProjectsV12;database=AdventureWorks2014;integrated security=SSPI">
+",ConnStr>
 /// An instance of the query type.
-let getOrders = new OrderCmd()
+let getOrders = new OrderCmd(ConnStr)
 
 (**
 Manipulate Data
@@ -146,4 +167,4 @@ let sendCharts (t:string) s c =
 Send Email
 ----------
 *)
-sendCharts "test@example.net" "Top Products Charts" charts
+sendCharts "test@example.com" "Top Products Charts" charts
