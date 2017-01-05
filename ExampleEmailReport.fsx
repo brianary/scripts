@@ -45,7 +45,7 @@ open FSharp.Charting
 Database
 --------
 Install the AdventureWorks2014 database from 
-https://msftdbprodsamples.codeplex.com/releases/view/125550
+https://msftdbprodsamples.codeplex.com/releases/view/125550 .
 With VS installed, you should be able to unzip 
 Adventure Works 2014 OLTP Script.zip into
 C:\Program Files\Microsoft SQL Server\120\Tools\Samples\Adventure Works 2014 OLTP Script
