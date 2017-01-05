@@ -47,10 +47,10 @@ Database
 Install the AdventureWorks2014 database from 
 https://msftdbprodsamples.codeplex.com/releases/view/125550 .
 With VS installed, you should be able to unzip 
-Adventure Works 2014 OLTP Script.zip into
-C:\Program Files\Microsoft SQL Server\120\Tools\Samples\Adventure Works 2014 OLTP Script
+**Adventure Works 2014 OLTP Script.zip** into
+*C:\Program Files\Microsoft SQL Server\120\Tools\Samples\Adventure Works 2014 OLTP Script*
 (depending on version) then run something like
-sqlcmd.exe -E -S "(localdb)\ProjectV12" -i instawdb.sql
+`sqlcmd.exe -E -S "(localdb)\ProjectV12" -i instawdb.sql`
 (from that directory, running in a PowerShell or cmd prompt as admin).
 *)
 /// Use the SQL Server Type Provider to define a type-safe query for the top products (by $ amount)

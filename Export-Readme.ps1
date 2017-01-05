@@ -86,6 +86,7 @@ function Export-FSharpFormatting
 function Format-FSScripts
 {
     Export-FSharpFormatting
+    $base = 'https://cdn.rawgit.com/brianary/scripts/master/'
     $FSFHeadPattern = @'
 (?mx) \A \s*
 ^\(\*\* \s* $ \s*
@@ -99,7 +100,7 @@ function Format-FSScripts
         % {
             if((Get-Content $_ -Raw) -match $FSFHeadPattern)
             {
-                "- **[$($Matches.Title)]($([IO.Path]::ChangeExtension($_,'html')))**: $($Matches.Synopsis)"
+                "- **[$($Matches.Title)]($base$([IO.Path]::ChangeExtension($_,'html')))**: $($Matches.Synopsis)"
             }
         }
 }
