@@ -1,5 +1,5 @@
 ' Too many emails remain beyond their period of relevance: daily personnel schedule changes, 
-' office food notices, server reboot notices, weather/traffic warnings, &c.
+' found item notices, office food notices, server reboot notices, weather/traffic warnings, &c.
 ' This Outlook script will allow specifying an expiration date as a hashtag in the subject
 ' of outgoing emails, since Outlook does such a good job of hiding the UI for that field. -BL
 
