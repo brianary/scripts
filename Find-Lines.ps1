@@ -61,7 +61,8 @@
     [string[]]$Include,
     [string[]]$Exclude = @('*.dll','*.exe','*.pdb','*.bin','*.cache','*.png','*.gif','*.jpg','*.ico','*.psd','*.obj','*.iso',
         '*.docx','*.xls','*.xlsx','*.pdf','*.rtf','*.swf','*.chm','*.ttf','*.woff','*.eot','*.otf','*.mdf','*.ldf','*.pack',
-        '*.zip','*.gz','*.tgz','*.jar','*.nupkg','*.vspscc','*.vsmdi','*.vssscc','*.vsd','*.vscontent','*.vssettings','*.suo'),
+        '*.zip','*.gz','*.tgz','*.jar','*.nupkg','*.vspscc','*.vsmdi','*.vssscc','*.vsd','*.vscontent','*.vssettings','*.suo',
+        '*.dbmdl','*.tdf'),
     [switch]$CaseSensitive,
     [switch]$List,
     [switch]$NotMatch,
@@ -116,7 +117,7 @@ $found = Select-String -Path $lookin @ssopt
 if($ChooseMatches) { $found = $found |Out-GridView -Title "Select matches: $Pattern $Filters $Path" -PassThru }
 switch($PSCmdlet.ParameterSetName)
 {
-    'Default' { $found }
-    Open      { $found |Invoke-Item }
-    Blame     { $found |% {Get-LineBlameInfo $_.Path $_.LineNumber} }
+    Default { $found }
+    Open    { $found |Invoke-Item }
+    Blame   { $found |% {Get-LineBlameInfo $_.Path $_.LineNumber} }
 }
