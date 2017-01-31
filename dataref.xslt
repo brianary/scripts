@@ -49,7 +49,7 @@
 	<html><head><title><xsl:value-of select="$name"/> Schema Reference</title>
 	<link rel="Stylesheet" type="text/css" href="dataref.css"/>
 	</head><body><h1><xsl:value-of select="$name"/> Schema Reference</h1>
-	<xsl:for-each select="document-uri(/),@id,@targetNamespace"><div><xsl:value-of/></div></xsl:for-each>
+	<xsl:for-each select="document-uri(/),@id,@targetNamespace"><div><xsl:value-of select="."/></div></xsl:for-each>
 	<xsl:if test="xs:import">
 		<h2>Imports</h2>
 		<ul>
