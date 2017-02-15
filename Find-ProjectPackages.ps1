@@ -79,10 +79,10 @@ Begin
     foreach($file in $projFiles)
     {
         Write-Verbose "Parsing $file"
-        Write-Progress $action "Parsing *proj package files: found $count" -CurrentOperation $file -PercentComplete (10*$i++/$max+60)
+        Write-Progress $action "Parsing *proj package files: found $($projFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+60)
         $p = Select-Xml //msbuild:HintPath $file -Namespace @{'msbuild'='http://schemas.microsoft.com/developer/msbuild/2003'}
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange(( $p |% {$dll = Join-Path (Split-Path $_.Path) $_.Node.InnerText; @{
+        [void]$packages.AddRange([object[]]( $p |% {$dll = Join-Path (Split-Path $_.Path) $_.Node.InnerText; @{
             name    = $_.Node.ParentNode.Attributes['Include'].Value
             version = $(if(Test-Path $dll -PathType Leaf) {ls $dll |% VersionInfo |% ProductVersion})
             file    = $file
@@ -91,10 +91,10 @@ Begin
     foreach($file in $nugetFiles)
     {
         Write-Verbose "Parsing $file"
-        Write-Progress $action "Parsing NuGet package files: found $count" -CurrentOperation $file -PercentComplete (10*$i++/$max+70)
+        Write-Progress $action "Parsing NuGet package files: found $($nugetFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+70)
         $p = Select-Xml /packages/package $file |% Node
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange(( $p |% {@{
+        [void]$packages.AddRange([object[]]( $p |% {@{
             name    = $_.id
             version = $_.version
             file    = $file
@@ -103,12 +103,12 @@ Begin
     foreach($file in $npmFiles)
     {
         Write-Verbose "Parsing $file"
-        Write-Progress $action "Parsing npm package files: found $count" -CurrentOperation $file -PercentComplete (10*$i++/$max+80)
+        Write-Progress $action "Parsing npm package files: found $($npmFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+80)
         $j = ConvertFrom-Json (Get-Content $file -Raw)
         if(!(Get-Member -InputObject $j -Name dependencies)) {Write-Verbose "No dependencies found in $file"; continue}
         $p = Get-Member -InputObject $j.dependencies -MemberType NoteProperty |% Name
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange(( $p |% {@{
+        [void]$packages.AddRange([object[]]( $p |% {@{
             name    = $_
             version = $j.dependencies.$_
             file    = $file
@@ -117,11 +117,11 @@ Begin
     foreach($file in $paketFiles)
     {
         Write-Verbose "Parsing $file"
-        Write-Progress $action "Parsing paket.lock package files: found $count" -CurrentOperation $file -PercentComplete (10*$i++/$max+90)
+        Write-Progress $action "Parsing paket.lock package files: found $($paketFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+90)
         $lockpattern = '\A\s{4}(?<Name>\w\S+)\s\((?:>= )?(?<Version>\d+(?:\.\d+)+)\b'
         $p = Get-Content $file |% {if($_ -match $lockpattern){New-Object psobject -Property @{Name=$Matches.Name;Version=$Matches.Version}}}
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange(( $p |% {@{
+        [void]$packages.AddRange([object[]]( $p |% {@{
             name    = $_.Name
             version = $_.Version
             file    = $file
