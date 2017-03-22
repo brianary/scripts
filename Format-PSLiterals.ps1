@@ -6,14 +6,17 @@
     An array, hash, object, or value type that can be represented as a PowerShell literal.
 
 .Example
-    ConvertFrom-Json '[{"a":1,"b":2}]' |Format-PSLiterals.ps1
-
+    ConvertFrom-Json '[{"a":1,"b":2,"c":{"d":"\/Date(1490216371478)\/","e":null}}]' |Format-PSLiterals.ps1
 
     @(
-        New-Object PSObject @{
-            a = 1
-            b = 2
-        }
+	    New-Object PSObject -Property ([ordered]@{
+		    a = 1
+		    b = 2
+		    c = New-Object PSObject -Property ([ordered]@{
+				    d = [datetime]'2017-03-22T20:59:31'
+				    e = $null
+			    })
+	    })
     )
 #>
 
@@ -21,7 +24,8 @@
 [CmdletBinding()] Param(
 [Parameter(Position=0,ValueFromPipeline=$true)]$Value,
 [string]$Indent = '',
-[string]$IndentBy = "`t"
+[string]$IndentBy = "`t",
+[switch]$SkipInitialIndent
 )
 Begin 
 {
@@ -30,10 +34,31 @@ Begin
         'Format-PSLiterals.ps1:Indent'   = "$Indent$IndentBy"
         'Format-PSLiterals.ps1:IndentBy' = $IndentBy
     }
+    $itab = if($SkipInitialIndent){''}else{$Indent}
+    $tab = $Indent
+    $tabtab = "$Indent$IndentBy"
+
+    function Format-PSString([string]$string)
+    {
+        $q,$string =
+            if($string -match '[\0\a\b\f\t\v]')
+            {
+                '"'
+                $string -replace '`','``' -replace '"','`"' -replace "`0",'`0' -replace "`a",'`a' -replace "`b",'`b' -replace "`f",'`f' -replace "`t",'`t' -replace "`v",'`v'
+            }
+            else
+            {
+                "'"
+                $string -replace "'","''"
+            }
+        if($string -match '\n|\r') {"@$q`n$string`n$q@"}
+        else {"$q$string$q"}
+    }
 }
 Process
 {
-    if($Value -eq $null) {}
+    if($Value -eq $null)
+    { '$null' }
     elseif($Value -is [int])
     { "$Value" }
     elseif($Value -is [bool])
@@ -47,35 +72,41 @@ Process
     elseif($Value -is [datetime])
     { "[datetime]'$(Get-Date -Date $Value -f yyyy-MM-dd\THH:mm:ss)'" }
     elseif($Value -is [string])
-    { "'$($Value -replace "'","''")'" }
+    { Format-PSString $Value }
     elseif($Value -is [array])
     {
-        "$Indent@("
+        "${itab}@("
         $Value |% {Format-PSLiterals.ps1 $_}
-        "$Indent)"
+        "${tab})"
     }
     elseif($Value -is [PSObject])
     {
-        "${Indent}New-Object PSObject @{"
+        "${itab}New-Object PSObject -Property ([ordered]@{"
         $Value.PSObject.Properties |
             ? {$_.Name -match '^\w+$'} |
-            % {"$Indent$IndentBy$($_.Name) = $(Format-PSLiterals.ps1 $_.Value)"}
-        "$Indent}"
+            % {"$Indent$IndentBy$($_.Name) = $(Format-PSLiterals.ps1 $_.Value -SkipInitialIndent)"}
+        "${tab}})"
     }
-    elseif($Value -is [Hashtable] -or $Value -is [Collections.Specialized.OrderedDictionary])
+    elseif($Value -is [Hashtable])
     {
-        "$Indent@{"
-        $Value.Keys |? {$_ -match '^\w+$'} |% {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_)"}
-        "$Indent}"
+        "${itab}@{"
+        $Value.Keys |? {$_ -match '^\w+$'} |% {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
+        "${tab}}"
+    }
+    elseif($Value -is [Collections.Specialized.OrderedDictionary])
+    {
+        "${itab}([ordered]@{"
+        $Value.Keys |? {$_ -match '^\w+$'} |% {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
+        "${tab}})"
     }
     elseif($Value -is [xml])
-    { "'$($Value.OuterXml -replace "'","''")'" }
+    { "[xml]$(Format-PSString $Value.OuterXml)" }
     else
     {
-        "$Indent@{"
+        "${itab}@{"
         Get-Member -InputObject $Value.PSObject.Properties -MemberType Properties |
             ? {$_.Name -match '^\w+$'} |
-            % {"$Indent$IndentBy$($_.Name) = $(Format-PSLiterals.ps1 $Value.$($_.Value))"}
-        "$Indent}"
+            % {"$Indent$IndentBy$($_.Name) = $(Format-PSLiterals.ps1 $Value.$($_.Value) -SkipInitialIndent)"}
+        "${tab}}"
     }
 }
