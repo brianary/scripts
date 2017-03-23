@@ -62,7 +62,8 @@ function Format-PSScripts
 function Install-RequiredPackages
 {
     Use-Command.ps1 paket $PSScriptRoot -url (irm http://fsprojects.github.io/Paket/stable)
-    paket restore
+    if(Test-Path paket.lock -PathType Leaf) {paket restore}
+    else {paket install}
 }
 
 function Export-FSharpFormatting

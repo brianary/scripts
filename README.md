@@ -11,6 +11,8 @@ PowerShell Scripts
 - **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1)**: Converts a DataRow object to a PSObject.
 - **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1)**: Parse escaped XML into XML and serialize it.
 - **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1)**: Converts named nodes of an element to properties of a PSObject, recursively.
+- **[ConvertTo-BasicAuthentication.ps1](ConvertTo-BasicAuthentication.ps1)**: ConvertTo-BasicAuthentication.ps1 [-Credential] <pscredential> [<CommonParameters>]
+
 - **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1)**: Converts an object to an ordered dictionary of properties and values.
 - **[Copy-SchTasks.ps1](Copy-SchTasks.ps1)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
 - **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1)**: Exports MS SQL script for an object from the given server.
@@ -72,6 +74,16 @@ PowerShell Scripts
 
 F# Scripts
 ----------
+Paket version 3.21.4.0
+Resolving packages for group Main:
+ - FAKE 4.56.0
+ - FSharp.Charting 0.90.14
+ - FSharp.Data.SqlClient 1.8.3
+     unlisted
+ - FSharp.Data.SqlClient 1.8.2
+ - FSharp.Formatting.CommandTool 2.14.4
+Locked version resolution written to A:\bscripts\paket.lock
+14 seconds - ready.
 - **[ExampleEmailReport.fsx](https://cdn.rawgit.com/brianary/scripts/master/ExampleEmailReport.html)**: Builds a chart and attaches it to an email, then sends it.
 
 Office VBA Scripts
@@ -80,4 +92,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 03/21/2017 17:31:34 -->
+<!-- generated 03/23/2017 09:52:10 -->
