@@ -42,6 +42,12 @@
 .Parameter Caption
     The optional table caption to add.
 
+.Parameter ReportFile
+    A UNC path to a .csv or .tsv file writable by the script and readable by the email recipient to output the data to,
+    which will be linked in the email rather than included in the email body.
+
+    Supports a format template for the current date and time (e.g. {0:yyyyMMddHHmmss}).
+
 .Parameter Timeout
     The timeout to use for the query, in seconds. The default is 90.
 
@@ -84,6 +90,7 @@
 [Parameter(ParameterSetName='ByConnectionName',Position=3,Mandatory=$true)][string]$ConnectionName,
 [string]$From,
 [string]$Caption,
+[string]$ReportFile,
 [int]$Timeout= 90,
 [string]$PreContent= ' ',
 [string]$PostContent= ' ',
@@ -117,32 +124,45 @@ try
     {
         Write-Verbose "No rows returned."
         Write-EventLog -LogName Application -Source Reporting -EventId 100 -Message "No rows returned for $Subject"
+        return
     }
-    else
-    { # convert the table into HTML (select away the add'l properties the DataTable adds), add some Outlook 2007-compat CSS, email it
-        $odd = $false
-        $tableFormat = @{OddRowBackground='#EEE'}
-        if($Caption){$tableFormat.Add('Caption',$Caption)}
-        $body = $data |
-            select ($data[0].Table.Columns |% ColumnName) |
-            ConvertTo-Html -PreContent $PreContent -PostContent $PostContent -Head '<style type="text/css">th,td {padding:2px 1ex 0 2px}</style>' |
-            Format-HtmlDataTable.ps1 @tableFormat |
-            Out-String
-        $Msg = @{
-            To         = $To
-            Subject    = $Subject
-            BodyAsHtml = $true
-            SmtpServer = $PSEmailServer
-            Body       = $body
+    $body =
+        if($ReportFile)
+        { # convert the table into a tsv/csv file and link to it
+            $ReportFile = $ReportFile -f (Get-Date)
+            if($ReportFile -like '*.tsv') {$data |Export-Csv $ReportFile -Delimiter "`t" -Encoding UTF8 -NoTypeInformation}
+            else {$data |Export-Csv $ReportFile -Encoding UTF8 -NoTypeInformation}
+            @"
+$PreContent
+See the file <a href=`"$([Net.WebUtility]::HtmlEncode($ReportFile))`">$([Net.WebUtility]::HtmlEncode((Split-Path $ReportFile -Leaf)))</a>.
+$PostContent
+"@
         }
-        if($From)     { $Msg.From= $From }
-        if($Cc)       { $Msg.Cc= $Cc }
-        if($Bcc)      { $Msg.Bcc= $Bcc }
-        if($Priority) { $Msg.Priority= $Priority }
-        if($UseSsl)   { $Msg.UseSsl = $true }
-        if($PSCmdlet.ShouldProcess("Message:`n$(New-Object PSObject -Property $Msg|Format-List|Out-String)`n",'Send message'))
-        { Send-MailMessage @Msg } # splat the arguments hashtable
+        else
+        { # convert the table into HTML (select away the add'l properties the DataTable adds), add some Outlook 2007-compat CSS, email it
+            $odd = $false
+            $tableFormat = @{OddRowBackground='#EEE'}
+            if($Caption){[void]$tableFormat.Add('Caption',$Caption)}
+            $data |
+                select ($data[0].Table.Columns |% ColumnName) |
+                ConvertTo-Html -PreContent $PreContent -PostContent $PostContent -Head '<style type="text/css">th,td {padding:2px 1ex 0 2px}</style>' |
+                Format-HtmlDataTable.ps1 @tableFormat |
+                Out-String
+        }
+    $Msg = @{
+        To         = $To
+        Subject    = $Subject
+        BodyAsHtml = $true
+        SmtpServer = $PSEmailServer
+        Body       = $body
     }
+    if($From)     { $Msg.From= $From }
+    if($Cc)       { $Msg.Cc= $Cc }
+    if($Bcc)      { $Msg.Bcc= $Bcc }
+    if($Priority) { $Msg.Priority= $Priority }
+    if($UseSsl)   { $Msg.UseSsl = $true }
+    if($PSCmdlet.ShouldProcess("Message:`n$(New-Object PSObject -Property $Msg|Format-List|Out-String)`n",'Send message'))
+    { Send-MailMessage @Msg } # splat the arguments hashtable
 }
 catch # report problems
 {
