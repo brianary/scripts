@@ -18,7 +18,13 @@
     Set-Acl
 
 .Link
+    Get-Command
+
+.Link
     Find-Certificate.ps1
+
+.Link
+    Get-CertificatePath.ps1
 
 .Link
     Get-CertificatePermissions.ps1
@@ -33,11 +39,13 @@
     https://technet.microsoft.com/library/ee909471.aspx
 
 .Example
-    Grant-AppPoolCertAccess.ps1 -AppPool ExampleAppPool -Certificate $cert
+    Grant-CertificateAccess.ps1 -AppPool ExampleAppPool -Certificate $cert
+
     Grants the ExampleAppPool app pool access to read the cert in $cert.
 
 .Example
-    Find-Certificate.ps1 -FindValue ExampleCert -FindType FindBySubjectName -StoreName TrustedPeople -StoreLocation LocalMachine |Grant-AppPoolCertAccess.ps1 ExampleAppPool
+    Find-Certificate.ps1 -FindValue ExampleCert -FindType FindBySubjectName -StoreName TrustedPeople -StoreLocation LocalMachine |Grant-CertificateAccess.ps1 ExampleAppPool
+
     Grants the ExampleAppPool app pool access to read the found ExampleCert.
     
     For more information about options for -FindType:
@@ -48,13 +56,17 @@
 #requires -Module WebAdministration
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='AppPool')]
-[ValidateScript({Test-Path IIS:\AppPools\$_})][string]$AppPool,
+[string]$AppPool,
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='UserName')]
 [string]$UserName,
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
 )
-Begin{try{Get-Command Get-Acl -CommandType Cmdlet |Out-Null}catch{throw 'The Get-Acl command is missing.'}}
+Begin
+{
+    try{Get-Command Get-Acl -CommandType Cmdlet |Out-Null}catch{throw 'The Get-Acl command is missing.'}
+    if($AppPool){Import-Module WebAdministration; if(!(Test-Path IIS:\AppPools\$AppPool)){throw "Could not find IIS:\AppPools\$AppPool"}}
+}
 Process
 {
     if($AppPool) {$UserName="IIS AppPool\${AppPool}"}
