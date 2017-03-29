@@ -140,7 +140,6 @@ $PostContent
         }
         else
         { # convert the table into HTML (select away the add'l properties the DataTable adds), add some Outlook 2007-compat CSS, email it
-            $odd = $false
             $tableFormat = @{OddRowBackground='#EEE'}
             if($Caption){[void]$tableFormat.Add('Caption',$Caption)}
             $data |
