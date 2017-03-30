@@ -29,7 +29,7 @@
 
 #Requires -Version 3
 #Requires -Module SqlServer
-[CmdletBinding()] Param(
+[CmdletBinding(SupportsShouldProcess=$true)] Param(
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
@@ -39,10 +39,41 @@
 
 Use-SqlcmdParams.ps1
 
+function Resolve-SqlcmdResults([string]$Action,[string]$Query)
+{
+    <#
+    .Synopsis
+        Executes SQL that generates SQL strings, and optionally executes the generated SQL.
+
+    .Parameter Action
+        Descriptive text for the commands produced, with two format arguments:
+          0: Verb tense, e.g. 'Renam{0:e;ing;ed}'
+          1: Command count
+
+    .Parameter Query
+        A SQL query that produces a single-column result set, named "command", containing
+        executable SQL.
+    #>
+    $count,$i = 0,0
+    [string[]]$commands = Invoke-Sqlcmd $query |% command
+    if(!$commands){return}
+    $max,$act = ($commands.Count/100),($action -f -1,$commands.Count)
+    Write-Verbose ($action -f 1,$commands.Count)
+    foreach($command in $commands)
+    {
+        Write-Progress $act "Execute command #$i" -CurrentOperation $command -PercentComplete ($i++/$max)
+        if(!$Update) {$command}
+        elseif($PSCmdlet.ShouldProcess($command,'execute')) {Invoke-Sqlcmd $command; $count++}
+    }
+    Write-Progress ($action -f 0,$i) -Completed
+    if($count) {Write-Warning ($action -f 0,$count)}
+}
+
 function Repair-DefaultNames
 {
-$count = 0
-Invoke-Sqlcmd @"
+    @{
+        Action = 'Renam{0:e;ing;ed} {1} defaults'
+        Query  = @"
 select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
        +''', ''DF_'+object_name(parent_object_id)+'_'+col_name(parent_object_id,parent_column_id)
        +''', ''OBJECT'';' [command]
@@ -53,17 +84,15 @@ select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
    and objectproperty(parent_object_id,'IsMsShipped') = 0 -- excludes dtproperties, &c
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
-"@ |%{
-        if($Update) {Invoke-Sqlcmd $_.command; $count++}
-        else {$_.command}
-    }
-if($count) {Write-Warning "Renamed $count defaults."}
+"@
+    }| % {Resolve-SqlcmdResults @_}
 }
 
 function Repair-PrimaryKeyNames
 {
-$count = 0
-Invoke-Sqlcmd @"
+    @{
+        Action = 'Renam{0:e;ing;ed} {1} primary keys'
+        Query  = @"
 select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
        +''', '''+'PK_'+object_name(parent_object_id)+''', ''OBJECT'';' command
   from sys.key_constraints 
@@ -73,17 +102,15 @@ select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
    and objectproperty(parent_object_id,'IsMsShipped') = 0 -- excludes dtproperties, &c
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
-"@ |%{
-        if($Update) {Invoke-Sqlcmd $_.command; $count++}
-        else {$_.command}
-    }
-if($count) {Write-Warning "Renamed $count primary keys."}
+"@
+    }| % {Resolve-SqlcmdResults @_}
 }
 
 function Repair-ForeignKeyNames
 { #TODO: Mitigate possible deterministic naming collisions.
-$count = 0
-Invoke-Sqlcmd @"
+    @{
+        Action = 'Renam{0:e;ing;ed} {1} foreign keys'
+        Query  =  @"
 select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
        +''', '''+'FK_'+object_name(parent_object_id)+'_'+object_name(referenced_object_id)+''', ''OBJECT'';' command
   from sys.foreign_keys 
@@ -93,11 +120,8 @@ select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
    and objectproperty(parent_object_id,'IsMsShipped') = 0 -- excludes dtproperties, &c
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
-"@ |%{
-        if($Update) {Invoke-Sqlcmd $_.command; $count++}
-        else {$_.command}
-    }
-if($count) {Write-Warning "Renamed $count primary keys."}
+"@
+    }| % {Resolve-SqlcmdResults @_}
 }
 
 Repair-DefaultNames
