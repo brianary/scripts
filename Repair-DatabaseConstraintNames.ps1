@@ -55,10 +55,10 @@ function Resolve-SqlcmdResults([string]$Action,[string]$Query)
         executable SQL.
     #>
     $count,$i = 0,0
-    [string[]]$commands = Invoke-Sqlcmd $query |% command
+    [string[]]$commands = Invoke-Sqlcmd $Query |% command
     if(!$commands){return}
-    $max,$act = ($commands.Count/100),($action -f -1,$commands.Count)
-    Write-Verbose ($action -f 1,$commands.Count)
+    $max,$act = ($commands.Count/100),($Action -f -1,$commands.Count)
+    Write-Verbose ($Action -f 1,$commands.Count)
     foreach($command in $commands)
     {
         Write-Progress $act "Execute command #$i" -CurrentOperation $command -PercentComplete ($i++/$max)
@@ -66,7 +66,7 @@ function Resolve-SqlcmdResults([string]$Action,[string]$Query)
         elseif($PSCmdlet.ShouldProcess($command,'execute')) {Invoke-Sqlcmd $command; $count++}
     }
     Write-Progress ($action -f 0,$i) -Completed
-    if($count) {Write-Warning ($action -f 0,$count)}
+    if($count) {Write-Warning ($Action -f 0,$count)}
 }
 
 function Repair-DefaultNames
