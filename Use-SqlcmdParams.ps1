@@ -12,10 +12,13 @@
     
     To use this script, add any of these parameters:
 
+    [CmdletBinding()] Param(
     [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string]$ServerInstance,
     [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string]$Database,
     [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
     [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
+    # ...
+    )
 
 .Link
     Import-Variables.ps1
@@ -58,11 +61,12 @@ function Get-SqlcmdParameterSet($ParameterSetName)
 
 Get-Variable -Scope 1 -Name PSBoundParameters -ValueOnly -EA SilentlyContinue |Import-Variables.ps1
 $caller = Get-Variable -Scope 1 -Name PSCmdlet -ValueOnly -EA SilentlyContinue
+if(!$caller){throw 'Calling script must start with [CmdletBinding()] Param( <# connection params #> ). See help.'}
 $value = Get-SqlcmdParameterSet $caller.ParameterSetName
 foreach($param in 'HostName','QueryTimeout','ConnectionTimeout','ErrorLevel','SeverityLevel','MaxCharLength','MaxBinaryLength','DisableVariables','DisableCommands','EncryptConnection')
 {
-    if($val = Get-Variable $param -ValueOnly -EA SilentlyContinue) {$value.Add($param,$val)}
-    elseif($val = Get-Variable $param -Scope 1 -ValueOnly -EA SilentlyContinue) {$value.Add($param,$val)}
+    if($val = Get-Variable $param -ValueOnly -EA SilentlyContinue) {$value.Add("Invoke-Sqlcmd:$param",$val)}
+    elseif($val = Get-Variable $param -Scope 1 -ValueOnly -EA SilentlyContinue) {$value.Add("Invoke-Sqlcmd:$param",$val)}
 }
 Write-Verbose "Params: $(ConvertTo-Json $value -Compress)"
 $defaults = Get-Variable -Scope 1 -Name PSDefaultParameterValues -EA SilentlyContinue
