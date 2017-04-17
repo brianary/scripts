@@ -76,6 +76,21 @@
 
 .Link
     Invoke-Sqlcmd
+
+.Example
+    Send-SqlReport.ps1 'report details' 'who@example.com' 'select ...' -Server '(localdb)\ProjectsV13' -Database AdventureWorks2014
+
+    Sends an email with the SQL results in the email body as HTML.
+
+.Example
+    Send-SqlReport.ps1 'report details' 'who@example.com' 'select ...' -Server DbServer -Database DbName -ReportFile C:\temp\report.csv
+
+    Sends an email with the SQL results as a CSV attachment.
+
+.Example
+    Send-SqlReport.ps1 'report details' 'who@example.com' 'select ...' -Server DbServer -Database DbName -ReportFile \\Server\share\report.tsv
+
+    Sends an email with a link in the body to a TSV file containing the SQL results on a network share.
 #>
 
 #Requires -Version 3
