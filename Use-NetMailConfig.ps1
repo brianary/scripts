@@ -7,11 +7,11 @@
     The configuration system provides a place to set email defaults:
 
     <system.net>
-        <mailSettings>
-          <smtp from="source@example.org" deliveryMethod="network">
-		      <network host="mail.example.org" enableSsl="true" />
-          </smtp>
-        </mailSettings>
+      <mailSettings>
+        <smtp from="source@example.org" deliveryMethod="network">
+          <network host="mail.example.org" enableSsl="true" />
+        </smtp>
+      </mailSettings>
     </system.net>
 
     The values for Send-MailMessage's From, SmtpServer, and UseSsl will be 
