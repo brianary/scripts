@@ -41,7 +41,7 @@
     Import-Module
 
 .Link
-    https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms
+    https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-ps-module
 
 .Example
     Install-SqlServerModule.ps1
