@@ -23,16 +23,16 @@
     
     * no SqlServer module/SQLPS/SMO/SQLCLR
 
-    Starting after version 13.0.1601.5, the SqlServer module is installed with SSMS 2016 16.4.1.
-    This puts the SqlServer module in C:\Program Files\WindowsPowerShell\Modules,
-    which may need to be prepended to the PSModulePath environment variable after
-    installation.
+    SSMS 2016 16.4.1 - 16.5.3 included the first SqlServer module, replacing SQLPS.
+
+    Starting with SSMS 2017, the SqlServer module is installed separately, using
+    the "Install-Module SqlServer" command (from the PowerShellGet module).
+
+.Link
+    Install-Module
 
 .Link
     Start-Process
-
-.Link
-    Invoke-WebRequest
 
 .Link
     Get-Module
@@ -41,7 +41,7 @@
     Import-Module
 
 .Link
-    https://msdn.microsoft.com/library/mt238290.aspx
+    https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms
 
 .Example
     Install-SqlServerModule.ps1
@@ -50,11 +50,11 @@
     Removes old SQLPS modules and installs the latest, as needed.
 #>
 
-#requires -version 3
-#requires -RunAsAdministrator
+#Requires -Version 3
+#Requires -RunAsAdministrator
+#Requires -Module PowerShellGet
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)]Param(
-[version]$Version = '13.0.16000.28',
-[uri]$SsmsDownload = 'https://download.microsoft.com/download/C/B/C/CBCFAAD1-2348-4119-B093-199EE7AADCBC/SSMS-Setup-ENU.exe'
+[version]$Version = '21.0.17099'
 )
 
 function Test-OldModulePath([string]$Path)
@@ -113,27 +113,29 @@ function Remove-AnyOldModule
         Update-PSModulePath Machine
         Update-PSModulePathProcess
     }
+    if(!(Get-Module SqlServer -ListAvailable |? Version -lt $Version))
+    { Write-Host 'Found no old SqlServer modules.' -ForegroundColor Green -BackgroundColor DarkMagenta }
+    else
+    {
+        Write-Host 'Found old SqlServer modules.' -ForegroundColor Green -BackgroundColor DarkMagenta
+        Get-Module SqlServer -ListAvailable |? Version -lt $Version |Remove-Module -Verbose
+    }
 }
 
 function Install-NewSqlServerModule
 {
-    $modulesdir = "$env:ProgramFiles\WindowsPowerShell\Modules"
-    if(Test-Path $modulesdir\SqlServer -PathType Container)
+    if(Get-Module SqlServer -ListAvailable |? Version -ge $Version)
     {
-        $installedversion = Get-ChildItem $modulesdir\SqlServer\Microsoft.SqlServer.Management.PSSnapins.dll |% VersionInfo |% FileVersion
-        if($installedversion -ge $Version)
-        {
-            Write-Host "You already have the latest SqlServer module." -ForegroundColor Green -BackgroundColor DarkMagenta
-            return
-        }
+        Get-Module SqlServer -ListAvailable |
+            ? Version -ge $Version |
+            select -Unique -ExpandProperty Version |
+            % {Write-Host "SqlServer version $_ already installed." -ForegroundColor Green -BackgroundColor DarkMagenta}
     }
-    ${setup.exe} = Join-Path $env:TEMP ($SsmsDownload.Segments |select -Last 1)
-    if(!($PSCmdlet.ShouldProcess(${setup.exe},'Install'))) {return}
-    Invoke-WebRequest $SsmsDownload.AbsoluteUri -OutFile ${setup.exe}
-    Start-Process ${setup.exe} '/install','/passive' -Wait
-    [Environment]::SetEnvironmentVariable('PSModulePath',
-        $modulesdir +';'+ [Environment]::GetEnvironmentVariable('PSModulePath','Machine'))
-    Import-Module SqlServer
+    else
+    {
+        Write-Host "Installing SqlServer" -ForegroundColor Green -BackgroundColor DarkMagenta
+        Install-Module SqlServer -Scope AllUsers
+    }
 }
 
 Remove-AnyOldModule
