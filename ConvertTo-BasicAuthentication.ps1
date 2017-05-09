@@ -21,7 +21,7 @@
 #>
 
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][PSCredential]$Credential
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSCredential]$Credential
 )
 
 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($Credential.UserName+':'+$Credential.GetNetworkCredential().Password))
