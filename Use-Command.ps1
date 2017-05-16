@@ -16,6 +16,9 @@
     The full path of the command, if installed.
     Accepts wildcards, as supported by Resolve-Path.
     
+.Parameter ChocolateyPackage
+    The name of the Chocolatey package to install if the command is missing.
+    
 .Parameter NugetPackage
     The name of the NuGet package to install if the command is missing.
     
@@ -57,9 +60,21 @@
     
 .Link
     Resolve-Path
+
+.Link
+    https://chocolatey.org/
+
+.Link
+    https://www.nuget.org/
+
+.Link
+    https://www.npmjs.com/
+
+.Link
+    https://technet.microsoft.com/library/bb490936.aspx
     
 .Link
-    SupportsShouldProcess Usage: http://www.iheartpowershell.com/2013/05/powershell-supportsshouldprocess-worst.html
+    http://www.iheartpowershell.com/2013/05/powershell-supportsshouldprocess-worst.html
     
 .Example
     Use-Command.ps1 nuget $ToolsDir\NuGet\nuget.exe -url http://www.nuget.org/nuget.exe
@@ -75,6 +90,7 @@
 [CmdletBinding(SupportsShouldProcess=$true)]
 Param([Parameter(Position=0,Mandatory=$true)]$Name, 
 [Parameter(Position=1,Mandatory=$true)][string]$Path,
+[Parameter(ParameterSetName='ChocolateyPackage')][Alias('ChocoPackage','chocopkg','cinst')][string]$ChocolateyPackage,
 [Parameter(ParameterSetName='NugetPackage')][Alias('nupkg')][string]$NugetPackage,
 [Parameter(ParameterSetName='NodePackage')][Alias('npm')][string]$NodePackage,
 [Parameter(ParameterSetName='NugetPackage')]
@@ -104,40 +120,52 @@ if($Path -and (Test-Path $Path)) { Set-ResolvedAlias $Name $Path ; return }
 
 switch($PSCmdlet.ParameterSetName)
 {
+    ChocolateyPackage
+    {
+        if(!(Get-Command cinst -ErrorAction SilentlyContinue))
+        { throw 'Chocolatey installer "cinst" not found, unable to install.' }
+        if($PSCmdlet.ShouldProcess($ChocolateyPackage,'Chocolatey install'))
+        {
+            cinst $ChocolateyPackage -y
+            Set-ResolvedAlias $Name $Path
+        }
+        else { Write-Warning "Installation of $ChocolateyPackage was cancelled." }
+    }
+
     NugetPackage
     {
-        if($PSCmdlet.ShouldProcess("This will use NuGet to install $NugetPackage to $InstallDir.",
-            "Are you sure you wish to install $Name ?",
-            "NuGet Install $NugetPackage"))
+        if(!(Get-Command nuget -ErrorAction SilentlyContinue))
+        { throw 'NuGet not found, unable to install.' }
+        if($PSCmdlet.ShouldProcess("$NugetPackage in $InstallDir",'NuGet install'))
         {
             nuget install $NugetPackage -x -o $InstallDir -NonInteractive
             Set-ResolvedAlias $Name $Path
         }
-        else { Write-Error "Installation of $NugetPackage was cancelled." }
+        else { Write-Warning "Installation of $NugetPackage was cancelled." }
     }
 
     NodePackage
     {
+        if(!(Get-Command npm -ErrorAction SilentlyContinue))
+        { throw 'Npm not found, unable to install.' }
         if(!(Test-Path "$env:USERPROFILE\AppData\Roaming\npm" -PathType Container)) 
         { mkdir "$env:USERPROFILE\AppData\Roaming\npm" |Out-Null }
-        if($PSCmdlet.ShouldProcess("This will use Node NPM to install $NodePackage to $InstallDir.",
-            "Are you sure you wish to install $Name ?",
-            "Node Install $NodePackage"))
+        if($PSCmdlet.ShouldProcess("$NodePackage in $InstallDir",'npm install'))
         {
             pushd $InstallDir
             npm install $NodePackage
             popd
             Set-ResolvedAlias $Name $Path
         }
-        else { Write-Error "Installation of $NodePackage was cancelled." }
+        else { Write-Warning "Installation of $NodePackage was cancelled." }
     }
 
     WindowsInstaller
     {
+        if(!(Get-Command msiexec -ErrorAction SilentlyContinue))
+        { throw 'Windows installer (msiexec) not found, unable to install.' }
         $file = $WindowsInstaller.Segments[$WindowsInstaller.Segments.Length-1]
-        if($PSCmdlet.ShouldProcess("This will use Windows Installer to install $file hands-free with INSTALLLEVEL set to $InstallLevel.",
-            "Are you sure you wish to install $file ?",
-            "Windows Install $file"))
+        if($PSCmdlet.ShouldProcess("$file (INSTALLLEVEL=$InstallLevel)",'Windows install'))
         {
             $msi =
                 if($WindowsInstaller.IsUnc)
@@ -151,15 +179,13 @@ switch($PSCmdlet.ParameterSetName)
                 "The file $Path was still not found. Continue waiting for installation?","Await Installation")) { Start-Sleep 5 }
             if(Test-Path $Path) { Set-ResolvedAlias $Name $Path }
         }
-        else { Write-Error "Installation of $WindowsInstaller was cancelled." }
+        else { Write-Warning "Installation of $WindowsInstaller was cancelled." }
     }
 
     ExecutableInstaller
     {
         $file = $ExecutableInstaller.Segments[$ExecutableInstaller.Segments.Length-1]
-        if($PSCmdlet.ShouldProcess("This will install $file $InstallerParameters.",
-            "Are you sure you wish to install $file ?",
-            "Install $file"))
+        if($PSCmdlet.ShouldProcess("$file $InstallerParameters",'execute installer'))
         {
             $exe =
                 if($ExecutableInstaller.IsUnc)
@@ -173,14 +199,12 @@ switch($PSCmdlet.ParameterSetName)
                 "The file $Path was still not found. Continue waiting for installation?","Await Installation")) { Start-Sleep 5 }
             if(Test-Path $Path) { Set-ResolvedAlias $Name $Path }
         }
-        else { Write-Error "Installation of $ExecutableInstaller was cancelled." }
+        else { Write-Warning "Installation of $ExecutableInstaller was cancelled." }
     }
     
     ExecutePowerShell
     {
-        if($PSCmdlet.ShouldProcess("This will execute $ExecutePowerShell.",
-            "Are you sure you wish to execute $ExecutePowerShell ?",
-            "Execute PowerShell Script"))
+        if($PSCmdlet.ShouldProcess($ExecutePowerShell,"execute PowerShell script"))
         {
             switch($ExecutePowerShell.Scheme)
             {
@@ -188,16 +212,14 @@ switch($PSCmdlet.ParameterSetName)
                 default { Invoke-Expression ((new-object net.webclient).DownloadString($ExecutePowerShell)) }
             }
         }
-        else { Write-Error "Execution of $ExecutePowerShell was cancelled." }
+        else { Write-Warning "Execution of $ExecutePowerShell was cancelled." }
     }
     
     DownloadZip
     {
-        if($PSCmdlet.ShouldProcess("This will download and unzip $DownloadZip to $Path.",
-            "Are you sure you wish to download $Name ?",
-            "Download $Name"))
+        $dir = Split-Path $Path
+        if($PSCmdlet.ShouldProcess("$DownloadZip to $dir",'download/unzip'))
         {
-            $dir = Split-Path $Path
             $filename = [IO.Path]::GetFileName($DownloadZip.LocalPath)
             if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
             $zippath = Join-Path $env:TEMP $filename
@@ -208,21 +230,19 @@ switch($PSCmdlet.ParameterSetName)
             [IO.Compression.ZipFile]::ExtractToDirectory($zippath,$dir)
             Set-ResolvedAlias $Name $Path
         }
-        else { Write-Error "Download/unzip of $Name was cancelled." }
+        else { Write-Warning "Download/unzip of $Name was cancelled." }
     }
     
     DownloadUrl
     {
-        if($PSCmdlet.ShouldProcess("This will download $DownloadUrl to $Path.",
-            "Are you sure you wish to download $Name ?",
-            "Download $Name"))
+        if($PSCmdlet.ShouldProcess("$DownloadUrl to $Path",'download'))
         {
             $dir = Split-Path $Path
             if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
             (New-Object System.Net.WebClient).DownloadFile($DownloadUrl,$Path)
             Set-ResolvedAlias $Name $Path
         }
-        else { Write-Error "Download of $Name was cancelled." }
+        else { Write-Warning "Download of $Name was cancelled." }
     }
     
     WarnOnly
