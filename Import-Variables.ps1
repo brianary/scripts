@@ -2,11 +2,9 @@
 .Synopsis
     Creates local variables from a data row or dictionary (hashtable).
 
-.Parameter Dictionary
-    A hash of string names to any values to set as variables.
-
 .Parameter InputObject
-    An object with properties to set as variables.
+    A hash of string names to any values to set as variables,
+    or a DataRow or object with properties to set as variables.
     Works with DataRows.
 
 .Example
@@ -33,27 +31,22 @@
 
 #requires -version 3
 [CmdletBinding()] Param(
-[Parameter(ParameterSetName='Dictionary',Position=0,Mandatory=$true,ValueFromPipeline=$true)][Collections.IDictionary]$Dictionary,
-[Parameter(ParameterSetName='InputObject',Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSObject]$InputObject
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSObject]$InputObject
 )
 Process
 {
-    switch($PSCmdlet.ParameterSetName)
+    if($InputObject -is [Collections.IDictionary])
     {
-        Dictionary
-        {
-            [string[]]$vars = $Dictionary.Keys |? {$_ -is [string]}
-            Write-Verbose "Importing $($vars.Count) Dictionary entries"
-            Write-Verbose "Importing: $vars"
-            foreach($var in $vars) {Set-Variable $var $Dictionary.$var -Scope 1}
-        }
-
-        InputObject
-        {
-            [string[]]$vars = Get-Member -InputObject $InputObject -MemberType Properties |% Name
-            Write-Verbose "Importing $($vars.Count) InputObject properties"
-            Write-Verbose "Importing $vars"
-            foreach($var in $vars) {Set-Variable $var $InputObject.$var -Scope 1}
-        }
+        [string[]]$vars = $InputObject.Keys |? {$_ -is [string]}
+        Write-Verbose "Importing $($vars.Count) Dictionary entries"
+        Write-Verbose "Importing: $vars"
+        foreach($var in $vars) {Set-Variable $var $InputObject.$var -Scope 1}
+    }
+    else
+    {
+        [string[]]$vars = Get-Member -InputObject $InputObject -MemberType Properties |% Name
+        Write-Verbose "Importing $($vars.Count) InputObject properties"
+        Write-Verbose "Importing $vars"
+        foreach($var in $vars) {Set-Variable $var $InputObject.$var -Scope 1}
     }
 }
