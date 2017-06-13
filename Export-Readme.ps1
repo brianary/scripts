@@ -63,7 +63,7 @@ function Install-RequiredPackages
 {
     Use-Command.ps1 paket $PSScriptRoot -url (irm http://fsprojects.github.io/Paket/stable)
     if(Test-Path paket.lock -PathType Leaf) {paket restore}
-    else {paket install}
+    else {paket install |Write-Host}
 }
 
 function Export-FSharpFormatting
