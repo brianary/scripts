@@ -77,17 +77,6 @@ PowerShell Scripts
 
 F# Scripts
 ----------
-Paket version 3.21.4.0
-Resolving packages for group Main:
- - FAKE 4.61.2
- - FSharp.Charting 0.90.14
- - FSharp.Data.SqlClient 1.8.3
-     unlisted
- - FSharp.Data.SqlClient 1.8.2
- - FSharp.Formatting.CommandTool 2.14.4
-Locked version resolution written to A:\bscripts\paket.lock
-Downloading FAKE 4.61.2
-32 seconds - ready.
 - **[ExampleEmailReport.fsx](https://cdn.rawgit.com/brianary/scripts/master/ExampleEmailReport.html)**: Builds a chart and attaches it to an email, then sends it.
 
 Office VBA Scripts
@@ -96,4 +85,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 05/24/2017 09:05:03 -->
+<!-- generated 06/13/2017 12:56:16 -->

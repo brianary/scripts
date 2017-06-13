@@ -35,18 +35,11 @@
 )
 Process
 {
-    if($InputObject -is [Collections.IDictionary])
-    {
-        [string[]]$vars = $InputObject.Keys |? {$_ -is [string]}
-        Write-Verbose "Importing $($vars.Count) Dictionary entries"
-        Write-Verbose "Importing: $vars"
-        foreach($var in $vars) {Set-Variable $var $InputObject.$var -Scope 1}
-    }
-    else
-    {
-        [string[]]$vars = Get-Member -InputObject $InputObject -MemberType Properties |% Name
-        Write-Verbose "Importing $($vars.Count) InputObject properties"
-        Write-Verbose "Importing $vars"
-        foreach($var in $vars) {Set-Variable $var $InputObject.$var -Scope 1}
-    }
+    $isDict = $InputObject -is [Collections.IDictionary]
+    [string[]]$vars = 
+        if($isDict) {$InputObject.Keys |? {$_ -is [string]}}
+        else {Get-Member -InputObject $InputObject -MemberType Properties |% Name}
+    if(!$vars){return}
+    Write-Verbose "Importing $($vars.Count) $(if($isDict){'keys'}else{'properties'}): $vars"
+    foreach($var in $vars) {Set-Variable $var $InputObject.$var -Scope 1}
 }
