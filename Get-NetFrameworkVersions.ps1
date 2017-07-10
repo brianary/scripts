@@ -26,7 +26,9 @@ $ndp.GetSubKeyNames() |
     ? {$_ -like 'v[123].*'} |
     % {
         $k = $ndp.OpenSubKey($_)
-        $versions += Add-Version $_ $k.GetValue('Version')
+        $v = $k.GetValue('Version')
+        Write-Verbose "Found '$_' subkey, version $v"
+        $versions += Add-Version $_ $v
         [void]$k.Dispose(); $k = $null
     }
 
@@ -34,7 +36,9 @@ $ndp.GetSubKeyNames() |
 $v4 = $ndp.OpenSubKey('v4\Full')
 try
 {
-    switch($v4.GetValue('Release'))
+    $release = $v4.GetValue('Release')
+    Write-Verbose "v4 release $release"
+    switch($release)
     { # see https://msdn.microsoft.com/en-us/library/hh925568.aspx
         378389 {$versions += Add-Version 'v4.5' $v4.GetValue('Version')}
         378675 {$versions += Add-Version 'v4.5.1' $v4.GetValue('Version')}
