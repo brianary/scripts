@@ -11,7 +11,7 @@
 
 #requires -version 3
 [CmdletBinding()] Param(
-[Alias('Server')][string]$ComputerName = $env:COMPUTERNAME
+[Alias('CN','Server')][string]$ComputerName = $env:COMPUTERNAME
 )
 
 function Add-Version([string]$Name,[string]$Version)
@@ -46,6 +46,8 @@ try
         394271 {$versions += Add-Version 'v4.6.1' $v4.GetValue('Version')}
         394747 {$versions += Add-Version 'v4.6.2+preview' $v4.GetValue('Version')}
         394748 {$versions += Add-Version 'v4.6.2+preview' $v4.GetValue('Version')}
+        394802 {$versions += Add-Version 'v4.6.2' $v4.GetValue('Version')}
+        460798 {$versions += Add-Version 'v4.7' $v4.GetValue('Version')}
     }    
 }
 catch [ArgumentNullException]
