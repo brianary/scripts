@@ -15,7 +15,7 @@
     Get-Credential
 
 .Example
-    Restore.SchTasks.ps1
+    Restore-SchTasks.ps1
 
     (Imports scheduled tasks from tasks.xml, prompting for passwords as needed.)
 #>
@@ -34,7 +34,7 @@ foreach($task in ((Get-Content $Path -Raw) -replace '(?<=\A|>)\s*</?Tasks>\s*(?=
     if($Exclude -and ($name -like $Exclude)) { Write-Verbose "Skipping task $name"; continue }
     else { Write-Verbose "Importing task $name" }
     Out-File "$name.xml" -Encoding unicode -InputObject "<?xml version=`"1.0`" encoding=`"UTF-16`" ?>`r`n`r`n$task"
-    $logon = (Select-Xml '/task:Task/task:Principals/task:Principal[@id=''Author'']/task:LogonType' -Xml $xml).Node.'#text'
+    $logon = (Select-Xml '/task:Task/task:Principals/task:Principal[@id=''Author'']/task:LogonType' -Xml $xml).Node.InnerText
     if($logon -ne 'Password')
     {
         Write-Verbose "Importing logon type $logon"
@@ -42,7 +42,7 @@ foreach($task in ((Get-Content $Path -Raw) -replace '(?<=\A|>)\s*</?Tasks>\s*(?=
     }
     else
     {
-        $user = (Select-Xml '/task:Task/task:Principals/task:Principal[@id=''Author'']/task:UserId' -Xml $xml).Node.'#text'
+        $user = (Select-Xml '/task:Task/task:Principals/task:Principal[@id=''Author'']/task:UserId' -Xml $xml).Node.InnerText
         if(!$credentials.ContainsKey($user))
         {
             $cred = Get-Credential $user -Message "Please enter credentials to run '$name' job as"
