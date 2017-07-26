@@ -5,6 +5,13 @@
 .Parameter Path
     The file to import tasks from, as exported from Backup-SchTasks.ps1.
 
+.Parameter Exclude
+    A wildcard pattern to match task "paths" (including folders) to skip.
+
+    User tasks are usually just in the root, and generally machine-specific
+    tasks Microsoft automatically sets up are in folders so this is *\* by
+    default to exclude the weird magic tasks.
+
 .Link
     https://msdn.microsoft.com/library/windows/desktop/bb736357.aspx
 
