@@ -5,6 +5,20 @@
 .Parameter HostName
     A list of hostnames to check the expiration dates of.
 
+.Inputs
+    System.String[] containing DNS hostnames to check for SSL certs via https.
+
+.Outputs
+    System.Management.Automation.PSObject containing fields related to the cert
+    found at each "https://$Host/" URL:
+
+    * Host: The hostname requested.
+    * Expires: The DateTime the certificate is due to expire.
+    * Subject: The subject name on the certificate.
+    * Issuer: The name of the certificate's issuing authority.
+    * KeySize: How many bits of encryption the cert uses.
+    * SignatureAlgorithm: The algorithm used by the cert.
+
 .Example
     Get-CertificateExpiration.ps1 www.example.com web.example.org
 
@@ -22,7 +36,8 @@
     KeySize            : 2048
     SignatureAlgorithm : sha256RSA
 #>
-[CmdletBinding()]Param(
+
+[CmdletBinding()][OutputType([psobject[]])] Param(
 [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
 [string[]]$HostName
 )

@@ -16,6 +16,13 @@
 .Parameter MaxVersion
     The maximum (inclusive) version of the package to return.
 
+.Inputs
+    System.String containing a package name (wildcards supported).
+
+.Outputs
+    System.Management.Automation.PSObject[] each with properties for the Name, 
+    Version, and File of packages found.
+
 .Link
     Select-Xml
 
@@ -33,8 +40,8 @@
     jQuery             1.8.3   C:\OtherRepo\packages.config
 #>
 
-#requires -version 3
-[CmdletBinding()] Param(
+#Requires -Version 3
+[CmdletBinding()][OutputType([psobject[]])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$PackageName,
 [string]$Path = $PWD,
 [version]$MinVersion,

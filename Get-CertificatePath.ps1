@@ -4,9 +4,23 @@
 
 .Parameter Certificate
     The X509Certificate2 to look up the path for.
+
+.Inputs
+    System.Security.Cryptography.X509Certificates.X509Certificate2 to find the private key file for.
+
+.Outputs
+    System.String of the path to the private key file (if found).
+
+.Link
+    Find-Certificate.ps1
+
+.Example
+    Find-Certificate.ps1 localhost FindBySubjectName My LocalMachine |Get-CertificatePath.ps1
+
+    C:\ProgramData\Microsoft\crypto\rsa\machinekeys\abd662b361941f26a1173357adb3c12d_b4d34fe9-d85e-45e3-83dd-a52fa93c8551
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
 )

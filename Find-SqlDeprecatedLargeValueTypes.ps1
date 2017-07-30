@@ -19,7 +19,7 @@
     connect to the server.
 
 .Outputs
-    System.Data.DataRow objects, each with an ObjectType property that
+    System.Data.DataRow[] each with an ObjectType property that
     indicates what other properties are available:
 
     Column: A table column with the following properties.
@@ -84,9 +84,9 @@
     the new (n)var*(max) types.
 #>
 
-#requires -Version 3
-#requires -Module SqlServer
-[CmdletBinding()] Param(
+#Requires -Version 3
+#Requires -Module SqlServer
+[CmdletBinding()][OutputType([Data.DataRow[]])] Param(
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,

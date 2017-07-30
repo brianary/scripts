@@ -15,12 +15,12 @@
     The HTML table data to be piped in.
 
 .Inputs
-    System.String (HTML, as produced by ConvertTo-Html)
+    System.String containing an HTML table, as produced by ConvertTo-Html.
 
 .Outputs
-    System.String (data-formatted HTML)
+    System.String containing the data-formatted HTML table.
 
-.Note
+.Notes
     Assumes only one <tr> element per string piped in, as produced by ConvertTo-Html.
 
 .Link
@@ -31,11 +31,18 @@
 
 .Example
     Invoke-Sqlcmd "..." |ConvertFrom-DataRow.ps1 |ConvertTo-Html |Format-HtmlDataTable.ps1
+
     Runs the query, parses each row into an HTML row, then fixes the alignment of numeric cells.
+
+.Example
+    $rows |ConvertTo-Html -Fragment |Format-HtmlDataTable.ps1 'Products' '#F99' '#FFF'
+
+    Renders DataRows as an HTML table, right-aligns numeric cells, then adds a caption ("Products"),
+    and alternates the rows between pale yellow and white.
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0)][string]$Caption,
 [Parameter(Position=1)][string]$OddRowBackground,
 [Parameter(Position=2)][string]$EvenRowBackground,

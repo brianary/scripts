@@ -5,9 +5,15 @@
 .Parameter Type
     The enumeration type name.
 
+.Inputs
+    System.Type of an Enum to get the values for.
+
+.Outputs
+    System.Management.Automation.PSObject with the Value and Name for each defined
+    value of the Enum.
+
 .Example
     Get-EnumValues Management.Automation.ActionPreference
-
 
     Value Name
     ----- ----
@@ -20,7 +26,6 @@
 
 .Example
     Get-EnumValues ConsoleColor
-
 
     Value Name
     ----- ----
@@ -42,9 +47,12 @@
        15 White
 #>
 
-
-[CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][Type]$Type
+#Requires -Version 3
+[CmdletBinding()][OutputType([psobject[]])] Param(
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Type]$Type
 )
-[enum]::GetValues($Type) |
-    % {New-Object PSObject -Property ([ordered]@{Value=[int]$_;Name=[string]$_})}
+Process
+{
+    [enum]::GetValues($Type) |
+        % {New-Object PSObject -Property ([ordered]@{Value=[int]$_;Name=[string]$_})}
+}

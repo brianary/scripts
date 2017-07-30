@@ -29,6 +29,9 @@
     a warning will be generated and the column will be ignored entirely for updates, and not used as
     either a key to match on or a data column to update.
 
+.Outputs
+    System.String of SQL MERGE script to replicate the table's data.
+
 .Link
     Invoke-Sqlcmd
 
@@ -44,7 +47,7 @@
 
 #Requires -Version 3
 #Requires -Module SqlServer
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
@@ -55,9 +58,6 @@
 )
 
 Use-SqlcmdParams.ps1
-
-$EOL = "
-"
 
 function Format-SqlValue($value)
 {
@@ -134,14 +134,14 @@ select quotename(COLUMN_NAME) as COLUMN_NAME
    and TABLE_NAME = $tablename
  order by ORDINAL_POSITION;
 "@ |% COLUMN_NAME
-$dataupdates = ($columns |? {$_ -notin $pk} |% {"{0} = source.{0}" -f $_}) -join ",$EOL"
+$dataupdates = ($columns |? {$_ -notin $pk} |% {"{0} = source.{0}" -f $_}) -join ",`r`n"
 $dataupdates =
     if($dataupdates) {"when matched then${EOL}update set $dataupdates"}
     else {"-- skip 'matched' condition (no non-key columns to update)"}
 $targetlist = $columns -join ','
 $sourcelist = ($columns |% {"source.{0}" -f $_}) -join ','
 
-$data = ($data |% {($_.ItemArray |% {Format-SqlValue $_}) -join ','} |% {"($_)"}) -join ",$EOL"
+$data = ($data |% {($_.ItemArray |% {Format-SqlValue $_}) -join ','} |% {"($_)"}) -join ",`r`n"
 
 @"
 if exists (select * from information_schema.columns where table_schema = $schemaname and table_name = $tablename

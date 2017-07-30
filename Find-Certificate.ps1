@@ -38,6 +38,9 @@
 .Parameter Require
     Whether to throw an error if a certificate is not found.
 
+.Outputs
+    System.Security.Cryptography.X509Certificates.X509Certificate2[] of found certificates.
+
 .Link
     https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509findtype.aspx
 
@@ -56,8 +59,8 @@
     Uses positional parameters to search Cert:\LocalMachine\TrustedPeople for a cert with subject of "ExampleCert".
 #>
 
-#requires -version 3
-[CmdletBinding()] Param(
+#Requires -Version 3
+[CmdletBinding()][OutputType([Security.Cryptography.X509Certificates.X509Certificate2[]])] Param(
 [Parameter(Position=0,Mandatory=$true)][Alias('Certificate','Value')]$FindValue,
 [Parameter(Position=1)][Alias('Type','Field')][Security.Cryptography.X509Certificates.X509FindType]$FindType,
 [Parameter(Position=2)][Security.Cryptography.X509Certificates.StoreName]$StoreName,

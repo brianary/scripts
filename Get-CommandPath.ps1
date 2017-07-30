@@ -10,22 +10,33 @@
     The name of the executable program to look for in the $env:Path directories,
     if the extension is omitted, $env:PathExt will be used to find one.
 
+.Inputs
+    System.String[] of commands to get the location details of.
+
+.Outputs
+    System.String[] of location details for the specified commands that were found.
+
 .Link
     Get-Command
 
 .Example
-    Get-CommandPath.ps1 telnet
+    Get-CommandPath.ps1 powershell
 
-
-    C:\WINDOWS\system32\telnet.exe
+    C:\windows\System32\WindowsPowerShell\v1.0\powershell.exe
 #>
 
-#requires -version 3
-[CmdletBinding()]Param(
-[Parameter(Position=0,Mandatory=$true)][Alias("an")][string[]]$ApplicationName
+#Requires -Version 3
+[CmdletBinding()][OutputType([string[]])] Param(
+[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
+[Alias('Name','AN')][string[]]$ApplicationName
 )
-$cmd = Get-Command $ApplicationName
-if($cmd -is [Management.Automation.ApplicationInfo]) {$cmd.Path}
-elseif($cmd -is [Management.Automation.ExternalScriptInfo]) {$cmd.Path}
-elseif($cmd -is [Management.Automation.AliasInfo]) {$cmd.Definition}
-else {Write-Error "$ApplicationName is $($cmd.GetType().FullName)"}
+Process
+{
+    foreach($cmd in Get-Command $ApplicationName)
+    {
+        if($cmd -is [Management.Automation.ApplicationInfo]) {$cmd.Path}
+        elseif($cmd -is [Management.Automation.ExternalScriptInfo]) {$cmd.Path}
+        elseif($cmd -is [Management.Automation.AliasInfo]) {$cmd.Definition}
+        else {Write-Error "$ApplicationName is $($cmd.GetType().FullName)"}
+    }
+}
