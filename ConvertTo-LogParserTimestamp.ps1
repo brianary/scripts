@@ -19,7 +19,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][datetime]$Value
 )
 "timestamp('$(Get-Date $Value -Format 'yyyy-MM-dd HH:mm:ss')','yyyy-MM-dd HH:mm:ss')"

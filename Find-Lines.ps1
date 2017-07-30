@@ -53,7 +53,7 @@
     returning the matches.
 #>
 
-#requires -version 3
+#Requires -Version 3
 [CmdletBinding(DefaultParameterSetName='Default')]Param(
     [Parameter(Position=0,Mandatory=$true)][string[]]$Pattern,
     [Parameter(Position=1)][string[]]$Filters,

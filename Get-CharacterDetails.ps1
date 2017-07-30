@@ -18,10 +18,10 @@
     A specific Unicode block (or named range) of characters to return.
 
 .Inputs
-    A string may be piped in.
+    System.String to get details on each character of.
 
 .Outputs
-    A PSObject with the following properties:
+    System.Management.Automation.PSObject with the following properties:
 
     Character
         The character these details apply to.
@@ -286,8 +286,8 @@
     IsWord              : True
 #>
 
-#requires -version 2
-[CmdletBinding()] Param(
+#Requires -Version 2
+[CmdletBinding()][OutputType([psobject[]])] Param(
 [Parameter(ParameterSetName='Block',Position=0)]
 [ValidateSet('BasicMultilingualPlane','BMP','ASCII','0x2xxx','BasicLatin','Latin1Supplement',
 'LatinExtendedA','LatinExtendedB','IPAExtensions','SpacingModifierLetters','CombiningDiacriticalMarks',

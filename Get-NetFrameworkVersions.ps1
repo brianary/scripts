@@ -5,12 +5,26 @@
 .Parameter ComputerName
     The computer to list the installed .NET Frameworks for.
 
+.Outputs
+    System.Collections.Hashtable of semantic version names to version numbers
+    of .NET frameworks installed.
+
 .Component
     Microsoft.Win32.RegistryKey
+
+.Example
+    Get-NetFrameworkVersions.ps1
+ 
+    Name                           Value
+    ----                           -----
+    v4.6.2+win10ann                4.6.1586
+    v3.5                           3.5.30729.4926
+    v2.0.50727                     2.0.50727.4927
+    v3.0                           3.0.30729.4926
 #>
 
-#requires -version 3
-[CmdletBinding()] Param(
+#Requires -Version 3
+[CmdletBinding()][OutputType([hashtable])] Param(
 [Alias('CN','Server')][string]$ComputerName = $env:COMPUTERNAME
 )
 

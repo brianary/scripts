@@ -7,6 +7,12 @@
 
     Each hash value or object property value may itself be a hash or object or XML element.
 
+.Inputs
+    System.Object (any object) to serialize.
+
+.Outputs
+    System.String[] for each XML-serialized value or property.
+
 .Example
     Format-XmlElements.ps1 @{html=@{body=@{p='Some text.'}}}
 
@@ -34,8 +40,8 @@
     …
 #>
 
-#requires -Version 3
-[CmdletBinding()] Param(
+#Requires -Version 3
+[CmdletBinding()][OutputType([string[]])] Param(
 [Parameter(Position=0,ValueFromPipeline=$true)]$Value
 )
 Begin {$Script:OFS = "`n"}

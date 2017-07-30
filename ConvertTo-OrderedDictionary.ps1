@@ -19,7 +19,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Collections.Specialized.OrderedDictionary])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]$InputObject
 )
 Process

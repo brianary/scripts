@@ -6,17 +6,27 @@
     The list of files to search.
 
 .Inputs
-    System.IO.FileSystemInfo
+    System.IO.FileInfo[] a list of files to compare.
 
 .Outputs
-    System.IO.FileSystemInfo
+    System.IO.FileInfo representing the newest of the files compared.
 
 .Link
     Test-NewerFile.ps1
+
+.Example
+    ls C:\java.exe -Recurse -ErrorAction SilentlyContinue |Find-NewestFile.ps1
+
+        Directory: C:\Program Files (x86)\Minecraft\runtime\jre-x64\1.8.0_25\bin
+
+
+    Mode                LastWriteTime         Length Name
+    ----                -------------         ------ ----
+    -a----       2017-02-05     15:03         190888 java.exe
 #>
 
-#requires -version 3
-[CmdletBinding()] Param(
+#Requires -Version 3
+[CmdletBinding()][OutputType([IO.FileInfo])] Param(
 [Parameter(ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
 [IO.FileInfo[]]$Files
 )

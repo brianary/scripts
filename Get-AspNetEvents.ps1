@@ -12,10 +12,18 @@
 .Parameter Before
     Skip events newer than this datetime.
     Defaults to now.
+
+.Outputs
+    System.Management.Automation.PSObject containing the fields stored in the event.
+
+.Example
+    Get-AspNetEvents.ps1 WebServer
+
+    Returns any ASP.NET-related events from the WebServer Application event log that occurred today.
 #>
 
-#requires -version 3
-[CmdletBinding()] Param(
+#Requires -Version 3
+[CmdletBinding()][OutputType([psobject])] Param(
 [Parameter(Position=0,Mandatory=$true)][Alias('CN','Server')][string[]]$ComputerName,
 [Parameter(Position=1)][DateTime]$After = ([DateTime]::Today),
 [Parameter(Position=2)][DateTime]$Before = ([DateTime]::Now),

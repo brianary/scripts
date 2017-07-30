@@ -5,6 +5,9 @@
 .Description
     This script is intended to be used to export shares from old machines to new ones.
 
+.Outputs
+    System.String[] of PowerShell commands to duplicate the local machine's shares.
+
 .Example
     Export-SmbShares.ps1
 
@@ -12,7 +15,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param()
+[CmdletBinding()][OutputType([string[]])] Param()
 
 function ConvertTo-StringLiteral([Parameter(ValueFromPipeline=$true)][string]$value)
 {Process{"'$($value -replace '''','''''')'"}}

@@ -6,7 +6,7 @@
     https://www.microsoft.com/download/details.aspx?id=40760
 #>
 
-#requires -Version 3
+#Requires -Version 3
 [CmdletBinding()] Param(
 [string]$DependenciesImage = 'dependencies.png'
 )

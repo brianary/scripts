@@ -11,6 +11,10 @@
 .Parameter Certificate
     The certificate to grant access to.
 
+.Inputs
+    System.Security.Cryptography.X509Certificates.X509Certificate2 to grant permissions to
+    the private key file of.
+
 .Link
     Get-Acl
 
@@ -52,8 +56,8 @@
     https://msdn.microsoft.com/en-us/library/system.security.cryptography.x509certificates.x509findtype%28v=vs.110%29.aspx
 #>
 
-#requires -version 3
-#requires -Module WebAdministration
+#Requires -Version 3
+#Requires -Module WebAdministration
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='AppPool')]
 [string]$AppPool,

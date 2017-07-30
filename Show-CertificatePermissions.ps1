@@ -5,6 +5,10 @@
 .Parameter Certificate
     The certificate to display permissions for.
 
+.Inputs
+    System.Security.Cryptography.X509Certificates.X509Certificate2 to show the permissions
+    of the private key file of.
+
 .Link
     Get-CertificatePermissions.ps1
 

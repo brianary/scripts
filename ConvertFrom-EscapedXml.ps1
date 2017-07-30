@@ -27,8 +27,8 @@
 )
 [xml] $xml = [Net.WebUtility]::HtmlDecode($EscapedXml)
 $sw = New-Object IO.StringWriter
-[Xml.XmlWriterSettings] $saveopts = New-Object Xml.XmlWriterSettings -Property @{ Indent = !$Compress; OmitXmlDeclaration = $true }
-[Xml.XmlWriter] $xo = [Xml.XmlWriter]::Create($sw, $saveopts)
+[Xml.XmlWriterSettings] $cfg = New-Object Xml.XmlWriterSettings -Property @{ Indent = !$Compress; OmitXmlDeclaration = $true }
+[Xml.XmlWriter] $xo = [Xml.XmlWriter]::Create($sw, $cfg)
 $xml.WriteTo($xo)
 $xo.Dispose()
 $out = $sw.ToString()

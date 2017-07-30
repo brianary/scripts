@@ -15,7 +15,7 @@
 #>
 
 #Requires -Version 2
-[CmdletBinding()]Param(
+[CmdletBinding()] Param(
 [Parameter(Mandatory=$true,Position=0)][Alias('CN','Source')][string]$ComputerName,
 [Parameter(Position=1)][Alias('To','Destination')][string]$DestinationComputerName = $env:COMPUTERNAME
 )
