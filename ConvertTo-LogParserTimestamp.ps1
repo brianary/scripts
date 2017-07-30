@@ -5,6 +5,12 @@
 .Parameter Value
     The DateTime value to convert to a LogParser literal.
 
+.Inputs
+    System.DateTime to encode for use as a literal in a LogParser query.
+
+.Outputs
+    System.String to use as a timestamp literal in a LogParser query.
+
 .Link
     https://www.microsoft.com/en-us/download/details.aspx?id=24659
 

@@ -14,16 +14,17 @@
 
 .Outputs
     System.Management.Automation.PSObject
-    or System.Collections.Specialized.OrderedDictionary
+    or System.Collections.Specialized.OrderedDictionary if -AsDictionary is specified
 
 .Example
     Invoke-Sqlcmd "select top 3 ProductID, Name from Production.Product" -ServerInstance ServerName -Database AdventureWorks |ConvertFrom-DataRow.ps1 |ConvertTo-Html
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding(DefaultParameterSetName='AsObject')][OutputType([psobject],ParameterSetName='AsObject')]
+[OutputType([Collections.Specialized.OrderedDictionary],ParameterSetName='AsDictionary')] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Data.DataRow]$DataRow,
-[Alias('AsOrderedDictionary','AsHashtable')][switch]$AsDictionary
+[Parameter(ParameterSetName='AsDictionary')][Alias('AsOrderedDictionary','AsHashtable')][switch]$AsDictionary
 )
 Process
 {

@@ -2,8 +2,14 @@
 .Synopsis
     Produces a basic authentication header string from a credential.
 
-.Credential
+.Parameter Credential
     Specifies a user account to authenticate an HTTP request that only accepts Basic authentication.
+
+.Inputs
+    System.Management.Automation.PSCredential to convert to the Authorization HTTP header value.
+
+.Outputs
+    System.String to use as the Authorization HTTP header value.
 
 .Link
     https://tools.ietf.org/html/rfc1945#section-11.1
@@ -20,7 +26,7 @@
     Calls a REST method that requires Basic authentication on the first request (with no challenge-response support).
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSCredential]$Credential
 )
 

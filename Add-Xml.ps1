@@ -24,17 +24,23 @@
 .Parameter SelectXmlInfo
     Output from the Select-Xml cmdlet.
 
+.Inputs
+    Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
+
+.Outputs
+    System.Xml.XmlDocument
+    Returned when Select-Xml queries an in-memory XML document or string, null when querying a file.
+
 .Link
     Select-Xml
 
 .Example
     Select-Xml /configuration/appSettings app.config |Add-Xml.ps1 '<add key="Version" value="2.0"/>' -UnlessXPath 'add[@key="Version"]'
 
-
     (Adds element to document file if it is not already there.)
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([xml])] Param(
 [Parameter(Position=0,Mandatory=$true)][Alias('Node','Element')][xml[]]$Xml,
 [ValidateSet('AppendChild','InsertAfter','InsertBefore','PrependChild')][string]$Position = 'AppendChild',
 [Parameter(Position=1)][Alias('IfMissing')][string]$UnlessXPath,
