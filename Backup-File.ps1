@@ -6,9 +6,11 @@
     Specifies a path to the items being removed. Wildcards are permitted.
     The parameter name ("-Path") is optional.
 
+.Inputs
+    System.String: file path
+
 .Example
     Backup-File.ps1 logfile.log
-
 
     Copies logfile.log to logfile-201612311159.log (on that date & time).
 #>

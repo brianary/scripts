@@ -1,0 +1,39 @@
+# EditorConfig is awesome: http://EditorConfig.org
+
+# last word for the project
+root = true
+
+# Windows-centric world
+[*]
+charset = utf-8-bom
+end_of_line = crlf
+insert_final_newline = true
+
+# PowerShell
+[*.ps1]
+indent_style = space
+indent_size = 4
+max_line_length = 128
+
+# F#
+[*.{fs,fsx}]
+indent_style = space
+
+# XSLT
+[*.{xsl,xslt}]
+indent_style = space
+indent_size = 4
+
+# CommonMark
+[*.md]
+indent_style = space
+
+# CSS
+[*.css]
+indent_style = space
+indent_size = 4
+
+# VScript/VBA
+[*.{vbs,vba}]
+indent_style = tab
+tab_width = 4

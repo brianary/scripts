@@ -5,14 +5,17 @@
 .Parameter InputObject
     An object to convert to a dictionary.
 
+.Inputs
+    Any .NET object to convert into a properties hash.
+
 .Outputs
-    System.Collections.Specialized.OrderedDictionary
+    System.Collections.Specialized.OrderedDictionary of the object's property names and values.
 
 .Link
     Get-Member
 
 .Example
-    ls *.txt |ConvertTo-Hashtable.ps1
+    ls *.txt |ConvertTo-OrderedDictionary.ps1
 #>
 
 #Requires -Version 3

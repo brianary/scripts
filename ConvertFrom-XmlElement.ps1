@@ -26,8 +26,8 @@
     webPages:Enabled false
 #>
 
-#requires -version 3
-[CmdletBinding()] Param(
+#Requires -Version 3
+[CmdletBinding()][OutputType([psobject])] Param(
 [Parameter(ParameterSetName='Element',Position=0,Mandatory=$true,ValueFromPipeline=$true)][Xml.XmlElement] $Element,
 [Parameter(ParameterSetName='SelectXmlInfo',Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
