@@ -76,21 +76,6 @@
 
 .Link
     Invoke-Sqlcmd
-
-.Example
-    Send-SqlReport.ps1 'report details' 'who@example.com' 'select ...' -Server '(localdb)\ProjectsV13' -Database AdventureWorks2014
-
-    Sends an email with the SQL results in the email body as HTML.
-
-.Example
-    Send-SqlReport.ps1 'report details' 'who@example.com' 'select ...' -Server DbServer -Database DbName -ReportFile C:\temp\report.csv
-
-    Sends an email with the SQL results as a CSV attachment.
-
-.Example
-    Send-SqlReport.ps1 'report details' 'who@example.com' 'select ...' -Server DbServer -Database DbName -ReportFile \\Server\share\report.tsv
-
-    Sends an email with a link in the body to a TSV file containing the SQL results on a network share.
 #>
 
 #Requires -Version 3
@@ -112,13 +97,12 @@
 [string[]]$Cc,
 [string[]]$Bcc,
 [Net.Mail.MailPriority]$Priority,
-[switch]$UseSsl,
-[uri]$SeqUrl = 'https://seqlog/'
+[switch]$UseSsl
 )
 
-Use-SeqServer.ps1 $SeqUrl
 Use-NetMailConfig.ps1
 Use-SqlcmdParams.ps1
+$logSeq = $PSDefaultParameterValues.Contains('Send-SeqEvent.ps1:Server')
 
 # use the default From host for emails without a host
 $mailhost = ([Net.Mail.MailAddress]$PSDefaultParameterValues['Send-MailMessage:From']).Host |Out-String
@@ -138,7 +122,7 @@ try
     if($data.Count -eq 0) # no rows
     {
         Write-Verbose "No rows returned."
-        Write-EventLog -LogName Application -Source Reporting -EventId 100 -Message "No rows returned for $Subject"
+        if($logSeq) { Send-SeqEvent.ps1 'No rows returned for {Subject}' @{Subject=$Subject} -Level Information }
         return
     }
     $Msg = @{
@@ -188,8 +172,7 @@ $PostContent
 catch # report problems
 {
     Write-Warning $_
-    Write-EventLog -LogName Application -Source Reporting -EventId 99 -EntryType Error -Message $_
-    if($SeqUrl) { Send-SeqScriptEvent.ps1 'Reporting' $_ Error -InvocationScope 2 }
+    if($logSeq) { Send-SeqScriptEvent.ps1 'Reporting' $_ Error -InvocationScope 2 }
     # consciously omitting Cc & Bcc
     $Msg = @{
         To         = $To
