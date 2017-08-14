@@ -12,41 +12,47 @@
     A value to initialize the object with, such as CommandText for a Command object, or 
     a ConnectionString for a Connection or ConnectionStringBuilder.
 
+.Parameter ConnectionString
+    A connection string to use (when creating a Command object).
+    No connection will be made if not specified.
+
 .Parameter StoredProcedure
     Sets the CommandType property of a Command object to StoredProcedure.
     Ignored for other objects.
 
 .Parameter OpenConnection
-    Opens the Connection object if an InitialValue was provided, ignored otherwise.
+    Opens the Connection object (or Command connection) if an InitialValue was provided, ignored otherwise.
+
+.Link
+    https://msdn.microsoft.com/library/system.data.common.dbproviderfactories.aspx
 
 .Example
     New-DbProviderObject.ps1 SqlClient ConnectionStringBuilder 'Server=ServerName;Database=DbName;Integrated Security=True'
-
 
     Key                 Value     
     ---                 -----     
     Data Source         ServerName
     Initial Catalog     DbName    
     Integrated Security True    
+
 .Example
     $conn = New-DbProviderObject.ps1 SqlClient Connection $connstr -Open
-
 
     ($conn contains an open DbConnection object.)
 
 .Example
-    $cmd = New-DbProviderObject.ps1 odbc Command -StoredProcedure
+    $cmd = New-DbProviderObject.ps1 odbc Command -ConnectionString $connstr -StoredProcedure -OpenConnection
 
-    
-    ($cmd contains a DbCommand with a CommandType of StoredProcedure.)
+    ($cmd contains a DbCommand with a CommandType of StoredProcedure and an open connection to $connstr.)
 #>
 
-#requires -version 4
+#Requires -Version 4
 [CmdletBinding()] Param(
 [Parameter(Mandatory=$true,Position=0)][AllowEmptyString()][string]$ProviderName,
 [ValidateSet('Command','Connection','ConnectionStringBuilder')]
 [Parameter(Mandatory=$true,Position=1)][string]$TypeName,
 [Parameter(Position=2)][Alias('Value')][string]$InitialValue,
+[Parameter(Position=3)][Alias('CS')][string]$ConnectionString,
 [switch]$StoredProcedure,
 [switch]$OpenConnection
 )
@@ -88,10 +94,15 @@ if($InitialValue)
         }
         ConnectionStringBuilder
         { # PowerShell must use the method form of SqlConnectionStringBuilder
-            if($ProviderName){$obj.set_ConnectionString($InitialValue)}
-            else{$obj.ConnectionString=$InitialValue} # DbConnectionStringBuilder does not support method form
+            if($ProviderName) { $obj.set_ConnectionString($InitialValue) }
+            else { $obj.ConnectionString=$InitialValue } # DbConnectionStringBuilder does not support method form
         }
     }
 }
-if($StoredProcedure -and $obj -is [Data.Common.Command]){$obj.CommandType='StoredProcedure'}
+if($obj -is [Data.Common.DbCommand])
+{
+    if($StoredProcedure) { $obj.CommandType = 'StoredProcedure' }
+    if($ConnectionString)
+    { $obj.Connection = New-DbProviderObject.ps1 $ProviderName Connection $ConnectionString -OpenConnection:$OpenConnection }
+}
 $obj
