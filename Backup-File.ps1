@@ -7,7 +7,7 @@
     The parameter name ("-Path") is optional.
 
 .Inputs
-    System.String: file path
+    System.String, a file path to back up.
 
 .Example
     Backup-File.ps1 logfile.log
