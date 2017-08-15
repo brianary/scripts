@@ -172,7 +172,7 @@ $PostContent
 catch # report problems
 {
     Write-Warning $_
-    if($logSeq) { Send-SeqScriptEvent.ps1 'Reporting' $_ Error -InvocationScope 2 }
+    if($logSeq) { Send-SeqScriptEvent.ps1 'Reporting' -InvocationScope 2 }
     # consciously omitting Cc & Bcc
     $Msg = @{
         To         = $To
