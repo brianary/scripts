@@ -7,10 +7,11 @@
 
 .Parameter ErrorRecord
     An optional PowerShell ErrorRecord object to record.
+    Will try to automatically find $_ in a calling "catch{}"" block.
 
 .Parameter Level
     The type of event to record.
-    Information by default.
+    Defaults to Error if an ErrorRecord is found, Information otherwise.
 
 .Parameter InvocationScope
     The scope of the script InvocationInfo to use.
@@ -33,15 +34,18 @@
     try { Connect-Thing } catch { Send-SeqScriptEvent.ps1 'Trying to connect' $_ -Level Error -Server http://my-seq }
 #>
 
-#requires -Version 3
+#Requires -Version 3
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true)][string]$Action,
-[Parameter(Position=1)][Management.Automation.ErrorRecord]$ErrorRecord,
-[Parameter(Position=2)][ValidateSet('Verbose','Debug','Information','Warning','Error','Fatal')][string] $Level = 'Information',
+[Parameter(Position=1)][Management.Automation.ErrorRecord]$ErrorRecord = 
+    ((Get-Variable _ -Scope 1 -ValueOnly -EA SilentlyContinue) -as [Management.Automation.ErrorRecord]),
+[Parameter(Position=2)][ValidateSet('Verbose','Debug','Information','Warning','Error','Fatal')][string] $Level = 'Error',
 [Alias('Scope')][string] $InvocationScope = '1',
 [uri] $Server,
 [string] $ApiKey
 )
+
+if(!($ErrorRecord -or $PSBoundParameters.ContainsKey('Level'))) { $Level = 'Information' }
 $caller = try{Get-Variable MyInvocation -Scope $Scope -ValueOnly -EA Stop}catch{$MyInvocation}
 $SeqEvent = @{ Level = $Level }
 if($Server){[void]$SeqEvent.Add('Server',$Server)}
