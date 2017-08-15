@@ -7,6 +7,9 @@
     or a DataRow or object with properties to set as variables.
     Works with DataRows.
 
+.Inputs
+    System.Management.Automation.PSCustomObject with properties to import as variables.
+
 .Example
     if($line -match '\AProject\("(?<TypeGuid>[^"]+)"\)') {Import-Variables.ps1 $Matches}
 
@@ -29,7 +32,7 @@
     Then fetches the list of GitHub emojis.
 #>
 
-#requires -version 3
+#Requires -Version 3
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSObject]$InputObject
 )

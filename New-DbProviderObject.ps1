@@ -23,6 +23,15 @@
 .Parameter OpenConnection
     Opens the Connection object (or Command connection) if an InitialValue was provided, ignored otherwise.
 
+.Inputs
+    System.String to initialize the database object.
+
+.Outputs
+    System.Data.Common.DbCommand (e.g. System.Data.SqlClient.SqlCommand) or 
+    System.Data.Common.DbConnection (e.g. System.Data.SqlClient.SqlConnection) or
+    System.Data.Common.DbConnectionStringBuilder (e.g. System.Data.SqlClient.SqlConnectionStringBuilder),
+    as requested.
+
 .Link
     https://msdn.microsoft.com/library/system.data.common.dbproviderfactories.aspx
 
@@ -51,7 +60,7 @@
 [Parameter(Mandatory=$true,Position=0)][AllowEmptyString()][string]$ProviderName,
 [ValidateSet('Command','Connection','ConnectionStringBuilder')]
 [Parameter(Mandatory=$true,Position=1)][string]$TypeName,
-[Parameter(Position=2)][Alias('Value')][string]$InitialValue,
+[Parameter(Position=2,ValueFromPipeline=$true)][Alias('Value')][string]$InitialValue,
 [Parameter(Position=3)][Alias('CS')][string]$ConnectionString,
 [switch]$StoredProcedure,
 [switch]$OpenConnection

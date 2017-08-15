@@ -9,10 +9,10 @@
     Output from the Select-Xml cmdlet.
 
 .Inputs
-    Microsoft.PowerShell.Commands.SelectXmlInfo
+    Microsoft.PowerShell.Commands.SelectXmlInfo output from Select-Xml.
 
 .Outputs
-    System.Management.Automation.PSCustomObject
+    System.Management.Automation.PSCustomObject object created from selected XML.
 
 .Link
     Select-Xml

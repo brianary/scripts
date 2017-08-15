@@ -7,7 +7,7 @@
     with the newest version ahead of the others.
 #>
 
-#requires -version 3
+#Requires -Version 3
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)] Param(
 [switch]$ResolveConflicts
 )

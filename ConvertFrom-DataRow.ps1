@@ -10,7 +10,8 @@
     rather than an object with properties.
 
 .Inputs
-    System.Data.DataRow
+    System.Data.DataRow with fields to convert into an object with properties or
+    into a hash with key/value pairs.
 
 .Outputs
     System.Management.Automation.PSObject
