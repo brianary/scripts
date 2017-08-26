@@ -34,7 +34,7 @@
     C:\temp\activity.27.old
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][string] $Path,
 [Parameter(Mandatory=$true,Position=1)][Alias('Extension')][string] $AppendText
 )

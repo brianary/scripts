@@ -8,17 +8,23 @@
 .Parameter SelectXmlInfo
     Output from the Select-Xml cmdlet.
 
+.Inputs
+    Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
+
+.Outputs
+    System.Xml.XmlDocument
+    Returned when Select-Xml queries an in-memory XML document or string, null when querying a file.
+
 .Link
     Select-Xml
 
 .Example
     Select-Xml '/configuration/appSettings/add[@key="Version"]/@value' app.config |Set-XmlNodeValue.ps1 '3.0'
 
-
     (Sets attribute value to '3.0', if found.)
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([xml])] Param(
 [Parameter(Position=0,Mandatory=$true)]$Value,
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo

@@ -9,10 +9,23 @@
     A file to check.
 
 .Parameter ErrorMessage
-    Instead of a boolean value, returns the parse error message, or nothing if successful.
+    When present, returns the parse error message, or nothing if successful
+    (instead of a boolean value).
+
+.Inputs
+    System.String containing a file path or potential XML data.
+
+.Outputs
+    System.Boolean indicating the XML is parseable, or System.String containing the 
+    parse error if -ErrorMessage is present and the XML isn't parseable.
+
+.Example
+    Test-Xml.ps1 '</>'
+
+    False
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([bool])] Param(
 [Parameter(ParameterSetName='Xml',Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [ValidateScript({!(Test-Path $_ -PathType Leaf)})][string] $Xml,
 [Parameter(ParameterSetName='Path',Mandatory=$true,ValueFromPipeline=$true)]

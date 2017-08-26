@@ -25,7 +25,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([psobject])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$Path
 )
 Begin { $Count = New-Object psobject -Property @{Tab=0;Space=0;Mix=0;Other=0} }

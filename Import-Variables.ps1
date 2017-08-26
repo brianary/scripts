@@ -8,7 +8,8 @@
     Works with DataRows.
 
 .Inputs
-    System.Management.Automation.PSCustomObject with properties to import as variables.
+    System.Collections.IDictionary with keys and values to import as variables,
+    or System.Management.Automation.PSCustomObject with properties to import as variables.
 
 .Example
     if($line -match '\AProject\("(?<TypeGuid>[^"]+)"\)') {Import-Variables.ps1 $Matches}

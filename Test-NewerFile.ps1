@@ -2,6 +2,9 @@
 .Synopsis
     Returns true if the difference file is newer than the reference file.
 
+.Outputs
+    System.Boolean indicating the difference file is newer.
+
 .Parameter ReferenceFile
     One of two files to compare.
 
@@ -10,7 +13,7 @@
 #>
 
 #requires -version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([bool])] Param(
 [Parameter(Position=0)][IO.FileInfo]$ReferenceFile,
 [Parameter(Position=1)][IO.FileInfo]$DifferenceFile
 )

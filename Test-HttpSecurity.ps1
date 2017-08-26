@@ -21,6 +21,12 @@
 .Parameter Endpoint
     The address of the Observatory web service.
 
+.Inputs
+    System.String containing a URL host to check.
+
+.Outputs
+    System.Management.Automation.PSObject containing scan results.
+
 .Link
     Invoke-RestMethod
 
@@ -75,7 +81,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()]Param(
+[CmdletBinding()][OutputType([psobject])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string[]]$Hosts,
 [Alias('Rescan')][switch]$Force,
 [switch]$Public,

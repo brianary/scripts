@@ -23,7 +23,6 @@
 .Example
     Repair-DatabaseConstraintNames.ps1 sqlpizza\supreme WebForms -Update
 
-
     WARNING: Renamed 10 defaults.
 #>
 
@@ -85,7 +84,7 @@ select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
 "@
-    }| % {Resolve-SqlcmdResults @_}
+    } |% {Resolve-SqlcmdResults @_}
 }
 
 function Repair-PrimaryKeyNames
@@ -103,7 +102,7 @@ select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
 "@
-    }| % {Resolve-SqlcmdResults @_}
+    } |% {Resolve-SqlcmdResults @_}
 }
 
 function Repair-ForeignKeyNames
@@ -121,7 +120,7 @@ select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
 "@
-    }| % {Resolve-SqlcmdResults @_}
+    } |% {Resolve-SqlcmdResults @_}
 }
 
 Repair-DefaultNames

@@ -8,6 +8,9 @@
 .Parameter Delete
     Indicates sent files should be deleted.
 
+.Inputs
+    System.IO.FileInfo of .eml files to send.
+
 .Component
     ADODB.Stream
 
@@ -22,10 +25,12 @@
 
 .Example
     Send-MailMessageFiles.ps1
+    
     Sends all .eml files in the current directory.
 
 .Example
     ls C:\Inetpub\mailroot\*.eml |Send-MailMessageFile.ps1
+
     Sends emails from drop directory.
 #>
 
