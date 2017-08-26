@@ -14,7 +14,10 @@
 .Inputs
     System.String of paths to copy from, if matches exist in the destination.
 
+.Example
+    Update-Files.ps1 C:\Source\*.txt D:\Dest
 
+    Copies *.txt files from C:\Source to D:\Dest that exist in both.
 #>
 
 #Requires -Version 3

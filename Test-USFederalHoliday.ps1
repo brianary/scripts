@@ -15,6 +15,21 @@
         * Thanksgiving Day, Fourth Thursday in November
         * Christmas Day, December 25 (±1 day, if observed)
 
+.Parameter Date
+    The date to check.
+
+.Parameter SatToFri
+    Indicates Saturday holidays are observed on Fridays.
+
+.Parameter SunToMon
+    Indicates Sunday holidays are observed on Mondays.
+
+.Inputs
+    System.DateTime values to check.
+
+.Outputs
+    System.String containing the holiday name when the date is a holiday.
+
 .Link
     http://www.federalreserve.gov/aboutthefed/k8.htm
 
@@ -37,7 +52,7 @@
     Runs Invoke-SomeBusinessDayTask only if today is not a holiday.
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][datetime]$Date,
 [Parameter(HelpMessage='Are Saturday holidays observed on Friday?')][switch]$SatToFri,
 [Parameter(HelpMessage='Are Sunday holidays observed on Monday?')][switch]$SunToMon

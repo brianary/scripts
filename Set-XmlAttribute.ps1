@@ -14,17 +14,23 @@
 .Parameter SelectXmlInfo
     Output from the Select-Xml cmdlet.
 
+.Inputs
+    Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
+
+.Outputs
+    System.Xml.XmlDocument
+    Returned when Select-Xml queries an in-memory XML document or string, null when querying a file.
+
 .Link
     Select-Xml
 
 .Example
     Select-Xml /configuration/system.web/compilation web.config |Set-XmlAttribute.ps1 debug false
 
-
     (Adds or updates the value of the 'debug' attribute to 'false'.)
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([xml])] Param(
 [Parameter(Position=0,Mandatory=$true)][string]$Name,
 [Parameter(Position=1,Mandatory=$true)][string]$Value,
 [Parameter(Position=2)][string]$NamespaceUri,

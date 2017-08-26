@@ -20,12 +20,17 @@
     Use -1 to for no default.
     Otherwise, the first item (index 0) is the default.
 
+.Inputs
+    System.String containing a choice to offer.
+
+.Outputs
+    System.String containing the choice that was selected.
+
 .Link
     https://msdn.microsoft.com/library/system.management.automation.host.pshostuserinterface.promptforchoice.aspx
 
 .Example
     Read-Choice.ps1 one,two,three
-
 
     Please select:
     [] one  [] two  [] three  [?] Help (default is "one"):
@@ -33,7 +38,6 @@
 
 .Example
     Read-Choice.ps1 ([ordered]@{'&one'='first thing';'&two'='second thing';'t&hree'='third thing'}) -Message 'Pick:'
-
 
     Pick:
     [O] one  [T] two  [H] three  [?] Help (default is "O"): ?
@@ -44,9 +48,9 @@
     &one
 #>
 
-#requires -Version 3
-[CmdletBinding()] Param(
-[Parameter(ParameterSetName='ChoicesArray',Position=0,Mandatory=$true)]
+#Requires -Version 3
+[CmdletBinding()][OutputType([string])] Param(
+[Parameter(ParameterSetName='ChoicesArray',Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [Alias('Options')][string[]]$Choices,
 [Parameter(ParameterSetName='ChoicesHash',Position=0,Mandatory=$true)]
 [Alias('Menu')][Collections.IDictionary]$ChoiceHash,
@@ -54,14 +58,29 @@
 [string]$Message = 'Please select:',
 [int]$DefaultIndex
 )
-$choicelist =
-    switch($PSCmdlet.ParameterSetName)
-    {
-        ChoicesArray {$Choices |% {New-Object System.Management.Automation.Host.ChoiceDescription $_}}
-        ChoicesHash
+Begin
+{
+    if($PSCmdlet.ParameterSetName -eq 'ChoicesArray') { $Values = New-Object Collections.Generic.List[string] }
+}
+Process
+{
+    if($PSCmdlet.ParameterSetName -eq 'ChoicesArray') { $Values.AddRange($Choices) }
+}
+End
+{
+    $choicelist =
+        switch($PSCmdlet.ParameterSetName)
         {
-            $Choices = @($ChoiceHash.Keys)
-            $Choices |% {New-Object System.Management.Automation.Host.ChoiceDescription $_,$ChoiceHash[$_]}
+            ChoicesArray
+            {
+                $Choices = $Values.ToArray()
+                $Choices |% {New-Object System.Management.Automation.Host.ChoiceDescription $_}
+            }
+            ChoicesHash
+            {
+                $Choices = @($ChoiceHash.Keys)
+                $Choices |% {New-Object System.Management.Automation.Host.ChoiceDescription $_,$ChoiceHash[$_]}
+            }
         }
-    }
-$Choices[$Host.UI.PromptForChoice($Caption,$Message,$choicelist,$DefaultIndex)]
+    $Choices[$Host.UI.PromptForChoice($Caption,$Message,$choicelist,$DefaultIndex)]
+}

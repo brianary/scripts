@@ -8,6 +8,12 @@
 .Parameter Format
     Precise, known format(s) to use to try parsing the datetime.
 
+.Inputs
+    System.String containing a possible date to test parse.
+
+.Outputs
+    System.Boolean indicating the string is a parseable date.
+
 .Link
     https://msdn.microsoft.com/library/8kb3ddd4.aspx
 
@@ -32,7 +38,7 @@
     False
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([bool])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$Date,
 [string[]]$Format
 )
