@@ -23,6 +23,9 @@
 .Parameter ConnectionName
     The connection string name from the ConfigurationManager to use when executing the query.
 
+.Parameter EmptySubject
+    The subject line for the email when no data is returned.
+
 .Parameter From
     The from address to use for the email.
     The default is to use $PSEmailServer.
@@ -88,6 +91,7 @@
 [Parameter(ParameterSetName='ByConnectionParameters',Position=4,Mandatory=$true)][string]$Database,
 [Parameter(ParameterSetName='ByConnectionString',Position=3,Mandatory=$true)][string]$ConnectionString,
 [Parameter(ParameterSetName='ByConnectionName',Position=3,Mandatory=$true)][string]$ConnectionName,
+[string]$EmptySubject,
 [string]$From,
 [string]$Caption,
 [string]$ReportFile,
@@ -97,12 +101,13 @@
 [string[]]$Cc,
 [string[]]$Bcc,
 [Net.Mail.MailPriority]$Priority,
-[switch]$UseSsl
+[switch]$UseSsl,
+[uri]$SeqUrl = $PSDefaultParameterValues['Send-SeqEvent.ps1:Server']
 )
 
 Use-NetMailConfig.ps1
 Use-SqlcmdParams.ps1
-$logSeq = $PSDefaultParameterValues.Contains('Send-SeqEvent.ps1:Server')
+if($SeqUrl){Use-SeqServer.ps1 $SeqUrl}
 
 # use the default From host for emails without a host
 $mailhost = ([Net.Mail.MailAddress]$PSDefaultParameterValues['Send-MailMessage:From']).Host |Out-String
@@ -113,23 +118,30 @@ if($mailhost)
     if($Bcc) { $Bcc = $Bcc |% { if($_ -like '*@*'){$_}else{"$_@$mailhost"} } } # allow username-only emails
 }
 
+$Msg = @{
+    To         = $To
+    Subject    = $Subject
+    BodyAsHtml = $true
+    SmtpServer = $PSEmailServer
+}
+if($From)     { $Msg.From= $From }
+if($Cc)       { $Msg.Cc= $Cc }
+if($Bcc)      { $Msg.Bcc= $Bcc }
+if($Priority) { $Msg.Priority= $Priority }
+if($UseSsl)   { $Msg.UseSsl = $true }
+
 try
 {
     $query = @{ Query = $Sql }
     if($Timeout) {$query += @{QueryTimeout=$Timeout}}
-    [Data.DataRow[]]$data = Invoke-Sqlcmd @query
+    [Data.DataRow[]]$data = Invoke-Sqlcmd @query -ErrorAction Stop
     $data |Format-Table |Out-String |Write-Verbose
     if($data.Count -eq 0) # no rows
     {
         Write-Verbose "No rows returned."
-        if($logSeq) { Send-SeqEvent.ps1 'No rows returned for {Subject}' @{Subject=$Subject} -Level Information }
+        if($SeqUrl) { Send-SeqEvent.ps1 'No rows returned for {Subject}' @{Subject=$Subject} -Level Information }
+        if($EmptySubject) { $Msg.Subject = $EmptySubject; Send-MailMessage @Msg  }
         return
-    }
-    $Msg = @{
-        To         = $To
-        Subject    = $Subject
-        BodyAsHtml = $true
-        SmtpServer = $PSEmailServer
     }
     if($ReportFile)
     { # convert the table into a tsv/csv file and link to it
@@ -161,18 +173,13 @@ $PostContent
             Format-HtmlDataTable.ps1 @tableFormat |
             Out-String))
     }
-    if($From)     { $Msg.From= $From }
-    if($Cc)       { $Msg.Cc= $Cc }
-    if($Bcc)      { $Msg.Bcc= $Bcc }
-    if($Priority) { $Msg.Priority= $Priority }
-    if($UseSsl)   { $Msg.UseSsl = $true }
     if($PSCmdlet.ShouldProcess("Message:`n$(New-Object PSObject -Property $Msg|Format-List|Out-String)`n",'Send message'))
     { Send-MailMessage @Msg } # splat the arguments hashtable
 }
 catch # report problems
 {
     Write-Warning $_
-    if($logSeq) { Send-SeqScriptEvent.ps1 'Reporting' -InvocationScope 2 }
+    if($SeqUrl) { Send-SeqScriptEvent.ps1 'Reporting' -InvocationScope 2 }
     # consciously omitting Cc & Bcc
     $Msg = @{
         To         = $To
