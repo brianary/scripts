@@ -46,7 +46,7 @@
 )
 
 if(!($ErrorRecord -or $PSBoundParameters.ContainsKey('Level'))) { $Level = 'Information' }
-$caller = try{Get-Variable MyInvocation -Scope $Scope -ValueOnly -EA Stop}catch{$MyInvocation}
+$caller = try{Get-Variable MyInvocation -Scope $InvocationScope -ValueOnly -EA Stop}catch{$MyInvocation}
 $SeqEvent = @{ Level = $Level }
 if($Server){[void]$SeqEvent.Add('Server',$Server)}
 if($ApiKey){[void]$SeqEvent.Add('ApiKey',$ApiKey)}
