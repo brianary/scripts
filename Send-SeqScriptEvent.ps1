@@ -1,6 +1,6 @@
 ﻿<#
 .Synopsis
-    Sends an event from a script to a Seq server, including script info.
+    Sends an event (often an error) from a script to a Seq server, including script info.
 
 .Parameter Action
     A description of what was being attempted.
@@ -51,11 +51,12 @@ $SeqEvent = @{ Level = $Level }
 if($Server){[void]$SeqEvent.Add('Server',$Server)}
 if($ApiKey){[void]$SeqEvent.Add('ApiKey',$ApiKey)}
 $Properties = @{
-    Script      = if($caller.ScriptName){Split-Path $caller.ScriptName -Leaf}else{$caller.MyCommand.Name}
-    CommandName = $caller.MyCommand.Name
-    Invocation  = $caller
-    Action      = $Action
-    CommandLine = [Environment]::GetCommandLineArgs()
+    Script       = if($caller.ScriptName){Split-Path $caller.ScriptName -Leaf}else{$caller.MyCommand.Name}
+    CommandName  = $caller.MyCommand.Name
+    Invocation   = $caller
+    Action       = $Action
+    CommandLine  = [Environment]::GetCommandLineArgs()
+    ComputerName = $env:COMPUTERNAME
 }
 if($ErrorRecord)
 {
