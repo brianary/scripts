@@ -51,23 +51,23 @@ $SeqEvent = @{ Level = $Level }
 if($Server){[void]$SeqEvent.Add('Server',$Server)}
 if($ApiKey){[void]$SeqEvent.Add('ApiKey',$ApiKey)}
 $Properties = @{
-    Script      = $caller.MyCommand.Name
-    Line        = $caller.Line
-    Column      = $caller.OffsetInLine
+    Script      = if($caller.ScriptName){Split-Path $caller.ScriptName -Leaf}else{$caller.MyCommand.Name}
+    CommandName = $caller.MyCommand.Name
+    Invocation  = $caller
     Action      = $Action
     CommandLine = [Environment]::GetCommandLineArgs()
 }
-if($Error)
+if($ErrorRecord)
 {
     $Properties += @{
         Message     = $ErrorRecord.Exception.Message
         Error       = $ErrorRecord
     }
-    [void]$SeqEvent.Add('Message','{Script}:{Line}:{Column}: {Action}: {Message}')
+    [void]$SeqEvent.Add('Message','{Script}: {Action}: {Message}')
 }
 else
 {
-    [void]$SeqEvent.Add('Message','{Script}:{Line}:{Column}: {Action}')
+    [void]$SeqEvent.Add('Message','{Script}: {Action}')
 }
 [void]$SeqEvent.Add('Properties',$Properties)
 Send-SeqEvent.ps1 @SeqEvent
