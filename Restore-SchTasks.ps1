@@ -33,6 +33,7 @@
 [string]$Exclude = '*\*'
 )
 $credentials = @{}
+$xmldecl = "<?xml version=`"1.0`" encoding=`"UTF-16`" ?>`r`n`r`n"
 $Script:PSDefaultParameterValues = @{'Select-Xml:Namespace'=@{task='http://schemas.microsoft.com/windows/2004/02/mit/task'}}
 foreach($task in ((Get-Content $Path -Raw) -replace '(?<=\A|>)\s*</?Tasks>\s*(?=\S|\z)','') -split '(?<=</Task>)\s*?(?=<!--)')
 {
@@ -40,7 +41,7 @@ foreach($task in ((Get-Content $Path -Raw) -replace '(?<=\A|>)\s*</?Tasks>\s*(?=
     $name = (Select-Xml '/comment()' -Xml $xml).Node.Value.Trim().TrimStart('\')
     if($Exclude -and ($name -like $Exclude)) { Write-Verbose "Skipping task $name"; continue }
     else { Write-Verbose "Importing task $name" }
-    Out-File "$name.xml" -Encoding unicode -InputObject "<?xml version=`"1.0`" encoding=`"UTF-16`" ?>`r`n`r`n$task"
+    Out-File "$name.xml" -Encoding unicode -InputObject "$xmldecl$task"  -Width ([int]::MaxValue)
     $logon = (Select-Xml '/task:Task/task:Principals/task:Principal[@id=''Author'']/task:LogonType' -Xml $xml).Node.InnerText
     if($logon -ne 'Password')
     {
