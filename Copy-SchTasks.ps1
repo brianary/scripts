@@ -34,7 +34,8 @@ schtasks /query /s $ComputerName /v /fo csv |
     Out-GridView -PassThru -Title 'Select jobs to copy' |
     select TaskName,'Run As User' -Unique |
     % {
-        schtasks /query /s $ComputerName /tn $_.TaskName /xml ONE |Out-File -Encoding unicode $TempXml
+        schtasks /query /s $ComputerName /tn $_.TaskName /xml ONE |
+            Out-File -Encoding unicode $TempXml  -Width ([int]::MaxValue)
         schtasks /create /s $DestinationComputerName /tn $_.TaskName /ru ($_.'Run As User') `
             /rp (Get-CachedCredentialFor $_.'Run As User' |
             ConvertFrom-Credential) /xml $TempXml

@@ -43,7 +43,7 @@ function Export-Dependencies($image)
 {
     Use-Command.ps1 dot ${env:ProgramFiles(x86)}\Graphviz*\bin\dot.exe -msi http://graphviz.org/pub/graphviz/stable/windows/graphviz-2.38.msi
     $gv = Join-Path $PSScriptRoot ([IO.Path]::ChangeExtension($image,'gv'))
-    Format-Dependencies |Out-File $gv -Encoding ascii
+    Format-Dependencies |Out-File $gv -Encoding ascii -Width ([int]::MaxValue)
     $ext = [IO.Path]::GetExtension($image).Trim('.')
     dot "-T$ext" -o $PSScriptRoot\$image $gv
     rm $gv
@@ -145,4 +145,4 @@ $(Format-VBAScripts)
 <!-- generated $(Get-Date) -->
 "@}
 
-Format-Readme |Out-File $PSScriptRoot\README.md -Encoding utf8
+Format-Readme |Out-File $PSScriptRoot\README.md -Encoding utf8 -Width ([int]::MaxValue)
