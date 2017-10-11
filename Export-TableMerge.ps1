@@ -42,7 +42,7 @@
     Export-TableMerge $server pubs employee |Out-File employee.sql
 
 .Example
-    Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -Schema Production -Table Product |Out-File -Encoding utf8 Data\Production.Product.sql
+    Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -Schema Production -Table Product |Out-File Data\Production.Product.sql utf8
 #>
 
 #Requires -Version 3
