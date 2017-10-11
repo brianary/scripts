@@ -35,7 +35,7 @@ schtasks /query /s $ComputerName /v /fo csv |
     select TaskName,'Run As User' -Unique |
     % {
         schtasks /query /s $ComputerName /tn $_.TaskName /xml ONE |
-            Out-File -Encoding unicode $TempXml  -Width ([int]::MaxValue)
+            Out-File $TempXml unicode -Width ([int]::MaxValue)
         schtasks /create /s $DestinationComputerName /tn $_.TaskName /ru ($_.'Run As User') `
             /rp (Get-CachedCredentialFor $_.'Run As User' |
             ConvertFrom-Credential) /xml $TempXml
