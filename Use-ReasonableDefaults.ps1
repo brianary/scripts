@@ -7,12 +7,16 @@
 
     Sets default values:
         Out-File -Width ([int]::MaxValue)
+        Export-Csv -NoTypeInformation
+        Invoke-WebRequest -UseBasicParsing
         Select-Xml -Namespace @{ a bunch of standard namespaces }
 #>
 
 #Requires -Version 3
 [CmdletBinding()] Param()
 $Global:PSDefaultParameterValues['Out-File:Width'] = [int]::MaxValue
+$Global:PSDefaultParameterValues['Export-Csv:NoTypeInformation'] = $True
+$Global:PSDefaultParameterValues['Invoke-WebRequest:UseBasicParsing'] = $True
 $Global:PSDefaultParameterValues['Select-Xml:Namespace'] = @{
 xhtml = 'http://www.w3.org/1999/xhtml' 
 xsl   = 'http://www.w3.org/1999/XSL/Transform' 
