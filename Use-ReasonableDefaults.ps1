@@ -3,7 +3,7 @@
     Sets certain cmdlet parameter defaults to rational, useful values.
 
 .Example
-    Use-ReasonableDefault.ps1
+    Use-ReasonableDefaults.ps1
 
     Sets default values:
         Out-File -Width ([int]::MaxValue)
