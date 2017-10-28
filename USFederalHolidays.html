@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>US Federal Holiday Detection
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="fsxfmt/style.css" />
+    <script type="text/javascript" src="fsxfmt/tips.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span9" id="main">
+          <h1>US Federal Holiday Detection</h1>
+<p>Here's how to determine whether a date is a US federal holiday using F#.
+You probably want to curry the first two boolean parameters with the appropriate settings
+(some departments observe Sunday holidays on Monday, and some observe Saturday holidays on Friday).</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">System</span>  
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="f">getHoliday</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">sunToMon</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="i">satToFri</span> (<span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="i">date</span><span class="o">:</span><span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="t">DateTime</span>) <span class="o">=</span>  
+   <span class="k">match</span> <span onmouseout="hideTip(event, 'fs5', 7)" onmouseover="showTip(event, 'fs5', 7)" class="i">date</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 8)" onmouseover="showTip(event, 'fs7', 8)" class="i">Month</span>, <span onmouseout="hideTip(event, 'fs5', 9)" onmouseover="showTip(event, 'fs5', 9)" class="i">date</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs8', 10)" onmouseover="showTip(event, 'fs8', 10)" class="i">Day</span>, (<span onmouseout="hideTip(event, 'fs5', 11)" onmouseover="showTip(event, 'fs5', 11)" class="i">date</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs8', 12)" onmouseover="showTip(event, 'fs8', 12)" class="i">Day</span><span class="o">-</span><span class="n">1</span>)<span class="o">/</span><span class="n">7</span><span class="o">+</span><span class="n">1</span>, <span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="i">date</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs9', 14)" onmouseover="showTip(event, 'fs9', 14)" class="i">DayOfWeek</span> <span class="k">with</span>
+   | <span class="n">1</span>, <span class="n">1</span>, _, _ <span class="k">-&gt;</span> <span class="s">&quot;New Year&#39;s Day&quot;</span>  
+   | <span class="n">1</span>, <span class="n">2</span>, _, <span onmouseout="hideTip(event, 'fs10', 15)" onmouseover="showTip(event, 'fs10', 15)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 16)" onmouseover="showTip(event, 'fs11', 16)" class="i">Monday</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs3', 17)" onmouseover="showTip(event, 'fs3', 17)" class="i">sunToMon</span> <span class="k">-&gt;</span> <span class="s">&quot;New Year&#39;s Day (observed)&quot;</span>  
+   | <span class="n">1</span>, _, <span class="n">3</span>, <span onmouseout="hideTip(event, 'fs10', 18)" onmouseover="showTip(event, 'fs10', 18)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 19)" onmouseover="showTip(event, 'fs11', 19)" class="i">Monday</span> <span class="k">-&gt;</span> <span class="s">&quot;Martin Luther King, Jr. Day&quot;</span>  
+   | <span class="n">2</span>, _, <span class="n">3</span>, <span onmouseout="hideTip(event, 'fs10', 20)" onmouseover="showTip(event, 'fs10', 20)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 21)" onmouseover="showTip(event, 'fs11', 21)" class="i">Monday</span> <span class="k">-&gt;</span> <span class="s">&quot;Presidents Day&quot;</span>  
+   | <span class="n">5</span>, <span onmouseout="hideTip(event, 'fs12', 22)" onmouseover="showTip(event, 'fs12', 22)" class="i">d</span>, _, <span onmouseout="hideTip(event, 'fs10', 23)" onmouseover="showTip(event, 'fs10', 23)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 24)" onmouseover="showTip(event, 'fs11', 24)" class="i">Monday</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs12', 25)" onmouseover="showTip(event, 'fs12', 25)" class="i">d</span> <span class="o">&gt;</span><span class="o">=</span> <span class="n">25</span> <span class="k">-&gt;</span> <span class="s">&quot;Memorial Day&quot;</span> <span class="c">// active pattern matching!</span>
+   | <span class="n">7</span>, <span class="n">3</span>, _, <span onmouseout="hideTip(event, 'fs10', 26)" onmouseover="showTip(event, 'fs10', 26)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs13', 27)" onmouseover="showTip(event, 'fs13', 27)" class="i">Friday</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs4', 28)" onmouseover="showTip(event, 'fs4', 28)" class="i">satToFri</span> <span class="k">-&gt;</span> <span class="s">&quot;Independence Day (observed)&quot;</span>  
+   | <span class="n">7</span>, <span class="n">4</span>, _, _ <span class="k">-&gt;</span> <span class="s">&quot;Independence Day&quot;</span>  
+   | <span class="n">7</span>, <span class="n">5</span>, _, <span onmouseout="hideTip(event, 'fs10', 29)" onmouseover="showTip(event, 'fs10', 29)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 30)" onmouseover="showTip(event, 'fs11', 30)" class="i">Monday</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs3', 31)" onmouseover="showTip(event, 'fs3', 31)" class="i">sunToMon</span> <span class="k">-&gt;</span> <span class="s">&quot;Independence Day (observed)&quot;</span>  
+   | <span class="n">9</span>, _, <span class="n">1</span>, <span onmouseout="hideTip(event, 'fs10', 32)" onmouseover="showTip(event, 'fs10', 32)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 33)" onmouseover="showTip(event, 'fs11', 33)" class="i">Monday</span> <span class="k">-&gt;</span> <span class="s">&quot;Labor Day&quot;</span>  
+   | <span class="n">10</span>, _, <span class="n">2</span>, <span onmouseout="hideTip(event, 'fs10', 34)" onmouseover="showTip(event, 'fs10', 34)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 35)" onmouseover="showTip(event, 'fs11', 35)" class="i">Monday</span> <span class="k">-&gt;</span> <span class="s">&quot;Columbus Day&quot;</span>  
+   | <span class="n">11</span>, <span class="n">10</span>, _, <span onmouseout="hideTip(event, 'fs10', 36)" onmouseover="showTip(event, 'fs10', 36)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs13', 37)" onmouseover="showTip(event, 'fs13', 37)" class="i">Friday</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs4', 38)" onmouseover="showTip(event, 'fs4', 38)" class="i">satToFri</span> <span class="k">-&gt;</span> <span class="s">&quot;Veterans Day (observed)&quot;</span>  
+   | <span class="n">11</span>, <span class="n">11</span>, _, _ <span class="k">-&gt;</span> <span class="s">&quot;Veterans Day&quot;</span>  
+   | <span class="n">11</span>, <span class="n">12</span>, _, <span onmouseout="hideTip(event, 'fs10', 39)" onmouseover="showTip(event, 'fs10', 39)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 40)" onmouseover="showTip(event, 'fs11', 40)" class="i">Monday</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs3', 41)" onmouseover="showTip(event, 'fs3', 41)" class="i">sunToMon</span> <span class="k">-&gt;</span> <span class="s">&quot;Veterans Day (observed)&quot;</span>  
+   | <span class="n">11</span>, _, <span class="n">4</span>, <span onmouseout="hideTip(event, 'fs10', 42)" onmouseover="showTip(event, 'fs10', 42)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs14', 43)" onmouseover="showTip(event, 'fs14', 43)" class="i">Thursday</span> <span class="k">-&gt;</span> <span class="s">&quot;Thanksgiving Day&quot;</span>  
+   | <span class="n">12</span>, <span class="n">24</span>, _, <span onmouseout="hideTip(event, 'fs10', 44)" onmouseover="showTip(event, 'fs10', 44)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs13', 45)" onmouseover="showTip(event, 'fs13', 45)" class="i">Friday</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs4', 46)" onmouseover="showTip(event, 'fs4', 46)" class="i">satToFri</span> <span class="k">-&gt;</span> <span class="s">&quot;Christmas Day (observed)&quot;</span>  
+   | <span class="n">12</span>, <span class="n">25</span>, _, _ <span class="k">-&gt;</span> <span class="s">&quot;Christmas Day&quot;</span>  
+   | <span class="n">12</span>, <span class="n">26</span>, _, <span onmouseout="hideTip(event, 'fs10', 47)" onmouseover="showTip(event, 'fs10', 47)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 48)" onmouseover="showTip(event, 'fs11', 48)" class="i">Monday</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs3', 49)" onmouseover="showTip(event, 'fs3', 49)" class="i">sunToMon</span> <span class="k">-&gt;</span> <span class="s">&quot;Christmas Day (observed)&quot;</span>  
+   | <span class="n">12</span>, <span class="n">31</span>, _, <span onmouseout="hideTip(event, 'fs10', 50)" onmouseover="showTip(event, 'fs10', 50)" class="t">DayOfWeek</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs13', 51)" onmouseover="showTip(event, 'fs13', 51)" class="i">Friday</span> <span class="k">when</span> <span onmouseout="hideTip(event, 'fs4', 52)" onmouseover="showTip(event, 'fs4', 52)" class="i">satToFri</span> <span class="k">-&gt;</span> <span class="s">&quot;New Year&#39;s Day (observed)&quot;</span>  
+   | _ <span class="k">-&gt;</span> <span class="k">null</span>
+</code></pre></td>
+</tr>
+</table>
+
+        </div>
+      </div>
+    </div>
+	<div class="tip" id="fs1">namespace System</div>
+<div class="tip" id="fs2">val getHoliday : sunToMon:bool -&gt; satToFri:bool -&gt; date:DateTime -&gt; string<br /><br />Full name: USFederalHolidays.getHoliday</div>
+<div class="tip" id="fs3">val sunToMon : bool</div>
+<div class="tip" id="fs4">val satToFri : bool</div>
+<div class="tip" id="fs5">val date : DateTime</div>
+<div class="tip" id="fs6">Multiple items<br />type DateTime =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;new : ticks:int64 -&gt; DateTime + 10 overloads<br />&#160;&#160;&#160;&#160;member Add : value:TimeSpan -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddDays : value:float -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddHours : value:float -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddMilliseconds : value:float -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddMinutes : value:float -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddMonths : months:int -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddSeconds : value:float -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddTicks : value:int64 -&gt; DateTime<br />&#160;&#160;&#160;&#160;member AddYears : value:int -&gt; DateTime<br />&#160;&#160;&#160;&#160;...<br />&#160;&#160;end<br /><br />Full name: System.DateTime<br /><br />--------------------<br />DateTime()<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(ticks: int64) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(ticks: int64, kind: DateTimeKind) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, calendar: Globalization.Calendar) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, kind: DateTimeKind) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, calendar: Globalization.Calendar) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, millisecond: int) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, millisecond: int, kind: DateTimeKind) : unit<br />&#160;&#160;&#160;<em>(+0 other overloads)</em></div>
+<div class="tip" id="fs7">property DateTime.Month: int</div>
+<div class="tip" id="fs8">property DateTime.Day: int</div>
+<div class="tip" id="fs9">property DateTime.DayOfWeek: DayOfWeek</div>
+<div class="tip" id="fs10">type DayOfWeek =<br />&#160;&#160;| Sunday = 0<br />&#160;&#160;| Monday = 1<br />&#160;&#160;| Tuesday = 2<br />&#160;&#160;| Wednesday = 3<br />&#160;&#160;| Thursday = 4<br />&#160;&#160;| Friday = 5<br />&#160;&#160;| Saturday = 6<br /><br />Full name: System.DayOfWeek</div>
+<div class="tip" id="fs11">field DayOfWeek.Monday = 1</div>
+<div class="tip" id="fs12">val d : int</div>
+<div class="tip" id="fs13">field DayOfWeek.Friday = 5</div>
+<div class="tip" id="fs14">field DayOfWeek.Thursday = 4</div>
+
+  </body>
+  </html>
