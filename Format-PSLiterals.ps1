@@ -85,6 +85,8 @@ Process
         $Value |% {Format-PSLiterals.ps1 $_}
         "${tab})"
     }
+    elseif($Value -is [ScriptBlock])
+    { "{$Value}" }
     elseif($Value -is [PSObject])
     {
         "${itab}New-Object PSObject -Property ([ordered]@{"
