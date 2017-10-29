@@ -1,6 +1,20 @@
 <#
 .Synopsis
     Exports scheduled jobs as a PowerShell script that can be run to restore them.
+
+.Link
+    https://docs.microsoft.com/powershell/module/psscheduledjob/about/about_scheduled_jobs
+
+.Link
+    https://msdn.microsoft.com/library/microsoft.powershell.scheduledjob.scheduledjobdefinition_members.aspx
+
+.Link
+    Get-ScheduledJob
+
+.Example
+    Export-ScheduledJobs.ps1 |Out-File Import-ScheduledJobs.ps1 utf8
+
+    Exports all scheduled jobs as PowerShell Register-ScheduledJob cmdlet strings.
 #>
 
 [CmdletBinding()][OutputType([Microsoft.PowerShell.ScheduledJob.ScheduledJobDefinition])] Param()
