@@ -24,17 +24,14 @@ function Export-ScheduledTaskAsXml
 [Parameter(Position=0,ValueFromPipeline=$true)][Microsoft.Management.Infrastructure.CimInstance]$Task
 )
 Process
-{
-    Write-Verbose "Export-ScheduledTask $($Task.TaskName |Format-PSLiterals.ps1) $($Task.TaskPath |Format-PSLiterals.ps1)"
-@"
+{@"
 @{
     TaskName = $($Task.TaskName |Format-PSLiterals.ps1)
     Xml      = @'
 $((Export-ScheduledTask $Task.TaskName $Task.TaskPath) -replace "(?m)^'@$",'&#39;@')
 '@
 } |% {Register-ScheduledTask @_}
-"@
-}
+"@}
 }
 
 Get-ScheduledTask -TaskPath $TaskPath |Export-ScheduledTaskAsXml
