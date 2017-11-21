@@ -58,7 +58,7 @@ With VS installed, you should be able to unzip
 /// Use the SQL Server Type Provider to define a type-safe query for the top products (by $ amount)
 /// summary order amount statistics by date.
 [<Literal>]
-let ConnStr = "server=(localdb)\ProjectsV13;database=AdventureWorks2014;integrated security=SSPI"
+let ConnStr = @"server=(localdb)\ProjectsV13;database=AdventureWorks2014;integrated security=SSPI"
 type OrderCmd = SqlCommandProvider<"
 select p.Name, p.ProductID, o.OrderDate, sum(od.LineTotal) Total, 
        min(od.LineTotal) MinAmt, max(od.LineTotal) MaxAmt, 
