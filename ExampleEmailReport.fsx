@@ -3,6 +3,8 @@ ExampleEmailReport.fsx
 ======================
 Builds a chart and attaches it to an email, then sends it. 
 
+![chart email](http://rawgit.com/brianary/scripts/master/ExampleEmailReport.png)
+
 Namespaces & References
 -----------------------
 Declare CLR library usage.
