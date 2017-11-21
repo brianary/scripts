@@ -1,0 +1,13 @@
+{
+    "powershell.codeFormatting.preset": "Allman",
+    "mssql.connections": [
+        {
+            "server": "(localdb)\\ProjectsV13",
+            "database": "AdventureWorks2014",
+            "authenticationType": "Integrated",
+            "profileName": "AdventureWorks2014",
+            "password": ""
+        }
+    ],
+    "workbench.colorTheme": "PowerShell ISE"
+}
