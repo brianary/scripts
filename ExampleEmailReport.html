@@ -122,7 +122,7 @@ With VS installed, you should be able to unzip
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">/// Use the SQL Server Type Provider to define a type-safe query for the top products (by $ amount)</span>
 <span class="c">/// summary order amount statistics by date.</span>
 [&lt;<span onmouseout="hideTip(event, 'fs21', 45)" onmouseover="showTip(event, 'fs21', 45)" class="t">Literal</span>&gt;]
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs22', 46)" onmouseover="showTip(event, 'fs22', 46)" class="i">ConnStr</span> <span class="o">=</span> <span class="s">&quot;server=(localdb)\ProjectsV13;database=AdventureWorks2014;integrated security=SSPI&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs22', 46)" onmouseover="showTip(event, 'fs22', 46)" class="i">ConnStr</span> <span class="o">=</span> <span class="s">@&quot;server=(localdb)\ProjectsV13;database=AdventureWorks2014;integrated security=SSPI&quot;</span>
 <span class="k">type</span> <span onmouseout="hideTip(event, 'fs23', 47)" onmouseover="showTip(event, 'fs23', 47)" class="t">OrderCmd</span> <span class="o">=</span> <span class="i">SqlCommandProvider</span><span class="o">&lt;</span><span class="s">&quot;</span>
 <span class="s">select p.Name, p.ProductID, o.OrderDate, sum(od.LineTotal) Total, </span>
 <span class="s">       min(od.LineTotal) MinAmt, max(od.LineTotal) MaxAmt, </span>
