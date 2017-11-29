@@ -41,8 +41,8 @@
     True
 #>
 
-[CmdletBinding()][OutputType([string])][OutputType([bool],ParameterSetName='HasExtension')] Param(
-[Parameter(Mandatory=$true,ValueFromPipeline=$true)][string] $Path,
+[CmdletBinding(DefaultParameterSetName='__AllParameterSets')][OutputType([string])][OutputType([bool],ParameterSetName='HasExtension')] Param(
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $Path,
 [Parameter(ParameterSetName='HasExtension')][switch] $HasExtension,
 [Parameter(ParameterSetName='Extension')][switch] $Extension
 )
