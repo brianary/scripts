@@ -77,6 +77,8 @@ Process
     { "$itab[datetimeoffset]'$($Value.ToString('yyyy-MM-dd\THH:mm:ss.fffffzzzz'))'" }
     elseif($Value -is [datetime])
     { "$itab[datetime]'$(Get-Date -Date $Value -f yyyy-MM-dd\THH:mm:ss)'" }
+    elseif($Value -is [enum])
+    { "$itab([$($Value.GetType().FullName)]::$Value)" }
     elseif($Value -is [string])
     { Format-PSString $Value }
     elseif($Value -is [array])
