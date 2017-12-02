@@ -15,14 +15,14 @@
     ConvertFrom-Json '[{"a":1,"b":2,"c":{"d":"\/Date(1490216371478)\/","e":null}}]' |Format-PSLiterals.ps1
 
     @(
-	    New-Object PSObject -Property ([ordered]@{
-		    a = 1
-		    b = 2
-		    c = New-Object PSObject -Property ([ordered]@{
-				    d = [datetime]'2017-03-22T20:59:31'
-				    e = $null
-			    })
-	    })
+            [PSCustomObject]@{
+                    a = 1
+                    b = 2
+                    c = [PSCustomObject]@{
+                                    d = [datetime]'2017-03-22T20:59:31'
+                                    e = $null
+                            }
+            }
     )
 #>
 
@@ -50,7 +50,7 @@ Begin
             if($string -match '[\0\a\b\f\t\v]')
             {
                 '"'
-                $string -replace '`','``' -replace '"','`"' -replace "`0",'`0' -replace "`a",'`a' -replace "`b",'`b' -replace "`f",'`f' -replace "`t",'`t' -replace "`v",'`v'
+                $string -replace '$','`$' -replace '`','``' -replace '"','`"' -replace "`0",'`0' -replace "`a",'`a' -replace "`b",'`b' -replace "`f",'`f' -replace "`t",'`t' -replace "`v",'`v'
             }
             else
             {
@@ -58,25 +58,25 @@ Begin
                 $string -replace "'","''"
             }
         if($string -match '\n|\r') {"@$q`n$string`n$q@"}
-        else {"$q$string$q"}
+        else {"$itab$q$string$q"}
     }
 }
 Process
 {
     if($Value -eq $null)
-    { '$null' }
+    { "$itab`$null" }
     elseif($Value -is [int])
-    { "$Value" }
+    { "$itab$Value" }
     elseif($Value -is [bool])
-    { "`$$Value" }
+    { "$itab`$$Value" }
     elseif([byte],[decimal],[double],[float],[int16],[long],[sbyte],[uint16],[uint32],[uint64] -contains $Value.GetType())
-    { "[$($Value.GetType().Name)]$Value" }
+    { "$itab[$($Value.GetType().Name)]$Value" }
     elseif([guid],[timespan],[char] -contains $Value.GetType())
-    { "[$($Value.GetType().Name)]'$Value'" }
+    { "$itab[$($Value.GetType().Name)]'$Value'" }
     elseif($Value -is [datetimeoffset])
-    { "[datetimeoffset]'$($Value.ToString('yyyy-MM-dd\THH:mm:ss.fffffzzzz'))'" }
+    { "$itab[datetimeoffset]'$($Value.ToString('yyyy-MM-dd\THH:mm:ss.fffffzzzz'))'" }
     elseif($Value -is [datetime])
-    { "[datetime]'$(Get-Date -Date $Value -f yyyy-MM-dd\THH:mm:ss)'" }
+    { "$itab[datetime]'$(Get-Date -Date $Value -f yyyy-MM-dd\THH:mm:ss)'" }
     elseif($Value -is [string])
     { Format-PSString $Value }
     elseif($Value -is [array])
@@ -87,12 +87,10 @@ Process
     }
     elseif($Value -is [ScriptBlock])
     { "{$Value}" }
-    elseif($Value -is [PSObject])
+    elseif($Value -is [Collections.Specialized.OrderedDictionary])
     {
-        "${itab}New-Object PSObject -Property ([ordered]@{"
-        $Value.PSObject.Properties |
-            ? {$_.Name -match '^\w+$'} |
-            % {"$Indent$IndentBy$($_.Name) = $(Format-PSLiterals.ps1 $_.Value -SkipInitialIndent)"}
+        "${itab}([ordered]@{"
+        $Value.Keys |? {$_ -match '^\w+$'} |% {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
         "${tab}})"
     }
     elseif($Value -is [Hashtable])
@@ -101,14 +99,16 @@ Process
         $Value.Keys |? {$_ -match '^\w+$'} |% {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
         "${tab}}"
     }
-    elseif($Value -is [Collections.Specialized.OrderedDictionary])
-    {
-        "${itab}([ordered]@{"
-        $Value.Keys |? {$_ -match '^\w+$'} |% {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
-        "${tab}})"
-    }
     elseif($Value -is [xml])
     { "[xml]$(Format-PSString $Value.OuterXml)" }
+    elseif($Value -is [PSObject])
+    {
+        "${itab}[PSCustomObject]@{"
+        $Value.PSObject.Properties |
+            ? {$_.Name -match '^\w+$'} |
+            % {"$Indent$IndentBy$($_.Name) = $(Format-PSLiterals.ps1 $_.Value -SkipInitialIndent)"}
+        "${tab}}"
+    }
     else
     {
         "${itab}@{"
