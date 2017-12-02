@@ -6,10 +6,15 @@
     The MatchInfo output from Select-String to augment with named capture groups.
 
 .Inputs
-    Microsoft.PowerShell.Commands.MatchInfo
+    Microsoft.PowerShell.Commands.MatchInfo, output from Select-String that used a pattern
+    with named capture groups.
 
 .Outputs
-    Microsoft.PowerShell.Commands.MatchInfo with additional note properties for each named capture group.
+    Microsoft.PowerShell.Commands.MatchInfo with additional note properties for each named
+    capture group.
+
+.Link
+    Add-Member
 
 .Example
     Select-String '^(?<Name>.*?\b)\s*(?<Email>\S+@\S+)$' addrbook.txt |Add-CapturesToMatches.ps1 |select Name,Phone,Filename
