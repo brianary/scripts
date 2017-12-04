@@ -20,7 +20,7 @@
     <html><body><p>Some text.</p></body></html>
 
 .Example
-    New-Object psobject -Property @{UserName=$env:USERNAME;Computer=$env:COMPUTERNAME} |Format-XmlElements.ps1
+    [pscustomobject]@{UserName=$env:USERNAME;Computer=$env:COMPUTERNAME} |Format-XmlElements.ps1
 
 
     <Computer>COMPUTERNAME</Computer>

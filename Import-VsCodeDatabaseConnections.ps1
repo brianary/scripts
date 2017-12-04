@@ -95,7 +95,7 @@ function Add-VsCodeConnections([object[]]$connections)
     }
     else
     {
-        $settings = New-Object psobject -Property @{'mssql.connections'=$connections}
+        $settings = [pscustomobject]@{'mssql.connections'=$connections}
     }
     ConvertTo-Json $settings -Depth 5 |Out-File ${settings.json} utf8
 }

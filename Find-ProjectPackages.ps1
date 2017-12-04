@@ -126,7 +126,7 @@ Begin
         Write-Verbose "Parsing $file"
         Write-Progress $action "Parsing paket.lock package files: found $($paketFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+90)
         $lockpattern = '\A\s{4}(?<Name>\w\S+)\s\((?:>= )?(?<Version>\d+(?:\.\d+)+)\b'
-        $p = Get-Content $file |% {if($_ -match $lockpattern){New-Object psobject -Property @{Name=$Matches.Name;Version=$Matches.Version}}}
+        $p = Get-Content $file |% {if($_ -match $lockpattern){[pscustomobject]@{Name=$Matches.Name;Version=$Matches.Version}}}
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
         [void]$packages.AddRange([object[]]( $p |% {@{
             name    = $_.Name
