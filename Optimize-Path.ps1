@@ -56,7 +56,7 @@ function Get-PathDetail([Parameter(Position=0,Mandatory=$true)][EnvironmentVaria
         if($Entry -like '%*') {$Entry}
         elseif(!$ev) {$fullpath}
         else {$Entry -ireplace $ev.Value,"%$($ev.Name)%"}
-    return New-Object psobject -Property @{
+    return [pscustomobject]@{
         Name       = $Entry
         Path       = $fullpath
         EnvVarPath = $evpath

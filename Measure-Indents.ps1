@@ -28,7 +28,7 @@
 [CmdletBinding()][OutputType([psobject])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$Path
 )
-Begin { $Count = New-Object psobject -Property @{Tab=0;Space=0;Mix=0;Other=0} }
+Begin { $Count = [pscustomobject]@{Tab=0;Space=0;Mix=0;Other=0} }
 Process
 {
     foreach($line in (Get-Content $Path))

@@ -29,7 +29,7 @@ foreach($share in (Get-WmiObject Win32_Share))
     $perms |
         % {
             $user,$permission =  $_ -split ', (?=READ|CHANGE|FULL)\b'
-            New-Object psobject -Property @{User=$user;Access=$permission}
+            [pscustomobject]@{User=$user;Access=$permission}
         } |
         group Access |
         % {[void]$access.Add($_.Name,[string[]]($_.Group|% User))}
