@@ -240,9 +240,9 @@ function Add-LinguistOverrides
             '','# Linguist overrides https://github.com/github/linguist#overrides' |Add-Content .gitattributes -Encoding UTF8
         }
     }
-    $VendorCode |% {"$_ linguist-vendored"} |Add-Content .gitattributes -Encoding UTF8
-    $DocumentationCode |% {"$_ linguist-documentation"} |Add-Content .gitattributes -Encoding UTF8
-    $GeneratedCode |% {"$_ linguist-generated=true"} |Add-Content .gitattributes -Encoding UTF8
+    if($VendorCode) {$VendorCode |% {"$_ linguist-vendored"} |Add-Content .gitattributes -Encoding UTF8}
+    if($DocumentationCode) {$DocumentationCode |% {"$_ linguist-documentation"} |Add-Content .gitattributes -Encoding UTF8}
+    if($GeneratedCode) {$GeneratedCode |% {"$_ linguist-generated=true"} |Add-Content .gitattributes -Encoding UTF8}
     #TODO: linguist-language entries?
     git add -N .gitattributes |Out-Null
     Write-Verbose 'Added Linguist overrides section to .gitattributes.'
