@@ -179,7 +179,7 @@ function Add-File
     Write-Verbose "Added $Filename"
 }
 
-function Add-Readme
+function Add-Readme([string]$name = (git rev-parse --show-toplevel |Split-Path -Leaf))
 {
     Add-File README.md @"
 $name
@@ -256,21 +256,25 @@ function Add-LinguistOverrides
 
 function Add-IssueTemplate
 {
+    if(!$IssueTemplate){Write-Verbose 'No issue template.'; return}
     Add-File .github/ISSUE_TEMPLATE.md $IssueTemplate
 }
 
 function Add-PullRequestTemplate
 {
+    if(!$PullRequestTemplate){Write-Verbose 'No pull request template.'; return}
     Add-File .github/PULL_REQUEST_TEMPLATE.md $PullRequestTemplate
 }
 
 function Add-ContributingGuidelines
 {
+    if(!$ContributingFile){Write-Verbose 'No contributing file.'; return}
     Copy-GitHubFile .github/CONTRIBUTING.md $ContributingFile
 }
 
 function Add-License
 {
+    if(!$LicenseFile){Write-Verbose 'No license.'; return}
     Copy-GitHubFile LICENSE.md $LicenseFile
 }
 
