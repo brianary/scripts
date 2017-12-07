@@ -54,10 +54,6 @@
     If no EditorConfig file exists, a simple default line endings value for text files
     in the repo. By default this is set to the system default, which is recommended.
 
-.Parameter DefaultMaxLineLength
-    If no EditorConfig file exists, a simple default max line length value for text
-    files in the repo.
-
 .Parameter DefaultIndentSize
     If no EditorConfig file exists, a simple default number of characters to indent
     lines for spaces (soft tabs) and tab display (hard tabs) for text files in the
@@ -121,7 +117,6 @@
 [string]$LicenseFile,
 [string]$DefaultCharset = ([Text.Encoding]::Default.WebName), #TODO: this is probably a terrible default 
 [string]$DefaultLineEndings = $(switch([Environment]::NewLine){"`n"{'lf'}"`r"{'cr'}default{'crlf'}}),
-[int]$DefaultMaxLineLength = 80,
 [int]$DefaultIndentSize = 4,
 [switch]$DefaultUsesTabs,
 [switch]$DefaultKeepTrailingSpace,
