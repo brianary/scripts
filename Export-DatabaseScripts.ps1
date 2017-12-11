@@ -24,6 +24,11 @@
 .Parameter ScriptingOptions
     Provides a list of boolean SMO ScriptingOptions properties to set to true.
 
+.Parameter SqlVersion
+    The SQL version to target when scripting.
+    By default, uses the version from the source server.
+    Versions greater than the source server's version may fail.
+
 .Component
     Microsoft.SqlServer.Smo.Server
 
@@ -52,16 +57,21 @@
 [Parameter(Position=2)][ValidateSet('Unicode','UTF7','UTF8','UTF32','ASCII','BigEndianUnicode','Default','OEM')][string]$Encoding = 'UTF8',
 [Parameter(Position=3,ValueFromRemainingArguments=$true)][string[]] $ScriptingOptions = (@'
 EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers ScriptBatchTerminator
-'@.Trim() -split '\W+')
+'@.Trim() -split '\W+'),
+[Microsoft.SqlServer.Management.Smo.SqlServerVersion]$SqlVersion
 )
 
 # connect to database
 $srv = New-Object Microsoft.SqlServer.Management.Smo.Server($Server)
+if(!$SqlVersion)
+{
+    [Microsoft.SqlServer.Management.Smo.SqlServerVersion]$SqlVersion = "Version$($srv.VersionMajor)$($srv.VersionMinor/10)"
+}
 $db = $srv.Databases[$Database]
 if(!$db) {return}
 Write-Verbose "Connected to $srv.$db $($srv.Product) $($srv.Edition) $($srv.VersionString) $($srv.ProductLevel) (Windows $($srv.OSVersion))"
 if((Test-Path $Database -PathType Container)) { Remove-Item -Force -Recurse $Database } # to reflect removed items
-mkdir $Database -EA:SilentlyContinue |Out-Null ; pushd $Database
+mkdir $Database -EA:SilentlyContinue |Out-Null ; Push-Location $Database
 
 # set up scripting options
 $opts = New-Object Microsoft.SqlServer.Management.Smo.ScriptingOptions
@@ -70,6 +80,7 @@ $ScriptingOptions |
         if(($opts |Get-Member $_) -and $opts.$_ -is [bool]) {$opts.$_ = $true} 
         else {Write-Warning "Not a boolean scripting option: '$_'"}
     }
+$opts.TargetServerVersion = $SqlVersion
 $opts.ToFileOnly = $true
 $opts.Encoding = 
     if($Encoding -eq 'OEM') {$OutputEncoding.GetEncoder().Encoding}
@@ -124,7 +135,7 @@ $folder.Keys |
     ? {$db.$_ -isnot [Microsoft.SqlServer.Management.Smo.DatabaseRoleCollection] -or ($db.$_ |? IsFixedRole -eq $false)} |
     ? {!($db.$_ |Get-Member IsSystemObject) -or ($db.$_ |? IsSystemObject -eq $false)} |
     % {
-        mkdir $folder.$_ -EA:SilentlyContinue |Out-Null ; pushd $folder.$_
+        mkdir $folder.$_ -EA:SilentlyContinue |Out-Null ; Push-Location $folder.$_
         $db.$_ |
             ? {!($_|Get-Member IsSystemObject) -or !($_.IsSystemObject)} |
             ? {$_ -isnot [Microsoft.SqlServer.Management.Smo.DatabaseRole] -or !($_.IsFixedRole)} |
@@ -135,7 +146,7 @@ $folder.Keys |
                 Write-Verbose "Export $($_.GetType().Name) $_ to $($opts.FileName)"
                 $_.Script($opts)
             }
-        popd # object collection folder
+        Pop-Location # object collection folder
     }
 
-popd # Database
+Pop-Location # Database
