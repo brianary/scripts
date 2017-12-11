@@ -44,8 +44,20 @@
 .Parameter Encoding
     The file encoding to use for the SQL scripts.
 
+.Parameter Append
+    Indicates the file should be appended to, rather than replaced.
+    Useful when piping a list of objects to be scripted to a file.
+
 .Parameter ScriptingOptions
     Provides a list of boolean SMO ScriptingOptions properties to set to true.
+
+.Parameter SqlVersion
+    The SQL version to target when scripting.
+    By default, uses the version from the source server.
+    Versions greater than the source server's version may fail.
+
+.Inputs
+    System.Data.DataRow, INFORMATION_SCHEMA.TABLES or INFORMATION_SCHEMA.ROUTINES records.
 
 .Component
     Microsoft.SqlServer.Smo.Server
@@ -80,53 +92,61 @@
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][string] $Server,
-[Parameter(Position=1,Mandatory=$true)][string] $Database,
-[Parameter(ParameterSetName='Urn',Position=2,Mandatory=$true)][string] $Urn,
-[Parameter(ParameterSetName='Table',Position=2,Mandatory=$true)][string] $Table,
-[Parameter(ParameterSetName='View',Position=2,Mandatory=$true)][string] $View,
-[Parameter(ParameterSetName='StoredProcedure',Position=2,Mandatory=$true)][Alias('proc','sproc')][string] $StoredProcedure,
-[Parameter(ParameterSetName='UserDefinedFunction',Position=2,Mandatory=$true)][Alias('UDF','func')][string] $UserDefinedFunction,
-[Parameter(ParameterSetName='Urn')]
-[Parameter(ParameterSetName='Table')]
-[Parameter(ParameterSetName='View')]
-[Parameter(ParameterSetName='StoredProcedure')]
-[Parameter(ParameterSetName='UserDefinedFunction')]
-[string] $Schema = 'dbo',
+[Parameter(Position=0,Mandatory=$true)][Alias('ServerInstance')][string] $Server,
+[Parameter(Position=1,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('TABLE_CATALOG','ROUTINE_CATALOG')][string] $Database,
+[Parameter(ParameterSetName='Urn',Mandatory=$true)][string] $Urn,
+[Parameter(ParameterSetName='Table',Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('TABLE_NAME')][string] $Table,
+[Parameter(ParameterSetName='View',Mandatory=$true)][string] $View,
+[Parameter(ParameterSetName='StoredProcedure',Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('ROUTINE_NAME','Procedure','SProcedure')][string] $StoredProcedure,
+[Parameter(ParameterSetName='UserDefinedFunction',Mandatory=$true)][Alias('UDF','Function')][string] $UserDefinedFunction,
+[Parameter(ValueFromPipelineByPropertyName=$true)][Alias('TABLE_SCHEMA','ROUTINE_SCHEMA')][string] $Schema = 'dbo',
 [Parameter(Mandatory=$true)][string] $FilePath,
 [ValidateSet('Unicode','UTF7','UTF8','UTF32','ASCII','BigEndianUnicode','Default','OEM')][string]$Encoding = 'UTF8',
-[Parameter(ValueFromRemainingArguments=$true)][string[]] $ScriptingOptions = (@'
-EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers ScriptBatchTerminator
-'@.Trim() -split '\W+')
+[switch]$Append,
+[Parameter(ValueFromRemainingArguments=$true)][string[]] $ScriptingOptions = 
+    'EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers ScriptBatchTerminator' -split '\s+',
+[Microsoft.SqlServer.Management.Smo.SqlServerVersion]$SqlVersion
 )
-
-# connect to database
-$srv = New-Object Microsoft.SqlServer.Management.Smo.Server($Server)
-$db = $srv.Databases[$Database]
-if(!$db) {return}
-Write-Verbose "Connected to $srv.$db $($srv.Product) $($srv.Edition) $($srv.VersionString) $($srv.ProductLevel) (Windows $($srv.OSVersion))"
-
-# set up scripting options
-$opts = New-Object Microsoft.SqlServer.Management.Smo.ScriptingOptions
-$ScriptingOptions |
-    % {
-        if(($opts |Get-Member $_) -and $opts.$_ -is [bool]) {$opts.$_ = $true} 
-        else {Write-Warning "Not a boolean scripting option: '$_'"}
+Begin
+{
+    # connect to database
+    $srv = New-Object Microsoft.SqlServer.Management.Smo.Server($Server)
+    if(!$SqlVersion)
+    {
+        [Microsoft.SqlServer.Management.Smo.SqlServerVersion]$SqlVersion = "Version$($srv.VersionMajor)$($srv.VersionMinor/10)"
     }
-$opts.ToFileOnly = $true
-$opts.FileName = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($FilePath)
-$opts.Encoding = 
-    if($Encoding -eq 'OEM') {$OutputEncoding.GetEncoder().Encoding}
-    else {[Text.Encoding]::$Encoding}
-Write-Verbose "Scripting options flags: $(($opts |Get-Member -MemberType Property |% Name |? {$opts.$_ -is [bool] -and $opts.$_}) -join ', ')"
-Write-Verbose "Scripting options values: $(($opts |Get-Member -MemberType Property |% Name |? {$opts.$_ -isnot [bool] -and $opts.$_} |% {"$_=$($opts.$_)"}) -join ', ')"
+}
+Process
+{
+    $db = $srv.Databases[$Database]
+    if(!$db) {return}
+    Write-Verbose "Connected to $srv.$db $($srv.Product) $($srv.Edition) $($srv.VersionString) $($srv.ProductLevel) (Windows $($srv.OSVersion))"
 
-$object = 
-    if($Urn) { $db.Resolve($Urn) }
-    elseif($Table) { $db.Tables[$Table,$Schema] }
-    elseif($View) { $db.Views[$View,$Schema] }
-    elseif($StoredProcedure) { $db.StoredProcedures[$StoredProcedure,$Schema] }
-    elseif($UserDefinedFunction) { $db.UserDefinedFunctions[$UserDefinedFunction,$Schema] }
-if(!$object){throw "Could not find object: $(ConvertTo-Json $PSBoundParameters -Compress)"}
+    # set up scripting options
+    $opts = New-Object Microsoft.SqlServer.Management.Smo.ScriptingOptions
+    Write-Verbose "Targeting SQL version: $SqlVersion"
+    $opts.TargetServerVersion = $SqlVersion
+    $ScriptingOptions |
+        % {
+            if(($opts |Get-Member $_) -and $opts.$_ -is [bool]) {$opts.$_ = $true} 
+            else {Write-Warning "Not a boolean scripting option: '$_'"}
+        }
+    if($Append){$opts.AppendToFile=$true}
+    $opts.ToFileOnly = $true
+    $opts.FileName = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($FilePath)
+    $opts.Encoding = 
+        if($Encoding -eq 'OEM') {$OutputEncoding.GetEncoder().Encoding}
+        else {[Text.Encoding]::$Encoding}
+    Write-Verbose "Scripting options flags: $(($opts |Get-Member -MemberType Property |% Name |? {$opts.$_ -is [bool] -and $opts.$_}) -join ', ')"
+    Write-Verbose "Scripting options values: $(($opts |Get-Member -MemberType Property |% Name |? {$opts.$_ -isnot [bool] -and $opts.$_} |% {"$_=$($opts.$_)"}) -join ', ')"
 
-$object.Script($opts)
+    $object = 
+        if($Urn) { $db.Resolve($Urn) }
+        elseif($Table) { $db.Tables[$Table,$Schema] }
+        elseif($View) { $db.Views[$View,$Schema] }
+        elseif($StoredProcedure) { $db.StoredProcedures[$StoredProcedure,$Schema] }
+        elseif($UserDefinedFunction) { $db.UserDefinedFunctions[$UserDefinedFunction,$Schema] }
+    if(!$object){throw "Could not find object: $(ConvertTo-Json $PSBoundParameters -Compress)"}
+
+    $object.Script($opts)
+}
