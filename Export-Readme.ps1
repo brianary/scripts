@@ -7,6 +7,7 @@
 #>
 
 #Requires -Version 3
+#Requires -Module SqlServer
 [CmdletBinding()] Param(
 [string]$DependenciesImage = 'dependencies.png'
 )
