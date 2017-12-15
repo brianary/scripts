@@ -3,6 +3,9 @@
     Exports IIS websites, app pools, and web apps as an idempotent PowerShell script to recreate them.
 
 .Link
+    https://docs.microsoft.com/en-us/iis/configuration/system.webserver/
+
+.Link
     https://docs.microsoft.com/en-us/iis/manage/powershell/powershell-snap-in-creating-web-sites-web-applications-virtual-directories-and-application-pools
 
 .Link
