@@ -2,6 +2,10 @@
 .Synopsis
     Exports IIS websites, app pools, and web apps as an idempotent PowerShell script to recreate them.
 
+.Outputs
+    System.String, PowerShell strings to create and configure IIS websites, app pools, and web apps
+    not found, as configured on the local machine.
+
 .Link
     https://docs.microsoft.com/en-us/iis/configuration/system.webserver/
 
@@ -24,7 +28,7 @@
     https://stackoverflow.com/a/14879480/54323
 
 .Example
-    Export-IisAppPools.ps1
+    Export-WebConfiguration.ps1
 #>
 
 #Requires -Version 3
@@ -36,8 +40,10 @@ function Export-WebAppPools
     '','# Application Pools'
     foreach($appPool in Get-Item iis:\AppPools\*)
     {
-        "if(!(Test-Path '$($appPool.PSPath)'))"
-        "{New-WebAppPool '$($appPool.Name)'}"
+        @"
+if(!(Test-Path '$($appPool.PSPath)'))
+{New-WebAppPool '$($appPool.Name)'}
+"@
         if($appPool.managedRuntimeVersion -notin '','v4.0')
         {
             "Set-ItemProperty '$($appPool.PSPath)' managedRuntimeVersion $($appPool.managedRuntimeVersion)"
