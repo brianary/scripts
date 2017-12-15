@@ -12,16 +12,19 @@
     Remove-Xml.ps1
 
 .Example
-    Get-IisAppHostCruft.ps1
+    Remove-WebAppHostCruft.ps1 -WhatIf
+
+    Shows what settings would be removed.
 #>
 
 #Requires -Version 3
 #Requires -Module WebAdministration
-[CmdletBinding()] Param()
+[CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='High')] Param()
 foreach($website in Get-Website)
 {
     $name,$path = $website.Name,$website.PhysicalPath
     Select-Xml "/configuration/location[starts-with(@path,'$name/')]" $env:SystemRoot\System32\inetsrv\config\applicationHost.config |
         ? {$app = $_.Node.Attributes['path'].Value -replace "\A$name/",''; !(Test-Path $path\$app -PathType Container) -and !(Get-WebApplication -Site $name $app)} |
+        ? {$PSCmdlet.ShouldProcess($_.Node.Attributes['path'].Value,'remove')} |
         Remove-Xml.ps1 -Verbose
 }
