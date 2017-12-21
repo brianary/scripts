@@ -20,6 +20,9 @@
 .Link
     https://weblog.west-wind.com/posts/2010/Feb/18/NET-WebRequestPreAuthenticate-not-quite-what-it-sounds-like
 
+.Link
+    https://powershell.org/forums/topic/pscredential-parameter-help/
+
 .Example
     Invoke-RestMethod https://example.com/api/items -Method Get -Headers @{Authorization=ConvertTo-BasicAuthentication.ps1 (Get-Credential -Message 'Log in')}
 
@@ -27,7 +30,8 @@
 #>
 
 [CmdletBinding()][OutputType([string])] Param(
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSCredential]$Credential
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
+[PSCredential][Management.Automation.Credential()]$Credential
 )
 
 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($Credential.UserName+':'+$Credential.GetNetworkCredential().Password))
