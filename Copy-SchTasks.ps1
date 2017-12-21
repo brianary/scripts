@@ -27,7 +27,8 @@ function Get-CachedCredentialFor([Parameter(Mandatory=$true,Position=0)][string]
     { $CredentialCache.Add($UserName,(Get-Credential -Message "Enter credentials for $UserName tasks" -UserName $UserName)) }
     $CredentialCache[$UserName]
 }
-function ConvertFrom-Credential([Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][PSCredential]$Credential)
+function ConvertFrom-Credential
+([Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][PSCredential][Management.Automation.Credential()]$Credential)
 { $Credential.GetNetworkCredential().Password }
 schtasks /query /s $ComputerName /v /fo csv |
     ConvertFrom-Csv |
