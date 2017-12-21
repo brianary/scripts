@@ -33,6 +33,51 @@
 .Link
     https://blogs.iis.net/jeonghwan/examples-of-iis-powershell-cmdlets
 
+.Link
+    https://docs.microsoft.com/en-us/iis/manage/powershell/powershell-snap-in-configuring-ssl-with-the-iis-powershell-snap-in
+
+.Link
+    https://github.com/PowerShell/xWebAdministration
+
+.Link
+    Get-WebGlobalModule
+
+.Link
+    New-WebAppPool
+
+.Link
+    Get-Website
+
+.Link
+    New-Website
+
+.Link
+    Get-WebBinding
+
+.Link
+    New-WebBinding
+
+.Link
+    Get-WebApplication
+
+.Link
+    New-WebApplication
+
+.Link
+    Set-WebConfigurationProperty
+
+.Link
+    Write-Progress
+
+.Link
+    Get-Item
+
+.Link
+    Get-ItemProperty
+
+.Link
+    Set-ItemProperty
+
 .Example
     Export-WebConfiguration.ps1
 #>
@@ -134,22 +179,30 @@ function Import-Websites
     $i,$max = 0,($websites.Count/100.)
     foreach($website in $websites)
     {
-        Write-Progress 'Exporting websites' $website.name -PercentComplete ($i/$max)
+        $name = $website.name
+        $primaryBinding = Get-WebBinding $name |select -First 1
+        $ipAddress,$port,$hostHeader = 
+            $primaryBinding.bindingInformation -split ':',3
+        Write-Progress 'Exporting websites' $name -PercentComplete ($i/$max)
         @"
-    Write-Progress 'Importing websites' '$($website.name)' -PercentComplete $([int]($i++/$max))
-    if(!(Test-Path 'IIS:\Sites\$($website.name)'))
+    Write-Progress 'Importing websites' '$name' -PercentComplete $([int]($i++/$max))
+    if(!(Test-Path 'IIS:\Sites\$name'))
     {@{
-        Name            = '$($website.name)'
+        Name            = '$name'
         PhysicalPath    = '$($website.physicalPath)'
         ApplicationPool = '$($website.applicationPool)'
+        Ssl             = $primaryBinding.protocol -eq 'https'
+        IPAddress       = $ipAddress
+        Port            = $port
+        HostHeader      = $hostHeader
     }|% {New-Website @_}}
     else
-    {Write-Verbose 'Website $($website.name) found'}
+    {Write-Verbose 'Website $name found'}
 "@
-        foreach($binding in $website.bindings.Collection)
+        foreach($binding in Get-WebBinding $name |select -Skip 1)
         {
-            $name,$protocol,$ipAddress,$port,$hostHeader = 
-                $website.name,$binding.protocol,$binding.bindingInformation -split ':',3
+            $protocol,$ipAddress,$port,$hostHeader = 
+                $binding.protocol,$binding.bindingInformation -split ':',3
             @"
     if(!(Get-WebBinding -Name '$name' -Protocol $protocol -IPAddress $ipAddress -Port $port -HostHeader '$hostHeader'))
     {@{
@@ -158,7 +211,6 @@ function Import-Websites
         IPAddress  = '$ipAddress'
         Port       = '$port'
         HostHeader = '$hostHeader'
-        $(if($protocol -ne 'https'){'#'})SslFlags = 0 #TODO: cert, certificate type, & binding
     } |% {New-WebBinding @_}}
     else
     {Write-Verbose 'Website $($website.name) $protocol binding ${ipAddress}:${port}:${hostHeader} found'}
@@ -168,6 +220,21 @@ function Import-Websites
     Write-Progress 'Exporting websites' -Completed
     @"
     Write-Progress 'Importing websites' -Completed
+}
+"@
+}
+
+function Export-ServerCertificates
+{
+    @"
+function Import-ServerCertificates
+{
+    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
+    if(!(`$PSCmdlet.ShouldProcess('server certificates','import'))){return}
+"@
+    #TODO: gcm -mo pki
+    @"
+    Write-Progress 'Importing server certificates' -Completed
 }
 "@
 }
@@ -210,13 +277,11 @@ function Import-WebApplications
             if($value)
             {@"
     Set-WebConfigurationProperty '$path' -Filter $authentication -Name enabled -Value $($value.Value)
-"@
-                if($auth -eq 'windows')
-                {
-                    #TODO: Get-WebConfiguration IIS:\Sites\appytest\Store -Filter system.webServer/security/authentication/windowsAuthentication/providers
-                    # .Collection : Negotiate, NTLM
-                }
-            }
+"@}
+            if($auth -eq 'windows' -and $value.Value) # unable to distinguish inherited vs. copied windows auth providers
+            {@"
+    Write-Warning 'Windows authentication is enabled for $path. Any site-specific provider customizations need to be configured manually.'
+"@}
         }
         #TODO: Set-WebConfigurationProperty stuff
         # asp,aspNetCore
