@@ -110,12 +110,12 @@
 [hashtable]$Owners = @{},
 [string[]]$VendorCode = @('packages/'),
 [string[]]$DocumentationCode,
-[string[]]$GeneratedCode = @('Reference.cs'),
+[string[]]$GeneratedCode = @('Service\ References/','Web\ References/'),
 [string]$IssueTemplate,
 [string]$PullRequestTemplate,
 [string]$ContributingFile,
 [string]$LicenseFile,
-[string]$DefaultCharset = ([Text.Encoding]::Default.WebName), #TODO: this is probably a terrible default 
+[string]$DefaultCharset = $OutputEncoding.WebName,
 [string]$DefaultLineEndings = $(switch([Environment]::NewLine){"`n"{'lf'}"`r"{'cr'}default{'crlf'}}),
 [int]$DefaultIndentSize = 4,
 [switch]$DefaultUsesTabs,
@@ -290,6 +290,12 @@ end_of_line              = $DefaultLineEndings
 charset                  = $DefaultCharset
 trim_trailing_whitespace = $(if($DefaultKeepTrailingSpace){'false'}else{'true'})
 insert_final_newline     = $(if($DefaultNoFinalNewLine){'false'}else{'true'})
+
+# CSS
+# https://www.w3.org/International/questions/qa-utf8-bom.en#bytheway
+[*.css]
+charset = utf-8
+
 "@ -Warn
 }
 

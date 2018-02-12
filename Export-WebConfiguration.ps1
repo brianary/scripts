@@ -83,6 +83,7 @@
 #>
 
 #Requires -Version 3
+#Requires -RunAsAdministrator
 #Requires -Module WebAdministration
 [CmdletBinding()] Param()
 
@@ -95,6 +96,7 @@ function Export-Header
 #>
 
 #Requires -Version 3
+#Requires -RunAsAdministrator
 #Requires -Module WebAdministration
 [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact='High')] Param()
 "@
@@ -191,10 +193,10 @@ function Import-Websites
         Name            = '$name'
         PhysicalPath    = '$($website.physicalPath)'
         ApplicationPool = '$($website.applicationPool)'
-        Ssl             = $primaryBinding.protocol -eq 'https'
-        IPAddress       = $ipAddress
+        Ssl             = `$$($primaryBinding.protocol -eq 'https')
+        IPAddress       = '$ipAddress'
         Port            = $port
-        HostHeader      = $hostHeader
+        HostHeader      = '$hostHeader'
     }|% {New-Website @_}}
     else
     {Write-Verbose 'Website $name found'}
