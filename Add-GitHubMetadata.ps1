@@ -108,7 +108,7 @@
 [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='Medium')]Param(
 [string[]]$DefaultOwner,
 [hashtable]$Owners = @{},
-[string[]]$VendorCode = @('packages/'),
+[string[]]$VendorCode = @('packages/','lib/'),
 [string[]]$DocumentationCode,
 [string[]]$GeneratedCode = @('Service\ References/','Web\ References/'),
 [string]$IssueTemplate,
