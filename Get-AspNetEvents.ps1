@@ -16,6 +16,9 @@
 .Outputs
     System.Management.Automation.PSObject containing the fields stored in the event.
 
+.Link
+    Get-WinEvent
+
 .Example
     Get-AspNetEvents.ps1 WebServer
 
