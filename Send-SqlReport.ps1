@@ -136,7 +136,7 @@ try
     if($Timeout) {$query += @{QueryTimeout=$Timeout}}
     [Data.DataRow[]]$data = Invoke-Sqlcmd @query -ErrorAction Stop
     $data |Format-Table |Out-String |Write-Verbose
-    if($data.Count -eq 0) # no rows
+    if(!$data -or $data.Count -eq 0) # no rows
     {
         Write-Verbose "No rows returned."
         if($SeqUrl) { Send-SeqEvent.ps1 'No rows returned for {Subject}' @{Subject=$Subject} -Level Information }
