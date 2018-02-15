@@ -23,7 +23,7 @@
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([psobject])] Param(
-[Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][string]$Path
+[Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
 )
 Process
 {

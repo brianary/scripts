@@ -108,9 +108,9 @@
 [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='Medium')]Param(
 [string[]]$DefaultOwner,
 [hashtable]$Owners = @{},
-[string[]]$VendorCode = @('packages/','lib/'),
+[string[]]$VendorCode = @('**/packages/**','**/lib/**'),
 [string[]]$DocumentationCode,
-[string[]]$GeneratedCode = @('Service\ References/','Web\ References/'),
+[string[]]$GeneratedCode = @('"**/Service References/**"','"**/Web References/**"'),
 [string]$IssueTemplate,
 [string]$PullRequestTemplate,
 [string]$ContributingFile,
