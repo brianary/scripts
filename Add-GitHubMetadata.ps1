@@ -176,6 +176,7 @@ function Add-File
 
 function Add-Readme([string]$name = (git rev-parse --show-toplevel |Split-Path -Leaf))
 {
+    if(Test-Path README.md -PathType Leaf){return}
     Add-File README.md @"
 $name
 $(New-Object string '=',($name.Length))
