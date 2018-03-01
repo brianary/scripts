@@ -1,39 +1,24 @@
-# EditorConfig is awesome: http://EditorConfig.org
+﻿# EditorConfig is awesome: http://EditorConfig.org
 
 # last word for the project
 root = true
 
-# Windows-centric world
+# defaults
 [*]
-charset = utf-8-bom
-end_of_line = crlf
-insert_final_newline = true
+indent_style             = space
+indent_size              = 4
+tab_width                = 4
+end_of_line              = crlf
+charset                  = us-ascii
+trim_trailing_whitespace = true
+insert_final_newline     = true
 
-# PowerShell
-[*.ps1]
-indent_style = space
-indent_size = 4
-max_line_length = 128
-
-# F#
-[*.{fs,fsx}]
-indent_style = space
-
-# XSLT
-[*.{xsl,xslt}]
-indent_style = space
-indent_size = 4
-
-# CommonMark
-[*.md]
-indent_style = space
+# git
+[{.gitattributes,CODEOWNERS}]
+charset = utf-8
 
 # CSS
+# https://www.w3.org/International/questions/qa-utf8-bom.en#bytheway
 [*.css]
-indent_style = space
-indent_size = 4
+charset = utf-8
 
-# VScript/VBA
-[*.{vbs,vba}]
-indent_style = tab
-tab_width = 4
