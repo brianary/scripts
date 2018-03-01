@@ -158,17 +158,45 @@ function Add-GitHubDirectory
     if(!(Test-Path .github -PathType Container)) {mkdir .github |Out-Null}
 }
 
+function Test-Utf8Signature
+{
+    Param(
+    [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
+    )
+    Process
+    {
+        Write-Verbose "Checking for utf-8 BOM/SIG in $Path"
+        $start = Get-Content $Path -Encoding Byte -TotalCount 3
+        return ($start[0] -eq 0xEF) -and ($start[1] -eq 0xBB) -and ($start[2] -eq 0xBF)
+    }
+}
+
+function Remove-Utf8Signature
+{
+    Param(
+    [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
+    )
+    Process
+    {
+        Write-Verbose "Removing utf-8 BOM/SIG from $Path"
+        $content = Get-Content $Path -Encoding UTF8 -Raw
+        # this will have to do until PS6
+        [IO.File]::WriteAllText($Path,$content,(New-Object System.Text.UTF8Encoding $False))
+    }
+}
+
 function Add-File
 {
     [CmdletBinding()] Param(
     [Parameter(Position=0,Mandatory=$true)][string]$Filename,
     [Parameter(Position=1,Mandatory=$true)][string]$Contents,
+    [Parameter(Position=2)][ValidateSet('utf8','ASCII')][string]$Encoding = 'utf8',
     [switch]$Warn,
     [switch]$Force
     )
     if(!$Contents){Write-Verbose "No contents to add to $Filename."; return }
     if(!$Force -and (Test-SkipFile $Filename)){ Write-Verbose "File $Filename exists!"; return }
-    $Contents |Out-File $Filename -Encoding utf8
+    $Contents |Out-File $Filename -Encoding $Encoding
     git add -N $Filename |Out-Null
     if($Warn){ Write-Warning "The file $Filename has been added, be sure to review it and customize as needed." }
     Write-Verbose "Added $Filename"
@@ -192,7 +220,11 @@ TODO: Add sections for additional details, special instructions, prerequisites, 
 
 function Add-CodeOwners
 {
-    if(Test-SkipFile .github/CODEOWNERS){return}
+    if(Test-SkipFile .github/CODEOWNERS)
+    {
+        if(Test-Utf8Signature .github/CODEOWNERS){Remove-Utf8Signature .github/CODEOWNERS}
+        return
+    }
     if(!$DefaultOwner)
     {
         Write-Verbose 'Determining default code owner(s).'
@@ -214,7 +246,7 @@ function Add-CodeOwners
 * $DefaultOwner
 $(if($Owners){'','# targeted owners' -join "`r`n"})
 $($Owners.Keys |% {"$_ $($Owners[$_] -join ' ')"})
-"@ -Warn -Force
+"@ ASCII -Warn -Force
 }
 
 function Add-LinguistOverrides
@@ -223,10 +255,11 @@ function Add-LinguistOverrides
     if(!(Test-Path .gitattributes -PathType Leaf))
     {
         Write-Verbose 'Creating .gitattributes file.'
-        '# Linguist overrides https://github.com/github/linguist#overrides' |Out-File .gitattributes utf8
+        '# Linguist overrides https://github.com/github/linguist#overrides' |Out-File .gitattributes ascii
     }
     else
     {
+        if(Test-Utf8Signature .gitattributes){Remove-Utf8Signature .gitattributes}
         if(Select-String '^# Linguist overrides' .gitattributes)
         {
             Select-String '^# Linguist overrides|\blinguist-\w+' .gitattributes |Out-String |Write-Verbose
