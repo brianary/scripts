@@ -15,38 +15,34 @@ gcm |
     % {[pscustomobject]@{
         CommandName  = $_.Name
         EncodingType = ([type]$_.Parameters.Encoding.ParameterType).Name # for brevity
-        Default      = ((((help $_.Name -Parameter Encoding |select -Skip 2 |% {$_.Trim()}) -join "`n"
-        ) -replace '\n(?=\w)','') -split '\n+' |sls '(?m)^(?!--|Required).*default.*') -join ' '
+        Default      = (help $_.Name -par encoding |sls 'the default') -replace 
+            'The default(?: value)? is | is the default|Specifies.*\. |[ .]','' -join ''
     }} |
     sort CommandName |
-    ft -auto -Wrap
+    ft -auto
 ```
 
 ```text
 CommandName      EncodingType                     Default
 -----------      ------------                     -------
 Add-Content      FileSystemCmdletProviderEncoding
-Export-Clixml    String                           The default value is Unicode.
-Export-Csv       String                           The default value is ASCII.
-Export-PSSession String                           The default value is UTF-8.
-Format-Hex       String                           The default value is Unicode.
+Export-Clixml    String                           Unicode
+Export-Csv       String                           ASCII
+Export-PSSession String                           UTF-8
+Format-Hex       String                           Unicode
 Get-Content      FileSystemCmdletProviderEncoding
-Import-Csv       String                           The default is ASCII.
-Out-File         String                           Unicode is the default. Default uses the encoding of the system's
-                                                  current ANSI code page.
-Select-String    String                           Specifies the character encoding that Select-String should assume
-                                                  when searching the file. The default is UTF8. Default is the encoding
-                                                  of the system's current ANSI code page. OEM is the current original
-                                                  equipment manufacturer code page identifier for the operating system.
-Send-MailMessage Encoding                         ASCII is the default.
-Set-Content      FileSystemCmdletProviderEncoding The default value is ASCII.
+Import-Csv       String                           ASCII
+Out-File         String                           Unicode
+Select-String    String                           UTF8
+Send-MailMessage Encoding                         ASCII
+Set-Content      FileSystemCmdletProviderEncoding ASCII
 ```
 
-We used **Get-Help** to parse the text description of the parameter defaults with that terrible knot of code.
+We used **Get-Help** and parsed the text description of the parameter defaults.
 
 Those defaults are definitely not… harmonius:
 ASCII, utf-8, "ANSI"/"OEM" (depending on your locale), and "Unicode" (which is really utf-16).
-**Select-String** lists two conflicting defaults in the help!
+"Default" as described in **Out-File** and **Select-String** aren't even the default.
 
 Not even the types of these parameters are in agreement!
 Some string names, some **System.Text.Encoding** objects (which can be converted from a name), but also an enumeration.
