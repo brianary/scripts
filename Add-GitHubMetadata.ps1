@@ -326,6 +326,10 @@ charset                  = $DefaultCharset
 trim_trailing_whitespace = $(if($DefaultKeepTrailingSpace){'false'}else{'true'})
 insert_final_newline     = $(if($DefaultNoFinalNewLine){'false'}else{'true'})
 
+# git
+[{.gitattributes,CODEOWNERS}]
+charset = utf-8
+
 # CSS
 # https://www.w3.org/International/questions/qa-utf8-bom.en#bytheway
 [*.css]
