@@ -42,7 +42,10 @@ We used **Get-Help** and parsed the text description of the parameter defaults.
 
 Those defaults are definitely not… harmonius:
 ASCII, utf-8, "ANSI"/"OEM" (depending on your locale), and "Unicode" (which is really utf-16).
-"Default" as described in **Out-File** and **Select-String** aren't even the default.
+`Default` as described in **Out-File** and **Select-String** **Encoding** parameter help aren't
+even the default.
+
+> Default uses the encoding of the system's current ANSI code page.
 
 Not even the types of these parameters are in agreement!
 Some string names, some **System.Text.Encoding** objects (which can be converted from a name), but also an enumeration.
