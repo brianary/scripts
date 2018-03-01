@@ -239,6 +239,7 @@ function Add-CodeOwners
         Write-Verbose "Default code owners determined to be $DefaultOwner."
     }
     Add-File .github/CODEOWNERS @"
+
 # Code Owners file https://github.com/blog/2392-introducing-code-owners
 # .gitattributes selection syntax mapping to GitHub @usernames or email addresses.
 
@@ -255,7 +256,7 @@ function Add-LinguistOverrides
     if(!(Test-Path .gitattributes -PathType Leaf))
     {
         Write-Verbose 'Creating .gitattributes file.'
-        '# Linguist overrides https://github.com/github/linguist#overrides' |Out-File .gitattributes ascii
+        '','# Linguist overrides https://github.com/github/linguist#overrides' |Out-File .gitattributes ascii
     }
     else
     {
