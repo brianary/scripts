@@ -46,16 +46,21 @@
 [Parameter(Position=2,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path,
 [int] $Offset = 0
 )
+Begin
+{
+    Write-Verbose "Testing for magic number $(($Bytes |% {$_.ToString("X")}) -join ' ') at $Offset"
+    $GetBytes =
+        if(!$Offset)
+        {{param($f); Get-Content $f -Encoding Byte -TotalCount $Bytes.Count}.GetNewClosure()}
+        elseif($Offset -gt 0)
+        {{param($f); Get-Content $f -Encoding Byte -TotalCount ($Offset + $Bytes.Count) |Select-Object -Skip $Offset}.GetNewClosure()}
+        else
+        {{param($f); Get-Content $f -Encoding Byte -Tail (-$Offset)}.GetNewClosure()}
+}
 Process
 {
-    [byte[]]$data =
-        if($Offset -ge 0)
-        {Get-Content $Path -Encoding Byte -TotalCount ($Offset + $Bytes.Count) |Select-Object -Skip $Offset}
-        else
-        {Get-Content $Path -Encoding Byte -Tail (-$Offset)}
-    for($i = 0; $i -lt $Bytes.Count; $i++)
-    {
-        if($data[$i] -ne $Bytes[$i]){return $false}
-    }
+    Write-Verbose "Testing for magic number in $Path"
+    [byte[]]$data = &$GetBytes $Path
+    for($i = 0; $i -lt $Bytes.Count; $i++){if($data[$i] -ne $Bytes[$i]){return $false}}
     return $true
 }
