@@ -98,6 +98,12 @@
     Measure-StandardDeviation.ps1
 
 .Link
+    Test-FileTypeMagicNumber.ps1
+
+.Link
+    Remove-Utf8Signature.ps1
+
+.Link
     Use-Command.ps1
 
 .Example
@@ -158,33 +164,6 @@ function Add-GitHubDirectory
     if(!(Test-Path .github -PathType Container)) {mkdir .github |Out-Null}
 }
 
-function Test-Utf8Signature
-{
-    Param(
-    [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
-    )
-    Process
-    {
-        Write-Verbose "Checking for utf-8 BOM/SIG in $Path"
-        $start = Get-Content $Path -Encoding Byte -TotalCount 3
-        return ($start[0] -eq 0xEF) -and ($start[1] -eq 0xBB) -and ($start[2] -eq 0xBF)
-    }
-}
-
-function Remove-Utf8Signature
-{
-    Param(
-    [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
-    )
-    Process
-    {
-        Write-Verbose "Removing utf-8 BOM/SIG from $Path"
-        $content = Get-Content $Path -Encoding UTF8 -Raw
-        # this will have to do until PS6
-        [IO.File]::WriteAllText($Path,$content,(New-Object System.Text.UTF8Encoding $False))
-    }
-}
-
 function Add-File
 {
     [CmdletBinding()] Param(
@@ -222,7 +201,7 @@ function Add-CodeOwners
 {
     if(Test-SkipFile .github/CODEOWNERS)
     {
-        if(Test-Utf8Signature .github/CODEOWNERS){Remove-Utf8Signature .github/CODEOWNERS}
+        if(Test-FileTypeMagicNumber.ps1 utf8 .github/CODEOWNERS){Remove-Utf8Signature.ps1 .github/CODEOWNERS}
         return
     }
     if(!$DefaultOwner)
@@ -260,7 +239,7 @@ function Add-LinguistOverrides
     }
     else
     {
-        if(Test-Utf8Signature .gitattributes){Remove-Utf8Signature .gitattributes}
+        if(Test-FileTypeMagicNumber.ps1 utf8 .gitattributes){Remove-Utf8Signature.ps1 .gitattributes}
         if(Select-String '^# Linguist overrides' .gitattributes)
         {
             Select-String '^# Linguist overrides|\blinguist-\w+' .gitattributes |Out-String |Write-Verbose
