@@ -20,6 +20,8 @@
     C:\ProgramData\Microsoft\crypto\rsa\machinekeys\abd662b361941f26a1173357adb3c12d_b4d34fe9-d85e-45e3-83dd-a52fa93c8551
 #>
 
+#Requires -Version 3
+#TODO: Require version 4 to get access to Get-ChildItem -Directory switch param
 [CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
@@ -40,10 +42,12 @@ Process
             if(!(Test-Path $path -PathType Leaf))
             { # flail wildly
                 Write-Warning "Searching more desperately for the certificate file."
-                $path = Get-ChildItem $env:USERPROFILE\.. -Directory |
+                $path = Get-ChildItem $env:USERPROFILE\.. |
+                    ? {$_ -is [IO.DirectoryInfo]} |
                     % {"$($_.FullName)\AppData\Roaming\Microsoft\Crypto\RSA"} |
                     ? {Test-Path $_ -PathType Container} |
-                    Get-ChildItem -Directory |
+                    Get-ChildItem |
+                    ? {$_ -is [IO.DirectoryInfo]} |
                     % {Join-Path $_.FullName $file} |
                     ? {Test-Path $_ -PathType Leaf}
             }
