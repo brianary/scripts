@@ -1,7 +1,7 @@
 ﻿<#
 .Synopsis
     Grants certificate file read access to an app pool or user.
-    
+
 .Parameter AppPool
     The name of the application pool to grant access.
 
@@ -35,7 +35,10 @@
 
 .Link
     Show-CertificatePermissions.ps1
-    
+
+.Link
+    https://msdn.microsoft.com/library/sacxhfka.aspx
+
 .Link
     http://stackoverflow.com/a/21713869/54323
 
@@ -51,9 +54,9 @@
     Find-Certificate.ps1 -FindValue ExampleCert -FindType FindBySubjectName -StoreName TrustedPeople -StoreLocation LocalMachine |Grant-CertificateAccess.ps1 ExampleAppPool
 
     Grants the ExampleAppPool app pool access to read the found ExampleCert.
-    
+
     For more information about options for -FindType:
-    https://msdn.microsoft.com/en-us/library/system.security.cryptography.x509certificates.x509findtype%28v=vs.110%29.aspx
+    https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509findtype.aspx
 #>
 
 #Requires -Version 3
@@ -75,8 +78,8 @@ Process
 {
     if($AppPool) {$UserName="IIS AppPool\${AppPool}"}
     elseif($UserName -notlike '*\*') {$UserName = "$env:USERDOMAIN\$UserName"}
-    Write-Verbose "UserName: $UserName"
     $path = Get-CertificatePath.ps1 $Certificate
+    Write-Verbose "Granting $UserName read access to $path"
     $acl = Get-Acl $path
     $acl.SetAccessRule((New-Object Security.AccessControl.FileSystemAccessRule $UserName,'Read','Allow'))
     Set-Acl $path $acl
