@@ -60,8 +60,10 @@
 #>
 
 #Requires -Version 3
+#TODO: require admin formally once everything is > PowerShell 3
+#-Requires -RunAsAdministrator
 #Requires -Module WebAdministration
-[CmdletBinding()] Param(
+[CmdletBinding(ConfirmImpact='Medium',SupportsShouldProcess=$true)] Param(
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='AppPool')]
 [string]$AppPool,
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='UserName')]
@@ -73,12 +75,30 @@ Begin
 {
     try{Get-Command Get-Acl -CommandType Cmdlet |Out-Null}catch{throw 'The Get-Acl command is missing.'}
     if($AppPool){Import-Module WebAdministration; if(!(Test-Path IIS:\AppPools\$AppPool)){throw "Could not find IIS:\AppPools\$AppPool"}}
+
+    # ensure admins have access to grant access to machinekeys
+    $machinekeys = "$env:ProgramData\Microsoft\crypto\rsa\machinekeys"
+    $acl = Get-Acl $machinekeys
+    if(!($acl.Access |? {$_.IdentityReference -eq 'BUILTIN\Administrators' -and $_.FileSystemRights -eq 'FullControl'}) -and
+        $PSCmdlet.ShouldProcess($machinekeys,'grant Administrators full control'))
+    {
+        if($acl.GetOwner([Security.Principal.NTAccount]) -ne 'BUILTIN\Administrators' -and
+            $PSCmdlet.ShouldProcess($machinekeys,'set Administrators as owner'))
+        {
+            Write-Verbose "Preparing to make Administrators owner of $machinekeys"
+            $acl.SetOwner([Security.Principal.NTAccount]'BUILTIN\Administrators')
+        }
+        $acl.SetAccessRule((New-Object Security.AccessControl.FileSystemAccessRule 'BUILTIN\Administrators','FullControl','Allow'))
+        Write-Verbose "Granting Administrators full access to $machinekeys"
+        Set-Acl $machinekeys $acl
+    }
 }
 Process
 {
     if($AppPool) {$UserName="IIS AppPool\${AppPool}"}
     elseif($UserName -notlike '*\*') {$UserName = "$env:USERDOMAIN\$UserName"}
     $path = Get-CertificatePath.ps1 $Certificate
+    if(!$PSCmdlet.ShouldProcess($path,"grant read access for $UserName")){return}
     Write-Verbose "Granting $UserName read access to $path"
     $acl = Get-Acl $path
     $acl.SetAccessRule((New-Object Security.AccessControl.FileSystemAccessRule $UserName,'Read','Allow'))
