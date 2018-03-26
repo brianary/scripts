@@ -18,12 +18,15 @@
     Update the database when present, otherwise simply outputs the changes as script.
 
 .Link
+    https://www.databasejournal.com/features/mssql/article.php/1570801/Beware-of-the-System-Generated-Constraint-Name.htm
+
+.Link
     Invoke-Sqlcmd
 
 .Example
-    Repair-DatabaseConstraintNames.ps1 sqlpizza\supreme WebForms -Update
+    Repair-DatabaseConstraintNames.ps1 SqlServerName DatabaseName -Update
 
-    WARNING: Renamed 10 defaults.
+    WARNING: Renamed 10 defaults
 #>
 
 #Requires -Version 3
@@ -76,7 +79,7 @@ function Repair-DefaultNames
 select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
        +''', ''DF_'+object_name(parent_object_id)+'_'+col_name(parent_object_id,parent_column_id)
        +''', ''OBJECT'';' [command]
-  from sys.default_constraints 
+  from sys.default_constraints
  where name like 'DF._._%' escape '.'
    and name <> 'DF_'+object_name(parent_object_id)+'_'+col_name(parent_object_id,parent_column_id)
    and objectproperty(parent_object_id,'IsUserTable') = 1 -- excludes 'sys' schema, &c
@@ -94,7 +97,7 @@ function Repair-PrimaryKeyNames
         Query  = @"
 select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
        +''', '''+'PK_'+object_name(parent_object_id)+''', ''OBJECT'';' command
-  from sys.key_constraints 
+  from sys.key_constraints
  where name like 'PK._._%' escape '.'
    and name <> 'PK_'+object_name(parent_object_id)
    and objectproperty(parent_object_id,'IsUserTable') = 1 -- excludes 'sys' schema, &c
@@ -112,7 +115,7 @@ function Repair-ForeignKeyNames
         Query  =  @"
 select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
        +''', '''+'FK_'+object_name(parent_object_id)+'_'+object_name(referenced_object_id)+''', ''OBJECT'';' command
-  from sys.foreign_keys 
+  from sys.foreign_keys
  where name like 'FK._._%' escape '.'
    and name <> 'FK_'+object_name(parent_object_id)
    and objectproperty(parent_object_id,'IsUserTable') = 1 -- excludes 'sys' schema, &c
