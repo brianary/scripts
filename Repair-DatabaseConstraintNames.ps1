@@ -76,7 +76,8 @@ function Repair-DefaultNames
     @{
         Action = 'Renam{0:e;ing;ed} {1} defaults'
         Query  = @"
-select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
+select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(name)
+       +''') is not null exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
        +''', ''DF_'+object_name(parent_object_id)+'_'+col_name(parent_object_id,parent_column_id)
        +''', ''OBJECT'';' [command]
   from sys.default_constraints
@@ -95,7 +96,8 @@ function Repair-PrimaryKeyNames
     @{
         Action = 'Renam{0:e;ing;ed} {1} primary keys'
         Query  = @"
-select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
+select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(name)
+       +''') is not null exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
        +''', '''+'PK_'+object_name(parent_object_id)+''', ''OBJECT'';' command
   from sys.key_constraints
  where name like 'PK._._%' escape '.'
@@ -113,7 +115,8 @@ function Repair-ForeignKeyNames
     @{
         Action = 'Renam{0:e;ing;ed} {1} foreign keys'
         Query  =  @"
-select 'exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
+select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(name)
+       +''') is not null exec sp_rename '''+quotename(schema_name(schema_id))+'.'+quotename(name)
        +''', '''+'FK_'+object_name(parent_object_id)+'_'+object_name(referenced_object_id)+''', ''OBJECT'';' command
   from sys.foreign_keys
  where name like 'FK._._%' escape '.'
