@@ -76,27 +76,29 @@ function Repair-DefaultNames
     @{
         Action = 'Check{0:;ing;ed} {1} constraints'
         Query  = @"
-select 'alter table ' + quotename(schemas.name) + '.' + quotename(objects.name)
-        + ' with check check constraint ' + quotename(foreign_keys.name) + '; -- FK' command
-   from sys.foreign_keys
-   join sys.objects
-     on foreign_keys.parent_object_id = objects.object_id
-   join sys.schemas
-     on objects.schema_id = schemas.schema_id
-  where foreign_keys.is_not_trusted = 1
-    and foreign_keys.is_not_for_replication = 0
-    and foreign_keys.is_disabled = 0
+select 'if exists (select * from sys.foreign_keys where object_id = object_id('''
+       + quotename(schema_name(schema_id))
+       + '.' + quotename(object_name(object_id))
+       + ''') and is_not_trusted = 1) alter table '
+       + quotename(object_schema_name(parent_object_id))
+       + '.' + quotename(object_name(parent_object_id))
+       + ' with check check constraint ' + quotename(name) + '; -- FK' command
+  from sys.foreign_keys
+ where is_not_trusted = 1
+   and is_not_for_replication = 0
+   and is_disabled = 0
  union all
- select 'alter table ' + quotename(schemas.name) + '.' + quotename(objects.name)
-        + ' with check check constraint ' + quotename(check_constraints.name) + ';'
-   from sys.check_constraints
-   join sys.objects
-     on check_constraints.parent_object_id = objects.object_id
-   join sys.schemas
-     on objects.schema_id = schemas.schema_id
-  where check_constraints.is_not_trusted = 1
-    and check_constraints.is_not_for_replication = 0
-    and check_constraints.is_disabled = 0;
+select 'if exists (select * from sys.foreign_keys where object_id = object_id('''
+       + quotename(schema_name(schema_id))
+       + '.' + quotename(object_name(object_id))
+       + ''') and is_not_trusted = 1) alter table '
+       + quotename(object_schema_name(parent_object_id))
+       + '.' + quotename(object_name(parent_object_id))
+       + ' with check check constraint ' + quotename(name) + ';' command
+  from sys.check_constraints
+ where is_not_trusted = 1
+   and is_not_for_replication = 0
+   and is_disabled = 0;
 "@
     } |% {Resolve-SqlcmdResults @_}
 }
