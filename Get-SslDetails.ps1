@@ -48,12 +48,15 @@ Process
         {
             $ssl = New-Object Net.Security.SslStream (New-Object Net.Sockets.NetworkStream $socket,$true),$true
             $ssl.AuthenticateAsClient($ComputerName,$null,$protocol,$false)
-            [Security.Cryptography.X509Certificates.X509Certificate2]$cert = [Security.Cryptography.X509Certificates.X509Certificate2]$ssl.RemoteCertificate
-            $result['KeyLength'] = $cert.PublicKey.Key.KeySize
-            $result['SignatureAlgorithm'] = $cert.SignatureAlgorithm.FriendlyName
-            $result['CertificateIssuer'] = $cert.GetNameInfo('SimpleName', $true)
-            $result['CertificateExpires'] = [datetime]::Parse($cert.GetExpirationDateString())
-            $result['Certificate'] = $cert
+            if(!$result['Certificate'])
+            {
+                [Security.Cryptography.X509Certificates.X509Certificate2]$cert = $ssl.RemoteCertificate
+                $result['KeyLength'] = $cert.PublicKey.Key.KeySize
+                $result['SignatureAlgorithm'] = $cert.SignatureAlgorithm.FriendlyName
+                $result['CertificateIssuer'] = $cert.GetNameInfo('SimpleName', $true)
+                $result['CertificateExpires'] = [datetime]$cert.GetExpirationDateString()
+                $result['Certificate'] = $cert
+            }
             $result[$protocol] = $true
         }
         catch
