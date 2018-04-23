@@ -8,13 +8,31 @@
 .Parameter Port
     The remote port to connect to.
 
+.Inputs
+    System.String of hostname(s) to get SSL support and certificate details for.
+
+.Outputs
+    System.Management.Automation.PSCustomObject with certifcated details and boolean
+    properties indicating support for SSL protocols.
+
+.Link
+    https://msdn.microsoft.com/library/system.security.authentication.sslprotocols.aspx
+
+.Link
+    https://msdn.microsoft.com/library/system.net.security.sslstream.authenticateasclient.aspx
+
+.Link
+    Get-EnumValues.ps1
+
 .Example
-    Test-SslProtocols -ComputerName "www.google.com"
+    Get-SslDetails.ps1 -ComputerName www.google.com
 
     ComputerName       : www.google.com
     Port               : 443
     KeyLength          : 2048
     SignatureAlgorithm : rsa-sha1
+    CertificateIssuer  : Google Inc
+    CertificateExpires : 06/20/2018 06:22:00
     Ssl2               : False
     Ssl3               : True
     Tls                : True
@@ -23,7 +41,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromPipeline=$true)]
 [Alias('CN','Hostname')][string]$ComputerName,
 [Parameter(ValueFromPipelineByPropertyName=$true)][int]$Port = 443
