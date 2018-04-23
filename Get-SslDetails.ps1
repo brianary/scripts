@@ -35,10 +35,10 @@
     CertificateIssuer  : Google Inc
     CertificateExpires : 06/20/2018 06:22:00
     Ssl2               : False
-    Ssl3               : True
-    Tls                : True
-    Tls11              : True
-    Tls12              : True
+    Ssl3               : False
+    Tls                : Aes128
+    Tls11              : Aes128
+    Tls12              : Aes128
 #>
 
 #Requires -Version 3
