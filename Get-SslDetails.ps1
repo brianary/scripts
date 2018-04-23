@@ -12,8 +12,9 @@
     System.String of hostname(s) to get SSL support and certificate details for.
 
 .Outputs
-    System.Management.Automation.PSCustomObject with certifcated details and boolean
-    properties indicating support for SSL protocols.
+    System.Management.Automation.PSCustomObject with certifcated details and
+    properties indicating support for SSL protocols with the cypher algorithm used
+    if supported or false if not supported.
 
 .Link
     https://msdn.microsoft.com/library/system.security.authentication.sslprotocols.aspx
@@ -75,7 +76,7 @@ Process
                 $result['CertificateExpires'] = [datetime]$cert.GetExpirationDateString()
                 $result['Certificate'] = $cert
             }
-            $result[$protocol] = $true
+            $result[$protocol] = $ssl.CipherAlgorithm
         }
         catch
         {
@@ -83,7 +84,8 @@ Process
         }
         finally
         {
-            $ssl.Close()
+            if($ssl -is [IDisposable]) {$ssl.Dispose()}
+            if($socket -is [IDisposable]) {$socket.Dispose()}
         }
     }
     [pscustomobject]$result
