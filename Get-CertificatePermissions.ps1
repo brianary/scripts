@@ -12,6 +12,9 @@
     System.Security.AccessControl.FileSecurity describing the security on the cert's private key file.
 
 .Link
+    Get-CertificatePath.ps1
+
+.Link
     Find-Certificate.ps1
 
 .Link
