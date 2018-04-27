@@ -7,6 +7,9 @@
     not found, as configured on the local machine.
 
 .Link
+    https://chocolatey.org/
+
+.Link
     https://docs.microsoft.com/en-us/iis/configuration/system.webserver/
 
 .Link
@@ -99,6 +102,18 @@ function Export-Header
 #Requires -RunAsAdministrator
 #Requires -Module WebAdministration
 [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact='High')] Param()
+
+`$todofile = [io.path]::ChangeExtension(`$PSCommandPath,'md')
+@"
+Manual TODO List
+================
+
+`"@ |Out-File `$todofile utf8
+function Write-Todo([string]`$message)
+{
+    Write-Warning "TODO: `$message (see `$todofile)"
+    "1. `$message" |Add-Content `$todofile
+}
 "@
 }
 
@@ -110,18 +125,28 @@ function Ping-GlobalModules
 {
     [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact='High')] Param()
     if(!(`$PSCmdlet.ShouldProcess('global modules','check'))){return}
+    `$modulepkg =
+    @{
+        ApplicationInitializationModule = 'iis-application-initialization'
+        AppWarmupModule                 = 'iis-application-initialization'
+        RewriteModule                   = 'urlrewrite'
+    }
+    if(!(Get-Command cinst -CommandType Application)) {`$modulepkg.Clear()}
 "@
     [object[]]$globalModules = Get-WebGlobalModule
     $i,$max = 0,($globalModules.Count/100.)
     foreach($globalModule in $globalModules)
     {
-        Write-Progress 'Exporting global module checks' $globalModule.Name -PercentComplete ($i/$max)
+        $name = $globalModule.Name
+        Write-Progress 'Exporting global module checks' $name -PercentComplete ($i/$max)
         @"
-    Write-Progress 'Checking global modules' '$($globalModule.Name)' -PercentComplete $([int]($i++/$max))
-    if(!(Get-WebGlobalModule '$($globalModule.Name)'))
-    {Write-Warning 'Global module $($globalModule.Name) not found ($($globalModule.Image))'}
+    Write-Progress 'Checking global modules' '$name' -PercentComplete $([int]($i++/$max))
+    if(!(Get-WebGlobalModule '$name'))
+    {Write-Todo 'Install missing global module $name if needed ($($globalModule.Image))'}
+    elseif(`$modulepkg.ContainsKey('$name') -and `$PSCmdlet.ShouldProcess(`$modulepkg['$name'],'install'))
+    {try{cinst (`$modulepkg['$name']) -y}catch{Write-Error "Unable to install $name. Is Chocolatey installed?"}}
     else
-    {Write-Verbose 'Global module $($globalModule.Name) found'}
+    {Write-Verbose 'Global module $name found'}
 "@
     }
     Write-Progress 'Exporting global module checks' -Completed
@@ -183,7 +208,7 @@ function Import-Websites
     {
         $name = $website.name
         $primaryBinding = Get-WebBinding $name |select -First 1
-        $ipAddress,$port,$hostHeader = 
+        $ipAddress,$port,$hostHeader =
             $primaryBinding.bindingInformation -split ':',3
         Write-Progress 'Exporting websites' $name -PercentComplete ($i/$max)
         @"
@@ -203,7 +228,7 @@ function Import-Websites
 "@
         foreach($binding in Get-WebBinding $name |select -Skip 1)
         {
-            $protocol,$ipAddress,$port,$hostHeader = 
+            $protocol,$ipAddress,$port,$hostHeader =
                 $binding.protocol,$binding.bindingInformation -split ':',3
             @"
     if(!(Get-WebBinding -Name '$name' -Protocol $protocol -IPAddress $ipAddress -Port $port -HostHeader '$hostHeader'))
@@ -241,61 +266,94 @@ function Import-ServerCertificates
 "@
 }
 
+function Get-LocationConfigPaths([string]$xpath)
+{
+    Select-Xml "/configuration/location[system.webServer/$xpath]/@path" (Get-WebConfigFile) |% {$_.Node.Value}
+}
+
 function Export-WebApplications
 {
-    @"
-function Import-WebApplications
-{
-    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
-    if(!(`$PSCmdlet.ShouldProcess('web applications','import'))){return}
-"@
     [object[]]$webapps = Get-WebApplication
-    $i,$max = 0,($webapps.Count/100.)
+    $i,$max,$functions = 0,($webapps.Count/100.),@()
     foreach($webapp in $webapps)
     {
-        $path = "IIS:\Sites\$($webapp.GetParentElement()['name'])\$($webapp.path.Trim('/'))"
+        $site = $webapp.GetParentElement()['name']
+        $apppath = $webapp.path.Trim('/')
+        $path = "IIS:\Sites\$site\$apppath"
+        $funcname = "Import-WebApplication_$($site -replace '\W+','')_$($apppath -replace '\W+','')"
+        $functions += $funcname
+        @"
+function $funcname
+{
+    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
+    if(!(`$PSCmdlet.ShouldProcess('$site web application: $apppath','import'))){return}
+"@
+        $local:PSDefaultParameterValues = @{
+            'Get-WebConfiguration:PSPath'           = 'MACHINE/WEBROOT/APPHOST'
+            'Get-WebConfiguration:Location'         = "$site/$apppath"
+            'Get-WebConfigurationProperty:PSPath'   = 'MACHINE/WEBROOT/APPHOST'
+            'Get-WebConfigurationProperty:Location' = "$site/$apppath"
+        }
+        $cfgcontext = "-PSPath MACHINE/WEBROOT/APPHOST -Location '$site/$apppath'"
         if(!($webapp.PhysicalPath)){throw "Physical paths on web applications aren't accessible. Try restarting PowerShell."}
         Write-Progress 'Exporting web applications' $path -Current $webapp.applicationPool -Percent ($i/$max)
         @"
     Write-Progress 'Importing web applications' '$path' -Current '$($webapp.applicationPool)' -Percent $([int]($i++/$max))
-    if(!(Test-Path '$path'))
+    if(!(Get-WebApplication '$apppath' -Site '$site'))
     {@{
-        Site            = '$($webapp.GetParentElement()['name'])'
-        Name            = '$($webapp.path.Trim('/'))'
+        Site            = '$site'
+        Name            = '$apppath'
         PhysicalPath    = '$($webapp.PhysicalPath)'
         ApplicationPool = '$($webapp.applicationPool)'
     } |% {New-WebApplication @_}}
     else
     {Write-Verbose 'Web application $path found'}
 "@
-        $value = Get-WebConfigurationProperty $path -Filter system.webServer/security/access -Name SslFlags
-        if($value){@"
-    Set-WebConfigurationProperty '$path' -Filter system.webServer/security/access -Name SslFlags -Value '$value'
+        Select-Xml "/configuration/location[@path='$site/$apppath']/system.webServer" (Get-WebConfigFile) |
+            % {$_.Node.SelectNodes('*')} -pv cfg |
+            % {
+                if($_.LocalName -ne 'security') {"The $($_.LocalName) may be customized for $path"}
+                else
+                {
+                    if($cfg.access){[psobject]@{
+                        Filter = 'system.webServer/security/access'
+                        Name   = 'SslFlags'
+                        Value  = $_.access.sslFlags
+                    }}
+                    $cfg.SelectNodes('authentication/*') |
+                        % {
+                            if($_.userName){"Set $path username to $($_.userName)"}
+                            if($_.InnerXml){"Configure $path $($_.LocalName) for $($_.InnerXml -replace '(?m)^\s+|[\r\n]+','')"}
+                            [pscustomobject]@{
+                                Filter = "system.webServer/security/authentication/$($_.LocalName)"
+                                Name   = 'enabled'
+                                Value  = $_.enabled
+                            }
+                        }
+                }
+            } |
+            % {
+                if($_ -is [string])
+                {@"
+    Write-Todo '$_'
 "@}
-        foreach($auth in 'digest','basic','anonymous','windows')
-        {
-            $authentication = "system.webServer/security/authentication/${auth}Authentication"
-            $value = Get-WebConfigurationProperty $path -Filter $authentication -Name enabled
-            if($value)
-            {@"
-    Set-WebConfigurationProperty '$path' -Filter $authentication -Name enabled -Value $($value.Value)
-"@}
-            if($auth -eq 'windows' -and $value.Value) # unable to distinguish inherited vs. copied windows auth providers
-            {@"
-    Write-Warning 'Windows authentication is enabled for $path. Any site-specific provider customizations need to be configured manually.'
-"@}
-        }
-        #TODO: Set-WebConfigurationProperty stuff
-        # asp,aspNetCore
-        # staticContent?
-        # defaultDocument?
-        # modules,handlers?
+                else
+                {@"
+    try{Set-WebConfigurationProperty $cfgcontext -Filter '$($_.Filter)' -Name '$($_.Name)' -Value '$($_.Value)'}
+    catch{Write-Todo "Set $path $($_.Filter) $($_.Name) to '$($_.Value)'"}
+"@}}
+        @"
+}
+"@
     }
-    Write-Progress 'Exporting web applications' -Completed
     @"
+function Import-WebApplications
+{
+    $($functions -join "`r`n    ")
     Write-Progress 'Importing web applications' -Completed
 }
 "@
+    Write-Progress 'Exporting web applications' -Completed
 }
 
 function Export-Footer
