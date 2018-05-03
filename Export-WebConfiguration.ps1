@@ -476,7 +476,10 @@ function Import-Websites
             IPAddress       = '$ipAddress'
             Port            = $port
             HostHeader      = '$hostHeader'
-        }|% {try{New-Website @_}catch{Write-Error "Unable to create website ${name}: `$_"; Write-Todo 'Create website $name'}}
+        } |% {
+            try{New-Website @_}
+            catch{Write-Error "Unable to create website ${name}: `$_"; Write-Todo 'Create website $name'}
+        }
     }
     else
     {Write-Verbose 'Website $name found'}
@@ -495,20 +498,22 @@ function Import-Websites
 "@}
             @"
     if(!(Get-WebBinding -Name '$name' -Protocol $protocol -IPAddress $ipAddress -Port $port -HostHeader '$hostHeader'))
-    {@{
-        Name       = '$name'
-        Protocol   = '$protocol'
-        IPAddress  = '$ipAddress'
-        Port       = '$port'
-        HostHeader = '$hostHeader'
-    } |% {
-        try{New-WebBinding @_}
-        catch
-        {
-            Write-Error "Unable to create $protocol web binding for ${name}: `$_"
-            Write-Todo 'Create $protocol web binding for $name'}
-        }
-     } $certbinding }
+    {
+        @{
+            Name       = '$name'
+            Protocol   = '$protocol'
+            IPAddress  = '$ipAddress'
+            Port       = '$port'
+            HostHeader = '$hostHeader'
+        } |% {
+            try{New-WebBinding @_}
+            catch
+            {
+                Write-Error "Unable to create $protocol web binding for ${name}: `$_"
+                Write-Todo 'Create $protocol web binding for $name'
+            }
+        } $certbinding
+    }
     else
     {Write-Verbose 'Website $($website.name) $protocol binding ${ipAddress}:${port}:${hostHeader} found'}
 "@
