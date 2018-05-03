@@ -15,32 +15,39 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([string[]])] Param()
+[CmdletBinding()][OutputType([string[]])] Param(
+[string]$Path = "Import-${env:ComputerName}WebConfiguration.ps1"
+)
 
 function ConvertTo-StringLiteral([Parameter(ValueFromPipeline=$true)][string]$value)
 {Process{"'$($value -replace '''','''''')'"}}
 
-foreach($share in (Get-WmiObject Win32_Share))
+function Export-SmbShares
 {
-    if($share.Name -match '(?i)\A(?:[a-z]|admin|ipc)\$$'){continue} # skip the builtins
-    $perms = (net share $share.Name |Out-String) -replace 
-        '(?ms)\A.*^Permission|(\r\n){2,}|^\b.*\r\n','' -replace '\A\s*|\s*\z','' -split '\r\n\s*'
-    $access = @{}
-    $perms |
-        % {
-            $user,$permission =  $_ -split ', (?=READ|CHANGE|FULL)\b'
-            [pscustomobject]@{User=$user;Access=$permission}
-        } |
-        group Access |
-        % {[void]$access.Add($_.Name,[string[]]($_.Group|% User))}
-    $cmd = @(
-        'New-SmbShare',
-        '-Name',(ConvertTo-StringLiteral $share.Name),
-        '-Path',(ConvertTo-StringLiteral $share.Path)
-    )
-    if($share.Description){$cmd+=@('-Description',(ConvertTo-StringLiteral $share.Description))}
-    if($access.FULL){$cmd+=@('-FullAccess',(($access.FULL|ConvertTo-StringLiteral) -join ','))}
-    if($access.CHANGE){$cmd+=@('-ChangeAccess',(($access.CHANGE|ConvertTo-StringLiteral) -join ','))}
-    if($access.READ){$cmd+=@('-ReadAccess',(($access.READ|ConvertTo-StringLiteral) -join ','))}
-    "$cmd"
+    foreach($share in (Get-WmiObject Win32_Share))
+    {
+        if($share.Name -match '(?i)\A(?:[a-z]|admin|ipc)\$$'){continue} # skip the builtins
+        $perms = (net share $share.Name |Out-String) -replace
+            '(?ms)\A.*^Permission|(\r\n){2,}|^\b.*\r\n','' -replace '\A\s*|\s*\z','' -split '\r\n\s*'
+        $access = @{}
+        $perms |
+            % {
+                $user,$permission =  $_ -split ', (?=READ|CHANGE|FULL)\b'
+                [pscustomobject]@{User=$user;Access=$permission}
+            } |
+            group Access |
+            % {[void]$access.Add($_.Name,[string[]]($_.Group|% User))}
+        $cmd = @(
+            'New-SmbShare',
+            '-Name',(ConvertTo-StringLiteral $share.Name),
+            '-Path',(ConvertTo-StringLiteral $share.Path)
+        )
+        if($share.Description){$cmd+=@('-Description',(ConvertTo-StringLiteral $share.Description))}
+        if($access.FULL){$cmd+=@('-FullAccess',(($access.FULL|ConvertTo-StringLiteral) -join ','))}
+        if($access.CHANGE){$cmd+=@('-ChangeAccess',(($access.CHANGE|ConvertTo-StringLiteral) -join ','))}
+        if($access.READ){$cmd+=@('-ReadAccess',(($access.READ|ConvertTo-StringLiteral) -join ','))}
+        "$cmd"
+    }
 }
+
+Export-SmbShares |Out-File $Path utf8
