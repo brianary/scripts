@@ -2,6 +2,17 @@
 .Synopsis
     Exports IIS websites, app pools, and web apps as an idempotent PowerShell script to recreate them.
 
+.Description
+    This script writes an import script that can be used to reproduce the IIS settings of the server
+    the export is run on.
+
+    The goal is to create an import script that is understandable, editable, can be stepped through,
+    and fails recoverably with intuitive remediation rather than failing catastrophically with
+    no remediation steps or clarity.
+
+    Special emphasis is made on supporting running the export on older versions of PowerShell & Windows
+    (IIS7+), with an expectation to run the import on a slightly newer version (IIS8+).
+
 .Parameter Path
     File to write import script text to.
 
@@ -40,6 +51,18 @@
 
 .Link
     https://github.com/PowerShell/xWebAdministration
+
+.Link
+    https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509certificate2.aspx
+
+.Link
+    https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509store.aspx
+
+.Link
+    https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509keystorageflags.aspx
+
+.Link
+    https://msdn.microsoft.com/library/system.convert.aspx
 
 .Link
     Get-WebGlobalModule
@@ -129,104 +152,8 @@ function Write-Todo([string]`$message)
 "@
 }
 
-function Get-CertificateFriendliestName(
-    [Parameter(Position=0,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert,
-    [switch]$WithExpiry)
-{Process{
-    if(!$cert.FriendlyName) {return "$($cert.Subject) expiring $($cert.NotAfter)"}
-    else {return "$($cert.FriendlyName) expiring $($cert.NotAfter)"}
-}}
-
-function Get-CertificateImportName([Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]$store,
-    [Parameter(Position=1,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert)
-{Process{
-    $basename = "Import-CertificateTo_$($store.Location)_$($store.Name)_"
-    if(!$cert.FriendlyName) {return "$basename$($cert.Thumbprint)"}
-    else {return "$basename$($cert.FriendlyName -replace '\W+','_')"}
-}}
-
-function Export-CertificateFrom([Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]$store,
-[Parameter(Position=1)][decimal]$PercentDenominator,
-[Parameter(Position=2,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert)
-{Begin{$i = 0} Process{
-    $location,$name,$secret,$percent,$certname,$Local:OFS =
-        $store.Location,$store.Name,[Web.Security.Membership]::GeneratePassword(40,12),
-        [math]::Floor($i++/$PercentDenominator),(Get-CertificateFriendliestName $cert),''
-    Write-Progress "Exporting certificates from Cert:\$location\$name" $certname -Current $cert.Subject -Percent $percent
-    $qcertname = "$($certname -replace "'","''")"
-    $action =
-        try
-        {@"
-`$store.Add((New-Object Security.Cryptography.X509Certificates.X509Certificate2 ([convert]::FromBase64String(@'
-$([convert]::ToBase64String($cert.Export('Pfx',$secret),'InsertLineBreaks'))
-'@)),'$($secret -replace "'","''")','$X509KeyStorageFlags'))
-"@}
-        catch
-        {
-            Write-Warning "Unable to export ${certname}: $_"
-            $err = "$_" -replace "'","''" -replace '[\r\n]+',''
-            "Write-Warning 'Could not import $qcertname because it did not export successfully: $err'"
-        }
-    @"
-
-function $(Get-CertificateImportName $store $cert)
-{
-    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param(
-    [Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]`$store
-    )
-    if(!(`$PSCmdlet.ShouldProcess('$qcertname','import into Cert:\$location\$name'))){return}
-    Write-Progress 'Importing certificates into Cert:\$location\$name' '$qcertname' ``
-        -Current '$($cert.Subject -replace "'","''")' -Percent $percent
-    $action
-}
-"@
-}}
-
-function Get-StoreImportName([Parameter(ValueFromPipeline=$true)]
-    [Security.Cryptography.X509Certificates.X509Store]$store)
-{Process{
-    return "Import-CertificateTo_$($store.Location)_$($store.Name)"
-}}
-
-function Export-CertificatesFrom([Parameter(ValueFromPipeline=$true)]
-    [Security.Cryptography.X509Certificates.X509Store]$store)
-{Process{ # Export-PfxCertificate is easier, but a bit too new to be broadly useful
-    $location,$name,$Local:OFS = $store.Location,$store.Name,"`r`n    "
-    $certs = Get-ChildItem Cert:\$location\$name
-    $certs |Export-CertificateFrom $store ($certs.Length/100)
-    @"
-
-function $(Get-StoreImportName $store)
-{
-    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
-    `$store = Get-Item Cert:\$location\$name
-    if(!(`$PSCmdlet.ShouldProcess('Cert:\$location\$name server certificates','import'))){return}
-    `$store.Open('OpenExistingOnly, ReadWrite')
-    $($certs |Get-CertificateImportName $store |% {"$_ `$store"})
-    `$store.Close()
-    `$store.Dispose()
-    Write-Progress 'Importing certificates into Cert:\$location\$name' -Completed
-}
-"@
-    Write-Progress "Exporting certificates from Cert:\$location\$name" -Completed
-}}
-
-function Export-Certificates
-{
-    $Local:OFS = "`r`n    "
-    $Stores |Export-CertificatesFrom
-    @"
-
-function Import-Certificates
-{
-    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
-    $($Stores |Get-StoreImportName)
-}
-"@
-}
-
 function Export-GlobalModulesCheck
-{
+{ #TODO: urlrewrite isn't detected after install
     @"
 
 function Ping-GlobalModules
@@ -264,6 +191,214 @@ function Ping-GlobalModules
 "@
 }
 
+function Get-CertificateFriendliestName(
+    [Parameter(Position=0,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert,
+    [switch]$WithExpiry)
+{Process{
+    if(!$cert.FriendlyName) {return "$($cert.Subject) expiring $($cert.NotAfter)"}
+    else {return "$($cert.FriendlyName) expiring $($cert.NotAfter)"}
+}}
+
+function Get-CertificateImportName([Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]$store,
+    [Parameter(Position=1,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert)
+{Process{
+    $basename = "Import-CertificateTo_$($store.Location)_$($store.Name)_"
+    if(!$cert.FriendlyName) {return "$basename$($cert.Thumbprint)"}
+    else {return "$basename$($cert.FriendlyName -replace '\W+','_')"}
+}}
+
+function Export-CertificateFrom([Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]$store,
+    [Parameter(Position=1)][string]$storepath,
+    [Parameter(Position=2)][decimal]$PercentDenominator,
+    [Parameter(Position=3,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert)
+{Begin{$i = 0} Process{
+    $location,$name,$secret,$percent,$certname,$Local:OFS =
+        $store.Location,$store.Name,[Web.Security.Membership]::GeneratePassword(40,12),
+        [math]::Floor($i++/$PercentDenominator),(Get-CertificateFriendliestName $cert),"`r`n    "
+    Write-Progress "Exporting certificates from $storepath" $certname -Current $cert.Subject -Percent $percent
+    $qcertname = "$($certname -replace "'","''")"
+    $action =
+        try
+        {
+            @"
+    `$store.Add((New-Object Security.Cryptography.X509Certificates.X509Certificate2 ([convert]::FromBase64String(@'
+$([convert]::ToBase64String($cert.Export('Pfx',$secret),'InsertLineBreaks'))
+'@)),'$($secret -replace "'","''")','$X509KeyStorageFlags'))
+"@
+        }
+        catch
+        {
+            Write-Warning "Unable to export ${certname}: $_"
+            $err = "$_" -replace "'","''" -replace '[\r\n]+',''
+            "Write-Warning 'Could not import $qcertname because it did not export successfully: $err'"
+        }
+    @"
+
+function $(Get-CertificateImportName $store $cert)
+{
+    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param(
+    [Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]`$store
+    )
+    if(Test-Path $storepath\$($cert.Thumbprint) -PathType Leaf)
+    {Write-Verbose 'Certificate $qcertname found at $storepath\$($cert.Thumbprint)'; return}
+    if(!(`$PSCmdlet.ShouldProcess('$qcertname','import into $storepath'))){return}
+    Write-Progress 'Importing certificates into $storepath' '$qcertname' ``
+        -Current '$($cert.Subject -replace "'","''")' -Percent $percent
+$action
+}
+"@
+}}
+
+function Get-StoreImportName([Parameter(ValueFromPipeline=$true)]
+    [Security.Cryptography.X509Certificates.X509Store]$store)
+{Process{
+    return "Import-CertificateTo_$($store.Location)_$($store.Name)"
+}}
+
+function Export-CertificatesFrom([Parameter(ValueFromPipeline=$true)]
+    [Security.Cryptography.X509Certificates.X509Store]$store)
+{Process{ # Export-PfxCertificate is easier, but not available in PS3
+    $location,$name,$Local:OFS = $store.Location,$store.Name,"`r`n    "
+    $storepath = "Cert:\$location\$name"
+    $certs = Get-ChildItem $storepath
+    $certs |Export-CertificateFrom $store $storepath ($certs.Length/100)
+    @"
+
+function $(Get-StoreImportName $store)
+{
+    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
+    `$store = Get-Item $storepath
+    if(!(`$PSCmdlet.ShouldProcess('$storepath server certificates','import'))){return}
+    `$store.Open('OpenExistingOnly, ReadWrite')
+    $($certs |Get-CertificateImportName $store |% {"$_ `$store"})
+    `$store.Close()
+    `$store.Dispose()
+    Write-Progress 'Importing certificates into $storepath' -Completed
+}
+"@
+    Write-Progress "Exporting certificates from $storepath" -Completed
+}}
+
+function Export-Certificates
+{
+    $Local:OFS = "`r`n    "
+    $Stores |Export-CertificatesFrom
+    @"
+
+function Import-Certificates
+{
+    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
+    $($Stores |Get-StoreImportName)
+}
+"@
+}
+
+function Export-NoCertificatePermissions($functionname,$qcertname,$warning)
+{
+    Write-Warning $warning
+    @"
+
+function $functionname
+{
+    [CmdletBinding()] Param()
+    Write-Warning 'No permissions were exported for $qcertname'
+}
+"@
+}
+
+function Export-CertificatePermissions(
+    [Parameter(Position=0)][string]$storepath,
+    [Parameter(Position=1)][decimal]$PercentDenominator,
+    [Parameter(Position=2,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert)
+{Begin{$i=0}Process{
+    $percent = [math]::Floor($i++/$PercentDenominator)
+    $certname = Get-CertificateFriendliestName $cert
+    $functionname = "$(Get-CertificateImportName $store $cert)_Permissions"
+    $qcertname = $certname -replace "'","''"
+    Write-Progress "Exporting certificate permissions from $storepath" $certname -Current $cert.Subject -Percent $percent
+    if(!"$($cert.PrivateKey.CspKeyContainerInfo.UniqueKeyContainerName)")
+    {
+        Export-NoCertificatePermissions $functionname $qcertname `
+            "No private key found for $qcertname; no permissions exported"
+        return
+    }
+    $pkpath = "$env:ProgramData\Microsoft\crypto\rsa\machinekeys\$($cert.PrivateKey.CspKeyContainerInfo.UniqueKeyContainerName)"
+    if(!(Test-Path $pkpath -PathType Leaf))
+    {
+        Export-NoCertificatePermissions $functionname $qcertname `
+            "Certificate $certname private key not found at $pkpath ; permissions cannot be exported"
+        return
+    }
+    $apppools = Get-Acl $pkpath |% Access |? IdentityReference -like 'IIS APPPOOL\*' |% IdentityReference
+    if(!$apppools)
+    {
+        Export-NoCertificatePermissions $functionname $qcertname `
+            "No permissions to export for $($cert.Subject)"
+        return
+    }
+    @"
+
+function $functionname
+{
+    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
+    if(!(`$PSCmdlet.ShouldProcess('$qcertname permissions','import into $storepath'))){return}
+    Write-Progress 'Importing certificate permissions into $storepath' '$qcertname' ``
+        -Current '$($cert.Subject -replace "'","''")' -Percent $percent
+    `$cert = Get-Item $storepath\$($cert.Thumbprint)
+    if(!"`$(`$cert.PrivateKey.CspKeyContainerInfo.UniqueKeyContainerName)")
+    {Write-Warning 'No private key found for $qcertname; permissions not set'; return}
+    `$pkpath = "`$env:ProgramData\Microsoft\crypto\rsa\machinekeys\`$(`$cert.PrivateKey.CspKeyContainerInfo.UniqueKeyContainerName)"
+    if(!(Test-Path `$pkpath -PathType Leaf))
+    {
+        Write-Error "Couldn't find $qcertname private key file `$pkpath"
+        Write-Todo 'Fix certificate $qcertname, the private key is not in the machine keys store, and no permissions were set'
+        return
+    }
+    `$acl = Get-Acl `$pkpath
+    $($apppools |% {"`$acl.SetAccessRule((New-Object Security.AccessControl.FileSystemAccessRule '$_','Read','Allow'))"})
+    Set-Acl `$pkpath `$acl
+}
+"@
+}}
+
+function Export-CertificatePermissionsFrom([Parameter(ValueFromPipeline=$true)]
+    [Security.Cryptography.X509Certificates.X509Store]$store)
+{Process{
+    $location,$name,$Local:OFS = $store.Location,$store.Name,"`r`n    "
+    $storepath = "Cert:\$location\$name"
+    $certs = Get-ChildItem $storepath
+    $certs |Export-CertificatePermissions $storepath ($certs.Length/100)
+    @"
+
+function $(Get-StoreImportName $store)_Permissions
+{
+    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
+    `$store = Get-Item $storepath
+    if(!(`$PSCmdlet.ShouldProcess('$storepath server certificates','import'))){return}
+    `$store.Open('OpenExistingOnly, ReadWrite')
+    $($certs |Get-CertificateImportName $store |% {"${_}_Permissions"})
+    `$store.Close()
+    `$store.Dispose()
+    Write-Progress 'Importing certificate permissions into $storepath' -Completed
+}
+"@
+    Write-Progress "Exporting certificate permissions from $storepath" -Completed
+}}
+
+function Export-CertificatesPermissions
+{
+    $Local:OFS = "`r`n    "
+    $Stores |Export-CertificatePermissionsFrom
+    @"
+
+function Import-CertificatePermissions
+{
+    [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
+    $($Stores |Get-StoreImportName |% {"${_}_Permissions"})
+}
+"@
+}
+
 function Export-WebAppPools
 {
     @"
@@ -277,21 +412,26 @@ function Import-WebAppPools
     $i,$max = 0,($appPools.Count/100.)
     foreach($appPool in $appPools)
     {
-        $iispath = "IIS:\AppPools\$($appPool.Name)"
+        $name = $appPool.Name
+        $iispath = "IIS:\AppPools\$name"
         Write-Progress 'Exporting application pools' $iispath -PercentComplete ($i/$max)
         @"
     Write-Progress 'Importing application pools' '$iispath' -PercentComplete $([int]($i++/$max))
     if(!(Test-Path '$iispath'))
-    {New-WebAppPool '$($appPool.Name)'}
+    {
+        try{New-WebAppPool '$name'}
+        catch{Write-Error "Unable to create app pool ${name}: `$_"; Write-Todo 'Create app pool $name'}
+    }
     else
-    {Write-Verbose 'App pool $($appPool.Name) found'}
+    {Write-Verbose 'App pool $name found'}
 "@
         if($appPool.managedRuntimeVersion -notin '','v4.0'){@"
     Set-ItemProperty '$iispath' managedRuntimeVersion $($appPool.managedRuntimeVersion)
 "@}
         $processModel = Get-ItemProperty $iispath processModel
-        if($processModel.identityType -ne 'ApplicationPoolIdentity'){@"
-    Set-ItemProperty '$iispath' processModel @{userName='$($processModel.userName)';identityType='$($processModel.identityType)'}
+        $idtype = $processModel.identityType
+        if($idtype -ne 'ApplicationPoolIdentity'){@"
+    Set-ItemProperty '$iispath' processModel @{userName='$($processModel.userName)';identityType='$idtype'}
 "@}
     }
     Write-Progress 'Exporting application pools' -Completed
@@ -314,7 +454,7 @@ function Import-Websites
     $i,$max = 0,($websites.Count/100.)
     foreach($website in $websites)
     {
-        $name = $website.name
+        $name,$physicalpath = $website.name,$website.physicalPath
         $primaryBinding = Get-WebBinding $name |select -First 1
         $ipAddress,$port,$hostHeader =
             $primaryBinding.bindingInformation -split ':',3
@@ -322,15 +462,22 @@ function Import-Websites
         @"
     Write-Progress 'Importing websites' '$name' -PercentComplete $([int]($i++/$max))
     if(!(Test-Path 'IIS:\Sites\$name'))
-    {@{
-        Name            = '$name'
-        PhysicalPath    = '$($website.physicalPath)'
-        ApplicationPool = '$($website.applicationPool)'
-        Ssl             = `$$($primaryBinding.protocol -eq 'https')
-        IPAddress       = '$ipAddress'
-        Port            = $port
-        HostHeader      = '$hostHeader'
-    }|% {New-Website @_}}
+    {
+        if(!(Test-Path '$physicalpath' -PathType Container))
+        {
+            mkdir '$physicalpath'
+            Write-Todo 'Add $name content to empty $physicalpath, which was missing and had to be created'
+        }
+        @{
+            Name            = '$name'
+            PhysicalPath    = '$physicalpath'
+            ApplicationPool = '$($website.applicationPool)'
+            Ssl             = `$$($primaryBinding.protocol -eq 'https')
+            IPAddress       = '$ipAddress'
+            Port            = $port
+            HostHeader      = '$hostHeader'
+        }|% {try{New-Website @_}catch{Write-Error "Unable to create website ${name}: `$_"; Write-Todo 'Create website $name'}}
+    }
     else
     {Write-Verbose 'Website $name found'}
 "@
@@ -354,7 +501,14 @@ function Import-Websites
         IPAddress  = '$ipAddress'
         Port       = '$port'
         HostHeader = '$hostHeader'
-    } |% {New-WebBinding @_} $certbinding }
+    } |% {
+        try{New-WebBinding @_}
+        catch
+        {
+            Write-Error "Unable to create $protocol web binding for ${name}: `$_"
+            Write-Todo 'Create $protocol web binding for $name'}
+        }
+     } $certbinding }
     else
     {Write-Verbose 'Website $($website.name) $protocol binding ${ipAddress}:${port}:${hostHeader} found'}
 "@
@@ -413,12 +567,22 @@ function $funcname
         @"
     Write-Progress 'Importing web applications' '$iispath' -Current '$pool' -Percent $([int]($i++/$max))
     if(!(Get-WebApplication '$name' -Site '$site'))
-    {@{
-        Name            = '$name'
-        Site            = '$site'
-        PhysicalPath    = '$physicalpath'
-        ApplicationPool = '$pool'
-    } |% {New-WebApplication @_}}
+    {
+        if(!(Test-Path '$physicalpath' -PathType Container))
+        {
+            mkdir '$physicalpath'
+            Write-Todo 'Add $name content to empty $physicalpath, which was missing and had to be created'
+        }
+        @{
+            Name            = '$name'
+            Site            = '$site'
+            PhysicalPath    = '$physicalpath'
+            ApplicationPool = '$pool'
+        } |% {
+            try{New-WebApplication @_}
+            catch{Write-Error "Unable to create web app ${name}: `$_"; Write-Todo 'Create web app $name'}
+        }
+    }
     else
     {Write-Verbose 'Web application $iispath found'}
 "@
@@ -477,6 +641,7 @@ function Export-Footer
 Ping-GlobalModules
 Import-Certificates
 Import-WebAppPools
+Import-CertificatePermissions
 Import-Websites
 Import-WebApplications
 "@
@@ -486,9 +651,10 @@ function Export-WebConfiguration
 {
     if(!(Test-Administrator)) {throw 'This script must be run as administrator.'}
     Export-Header
-    Export-Certificates
     Export-GlobalModulesCheck
+    Export-Certificates
     Export-WebAppPools
+    Export-CertificatesPermissions
     Export-Websites
     Export-WebApplications
     Export-Footer
