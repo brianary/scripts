@@ -16,7 +16,7 @@
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string[]])] Param(
-[string]$Path = "Import-${env:ComputerName}WebConfiguration.ps1"
+[string]$Path = "Import-${env:ComputerName}SmbShares.ps1"
 )
 
 function ConvertTo-StringLiteral([Parameter(ValueFromPipeline=$true)][string]$value)
