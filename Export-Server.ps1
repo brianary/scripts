@@ -105,6 +105,41 @@ function Import-Hosts
 '@
 }
 
+function Export-SystemDsns
+{
+    if(!(Get-ChildItem HKLM:\SOFTWARE\ODBC\ODBC.INI\*)){return}
+    Write-Verbose "Exporting ODBC system DSNs to $PSScriptRoot"
+    regedit /e "$PSScriptRoot\ODBC.reg" "HKEY_LOCAL_MACHINE\SOFTWARE\ODBC\ODBC.INI"
+    @'
+
+function Import-SystemDsns
+{
+    [CmdletBinding(SupportsShouldProcess=`$true)] Param()
+    if(!`$PSCmdlet.ShouldProcess('ODBC system DSNs','import')){return}
+    Write-Verbose 'Import ODBC system DSNs'
+    regedit "$PSScriptRoot\ODBC.reg"
+}
+'@
+}
+
+function Export-FileDsns
+{
+    if(!(Test-Path "$env:CommonProgramFiles\ODBC\Data Sources\*.dsn" -PathType Leaf)){return}
+    Write-Verbose "Copying ODBC DSN files to $PSScriptRoot"
+    Copy-Item "$env:CommonProgramFiles\ODBC\Data Sources\*.dsn" $PSScriptRoot
+    @'
+
+function Import-FileDsns
+{
+    [CmdletBinding(SupportsShouldProcess=`$true)] Param()
+    if(!`$PSCmdlet.ShouldProcess('ODBC DSN files','copy')){return}
+    Write-Verbose 'Copying ODBC DSN files'
+    mkdir "$env:CommonProgramFiles\ODBC\Data Sources"
+    Copy-Item $PSScriptRoot\*.dsn "$env:CommonProgramFiles\ODBC\Data Sources"
+}
+'@
+}
+
 function Export-Msas
 {
     Write-Verbose "Creating import/conversion for MSAs in $Path"
@@ -147,7 +182,7 @@ function Export-WebPlatformInstallerPackages
     if(!(Get-Command webpicmd -CommandType Application -ErrorAction SilentlyContinue)){return}
     Write-Verbose "Exporting list of installed WebPI packages to $Path"
     $webpicmd = webpicmd /list /listoption:installed |
-        ? {![string]::IsNullOrWhiteSpace($_)} |
+        ? {![string]::IsNullOrWhiteSpace($_)} | #TODO: FIX: Not working right on all machines yet
         select -skip 9 |
         % {
             $id,$title = $_ -split '\s+',2
@@ -164,6 +199,11 @@ function Import-WebPlatformInstallerPackages
 "@
 }
 
+function Export-InstalledApplications
+{
+    #TODO: Write InstalledApplications.txt using WMI Programs (excluding MS)
+}
+
 function Export-Footer
 {
     Write-Verbose "Finishing export to $Path"
@@ -172,6 +212,8 @@ function Export-Footer
 Import-WebConfiguration
 Import-SmbShares
 Import-Hosts
+Import-SystemDsns
+Import-FileDsns
 Import-Msas
 Import-ChocolateyPackages
 Import-WebPlatformInstallerPackages
@@ -185,6 +227,8 @@ function Export-Server
     Export-WebConfiguration
     Export-SmbShares
     Export-Hosts
+    Export-SystemDsns
+    Export-FileDsns
     Export-Msas
     Export-ChocolateyPackages
     Export-WebPlatformInstallerPackages
