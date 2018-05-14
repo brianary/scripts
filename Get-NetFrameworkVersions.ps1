@@ -14,7 +14,7 @@
 
 .Example
     Get-NetFrameworkVersions.ps1
- 
+
     Name                           Value
     ----                           -----
     v4.6.2+win10ann                4.6.1586
@@ -53,7 +53,10 @@ try
     [string]$release = $v4.GetValue('Release')
     Write-Verbose "v4 release $release"
     $name = [ordered]@{ # see https://msdn.microsoft.com/en-us/library/hh925568.aspx
-        '460806' = 'v4.7+after-4.7'
+        '461814' = 'v4.7.2+pre-win10april2018'
+        '461808' = 'v4.7.2+win10april2018'
+        '461310' = 'v4.7.1+pre-win10fcu'
+        '461308' = 'v4.7.1+win10fcu'
         '460805' = 'v4.7+pre-win10cu'
         '460798' = 'v4.7+win10cu'
         '394806' = 'v4.6.2+pre-win10ann'
