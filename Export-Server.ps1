@@ -43,6 +43,7 @@ function Test-Administrator
 function Export-Header
 {
     Write-Verbose "Creating export script $Path"
+    Write-Progress "Exporting $env:ComputerName" "Creating script $Path" -Id 1 -percent 0
     @"
 <#
 .Synopsis
@@ -74,7 +75,8 @@ function Import-WebConfiguration
 }
 "@
     if(!(Get-Module WebAdministration -ListAvailable)){Write-Warning "IIS not detected. Skipping."; return}
-    Write-Verbose "Exporting web configuration to $Path"
+    Write-Verbose "Exporting web configuration to Import-${env:ComputerName}WebConfiguration.ps1"
+    Write-Progress "Exporting $env:ComputerName" "Exporting Import-${env:ComputerName}WebConfiguration.ps1" -Id 1 -percent 1
     Export-WebConfiguration.ps1
 }
 
@@ -87,7 +89,7 @@ function Import-SmbShares
     [CmdletBinding(SupportsShouldProcess=`$true)] Param()
     if(!`$PSCmdlet.ShouldProcess('SMB shares','create')) {return}
     Write-Verbose 'Importing SMB shares.'
-    if(Test-Path 'Import-${env:ComputerName}SmbShares.ps1' -PathType Leaf)
+    if(Test-Path '' -PathType Leaf)
     {.\Import-${env:ComputerName}SmbShares.ps1}
     elseif(Test-Path "`$PSScriptRoot\Import-${env:ComputerName}SmbShares.ps1" -PathType Leaf)
     {& "`$PSScriptRoot\Import-${env:ComputerName}SmbShares.ps1"}
@@ -96,6 +98,7 @@ function Import-SmbShares
 }
 "@
     Write-Verbose "Exporting SMB shares to $Path"
+    Write-Progress "Exporting $env:ComputerName" "Creating script Import-${env:ComputerName}SmbShares.ps1" -Id 1 -percent 50
     Export-SmbShares.ps1
 }
 
@@ -115,6 +118,7 @@ function Import-Hosts
 '@
     if(!(Get-Content $env:SystemRoot\system32\drivers\etc\hosts |Select-String '^\s*\d')){return}
     Write-Verbose "Copying hosts file to $PWD"
+    Write-Progress "Exporting $env:ComputerName" "Exporting hosts file" -Id 1 -percent 52
     Copy-Item $env:SystemRoot\system32\drivers\etc\hosts "$PWD"
 }
 
@@ -132,7 +136,8 @@ function Import-SystemDsns
 }
 '@
     if(!(Get-ChildItem HKLM:\SOFTWARE\ODBC\ODBC.INI\*)){return}
-    Write-Verbose "Exporting ODBC system DSNs to $PWD"
+    Write-Verbose "Exporting ODBC system DSNs to $PWD\ODBC.reg"
+    Write-Progress "Exporting $env:ComputerName" "Exporting ODBC.reg" -Id 1 -percent 53
     regedit /e "$PWD\ODBC.reg" "HKEY_LOCAL_MACHINE\SOFTWARE\ODBC\ODBC.INI"
 }
 
@@ -151,7 +156,8 @@ function Import-FileDsns
 }
 '@
     if(!(Test-Path "$env:CommonProgramFiles\ODBC\Data Sources\*.dsn" -PathType Leaf)){return}
-    Write-Verbose "Copying ODBC DSN files to $PWD"
+    Write-Verbose "Copying ODBC DSN files (*.dsn) to $PWD"
+    Write-Progress "Exporting $env:ComputerName" "Exporting file DSNs (*.dsn) to $PWD" -Id 1 -percent 55
     Copy-Item "$env:CommonProgramFiles\ODBC\Data Sources\*.dsn" "$PWD"
 }
 
@@ -170,11 +176,13 @@ function Import-Msas
 }
 "@
     Write-Verbose "Created import/conversion for MSAs in $Path"
+    Write-Progress "Exporting $env:ComputerName" "MSA conversion created" -Id 1 -percent 57
 }
 
 function Export-ChocolateyPackages
 {
     Write-Verbose "Exporting list of installed Chocolatey packages to $Path"
+    Write-Progress "Exporting $env:ComputerName" "Exporting Chocolatey packages to $Path" -Id 1 -percent 60
     $cinst =
         if(!(Get-Command clist -CommandType Application -ErrorAction SilentlyContinue)) {@()}
         else
@@ -200,6 +208,7 @@ function Import-ChocolateyPackages
 function Export-WebPlatformInstallerPackages
 {
     Write-Verbose "Exporting list of installed WebPI packages to $Path"
+    Write-Progress "Exporting $env:ComputerName" "Exporting WebPI packages to $Path" -Id 1 -percent 70
     $webpicmd =
         if(!(Get-Command webpicmd -CommandType Application -ErrorAction SilentlyContinue)) {@()}
         else
@@ -228,6 +237,7 @@ function Import-WebPlatformInstallerPackages
 function Export-InstalledApplications
 {
     Write-Verbose "Exporting list of installed applications to InstalledApplications.txt"
+    Write-Progress "Exporting $env:ComputerName" "Exporting InstalledApplications.txt" -Id 1 -percent 80
     Get-WmiObject Win32_Product -Filter "Vendor <> 'Microsoft Corporation'" |
         Sort-Object Caption |
         ForEach-Object {"$($_.Caption) ($($_.Version))"} |
@@ -237,6 +247,7 @@ function Export-InstalledApplications
 function Export-Footer
 {
     Write-Verbose "Finishing export to $Path"
+    Write-Progress "Exporting $env:ComputerName" "Finishing script $Path" -Id 1 -percent 99
     @"
 
 Import-WebConfiguration
@@ -248,6 +259,7 @@ Import-FileDsns
 Import-ChocolateyPackages
 Import-WebPlatformInstallerPackages
 "@
+    Write-Progress "Exporting $env:ComputerName" -Id 1 -Completed
 }
 
 function Export-Server
