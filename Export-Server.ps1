@@ -51,7 +51,7 @@ function Export-Header
 
 #Requires -Version 3
 #Requires -RunAsAdministrator
-#Requires -Module ActiveDirectory
+##Requires -Module ActiveDirectory # uncomment to convert MSAs
 [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact='High')] Param()
 
 "@
@@ -66,7 +66,7 @@ function Import-WebConfiguration
     [CmdletBinding()] Param()
     Write-Verbose 'Importing web configuration.'
     if(Test-Path 'Import-${env:ComputerName}WebConfiguration.ps1' -PathType Leaf)
-    {Import-${env:ComputerName}WebConfiguration.ps1}
+    {.\Import-${env:ComputerName}WebConfiguration.ps1}
     elseif(Test-Path "`$PSScriptRoot\Import-${env:ComputerName}WebConfiguration.ps1" -PathType Leaf)
     {& "`$PSScriptRoot\Import-${env:ComputerName}WebConfiguration.ps1"}
     else
@@ -88,7 +88,7 @@ function Import-SmbShares
     if(!`$PSCmdlet.ShouldProcess('SMB shares','create')) {return}
     Write-Verbose 'Importing SMB shares.'
     if(Test-Path 'Import-${env:ComputerName}SmbShares.ps1' -PathType Leaf)
-    {Import-${env:ComputerName}SmbShares.ps1}
+    {.\Import-${env:ComputerName}SmbShares.ps1}
     elseif(Test-Path "`$PSScriptRoot\Import-${env:ComputerName}SmbShares.ps1" -PathType Leaf)
     {& "`$PSScriptRoot\Import-${env:ComputerName}SmbShares.ps1"}
     else
@@ -244,7 +244,7 @@ Import-SmbShares
 Import-Hosts
 Import-SystemDsns
 Import-FileDsns
-Import-Msas
+#Import-Msas # uncomment to convert MSAs
 Import-ChocolateyPackages
 Import-WebPlatformInstallerPackages
 "@
