@@ -114,8 +114,8 @@ function Import-Hosts
 }
 '@
     if(!(Get-Content $env:SystemRoot\system32\drivers\etc\hosts |Select-String '^\s*\d')){return}
-    Write-Verbose "Copying hosts file to $PSScriptRoot"
-    Copy-Item $env:SystemRoot\system32\drivers\etc\hosts $PSScriptRoot
+    Write-Verbose "Copying hosts file to $PWD"
+    Copy-Item $env:SystemRoot\system32\drivers\etc\hosts "$PWD"
 }
 
 function Export-SystemDsns
@@ -132,8 +132,8 @@ function Import-SystemDsns
 }
 '@
     if(!(Get-ChildItem HKLM:\SOFTWARE\ODBC\ODBC.INI\*)){return}
-    Write-Verbose "Exporting ODBC system DSNs to $PSScriptRoot"
-    regedit /e "$PSScriptRoot\ODBC.reg" "HKEY_LOCAL_MACHINE\SOFTWARE\ODBC\ODBC.INI"
+    Write-Verbose "Exporting ODBC system DSNs to $PWD"
+    regedit /e "$PWD\ODBC.reg" "HKEY_LOCAL_MACHINE\SOFTWARE\ODBC\ODBC.INI"
 }
 
 function Export-FileDsns
@@ -151,8 +151,8 @@ function Import-FileDsns
 }
 '@
     if(!(Test-Path "$env:CommonProgramFiles\ODBC\Data Sources\*.dsn" -PathType Leaf)){return}
-    Write-Verbose "Copying ODBC DSN files to $PSScriptRoot"
-    Copy-Item "$env:CommonProgramFiles\ODBC\Data Sources\*.dsn" $PSScriptRoot
+    Write-Verbose "Copying ODBC DSN files to $PWD"
+    Copy-Item "$env:CommonProgramFiles\ODBC\Data Sources\*.dsn" "$PWD"
 }
 
 function Export-Msas
