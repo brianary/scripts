@@ -257,7 +257,7 @@ Import-SystemDsns
 Import-FileDsns
 #Import-Msas # uncomment to convert MSAs
 Import-ChocolateyPackages
-Import-WebPlatformInstallerPackages
+#Import-WebPlatformInstallerPackages # uncomment to install all the WebPI modules from the old server
 "@
     Write-Progress "Exporting $env:ComputerName" -Id 1 -Completed
 }

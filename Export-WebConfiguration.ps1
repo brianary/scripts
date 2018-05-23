@@ -643,7 +643,7 @@ function Export-Footer
 {
     @"
 
-Ping-GlobalModules
+#Ping-GlobalModules # uncomment to install all the modules from the old server
 Import-Certificates
 Import-WebAppPools
 Import-CertificatePermissions
