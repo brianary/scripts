@@ -24,9 +24,21 @@ function ConvertTo-StringLiteral([Parameter(ValueFromPipeline=$true)][string]$va
 
 function Export-SmbShares
 {
+    @"
+<#
+.Synopsis
+    Imports SMB file shares exported from $env:ComputerName
+#>
+
+#Requires -Version 3
+#Requires -RunAsAdministrator
+[CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact='High')] Param()
+
+"@
     foreach($share in (Get-WmiObject Win32_Share))
     {
         if($share.Name -match '(?i)\A(?:[a-z]|admin|ipc)\$$'){continue} # skip the builtins
+        $quotablename,$quotablepath = ($share.Name -replace "'","''"),($share.Path -replace "'","''")
         $perms = (net share $share.Name |Out-String) -replace
             '(?ms)\A.*^Permission|(\r\n){2,}|^\b.*\r\n','' -replace '\A\s*|\s*\z','' -split '\r\n\s*'
         $access = @{}
@@ -37,16 +49,13 @@ function Export-SmbShares
             } |
             group Access |
             % {[void]$access.Add($_.Name,[string[]]($_.Group|% User))}
-        $cmd = @(
-            'New-SmbShare',
-            '-Name',(ConvertTo-StringLiteral $share.Name),
-            '-Path',(ConvertTo-StringLiteral $share.Path)
-        )
+        $cmd = @('New-SmbShare','-Name',"'$quotablename'",'-Path',"'$quotablepath'")
         if($share.Description){$cmd+=@('-Description',(ConvertTo-StringLiteral $share.Description))}
         if($access.FULL){$cmd+=@('-FullAccess',(($access.FULL|ConvertTo-StringLiteral) -join ','))}
         if($access.CHANGE){$cmd+=@('-ChangeAccess',(($access.CHANGE|ConvertTo-StringLiteral) -join ','))}
         if($access.READ){$cmd+=@('-ReadAccess',(($access.READ|ConvertTo-StringLiteral) -join ','))}
-        "$cmd"
+        "if(Test-Path '$quotablepath' -PathType Container){$cmd}"
+        "else{Write-Error 'Folder $quotablepath does not exist to share as $quotablename'}"
     }
 }
 

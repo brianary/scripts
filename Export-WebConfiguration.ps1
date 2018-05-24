@@ -139,6 +139,10 @@ function Export-Header
 [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact='High')] Param()
 
 `$todofile = [io.path]::ChangeExtension(`$PSCommandPath,'txt')
+if(Test-Path `$todofile -PathType Leaf)
+{ # don't clobber a previous todo list
+    Move-Item `$todofile [io.path]::ChangeExtension(`$todofile,(Get-Date -f yyyyMMddHHmmss))
+}
 @"
 Manual $env:ComputerName Web Configuration TODO List
 ======================================================
