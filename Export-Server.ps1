@@ -29,7 +29,7 @@
       (Add/Remove Programs in older Windows versions)
 #>
 
-#Requires -RunAsAdministrator
+##Requires -RunAsAdministrator # not supported in legacy PowerShell
 [CmdletBinding()] Param(
 [string]$Path = "Import-${env:ComputerName}.ps1"
 )

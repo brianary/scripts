@@ -596,17 +596,17 @@ function $funcname
     {Write-Verbose 'Web application $iispath found'}
 "@
         Select-Xml "/configuration/location[@path='$site/$name']/system.webServer" (Get-WebConfigFile) |
-            % {$_.Node.SelectNodes('*')} -pv cfg |
+            % {$_.Node.SelectNodes('*')} |
             % {
                 if($_.LocalName -ne 'security') {"The $($_.LocalName) may be customized for $iispath"}
                 else
                 {
-                    if($cfg.access){[psobject]@{
+                    if($_.access){[psobject]@{
                         Filter = 'system.webServer/security/access'
                         Name   = 'SslFlags'
                         Value  = $_.access.sslFlags
                     }}
-                    $cfg.SelectNodes('authentication/*') |
+                    $_.SelectNodes('authentication/*') |
                         % {
                             if($_.userName){"Set $iispath username to $($_.userName)"}
                             if($_.InnerXml){"Configure $iispath $($_.LocalName) for $($_.InnerXml -replace '(?m)^\s+|[\r\n]+','')"}
