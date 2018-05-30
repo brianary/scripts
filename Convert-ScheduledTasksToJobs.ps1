@@ -156,6 +156,7 @@ function ConvertTo-JobTrigger
     }
 }
 
+$CredentialCache = @{}
 function Convert-ScheduledTaskToJob
 {
 [CmdletBinding(SupportsShouldProcess=$true)] Param(
@@ -163,54 +164,48 @@ function Convert-ScheduledTaskToJob
 [Parameter(Position=1,Mandatory=$true)]$Script,
 [Parameter(Position=2)][string]$Argument
 )
-    Begin
-    {
-        $CredentialCache = @{}
+    [string]$userid = $Task.Principal.UserId
+    if(!$CredentialCache.ContainsKey($userid)) {$CredentialCache[$userid] = Get-Credential $userid}
+    $options = @{
+        ContinueIfGoingOnBattery = !$Task.Settings.StopIfGoingOnBatteries
+        DoNotAllowDemandStart    = !$Task.Settings.AllowDemandStart
+        HideInTaskScheduler      = $Task.Settings.Hidden
+        MultipleInstancePolicy   = $Task.Settings.MultipleInstances
+        RequireNetwork           = $Task.Settings.RunOnlyIfNetworkAvailable
+        RunElevated              = $Task.Principal.RunLevel -eq 'Highest'
+        StartIfIdle              = $Task.Settings.RunOnlyIfIdle
+        StartIfOnBattery         = !$Task.Settings.DisallowStartIfOnBatteries
+        WakeToRun                = $Task.Settings.WakeToRun
     }
-    Process
+    if($options.StartIfIdle)
     {
-        $userid = $Task.Principal.UserId
-        if(!$CredentialCache.ContainsKey($userid)) {$CredentialCache[$userid] = Get-Credential $userid}
-        $options = @{
-            ContinueIfGoingOnBattery = !$Task.Settings.StopIfGoingOnBatteries
-            DoNotAllowDemandStart    = !$Task.Settings.AllowDemandStart
-            HideInTaskScheduler      = $Task.Settings.Hidden
-            MultipleInstancePolicy   = $Task.Settings.MultipleInstances
-            RequireNetwork           = $Task.Settings.RunOnlyIfNetworkAvailable
-            RunElevated              = $Task.Principal.RunLevel -eq 'Highest'
-            StartIfIdle              = $Task.Settings.RunOnlyIfIdle
-            StartIfOnBattery         = !$Task.Settings.DisallowStartIfOnBatteries
-            WakeToRun                = $Task.Settings.WakeToRun
+        $options += @{
+            IdleDuration        = ConvertTo-TimeSpan $Task.Settings.IdleSettings.IdleDuration
+            IdleTimeout         = ConvertTo-TimeSpan $Task.Settings.IdleSettings.WaitTimeout
+            StopIfGoingOffIdle  = $Task.Settings.IdleSettings.StopOnIdleEnd
+            RestartOnIdleResume = $Task.Settings.IdleSettings.RestartOnIdle
         }
-        if($options.StartIfIdle)
-        {
-            $options += @{
-                IdleDuration        = ConvertTo-TimeSpan $Task.Settings.IdleSettings.IdleDuration
-                IdleTimeout         = ConvertTo-TimeSpan $Task.Settings.IdleSettings.WaitTimeout
-                StopIfGoingOffIdle  = $Task.Settings.IdleSettings.StopOnIdleEnd
-                RestartOnIdleResume = $Task.Settings.IdleSettings.RestartOnIdle
-            }
-        }
-        $argumentList = $Argument.Trim() -split '(?<=^[^"]*(?:"[^"]*"[^"]*)*)\s+'
-        $params = @{
-            Name         = $Task.TaskName
-            Credential   = $CredentialCache[$userid]
-            Trigger      = Export-ScheduledTask $Task.TaskName |Select-Xml /task:Task/task:Triggers/* |
-                            % {$_.Node} |ConvertTo-JobTrigger
-            ScheduledJobOption = New-ScheduledJobOption @options
-        }
-        $params +=
-            if($Script -is [string]) {@{ FilePath = $Script.Trim('"') }}
-            elseif($Script -is [ScriptBlock]) {@{ ScriptBlock = $Script }}
-        if($argumentList) {$params['ArgumentList']= $argumentList}
-        if($PSCmdlet.ShouldProcess($Task.TaskName,'disable scheduled task'))
-        {
-            Disable-ScheduledTask $Task.TaskName
-        }
-        if($PSCmdlet.ShouldProcess((ConvertTo-Json $params -Compress),'register scheduled job'))
-        {
-            Register-ScheduledJob @params
-        }
+    }
+    $argumentList = $Argument.Trim() -split '(?<=^[^"]*(?:"[^"]*"[^"]*)*)\s+'
+    $params = @{
+        Name         = $Task.TaskName
+        Credential   = $CredentialCache[$userid]
+        ScheduledJobOption = New-ScheduledJobOption @options
+    }
+    [Xml.XmlElement]$triggers = Export-ScheduledTask $Task.TaskName |Select-Xml /task:Task/task:Triggers |% Node
+    if($triggers.ChildNodes.Count -eq 0){Write-Warning "Task $($Task.TaskName) has no triggers."}
+    else { $params += @{ Trigger = $triggers.ChildNodes |ConvertTo-JobTrigger } }
+    $params +=
+        if($Script -is [string]) {@{ FilePath = $Script.Trim('"') }}
+        elseif($Script -is [ScriptBlock]) {@{ ScriptBlock = $Script }}
+    if($argumentList) {$params['ArgumentList']= $argumentList}
+    if($PSCmdlet.ShouldProcess($Task.TaskName,'disable scheduled task'))
+    {
+        Disable-ScheduledTask $Task.TaskName
+    }
+    if($PSCmdlet.ShouldProcess((ConvertTo-Json $params -Compress),'register scheduled job'))
+    {
+        Register-ScheduledJob @params
     }
 }
 
@@ -250,8 +245,11 @@ $CommandParam = @'
         }
         elseif($a.Arguments -match $FilePathParam)
         {
-            Write-Verbose "Converting '$($Task.TaskName)' as a PowerShell file task."
-            Convert-ScheduledTaskToJob $Task $Matches.FilePath $Matches.Params
+            $file =
+                if([io.path]::IsPathRooted($Matches.FilePath)) {$Matches.FilePath}
+                else { [io.path]::Combine($a.WorkingDirectory,$Matches.FilePath) }
+            Write-Verbose "Converting '$($Task.TaskName)' as a PowerShell file task ($file)."
+            Convert-ScheduledTaskToJob $Task $file $Matches.Params
         }
         elseif($a.Arguments -match $CommandParam)
         {
