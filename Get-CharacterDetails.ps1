@@ -48,7 +48,7 @@
         The list of Unicode general category classes that will match the character.
 
     HtmlEncode
-        The result of HTML-encoding the character using 
+        The result of HTML-encoding the character using
         System.Net.WebUtility.HtmlEncode().
 
     HtmlAttributeEncode
@@ -343,7 +343,29 @@
 Begin
 {
     try{[void][Web.HttpUtility]}catch{Add-Type -AN System.Web}
-    # Only some blocks are supported: https://msdn.microsoft.com/en-us/library/20bw873z.aspx#SupportedNamedBlocks
+    try{[void][PasswordCharacter]}catch{Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public class PasswordCharacter
+{
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+    private static extern int GetStringTypeW(int dwInfoType, string lpSrcStr, int cchSrc, out ushort lpCharType);
+    public enum CharacterType { None = 0, Uppercase, Lowercase, Caseless, Digit, Special }
+    static public CharacterType GetCharacterType(char charvalue)
+    {
+        ushort chartype = 0;
+        int errcode = GetStringTypeW(1,charvalue.ToString(),1,out chartype);
+        if(errcode == 87) {throw new ArgumentOutOfRangeException("Bad parameter.");}
+        if(errcode == 1004) {throw new ArgumentOutOfRangeException("Bad flags.");}
+        if((chartype & 1) != 0) {return CharacterType.Uppercase;}
+        if((chartype & 2) != 0) {return CharacterType.Lowercase;}
+        if((chartype & 0x100) != 0) {return CharacterType.Caseless;}
+        if((chartype & 4) != 0) {return CharacterType.Digit;}
+        return CharacterType.Special;
+    }
+}
+'@}
+    # Only some blocks are supported: https://msdn.microsoft.com/library/20bw873z.aspx#SupportedNamedBlocks
     function Find-UnicodeRangeBlock([int]$c)
     {
         if($c -le 0x007F) {'BasicLatin'}
@@ -753,6 +775,7 @@ VerticalForms
             MatchesBlock        = ''
             UnicodeCategory     = [char]::GetUnicodeCategory($c)
             CategoryClasses     = Find-UnicodeCategoryClasses($c)
+            PasswordCategory    = [PasswordCharacter]::GetCharacterType($c)
             HtmlEncode          = [Net.WebUtility]::HtmlEncode($c)
             HtmlAttributeEncode = [Web.HttpUtility]::HtmlAttributeEncode($c)
             UrlEncode           = [Net.WebUtility]::UrlEncode($c)
