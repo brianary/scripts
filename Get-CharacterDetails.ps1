@@ -47,6 +47,12 @@
     CategoryClasses
         The list of Unicode general category classes that will match the character.
 
+    PasswordCategory
+        The passfilt.dll category of the character:
+        Uppercase, Lowercase, Caseless, Digit, or Special.
+        ActiveDirectory complexity rules typically require a character from at least
+        three of these fairly arbitrary categories.
+
     HtmlEncode
         The result of HTML-encoding the character using
         System.Net.WebUtility.HtmlEncode().
@@ -223,6 +229,9 @@
     https://msdn.microsoft.com/library/system.globalization.unicodecategory.aspx
 
 .Link
+    https://msdn.microsoft.com/library/windows/desktop/ms722458.aspx
+
+.Link
     https://msdn.microsoft.com/library/system.net.webutility.aspx
 
 .Link
@@ -236,6 +245,9 @@
 
 .Link
     https://technet.microsoft.com/library/bb726984.aspx
+
+.Link
+    https://msdn.microsoft.com/library/system.io.path.getinvalidfilenamechars.aspx
 
 .Example
     Get-CharacterDetails.ps1 ASCII |Out-GridView
@@ -708,6 +720,7 @@ public class PasswordCharacter
             ? {$c -match "\p{$_}"}
     }
     $invalidUserNameChars = '"/\[]:;|=,+*?<>'.ToCharArray() # https://technet.microsoft.com/en-us/library/bb726984.aspx
+    $invalidFileNameChars = [IO.Path]::GetInvalidFileNameChars()  # https://msdn.microsoft.com/library/system.io.path.getinvalidfilenamechars.aspx
     $notablock = @'
 ArabicSupplement
 NKo
@@ -788,7 +801,7 @@ VerticalForms
             IsDigit             = [char]::IsDigit($c)
             IsHighSurrogate     = [char]::IsHighSurrogate($c)
             IsLegalUserName     = $invalidUserNameChars -notcontains [char]$c
-            IsLegalFileName     = [IO.Path]::InvalidPathChars -notcontains [char]$c
+            IsLegalFileName     = $invalidFileNameChars -notcontains [char]$c
             IsLetter            = [char]::IsLetter($c)
             IsLetterOrDigit     = [char]::IsLetterOrDigit($c)
             IsLower             = [char]::IsLower($c)

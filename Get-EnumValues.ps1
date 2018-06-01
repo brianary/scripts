@@ -45,6 +45,45 @@
        13 Magenta
        14 Yellow
        15 White
+
+.Example
+    Get-EnumValues.ps1 System.Web.Security.AntiXss.MidCodeCharts
+
+
+    ·   Value Name
+        ----- ----
+            0 None
+            1 GreekExtended
+            2 GeneralPunctuation
+            4 SuperscriptsAndSubscripts
+            8 CurrencySymbols
+           16 CombiningDiacriticalMarksForSymbols
+           32 LetterlikeSymbols
+           64 NumberForms
+          128 Arrows
+          256 MathematicalOperators
+          512 MiscellaneousTechnical
+         1024 ControlPictures
+         2048 OpticalCharacterRecognition
+         4096 EnclosedAlphanumerics
+         8192 BoxDrawing
+        16384 EthiopicExtended
+        16384 EthiopicExtended
+        32768 GeometricShapes
+        65536 MiscellaneousSymbols
+       131072 Dingbats
+       262144 MiscellaneousMathematicalSymbolsA
+       524288 SupplementalArrowsA
+      1048576 BraillePatterns
+      2097152 SupplementalArrowsB
+      4194304 MiscellaneousMathematicalSymbolsB
+      8388608 SupplementalMathematicalOperators
+     16777216 MiscellaneousSymbolsAndArrows
+     33554432 Glagolitic
+     67108864 LatinExtendedC
+    134217728 Coptic
+    268435456 GeorgianSupplement
+    536870912 Tifinagh
 #>
 
 #Requires -Version 3
