@@ -27,7 +27,7 @@
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([psobject])] Param(
-[Parameter(Position=0,Mandatory=$true)][Alias('CN','Server')][string[]]$ComputerName,
+[Parameter(Position=0)][Alias('CN','Server')][string[]]$ComputerName = $env:COMPUTERNAME,
 [Parameter(Position=1)][DateTime]$After = ([DateTime]::Today),
 [Parameter(Position=2)][DateTime]$Before = ([DateTime]::Now),
 [switch]$AllProperties
@@ -62,7 +62,7 @@ $IdFields = @{
         'AuthenticationType','ReqThreadAccountName','ThreadId','ThreadAccountName','IsImpersonating','StackTrace','CustomEventDetails')
     # 1325 (1) serious low-level stuff, no fields
 }
-$order = 
+$order =
     if($AllProperties) { @('MachineName','EventTime','EventTimeUtc','LogTime','EntryType','AppPath','ExceptionType',
         'ExceptionMessage','AccountName','UserHostAddress','IsImpersonating','IsAuthenticated','AuthenticationType','User','TrustLevel',
         'CustomEventDetails','AppLocalPath','RequestUrl','RequestPath','AppDomain','Source','EventCode','EventDetailCode','EventMessage',
@@ -76,16 +76,16 @@ $IntFields= 'EventOccurrence','EventSequence','EventCode','EventDetailCode','Pro
 $query = [xml]@"
 <QueryList>
     <Query Id="0" Path="Application">
-        <Select Path="Application">*[System[Provider[@Name='Active Server Pages' 
-                                                     or @Name='ASP.NET 2.0.50727.0' 
+        <Select Path="Application">*[System[Provider[@Name='Active Server Pages'
+                                                     or @Name='ASP.NET 2.0.50727.0'
                                                      or @Name='ASP.NET 4.0.30319.0']
-                                            and TimeCreated[@SystemTime &gt;= '$(Get-Date $After.ToUniversalTime() -Format yyyy-MM-ddTHH:mm:ss.000Z)' 
+                                            and TimeCreated[@SystemTime &gt;= '$(Get-Date $After.ToUniversalTime() -Format yyyy-MM-ddTHH:mm:ss.000Z)'
                                                             and @SystemTime &lt;= '$(Get-Date $Before.ToUniversalTime() -Format yyyy-MM-ddTHH:mm:ss.999Z)']]]</Select>
-        <Suppress Path="Application">*[System[EventID=1017 
-                                              or EventID=1019 
-                                              or EventID=1023 
-                                              or EventID=1025 
-                                              or EventID=1076 
+        <Suppress Path="Application">*[System[EventID=1017
+                                              or EventID=1019
+                                              or EventID=1023
+                                              or EventID=1025
+                                              or EventID=1076
                                               or EventID=1077]]</Suppress>
     </Query>
 </QueryList>

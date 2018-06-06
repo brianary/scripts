@@ -1,10 +1,10 @@
 ﻿<#
 .Synopsis
     Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
-    
+
 .Parameter ComputerName
     The name of the computer to copy jobs from.
-    
+
 .Parameter DestinationComputerName
     The name of the computer to copy jobs to (local computer by default).
 
@@ -32,6 +32,7 @@ function ConvertFrom-Credential
 { $Credential.GetNetworkCredential().Password }
 schtasks /query /s $ComputerName /v /fo csv |
     ConvertFrom-Csv |
+    ? {$_.HostName -ne 'HostName'} |
     Out-GridView -PassThru -Title 'Select jobs to copy' |
     select TaskName,'Run As User' -Unique |
     % {
