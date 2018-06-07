@@ -194,7 +194,11 @@ function Convert-ScheduledTaskToJob
     }
     [Xml.XmlElement]$triggers = Export-ScheduledTask $Task.TaskName |Select-Xml /task:Task/task:Triggers |% Node
     if($triggers.ChildNodes.Count -eq 0){Write-Warning "Task $($Task.TaskName) has no triggers."}
-    else { $params += @{ Trigger = $triggers.ChildNodes |ConvertTo-JobTrigger } }
+    else
+    {
+        $trigger = $triggers.ChildNodes |ConvertTo-JobTrigger
+        if($trigger) { $params += @{ Trigger = $trigger } }
+    }
     $params +=
         if($Script -is [string]) {@{ FilePath = $Script.Trim('"') }}
         elseif($Script -is [ScriptBlock]) {@{ ScriptBlock = $Script }}
@@ -245,10 +249,11 @@ $CommandParam = @'
         }
         elseif($a.Arguments -match $FilePathParam)
         {
+            $workdir,$filepath = $a.WorkingDirectory,$Matches.FilePath.Trim('"')
+            Write-Verbose "Converting '$($Task.TaskName)' as a PowerShell file task ($filePath; $workdir)."
             $file =
-                if([io.path]::IsPathRooted($Matches.FilePath)) {$Matches.FilePath}
-                else { [io.path]::Combine($a.WorkingDirectory,$Matches.FilePath) }
-            Write-Verbose "Converting '$($Task.TaskName)' as a PowerShell file task ($file)."
+                if([io.path]::IsPathRooted($filepath)) {$filepath}
+                else { [io.path]::Combine($workdir,$filepath) }
             Convert-ScheduledTaskToJob $Task $file $Matches.Params
         }
         elseif($a.Arguments -match $CommandParam)
