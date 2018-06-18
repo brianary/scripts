@@ -1,63 +1,63 @@
 ﻿<#
 .Synopsis
     Checks for the existence of the given command, and adds if missing and a source is defined.
-    
+
 .Description
     Use-Command checks to see if a command exists by the name given.
-    
+
     If the command does not exist, but the path is valid, an alias is created.
-    
+
     Otherwise, if one of several installation methods is provided, an installation attempt is made before aliasing.
-    
+
 .Parameter Name
     The name of the command to test.
-    
+
 .Parameter Path
     The full path of the command, if installed.
     Accepts wildcards, as supported by Resolve-Path.
-    
+
 .Parameter ChocolateyPackage
     The name of the Chocolatey package to install if the command is missing.
-    
+
 .Parameter NugetPackage
     The name of the NuGet package to install if the command is missing.
-    
+
 .Parameter NodePackage
     The name of the Node NPM package to install if the command is missing.
-    
+
 .Parameter InstallDir
     The directory to install NuGet or Node packages to.
     Node will create and use a "node_modules" folder under this one.
     Default is C:\Tools
-    
+
 .Parameter WindowsInstaller
     The location (file or URL) of an MSI package to install if the command is missing.
-    
+
 .Parameter InstallLevel
     The INSTALLLEVEL to pass to Windows Installer.
     Default is 32767
-    
+
 .Parameter ExecutableInstaller
     The location (file or URL) of an .exe installer to use if the command is missing.
-    
+
 .Parameter InstallerParameters
     Parameters to pass to the .exe installer.
-    
+
 .Parameter ExecutePS
     The URL or file path of a PowerShell script to download and execute to install the command if it is missing.
-    
+
 .Parameter DownloadZip
     The URL to download a .zip file containing the command if it is missing.
-    
+
 .Parameter DownloadUrl
     The URL to download the command from if it is missing.
-    
+
 .Parameter Message
     A message to display, rather than attempting to install a missing command.
-    
+
 .Parameter Fail
     Throw an exception rather than attempt to install a missing command.
-    
+
 .Link
     Resolve-Path
 
@@ -72,14 +72,14 @@
 
 .Link
     https://technet.microsoft.com/library/bb490936.aspx
-    
+
 .Link
     http://www.iheartpowershell.com/2013/05/powershell-supportsshouldprocess-worst.html
-    
+
 .Example
     Use-Command.ps1 nuget $ToolsDir\NuGet\nuget.exe -url http://www.nuget.org/nuget.exe
     This example downloads and aliases nuget, if missing.
-    
+
 .Example
     Use-Command.ps1 npm 'C:\Program Files\nodejs\npm.cmd' -msi http://nodejs.org/dist/v0.10.33/x64/node-v0.10.33-x64.msi
     This example downloads and silently installs node if npm is missing.
@@ -88,7 +88,7 @@
 #requires -Version 2
 #requires -Modules Microsoft.PowerShell.Utility
 [CmdletBinding(SupportsShouldProcess=$true)]
-Param([Parameter(Position=0,Mandatory=$true)]$Name, 
+Param([Parameter(Position=0,Mandatory=$true)]$Name,
 [Parameter(Position=1,Mandatory=$true)][string]$Path,
 [Parameter(ParameterSetName='ChocolateyPackage')][Alias('ChocoPackage','chocopkg','cinst')][string]$ChocolateyPackage,
 [Parameter(ParameterSetName='NugetPackage')][Alias('nupkg')][string]$NugetPackage,
@@ -148,8 +148,8 @@ switch($PSCmdlet.ParameterSetName)
     {
         if(!(Get-Command npm -ErrorAction SilentlyContinue))
         { throw 'Npm not found, unable to install.' }
-        if(!(Test-Path "$env:USERPROFILE\AppData\Roaming\npm" -PathType Container)) 
-        { mkdir "$env:USERPROFILE\AppData\Roaming\npm" |Out-Null }
+        if(!(Test-Path "$env:APPDATA\npm" -PathType Container))
+        { mkdir "$env:APPDATA\npm" |Out-Null }
         if($PSCmdlet.ShouldProcess("$NodePackage in $InstallDir",'npm install'))
         {
             pushd $InstallDir
@@ -201,7 +201,7 @@ switch($PSCmdlet.ParameterSetName)
         }
         else { Write-Warning "Installation of $ExecutableInstaller was cancelled." }
     }
-    
+
     ExecutePowerShell
     {
         if($PSCmdlet.ShouldProcess($ExecutePowerShell,"execute PowerShell script"))
@@ -214,7 +214,7 @@ switch($PSCmdlet.ParameterSetName)
         }
         else { Write-Warning "Execution of $ExecutePowerShell was cancelled." }
     }
-    
+
     DownloadZip
     {
         $dir = Split-Path $Path
@@ -232,7 +232,7 @@ switch($PSCmdlet.ParameterSetName)
         }
         else { Write-Warning "Download/unzip of $Name was cancelled." }
     }
-    
+
     DownloadUrl
     {
         if($PSCmdlet.ShouldProcess("$DownloadUrl to $Path",'download'))
@@ -244,7 +244,7 @@ switch($PSCmdlet.ParameterSetName)
         }
         else { Write-Warning "Download of $Name was cancelled." }
     }
-    
+
     WarnOnly
     {
         Write-Warning $Message
