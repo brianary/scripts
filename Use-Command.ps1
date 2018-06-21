@@ -77,11 +77,13 @@
     http://www.iheartpowershell.com/2013/05/powershell-supportsshouldprocess-worst.html
 
 .Example
-    Use-Command.ps1 nuget $ToolsDir\NuGet\nuget.exe -url http://www.nuget.org/nuget.exe
+    Use-Command.ps1 nuget $ToolsDir\NuGet\nuget.exe -url https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+
     This example downloads and aliases nuget, if missing.
 
 .Example
-    Use-Command.ps1 npm 'C:\Program Files\nodejs\npm.cmd' -msi http://nodejs.org/dist/v0.10.33/x64/node-v0.10.33-x64.msi
+    Use-Command.ps1 npm 'C:\Program Files\nodejs\npm.cmd' -cinst nodejs
+
     This example downloads and silently installs node if npm is missing.
 #>
 
@@ -134,6 +136,7 @@ switch($PSCmdlet.ParameterSetName)
 
     NugetPackage
     {
+        Use-Command.ps1 nuget $env:ChocolateyInstall\bin\nuget.exe -cinst NuGet.CommandLine
         if(!(Get-Command nuget -ErrorAction SilentlyContinue))
         { throw 'NuGet not found, unable to install.' }
         if($PSCmdlet.ShouldProcess("$NugetPackage in $InstallDir",'NuGet install'))
@@ -146,10 +149,11 @@ switch($PSCmdlet.ParameterSetName)
 
     NodePackage
     {
+        Use-Command.ps1 npm $env:ProgramFiles\nodejs\npm.cmd -cinst nodejs
         if(!(Get-Command npm -ErrorAction SilentlyContinue))
         { throw 'Npm not found, unable to install.' }
-        if(!(Test-Path "$env:APPDATA\npm" -PathType Container))
-        { mkdir "$env:APPDATA\npm" |Out-Null }
+        if(!(Test-Path "$env:USERPROFILE\AppData\Roaming\npm" -PathType Container))
+        { mkdir "$env:USERPROFILE\AppData\Roaming\npm" |Out-Null }
         if($PSCmdlet.ShouldProcess("$NodePackage in $InstallDir",'npm install'))
         {
             pushd $InstallDir
@@ -224,7 +228,7 @@ switch($PSCmdlet.ParameterSetName)
             if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
             $zippath = Join-Path $env:TEMP $filename
             Write-Verbose "Downloading $DownloadZip to $path"
-            (New-Object System.Net.WebClient).DownloadFile($DownloadZip,$zippath)
+            Invoke-WebRequest $DownloadZip -OutFile $zippath
             try{[void][IO.Compression.ZipFile]}catch{Add-Type -AN System.IO.Compression.FileSystem}
             Write-Verbose "Copying zipped items from $zippath to $dir"
             [IO.Compression.ZipFile]::ExtractToDirectory($zippath,$dir)
@@ -239,7 +243,7 @@ switch($PSCmdlet.ParameterSetName)
         {
             $dir = Split-Path $Path
             if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
-            (New-Object System.Net.WebClient).DownloadFile($DownloadUrl,$Path)
+            Invoke-WebRequest $DownloadUrl -OutFile $Path
             Set-ResolvedAlias $Name $Path
         }
         else { Write-Warning "Download of $Name was cancelled." }
