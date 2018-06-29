@@ -85,6 +85,11 @@
     Use-Command.ps1 npm 'C:\Program Files\nodejs\npm.cmd' -cinst nodejs
 
     This example downloads and silently installs node if npm is missing.
+
+.Example
+    Use-Command.ps1 Get-ADUser $null -WindowsFeature RSAT-AD-PowerShell
+
+    This example downloads and installs the RSAT-AD-PowerShell module if missing.
 #>
 
 #requires -Version 2
@@ -92,6 +97,7 @@
 [CmdletBinding(SupportsShouldProcess=$true)]
 Param([Parameter(Position=0,Mandatory=$true)]$Name,
 [Parameter(Position=1,Mandatory=$true)][string]$Path,
+[Parameter(ParameterSetName='WindowsFeature')][Alias('WinFeature')][string]$WindowsFeature,
 [Parameter(ParameterSetName='ChocolateyPackage')][Alias('ChocoPackage','chocopkg','cinst')][string]$ChocolateyPackage,
 [Parameter(ParameterSetName='NugetPackage')][Alias('nupkg')][string]$NugetPackage,
 [Parameter(ParameterSetName='NodePackage')][Alias('npm')][string]$NodePackage,
@@ -122,10 +128,21 @@ if($Path -and (Test-Path $Path)) { Set-ResolvedAlias $Name $Path ; return }
 
 switch($PSCmdlet.ParameterSetName)
 {
+    WindowsFeature
+    {
+        if(!(Get-Command Install-WindowsFeature -ErrorAction SilentlyContinue))
+        { throw "Install-WindowsFeature not found, unable to install $WindowsFeature." }
+        if($PSCmdlet.ShouldProcess($WindowsFeature,'install Windows feature'))
+        {
+            Install-WindowsFeature $WindowsFeature
+        }
+        else { Write-Warning "Installation of $WindowsFeature was cancelled." }
+    }
+
     ChocolateyPackage
     {
         if(!(Get-Command cinst -ErrorAction SilentlyContinue))
-        { throw 'Chocolatey installer "cinst" not found, unable to install.' }
+        { throw "Chocolatey installer ""cinst"" not found, unable to install $ChocolateyPackage." }
         if($PSCmdlet.ShouldProcess($ChocolateyPackage,'Chocolatey install'))
         {
             cinst $ChocolateyPackage -y
@@ -138,7 +155,7 @@ switch($PSCmdlet.ParameterSetName)
     {
         Use-Command.ps1 nuget $env:ChocolateyInstall\bin\nuget.exe -cinst NuGet.CommandLine
         if(!(Get-Command nuget -ErrorAction SilentlyContinue))
-        { throw 'NuGet not found, unable to install.' }
+        { throw "NuGet not found, unable to install $NugetPackage." }
         if($PSCmdlet.ShouldProcess("$NugetPackage in $InstallDir",'NuGet install'))
         {
             nuget install $NugetPackage -x -o $InstallDir -NonInteractive
@@ -151,7 +168,7 @@ switch($PSCmdlet.ParameterSetName)
     {
         Use-Command.ps1 npm $env:ProgramFiles\nodejs\npm.cmd -cinst nodejs
         if(!(Get-Command npm -ErrorAction SilentlyContinue))
-        { throw 'Npm not found, unable to install.' }
+        { throw "Npm not found, unable to install $NodePackage." }
         if(!(Test-Path "$env:USERPROFILE\AppData\Roaming\npm" -PathType Container))
         { mkdir "$env:USERPROFILE\AppData\Roaming\npm" |Out-Null }
         if($PSCmdlet.ShouldProcess("$NodePackage in $InstallDir",'npm install'))
@@ -167,7 +184,7 @@ switch($PSCmdlet.ParameterSetName)
     WindowsInstaller
     {
         if(!(Get-Command msiexec -ErrorAction SilentlyContinue))
-        { throw 'Windows installer (msiexec) not found, unable to install.' }
+        { throw "Windows installer (msiexec) not found, unable to install $WindowsInstaller." }
         $file = $WindowsInstaller.Segments[$WindowsInstaller.Segments.Length-1]
         if($PSCmdlet.ShouldProcess("$file (INSTALLLEVEL=$InstallLevel)",'Windows install'))
         {
