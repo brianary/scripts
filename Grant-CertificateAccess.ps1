@@ -62,7 +62,8 @@
 #Requires -Version 3
 #TODO: require admin formally once everything is > PowerShell 3
 #-Requires -RunAsAdministrator
-#Requires -Module WebAdministration
+# WebAdministration is conditionally imported below, since it's only needed for AppPools.
+#-Requires -Module WebAdministration
 [CmdletBinding(ConfirmImpact='Medium',SupportsShouldProcess=$true)] Param(
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='AppPool')]
 [string]$AppPool,
