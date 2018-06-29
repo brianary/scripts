@@ -30,12 +30,12 @@
     Status           : OK
     Manufacturer     : Microsoft Corporation
     Model            : Surface Pro 4
-    PrimaryOwnerName : 
+    PrimaryOwnerName :
     Memory           : 3.93 GiB (25.68 % free)
     OperatingSystem  : Microsoft Windows 10 Pro64-bit  (10.0.14393)
     Processors       : Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz
     Drives           : C: 118 GiB (31.47 % free)
-    Shares           : 
+    Shares           :
     NetVersions      : {v4.6.2+win10ann, v3.5, v2.0.50727, v3.0}
 #>
 
@@ -48,23 +48,24 @@
 foreach($computer in $ComputerName)
 {
     $wmiargs = @{ ComputerName= $computer }
-    $cs = gwmi Win32_ComputerSystem @wmiargs
-    $os = gwmi Win32_OperatingSystem @wmiargs
+    $cs = Get-WmiObject Win32_ComputerSystem @wmiargs
+    $os = Get-WmiObject Win32_OperatingSystem @wmiargs
     $value = [ordered]@{}
     if($All)
     {
-        $cs.PSObject.Properties |? {!($value.Contains($_.Name)) -and $_.Name -notlike '__*'} |% {$value.Add($_.Name,$_.Value)}
-        $os.PSObject.Properties |? {!($value.Contains($_.Name)) -and $_.Name -notlike '__*'} |% {$value.Add($_.Name,$_.Value)}
-        $value.TotalPhysicalMemory = Format-ByteUnits $value.TotalPhysicalMemory -si -dot 2 + 
+        $cs |Get-Member -MemberType Property |? Name -NotLike '__*' |% Name |% {$value.Add($_,$cs.$_)}
+        $os |Get-Member -MemberType Property |? Name -NotLike '__*' |% Name |
+            ? {!($value.Contains($_))} |% {$value.Add($_,$cs.$_)}
+        $value.TotalPhysicalMemory = Format-ByteUnits $value.TotalPhysicalMemory -si -dot 2 +
             " ($('{0:p}' -f (1KB*$os.FreePhysicalMemory/$cs.TotalPhysicalMemory)) free)"
-        $value.Processors= (gwmi Win32_Processor @wmiargs |
+        $value.Processors= (Get-WmiObject Win32_Processor @wmiargs |
             % Name |
             % {$_ -replace '\s{2,}',' '})
-        $value.Drives= (gwmi Win32_Volume @wmiargs |
+        $value.Drives= (Get-WmiObject Win32_Volume @wmiargs |
             ? {$_.DriveType -eq 3 -and $_.DriveLetter -and $_.Capacity} |
             sort DriveLetter |
             % {"$($_.DriveLetter) $(Format-ByteUnits $_.Capacity -si -dot 2) ($('{0:p}' -f ($_.FreeSpace/$_.Capacity)) free)"})
-        $value.Shares= (gwmi Win32_Share @wmiargs |
+        $value.Shares= (Get-WmiObject Win32_Share @wmiargs |
             ? {$_.Type -eq 0} |
             % {"$($_.Name)=$($_.Path)"})
         $value.NetVersions = (Get-NetFrameworkVersions.ps1 $computer)
@@ -77,21 +78,21 @@ foreach($computer in $ComputerName)
             Manufacturer = $cs.Manufacturer
             Model = $cs.Model
             PrimaryOwnerName = $cs.PrimaryOwnerName
-            Memory = (Format-ByteUnits $cs.TotalPhysicalMemory -si -dot 2) + 
+            Memory = (Format-ByteUnits $cs.TotalPhysicalMemory -si -dot 2) +
                 " ($('{0:p}' -f (1KB*$os.FreePhysicalMemory/$cs.TotalPhysicalMemory)) free)"
             OperatingSystem = $os.Caption + $(try{ $os.OSArchitecture }catch{''}) + ' ' + $os.CSDVersion + ' (' + $os.Version + ')'
-            Processors = (gwmi Win32_Processor @wmiargs |
+            Processors = (Get-WmiObject Win32_Processor @wmiargs |
                 % Name |
                 % {$_ -replace '\s{2,}',' '})
-            Drives = (gwmi Win32_Volume @wmiargs |
+            Drives = (Get-WmiObject Win32_Volume @wmiargs |
                 ? {$_.DriveType -eq 3 -and $_.DriveLetter -and $_.Capacity} |
                 sort DriveLetter |
                 % {"$($_.DriveLetter) $(Format-ByteUnits $_.Capacity -si -dot 2) ($('{0:p}' -f ($_.FreeSpace/$_.Capacity)) free)"})
-            Shares= (gwmi Win32_Share @wmiargs |
+            Shares= (Get-WmiObject Win32_Share @wmiargs |
                 ? {$_.Type -eq 0} |
                 % {"$($_.Name)=$($_.Path)"})
             NetVersions = (Get-NetFrameworkVersions.ps1 $computer)
         }
     }
-    New-Object PSObject -Property $value
+    [PSCustomObject]$value
 }
