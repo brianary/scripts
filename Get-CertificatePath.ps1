@@ -28,7 +28,8 @@
 )
 Process
 {
-    if($Certificate.PSObject.Properties.Match('Path').Count -and $Certificate.Path) {$Certificate.Path}
+    [bool]$hasPath = $Certificate |Get-Member Path -MemberType Property
+    if($hasPath -and $Certificate.Path) {$Certificate.Path}
     else
     {
         $file = $Certificate.PrivateKey.CspKeyContainerInfo.UniqueKeyContainerName
@@ -54,7 +55,7 @@ Process
             if(!(Test-Path $path -PathType Leaf)) {throw "Could not find certificate path: $path"}
         }
         Write-Verbose "Certificate path: $path"
-        if($Certificate.PSObject.Properties.Match('Path').Count) {$Certificate.Path = $path}
+        if($hasPath) {$Certificate.Path = $path}
         else {Add-Member -InputObject $Certificate -MemberType NoteProperty -Name Path -Value $path}
         $path
     }

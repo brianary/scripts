@@ -81,7 +81,7 @@ function Add-VsCodeConnections([object[]]$connections)
     if(Test-Path ${settings.json} -PathType Leaf)
     {
         $settings = Get-Content ${settings.json} -Raw |ConvertFrom-Json
-        if('mssql.connections' -in $settings.PSObject.Properties.Name)
+        if($settings |Get-Member mssql.connections -MemberType NoteProperty)
         {
             $csnew = $connections |? profileName -notin $settings.'mssql.connections'.profileName
             if(!$csnew){Write-Verbose "No new connections to add."; return}

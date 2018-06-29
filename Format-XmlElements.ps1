@@ -60,16 +60,20 @@ Process
     { $Value.Keys |? {$_ -match '^\w+$'} |% {"<$_>$(Format-XmlElements.ps1 $Value.$_)</$_>"} }
     elseif($Value -is [PSObject])
     {
-        $Value.PSObject.Properties |
-            ? {$_.Name -match '^\w+$'} |
-            % {"<$($_.Name)>$(Format-XmlElements.ps1 $_.Value)</$($_.Name)>"}
+        $Value |
+            Get-Member -MemberType Properties |
+            ? Name -NotLike '\W' |
+            % Name |
+            % {"<$_>$(Format-XmlElements.ps1 $Value.$_)</$_>"}
     }
     elseif($Value -is [xml])
     { $Value.OuterXml }
     else
     {
-        Get-Member -InputObject $Value.PSObject.Properties -MemberType Properties |
-            ? {$_.Name -match '^\w+$'} |
-            % {"<$($_.Name)>$(Format-XmlElements.ps1 $Value.$($_.Value))</$($_.Name)>"}
+        $Value |
+            Get-Member -MemberType Properties |
+            ? Name -NotLike '\W' |
+            % Name |
+            % {"<$_>$(Format-XmlElements.ps1 $Value.$_)</$_>"}
     }
 }

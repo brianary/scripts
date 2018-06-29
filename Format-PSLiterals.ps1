@@ -33,7 +33,7 @@
 [string]$IndentBy = "`t",
 [switch]$SkipInitialIndent
 )
-Begin 
+Begin
 {
     $Script:OFS = "`n$Indent"
     $Local:PSDefaultParameterValues = @{
@@ -106,17 +106,21 @@ Process
     elseif($Value -is [PSObject])
     {
         "${itab}[PSCustomObject]@{"
-        $Value.PSObject.Properties |
-            ? {$_.Name -match '^\w+$'} |
-            % {"$Indent$IndentBy$($_.Name) = $(Format-PSLiterals.ps1 $_.Value -SkipInitialIndent)"}
+        $Value |
+            Get-Member -MemberType Properties |
+            ? Name -NotLike '\W' |
+            % Name |
+            % {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
         "${tab}}"
     }
     else
     {
         "${itab}@{"
-        Get-Member -InputObject $Value.PSObject.Properties -MemberType Properties |
-            ? {$_.Name -match '^\w+$'} |
-            % {"$Indent$IndentBy$($_.Name) = $(Format-PSLiterals.ps1 $Value.$($_.Value) -SkipInitialIndent)"}
+        $Value |
+            Get-Member -MemberType Properties |
+            ? Name -NotLike '\W' |
+            % Name |
+            % {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
         "${tab}}"
     }
 }
