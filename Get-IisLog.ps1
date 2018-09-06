@@ -125,7 +125,7 @@ select to_localtime(to_timestamp(date,time)) as Time,
        strcat(s-ip,strcat(':',to_string(s-port))) as Server,
        extract_filename(LogFilename) as Filename, 
        LogRow as Line, 
-       coalesce(c-ip,'') as IpAddr, 
+       coalesce(c-ip,'') as IpAddress, 
        cs-username as Username,
        coalesce(replace_chr(cs(User-Agent),'+',' '),'') as UserAgent, 
        cs-method as Method,
@@ -139,4 +139,13 @@ $where
 "@
 Write-Verbose $sql
 logparser $sql -i:IISW3C -o:TSV -headers:off -stats:off |
-    ConvertFrom-Csv -Delimiter "`t" -Header 'Time','Server','Filename','Line','IpAddr','Username','UserAgent','Method','UriPath','Query','Referrer','Status'
+    ConvertFrom-Csv -Delimiter "`t" -Header 'Time','Server','Filename','Line','IpAddress','Username','UserAgent','Method','UriPath','Query','Referrer','Status' |
+    % {
+        [datetime]$_.Time = $_.Time
+        [long]$_.Line = $_.Line
+        [Net.IpAddress]$_.IpAddress = $_.IpAddress
+        [Microsoft.PowerShell.Commands.WebRequestMethod]$_.Method = $_.Method
+        [uri]$_.Referrer = $_.Referrer
+        [decimal]$_.Status = $_.Status
+        $_
+    }
