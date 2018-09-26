@@ -54,10 +54,12 @@
 )
 
 $sh = New-Object -ComObject WScript.Shell
-$path = Split-Path $Name
+[Environment]::CurrentDirectory = $PWD # sync IO dir to PS
+$folder = Split-Path ([IO.Path]::GetFullPath($Path))
 # the old WshShortcut COM component doesn't support Unicode
-$file = [Net.WebUtility]::UrlEncode((Split-Path $Name -Leaf))
-$fullname = Join-Path $path $file
+$file = [Net.WebUtility]::UrlEncode((Split-Path $Path -Leaf))
+if(![IO.Path]::HasExtension($file)) {$file += if([uri]::IsWellFormedUriString($TargetPath,'Absolute')){'.url'}else{'.lnk'}}
+$fullname = Join-Path $folder $file
 $lnk = $sh.CreateShortcut($fullname)
 $lnk.TargetPath = $TargetPath
 if($Arguments)        {$lnk.Arguments = $Arguments}
