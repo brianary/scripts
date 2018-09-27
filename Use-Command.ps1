@@ -43,7 +43,7 @@
 .Parameter InstallerParameters
     Parameters to pass to the .exe installer.
 
-.Parameter ExecutePS
+.Parameter ExecutePowerShell
     The URL or file path of a PowerShell script to download and execute to install the command if it is missing.
 
 .Parameter DownloadZip
@@ -112,7 +112,7 @@ Param([Parameter(Position=0,Mandatory=$true)]$Name,
 [Alias('exe')][uri]$ExecutableInstaller,
 [Parameter(ParameterSetName='ExecutableInstaller')]
 [Alias('params')][string[]]$InstallerParameters = @(),
-[Parameter(ParameterSetName='ExecutePowerShell')][Alias('iex')][uri]$ExecutePowerShell,
+[Parameter(ParameterSetName='ExecutePS')][Alias('iex')][uri]$ExecutePowerShell,
 [Parameter(ParameterSetName='DownloadZip')][Alias('zip')][uri]$DownloadZip,
 [Parameter(ParameterSetName='DownloadUrl')][Alias('url')][uri]$DownloadUrl,
 [Parameter(ParameterSetName='WarnOnly')]
