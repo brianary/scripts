@@ -97,6 +97,12 @@ select top 1 with ties [{2}] value, count(*) #
   from [{0}].[{1}]
  group by [{2}]
  order by # desc
+),     MedianValue as (
+select max(value) value
+  from (select top 50 percent [{2}] value from [{0}].[{1}] order by value) a
+ union
+select min(value)
+  from (select top 50 percent [{2}] value from [{0}].[{1}] order by value desc) b
 )
 select '{2}' ColumnName,
        '{3}' SqlType,
@@ -106,6 +112,7 @@ select '{2}' ColumnName,
        min([{2}]) MinimumValue,
        max([{2}]) MaximumValue,
        avg([{2}]) MeanAverage,
+       (select avg(value) from MedianValue) MedianAverage,
        (select avg(value) from TopValues) ModeAverage,
        var([{2}]) Variance,
        stdev([{2}]) StandardDeviation
