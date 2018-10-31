@@ -12,7 +12,7 @@
 .Example
     Remove-LockyFile.ps1 InUse.dll
 
-    (Tries to remove file, renames it if unable to.)
+    (Tries to remove file, renames it if unable to, tries deleting at reboot as a last resort.)
 #>
 
 #Requires -Version 3
@@ -22,12 +22,36 @@
 )
 Process
 {
-    try { Remove-Item $Path -Force }
+    try{[void][RebootFileAction]}catch{Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public class RebootFileAction
+{
+    [DllImport("kernel32.dll", SetLastError=true, CharSet=CharSet.Auto)]
+    private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
+    const int MOVEFILE_DELAY_UNTIL_REBOOT = 0x4;
+    static public void Delete(string filename)
+    {
+        if(!MoveFileEx(filename,"",MOVEFILE_DELAY_UNTIL_REBOOT))
+        { throw new InvalidOperationException(String.Format("Unable to mark {0} for deletion at reboot.",filename)); }
+    }
+}
+'@}
+    try { Remove-Item $Path -Force -ErrorAction Stop }
     catch
     {
         $NewPath = "$Path~$([guid]::NewGuid().Guid)"
-        Move-Item $Path $NewPath
-        try { Remove-Item $NewPath -Force }
-        catch { Write-Warning "Renamed file, but unable to remove $(Resolve-Path $NewPath)" }
+        try
+        {
+            Move-Item $Path $NewPath -Force -ErrorAction Stop
+            $Path = Resolve-Path $NewPath
+            try { Remove-Item $Path -Force -ErrorAction Stop }
+            catch { Write-Warning "Renamed file, but unable to remove $Path"; throw }
+        }
+        catch
+        {
+            [RebootFileAction]::Delete((Resolve-Path $Path))
+            Write-Warning "File $Path has been marked for deletion at reboot."
+        }
     }
 }
