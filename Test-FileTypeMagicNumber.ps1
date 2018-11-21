@@ -41,7 +41,7 @@
 [Parameter(Position=0,Mandatory=$true)]
 [ValidateSet('7z','aiff','avi','bmp','cab','exe','flac','flif','gif','gzip','ico','iso','javaclass',
 'jpeg','midi','mkv','mp3','mpeg','msoffice','ogg','pdf','png','postscript','psd','rar','rtf','tar',
-'tiff','utf16','utf16be','utf32','utf32be','utf8','wasm','wav','webm','webp','wmv','zip')]
+'tiff','utf16','utf16be','utf32','utf32be','utf8','wasm','wav','webm','webp','wmv','xml','zip')]
 [string]$FileType,
 [Parameter(Position=2,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
 )
@@ -51,6 +51,13 @@ Begin
     [scriptblock]$test =
         switch($FileType)
         {
+            xml
+            {{ param($f)
+                return (Test-MagicNumber.ps1 0xEF,0xBB,0xBF,0x3C,0x3F,0x78,0x6D,0x6C $f) -or
+                    (Test-MagicNumber.ps1 0x3C,0x3F,0x78,0x6D,0x6C $f) -or
+                    (Test-MagicNumber.ps1 0xFE,0xFF,0x00,0x3C,0x00,0x3F,0x00,0x78,0x00,0x6D,0x00,0x6C $f) -or
+                    (Test-MagicNumber.ps1 0xFF,0xFE,0x3C,0x00,0x3F,0x00,0x78,0x00,0x6D,0x00,0x6C,0x00 $f)
+            }}
             gif
             {{ param($f)
                 return (Test-MagicNumber.ps1 0x47,0x49,0x46,0x38,0x39,0x61 $f) -or
