@@ -6,8 +6,8 @@
     The value to search for, usually a string.
 
     For a FindType of FindByTimeValid, FindByTimeNotYetValid, or FindByTimeExpired, the FindValue must be a datetime.
-    For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a 
-    System.Security.Cryptography.Oid. 
+    For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a
+    System.Security.Cryptography.Oid.
     For a FindType of FindByKeyUsage, the FindValue can be a string or an int bitmask.
 
 .Parameter FindType
@@ -15,8 +15,8 @@
     e.g. FindBySubjectName, FindByKeyUsage, FindByIssuerDistinguishedName
 
     For a FindType of FindByTimeValid, FindByTimeNotYetValid, or FindByTimeExpired, the FindValue should be a datetime.
-    For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a 
-    System.Security.Cryptography.Oid. 
+    For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a
+    System.Security.Cryptography.Oid.
     For a FindType of FindByKeyUsage, the FindValue can be a string or an int bitmask.
 
     Omitting a FindType or StoreName will search all stores and common fields.
@@ -72,9 +72,11 @@ $cert =
     if(!($StoreName -and $FindType))
     {
         Write-Verbose "Find '$FindValue'"
+        $now = Get-Date
         ls Cert:\CurrentUser,Cert:\LocalMachine |
             % {ls "Cert:\$($_.Location)\$($_.Name)"} |
-            ? {$_.Subject,$_.Issuer,$_.Thumbprint |? {$_ -like "*$FindValue*"}}
+            ? {$_.Subject,$_.Issuer,$_.Thumbprint |? {$_ -like "*$FindValue*"}} |
+            ? {!$Valid -or ($now -ge $_.NotBefore -and $now -le $_.NotAfter)}
     }
     else
     {
