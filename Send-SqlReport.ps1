@@ -29,7 +29,7 @@
 .Parameter From
     The from address to use for the email.
     The default is to use $PSEmailServer.
-    If that is missing, it will be populated by the value from the 
+    If that is missing, it will be populated by the value from the
     configuration value:
 
     <system.net>
@@ -95,7 +95,7 @@
 [string]$From,
 [string]$Caption,
 [string]$ReportFile,
-[int]$Timeout= 90,
+[Alias('Timeout')][int]$QueryTimeout= 90,
 [string]$PreContent= ' ',
 [string]$PostContent= ' ',
 [string[]]$Cc,
@@ -133,16 +133,16 @@ if($UseSsl)   { $Msg.UseSsl = $true }
 try
 {
     $query = @{ Query = $Sql }
-    if($Timeout) {$query += @{QueryTimeout=$Timeout}}
-    [Data.DataRow[]]$data = Invoke-Sqlcmd @query -ErrorAction Stop
+    [psobject[]]$data = Invoke-Sqlcmd @query -ErrorAction Stop |ConvertFrom-DataRow.ps1
     $data |Format-Table |Out-String |Write-Verbose
-    if(!$data -or $data.Count -eq 0) # no rows
+    if(!$data -or $data.Length -eq 0) # no rows
     {
         Write-Verbose "No rows returned."
         if($SeqUrl) { Send-SeqEvent.ps1 'No rows returned for {Subject}' @{Subject=$Subject} -Level Information }
         if($EmptySubject) { $Msg.Subject = $EmptySubject; Send-MailMessage @Msg  }
         return
     }
+    Write-Verbose "$($data.Length) rows returned."
     if($ReportFile)
     { # convert the table into a tsv/csv file and link to it
         $ReportFile = $ReportFile -f (Get-Date)
@@ -168,7 +168,6 @@ $PostContent
         $tableFormat = @{OddRowBackground='#EEE'}
         if($Caption){$tableFormat.Add('Caption',$Caption)}
         $Msg.Add('Body',($data |
-            select ($data[0].Table.Columns |% ColumnName) |
             ConvertTo-Html -PreContent $PreContent -PostContent $PostContent -Head '<style type="text/css">th,td {padding:2px 1ex 0 2px}</style>' |
             Format-HtmlDataTable.ps1 @tableFormat |
             Out-String))
