@@ -19,6 +19,7 @@
 [Net.ServicePointManager]::SecurityProtocol = 'Tls12'
 $Global:PSDefaultParameterValues['Out-File:Width'] = [int]::MaxValue
 $Global:PSDefaultParameterValues['Out-File:Encoding'] = 'UTF8'
+$Global:PSDefaultParameterValues['Get-ChildItem:Force'] = $True
 $Global:PSDefaultParameterValues['Export-Csv:NoTypeInformation'] = $True
 $Global:PSDefaultParameterValues['Invoke-WebRequest:UseBasicParsing'] = $True
 $Global:PSDefaultParameterValues['Select-Xml:Namespace'] = @{
