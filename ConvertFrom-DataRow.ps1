@@ -30,7 +30,7 @@
 Process
 {
     $fields = [ordered]@{}
-    $DataRow.Table.Columns |% ColumnName |% {[void]$fields.Add($_,$DataRow[$_])}
+    if($DataRow.Table -is [Data.DataTable]) {$DataRow.Table.Columns.ColumnName |% {[void]$fields.Add($_,$DataRow[$_])}}
     if($AsDictionary) {$fields}
-    else {New-Object psobject -Property $fields}
+    elseif($fields.Count) {[pscustomobject]$fields}
 }
