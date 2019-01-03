@@ -199,6 +199,7 @@ function Get-ColorTable([Parameter(Position=0,Mandatory=$true)][Collections.IDic
 
 function Set-ColorTable([hashtable]$ColorTable)
 {
+    if(!(Test-Path "HKCU:\Console\$ProcessName")) {New-Item -Path 'HKCU:\Console' -Name $ProcessName -Force |Out-Null}
     foreach($color in [Enum]::GetValues([ConsoleColor]))
     {
         if($ColorTable.ContainsKey($color))
