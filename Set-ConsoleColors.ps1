@@ -1,6 +1,6 @@
 <#
 .Synopsis
-    Sets console colors.
+    Overrides ConsoleClass window color palette entries with RGB values.
 
 .Parameter ForegroundColor
     The integer (A)RGB value to use for foreground text.
@@ -98,6 +98,21 @@
 
     * apparently hard-coded palette entry
 
+.Link
+    Set-ItemProperty
+
+.Link
+    Remove-ItemProperty
+
+.Link
+    Get-Variable
+
+.Link
+    https://stackoverflow.com/questions/36116326/programmatically-change-powershells-16-default-console-colours/36118181#36118181
+
+.Link
+    https://docs.microsoft.com/dotnet/api/system.bitconverter.getbytes#System_BitConverter_GetBytes_System_Int32_
+
 .Example
     Set-ConsoleColors.ps1 -BG 0x282A36 -FG 0xF8F8F2 -EBG 0x44475A -EFG 0xFF5555 -VAR 0xFFB86C
 
@@ -191,3 +206,4 @@ if($PSCmdlet.ParameterSetName -eq 'ByContext') {$ColorTable = Get-ColorTable $PS
 else {foreach($color in @($ColorTable.Keys)) {$ColorTable[$color] = $ColorTable[$color] |ConvertTo-ABGR}}
 
 Set-ColorTable $ColorTable
+Write-Warning 'All affected ConsoleClass windows will need to be reopened to use the new colors.'
