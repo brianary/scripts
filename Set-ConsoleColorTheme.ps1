@@ -12,6 +12,9 @@
     https://draculatheme.com/
 
 .Link
+    https://github.com/dracula/visual-studio-code/blob/master/src/dracula.yml
+
+.Link
     https://ethanschoonover.com/solarized/
 
 .Link
@@ -19,6 +22,12 @@
 
 .Link
     http://www.kippura.org/zenburnpage/
+
+.Link
+    https://github.com/coding-horror/ide-hot-or-not/
+
+.Link
+    https://studiostyl.es/
 
 .Example
     Set-ConsoleColorTheme.ps1 Dracula
