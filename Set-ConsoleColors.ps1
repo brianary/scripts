@@ -212,6 +212,8 @@ function Set-ColorTable([hashtable]$ColorTable)
     }
 }
 
+if(![enum]::IsDefined([ConsoleColor],$Host.UI.RawUI.ForegroundColor))
+{throw 'This script can only set colors for ConsoleClass windows.'}
 if($PSCmdlet.ParameterSetName -eq 'ByContext') {$ColorTable = Get-ColorTable $PSBoundParameters}
 else {foreach($color in @($ColorTable.Keys)) {$ColorTable[$color] = $ColorTable[$color] |ConvertTo-ABGR}}
 
