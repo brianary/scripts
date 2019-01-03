@@ -19,51 +19,55 @@
     Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.ErrorBackgroundColor.
 
 .Parameter WarningForegroundColor
-    The integer (A)RGB value to use for foreground text.
+    The integer (A)RGB value to use for warning foreground text.
     Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.WarningForegroundColor.
 
 .Parameter WarningBackgroundColor
-    The integer (A)RGB value to use for background text.
+    The integer (A)RGB value to use for warning background text.
     Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.WarningnBackgroundColor.
 
 .Parameter DebugForegroundColor
-    The integer (A)RGB value to use for foreground text.
+    The integer (A)RGB value to use for debug foreground text.
     Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.DebugForegroundColor.
 
 .Parameter DebugBackgroundColor
-    The integer (A)RGB value to use for background text.
+    The integer (A)RGB value to use for debug background text.
     Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.DebugBackgroundColor.
 
 .Parameter VerboseForegroundColor
-    The integer (A)RGB value to use for foreground text.
+    The integer (A)RGB value to use for verbose foreground text.
     Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.VerboseForegroundColor.
 
 .Parameter VerboseBackgroundColor
-    The integer (A)RGB value to use for background text.
+    The integer (A)RGB value to use for verbose background text.
     Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.VerboseBackgroundColor.
 
 .Parameter ProgressForegroundColor
-    The integer (A)RGB value to use for foreground text.
+    The integer (A)RGB value to use for progress foreground text.
     Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.ProgressForegroundColor.
 
 .Parameter ProgressBackgroundColor
-    The integer (A)RGB value to use for background text.
+    The integer (A)RGB value to use for progress background text.
     Typically this is set to the "DarkCyan" (3) palette entry via $Host.PrivateData.ProgressBackgroundColor.
 
 .Parameter StringForegroundColor
-    The integer (A)RGB value to use for foreground text.
+    The integer (A)RGB value to use for string literal foreground text.
     This is set to the "DarkCyan" (3) palette entry.
 
 .Parameter CommandForegroundColor
-    The integer (A)RGB value to use for foreground text.
+    The integer (A)RGB value to use for command foreground text.
     This is set to the "Yellow" (14) palette entry.
 
 .Parameter VariableForegroundColor
-    The integer (A)RGB value to use for foreground text.
+    The integer (A)RGB value to use for variable foreground text.
     This is set to the "Green" (10) palette entry.
 
+.Parameter NumberForegroundColor
+    The integer (A)RGB value to use for numeric literal foreground text.
+    This is set to the "White" (15) palette entry.
+
 .Parameter OperatorForegroundColor
-    The integer (A)RGB value to use for foreground text.
+    The integer (A)RGB value to use for operator foreground text.
     This is set to the "DarkGray" (8) palette entry.
 
 .Parameter ColorTable
@@ -78,7 +82,7 @@
 .Notes
     ConsoleClass window palette
 
-     # Hex RGB Name        CMD COLOR    Use
+     # Hex RGB Name        CMD COLOR    PowerShell Usage
      0 #000000 Black       Black        ErrorBG, WarningBG, DebugBG, VerboseBG
      1 #000080 DarkBlue    Blue
      2 #008000 DarkGreen   Green
@@ -94,9 +98,13 @@
     12 #FF0000 Red         Light Red    ErrorFG
     13 #FF00FF Magenta     Light Purple
     14 #FFFF00 Yellow      Light Yellow CommandFG*, DebugFG, ProgressFG, VerboseFG, WarningFG
-    15 #FFFFFF White       Bright White
+    15 #FFFFFF White       Bright White NumberFG*
 
     * apparently hard-coded palette entry
+
+    Tip: Since DarkCyan is used (by default) as both a background and a foreground,
+    special care must be taken in choosing that it contrasts well with both the default
+    background color and the progress foreground color.
 
 .Link
     Set-ItemProperty
@@ -146,6 +154,7 @@
 [Parameter(ParameterSetName='ByContext')][Alias('STR')][int]$StringForegroundColor,
 [Parameter(ParameterSetName='ByContext')][Alias('CMD')][int]$CommandForegroundColor,
 [Parameter(ParameterSetName='ByContext')][Alias('VAR')][int]$VariableForegroundColor,
+[Parameter(ParameterSetName='ByContext')][Alias('NUM')][int]$NumberForegroundColor,
 [Parameter(ParameterSetName='ByContext')][Alias('OP')][int]$OperatorForegroundColor,
 [Parameter(ParameterSetName='ByColorTable',Position=0,Mandatory=$true)][hashtable]$ColorTable,
 [Alias('ForProcessName')][string]$ProcessName = '%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe'
@@ -166,10 +175,11 @@ function Get-ColorTable([Parameter(Position=0,Mandatory=$true)][Collections.IDic
     {
         [ConsoleColor]$color = switch -Wildcard ($param)
         {
-            'String*'     {'DarkCyan'}
             'Command*'    {'Yellow'}
-            'Variable*'   {'Green'}
+            'Number*'     {'White'}
             'Operator*'   {'DarkGray'}
+            'String*'     {'DarkCyan'}
+            'Variable*'   {'Green'}
             '????ground*' {$Host.UI.RawUI.$param}
             default       {$Host.PrivateData.$param}
         }
