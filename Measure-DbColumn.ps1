@@ -89,6 +89,10 @@
 )
 Begin
 {
+    $SOQ = @'
+select '{2}' ColumnName,
+       '{3}' SqlType,
+'@
     $EOQ = if(!$Condition) {' from [{0}].[{1}];'} else {" from [{0}].[{1}] where $Condition ;"}
     $query = @{
         Numeric = @"
@@ -104,8 +108,7 @@ select max(value) value
 select min(value)
   from (select top 50 percent [{2}] value from [{0}].[{1}] order by value desc) b
 )
-select '{2}' ColumnName,
-       '{3}' SqlType,
+$SOQ
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
        cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
        count(distinct [{2}]) UniqueValues,
@@ -125,8 +128,7 @@ select top 1 [{2}] value, count(*) #
  group by [{2}]
  order by # desc
 )
-select '{2}' ColumnName,
-       '{3}' SqlType,
+$SOQ
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
        cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
        count(distinct [{2}]) UniqueValues,
@@ -142,8 +144,7 @@ select top 1 [{2}] value, count(*) #
  group by [{2}]
  order by # desc
 )
-select '{2}' ColumnName,
-       '{3}' SqlType,
+$SOQ
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
        cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
        count(distinct [{2}]) UniqueValues,
@@ -154,20 +155,20 @@ select '{2}' ColumnName,
        max(len([{2}])) MaximumLength,
        cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}] <> ltrim([{2}])) then 1 else 0 end as bit) HasLeadingSpaces,
        cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}] <> rtrim([{2}])) then 1 else 0 end as bit) HasTrailingSpaces,
-       cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}] 
+       cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}] like '%'+char(0x09)+'%') then 1 else 0 end as bit) HasTabs,
+       cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}]
            like '%[' + char(0x00) + '-' + char(0x1F) + ']%') then 1 else 0 end as bit) HasControlChars,
-       cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}] 
+       cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}]
            like '%[€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ]%') then 1 else 0 end as bit) HasWindows1252Conflicts,
-       cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}] collate SQL_Latin1_General_CP437_BIN 
+       cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}] collate SQL_Latin1_General_CP437_BIN
            <> cast([{2}] as varchar(max)) collate SQL_Latin1_General_CP437_BIN) then 1 else 0 end as bit) HasUnicode,
        cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}] collate SQL_Latin1_General_CP437_BIN
            like '%[^' + char(0x00) + '-~]%') then 1 else 0 end as bit) HasNonAscii7,
-       cast(case when exists (select top 1 * from [{0}].[{1}] where [{2}] like '%[^0-9A-Za-z_]%') then 1 else 0 end as bit) HasNonAlphanumeric
+       cast(case when exists (select top 1 * from [{0}].[{1}] where ltrim(rtrim([{2}])) like '%[^0-9A-Za-z_]%') then 1 else 0 end as bit) HasNonAlphanumeric
 $EOQ
 "@
         VariableLength = @"
-select '{2}' ColumnName,
-       '{3}' SqlType,
+$SOQ
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
        cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
        count(distinct [{2}]) UniqueValues,
@@ -176,9 +177,8 @@ select '{2}' ColumnName,
 $EOQ
 "@
         Other = @"
-select '{2}' ColumnName,
-       '{3}' SqlType,
-       sum(case when [{2}] is null then 1 else 0 end) NullValues
+$SOQ
+        sum(case when [{2}] is null then 1 else 0 end) NullValues
 $EOQ
 "@
     }
