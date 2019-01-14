@@ -32,7 +32,11 @@ Process
     if($hasPath -and $Certificate.Path) {$Certificate.Path}
     else
     {
+        $certname = "$($Certificate.Subject) ($($Certificate.Thumbprint))"
+        if(!$Certificate.HasPrivateKey) { Write-Error "No private key for $certname"; return }
+        if(!$Certificate.PrivateKey) { Write-Error "Empty private key for $certname"; return }
         $file = $Certificate.PrivateKey.CspKeyContainerInfo.UniqueKeyContainerName
+        if(!$file) { Write-Error "No private key filename for $certname"; return }
         Write-Verbose "Certificate file: $file"
         $path = "$env:ProgramData\Microsoft\crypto\rsa\machinekeys\$file"
         if(!(Test-Path $path -PathType Leaf))
