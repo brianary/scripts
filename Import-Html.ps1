@@ -9,6 +9,9 @@
     Which table to import, by the element's document position.
 
 .Link
+    ConvertFrom-Html.ps1
+
+.Link
     Invoke-WebRequest
 
 .Example
