@@ -34,5 +34,6 @@
 Process
 {
     $response = Invoke-WebRequest $Uri -UseBasicParsing:$false
+    Write-Verbose "Reading '$($response.ParsedHtml.title)' table #$TableIndex"
     $response.ParsedHtml.getElementsByTagName('table')[$TableIndex] |ConvertFrom-Html.ps1
 }
