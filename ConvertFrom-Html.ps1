@@ -24,10 +24,14 @@
 )
 Process
 {
-    $headers = $TableElement.rows[0].cells |% {$_.innerText}
+    Write-Verbose "Table contains $($TableElement.rows.length) rows"
+    $i,$max = 0,($TableElement.rows.length/100)
+    $headers = $TableElement.rows[0].cells |% {$_.innerText -replace '\s+',' ' -replace '\A\s+|\s+\z',''}
     1..($TableElement.rows.length-1) |% {$TableElement.rows[$_]} -pv row |% {
         $value = [ordered]@{}
         0..($row.cells.length-1) |% {$value[$headers[$_]]= $row.cells[$_].innerText}
-        [pscustomobject]$value
+        $object = [pscustomobject]$value
+        Write-Progress 'Reading rows' "{$(ConvertTo-Json $object -Compress)}" -PercentComplete ($i++/$max)
+        $object
     }
 }
