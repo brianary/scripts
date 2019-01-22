@@ -6,7 +6,7 @@
     The URL to read the HTML from.
 
 .Parameter TableIndex
-    Which table to import, by the element's document position.
+    Which table to import, by the element's document position (zero-based).
 
 .Link
     ConvertFrom-Html.ps1
