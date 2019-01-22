@@ -24,8 +24,8 @@
 )
 Process
 {
-    $headers = $table.rows[0].cells |% {$_.innerText}
-    1..($table.rows.length-1) |% {$table.rows[$_]} -pv row |% {
+    $headers = $TableElement.rows[0].cells |% {$_.innerText}
+    1..($TableElement.rows.length-1) |% {$TableElement.rows[$_]} -pv row |% {
         $value = [ordered]@{}
         0..($row.cells.length-1) |% {$value[$headers[$_]]= $row.cells[$_].innerText}
         [pscustomobject]$value
