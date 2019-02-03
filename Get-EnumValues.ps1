@@ -92,6 +92,6 @@
 )
 Process
 {
-    [enum]::GetValues($Type) |
-        % {New-Object PSObject -Property ([ordered]@{Value=[int]$_;Name=[string]$_})}
+    [enum]::GetNames($Type) |
+        % {New-Object PSObject -Property ([ordered]@{Value=[int][enum]::Parse($Type,$_);Name=$_})}
 }
