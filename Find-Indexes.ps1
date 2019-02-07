@@ -18,6 +18,15 @@
 .Parameter ColumnName
     The column name to search for.
 
+.Link
+    Invoke-Sqlcmd
+
+.Link
+    ConvertFrom-DataRow.ps1
+
+.Link
+    https://docs.microsoft.com/sql/relational-databases/system-catalog-views/sys-index-columns-transact-sql
+
 .Example
     Find-Indexes.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks -ColumnName AddressTypeID
 
@@ -49,7 +58,8 @@ select object_schema_name(i.object_id) SchemaName,
        ic.index_column_id IndexOrdinal,
        indexproperty(i.object_id,i.name,'IsUnique') IsUnique,
        indexproperty(i.object_id,i.name,'IsClustered') IsClustered,
-       indexproperty(i.object_id,i.name,'IsDisabled') IsDisabled
+       indexproperty(i.object_id,i.name,'IsDisabled') IsDisabled,
+       (select count(*) from sys.index_columns c where c.object_id = i.object_id and c.index_id = i.index_id) ColumnsInIndex
   from sys.index_columns ic
   join sys.indexes i
     on ic.object_id = i.object_id
