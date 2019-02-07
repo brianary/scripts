@@ -33,6 +33,9 @@
     System.String of SQL MERGE script to replicate the table's data.
 
 .Link
+    Use-SqlcmdParams.ps1
+
+.Link
     Invoke-Sqlcmd
 
 .Link

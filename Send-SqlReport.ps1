@@ -75,6 +75,9 @@
     (See the From parameter for an alternate SSL flag.)
 
 .Link
+    Use-SqlcmdParams.ps1
+
+.Link
     Send-MailMessage
 
 .Link

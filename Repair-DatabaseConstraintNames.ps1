@@ -18,10 +18,13 @@
     Update the database when present, otherwise simply outputs the changes as script.
 
 .Link
-    https://www.databasejournal.com/features/mssql/article.php/1570801/Beware-of-the-System-Generated-Constraint-Name.htm
+    Use-SqlcmdParams.ps1
 
 .Link
     Invoke-Sqlcmd
+
+.Link
+    https://www.databasejournal.com/features/mssql/article.php/1570801/Beware-of-the-System-Generated-Constraint-Name.htm
 
 .Example
     Repair-DatabaseConstraintNames.ps1 SqlServerName DatabaseName -Update
