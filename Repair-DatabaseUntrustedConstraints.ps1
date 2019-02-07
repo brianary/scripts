@@ -18,10 +18,13 @@
     Update the database when present, otherwise simply outputs the changes as script.
 
 .Link
-    https://www.brentozar.com/blitz/foreign-key-trusted/
+    Use-SqlcmdParams.ps1
 
 .Link
     Invoke-Sqlcmd
+
+.Link
+    https://www.brentozar.com/blitz/foreign-key-trusted/
 
 .Example
     Repair-DatabaseUntrustedConstraints.ps1 SqlServerName DatabaseName -Update

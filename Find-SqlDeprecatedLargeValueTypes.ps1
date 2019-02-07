@@ -3,8 +3,8 @@
     Reports text, ntext, and image datatypes found in a given database.
 
 .Parameter ServerInstance
-    A string specifying the name of an instance of the Database Engine. 
-    For default instances, only specify the computer name: "MyComputer". 
+    A string specifying the name of an instance of the Database Engine.
+    For default instances, only specify the computer name: "MyComputer".
     For named instances, use the format "ComputerName\InstanceName".
 
 .Parameter Database
@@ -15,7 +15,7 @@
     Specifies a connection string to connect to the server.
 
 .Parameter ConnectionName
-    The connection string name from the ConfigurationManager to use to 
+    The connection string name from the ConfigurationManager to use to
     connect to the server.
 
 .Outputs
@@ -62,7 +62,7 @@
       * IsMsDbTools: True for tables created by Microsoft Tools,
         such as sysdiagrams, otherwise false.
       * ConvertSqlScript: The SQL script that can be used to convert
-        the column from the deprecated large data type to the new 
+        the column from the deprecated large data type to the new
         "(max)" type.
 
     Parameter
@@ -72,6 +72,9 @@
     Routine
 
       * TODO
+
+.Link
+    Use-SqlcmdParams.ps1
 
 .Link
     Invoke-Sqlcmd
@@ -136,38 +139,38 @@ select 'Column' [ObjectType],
        min(datalength($column)) MinDataLength,
        cast($($sigma.avg) as int) AvgDataLength,
        max(datalength($column)) MaxDataLength,
-       'Length ' + cast(cast(($($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate ' 
+       'Length ' + cast(cast(($($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate '
            + cast(sum(case when datalength($column) > ($($sigma.stddev)+$($sigma.avg)) then 1 else 0 end) as varchar(30))
            + ' values' Sigma1,
-       'Length ' + cast(cast((2*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate ' 
+       'Length ' + cast(cast((2*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate '
            + cast(sum(case when datalength($column) > (2*$($sigma.stddev)+$($sigma.avg)) then 1 else 0 end) as varchar(30))
            + ' values' Sigma2,
-       'Length ' + cast(cast((3*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate ' 
+       'Length ' + cast(cast((3*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate '
            + cast(sum(case when datalength($column) > (3*$($sigma.stddev)+$($sigma.avg)) then 1 else 0 end) as varchar(30))
            + ' values' Sigma3,
-       'Length ' + cast(cast((4*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate ' 
+       'Length ' + cast(cast((4*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate '
            + cast(sum(case when datalength($column) > (4*$($sigma.stddev)+$($sigma.avg)) then 1 else 0 end) as varchar(30))
            + ' values' Sigma4,
-       'Length ' + cast(cast((5*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate ' 
+       'Length ' + cast(cast((5*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate '
            + cast(sum(case when datalength($column) > (5*$($sigma.stddev)+$($sigma.avg)) then 1 else 0 end) as varchar(30))
            + ' values' Sigma5,
-       'Length ' + cast(cast((6*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate ' 
+       'Length ' + cast(cast((6*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate '
            + cast(sum(case when datalength($column) > (6*$($sigma.stddev)+$($sigma.avg)) then 1 else 0 end) as varchar(30))
            + ' values' Sigma6,
-       'Length ' + cast(cast((7*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate ' 
+       'Length ' + cast(cast((7*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate '
            + cast(sum(case when datalength($column) > (7*$($sigma.stddev)+$($sigma.avg)) then 1 else 0 end) as varchar(30))
            + ' values' Sigma7,
-       'Length ' + cast(cast((8*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate ' 
+       'Length ' + cast(cast((8*$($sigma.stddev)+$($sigma.avg)) as int) as varchar(30)) + ' would truncate '
            + cast(sum(case when datalength($column) > (8*$($sigma.stddev)+$($sigma.avg)) then 1 else 0 end) as varchar(30))
            + ' values' Sigma8,
        cast(objectproperty($tableid,'IsUserTable') as bit) IsUserTable,
        cast(objectproperty($tableid,'IsMsShipped') as bit) IsMsShipped,
        cast(case when exists (select * from sys.extended_properties
-           where class = 1 and major_id = $tableid and minor_id = 0 
-           and name = 'microsoft_database_tools_support') 
+           where class = 1 and major_id = $tableid and minor_id = 0
+           and name = 'microsoft_database_tools_support')
            then 1 else 0 end as bit) IsMsDbTools,
        '$($updatesql -replace "'","''")' ConvertSqlScript
-  from $table; 
+  from $table;
 "@ |% {Write-Verbose $_ ; Invoke-Sqlcmd $_}
     }
 <#
