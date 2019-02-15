@@ -28,15 +28,16 @@
     https://docs.microsoft.com/sql/relational-databases/system-catalog-views/sys-index-columns-transact-sql
 
 .Example
-    Find-Indexes.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks -ColumnName AddressTypeID
+    Find-Indexes.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2014 -ColumnName ErrorLogID
 
-    SchemaName   : Person
-    TableName    : AddressType
-    IndexName    : AddressTypePK
-    IndexOrdinal : 1
-    IsUnique     : 1
-    IsClustered  : 1
-    IsDisabled   : 0
+    SchemaName     : dbo
+    TableName      : ErrorLog
+    IndexName      : PK_ErrorLog_ErrorLogID
+    IndexOrdinal   : 1
+    IsUnique       : 1
+    IsClustered    : 1
+    IsDisabled     : 0
+    ColumnsInIndex : 1
 #>
 
 #Requires -Version 3
