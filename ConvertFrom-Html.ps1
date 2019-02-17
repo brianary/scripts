@@ -24,7 +24,6 @@
 )
 Process
 {
-    Write-Verbose "tagName=$($TableElement.tagName)"
     switch($TableElement.tagName)
     {
         table
