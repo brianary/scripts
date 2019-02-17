@@ -12,6 +12,9 @@
     ConvertFrom-Html.ps1
 
 .Link
+    Get-Html.ps1
+
+.Link
     Invoke-WebRequest
 
 .Example
@@ -29,11 +32,12 @@
 [CmdletBinding()] Param(
 [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)][uri]$Uri,
 [Parameter(Position=1,ValueFromPipelineByPropertyName=$true)]
-[Alias('Index','Position','Number')][int]$TableIndex = 0
+[Alias('Index','Position','Number')][uint32]$TableIndex = 0
 )
 Process
 {
-    $response = Invoke-WebRequest $Uri -UseBasicParsing:$false
-    Write-Verbose "Reading '$($response.ParsedHtml.title)' table #$TableIndex"
-    $response.ParsedHtml.getElementsByTagName('table')[$TableIndex] |ConvertFrom-Html.ps1
+    Invoke-WebRequest $Uri -UseBasicParsing:$false |
+        Get-Html.ps1 table |
+        select -Skip $TableIndex -First 1 |
+        ConvertFrom-Html.ps1
 }
