@@ -9,12 +9,24 @@
 
     The same ParameterSetNames as Invoke-Sqlcmd are used, plus ConnectionName to
     pull a connection string from the .NET configuration.
-    
-    To use this script, add any of these parameters:
+
+    To use this script, add any or all of these parameter sets:
 
     [CmdletBinding()] Param(
     [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string]$ServerInstance,
-    [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string]$Database,
+    [Parameter(ParameterSetName='ByConnectionParameters')][string]$Database,
+    [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
+    [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
+    # ...
+    )
+
+    Or, if you wish to support Use-SqlcmdParams.ps1 in scripts that call your script:
+
+    [CmdletBinding()] Param(
+    [Parameter(ParameterSetName='ByConnectionParameters')][string]$ServerInstance =
+        $PSDefaultParameterValues['Invoke-Sqlcmd:ServerInstance'],
+    [Parameter(ParameterSetName='ByConnectionParameters')][string]$Database =
+        $PSDefaultParameterValues['Invoke-Sqlcmd:Database'],
     [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
     [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
     # ...
