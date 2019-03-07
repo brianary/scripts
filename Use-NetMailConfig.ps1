@@ -17,7 +17,7 @@
     The values for Send-MailMessage's From, SmtpServer, and UseSsl will be
     taken from whatever is set in the machine.config (or more localized config).
 
-.Configuration
+.Component
     System.Configuration
 
 .Link
