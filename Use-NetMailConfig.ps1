@@ -14,8 +14,11 @@
       </mailSettings>
     </system.net>
 
-    The values for Send-MailMessage's From, SmtpServer, and UseSsl will be 
+    The values for Send-MailMessage's From, SmtpServer, and UseSsl will be
     taken from whatever is set in the machine.config (or more localized config).
+
+.Configuration
+    System.Configuration
 
 .Link
     Send-MailMessage
@@ -23,7 +26,7 @@
 .Example
     Use-NetMailConfig.ps1
 
-    Sets Send-MailMessage defaults for From, SmtpServer, and UseSsl to 
+    Sets Send-MailMessage defaults for From, SmtpServer, and UseSsl to
     values from the ConfigurationManager.
 #>
 

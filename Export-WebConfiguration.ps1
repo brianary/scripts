@@ -16,6 +16,9 @@
 .Parameter Path
     File to write import script text to.
 
+.Component
+    System.Web
+
 .Link
     https://chocolatey.org/
 
