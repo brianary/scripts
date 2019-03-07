@@ -58,6 +58,9 @@
 .Parameter Fail
     Throw an exception rather than attempt to install a missing command.
 
+.Component
+    System.IO.Compression.FileSystem
+
 .Link
     Resolve-Path
 

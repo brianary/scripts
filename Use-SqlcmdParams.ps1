@@ -32,6 +32,9 @@
     # ...
     )
 
+.Component
+    System.Configuration
+
 .Link
     Import-Variables.ps1
 #>

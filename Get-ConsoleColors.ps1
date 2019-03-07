@@ -2,6 +2,9 @@
 .Synopsis
     Gets current console color details.
 
+.Component
+    System.Drawing
+
 .Example
     Get-ConsoleColors.ps1 |Format-Table -AutoSize
 

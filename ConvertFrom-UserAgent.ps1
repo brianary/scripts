@@ -11,6 +11,9 @@
 .Outputs
     System.Web.HttpBrowserCapabilities parsed from the HTTP User-Agent string.
 
+.Component
+    System.Web
+
 .Link
     https://docs.microsoft.com/dotnet/api/system.web.httpbrowsercapabilities
 

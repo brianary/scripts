@@ -216,6 +216,9 @@
             * Nd  Number, decimal digit
             * Pc  Punctuation, connector (includes _)
 
+.Component
+    System.Web
+
 .Link
     http://unicode.org/
 
