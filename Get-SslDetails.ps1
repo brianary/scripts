@@ -51,13 +51,14 @@ Begin {$protocols = Get-EnumValues.ps1 Security.Authentication.SslProtocols |? N
 Process
 {
     $result = [ordered]@{
-        ComputerName       = $ComputerName
-        Port               = $Port
-        KeyLength          = $null
-        SignatureAlgorithm = $null
-        CertificateIssuer  = $null
-        CertificateExpires = $null
-        Certificate        = $null
+        ComputerName         = $ComputerName
+        Port                 = $Port
+        KeyLength            = $null
+        SignatureAlgorithm   = $null
+        CertificateIssuer    = $null
+        CertificateEffective = $null
+        CertificateExpires   = $null
+        Certificate          = $null
     }
     foreach($protocol in $protocols)
     {
@@ -73,7 +74,8 @@ Process
                 $result['KeyLength'] = $cert.PublicKey.Key.KeySize
                 $result['SignatureAlgorithm'] = $cert.SignatureAlgorithm.FriendlyName
                 $result['CertificateIssuer'] = $cert.GetNameInfo('SimpleName', $true)
-                $result['CertificateExpires'] = [datetime]$cert.GetExpirationDateString()
+                $result['CertificateEffective'] = $cert.NotBefore
+                $result['CertificateExpires'] = $cert.NotAfter
                 $result['Certificate'] = $cert
             }
             $result[$protocol] = $ssl.CipherAlgorithm

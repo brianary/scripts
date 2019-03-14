@@ -28,22 +28,23 @@
 
 .Example
     Invoke-RestMethod https://api.github.com/ |Import-Variables.ps1 ; Invoke-RestMethod $emojis_url
-    
+
     Sets variables from the fields returned by the web service: $current_user_url, $emojis_url, &c.
     Then fetches the list of GitHub emojis.
 #>
 
 #Requires -Version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSObject]$InputObject
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSObject]$InputObject,
+[Alias('Type')][Management.Automation.PSMemberTypes]$MemberType = 'Properties'
 )
 Process
 {
     $isDict = $InputObject -is [Collections.IDictionary]
-    [string[]]$vars = 
+    [string[]]$vars =
         if($isDict) {$InputObject.Keys |? {$_ -is [string]}}
-        else {Get-Member -InputObject $InputObject -MemberType Properties |% Name}
+        else {Get-Member -InputObject $InputObject -MemberType $MemberType |% Name}
     if(!$vars){return}
-    Write-Verbose "Importing $($vars.Count) $(if($isDict){'keys'}else{'properties'}): $vars"
+    Write-Verbose "Importing $($vars.Count) $(if($isDict){'keys'}else{"$MemberType properties"}): $vars"
     foreach($var in $vars) {Set-Variable $var $InputObject.$var -Scope 1}
 }

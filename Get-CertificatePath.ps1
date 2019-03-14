@@ -15,6 +15,9 @@
     Find-Certificate.ps1
 
 .Link
+    Format-Certificate.ps1
+
+.Link
     https://github.com/MicrosoftArchive/clrsecurity/blob/master/Security.Cryptography/src/X509Certificates/X509Certificate2ExtensionMethods.cs#L58
 
 .Example
@@ -110,7 +113,12 @@ public static class CryptoApi
         [System.Security.Cryptography.X509Certificates.X509Certificate2]$cert)
     {
         Use-CryptoApi
-        [CryptoApi]::GetCngUniqueKeyContainerName($cert)
+        try {[CryptoApi]::GetCngUniqueKeyContainerName($cert)}
+        catch [Management.Automation.MethodInvocationException]
+        {
+            if(!(Test-Administrator.ps1)) {Write-Error "Not running as admin. Finding private key details may fail."}
+            throw
+        }
     }
     function Get-CngPrivateKeyFile([Parameter(Position=0,Mandatory=$true)][string]$filename)
     {
@@ -131,7 +139,7 @@ Process
     if($hasPath -and $Certificate.Path) {$Certificate.Path}
     else
     {
-        $certname = "$($Certificate.Subject) ($($Certificate.Thumbprint))"
+        $certname = Format-Certificate.ps1 $Certificate
         if(!$Certificate.HasPrivateKey) { Write-Error "No private key for $certname"; return }
         if($Certificate.PrivateKey)
         {

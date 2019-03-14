@@ -68,6 +68,9 @@
     https://msdn.microsoft.com/library/system.convert.aspx
 
 .Link
+    Format-Certificate.ps1
+
+.Link
     Get-WebGlobalModule
 
 .Link
@@ -198,21 +201,9 @@ function Ping-GlobalModules
 "@
 }
 
-function Get-CertificateFriendliestName(
-    [Parameter(Position=0,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert,
-    [switch]$WithExpiry)
-{Process{
-    if(!$cert.FriendlyName) {return "$($cert.Subject) expiring $($cert.NotAfter)"}
-    else {return "$($cert.FriendlyName) expiring $($cert.NotAfter)"}
-}}
-
 function Get-CertificateImportName([Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]$store,
     [Parameter(Position=1,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert)
-{Process{
-    $basename = "Import-CertificateTo_$($store.Location)_$($store.Name)_"
-    if(!$cert.FriendlyName) {return "$basename$($cert.Thumbprint)"}
-    else {return "$basename$($cert.FriendlyName -replace '\W+','_')"}
-}}
+{Process{"Import-CertificateTo_$($store.Location)_$($store.Name)_$(Format-Certificate.ps1 $cert -f q)"}}
 
 function Export-CertificateFrom([Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]$store,
     [Parameter(Position=1)][string]$storepath,
@@ -221,7 +212,7 @@ function Export-CertificateFrom([Parameter(Position=0)][Security.Cryptography.X5
 {Begin{$i = 0} Process{
     $location,$name,$secret,$percent,$certname,$Local:OFS =
         $store.Location,$store.Name,[Web.Security.Membership]::GeneratePassword(40,12),
-        [math]::Floor($i++/$PercentDenominator),(Get-CertificateFriendliestName $cert),"`r`n    "
+        [math]::Floor($i++/$PercentDenominator),(Format-Certificate.ps1 $cert),"`r`n    "
     Write-Progress "Exporting certificates from $storepath" $certname -Current $cert.Subject -Percent $percent
     $qcertname = "$($certname -replace "'","''")"
     $action =
@@ -319,7 +310,7 @@ function Export-CertificatePermissions(
     [Parameter(Position=2,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert)
 {Begin{$i=0}Process{
     $percent = [math]::Floor($i++/$PercentDenominator)
-    $certname = Get-CertificateFriendliestName $cert
+    $certname = Format-Certificate.ps1 $cert
     $functionname = "$(Get-CertificateImportName $store $cert)_Permissions"
     $qcertname = $certname -replace "'","''"
     Write-Progress "Exporting certificate permissions from $storepath" $certname -Current $cert.Subject -Percent $percent

@@ -32,8 +32,11 @@
 
     Uses LocalMachine by default.
 
-.Parameter Current
+.Parameter Valid
     Whether to further filter search results by checking the effective and expiration dates.
+
+.Parameter NotArchived
+    Whether to further filter search results by excluding certificates marked as archived.
 
 .Parameter Require
     Whether to throw an error if a certificate is not found.
@@ -52,10 +55,12 @@
 
 .Example
     Find-Certificate.ps1 -FindValue ExampleCert -FindType FindBySubjectName -StoreName TrustedPeople -StoreLocation LocalMachine
+
     Searches Cert:\LocalMachine\TrustedPeople for a certificate with a subject name of "ExampleCert".
 
 .Example
     Find-Certificate.ps1 ExampleCert FindBySubjectName TrustedPeople LocalMachine
+
     Uses positional parameters to search Cert:\LocalMachine\TrustedPeople for a cert with subject of "ExampleCert".
 #>
 
@@ -66,6 +71,7 @@
 [Parameter(Position=2)][Security.Cryptography.X509Certificates.StoreName]$StoreName,
 [Parameter(Position=3)][Security.Cryptography.X509Certificates.StoreLocation]$StoreLocation = 'LocalMachine',
 [Alias('Current')][switch]$Valid,
+[switch]$NotArchived,
 [switch]$Require
 )
 $cert =
@@ -75,6 +81,7 @@ $cert =
         $now = Get-Date
         ls Cert:\CurrentUser,Cert:\LocalMachine |
             % {ls "Cert:\$($_.Location)\$($_.Name)"} |
+            ? {!$NotArchived -or !$_.Archived} |
             ? {$_.Subject,$_.Issuer,$_.Thumbprint |? {$_ -like "*$FindValue*"}} |
             ? {!$Valid -or ($now -ge $_.NotBefore -and $now -le $_.NotAfter)}
     }
@@ -88,7 +95,7 @@ $cert =
         $found = $store.Certificates.Find($FindType,$FindValue,$Valid)
         [void]$store.Close()
         $store = $null
-        $found
+        $found |? {!$NotArchived -or !$_.Archived}
     }
 if($Require -and !$cert) {throw "Could not find certificate $FindType $FindValue in $StoreLocation $StoreName"}
 $cert
