@@ -12,6 +12,9 @@
 .Link
     Get-CertificatePermissions.ps1
 
+.Link
+    Format-Certificate.ps1
+
 .Example
     Show-CertificatePermissions.ps1 -Certificate $cert
 
@@ -24,8 +27,13 @@
 
 .Example
     $c = Find-Certificate.ps1 ExampleCert FindBySubjectName TrustedPeople LocalMachine ; Show-CertificatePermissions.ps1 $c
-    
+
     Another approach to display cert permissions.
+
+.Example
+    Find-Certificate.ps1 $issuername FindByIssuerName -Valid |Show-CertificatePermissions.ps1 |Out-File certperms.txt utf8
+
+    Save valid certificate permissions from a given issuer to a file.
 #>
 
 [CmdletBinding()] Param(
@@ -34,6 +42,8 @@
 )
 Process
 {
+    if(!$Certificate.HasPrivateKey) {return}
+    Format-Certificate.ps1 $Certificate |Write-Output
     Get-CertificatePermissions.ps1 -Certificate $Certificate |
         select IdentityReference,AccessControlType,FileSystemRights |
         Format-Table -AutoSize
