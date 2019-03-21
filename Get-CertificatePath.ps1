@@ -135,7 +135,7 @@ public static class CryptoApi
 }
 Process
 {
-    [bool]$hasPath = $Certificate |Get-Member Path -MemberType Property
+    [bool]$hasPath = $Certificate |Get-Member Path -MemberType NoteProperty
     if($hasPath -and $Certificate.Path) {$Certificate.Path}
     else
     {
