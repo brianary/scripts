@@ -60,7 +60,7 @@
     0CAD75*  example-cert-name, expires Sat, 13 Mar 2021 11:31:30 GMT
 
 .Example
-    Format-Certificate.ps1 $cert -Format 'n k T A r'
+    Format-Certificate.ps1 $cert -Format 'n P T A r'
 
     example-cert-name [HasPrivateKey] 0CAD7530A40BD2F7160B19DA77A3FCF7CAEB08D0 2021-03-13T11:31:30
 #>
