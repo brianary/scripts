@@ -11,7 +11,7 @@
     such as "<?xml" for xml or "%YAML " for yaml.
 
     Text files require either a UTF BOM/SIG, or must end with a newline (U+000A) and not contain any NUL (U+0000)
-    characters (in the first 1KB sampled).
+    characters (in the first 1KB sampled), or just not contain any characters above 7-bit US-ASCII in the first 1KB.
 
 .Parameter Path
     The file to test.
@@ -66,10 +66,11 @@ Begin
             text
             {{ param($f)
                 return (Test-MagicNumber.ps1 0xEF,0xBB,0xBF $f) -or  # UTF-8 SIG
-                    (Test-MagicNumber.ps1 0xFE,0xFF,0x00 $f) -or     # UTF-16 BOM (big-endian)
+                    (Test-MagicNumber.ps1 0xFE,0xFF $f) -or          # UTF-16 BOM (big-endian)
                     (Test-MagicNumber.ps1 0xFF,0xFE $f) -or          # UTF-16 BOM (little-endian)
                     # US-ASCII (POSIX)
-                    ((Test-MagicNumber.ps1 0x0A $f -Offset -1) -and (0 -notin (Get-Content $f -Encoding Byte -Total 1KB)))
+                    ((Test-MagicNumber.ps1 0x0A $f -Offset -1) -and (0 -notin (Get-Content $f -Encoding Byte -Total 1KB))) -or
+                    (!(Get-Content $f -Encoding Byte -Total 1KB |? {$_ -gt 0x7F -or $_ -eq 0}))
             }}
             xml
             {{ param($f)
@@ -200,4 +201,4 @@ Begin
             }
         }
 }
-Process {if((Get-Item $Path).Length -eq 0){return $false}else{&$test $Path}}
+Process {if($Path){&$test $Path}}
