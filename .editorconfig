@@ -18,7 +18,7 @@ max_line_length          = 128
 [{.gitattributes,CODEOWNERS}]
 charset = utf-8
 
-# CSS
-# https://www.w3.org/International/questions/qa-utf8-bom.en#bytheway
-[*.css]
+# CSS https://www.w3.org/International/questions/qa-utf8-bom.en#bytheway
+# JSON https://tools.ietf.org/html/rfc8259#section-8.1
+[*.{css,json}]
 charset = utf-8

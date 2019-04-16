@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!-- WSDL/XSD to human-readable XHTML Reference, see http://webcoder.info/downloads/DataRef.html -->
 <xsl:transform xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ws="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:ws="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:x="urn:guid:f203a737-cebb-419d-9fbe-a684f1f13591"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	version="2.0" exclude-result-prefixes="xsl xs x ws">
 <xsl:output method="xhtml" version="1.1" use-character-maps="amp"
-	encoding="utf-8" media-type="application/xhtml+xml" indent="yes" 
-	doctype-public="-//W3C//DTD XHTML 1.1//EN" 
+	encoding="utf-8" media-type="application/xhtml+xml" indent="yes"
+	doctype-public="-//W3C//DTD XHTML 1.1//EN"
 	doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
 <xsl:character-map name="amp"><xsl:output-character character="`" string="&amp;" /></xsl:character-map>
 <xsl:strip-space elements="*"/>
@@ -44,7 +44,7 @@
 
 <xsl:template match="/xs:schema">
 	<xsl:variable name="id" select="(@id,@targetNamespace,document-uri(/))[1]"/>
-	<xsl:variable name="name" select="if (matches($id,'\p{L}+\.xsd$','i')) 
+	<xsl:variable name="name" select="if (matches($id,'\p{L}+\.xsd$','i'))
 		then replace($id,'^.*?\P{L}*(\p{L}+)\.xsd$','$1','i') else $id" as="xs:string?"/>
 	<html><head><title><xsl:value-of select="$name"/> Schema Reference</title>
 	<link rel="Stylesheet" type="text/css" href="dataref.css"/>
@@ -192,7 +192,7 @@
 	<xsl:param name="depth" select="0" as="xs:integer" tunnel="yes"/>
 	<xsl:variable name="name" select="if (self::xs:attribute) then concat('@',@name) else @name" as="xs:string?"/>
 	<xsl:variable name="type" select="if (@type) then resolve-QName(@type,.) else ()" as="xs:QName?"/>
-	<xsl:variable name="complexType" select="if (xs:complexType) then xs:complexType 
+	<xsl:variable name="complexType" select="if (xs:complexType) then xs:complexType
 		else if (exists($type)) then $schema/xs:complexType[QName($tns,@name) eq $type] else ()" as="element()*"/>
 	<xsl:choose>
 		<xsl:when test="exists($type) and x:in-xs($type)">
