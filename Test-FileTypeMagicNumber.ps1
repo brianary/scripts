@@ -10,6 +10,9 @@
     Several types require the presence of an optional header or prefix for positive identification of a file type,
     such as "<?xml" for xml or "%YAML " for yaml.
 
+    Text files require either a UTF BOM/SIG, or must end with a newline (U+000A) and not contain any NUL (U+0000)
+    characters (in the first 1KB sampled).
+
 .Parameter Path
     The file to test.
 
@@ -24,6 +27,12 @@
 
 .Link
     https://blogs.msdn.microsoft.com/sergey_babkins_blog/2015/01/02/powershell-script-blocks-are-not-closures/
+
+.Link
+    http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_206
+
+.Link
+    http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403
 
 .Link
     Test-MagicNumber.ps1
@@ -43,7 +52,7 @@
 [CmdletBinding()][OutputType([bool])] Param(
 [Parameter(Position=0,Mandatory=$true)]
 [ValidateSet('7z','aiff','avi','bmp','cab','dataweave','exe','flac','flif','gif','gzip','ico','iso','javaclass',
-'jpeg','midi','mkv','mp3','mpeg','msoffice','ogg','pdf','png','postscript','psd','raml','rar','rtf','tar',
+'jpeg','midi','mkv','mp3','mpeg','msoffice','ogg','pdf','png','postscript','psd','raml','rar','rtf','tar','text',
 'tiff','utf16','utf16be','utf32','utf32be','utf8','wasm','wav','webm','webp','wmv','xml','yaml','zip')]
 [string]$FileType,
 [Parameter(Position=2,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
@@ -54,6 +63,14 @@ Begin
     [scriptblock]$test =
         switch($FileType)
         {
+            text
+            {{ param($f)
+                return (Test-MagicNumber.ps1 0xEF,0xBB,0xBF $f) -or  # UTF-8 SIG
+                    (Test-MagicNumber.ps1 0xFE,0xFF,0x00 $f) -or     # UTF-16 BOM (big-endian)
+                    (Test-MagicNumber.ps1 0xFF,0xFE $f) -or          # UTF-16 BOM (little-endian)
+                    # US-ASCII (POSIX)
+                    ((Test-MagicNumber.ps1 0x0A $f -Offset -1) -and (0 -notin (Get-Content $f -Encoding Byte -Total 1KB)))
+            }}
             xml
             {{ param($f)
                 return (Test-MagicNumber.ps1 0xEF,0xBB,0xBF,0x3C,0x3F,0x78,0x6D,0x6C $f) -or
@@ -183,4 +200,4 @@ Begin
             }
         }
 }
-Process {&$test $Path}
+Process {if((Get-Item $Path).Length -eq 0){return $false}else{&$test $Path}}
