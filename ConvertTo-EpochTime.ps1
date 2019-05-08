@@ -5,6 +5,9 @@
 .Parameter DateTime
     The DateTime value to convert to number of seconds since Jan 1, 1970.
 
+.Parameter UniversalTime
+    Indicates the DateTime provided is local, and should be converted to UTC.
+
 .Inputs
     System.DateTime values to convert to integers.
 
@@ -27,6 +30,7 @@
 #>
 
 [CmdletBinding()][OutputType([int])] Param(
-[Parameter(Mandatory=$true,ValueFromPipeline=$true)][DateTime]$DateTime
+[Parameter(Mandatory=$true,ValueFromPipeline=$true)][DateTime] $DateTime,
+[Alias('UTC')][switch] $UniversalTime
 )
-Process{[int][double]::Parse((Get-Date $DateTime -UFormat %s))}
+Process{[int][double]::Parse((Get-Date $(if($UniversalTime){$DateTime.ToUniversalTime()}else{$DateTime}) -UFormat %s))}
