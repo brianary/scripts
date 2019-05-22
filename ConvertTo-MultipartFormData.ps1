@@ -19,7 +19,7 @@
     New-Guid
 
 .Example
-    @{ title = 'Name'; file = Get-Item avartar.png } |ConvertTo-MultipartFormData.ps1 |Invoke-WebRequest $url -Method POST
+    @{ title = 'Name'; file = Get-Item avatar.png } |ConvertTo-MultipartFormData.ps1 |Invoke-WebRequest $url -Method POST
 
     Sends two fields, one of which is a file upload.
 #>
