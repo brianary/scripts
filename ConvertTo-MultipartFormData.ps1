@@ -31,11 +31,13 @@
 DynamicParam
 {
     $boundary = "$(New-Guid)"
-    $PSDefaultParameterValues['Invoke-WebRequest:ContentType'] = "multipart/form-data; boundary=$boundary"
-    $PSDefaultParameterValues['Invoke-RestMethod:ContentType'] = "multipart/form-data; boundary=$boundary"
+    $ct = "multipart/form-data; boundary=$boundary"
+    $PSDefaultParameterValues['Invoke-WebRequest:ContentType'] = $ct
+    $PSDefaultParameterValues['Invoke-RestMethod:ContentType'] = $ct
 }
 Begin
 {
+    $cmdletname = $MyInvocation.MyCommand.Name
     if((Get-Module Microsoft.PowerShell.Utility).Version -ge [version]6.1)
     {
         Write-Warning "Invoke-WebRequest and Invoke-RestMethod appear to natively support multipart/form-data."
@@ -44,13 +46,18 @@ Begin
 }
 Process
 {
+    Write-Verbose "$cmdletname : Creating $($Fields.Count)-field $ct"
     $content = New-Object Net.Http.MultipartFormDataContent $boundary
     foreach($field in $Fields.GetEnumerator())
     {
-        if($field.Value -isnot [IO.FileInfo]) {$content.Add([Net.Http.StringContent]$field.Value,$field.Key)}
+        if($field.Value -isnot [IO.FileInfo])
+        {
+            Write-Verbose " + $cmdletname : Adding field: $($field.Key)=$($field.Value)"
+            $content.Add([Net.Http.StringContent]$field.Value,$field.Key)
+        }
         else
         {
-            Write-Verbose "Adding file $($field.Value.FullName)"
+            Write-Verbose " + $cmdletname : Adding file: $($field.Value.FullName) ($($field.Value.Length) bytes)"
             $content.Add([Net.Http.StreamContent]$field.Value.OpenRead(),$field.Key,$field.Value.Name)
         }
     }
@@ -58,6 +65,7 @@ Process
     $getbody.Wait()
     [string]$body = $getbody.Result
     $content.Dispose()
+    Write-Verbose "$cmdletname : Created $($body.Length)-byte $ct"
     return $body
 }
 End
