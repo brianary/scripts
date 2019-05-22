@@ -51,7 +51,7 @@ Process
         else
         {
             Write-Verbose "Adding file $($field.Value.FullName)"
-            $content.Add([Net.Http.StreamContent]$field.Value.OpenRead(),'file',$field.Value.Name)
+            $content.Add([Net.Http.StreamContent]$field.Value.OpenRead(),$field.Key,$field.Value.Name)
         }
     }
     [Threading.Tasks.Task[string]]$getbody = $content.ReadAsStringAsync()
