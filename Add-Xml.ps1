@@ -53,8 +53,8 @@ Process
     [Xml.XmlNode]$node = $SelectXmlInfo.Node
     if(!$node.ParentNode -and $Position -in 'InsertAfter','InsertBefore')
     {
-        Stop-ThrowError.ps1 ArgumentException "Unable to $Position root node",
-            'SelectXmlInfo' 'SingleRoot' InvalidArgument $SelectXmlInfo
+        Stop-ThrowError.ps1 [ArgumentException] "Unable to $Position root node",
+            SelectXmlInfo InvalidArgument $SelectXmlInfo SingleRoot
     }
     $ns = if($Namespace){@{Namespace=$Namespace}}else{@{}}
     if($UnlessXPath -and (Select-Xml $UnlessXPath $node @ns)) { Write-Verbose "Found $UnlessXPath in $($SelectXmlInfo.Pattern)"; return }
