@@ -61,7 +61,7 @@
     New-Object
 
 .Example
-    Stop-ThrowError.ps1 [ArgumentException] 'Unable to remove root node',SelectXmlInfo InvalidArgument $SelectXmlInfo RootRequired
+    Stop-ThrowError.ps1 ArgumentException 'Unable to remove root node',SelectXmlInfo InvalidArgument $SelectXmlInfo RootRequired
 
     C:\Scripts\Remove-Xml.ps1 : Unable to remove root node
     Parameter name: SelectXmlInfo
@@ -83,7 +83,7 @@
 [Parameter(ParameterSetName='Detailed',Position=4)][string] $ErrorId =
     "L$(Get-PSCallStack |select -First 1 |% ScriptLineNumber)"
 )
-[Exception] $ex = New-Object $ExceptionTypeName $ExceptionArgumentList
+[Exception] $ex = New-Object $ExceptionType.FullName $ExceptionArguments
 [object[]] $params =
     if($PSCmdlet.ParameterSetName -eq 'Detailed') {$ex,$ErrorId,$ErrorCategory,$TargetObject}
     else {(Get-Variable PSItem -ValueOnly -Scope 1),$ex}

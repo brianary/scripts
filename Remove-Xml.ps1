@@ -33,7 +33,7 @@ Process
 
     if(!$node.ParentNode)
     {
-        Stop-ThrowError.ps1 [ArgumentException] 'Unable to remove root node',
+        Stop-ThrowError.ps1 ArgumentException 'Unable to remove root node',
             SelectXmlInfo InvalidArgument $SelectXmlInfo RootRequired
     }
     [void]$node.ParentNode.RemoveChild($node)
