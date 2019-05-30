@@ -53,7 +53,7 @@ Process
     [Xml.XmlNode]$node = $SelectXmlInfo.Node
     if(!$node.ParentNode -and $Position -in 'InsertAfter','InsertBefore')
     {
-        Stop-ThrowError.ps1 [ArgumentException] "Unable to $Position root node",
+        Stop-ThrowError.ps1 ArgumentException "Unable to $Position root node",
             SelectXmlInfo InvalidArgument $SelectXmlInfo SingleRoot
     }
     $ns = if($Namespace){@{Namespace=$Namespace}}else{@{}}
