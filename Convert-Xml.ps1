@@ -29,6 +29,13 @@
 )
 Begin
 {
+    [version] $xsltversion = Select-Xml '/xsl:transform/@version' $TransformFile -Namespace @{
+        xsl='http://www.w3.org/1999/XSL/Transform'} |Select-XmlNodeValue.ps1
+    if($xsltversion -gt '1.0')
+    {
+        Stop-ThrowError.ps1 ArgumentException "XSLT version $xsltversion is not supported by the CLR.",
+            'TransformFile' InvalidArgument $TransformFile 'XSLTv'
+    }
     $xslt = New-Object Xml.Xsl.XslCompiledTransform
     try
     {
@@ -45,9 +52,12 @@ Begin
 Process
 {
     $absPath = Resolve-Path $Path
-    if((Test-Path $OutFile) -and
-        !$PSCmdlet.ShouldContinue("$(Get-Item $OutFile |select FullName,LastWriteTime,Length)","Overwrite File?"))
-    {Write-Warning "Skipping transform from $absPath to $OutFile"; continue}
-    if($OutFile) {$xslt.Transform($absPath,[IO.Path]::Combine($PWD,$OutFile))}
-    else {$xslt.Transform($absPath,[Console]::Out)}
+    if(!$OutFile) {$xslt.Transform($absPath,[Console]::Out)}
+    else
+    {
+        $xslt.Transform($absPath,[IO.Path]::Combine($PWD,$OutFile))
+        if((Test-Path $OutFile) -and
+            !$PSCmdlet.ShouldContinue("$(Get-Item $OutFile |select FullName,LastWriteTime,Length)","Overwrite File?"))
+        {Write-Warning "Skipping transform from $absPath to $OutFile"; continue}
+    }
 }
