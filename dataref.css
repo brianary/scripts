@@ -11,10 +11,14 @@ table:hover caption { background-color: activecaption; color: captiontext; }
 table.input, table.output { width: 48%; min-width: 42em; }
 table.input { float: left; }
 table.output, table.output caption { border-left: 1px dotted graytext; }
+tr:hover { border: 1px dotted #999; }
 th { text-align: left; }
 th.occurs, td.occurs { width: 2em; text-align: center; }
+th.notes, td.notes { min-width: 3em; max-width: 40%; }
+td.notes { color: green; font-style: italic; }
+td.notes p, td.notes table { margin: 1ex; }
 th.direction { font: caption; font-style: italic; }
-td { vertical-align: top; }
+th,td { vertical-align: top; }
 ul { padding-top: 0; padding-bottom: 0; margin-top: 0; margin-bottom: 0; }
 div.index ul { list-style-type: none; margin: 0 0 0 1em; padding: 0; }
 div.index li { list-style-type: none; margin: 0; padding: 0; }

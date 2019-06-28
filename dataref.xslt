@@ -1,15 +1,20 @@
 <?xml version="1.0"?>
-<!-- WSDL/XSD to human-readable XHTML Reference, see http://webcoder.info/downloads/DataRef.html -->
+<!--
+An XSLT stylesheet to convert WSDL or XSD files to HTML quick-references
+
+This transform requires an XSLT version 2.0 processor (such as Saxon), and uses dataref.css for style.
+
+This stylesheet builds a list of all of the services, ports, and messages (for WSDL), global definitions
+(for XSD), data structures and an index of simple fields (for both).
+-->
 <xsl:transform xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ws="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:x="urn:guid:f203a737-cebb-419d-9fbe-a684f1f13591"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	version="2.0" exclude-result-prefixes="xsl xs x ws">
-<xsl:output method="xhtml" version="1.1" use-character-maps="amp"
-	encoding="utf-8" media-type="application/xhtml+xml" indent="yes"
-	doctype-public="-//W3C//DTD XHTML 1.1//EN"
-	doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
+	version="2.0" exclude-result-prefixes="xsl xs x wsdl">
+<xsl:output method="html" version="5" use-character-maps="amp"
+	encoding="utf-8" media-type=" text/html" indent="yes" />
 <xsl:character-map name="amp"><xsl:output-character character="`" string="&amp;" /></xsl:character-map>
 <xsl:strip-space elements="*"/>
 
@@ -65,18 +70,19 @@
 	<xsl:for-each select="xs:complexType">
 		<h2 class="{@name}"><xsl:value-of select="@name"/></h2>
 		<table class="{@name}"><caption><xsl:value-of select="@name"/></caption>
-			<thead><tr><th>Name</th><th title="Occurrances" class="occurs">#</th><th>Type</th></tr></thead>
+			<thead><tr><th>Name</th><th title="Occurrances" class="occurs">#</th>
+				<th>Type</th><th class="notes" title="Notes">📝</th></tr></thead>
 			<tbody><xsl:apply-templates select="xs:attribute,* except xs:attribute"/></tbody>
 		</table>
 	</xsl:for-each>
 	</body></html>
 </xsl:template>
 
-<xsl:template match="ws:definitions">
-	<html><head><title><xsl:value-of select="ws:service/@name" separator=", "/> Reference</title>
+<xsl:template match="wsdl:definitions">
+	<html><head><title><xsl:value-of select="wsdl:service/@name" separator=", "/> Reference</title>
 	<link rel="Stylesheet" type="text/css" href="dataref.css"/>
 	</head><body>
-	<xsl:apply-templates select="ws:service">
+	<xsl:apply-templates select="wsdl:service">
 		<xsl:sort select="@name"/>
 	</xsl:apply-templates>
 	<h1 class="index">Simple Field Index</h1>
@@ -96,16 +102,16 @@
 				<xsl:variable name="element" as="xs:QName*" select="x:schema-QNames(current-group()/ancestor::xs:element[parent::xs:schema]
 					|$schema//xs:element[@type and QName($tns,@type) = $type]/ancestor-or-self::xs:element[parent::xs:schema])"/>
 				<!-- all messages that use the group of types and elements associated with these field names -->
-				<xsl:variable name="message" as="xs:QName*" select="x:schema-QNames(/ws:definitions/ws:message
-					[ws:part[@element and resolve-QName(@element,.) = $element] or ws:part[@type and resolve-QName(@type,.) = $type]])"/>
+				<xsl:variable name="message" as="xs:QName*" select="x:schema-QNames(/wsdl:definitions/wsdl:message
+					[wsdl:part[@element and resolve-QName(@element,.) = $element] or wsdl:part[@type and resolve-QName(@type,.) = $type]])"/>
 				<li><div><xsl:value-of select="current-grouping-key()"/></div>
 				<ul class="fieldops">
-					<xsl:for-each-group select="/ws:definitions/ws:portType/ws:operation[ws:input[resolve-QName(@message,.) = $message]]" group-by="@name">
+					<xsl:for-each-group select="/wsdl:definitions/wsdl:portType/wsdl:operation[wsdl:input[resolve-QName(@message,.) = $message]]" group-by="@name">
 						<xsl:sort select="current-grouping-key()"/>
 						<li><xsl:text disable-output-escaping="yes">&amp;rarr;</xsl:text>
 							<a href="#o.{current-grouping-key()}"><xsl:value-of select="current-grouping-key()"/></a></li>
 					</xsl:for-each-group>
-					<xsl:for-each-group select="/ws:definitions/ws:portType/ws:operation[ws:output[resolve-QName(@message,.) = $message]]" group-by="@name">
+					<xsl:for-each-group select="/wsdl:definitions/wsdl:portType/wsdl:operation[wsdl:output[resolve-QName(@message,.) = $message]]" group-by="@name">
 						<xsl:sort select="current-grouping-key()"/>
 						<li><xsl:text disable-output-escaping="yes">&amp;larr;</xsl:text>
 							<a href="#o.{current-grouping-key()}"><xsl:value-of select="current-grouping-key()"/></a></li>
@@ -117,48 +123,49 @@
 	</div></body></html>
 </xsl:template>
 
-<xsl:template match="ws:documentation">
+<xsl:template match="wsdl:documentation|xs:documentation">
 	<p><xsl:apply-templates/></p>
 </xsl:template>
 
-<xsl:template match="ws:service">
+<xsl:template match="wsdl:service">
 	<h1 id="s.{@name}"><xsl:value-of select="@name"/> Reference</h1>
-	<xsl:apply-templates select="ws:documentation"/>
-	<xsl:apply-templates select="/ws:definitions/ws:portType[@name = current()/ws:port/@name]">
+	<xsl:apply-templates select="wsdl:documentation"/>
+	<xsl:apply-templates select="/wsdl:definitions/wsdl:portType[@name = current()/wsdl:port/@name]">
 		<xsl:sort select="@name"/>
 	</xsl:apply-templates>
 </xsl:template>
 
-<xsl:template match="ws:portType">
+<xsl:template match="wsdl:portType">
 	<div id="p.{@name}" class="port">
 		<h2><xsl:value-of select="@name"/></h2>
-		<xsl:apply-templates select="ws:documentation"/>
-		<xsl:apply-templates select="ws:operation">
+		<xsl:apply-templates select="wsdl:documentation"/>
+		<xsl:apply-templates select="wsdl:operation">
 			<xsl:sort select="@name"/>
 		</xsl:apply-templates>
 	</div>
 </xsl:template>
 
-<xsl:template match="ws:operation">
+<xsl:template match="wsdl:operation">
 	<div id="o.{@name}" class="operation">
 		<h3><xsl:value-of select="@name"/></h3>
-		<xsl:apply-templates select="ws:documentation,ws:input,ws:output"/>
+		<xsl:apply-templates select="wsdl:documentation,wsdl:input,wsdl:output"/>
 	</div>
 </xsl:template>
 
-<xsl:template match="ws:input|ws:output">
+<xsl:template match="wsdl:input|wsdl:output">
 	<xsl:variable name="name" select="local-name()" as="xs:string"/>
 	<xsl:variable name="message" select="resolve-QName(@message,.)" as="xs:QName"/>
-	<xsl:variable name="part" select="/ws:definitions/ws:message[QName(/ws:definitions/@targetNamespace,@name) eq $message]/ws:part" as="element(ws:part)*"/>
+	<xsl:variable name="part" select="/wsdl:definitions/wsdl:message[QName(/wsdl:definitions/@targetNamespace,@name) eq $message]/wsdl:part" as="element(wsdl:part)*"/>
 	<xsl:if test="$part">
 		<table class="{$name}"><caption><xsl:value-of select="$name"/></caption>
-			<thead><tr><th>Name</th><th title="Occurrances" class="occurs">#</th><th>Type</th></tr></thead>
+			<thead><tr><th>Name</th><th title="Occurrances" class="occurs">#</th>
+				<th>Type</th><th class="notes" title="Notes">📝</th></tr></thead>
 			<xsl:apply-templates select="$part"/>
 		</table>
 	</xsl:if>
 </xsl:template>
 
-<xsl:template match="ws:part">
+<xsl:template match="wsdl:part">
 	<xsl:variable name="type" select="if (@type) then resolve-QName(@type,.) else ()" as="xs:QName?"/>
 	<xsl:choose>
 		<xsl:when test="exists($type)">
@@ -198,12 +205,16 @@
 		<xsl:when test="exists($type) and x:in-xs($type)">
 			<tr><td style="padding-left:{$depth}em"><xsl:value-of select="$name"/></td>
 				<td class="occurs"><xsl:call-template name="occurs"/></td>
-				<td><xsl:value-of select="local-name-from-QName($type)"/></td></tr>
+				<td><xsl:value-of select="local-name-from-QName($type)"/></td>
+				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
+					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
 		</xsl:when>
 		<xsl:when test="xs:simpleType">
 			<tr><td style="padding-left:{$depth}em"><xsl:value-of select="$name"/></td>
 				<td class="occurs"><xsl:call-template name="occurs"/></td>
-				<td><xsl:apply-templates/></td></tr>
+				<td><xsl:apply-templates select="xs:simpleType"/></td>
+				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
+					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
 		</xsl:when>
 		<xsl:when test="not(exists($complexType))">
 			<xsl:variable name="element" select="if (@element) then resolve-QName(@element,.) else ()" as="xs:QName?"/>
@@ -211,7 +222,9 @@
 				<td class="occurs"><xsl:call-template name="occurs"/></td>
 				<td><xsl:value-of select="@type"/>
 					<xsl:apply-templates select="xs:attribute,$schema/xs:simpleType[not(exists($type)) or QName($tns,@name) eq $type]"/>
-				</td></tr>
+				</td>
+				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
+					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
 			<xsl:apply-templates select="$schema/xs:element[QName($tns,@name) = $element]">
 				<xsl:with-param name="depth" select="$depth +1" as="xs:integer" tunnel="yes"/>
 			</xsl:apply-templates>
@@ -219,12 +232,18 @@
 		<xsl:otherwise>
 			<tr><th style="padding-left:{$depth}em"><xsl:value-of select="$name"/></th>
 				<td class="occurs"><xsl:call-template name="occurs"/></td>
-				<td><xsl:value-of select="($type,@name)[1]"/></td></tr>
+				<td><xsl:value-of select="($type,@name)[1]"/></td>
+				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
+					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
 			<xsl:apply-templates select="xs:attribute,$complexType">
 				<xsl:with-param name="depth" select="$depth +1" as="xs:integer" tunnel="yes"/>
 			</xsl:apply-templates>
 		</xsl:otherwise>
 	</xsl:choose>
+</xsl:template>
+
+<xsl:template match="xs:annotation">
+	<xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="xs:any">
