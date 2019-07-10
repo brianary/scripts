@@ -5,6 +5,26 @@
 .Parameter Value
     An array, hash, object, or value type that can be represented as a PowerShell literal.
 
+.Parameter Indent
+    The starting indent value. You can probably ignore this.
+
+.Parameter IndentBy
+    The string to use for incremental indentation.
+
+.Parameter Newline
+    The line ending sequence to use.
+
+.Parameter SkipInitialIndent
+    Indicates the first line has already been indented. You can probably ignore this.
+
+.Parameter GenerateKey
+    Generates a key to use for encrypting credential literals.
+    If this is omitted, credentials will be encrypted using DPAPI, which will only be
+    decryptable on the same Windows machine where they were encrypted.
+
+.Parameter Key
+    The key to use for encrypting credentials.
+
 .Inputs
     System.Object (any object) to serialize.
 
@@ -31,11 +51,14 @@
 [Parameter(Position=0,ValueFromPipeline=$true)]$Value,
 [string]$Indent = '',
 [string]$IndentBy = "`t",
-[switch]$SkipInitialIndent
+[string]$Newline = "`r`n",
+[switch]$SkipInitialIndent,
+[Alias('PortableKey')][switch]$GenerateKey,
+[byte[]]$Key
 )
 Begin
 {
-    $Script:OFS = "`n$Indent"
+    $Script:OFS = "$Newline$Indent"
     $Local:PSDefaultParameterValues = @{
         'Format-PSLiterals.ps1:Indent'   = "$Indent$IndentBy"
         'Format-PSLiterals.ps1:IndentBy' = $IndentBy
@@ -43,6 +66,21 @@ Begin
     $itab = if($SkipInitialIndent){''}else{$Indent}
     $tab = $Indent
     $tabtab = "$Indent$IndentBy"
+    if($GenerateKey)
+    {
+        [byte[]]$Key = 0..31 |% {Get-Random -Maximum 255}
+        "[byte[]]`$key = $($Key -join ',')"
+    }
+    if($Key)
+    {
+        $Local:PSDefaultParameterValues['Format-PSLiterals.ps1:Key'] = $Key
+        $keyopt = ' -Key $key'
+        $Script:PSDefaultParameterValues['ConvertFrom-SecureString:Key'] = $Key
+    }
+    else
+    {
+        $dpapiwarn = " # using DPAPI, only valid for $env:UserName on $env:ComputerName as of $(Get-Date)"
+    }
 
     function Format-PSString([string]$string)
     {
@@ -57,13 +95,19 @@ Begin
                 "'"
                 $string -replace "'","''"
             }
-        if($string -match '\n|\r') {"@$q`n$string`n$q@"}
+        if($string -match '\n|\r') {"@$q$Newline$string$Newline$q@"}
         else {"$itab$q$string$q"}
     }
+
+    function Format-WrapString([Parameter(ValueFromPipeline=$true)][string]$string,[int]$width = 80)
+    {Process{
+        for($i = 0; ($i+$width) -lt $string.Length; $i += $width) {$string.Substring($i,$width)}
+        if($string.Length % $width) {$string.Substring($string.Length - ($string.Length % $width))}
+    }}
 }
 Process
 {
-    if($Value -eq $null)
+    if($null -eq $Value)
     { "$itab`$null" }
     elseif($Value -is [int])
     { "$itab$Value" }
@@ -86,6 +130,13 @@ Process
         "${itab}@("
         $Value |% {Format-PSLiterals.ps1 $_}
         "${tab})"
+    }
+    elseif($Value -is [pscredential])
+    {
+        $username = "'$($Value.UserName -replace "'","''")'"
+        $password = (ConvertFrom-SecureString $Value.Password |Format-WrapString) -join "' +$Newline${tabtab}'"
+        $password = "(ConvertTo-SecureString ($Newline${tabtab}'$password')$keyopt)"
+        "${itab}New-Object pscredential $username,$password$dpapiwarn"
     }
     elseif($Value -is [ScriptBlock])
     { "{$Value}" }
