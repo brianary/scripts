@@ -75,10 +75,12 @@ Begin
     {
         $Local:PSDefaultParameterValues['Format-PSLiterals.ps1:Key'] = $Key
         $keyopt = ' -Key $key'
+        $dpapiwarn = ''
         $Script:PSDefaultParameterValues['ConvertFrom-SecureString:Key'] = $Key
     }
     else
     {
+        $keyopt = ''
         $dpapiwarn = " # using DPAPI, only valid for $env:UserName on $env:ComputerName as of $(Get-Date)"
     }
 
