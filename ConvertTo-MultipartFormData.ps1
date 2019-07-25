@@ -19,7 +19,7 @@
     New-Guid
 
 .Example
-    @{ title = 'Name'; file = Get-Item avatar.png } |ConvertTo-MultipartFormData.ps1 |Invoke-WebRequest $url -Method POST
+    @{ title = 'Name'; file = Get-Item avartar.png } |ConvertTo-MultipartFormData.ps1 |Invoke-WebRequest $url -Method POST
 
     Sends two fields, one of which is a file upload.
 #>
@@ -31,9 +31,8 @@
 DynamicParam
 {
     $boundary = "$(New-Guid)"
-    $ct = "multipart/form-data; boundary=$boundary"
-    $PSDefaultParameterValues['Invoke-WebRequest:ContentType'] = $ct
-    $PSDefaultParameterValues['Invoke-RestMethod:ContentType'] = $ct
+    $PSDefaultParameterValues['Invoke-WebRequest:ContentType'] = "multipart/form-data; boundary=$boundary"
+    $PSDefaultParameterValues['Invoke-RestMethod:ContentType'] = "multipart/form-data; boundary=$boundary"
 }
 Begin
 {
@@ -46,27 +45,27 @@ Begin
 }
 Process
 {
-    Write-Verbose "$cmdletname : Creating $($Fields.Count)-field $ct"
     $content = New-Object Net.Http.MultipartFormDataContent $boundary
     foreach($field in $Fields.GetEnumerator())
     {
         if($field.Value -isnot [IO.FileInfo])
         {
-            Write-Verbose " + $cmdletname : Adding field: $($field.Key)=$($field.Value)"
             $content.Add([Net.Http.StringContent]$field.Value,$field.Key)
+            Write-Verbose "$cmdletname : $($field.Key)=$($field.Value)"
         }
         else
         {
-            Write-Verbose " + $cmdletname : Adding file: $($field.Value.FullName) ($($field.Value.Length) bytes)"
-            $content.Add([Net.Http.StreamContent]$field.Value.OpenRead(),$field.Key,$field.Value.Name)
+            Write-Verbose "$cmdletname : Adding file $($field.Value.FullName)"
+            $content.Add((New-Object Net.Http.StreamContent] ($field.Value.OpenRead())),'file',$field.Value.Name)
         }
     }
-    [Threading.Tasks.Task[string]]$getbody = $content.ReadAsStringAsync()
+    $content.Headers.GetEnumerator() |% {Write-Verbose "$cmdletname header : $($_.Key)=$($_.Value -join "`n`t")"}
+    [Threading.Tasks.Task[byte[]]]$getbody = $content.ReadAsByteArrayAsync()
     $getbody.Wait()
-    [string]$body = $getbody.Result
+    [byte[]]$body = $getbody.Result
     $content.Dispose()
-    Write-Verbose "$cmdletname : Created $($body.Length)-byte $ct"
-    return $body
+    Write-Verbose "$cmdletname : Body is $($body.Length) bytes"
+    return,$body
 }
 End
 {
