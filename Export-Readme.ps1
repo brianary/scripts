@@ -9,7 +9,7 @@
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding()] Param(
-[string]$DependenciesImage = 'dependencies.png'
+[string]$DependenciesImage = 'dependencies.svg'
 )
 
 function Format-Dependencies
@@ -26,7 +26,7 @@ digraph ScriptDependencies
     foreach($help in Get-Help *.ps1)
     {
         Write-Verbose $help.Name
-        if($help.Name -notlike "$PSScriptRoot\*" -or 
+        if($help.Name -notlike "$PSScriptRoot\*" -or
             !(Get-Member relatedLinks -InputObject $help -MemberType Properties)) {continue}
         $help.relatedLinks.navigationLink |
             ? {Get-Member linkText -InputObject $_ -MemberType Properties} |
