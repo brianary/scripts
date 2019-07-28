@@ -29,6 +29,6 @@
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$Name,
-[Parameter(Position=1)]$Scope = 'Local'
+[Parameter(Position=1)]$Scope = '1'
 )
 Process {[bool](Get-Variable -Name $Name -Scope $Scope -ErrorAction SilentlyContinue)}
