@@ -20,7 +20,7 @@
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
 [string]$Path
 )
-Process
+Begin
 {
     try{[void][RebootFileAction]}catch{Add-Type -TypeDefinition @'
 using System;
@@ -37,6 +37,9 @@ public class RebootFileAction
     }
 }
 '@}
+}
+Process
+{
     try { Remove-Item $Path -Force -ErrorAction Stop }
     catch
     {
