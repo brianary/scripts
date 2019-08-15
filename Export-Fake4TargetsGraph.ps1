@@ -2,20 +2,44 @@
 .Synopsis
     Exports a graph of a Fake4 build script's targets.
 
+.Parameter Renderer
+    The name of the Graphviz rendering engine to use.
+
+.Parameter Format
+    The output format of the graph.
+
+.Parameter OutFile
+    The filename to output the graph to.
+
+.Parameter FakeVersion
+    The specific version of Fake4 to install if it is missing.
+
 .Notes
-    TODO: Parameterize Fake version, with a default.
-    TODO: Install Fake4 from NuGet, by version, if missing.
-    TODO: Use-Command.ps1 Graphviz (if missing).
     TODO: Parameterize build script file.
     TODO: Parameterize build target, and include only it and its dependencies.
-    TODO: Parameterize format (maybe as a dynamic param, using `dot -T? 2>&1` for ValidateSet), default to "svg".
-    TODO: Parameterize output filename.
-    TODO: Parameterize renderer, default to "dot".
-    TODO: For "gv" format, skip the rendering step.
     TODO: Invoke-Item?
+
+.Example
+    Export-Fake4TargetsGraph.ps1
+
+    Parses build.fsx and shows the target dependency graph in build.svg.
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param()
-
-fake4 -dg 2>&1 |? {$_ -match '^(digraph|  |})'} |Out-String |dot --% -Tsvg -obuild.svg
+[CmdletBinding()] Param(
+[ValidateSet('dot','circo','sfdp','twopi')][string] $Renderer = 'dot',
+[ValidateSet('bmp','gif','gv','jpg','pdf','png','ps','svg','svgz','tiff','vml','vmlz')]
+[string] $Format = 'svg',
+[string] $OutFile = "build.$Format",
+[ValidatePattern('\A4\.\S+\z')][string] $FakeVersion = '4.64.17'
+)
+Begin
+{
+    Use-Command.ps1 fake4 "$env:LOCALAPPDATA\Fake\tools\fake.exe" -nupkg fake -Version $FakeVersion -InstallDir $env:LOCALAPPDATA
+    Use-Command.ps1 dot "$env:ChocolateyInstall\bin\dot.exe" -cinst graphviz
+}
+Process
+{
+    if($Format -eq 'gv') {fake4 -dg 2>&1 |? {$_ -match '^(digraph|  |})'} |Out-File $OutFile ascii}
+    else {fake4 -dg 2>&1 |? {$_ -match '^(digraph|  |})'} |Out-String |& $Renderer "-T$Format" "-o$OutFile"}
+}
