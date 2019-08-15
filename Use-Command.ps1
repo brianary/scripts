@@ -25,6 +25,9 @@
 .Parameter NodePackage
     The name of the Node NPM package to install if the command is missing.
 
+.Parameter Version
+    The specific package version to install.
+
 .Parameter InstallDir
     The directory to install NuGet or Node packages to.
     Node will create and use a "node_modules" folder under this one.
@@ -98,30 +101,34 @@
 #requires -Version 2
 #requires -Modules Microsoft.PowerShell.Utility
 [CmdletBinding(SupportsShouldProcess=$true)]
-Param([Parameter(Position=0,Mandatory=$true)]$Name,
-[Parameter(Position=1,Mandatory=$true)][string]$Path,
-[Parameter(ParameterSetName='WindowsFeature')][Alias('WinFeature')][string]$WindowsFeature,
-[Parameter(ParameterSetName='ChocolateyPackage')][Alias('ChocoPackage','chocopkg','cinst')][string]$ChocolateyPackage,
-[Parameter(ParameterSetName='NugetPackage')][Alias('nupkg')][string]$NugetPackage,
-[Parameter(ParameterSetName='NodePackage')][Alias('npm')][string]$NodePackage,
+Param([Parameter(Position=0,Mandatory=$true)][string] $Name,
+[Parameter(Position=1,Mandatory=$true)][string] $Path,
+[Parameter(ParameterSetName='WindowsFeature')][Alias('WinFeature')][string] $WindowsFeature,
+[Parameter(ParameterSetName='ChocolateyPackage')][Alias('ChocoPackage','chocopkg','cinst')][string] $ChocolateyPackage,
+[Parameter(ParameterSetName='NugetPackage')][Alias('nupkg')][string] $NugetPackage,
+[Parameter(ParameterSetName='NodePackage')][Alias('npm')][string] $NodePackage,
+[Parameter(ParameterSetName='ChocolateyPackage')]
 [Parameter(ParameterSetName='NugetPackage')]
 [Parameter(ParameterSetName='NodePackage')]
-[Alias('dir')][string]$InstallDir = 'C:\Tools',
+[ValidatePattern('\A\S+\z')][string] $Version,
+[Parameter(ParameterSetName='NugetPackage')]
+[Parameter(ParameterSetName='NodePackage')]
+[Alias('dir')][string] $InstallDir = 'C:\Tools',
 [Parameter(ParameterSetName='WindowsInstaller')]
-[Alias('msi')][uri]$WindowsInstaller,
+[Alias('msi')][uri] $WindowsInstaller,
 [Parameter(ParameterSetName='WindowsInstaller')]
-[int]$InstallLevel = 32767,
+[int] $InstallLevel = 32767,
 [Parameter(ParameterSetName='ExecutableInstaller')]
-[Alias('exe')][uri]$ExecutableInstaller,
+[Alias('exe')][uri] $ExecutableInstaller,
 [Parameter(ParameterSetName='ExecutableInstaller')]
-[Alias('params')][string[]]$InstallerParameters = @(),
-[Parameter(ParameterSetName='ExecutePS')][Alias('iex')][uri]$ExecutePowerShell,
-[Parameter(ParameterSetName='DownloadZip')][Alias('zip')][uri]$DownloadZip,
-[Parameter(ParameterSetName='DownloadUrl')][Alias('url')][uri]$DownloadUrl,
+[Alias('params')][string[]] $InstallerParameters = @(),
+[Parameter(ParameterSetName='ExecutePS')][Alias('iex')][uri] $ExecutePowerShell,
+[Parameter(ParameterSetName='DownloadZip')][Alias('zip')][uri] $DownloadZip,
+[Parameter(ParameterSetName='DownloadUrl')][Alias('url')][uri] $DownloadUrl,
 [Parameter(ParameterSetName='WarnOnly')]
-[Alias('msg')][string]$Message,
+[Alias('msg')][string] $Message,
 [Parameter(ParameterSetName='Fail')]
-[switch]$Fail
+[switch] $Fail
 )
 function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Position=1)][string]$Path)
 { Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |% Path |Find-NewestFile.ps1 |% FullName) -Scope Global }
@@ -148,7 +155,8 @@ switch($PSCmdlet.ParameterSetName)
         { throw "Chocolatey installer ""cinst"" not found, unable to install $ChocolateyPackage." }
         if($PSCmdlet.ShouldProcess($ChocolateyPackage,'Chocolatey install'))
         {
-            cinst $ChocolateyPackage -y
+            if($Version) {cinst $ChocolateyPackage -y --version=$Version}
+            else {cinst $ChocolateyPackage -y}
             Set-ResolvedAlias $Name $Path
         }
         else { Write-Warning "Installation of $ChocolateyPackage was cancelled." }
@@ -161,7 +169,8 @@ switch($PSCmdlet.ParameterSetName)
         { throw "NuGet not found, unable to install $NugetPackage." }
         if($PSCmdlet.ShouldProcess("$NugetPackage in $InstallDir",'NuGet install'))
         {
-            nuget install $NugetPackage -x -o $InstallDir -NonInteractive
+            if($Version) {nuget install $NugetPackage -x -o $InstallDir -Version $Version -NonInteractive}
+            else {nuget install $NugetPackage -x -o $InstallDir -NonInteractive}
             Set-ResolvedAlias $Name $Path
         }
         else { Write-Warning "Installation of $NugetPackage was cancelled." }
@@ -177,7 +186,8 @@ switch($PSCmdlet.ParameterSetName)
         if($PSCmdlet.ShouldProcess("$NodePackage in $InstallDir",'npm install'))
         {
             pushd $InstallDir
-            npm install $NodePackage
+            if($Version) {npm install $NodePackage@$Version}
+            else {npm install $NodePackage}
             popd
             Set-ResolvedAlias $Name $Path
         }
