@@ -1,5 +1,5 @@
 <#
-.Summary
+.Synopsis
     Generate a new password.
 
 .Parameter Length
