@@ -133,6 +133,11 @@ Process
         $Value |% {Format-PSLiterals.ps1 $_}
         "${tab})"
     }
+    elseif($Value -is [securestring])
+    {
+        $password = (ConvertFrom-SecureString $Value |Format-WrapString) -join "' +$Newline${tabtab}'"
+        "(ConvertTo-SecureString ($Newline${tabtab}'$password')$keyopt)$dpapiwarn"
+    }
     elseif($Value -is [pscredential])
     {
         $username = "'$($Value.UserName -replace "'","''")'"
