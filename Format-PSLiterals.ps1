@@ -106,6 +106,44 @@ Begin
         for($i = 0; ($i+$width) -lt $string.Length; $i += $width) {$string.Substring($i,$width)}
         if($string.Length % $width) {$string.Substring($string.Length - ($string.Length % $width))}
     }}
+
+    $typealias = @{}
+    (Get-TypeAccelerators.ps1).GetEnumerator() |% {$typealias[$_.Value.FullName] = $_.Key}
+    function Format-ParameterType([Parameter(ValueFromPipelineByPropertyName=$true)][type]$ParameterType)
+    {Process{
+        $value = $ParameterType.FullName
+        if($typealias.ContainsKey($value)) {$value = $typealias[$value]}
+        "[$value]"
+    }}
+
+    function Format-ParameterAttribute([Parameter(ValueFromPipeline=$true)][attribute]$Attribute)
+    {Process{
+        Import-Variables.ps1 $Attribute
+        $name = $Attribute.GetType().Name -replace 'Attribute\z',''
+        switch($name)
+        {
+            Parameter
+            {
+                $props = @()
+                if($ParameterSetName -ne '__AllParameterSets') {$props += "ParameterSetName=$ParameterSetName"}
+                if($Position -ne [int]::MinValue) {$props += "Position=$Position"}
+                'Mandatory','ValueFromPipeline','ValueFromPipelineByPropertyName','ValueFromRemainingArguments' |
+                    foreach {Get-Variable $_ -ValueOnly} |
+                    where {$_} |
+                    foreach {$props += "$_=`$true"}
+                if($props){"[$name($($props -join ','))]"} else {''}
+            }
+            Alias {"[Alias($(($AliasNames |Format-PSLiterals.ps1 -SkipInitialIndent) -join ','))]"}
+            ValidateCount {"[$name($MinLength,$MaxLength)]"}
+            ValidateDrive {"[$name($(($ValidRootDrives |Format-PSLiterals.ps1 -SkipInitialIndent) -join ','))]"}
+            ValidateLength {"[$name($MinLength,$MaxLength)]"}
+            ValidatePattern {"[$name('$($RegexPattern -replace "'","''")')]"}
+            ValidateRange {"[$name($MinRange,$MaxRange)]"}
+            ValidateScript {"[$name($ScriptBlock)]"}
+            ValidateSet {"[$name($(($ValidValues |Format-PSLiterals.ps1 -SkipInitialIndent) -join ','))]"}
+            default {"[$name()]"}
+        }
+    }}
 }
 Process
 {
@@ -145,18 +183,29 @@ Process
         $password = "(ConvertTo-SecureString ($Newline${tabtab}'$password')$keyopt)"
         "${itab}New-Object pscredential $username,$password$dpapiwarn"
     }
+    elseif($Value -is [Management.Automation.RuntimeDefinedParameterDictionary])
+    {
+        "${itab}Param("
+        ($Value.GetEnumerator() |% {"$tabtab$(Format-PSLiterals.ps1 $_.Value)"}) -join ','
+        "${itab})"
+    }
+    elseif($Value -is [Management.Automation.RuntimeDefinedParameter])
+    {
+        "$($Value.Attributes |Format-ParameterAttribute)"
+        "$itab$($Value |Format-ParameterType) `$$($Value.Name)"
+    }
     elseif($Value -is [ScriptBlock])
     { "{$Value}" }
     elseif($Value -is [Collections.Specialized.OrderedDictionary])
     {
         "${itab}([ordered]@{"
-        $Value.Keys |? {$_ -match '^\w+$'} |% {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
+        $Value.Keys |? {$_ -match '^\w+$'} |% {"$tabtab$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
         "${tab}})"
     }
     elseif($Value -is [Hashtable])
     {
         "${itab}@{"
-        $Value.Keys |? {$_ -match '^\w+$'} |% {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
+        $Value.Keys |? {$_ -match '^\w+$'} |% {"$tabtab$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
         "${tab}}"
     }
     elseif($Value -is [xml])
