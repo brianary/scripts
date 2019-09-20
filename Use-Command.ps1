@@ -65,6 +65,9 @@
     System.IO.Compression.FileSystem
 
 .Link
+    Find-NewestFile.ps1
+
+.Link
     Resolve-Path
 
 .Link
