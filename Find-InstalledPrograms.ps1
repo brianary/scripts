@@ -7,6 +7,8 @@
 
 .Link
     Get-WmiObject
+
+.Link
     https://serverfault.com/questions/693264/with-powershell-get-exactly-the-same-application-list-as-in-add-remove-programms
 
 .Example

@@ -10,6 +10,8 @@
 
 .Link
     Invoke-RestMethod
+
+.Link
     https://duckduckgo.com/api
 
 .Example
