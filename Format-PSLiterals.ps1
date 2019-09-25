@@ -128,9 +128,9 @@ Begin
                 if($ParameterSetName -ne '__AllParameterSets') {$props += "ParameterSetName=$ParameterSetName"}
                 if($Position -ne [int]::MinValue) {$props += "Position=$Position"}
                 'Mandatory','ValueFromPipeline','ValueFromPipelineByPropertyName','ValueFromRemainingArguments' |
-                    foreach {Get-Variable $_ -ValueOnly} |
-                    where {$_} |
-                    foreach {$props += "$_=`$true"}
+                    foreach {try{Get-Variable $_ -ErrorAction Stop}catch{}} |
+                    where {$_.Value} |
+                    foreach {$props += "$($_.Name)=`$$($_.Value.ToString().ToLower())"}
                 if($props){"[$name($($props -join ','))]"} else {''}
             }
             Alias {"[Alias($(($AliasNames |Format-PSLiterals.ps1 -SkipInitialIndent) -join ','))]"}
