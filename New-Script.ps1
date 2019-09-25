@@ -109,11 +109,12 @@ DynamicParam
 }
 Process
 {
+    Import-Variables.ps1 $PSBoundParameters
     $OFS = @'
 
 
 '@
-    $name = "$Verb-$Noun.ps1"
+    $name = "$NameVerb-$NameNoun.ps1"
     $commenthelp = @()
     if($Synopsis) {$commenthelp += '.Synopsis',"$Indent$Synopsis",''}
     if($Parameters -and $Parameters.Count) {$commenthelp += $Parameters.GetEnumerator() |% Key |% {".Parameter $_",''}}
