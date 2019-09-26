@@ -94,7 +94,9 @@ PowerShell Scripts
 - **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1)**: Create a new PSObject by recursively combining the properties of PSObjects.
 - **[New-DbProviderObject.ps1](New-DbProviderObject.ps1)**: Create a common database object.
+- **[New-Jwt.ps1](New-Jwt.ps1)**: Generates a JSON Web Token (JWT)
 - **[New-Password.ps1](New-Password.ps1)**: Generate a new password.
+- **[New-Script.ps1](New-Script.ps1)**: Creates a simple boilerplate script.
 - **[New-Shortcut.ps1](New-Shortcut.ps1)**: Create a Windows shortcut.
 - **[Optimize-Path.ps1](Optimize-Path.ps1)**: Sorts, prunes, and normalizes both user and system Path entries.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1)**: Pushes the current VS Code editor workspace location to the location stack.
@@ -135,7 +137,9 @@ PowerShell Scripts
 - **[Test-MagicNumber.ps1](Test-MagicNumber.ps1)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
 - **[Test-NewerFile.ps1](Test-NewerFile.ps1)**: Returns true if the difference file is newer than the reference file.
 - **[Test-NoteProperty.ps1](Test-NoteProperty.ps1)**: Looks for any matching NoteProperties on an object.
+- **[Test-Uri.ps1](Test-Uri.ps1)**: Determines whether a string is a valid URI.
 - **[Test-USFederalHoliday.ps1](Test-USFederalHoliday.ps1)**: Returns true if the given date is a U.S. federal holiday.
+- **[Test-Utf8Encoding.ps1](Test-Utf8Encoding.ps1)**: Determines whether a file can be parsed as UTF-8 successfully.
 - **[Test-Variable.ps1](Test-Variable.ps1)**: Indicates whether a variable has been defined.
 - **[Test-Xml.ps1](Test-Xml.ps1)**: Try parsing text as XML.
 - **[Uninstall-OldModules.ps1](Uninstall-OldModules.ps1)**: Uninstalls old module versions.
@@ -159,4 +163,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 09/15/2019 18:15:23 -->
+<!-- generated 09/26/2019 08:32:42 -->
