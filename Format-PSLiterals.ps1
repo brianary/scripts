@@ -139,7 +139,7 @@ Begin
             ValidateLength {"[$name($MinLength,$MaxLength)]"}
             ValidatePattern {"[$name('$($RegexPattern -replace "'","''")')]"}
             ValidateRange {"[$name($MinRange,$MaxRange)]"}
-            ValidateScript {"[$name($ScriptBlock)]"}
+            ValidateScript {"[$name({$ScriptBlock})]"}
             ValidateSet {"[$name($(($ValidValues |Format-PSLiterals.ps1 -SkipInitialIndent) -join ','))]"}
             default {"[$name()]"}
         }
