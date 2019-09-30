@@ -9,7 +9,8 @@
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding()] Param(
-[string]$DependenciesImage = 'dependencies.svg'
+[string]$DependenciesImage = 'dependencies.svg',
+[string]$StatusAge = '2 weeks ago'
 )
 
 function Format-Dependencies
@@ -50,13 +51,34 @@ function Export-Dependencies($image)
     rm $gv
 }
 
+function Get-StatusSymbol([string]$status)
+{
+    switch($status)
+    {
+        A {':new: '}
+        B {':heavy_exclamation_mark: '}
+        C {':heavy_plus_sign: '}
+        D {':heavy_minus_sign: '}
+        M {':up: '}
+        R {':name_badge: '}
+        T {':wavy_dash: '}
+        U {':red_circle: '}
+        X {':large_orange_diamond: '}
+        default {':large_blue_diamond: '}
+    }
+}
+
 function Format-PSScripts
 {
+    $status = @{}
+    git diff --name-status $(git rev-list -1 --before="$StatusAge" master) |
+        % {if($_ -match '^(?<Status>\w)\t(?<Script>\S.*)') {$status[$Matches.Script] = Get-StatusSymbol $Matches.Status}}
     ls $PSScriptRoot\*.ps1 |
         % {Get-Help $_.FullName} |
         % {
             $name = Split-Path $_.Name -Leaf
-            "- **[$name]($name)**: $($_.Synopsis)"
+            $symbol = if($status.ContainsKey($name)){$status[$name]}
+            "- $symbol**[$name]($name)**: $($_.Synopsis)"
         }
 }
 

@@ -96,8 +96,8 @@ if($IncludeIssuedAt) {$Body['iss'] = ConvertTo-NumericDate (Get-Date)}
 $jwt = "$(ConvertTo-JSON64 $Headers).$(ConvertTo-JSON64 $Body)"
 $secred = New-Object pscredential 'secret',$Secret
 [byte[]]$secbytes = [Text.Encoding]::UTF8.GetBytes($secred.GetNetworkCredential().Password)
-$enc = New-Object "Security.Cryptography.$($Algorithm -replace '\AHS','HMACSHA')" (,$secbytes)
+$hash = New-Object "Security.Cryptography.$($Algorithm -replace '\AHS','HMACSHA')" (,$secbytes)
 $secbytes = $null
-$jwt = "$jwt.$(ConvertTo-Base64Url ($enc.ComputeHash([Text.Encoding]::UTF8.GetBytes($jwt))))"
-$enc.Dispose()
+$jwt = "$jwt.$(ConvertTo-Base64Url ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($jwt))))"
+$hash.Dispose()
 $jwt
