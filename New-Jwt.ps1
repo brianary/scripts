@@ -93,11 +93,15 @@ if($ExpirationTime) {$Body['exp'] = ConvertTo-NumericDate $ExpirationTime}
 if($IssuedAt) {$Body['iss'] = ConvertTo-NumericDate $IssuedAt}
 if($NotBefore) {$Body['nbf'] = ConvertTo-NumericDate $NotBefore}
 if($IncludeIssuedAt) {$Body['iss'] = ConvertTo-NumericDate (Get-Date)}
+Write-Verbose "JWT headers: $(ConvertTo-Json $Headers -Compress)"
+Write-Verbose "JWT body: $(ConvertTo-Json $Body -Compress)"
 $jwt = "$(ConvertTo-JSON64 $Headers).$(ConvertTo-JSON64 $Body)"
+Write-Verbose "Unsigned JWT: $jwt"
 $secred = New-Object pscredential 'secret',$Secret
 [byte[]]$secbytes = [Text.Encoding]::UTF8.GetBytes($secred.GetNetworkCredential().Password)
 $hash = New-Object "Security.Cryptography.$($Algorithm -replace '\AHS','HMACSHA')" (,$secbytes)
 $secbytes = $null
+Write-Verbose "Signing JWT with $($enc.GetType().Name)"
 $jwt = "$jwt.$(ConvertTo-Base64Url ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($jwt))))"
 $hash.Dispose()
 $jwt
