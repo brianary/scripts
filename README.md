@@ -102,8 +102,8 @@ PowerShell Scripts
 - **[Optimize-Path.ps1](Optimize-Path.ps1)**: Sorts, prunes, and normalizes both user and system Path entries.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1)**: Pushes the current VS Code editor workspace location to the location stack.
 - **[Read-Choice.ps1](Read-Choice.ps1)**: Returns choice selected from a list of options.
-- **[Read-WebRequest.ps1](Read-WebRequest.ps1)**: Parses an HTTP listener request.
-- **[Receive-WebRequest.ps1](Receive-WebRequest.ps1)**: Listens for an HTTP request and returns an HTTP request & response.
+- :new: **[Read-WebRequest.ps1](Read-WebRequest.ps1)**: Parses an HTTP listener request.
+- :new: **[Receive-WebRequest.ps1](Receive-WebRequest.ps1)**: Listens for an HTTP request and returns an HTTP request & response.
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1)**: Removes a file that may be prone to locking.
 - **[Remove-Utf8Signature.ps1](Remove-Utf8Signature.ps1)**: Removes the utf-8 signature (BOM) from a file.
 - **[Remove-WebAppHostCruft.ps1](Remove-WebAppHostCruft.ps1)**: Removes unused web application settings that have accumulated.
@@ -113,7 +113,7 @@ PowerShell Scripts
 - **[Repair-GeForceExperience.ps1](Repair-GeForceExperience.ps1)**: Fix "Something went wrong. Try restarting GeForce Experience."
 - **[Reset-ConsoleColors.ps1](Reset-ConsoleColors.ps1)**: Resets console color palette.
 - **[Resolve-XmlNamespaces.ps1](Resolve-XmlNamespaces.ps1)**: Gets the namespaces and their URIs and URLs from a document.
-- **[Restart-HttpListener.ps1](Restart-HttpListener.ps1)**: Stops and restarts an HTTP listener.
+- :new: **[Restart-HttpListener.ps1](Restart-HttpListener.ps1)**: Stops and restarts an HTTP listener.
 - **[Restore-SchTasks.ps1](Restore-SchTasks.ps1)**: Imports from a single XML file into the local Scheduled Tasks.
 - **[Save-CertificatePermissions.ps1](Save-CertificatePermissions.ps1)**: Saves the permissions of found certificates to a file.
 - **[Save-WebRequest.ps1](Save-WebRequest.ps1)**: Downloads a given URL to a file, automatically determining the filename.
@@ -132,10 +132,10 @@ PowerShell Scripts
 - **[Show-DataRef.ps1](Show-DataRef.ps1)**: Display an HTML view of an XML schema or WSDL using Saxon.
 - **[Show-ScheduledTask.ps1](Show-ScheduledTask.ps1)**: Provides a human-readable view of a scheduled task returned by Get-ScheduledTasks.
 - **[Split-FileName.ps1](Split-FileName.ps1)**: Returns the specified part of the filename.
-- **[Start-HttpListener.ps1](Start-HttpListener.ps1)**: Creates and starts an HTTP listener, for testing HTTP clients.
-- **[Stop-HttpListener.ps1](Stop-HttpListener.ps1)**: Closes an HTTP listener.
+- :new: **[Start-HttpListener.ps1](Start-HttpListener.ps1)**: Creates and starts an HTTP listener, for testing HTTP clients.
+- :new: **[Stop-HttpListener.ps1](Stop-HttpListener.ps1)**: Closes an HTTP listener.
 - **[Stop-ThrowError.ps1](Stop-ThrowError.ps1)**: Throws a better error than "throw".
-- **[Suspend-HttpListener.ps1](Suspend-HttpListener.ps1)**: Pauses an HTTP listener.
+- :new: **[Suspend-HttpListener.ps1](Suspend-HttpListener.ps1)**: Pauses an HTTP listener.
 - **[Test-DateTime.ps1](Test-DateTime.ps1)**: Tests whether the given string can be parsed as a date.
 - **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1)**: Tests for a given common file type by magic number.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1)**: Scan sites using Mozilla's Observatory.
@@ -160,7 +160,7 @@ PowerShell Scripts
 - **[Use-SeqServer.ps1](Use-SeqServer.ps1)**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 - **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 - **[Use-SystemCrypto.ps1](Use-SystemCrypto.ps1)**: Sets the .NET Frameworks prior to 4.7.1 to inherit the system TLS settings.
-- **[Write-WebResponse.ps1](Write-WebResponse.ps1)**: Sends a text or binary response body to the HTTP listener client.
+- :new: **[Write-WebResponse.ps1](Write-WebResponse.ps1)**: Sends a text or binary response body to the HTTP listener client.
 
 F# Scripts
 ----------
@@ -173,4 +173,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 10/02/2019 23:02:19 -->
+<!-- generated 10/02/2019 23:06:16 -->
