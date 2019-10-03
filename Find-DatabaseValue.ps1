@@ -277,7 +277,7 @@ foreach($row in $corpus)
     $query = $valsql -f $TABLE_SCHEMA,$TABLE_NAME,$COLUMN_NAME
     [Data.DataTable]$data = $null
     Write-Verbose "Query: $query"
-    $data = Invoke-Sqlcmd $query -OutputAs DataTables
+    $data = try {Invoke-Sqlcmd $query -OutputAs DataTables} catch {Write-Error $_; continue}
     if($data -and ($data.Rows.Count -gt 0))
     {
         $count += $data.Rows.Count
