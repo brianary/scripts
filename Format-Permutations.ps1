@@ -45,7 +45,7 @@
 function Format-Permute([string]$Format,[object[][]]$NextValues,[object[]]$Values = @())
 {
     if($Values.Length -eq 1) {$NextValues[0] |foreach {$Format -f ($Values+$_)}}
-    else {$NextValues[0] |foreach {Format-Permute $Format $NextValues[1..$NextValues.Length] ($Values+$_)}}
+    else {$NextValues[0] |foreach {Format-Permute $Format $NextValues[1..($NextValues.Length-1)] ($Values+$_)}}
 }
 
 Format-Permute $Format $InputObject
