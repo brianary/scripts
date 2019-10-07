@@ -48,7 +48,7 @@ PowerShell Scripts
 - :new: **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1)**: Searches an entire database for a field value.
 - **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1)**: Removes duplicates from a list of files.
 - **[Find-Indexes.ps1](Find-Indexes.ps1)**: Returns indexes using a column with the given name.
-- :up: **[Find-InstalledPrograms.ps1](Find-InstalledPrograms.ps1)**: Searches installed programs.
+- **[Find-InstalledPrograms.ps1](Find-InstalledPrograms.ps1)**: Searches installed programs.
 - **[Find-Lines.ps1](Find-Lines.ps1)**: Searches a specific subset of files for lines matching a pattern.
 - **[Find-NewestFile.ps1](Find-NewestFile.ps1)**: Finds the most recent file.
 - **[Find-ProjectPackages.ps1](Find-ProjectPackages.ps1)**: Find modules used in projects.
@@ -57,6 +57,7 @@ PowerShell Scripts
 - **[Format-Certificate.ps1](Format-Certificate.ps1)**: Generates a formatted name/description from a certificate.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1)**: Escape URLs more aggressively.
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
+- :new: **[Format-Permutations.ps1](Format-Permutations.ps1)**: Builds format strings using every combination of elements from multiple arrays.
 - :up: **[Format-PSLiterals.ps1](Format-PSLiterals.ps1)**: Serializes complex content into PowerShell literals.
 - **[Format-Xml.ps1](Format-Xml.ps1)**: Pretty-print XML.
 - **[Format-XmlElements.ps1](Format-XmlElements.ps1)**: Serializes complex content into XML elements.
@@ -96,7 +97,7 @@ PowerShell Scripts
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1)**: Create a new PSObject by recursively combining the properties of PSObjects.
 - **[New-DbProviderObject.ps1](New-DbProviderObject.ps1)**: Create a common database object.
 - :new: **[New-Jwt.ps1](New-Jwt.ps1)**: Generates a JSON Web Token (JWT)
-- :up: **[New-Password.ps1](New-Password.ps1)**: Generate a new password.
+- **[New-Password.ps1](New-Password.ps1)**: Generate a new password.
 - :new: **[New-Script.ps1](New-Script.ps1)**: Creates a simple boilerplate script.
 - **[New-Shortcut.ps1](New-Shortcut.ps1)**: Create a Windows shortcut.
 - **[Optimize-Path.ps1](Optimize-Path.ps1)**: Sorts, prunes, and normalizes both user and system Path entries.
@@ -153,7 +154,7 @@ PowerShell Scripts
 - **[Test-Xml.ps1](Test-Xml.ps1)**: Try parsing text as XML.
 - **[Uninstall-OldModules.ps1](Uninstall-OldModules.ps1)**: Uninstalls old module versions.
 - **[Update-Files.ps1](Update-Files.ps1)**: Copies specified source files that exist in the destination directory.
-- :up: **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
+- **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 - **[Use-Java.ps1](Use-Java.ps1)**: Switch the Java version for the current process by modifying environment variables.
 - **[Use-NetMailConfig.ps1](Use-NetMailConfig.ps1)**: Use .NET configuration to set defaults for Send-MailMessage.
 - **[Use-ReasonableDefaults.ps1](Use-ReasonableDefaults.ps1)**: Sets certain cmdlet parameter defaults to rational, useful values.
@@ -173,4 +174,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 10/02/2019 23:06:16 -->
+<!-- generated 10/07/2019 08:20:30 -->
