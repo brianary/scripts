@@ -16,7 +16,7 @@
     https://social.technet.microsoft.com/wiki/contents/articles/7855.powershell-using-the-f-format-operator.aspx
 
 .Example
-	Format-Permutations.ps1 'srv-{0}-{1:00}' @('dev','test','stage','live'),@(1..4)
+	Format-Permutations.ps1 'srv-{0}-{1:00}' 'dev','test','stage','live' (1..4)
 
     srv-dev-01
     srv-dev-02
@@ -39,7 +39,7 @@
 #Requires -Version 3
 [CmdletBinding()][OutputType([string[]])] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $Format,
-[Parameter(Position=1,Mandatory=$true)][ValidateNotNull()][object[][]] $InputObject
+[Parameter(Position=1,Mandatory=$true,ValueFromRemainingArguments=$true)][ValidateNotNull()][object[][]] $InputObject
 )
 
 function Format-Permute([string]$Format,[object[][]]$NextValues,[object[]]$Values = @())

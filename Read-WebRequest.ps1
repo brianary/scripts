@@ -37,12 +37,8 @@ if(!$Request.HasEntityBody) {return}
 if(!$Request.ContentLength64) {Write-Warning 'Empty HTTP request body.'; return}
 if(!$Request.InputStream.CanRead)
 {Stop-ThrowError.ps1 InvalidOperationException 'Unable to read HTTP request.' InvalidOperation $Request NOREAD}
-switch -Wildcard ($Request.ContentType)
-{ #TODO: multipart/alternative, multipart/parallel, multipart/related, multipart/form-data, multipart/*
-    'text/*'            {Read-TextWebRequest}
-    'message/*'         {Read-TextWebRequest}
-    'application/json'  {Read-TextWebRequest}
-    'application/xml'   {Read-TextWebRequest}
-    'application/*+xml' {Read-TextWebRequest}
-    default             {Read-BinaryWebRequest}
-}
+#TODO: multipart/alternative, multipart/parallel, multipart/related, multipart/form-data, multipart/*
+# https://stackoverflow.com/a/21689347/54323
+# https://docs.microsoft.com/dotnet/api/system.net.http.streamcontent
+if($Request.ContentType -match '\A(?:(?:text|message)/.*|application/(?:json|(?:.*\+)xml))\z') {Read-TextWebRequest}
+else {Read-BinaryWebRequest}
