@@ -35,8 +35,9 @@
 
 #Requires -Version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSObject]$InputObject,
-[Alias('Type')][Management.Automation.PSMemberTypes]$MemberType = 'Properties'
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSObject] $InputObject,
+[Alias('Type')][Management.Automation.PSMemberTypes] $MemberType = 'Properties',
+[string] $Scope = '1'
 )
 Process
 {
@@ -46,5 +47,5 @@ Process
         else {Get-Member -InputObject $InputObject -MemberType $MemberType |% Name}
     if(!$vars){return}
     Write-Verbose "Importing $($vars.Count) $(if($isDict){'keys'}else{"$MemberType properties"}): $vars"
-    foreach($var in $vars) {Set-Variable $var $InputObject.$var -Scope 1}
+    foreach($var in $vars) {Set-Variable $var $InputObject.$var -Scope $Scope}
 }
