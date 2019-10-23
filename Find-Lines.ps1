@@ -62,7 +62,7 @@
     [string[]]$Exclude = @('*.dll','*.exe','*.pdb','*.bin','*.cache','*.png','*.gif','*.jpg','*.ico','*.psd','*.obj','*.iso',
         '*.docx','*.xls','*.xlsx','*.pdf','*.rtf','*.swf','*.chm','*.ttf','*.woff','*.eot','*.otf','*.mdf','*.ldf','*.pack',
         '*.zip','*.gz','*.tgz','*.jar','*.nupkg','*.vspscc','*.vsmdi','*.vssscc','*.vsd','*.vscontent','*.vssettings','*.suo',
-        '*.dbmdl','*.tdf','*.optdata','*.sigdata'),
+        '*.dbmdl','*.tdf','*.optdata','*.sigdata','*.lib'),
     [switch]$CaseSensitive,
     [switch]$List,
     [switch]$NotMatch,
