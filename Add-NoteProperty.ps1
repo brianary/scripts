@@ -51,7 +51,8 @@
 [Parameter(Position=1,Mandatory=$true)][ScriptBlock] $Value,
 [Alias('Import')][string[]] $Properties = @(),
 [Parameter(ValueFromPipeline=$true,Mandatory=$true)][PSObject] $InputObject,
-[switch] $PassThru
+[switch] $PassThru,
+[switch] $Force
 )
 Process
 {
@@ -72,5 +73,5 @@ Process
 	}
 	[psobject[]] $v = $Value.InvokeWithContext($null,$context,$null)
 	Add-Member -InputObject $InputObject -MemberType NoteProperty -Name $Name `
-		-Value $(if($v.Length -eq 1){$v[0]}else{$v}) -PassThru:$PassThru
+		-Value $(if($v.Length -eq 1){$v[0]}else{$v}) -PassThru:$PassThru -Force:$Force
 }
