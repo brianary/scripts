@@ -114,7 +114,7 @@ $SOQ
        count(distinct [{2}]) UniqueValues,
        min([{2}]) MinimumValue,
        max([{2}]) MaximumValue,
-       avg([{2}]) MeanAverage,
+       avg(cast([{2}] as real)) MeanAverage,
        (select avg(value) from MedianValue) MedianAverage,
        (select avg(value) from TopValues) ModeAverage,
        var([{2}]) Variance,
@@ -233,7 +233,7 @@ Process
             ($typefmt -f $datatype.Name,$datatype.MaximumLength,$datatype.NumericPrecision,$datatype.NumericScale)
         Database = $table.Parent.Name
         ServerInstance = $table.Parent.Parent.Name
-    } |
+	} |
         ? {$PSCmdlet.ShouldProcess("column $fqtn.$ColumnName","query $($table.RowCount) rows")} |
         % {Invoke-Sqlcmd @_} |
         ConvertFrom-DataRow.ps1
