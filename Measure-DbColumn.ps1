@@ -115,8 +115,8 @@ $SOQ
        min([{2}]) MinimumValue,
        max([{2}]) MaximumValue,
        avg(cast([{2}] as real)) MeanAverage,
-       (select avg(value) from MedianValue) MedianAverage,
-       (select avg(value) from TopValues) ModeAverage,
+       (select avg(cast(value as real)) from MedianValue) MedianAverage,
+       (select avg(cast(value as real)) from TopValues) ModeAverage,
        var([{2}]) Variance,
        stdev([{2}]) StandardDeviation
 $EOQ
@@ -227,10 +227,12 @@ Process
     $datatype = $Column.DataType
     $querytype,$typefmt = $typeinfo[$datatype.Name]
     $table = $Column.Parent
-    $fqtn = "$($table.Parent.Parent.Name).$($table.Parent.Name).$($table.Name)"
+	$fqtn = "$($table.Parent.Parent.Name).$($table.Parent.Name).$($table.Name)"
+	$sql = $query[$querytype] -f $table.Schema,$table.Name,$ColumnName,
+		($typefmt -f $datatype.Name,$datatype.MaximumLength,$datatype.NumericPrecision,$datatype.NumericScale)
+	Write-Verbose "SQL: $sql"
     @{
-        Query = $query[$querytype] -f $table.Schema,$table.Name,$ColumnName,
-            ($typefmt -f $datatype.Name,$datatype.MaximumLength,$datatype.NumericPrecision,$datatype.NumericScale)
+        Query = $sql
         Database = $table.Parent.Name
         ServerInstance = $table.Parent.Parent.Name
 	} |
