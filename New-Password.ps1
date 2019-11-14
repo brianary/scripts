@@ -5,8 +5,29 @@
 .Parameter Length
     The length of the password in characters.
 
+.Parameter MaxRepeats
+	The maximum number of times a character may be repeated consecutively.
+
+.Parameter ValidMatch
+	A regular expression the password must match.
+
+.Parameter InvalidMatch
+	A regular expression the password must not match.
+
 .Parameter AsSecureString
-    Converts the password to a secure string.
+	Converts the password to a secure string.
+
+.Parameter HasNumber
+	Indicates the password must contain a numeric character.
+
+.Parameter HasUpper
+	Indicates the password must contain an uppercase letter.
+
+.Parameter HasLower
+	Indicates the password must contain a lowercase letter.
+
+.Parameter HasSpecial
+	Indicates the password must contain a special character (something that isn't a letter or number).
 
 .Link
     Invoke-RestMethod
@@ -17,20 +38,56 @@
 .Example
     New-Password.ps1 64
 
-    -pTs[_?B0S6uqqBquWfB%f*FWPO)X6AEt|>}(V&|%%A-n^OSw!Z9#G/3s=LL;(Uq
+	-pTs[_?B0S6uqqBquWfB%f*FWPO)X6AEt|>}(V&|%%A-n^OSw!Z9#G/3s=LL;(Uq
+
+.Example
+	New-Password.ps1 32 -InvalidMatch '[ \\@]'
+
+	Y]Mo*>V0KUB$*V*j2J%YHsOvp:Ui^{L;
+
+.Example
+	New-Password 12 -HasNumber -HasUpper -HasLower -HasSpecial
+
+	ecRAgbdX^9)=
 #>
 
 #Requires -Version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][int]$Length,
-[Alias('SecureString')][switch]$AsSecureString
+[Parameter(Position=0,Mandatory=$true)][int] $Length,
+[int] $MaxRepeats,
+[regex] $ValidMatch,
+[regex] $InvalidMatch,
+[Alias('SecureString')][switch] $AsSecureString,
+[switch] $HasNumber,
+[switch] $HasUpper,
+[switch] $HasLower,
+[switch] $HasSpecial
 )
-$pwd =
-    try
-    {
-        $a = Invoke-RestMethod "https://api.duckduckgo.com/?q=pwgen+strong+$Length&format=json"
-        [Net.HttpUtility]::HtmlDecode($a.Answer) -replace ' \(random password\)\z',''
-    }
-    catch {[Web.Security.Membership]::GeneratePassword($Length,3)}
+$i = 0
+while($true)
+{
+	$i++
+	if($i -gt 100)
+	{
+		Stop-ThrowError.ps1 InvalidOperationException 'Failed to meet requirements after 100 tries.' `
+			InvalidOperation $PSBoundParameters 'GIVEUP'
+	}
+	$pwd =
+		try
+		{
+			$a = Invoke-RestMethod "https://api.duckduckgo.com/?q=pwgen+strong+$Length&format=json"
+			[Net.HttpUtility]::HtmlDecode($a.Answer) -replace ' \(random password\)\z',''
+		}
+		catch {[Web.Security.Membership]::GeneratePassword($Length,3)}
+	if($MaxRepeats -gt 1 -and $pwd -match "(.)$('\1' * $MaxRepeats)")
+	{Write-Verbose "Password #$i has too many duplicate characters"; continue}
+	if($ValidMatch -and $pwd -notmatch $ValidMatch) {Write-Verbose "Password #$i not valid: $pwd"; continue}
+	if($InvalidMatch -and $pwd -match $InvalidMatch) {Write-Verbose "Password #$i invalid: $pwd"; continue}
+	if($HasNumber -and $pwd -notmatch '\d') {Write-Verbose "Password #$i missing number: $pwd"; continue}
+	if($HasUpper -and $pwd -cnotmatch '\p{Lu}') {Write-Verbose "Password #$i missing uppercase: $pwd"; continue}
+	if($HasLower -and $pwd -cnotmatch '\p{Ll}') {Write-Verbose "Password #$i missing lowercase: $pwd"; continue}
+	if($HasSpecial -and $pwd -inotmatch '[^0-9A-Z]') {Write-Verbose "Password #$i missing lowercase: $pwd"; continue}
+	break
+}
 if($AsSecureString) {ConvertTo-SecureString $pwd -AsPlainText -Force}
 else {$pwd}

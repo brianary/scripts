@@ -720,7 +720,7 @@ public class PasswordCharacter
     {
         @('Lu','Ll','Lt','Lm','Lo','L','Mn','Mc','Me','M','Nd','Nl','No','N','Pc','Pd','Ps','Pe','Pi',
           'Pf','Po','P','Sm','Sc','Sk','So','S','Zs','Zl','Zp','Z','Cc','Cf','Cs','Co','Cn','C') |
-            ? {$c -match "\p{$_}"}
+            ? {$c -cmatch "\p{$_}"}
     }
     $invalidUserNameChars = '"/\[]:;|=,+*?<>'.ToCharArray() # https://technet.microsoft.com/en-us/library/bb726984.aspx
     $invalidFileNameChars = [IO.Path]::GetInvalidFileNameChars()  # https://msdn.microsoft.com/library/system.io.path.getinvalidfilenamechars.aspx
