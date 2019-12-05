@@ -55,16 +55,16 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([string[]])] Param(
+[CmdletBinding(DefaultParameterSetName='GenerateKey')][OutputType([string[]])] Param(
 [Parameter(Position=0,ValueFromPipeline=$true)] $Value,
 [string] $Indent = '',
 [string] $IndentBy = "`t",
 [string] $Newline = "`r`n",
 [switch] $SkipInitialIndent,
 [Parameter(ParameterSetName='GenerateKey')][Alias('PortableKey')][switch] $GenerateKey,
-[Parameter(ParameterSetName='SecureKey')][securestring] $SecureKey,
-[Parameter(ParameterSetName='Credential')][pscredential] $Credential,
-[Parameter(ParameterSetName='KeyBytes')][byte[]] $KeyBytes
+[Parameter(ParameterSetName='SecureKey',Mandatory=$true)][securestring] $SecureKey,
+[Parameter(ParameterSetName='Credential',Mandatory=$true)][pscredential] $Credential,
+[Parameter(ParameterSetName='KeyBytes',Mandatory=$true)][byte[]] $KeyBytes
 )
 Begin
 {
@@ -78,16 +78,35 @@ Begin
 	$tabtab = "$Indent$IndentBy"
 	if($GenerateKey)
 	{
-		[byte[]]$KeyBytes = 0..31 |% {Get-Random -Maximum 255}
+		[byte[]] $KeyBytes = New-Object byte[] 32
+		$rng = New-Object Security.Cryptography.RNGCryptoServiceProvider
+		$rng.GetBytes($KeyBytes)
+		$rng.Dispose(); $rng = $null
 		"[byte[]]`$key = $($KeyBytes -join ',')"
 	}
 	elseif($SecureKey)
 	{
-		$Credential = New-Object pscredential 'secret',$SecureKey
+		$Credential = New-Object pscredential 'SecureKey',$SecureKey
 	}
 	if($Credential)
 	{
-		$KeyBytes = [Text.Encoding]::UTF8.GetBytes($Credential.GetNetworkCredential().Password)
+		[byte[]] $salt = New-Object byte[] 8
+		$rng = New-Object Security.Cryptography.RNGCryptoServiceProvider
+		$rng.GetBytes($salt)
+		$rng.Dispose(); $rng = $null
+		$hash = New-Object Security.Cryptography.Rfc2898DeriveBytes `
+			([Text.Encoding]::UTF8.GetBytes($Credential.GetNetworkCredential().Password)),$salt,
+			(Get-Random 9999 -Minimum 1000)
+		$iterations = $hash.IterationCount
+		[byte[]] $salt = $hash.Salt
+		[byte[]] $KeyBytes = $hash.GetBytes(32)
+		$hash.Dispose(); $hash = $null
+		$creduser = $Credential.UserName -replace "'","''"
+		"`$hash = New-Object Security.Cryptography.Rfc2898DeriveBytes ``"
+		"	([Text.Encoding]::UTF8.GetBytes((Get-Credential '$creduser').GetNetworkCredential().Password)),"
+		"	($($salt -join ',')),$iterations"
+		"[byte[]]`$key = `$hash.GetBytes(32)"
+		"`$hash.Dispose(); `$hash = `$null"
 	}
 	if($KeyBytes)
 	{
