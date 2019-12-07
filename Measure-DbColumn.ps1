@@ -121,6 +121,65 @@ $SOQ
        stdev([{2}]) StandardDeviation
 $EOQ
 "@
+        DateTime = @"
+  with TopValues as (
+select top 1 [{2}] value, count(*) #
+  from [{0}].[{1}]
+ group by [{2}]
+ order by # desc
+),     MedianValue as (
+select max(datediff(second,'1970-01-01',[{2}]) as real) value
+  from (select top 50 percent [{2}] value from [{0}].[{1}] order by value) a
+ union
+select min(datediff(second,'1970-01-01',[{2}]) as real)
+  from (select top 50 percent [{2}] value from [{0}].[{1}] order by value desc) b
+),     DateOnlyCount as (
+select count(*) #
+  from [{0}].[{1}]
+ where [{2}] = cast([{2}] as date)
+),     TopYears as (
+select top 1 Year([{2}]) [year], count(*) #
+  from [{0}].[{1}]
+ group by Year([{2}])
+ order by # desc
+),     TopMonths as (
+select top 1 datename(month,[{2}]) [month], count(*) #
+  from [{0}].[{1}]
+ group by datename(month,[{2}])
+ order by # desc
+),     TopDaysOfWeek as (
+select top 1 datename(dow,[{2}]) [dayofweek], count(*) #
+  from [{0}].[{1}]
+ group by datename(dow,[{2}])
+ order by # desc
+),     TopDays as (
+select top 1 Day([{2}]) [day], count(*) #
+  from [{0}].[{1}]
+ group by Day([{2}])
+ order by # desc
+)
+$SOQ
+       sum(case when [{2}] is null then 1 else 0 end) NullValues,
+       cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
+       case count(*) when (select # from DateOnlyCount) then 1 else 0 end as bit IsDateOnly,
+       (select # from DateOnlyCount) DateOnlyValues,
+       count(distinct [{2}]) UniqueValues,
+       (select top 1 value from TopValues) MostCommonValue,
+       min([{2}]) MinimumValue,
+       max([{2}]) MaximumValue,
+       dateadd(seconds,'1970-01-01',avg(cast(datediff(second,'1970-01-01',[{2}]) as real))) MeanAverage,
+       (select dateadd(seconds,avg([{2}]),'1970-01-01') from TopValues) MedianAverage,
+       (select value from TopValues) ModeAverage,
+       avg(Year([{2}])) MeanYear,
+       (select [year] from TopYears) ModeYear,
+       datename(month,avg(Month([{2}]))) MeanMonth,
+       (select MonthName([month]) from TopMonths) ModeMonth,
+       datename(dow,avg(datepart(dow,[{2}]))) MeanDayOfWeek,
+       (select [dayofweek] from TopDaysOfWeek) ModeDayOfWeek,
+       avg(Day([{2}])) MeanDayOfMonth,
+       (select [day] from TopDays) ModeDayOfMonth
+$EOQ
+"@
         Temporal = @"
   with TopValues as (
 select top 1 [{2}] value, count(*) #
