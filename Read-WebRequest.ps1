@@ -40,5 +40,5 @@ if(!$Request.InputStream.CanRead)
 #TODO: multipart/alternative, multipart/parallel, multipart/related, multipart/form-data, multipart/*
 # https://stackoverflow.com/a/21689347/54323
 # https://docs.microsoft.com/dotnet/api/system.net.http.streamcontent
-if($Request.ContentType -match '\A(?:(?:text|message)/.*|application/(?:json|(?:.*\+)xml))\z') {Read-TextWebRequest}
+if($Request.ContentType -match '\A(?:(?:text|message)/.*|application/(?:json|(?:.*\+)xml))(?:;|\z)') {Read-TextWebRequest}
 else {Read-BinaryWebRequest}
