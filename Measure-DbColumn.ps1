@@ -109,6 +109,7 @@ select min(value)
   from (select top 50 percent [{2}] value from [{0}].[{1}] order by value desc) b
 )
 $SOQ
+       count([{2}]) [Values],
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
        cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
        count(distinct [{2}]) UniqueValues,
@@ -159,6 +160,7 @@ select top 1 Day([{2}]) [day], count(*) #
  order by # desc
 )
 $SOQ
+       count([{2}]) [Values],
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
        cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
        cast(case count([{2}]) when (select # from DateOnlyCount) then 1 else 0 end as bit) IsDateOnly,
@@ -178,25 +180,25 @@ $SOQ
        datename(dw,avg(datepart(dw,[{2}]))) MeanDayOfWeek,
        (select [dayofweek] from TopDaysOfWeek) ModeDayOfWeek,
        avg(Day([{2}])) MeanDayOfMonth,
-       sum(case datepart(dw,[{2}]) when 1 then 1.0 end) / count(*) Sunday,
-       sum(case datepart(dw,[{2}]) when 2 then 1.0 end) / count(*) Monday,
-       sum(case datepart(dw,[{2}]) when 3 then 1.0 end) / count(*) Tuesday,
-       sum(case datepart(dw,[{2}]) when 4 then 1.0 end) / count(*) Wednesday,
-       sum(case datepart(dw,[{2}]) when 5 then 1.0 end) / count(*) Thursday,
-       sum(case datepart(dw,[{2}]) when 6 then 1.0 end) / count(*) Friday,
-       sum(case datepart(dw,[{2}]) when 7 then 1.0 end) / count(*) Saturday,
-       sum(case datepart(m,[{2}]) when 1 then 1.0 end) / count(*) January,
-       sum(case datepart(m,[{2}]) when 2 then 1.0 end) / count(*) Febuary,
-       sum(case datepart(m,[{2}]) when 3 then 1.0 end) / count(*) March,
-       sum(case datepart(m,[{2}]) when 4 then 1.0 end) / count(*) April,
-       sum(case datepart(m,[{2}]) when 5 then 1.0 end) / count(*) May,
-       sum(case datepart(m,[{2}]) when 6 then 1.0 end) / count(*) June,
-       sum(case datepart(m,[{2}]) when 7 then 1.0 end) / count(*) July,
-       sum(case datepart(m,[{2}]) when 8 then 1.0 end) / count(*) August,
-       sum(case datepart(m,[{2}]) when 9 then 1.0 end) / count(*) September,
-       sum(case datepart(m,[{2}]) when 10 then 1.0 end) / count(*) October,
-       sum(case datepart(m,[{2}]) when 11 then 1.0 end) / count(*) November,
-       sum(case datepart(m,[{2}]) when 12 then 1.0 end) / count(*) December
+       sum(case datepart(dw,[{2}]) when 1 then 1 end) Sunday,
+       sum(case datepart(dw,[{2}]) when 2 then 1 end) Monday,
+       sum(case datepart(dw,[{2}]) when 3 then 1 end) Tuesday,
+       sum(case datepart(dw,[{2}]) when 4 then 1 end) Wednesday,
+       sum(case datepart(dw,[{2}]) when 5 then 1 end) Thursday,
+       sum(case datepart(dw,[{2}]) when 6 then 1 end) Friday,
+       sum(case datepart(dw,[{2}]) when 7 then 1 end) Saturday,
+       sum(case datepart(m,[{2}]) when 1 then 1 end) January,
+       sum(case datepart(m,[{2}]) when 2 then 1 end) Febuary,
+       sum(case datepart(m,[{2}]) when 3 then 1 end) March,
+       sum(case datepart(m,[{2}]) when 4 then 1 end) April,
+       sum(case datepart(m,[{2}]) when 5 then 1 end) May,
+       sum(case datepart(m,[{2}]) when 6 then 1 end) June,
+       sum(case datepart(m,[{2}]) when 7 then 1 end) July,
+       sum(case datepart(m,[{2}]) when 8 then 1 end) August,
+       sum(case datepart(m,[{2}]) when 9 then 1 end) September,
+       sum(case datepart(m,[{2}]) when 10 then 1 end) October,
+       sum(case datepart(m,[{2}]) when 11 then 1 end) November,
+       sum(case datepart(m,[{2}]) when 12 then 1 end) December
 $EOQ
 "@
         Temporal = @"
@@ -207,6 +209,7 @@ select top 1 [{2}] value, count(*) #
  order by # desc
 )
 $SOQ
+       count([{2}]) [Values],
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
        cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
        count(distinct [{2}]) UniqueValues,
@@ -223,6 +226,7 @@ select top 1 [{2}] value, count(*) #
  order by # desc
 )
 $SOQ
+       count([{2}]) [Values],
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
        cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
        count(distinct [{2}]) UniqueValues,
@@ -247,6 +251,7 @@ $EOQ
 "@
         VariableLength = @"
 $SOQ
+       count([{2}]) [Values],
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
        cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
        count(distinct [{2}]) UniqueValues,
@@ -256,7 +261,8 @@ $EOQ
 "@
         Other = @"
 $SOQ
-        sum(case when [{2}] is null then 1 else 0 end) NullValues
+       count([{2}]) Values,
+       sum(case when [{2}] is null then 1 else 0 end) NullValues
 $EOQ
 "@
     }
