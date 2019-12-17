@@ -161,8 +161,9 @@ select top 1 Day([{2}]) [day], count(*) #
 $SOQ
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
        cast(case when count(*) = count(distinct [{2}]) then 1 else 0 end as bit) IsUnique,
-       cast(case count(*) when (select # from DateOnlyCount) then 1 else 0 end as bit) IsDateOnly,
+       cast(case count([{2}]) when (select # from DateOnlyCount) then 1 else 0 end as bit) IsDateOnly,
        (select # from DateOnlyCount) DateOnlyValues,
+       count([{2}]) - (select # from DateOnlyCount) DateTimeValues,
        count(distinct [{2}]) UniqueValues,
        (select top 1 value from TopValues) MostCommonValue,
        min([{2}]) MinimumValue,
@@ -177,7 +178,25 @@ $SOQ
        datename(dw,avg(datepart(dw,[{2}]))) MeanDayOfWeek,
        (select [dayofweek] from TopDaysOfWeek) ModeDayOfWeek,
        avg(Day([{2}])) MeanDayOfMonth,
-       (select [day] from TopDays) ModeDayOfMonth
+       sum(case datepart(dw,[{2}]) when 1 then 1.0 end) / count(*) Sunday,
+       sum(case datepart(dw,[{2}]) when 2 then 1.0 end) / count(*) Monday,
+       sum(case datepart(dw,[{2}]) when 3 then 1.0 end) / count(*) Tuesday,
+       sum(case datepart(dw,[{2}]) when 4 then 1.0 end) / count(*) Wednesday,
+       sum(case datepart(dw,[{2}]) when 5 then 1.0 end) / count(*) Thursday,
+       sum(case datepart(dw,[{2}]) when 6 then 1.0 end) / count(*) Friday,
+       sum(case datepart(dw,[{2}]) when 7 then 1.0 end) / count(*) Saturday,
+       sum(case datepart(m,[{2}]) when 1 then 1.0 end) / count(*) January,
+       sum(case datepart(m,[{2}]) when 2 then 1.0 end) / count(*) Febuary,
+       sum(case datepart(m,[{2}]) when 3 then 1.0 end) / count(*) March,
+       sum(case datepart(m,[{2}]) when 4 then 1.0 end) / count(*) April,
+       sum(case datepart(m,[{2}]) when 5 then 1.0 end) / count(*) May,
+       sum(case datepart(m,[{2}]) when 6 then 1.0 end) / count(*) June,
+       sum(case datepart(m,[{2}]) when 7 then 1.0 end) / count(*) July,
+       sum(case datepart(m,[{2}]) when 8 then 1.0 end) / count(*) August,
+       sum(case datepart(m,[{2}]) when 9 then 1.0 end) / count(*) September,
+       sum(case datepart(m,[{2}]) when 10 then 1.0 end) / count(*) October,
+       sum(case datepart(m,[{2}]) when 11 then 1.0 end) / count(*) November,
+       sum(case datepart(m,[{2}]) when 12 then 1.0 end) / count(*) December
 $EOQ
 "@
         Temporal = @"
