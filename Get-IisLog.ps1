@@ -274,6 +274,6 @@ logparser $sql -i:IISW3C -o:TSV -headers:off -stats:off |
 			if($substatus.ContainsKey($status)) {$substatus[$status]}
 			elseif($substatus -eq 0) {}
 			else {$_.SubStatus}
-		$_.WinStatus = $_.WinStatus + ': ' + [ComponentModel.Win32Exception]$_.WinStatus
+		$_.WinStatus = $_.WinStatus + ': ' + ([ComponentModel.Win32Exception]$_.WinStatus).Message
 		$_
 	}
