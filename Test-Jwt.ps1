@@ -25,27 +25,22 @@
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][AllowEmptyString()][AllowNull()][string] $InputObject,
 [Parameter(Position=1,Mandatory=$true)][SecureString] $Secret
 )
-Begin
-{
-    function ConvertFrom-Base64Url([string]$s)
-    {[Convert]::FromBase64String(($s -replace '-','+' -replace '_','/').PadRight($s.Length + (4 - $s.Length % 4) % 4, '='))}
-}
 Process
 {
     if(!$InputObject) {Write-Verbose 'No JWT input'; return $false}
     if(!$InputObject.Contains([char]'.')) {Write-Verbose 'JWT is missing a dot'; return $false}
     $head64,$body64,$sign64 = $InputObject -split '\.'
-    $head = [Text.Encoding]::UTF8.GetString((ConvertFrom-Base64Url $head64))
+    $head = ConvertFrom-Base64.ps1 $head64 utf8 -UriStyle
     Write-Verbose "JWT head: $head"
     if(!(Test-Json.ps1 $head)) {Write-Verbose 'JWT header does not decode to valid JSON'; return $false}
     $head = ConvertFrom-Json $head
     if($head.typ -ne 'JWT') {Write-Verbose "JWT type is $($head.typ)"; return $false}
     if($head.alg -notin 'HS256','HS384','HS512') {Write-Verbose "Unsupported algorithm: $($head.alg)"; return $false}
-    $body = [Text.Encoding]::UTF8.GetString((ConvertFrom-Base64Url $body64))
+    $body = ConvertFrom-Base64.ps1 $body64 utf8 -UriStyle
     Write-Verbose "JWT body: $body"
     if(!(Test-Json.ps1 $body)) {Write-Verbose 'JWT body does not decode to valid JSON'; return $false}
     $body = ConvertFrom-Json $body
-    [byte[]]$sign = ConvertFrom-Base64Url $sign64
+    [byte[]]$sign = ConvertFrom-Base64.ps1 $sign64 -UriStyle
     $secred = New-Object pscredential 'secret',$Secret
     [byte[]]$secbytes = [Text.Encoding]::UTF8.GetBytes($secred.GetNetworkCredential().Password)
     $hash = New-Object "Security.Cryptography.$($head.alg -replace '\AHS','HMACSHA')" (,$secbytes)

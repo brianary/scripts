@@ -18,6 +18,7 @@ PowerShell Scripts
 - **[Backup-SchTasks.ps1](Backup-SchTasks.ps1)**: Exports the local list of Scheduled Tasks into a single XML file.
 - **[Convert-ScheduledTasksToJobs.ps1](Convert-ScheduledTasksToJobs.ps1)**: Converts Scheduled Tasks to Scheduled Jobs.
 - **[Convert-Xml.ps1](Convert-Xml.ps1)**: Transform XML using an XSLT template.
+- **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1)**: Converts base-64-encoded text to bytes or text.
 - **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1)**: Convert a CimInstance object to a PSObject.
 - **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
 - **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1)**: Parses a Timespan from a ISO8601 duration string.
@@ -25,6 +26,7 @@ PowerShell Scripts
 - **[ConvertFrom-Html.ps1](ConvertFrom-Html.ps1)**: Parses an HTML table into objects.
 - **[ConvertFrom-UserAgent.ps1](ConvertFrom-UserAgent.ps1)**: Parse an HTTP User-Agent string.
 - **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1)**: Converts named nodes of an element to properties of a PSObject, recursively.
+- **[ConvertTo-Base64.ps1](ConvertTo-Base64.ps1)**: Converts bytes or text to base-64-encoded text.
 - **[ConvertTo-BasicAuthentication.ps1](ConvertTo-BasicAuthentication.ps1)**: Produces a basic authentication header string from a credential.
 - **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
 - **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1)**: Formats a datetime as a LogParser literal.
@@ -82,7 +84,7 @@ PowerShell Scripts
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1)**: Collects some useful system hardware and operating system details via WMI.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1)**: Returns the list of PowerShell type accelerators.
-- **[Get-WebRequestBody.ps1](Get-WebRequestBody.ps1)**: Listens on a given port of the localhost, returning the body of a single web request, and responding with an empty 204.
+- :new: **[Get-WebRequestBody.ps1](Get-WebRequestBody.ps1)**: Listens on a given port of the localhost, returning the body of a single web request, and responding with an empty 204.
 - **[Get-XmlNamespaces.ps1](Get-XmlNamespaces.ps1)**: Gets the namespaces from a document as a dictionary.
 - **[Grant-CertificateAccess.ps1](Grant-CertificateAccess.ps1)**: Grants certificate file read access to an app pool or user.
 - **[Import-Html.ps1](Import-Html.ps1)**: Imports from an HTML table's rows, given a URL.
@@ -98,7 +100,7 @@ PowerShell Scripts
 - **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1)**: Create a new PSObject by recursively combining the properties of PSObjects.
 - **[New-DbProviderObject.ps1](New-DbProviderObject.ps1)**: Create a common database object.
-- **[New-Jwt.ps1](New-Jwt.ps1)**: Generates a JSON Web Token (JWT)
+- :up: **[New-Jwt.ps1](New-Jwt.ps1)**: Generates a JSON Web Token (JWT)
 - **[New-Password.ps1](New-Password.ps1)**: Generate a new password.
 - **[New-Script.ps1](New-Script.ps1)**: Creates a simple boilerplate script.
 - **[New-Shortcut.ps1](New-Shortcut.ps1)**: Create a Windows shortcut.
@@ -144,7 +146,7 @@ PowerShell Scripts
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1)**: Scan sites using Mozilla's Observatory.
 - **[Test-Interactive.ps1](Test-Interactive.ps1)**: Determines whether both the user and process are interactive.
 - **[Test-Json.ps1](Test-Json.ps1)**: Determines whether a string is valid JSON.
-- **[Test-Jwt.ps1](Test-Jwt.ps1)**: Determines whether a string is a valid JWT.
+- :up: **[Test-Jwt.ps1](Test-Jwt.ps1)**: Determines whether a string is a valid JWT.
 - **[Test-LockedFile.ps1](Test-LockedFile.ps1)**: Returns true if the specified file is locked.
 - **[Test-MagicNumber.ps1](Test-MagicNumber.ps1)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
 - **[Test-NewerFile.ps1](Test-NewerFile.ps1)**: Returns true if the difference file is newer than the reference file.
@@ -177,4 +179,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 12/26/2019 11:43:07 -->
+<!-- generated 12/26/2019 16:35:44 -->
