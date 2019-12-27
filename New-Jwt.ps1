@@ -3,13 +3,13 @@
 	Generates a JSON Web Token (JWT)
 
 .Parameter Body
-    A hash of JWT body elements.
+	A hash of JWT body elements.
 
 .Parameter Headers
-    Custom headers (beyond typ and alg) to add to the JWT.
+	Custom headers (beyond typ and alg) to add to the JWT.
 
 .Parameter Secret
-    A secret used to sign the JWT.
+	A secret used to sign the JWT.
 
 .Parameter Algorithm
 	The hashing algorithm class to use when signing the JWT.
@@ -18,16 +18,16 @@
 	When the JWT becomes valid.
 
 .Parameter IssuedAt
-    Specifies when the JWT was issued.
+	Specifies when the JWT was issued.
 
 .Parameter IncludeIssuedAt
 	Indicates the issued time should be included, based on the current datetime (ignored if IssuedAt is provided).
 
 .Parameter ExpirationTime
-    When the JWT expires.
+	When the JWT expires.
 
 .Parameter ExpiresAfter
-    How long from now until the JWT expires (ignored if ExpirationTime is provided).
+	How long from now until the JWT expires (ignored if ExpirationTime is provided).
 
 .Parameter JwtId
 	A unique (at least within a given issuer) identifier for the JWT.
@@ -45,10 +45,13 @@
 	Additional claims to add to the body of the JWT.
 
 .Outputs
-    System.String of an encoded, signed JWT
+	System.String of an encoded, signed JWT
 
 .Link
-    Test-Uri.ps1
+	ConvertTo-Base64.ps1
+
+.Link
+	Test-Uri.ps1
 
 .Link
 	https://tools.ietf.org/html/rfc7519
@@ -62,7 +65,7 @@
 .Example
 	New-Jwt.ps1 -Subject 1234567890 -IssuedAt 2018-01-18T01:30:22Z -Secret (ConvertTo-SecureString swordfish -AsPlainText -Force)
 
-    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.59noQVrGQKetFM3RRTe9m4MVBUMkLo3WxqqpPf1xJ-U
+	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.59noQVrGQKetFM3RRTe9m4MVBUMkLo3WxqqpPf1xJ-U
 #>
 
 #Requires -Version 3
@@ -84,12 +87,11 @@
 [hashtable] $Claims
 )
 
-function ConvertTo-Base64Url([byte[]]$b) {[Convert]::ToBase64String($b).Trim('=') -replace '\+','-' -replace '/','_'}
-function ConvertTo-JSON64($o) {ConvertTo-Base64Url ([Text.Encoding]::UTF8.GetBytes((ConvertTo-Json $o -Compress)))}
+function ConvertTo-JSON64($o) {ConvertTo-Base64.ps1 ([Text.Encoding]::UTF8.GetBytes((ConvertTo-Json $o -Compress))) utf8 -UriStyle}
 function ConvertTo-NumericDate([datetime]$d)
 {
-    if($d.Kind -eq 'Utc') {[int](Get-Date $d -UFormat %s)}
-    else {[int](Get-Date $d.ToUniversalTime() -UFormat %s)}
+	if($d.Kind -eq 'Utc') {[int](Get-Date $d -UFormat %s)}
+	else {[int](Get-Date $d.ToUniversalTime() -UFormat %s)}
 }
 function ConvertFrom-NumericDate([int]$i)
 {
@@ -120,6 +122,6 @@ $secred = New-Object pscredential 'secret',$Secret
 $hash = New-Object "Security.Cryptography.$($Algorithm -replace '\AHS','HMACSHA')" (,$secbytes)
 $secbytes = $null
 Write-Verbose "Signing JWT with $($hash.GetType().Name)"
-$jwt = "$jwt.$(ConvertTo-Base64Url ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($jwt))))"
+$jwt = "$jwt.$(ConvertTo-Base64.ps1 ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($jwt))) utf8 -UriStyle)"
 $hash.Dispose()
 $jwt
