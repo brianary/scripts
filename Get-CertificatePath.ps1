@@ -1,6 +1,6 @@
 ﻿<#
 .Synopsis
-    Gets the physical path on disk of a certificate.
+    Gets the physical path on disk of a certificate's private key.
 
 .Parameter Certificate
     The X509Certificate2 to look up the path for.
@@ -73,28 +73,17 @@ using System.Security.Permissions;
 using Microsoft.Win32.SafeHandles;
 public static class CryptoApi
 {
-    [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
-    public sealed class SafeCertContextHandle : SafeHandleZeroOrMinusOneIsInvalid
-    {
-        private SafeCertContextHandle() : base(true) {}
-        [DllImport("crypt32.dll")]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass", Justification = "SafeHandle release method")]
-        [SuppressUnmanagedCodeSecurity]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool CertFreeCertificateContext(IntPtr pCertContext);
-        protected override bool ReleaseHandle() {return CertFreeCertificateContext(handle);}
-    }
     [DllImport("crypt32.dll")]
-    internal static extern SafeCertContextHandle CertDuplicateCertificateContext(IntPtr certContext);       // CERT_CONTEXT *
+    internal static extern SafeNCryptKeyHandle CertDuplicateCertificateContext(IntPtr certContext);       // CERT_CONTEXT *
     [DllImport("crypt32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    internal static extern bool CryptAcquireCertificatePrivateKey(SafeCertContextHandle pCert,
-                                                                  uint dwFlags,
-                                                                  IntPtr pvReserved,        // void *
-                                                                  [Out] out SafeNCryptKeyHandle phCryptProvOrNCryptKey,
-                                                                  [Out] out int dwKeySpec,
-                                                                  [Out, MarshalAs(UnmanagedType.Bool)] out bool pfCallerFreeProvOrNCryptKey);
+	internal static extern bool
+		CryptAcquireCertificatePrivateKey(SafeNCryptKeyHandle pCert,
+                                          uint dwFlags,
+                                          IntPtr pvReserved,        // void *
+                                          [Out] out SafeNCryptKeyHandle phCryptProvOrNCryptKey,
+                                          [Out] out int dwKeySpec,
+                                          [Out, MarshalAs(UnmanagedType.Bool)] out bool pfCallerFreeProvOrNCryptKey);
     [SecurityCritical]
     [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
     public static string GetCngUniqueKeyContainerName(X509Certificate2 certificate)
@@ -154,7 +143,7 @@ Process
             $path = Get-CngPrivateKeyFile $file
         }
         if($hasPath) {$Certificate.Path = $path}
-        else {Add-Member -InputObject $Certificate -MemberType NoteProperty -Name Path -Value $path}
+		else {Add-Member -InputObject $Certificate -MemberType NoteProperty -Name Path -Value $path}
         $path
     }
 }
