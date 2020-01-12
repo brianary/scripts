@@ -12,7 +12,7 @@
 	The text encoding to use when converting text to binary data.
 
 .Parameter UriStyle
-	Indicates that the URI-friendly variant of base-64 should be used.
+	Indicates that the URI-friendly variant of the base-64 algorithm should be used.
 	This variant, as used by JWTs, uses - instead of +, and _ instead of /, and trims the = padding at the end
 	to avoid extra escaping within URLs or URL-encoded data.
 
