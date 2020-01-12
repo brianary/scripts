@@ -9,7 +9,7 @@
     Client authentication methods to support.
 
 .Parameter Realm
-    The RFC2617 security
+    The RFC2617 authentication realm.
 
 .Parameter IgnoreWriteExceptions
     Indicates that response writes shouldn't generate exceptions.
@@ -30,8 +30,8 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding(DefaultParameterSetName='Port')][OutputType([Net.HttpListener])] Param(
-[Parameter(ParameterSetName='Port',Position=0,Mandatory=$true,ValueFromRemainingArguments=$true)]
+[CmdletBinding()][OutputType([Net.HttpListener])] Param(
+[Parameter(Position=0,Mandatory=$true,ValueFromRemainingArguments=$true)]
 [ValidateCount(1,2147483647)][int[]] $Port,
 [Net.AuthenticationSchemes[]] $AuthenticationSchemes = 'Anonymous',
 [string] $Realm,
@@ -44,8 +44,7 @@ catch{Add-Type -AN System.Web |Out-Null}
 if(![Net.HttpListener]::IsSupported)
 {Stop-ThrowError.ps1 InvalidOperationException "This $($env:os) doesn't support .NET HTTP listeners." InvalidOperation $env:os OS}
 [Net.HttpListener]$Listener = New-Object Net.HttpListener -Property @{AuthenticationSchemes=$AuthenticationSchemes}
-if($Port) {$BindUrl = $Port |foreach {[uri]"http://localhost:$_/"}}
-$BindUrl |where {!$Listener.Prefixes.Contains($_)} |foreach {$Listener.Prefixes.Add($_)}
+$Port |foreach {$Listener.Prefixes.Add("http://*:$_/")}
 $Listener.Start()
 $Listener |Out-String |Write-Verbose
 $Listener
