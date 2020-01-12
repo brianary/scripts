@@ -255,7 +255,6 @@ select to_localtime(to_timestamp(date,time)) as Time,
        coalesce(cs-uri-stem,'') as UriPath,
        coalesce(cs-uri-query,'') as Query,
        coalesce(cs(Referer),'') as Referrer,
-       strcat(strcat(to_string(sc-status),'.'),to_string(sc-substatus)) as Status
        sc-status as StatusCode,
        '' as Status,
        sc-substatus as SubStatusCode,
@@ -269,7 +268,8 @@ $where
 Write-Verbose $sql
 logparser $sql -i:IISW3C -o:TSV -headers:off -stats:off |
 	ConvertFrom-Csv -Delimiter "`t" -Header 'Time','Server','Filename','Line','IpAddress',
-		'Username','UserAgent','Method','UriPath','Query','Referrer','Status' |
+        'Username','UserAgent','Method','UriPath','Query','Referrer',
+        'StatusCode','Status','SubStatusCode','SubStatus','WinStatusCode','WinStatus' |
 	% {
 		[datetime]$_.Time = $_.Time
 		[long]$_.Line = $_.Line
@@ -279,6 +279,6 @@ logparser $sql -i:IISW3C -o:TSV -headers:off -stats:off |
 		$_.Status = [Net.HttpStatusCode]$_.StatusCode
 		$iisFullStatus = $_.StatusCode + '.' + $_.SubStatusCode
 		if($iisSubStatus.ContainsKey($iisFullStatus)) {$_.SubStatus = $iisSubStatus[$iisFullStatus]}
-		$_.WinStatus = [ComponentModel.Win32Exception]$_.WinStatusCode
+		$_.WinStatus = [ComponentModel.Win32Exception][int]$_.WinStatusCode
 		$_
 	}
