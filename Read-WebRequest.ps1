@@ -28,7 +28,7 @@ function Read-BinaryWebRequest
 	if(!$Request.HasEntityBody) {return}
 	if(!$Request.InputStream.CanRead)
 	{Stop-ThrowError.ps1 InvalidOperationException 'Unable to read HTTP request.' InvalidOperation $Request NOREAD}
-		if($Request.ContentLength64 -lt 1)
+	if($Request.ContentLength64 -lt 1)
 	{
 		$read = 0
 		[byte[]] $data = New-Object byte[] 1KB

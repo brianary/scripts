@@ -3,7 +3,7 @@
 	Listens for an HTTP request and returns an HTTP request & response.
 
 .Parameter Listener
-    The HTTP listener to receive the request through.
+	The HTTP listener to receive the request through.
 
 .Inputs
 	System.Net.HttpListener to receive the request through.
