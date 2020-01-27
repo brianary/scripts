@@ -1,9 +1,9 @@
 <#
 .Synopsis
-    Generate a new password.
+	Generate a new password.
 
 .Parameter Length
-    The length of the password in characters.
+	The length of the password in characters.
 
 .Parameter MaxRepeats
 	The maximum number of times a character may be repeated consecutively.
@@ -16,6 +16,9 @@
 
 .Parameter AsSecureString
 	Converts the password to a secure string.
+
+.Parameter TryMaxTimes
+	The most attempts that should be made to generate an acceptable password before failing.
 
 .Parameter HasNumber
 	Indicates the password must contain a numeric character.
@@ -30,13 +33,13 @@
 	Indicates the password must contain a special character (something that isn't a letter or number).
 
 .Link
-    Invoke-RestMethod
+	Invoke-RestMethod
 
 .Link
-    https://duckduckgo.com/api
+	https://duckduckgo.com/api
 
 .Example
-    New-Password.ps1 64
+	New-Password.ps1 64
 
 	-pTs[_?B0S6uqqBquWfB%f*FWPO)X6AEt|>}(V&|%%A-n^OSw!Z9#G/3s=LL;(Uq
 
@@ -58,6 +61,7 @@
 [regex] $ValidMatch,
 [regex] $InvalidMatch,
 [Alias('SecureString')][switch] $AsSecureString,
+[int] $TryMaxTimes = 100,
 [switch] $HasNumber,
 [switch] $HasUpper,
 [switch] $HasLower,
@@ -67,18 +71,18 @@ $i = 0
 while($true)
 {
 	$i++
-	if($i -gt 100)
+	if($i -gt $TryMaxTimes)
 	{
 		Stop-ThrowError.ps1 InvalidOperationException 'Failed to meet requirements after 100 tries.' `
 			InvalidOperation $PSBoundParameters 'GIVEUP'
 	}
 	$pwd =
-		try
+		try{[Web.Security.Membership]::GeneratePassword($Length,3)}
+		catch
 		{
 			$a = Invoke-RestMethod "https://api.duckduckgo.com/?q=pwgen+strong+$Length&format=json"
 			[Net.HttpUtility]::HtmlDecode($a.Answer) -replace ' \(random password\)\z',''
 		}
-		catch {[Web.Security.Membership]::GeneratePassword($Length,3)}
 	if($MaxRepeats -gt 1 -and $pwd -match "(.)$('\1' * $MaxRepeats)")
 	{Write-Verbose "Password #$i has too many duplicate characters"; continue}
 	if($ValidMatch -and $pwd -notmatch $ValidMatch) {Write-Verbose "Password #$i not valid: $pwd"; continue}
