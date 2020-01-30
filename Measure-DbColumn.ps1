@@ -65,16 +65,47 @@
     HasNonAlphanumeric : True
 
 .Example
-    Get-DbaDbTable SqlServerName -Database DbName -Table TableName |Measure-DbColumn.ps1 created
+    Get-DbaDbTable '(localdb)\ProjectsV13' -database AdventureWorks2016 -Table Sales.SalesOrderHeader |Measure-DbColumn.ps1 OrderDate
 
-    ColumnName      : created
-    SqlType         : smalldatetime
+    ColumnName      : OrderDate
+    SqlType         : datetime
+    Values          : 31465
     NullValues      : 0
     IsUnique        : False
-    UniqueValues    : 95
-    MostCommonValue : 12/22/2015 09:51:00
-    MinimumValue    : 06/17/2004 13:25:00
-    MaximumValue    : 10/01/2018 06:32:00
+    IsDateOnly      : True
+    DateOnlyValues  : 31465
+    DateTimeValues  : 0
+    UniqueValues    : 1124
+    MostCommonValue : 03/31/2014 00:00:00
+    MinimumValue    : 05/31/2011 00:00:00
+    MaximumValue    : 06/30/2014 00:00:00
+    ModeAverage     : 03/31/2014 00:00:00
+    MeanYear        : 2013
+    ModeYear        : 2013
+    MeanMonth       : January
+    ModeMonth       : May
+    MeanDayOfWeek   : Thursday
+    ModeDayOfWeek   : Monday
+    MeanDayOfMonth  : 16
+    Sunday          : 4444
+    Monday          : 4875
+    Tuesday         : 4482
+    Wednesday       : 4591
+    Thursday        : 4346
+    Friday          : 4244
+    Saturday        : 4483
+    January         : 2877
+    Febuary         : 2300
+    March           : 3144
+    April           : 2812
+    May             : 3175
+    June            : 2189
+    July            : 2356
+    August          : 2324
+    September       : 2300
+    October         : 2616
+    November        : 2716
+    December        : 2656
 #>
 
 #Requires -Version 3
@@ -173,7 +204,7 @@ $SOQ
        --dateadd(seconds,'1970-01-01',avg(cast(datediff(second,'1970-01-01',[{2}]) as real))) MeanAverage,
        --(select dateadd(seconds,avg([{2}]),'1970-01-01') from TopValues) MedianAverage,
        (select value from TopValues) ModeAverage,
-       cast(avg(cast(Year([create_dt]) as real)) as int) MeanYear,
+       cast(avg(cast(Year([{2}]) as real)) as int) MeanYear,
        (select [year] from TopYears) ModeYear,
        datename(month,avg(Month([{2}]))) MeanMonth,
        (select [month] from TopMonths) ModeMonth,
