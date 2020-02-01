@@ -149,7 +149,7 @@ function Format-Readme
     @"
 Useful General-Purpose Scripts
 ==============================
-This repo contains a collection of generally useful scripts (mostly Windows, mostly PowerShell).
+This repo contains a collection of generally useful scripts (mostly Windows, mostly PowerShell 5).
 
 PowerShell Scripts
 ------------------
