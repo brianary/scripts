@@ -12,6 +12,7 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 	xmlns:x="urn:guid:f203a737-cebb-419d-9fbe-a684f1f13591"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions"
 	version="2.0" exclude-result-prefixes="xsl xs x wsdl">
 <xsl:output method="html" version="5" use-character-maps="amp"
 	encoding="utf-8" media-type=" text/html" indent="yes" />
@@ -55,27 +56,127 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 	<link rel="Stylesheet" type="text/css" href="dataref.css"/>
 	</head><body><h1><xsl:value-of select="$name"/> Schema Reference</h1>
 	<xsl:for-each select="document-uri(/),@id,@targetNamespace"><div><xsl:value-of select="."/></div></xsl:for-each>
-	<xsl:if test="xs:import">
-		<h2>Imports</h2>
-		<ul>
-			<xsl:for-each select="xs:import">
-				<li>{<xsl:value-of select="@namespace"/>} <xsl:value-of select="@schemaLocation"/></li>
-			</xsl:for-each>
-		</ul>
-	</xsl:if>
-	<xsl:for-each select="xs:simpleType">
-		<h2 class="{@name}"><xsl:value-of select="@name"/></h2>
-		<xsl:apply-templates select="xs:attribute,* except xs:attribute"/>
-	</xsl:for-each>
-	<xsl:for-each select="xs:complexType">
-		<h2 class="{@name}"><xsl:value-of select="@name"/></h2>
-		<table class="{@name}"><caption><xsl:value-of select="@name"/></caption>
-			<thead><tr><th>Name</th><th title="Occurrances" class="occurs">#</th>
-				<th>Type</th><th class="notes" title="Notes">📝</th></tr></thead>
-			<tbody><xsl:apply-templates select="xs:attribute,* except xs:attribute"/></tbody>
-		</table>
-	</xsl:for-each>
+	<xsl:apply-templates mode="root" />
 	</body></html>
+</xsl:template>
+
+<xsl:template match="xs:include" mode="root">
+	<div class="include">
+		<p>
+			<xsl:text>Includes: </xsl:text>
+			<a>
+				<xsl:if test="not(fn:matches(@schemaLocation,'^https?:',''))">
+					<xsl:attribute name="href">
+						<xsl:value-of select="fn:replace(@schemaLocation,'.xsd$','.html')" />
+					</xsl:attribute>
+				</xsl:if>
+				<xsl:value-of select="@schemaLocation" />
+			</a>
+		</p>
+		<xsl:apply-templates select="xs:annotation/xs:documentation" />
+	</div>
+</xsl:template>
+
+<xsl:template match="xs:import" mode="root">
+	<div class="import">
+		<p>
+			<xsl:text>Imports: {</xsl:text>
+			<xsl:value-of select="@namespace" />
+			<xsl:text>} </xsl:text>
+			<a>
+				<xsl:if test="not(fn:matches(@schemaLocation,'^https?:',''))">
+					<xsl:attribute name="href">
+						<xsl:value-of select="fn:replace(@schemaLocation,'.xsd$','.html')" />
+					</xsl:attribute>
+				</xsl:if>
+				<xsl:value-of select="@schemaLocation" />
+			</a>
+		</p>
+		<xsl:apply-templates select="xs:annotation/xs:documentation" />
+	</div>
+</xsl:template>
+
+<xsl:template match="xs:notation" mode="root">
+	<div class="notation">
+		<p>With notation: <xsl:value-of select="@name" /> <xsl:value-of select="@public" /> <xsl:value-of select="@system" /></p>
+		<xsl:apply-templates select="xs:annotation/xs:documentation" />
+	</div>
+</xsl:template>
+
+<xsl:template match="xs:redefine" mode="root">
+	<h2 class="redefine">Redefine</h2>
+	<div class="redefine">
+		<xsl:apply-templates />
+	</div>
+</xsl:template>
+
+<xsl:template match="xs:simpleType" mode="root">
+	<h2 class="simpleType"><xsl:value-of select="@name"/></h2>
+	<xsl:apply-templates select="xs:attribute,* except xs:attribute"/>
+</xsl:template>
+
+<xsl:template match="xs:complexType" mode="root">
+	<h2 class="complexType"><xsl:value-of select="@name"/></h2>
+	<table><caption><xsl:value-of select="@name"/></caption>
+		<thead><tr><th>Name</th><th title="Occurrances" class="occurs">#</th>
+			<th>Type</th><th class="notes" title="Notes">📝</th></tr></thead>
+		<tbody><xsl:apply-templates select="xs:attribute,* except xs:attribute"/></tbody>
+	</table>
+</xsl:template>
+
+<xsl:template match="xs:element|xs:attribute|xs:group|xs:attributeGroup" mode="root">
+	<xsl:variable name="name" select="if (self::xs:attribute) then concat('@',@name) else @name" as="xs:string?"/>
+	<xsl:variable name="type" select="if (@type) then resolve-QName(@type,.) else ()" as="xs:QName?"/>
+	<xsl:variable name="complexType" select="if (xs:complexType) then xs:complexType
+		else if (exists($type)) then $schema/xs:complexType[QName($tns,@name) eq $type] else ()" as="element()*"/>
+	<h2 class="element-or-attribute"><xsl:value-of select="local-name()" /></h2>
+	<table><caption><xsl:value-of select="local-name()"/></caption>
+	<thead><tr><th>Name</th><th title="Occurrances" class="occurs">#</th>
+		<th>Type</th><th class="notes" title="Notes">📝</th></tr></thead><tbody>
+	<xsl:choose>
+		<xsl:when test="not(@type) and not(exists(xs:simpleType|xs:complexType))">
+			<tr><td><xsl:value-of select="$name"/></td>
+				<td class="occurs"><xsl:call-template name="occurs"/></td>
+				<td><var>ANY</var></td>
+				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
+					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
+		</xsl:when>
+		<xsl:when test="xs:simpleType">
+			<tr><td><xsl:value-of select="$name"/></td>
+				<td class="occurs"><xsl:call-template name="occurs"/></td>
+				<td><xsl:apply-templates select="xs:simpleType"/></td>
+				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
+					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
+		</xsl:when>
+		<xsl:when test="not(exists($complexType))">
+			<xsl:variable name="element" select="if (@element) then resolve-QName(@element,.) else ()" as="xs:QName?"/>
+			<tr><td><xsl:value-of select="$name"/></td>
+				<td class="occurs"><xsl:call-template name="occurs"/></td>
+				<td><xsl:value-of select="@type"/>
+					<xsl:apply-templates select="xs:attribute,$schema/xs:simpleType[not(exists($type)) or QName($tns,@name) eq $type]"/>
+				</td>
+				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
+					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
+			<xsl:apply-templates select="$schema/xs:element[QName($tns,@name) = $element]"/>
+		</xsl:when>
+		<xsl:when test="exists($type) and x:in-xs($type)">
+			<tr><td><xsl:value-of select="$name"/></td>
+				<td class="occurs"><xsl:call-template name="occurs"/></td>
+				<td><xsl:value-of select="local-name-from-QName($type)"/></td>
+				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
+					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
+		</xsl:when>
+		<xsl:otherwise>
+			<tr><th><xsl:value-of select="$name"/></th>
+				<td class="occurs"><xsl:call-template name="occurs"/></td>
+				<td><xsl:value-of select="($type,@name)[1]"/></td>
+				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
+					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
+			<xsl:apply-templates select="xs:attribute,$complexType"/>
+		</xsl:otherwise>
+	</xsl:choose>
+	</tbody>
+	</table>
 </xsl:template>
 
 <xsl:template match="wsdl:definitions">
@@ -251,6 +352,10 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 
 <xsl:template match="xs:annotation">
 	<xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="xs:schema/xs:*/xs:annotation/xs:documentation">
+	<tr><td colspan="4"><p class="notes">📝 <xsl:value-of select="." /></p></td></tr>
 </xsl:template>
 
 <xsl:template match="xs:any">
