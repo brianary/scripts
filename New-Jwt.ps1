@@ -87,7 +87,7 @@
 [hashtable] $Claims
 )
 
-function ConvertTo-JSON64($o) {ConvertTo-Base64.ps1 ([Text.Encoding]::UTF8.GetBytes((ConvertTo-Json $o -Compress))) utf8 -UriStyle}
+function ConvertTo-JSON64($o) {ConvertTo-Base64.ps1 ([Text.Encoding]::UTF8.GetBytes((ConvertTo-Json $o -Compress))) -UriStyle}
 function ConvertTo-NumericDate([datetime]$d)
 {
 	if($d.Kind -eq 'Utc') {[int](Get-Date $d -UFormat %s)}
@@ -122,6 +122,6 @@ $secred = New-Object pscredential 'secret',$Secret
 $hash = New-Object "Security.Cryptography.$($Algorithm -replace '\AHS','HMACSHA')" (,$secbytes)
 $secbytes = $null
 Write-Verbose "Signing JWT with $($hash.GetType().Name)"
-$jwt = "$jwt.$(ConvertTo-Base64.ps1 ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($jwt))) utf8 -UriStyle)"
+$jwt = "$jwt.$(ConvertTo-Base64.ps1 ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($jwt))) -UriStyle)"
 $hash.Dispose()
 $jwt
