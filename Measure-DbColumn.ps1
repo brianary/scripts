@@ -337,8 +337,16 @@ $EOQ
 }
 Process
 {
-    if(!$Column) {$Column = $Table.Columns[$ColumnName]}
-    else {$ColumnName = $Column.Name}
+	if($Column) {$ColumnName = $Column.Name}
+	else
+	{
+		$Column = $Table.Columns[$ColumnName]
+		if(!$Column)
+		{
+			Stop-ThrowError.ps1 ArgumentException "Column '$ColumnName' not found in table '$($Table.Name)'",
+				'ColumnName' InvalidArgument $Table 'NOCOL'
+		}
+	}
     $datatype = $Column.DataType
     $querytype,$typefmt = $typeinfo[$datatype.Name]
     $table = $Column.Parent
