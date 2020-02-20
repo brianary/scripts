@@ -157,7 +157,7 @@ function Format-LikeCondition([string]$column,[string[]]$patterns,[switch]$not)
 
 Use-SqlcmdParams.ps1 -QueryTimeout 300
 
-$selectFrom = "select '{0}.{1}' [TableName], * from"
+$selectFrom = "select '{0}.{1}' [#TableName], '{2}' [#ColumnName], * from"
 $colssql = @"
 select quotename(TABLE_SCHEMA) TABLE_SCHEMA,
        quotename(TABLE_NAME) TABLE_NAME,
