@@ -213,8 +213,8 @@ function Add-CodeOwners
         $authors |Out-String |Write-Verbose
         [int]$max = ($authors |measure Commits -Maximum).Maximum
         [int]$oneSigmaFromTop = $max - (Measure-StandardDeviation.ps1 $authors.Commits)
-        Write-Verbose "Authors with more than $oneSigmaFromTop commits will be included as default code owners."
-        $DefaultOwner = $authors |? {[int]$_.Commits -gt $oneSigmaFromTop} |% Email
+        Write-Verbose "Authors with $oneSigmaFromTop or more commits will be included as default code owners."
+        $DefaultOwner = $authors |? {[int]$_.Commits -ge $oneSigmaFromTop} |% Email
         Write-Verbose "Default code owners determined to be $DefaultOwner."
     }
     Add-File .github/CODEOWNERS @"
