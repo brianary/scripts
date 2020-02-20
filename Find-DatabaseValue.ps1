@@ -259,7 +259,8 @@ $colssql += ' order by TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION;'
 
 Write-Debug "Schema Query:`n$colssql"
 $corpus = Invoke-Sqlcmd $colssql |ConvertFrom-DataRow.ps1
-if(!$corpus) {Stop-ThrowError.ps1 ItemNotFoundException 'No columns left to search.' ObjectNotFound $PSBoundParameters NOCOLS}
+if(!$corpus) {Stop-ThrowError.ps1 Management.Automation.ItemNotFoundException 'No columns left to search.' `
+    ObjectNotFound $PSBoundParameters NOCOLS}
 Write-Verbose "Searching $($corpus.Length) tables"
 $count,$p,$rows,$lasttable = 0,0,0,''
 foreach($row in $corpus)
