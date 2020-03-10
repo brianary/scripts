@@ -37,11 +37,12 @@ Process
             'http://www.w3.org/2001/XMLSchema-instance')
         $nons = if($nonsatt) {$nonsatt.Value}
         [string[]]$locations = $element.Attributes.GetNamedItem('schemaLocation',
-            'http://www.w3.org/2001/XMLSchema-instance').Value -split '\s+'
+			'http://www.w3.org/2001/XMLSchema-instance').Value.Trim() -split '\s+'
+		if($locations.Length -band 1) {Write-Warning "XML schemaLocation has $($locations.Length) entries"}
         $schemaLocation = @{}
-        for($i = 0; $i -lt $locations.Length; $i += 2)
+        for($i = 1; $i -lt $locations.Length; $i += 2)
         {
-            $schemaLocation[$locations[$i]] = $locations[$i+1]
+            $schemaLocation[$locations[$i-1]] = $locations[$i]
         }
         $nav = $element.CreateNavigator()
         [void]$nav.MoveToFollowing('Element')
