@@ -142,6 +142,32 @@ function Format-VBAScripts
         }
 }
 
+function Format-PS5Scripts
+{
+    ls $PSScriptRoot\PS5\*.ps1 |
+        % {Get-Help $_.FullName} |
+        % {
+            $name = Split-Path $_.Name -Leaf
+            "- **[$name]($name)**: $($_.Synopsis)"
+        }
+}
+
+function Format-PS5Readme
+{
+	$local:OFS="`n"
+	@"
+PowerShell 5.1 Scripts
+======================
+
+A collection of legacy scripts that have been supplanted by newer scripts or modules for PowerShell 6+,
+or have dependencies that are no longer available in PowerShell 6+.
+
+$(Format-PS5Scripts)
+
+<!-- generated $(Get-Date) -->
+"@
+}
+
 function Format-Readme
 {
     Export-Dependencies $DependenciesImage
@@ -149,7 +175,8 @@ function Format-Readme
     @"
 Useful General-Purpose Scripts
 ==============================
-This repo contains a collection of generally useful scripts (mostly Windows, mostly PowerShell 5).
+
+This repo contains a collection of generally useful scripts (mostly Windows PowerShell).
 
 PowerShell Scripts
 ------------------
@@ -169,3 +196,4 @@ $(Format-VBAScripts)
 "@}
 
 Format-Readme |Out-File $PSScriptRoot\README.md -Encoding utf8 -Width ([int]::MaxValue)
+Format-PS5Readme |Out-File $PSScriptRoot\PS5\README.md -Encoding utf8 -Width ([int]::MaxValue)
