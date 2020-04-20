@@ -48,7 +48,6 @@
 [ValidateScript({!(Test-Path $_ -PathType Leaf)})][string] $Xml,
 [Parameter(ParameterSetName='Path',Mandatory=$true,ValueFromPipeline=$true)]
 [ValidateScript({Test-Path $_ -PathType Leaf})][string] $Path,
-[ValidateScript({!(($_.Keys |Test-Uri.ps1) -contains $false) -and !(($_.Values |Test-Uri.ps1) -contains $false)})]
 [Alias('Schemas')][hashtable] $Schemata,
 [switch]$Warnings,
 [switch]$ErrorMessage
