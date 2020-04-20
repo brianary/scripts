@@ -57,24 +57,28 @@
 [Alias('NotSuccessful')][switch] $ErrorMessage
 )
 
-if($Path){$Xml= Get-Content $Path -Raw}
-try{[xml]$x = $Xml}
-catch [Management.Automation.RuntimeException]
+Process
 {
-	if($Warnings) {Write-Warning $_.Exception.Message}
-	if(!$ErrorMessage) {return $false}
-	else {return $_.Exception.InnerException.InnerException.Message}
+	if($Path){$Xml= Get-Content $Path -Raw}
+	try{[xml]$x = $Xml}
+	catch [Management.Automation.RuntimeException]
+	{
+		if($Warnings) {Write-Warning $_.Exception.Message}
+		if(!$ErrorMessage) {return $false}
+		else {return $_.Exception.InnerException.InnerException.Message}
+	}
+	if($SkipValidation) {return !$ErrorMessage}
+	#$x.Schemas.XmlResolver = New-Object Xml.XmlUrlResolver # this should be the default, but can't set a base URL
+	# kludgy hack to try and address XmlUrlResolver using env working dir:
+	[Environment]::CurrentDirectory = if($Path) {Resolve-Path $Path |Split-Path} else {$PWD}
+	$xmlsrc = if($Path) {@{Path=$Path}} else {@{Xml=$Xml}}
+	foreach($schema in Resolve-XmlSchemaLocation.ps1 @xmlsrc) {if($schema.Url){[void]$x.Schemas.Add($schema.Urn,$schema.Url)}}
+	if($Schemata) {foreach($schema in $Schemata.GetEnumerator()) {[void]$x.Schemas.Add($schema.Key,$schema.Value)}}
+	if($x.Schemas.Count -eq 0) {return !$ErrorMessage}
+	$x.Schemas.Schemas().SourceUri |% {Write-Verbose "Added schema $_"}
+	$Script:validationErrors = @()
+	$Script:warn = $Warnings
+	$x.Validate({ if($Script:warn) {Write-Warning $_.Message}; $Script:validationErrors += @($_.Message) })
+	if($ErrorMessage) {return $Script:validationErrors}
+	else {return !($Script:validationErrors)}
 }
-if($SkipValidation) {return $true}
-#$x.Schemas.XmlResolver = New-Object Xml.XmlUrlResolver # this should be the default, but can't set a base URL
-# kludgy hack to try and address XmlUrlResolver using env working dir:
-[Environment]::CurrentDirectory = if($Path) {Resolve-Path $Path |Split-Path} else {$PWD}
-$xmlsrc = if($Path) {@{Path=$Path}} else {@{Xml=$Xml}}
-foreach($schema in Resolve-XmlSchemaLocation.ps1 @xmlsrc) {if($schema.Url){[void]$x.Schemas.Add($schema.Urn,$schema.Url)}}
-if($Schemata) {foreach($schema in $Schemata.GetEnumerator()) {[void]$x.Schemas.Add($schema.Key,$schema.Value)}}
-$x.Schemas.Schemas().SourceUri |% {Write-Verbose "Added schema $_"}
-$Script:validationErrors = @()
-$Script:warn = $Warnings
-$x.Validate({ if($Script:warn) {Write-Warning $_.Message}; $Script:validationErrors += @($_.Message) })
-if($ErrorMessage) {return $Script:validationErrors}
-else {return !($Script:validationErrors)}
