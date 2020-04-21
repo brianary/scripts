@@ -56,7 +56,26 @@
 [Alias('ShowWarnings')][switch] $Warnings,
 [Alias('NotSuccessful')][switch] $ErrorMessage
 )
-
+Begin
+{
+	function Add-Schema([Xml.Schema.XmlSchemaSet]$set,[string]$urn,[string]$url)
+	{
+		Write-Verbose "Adding $url for $urn"
+		try {[void]$set.Add($urn,$url)}
+		catch
+		{
+			if(!(Test-Path $url)) {Write-Error "Error adding $url for $urn"}
+			else
+			{
+				$s = [Xml.Schema.XmlSchema]::Read( [IO.File]::OpenRead($url), {throw $_.Exception} )
+				$s.Compile( {
+					if($_.Severity -eq [Xml.Schema.XmlSeverityType]::Error) {Write-Error $_.Message; throw $_.Exception}
+					else {Write-Warning $_.Message}
+				} )
+			}
+		}
+	}
+}
 Process
 {
 	if($Path){$Xml= Get-Content $Path -Raw}
@@ -72,8 +91,8 @@ Process
 	# kludgy hack to try and address XmlUrlResolver using env working dir:
 	[Environment]::CurrentDirectory = if($Path) {Resolve-Path $Path |Split-Path} else {$PWD}
 	$xmlsrc = if($Path) {@{Path=$Path}} else {@{Xml=$Xml}}
-	foreach($schema in Resolve-XmlSchemaLocation.ps1 @xmlsrc) {if($schema.Url){[void]$x.Schemas.Add($schema.Urn,$schema.Url)}}
-	if($Schemata) {foreach($schema in $Schemata.GetEnumerator()) {[void]$x.Schemas.Add($schema.Key,$schema.Value)}}
+	foreach($schema in Resolve-XmlSchemaLocation.ps1 @xmlsrc |where {$_.Url}) {Add-Schema $x.Schemas $schema.Urn $schema.Url}
+	if($Schemata) {foreach($schema in $Schemata.GetEnumerator()) {Add-Schema $x.Schemas $schema.Key $schema.Value}}
 	if($x.Schemas.Count -eq 0) {return !$ErrorMessage}
 	$x.Schemas.Schemas().SourceUri |% {Write-Verbose "Added schema $_"}
 	$Script:validationErrors = @()
