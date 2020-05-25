@@ -1,4 +1,4 @@
 # Linguist overrides https://github.com/github/linguist#overrides
 README.md         linguist-generated=true
 *.html            linguist-generated=true
-dependencies.png  linguist-generated=true
+dependencies.svg  linguist-generated=true
