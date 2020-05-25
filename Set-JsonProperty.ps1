@@ -25,6 +25,9 @@
 	Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
 	{ "powershell.codeFormatting.preset": "value" }
 
+.Parameter WarnOverwrite
+	Indicates that overwriting values should generate a warning.
+
 .Parameter InputObject
 	The JSON string to set the property in.
 
@@ -55,6 +58,7 @@
 [Parameter(Position=1,Mandatory=$true)][AllowEmptyString()][AllowEmptyCollection()][AllowNull()]
 [Alias('Value')][psobject] $PropertyValue,
 [Alias('Separator','Delimiter')][char] $PathSeparator = '.',
+[switch] $WarnOverwrite,
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject
 )
 Begin
@@ -78,8 +82,9 @@ Process
 	$nameSegment = $path[-1]
 	if($property.PSObject.Properties.Match($nameSegment,'NoteProperty').Count)
 	{
+		if($WarnOverwrite) {Write-Warning "Property $PropertyName overwriting '$($property.$nameSegment)'."}
 		$property.$nameSegment = $PropertyValue
 	}
 	else {$property |Add-Member ($path[-1]) $PropertyValue}
-	$object |ConvertTo-Json
+	$object |ConvertTo-Json -Depth 100
 }
