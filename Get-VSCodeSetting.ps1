@@ -47,6 +47,11 @@ ${settings.json} = Get-VSCodeSettingsFile.ps1 -Workspace:$Workspace
 $property = Get-Content ${settings.json} -Raw |ConvertFrom-Json
 while($nameSegment)
 {
+	if(!$property.PSObject.Properties.Match($nameSegment,'NoteProperty').Count)
+	{
+		Write-Verbose "VSCode setting not found: $Name"
+		return $null
+	}
 	$property = $property.$nameSegment
 	$nameSegment,$path = $path
 }
