@@ -56,25 +56,32 @@ ${settings.json} =
 			Join-Path "$PWD" .vscode/settings.json
 		}
 	}
-	elseif($IsWindows -or $env:OS -eq 'Windows_NT')
-	{
-		# could also try Resolve-Path "$env:APPDATA\Code*\User\settings.json", but this is better targetted
-		"$env:APPDATA\Code - Insiders\User\settings.json","$env:APPDATA\Code\User\settings.json" |
-			where {Test-Path $_ -PathType Leaf} |
-			select -First 1
-	}
-	elseif($IsLinux)
-	{
-		"$HOME/.config/Code/User/settings.json"
-	}
-	elseif($IsMacOS)
-	{
-		"$HOME/Library/Application Support/Code/User/settings.json"
-	}
 	else
 	{
-		Stop-ThrowError.ps1 InvalidOperationException 'Unable to determine location of VSCode settings.json' `
-			InvalidOperation $null OS
+		if(!(Test-Path variable:IsWindows))
+		{
+			$IsWindows = $PSVersionTable.PSEdition -eq 'Desktop' -or  $env:OS -eq 'Windows_NT'
+		}
+		if($IsWindows)
+		{
+			# could also try Resolve-Path "$env:APPDATA\Code*\User\settings.json", but this is better targetted
+			"$env:APPDATA\Code - Insiders\User\settings.json","$env:APPDATA\Code\User\settings.json" |
+				where {Test-Path $_ -PathType Leaf} |
+				select -First 1
+		}
+		elseif($IsLinux)
+		{
+			"$HOME/.config/Code/User/settings.json"
+		}
+		elseif($IsMacOS)
+		{
+			"$HOME/Library/Application Support/Code/User/settings.json"
+		}
+		else
+		{
+			Stop-ThrowError.ps1 InvalidOperationException 'Unable to determine location of VSCode settings.json' `
+				InvalidOperation $null OS
+		}
 	}
 Write-Verbose "Using VSCode settings ${settings.json}"
 
