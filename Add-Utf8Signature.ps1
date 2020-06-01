@@ -1,6 +1,6 @@
 <#
 .Synopsis
-    Adds the utf-8 signature (BOM) from a file.
+    Adds the utf-8 signature (BOM) to a file.
 
 .Parameter Path
     The file to add the utf-8 signature to.
