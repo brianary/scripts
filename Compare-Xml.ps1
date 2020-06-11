@@ -6,6 +6,11 @@
 	Compare-Xml.ps1 '<a b="z"/>' '<a b="y"/>' |Format-Xml.ps1
 
 	<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+		<xsl:template match="@*|node()">
+			<xsl:copy>
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:copy>
+		</xsl:template>
 		<xsl:template match="/a/@b" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 			<xsl:attribute name="b"><![CDATA[y]]></xsl:attribute>
 		</xsl:template>
@@ -168,10 +173,7 @@ function Compare-XmlNode
 	[Parameter(Position=1,Mandatory=$true)][XmlNode] $DifferenceNode
 	)
 	if($RefenenceNode.OuterXml -eq $DifferenceNode.OuterXml) {return}
-	if($ReferenceNode.NodeType -ne $DifferenceNode.NodeType)
-	{
-	}
-	switch($ReferenceNode.NodeType)
+	switch($DifferenceNode.NodeType)
 	{
 		Attribute {Compare-XmlAttribute $ReferenceNode $DifferenceNode}
 		CDATA {Compare-XmlCData $ReferenceNode $DifferenceNode}
@@ -186,7 +188,11 @@ function Compare-XmlNode
 	}
 }
 
-[xml]$value = '<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>'
+[xml]$value = @'
+<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:template match="@*|node()"><xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy></xsl:template>
+</xsl:transform>
+'@
 foreach($template in Compare-XmlNode $ReferenceXml $DifferenceXml)
 {
 	[void]$value.DocumentElement.AppendChild($value.ImportNode([XmlNode]$template.DocumentElement,$true))
