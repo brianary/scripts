@@ -11,7 +11,7 @@
 				<xsl:apply-templates select="@*|node()" />
 			</xsl:copy>
 		</xsl:template>
-		<xsl:template match="/a/@b" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+		<xsl:template match="/a/@b">
 			<xsl:attribute name="b"><![CDATA[y]]></xsl:attribute>
 		</xsl:template>
 	</xsl:transform>
@@ -49,7 +49,7 @@ function Compare-XmlCData
 	)
 	if($ReferenceCData.Value -eq $DifferenceCData.Value) {return}
 	return [xml]@"
-<xsl:template match="$(Resolve-Xml.ps1 $ReferenceCData)" ${ns}xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template match="$(Resolve-Xml.ps1 $ReferenceCData)" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:text><![CDATA[$($DifferenceCData.Value)">]]></xsl:text>
 </xsl:template>
 "@
@@ -63,7 +63,7 @@ function Compare-XmlComment
 	)
 	if($ReferenceComment.Value -eq $DifferenceComment.Value) {return}
 	return [xml]@"
-<xsl:template match="$(Resolve-Xml.ps1 $ReferenceComment)" ${ns}xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template match="$(Resolve-Xml.ps1 $ReferenceComment)" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:comment><![CDATA[$($DifferenceComment.Value)">]]></xsl:comment>
 </xsl:template>
 "@
@@ -75,8 +75,32 @@ function Compare-XmlDocument
 	[Parameter(Position=0,Mandatory=$true)][xml] $ReferenceDocument,
 	[Parameter(Position=1,Mandatory=$true)][xml] $DifferenceDocument
 	)
-	#TODO: <xsl:output> with method from DocumentType.Name, omit-xml-declaration from FirstChild is XmlDeclaration,
-	#      with doctype-public, doctype-system, encoding
+	$ns = 'xmlns:xsl="http://www.w3.org/1999/XSL/Transform"'
+	$declaration =
+		if($DifferenceDocument.FirstChild.NodeType -ne 'XmlDeclaration')
+		{
+			"omit-xml-declaration='yes'"
+			$encoding = $DifferenceDocument.FirstChild.Encoding
+			if($encoding) {"encoding='$encoding'"}
+			$standalone = $DifferenceDocument.FirstChild.Standalone
+			if($standalone) {"standalone='$standalone'"}
+		}
+	$doctype = $DifferenceDocument.ChildNodes |where NodeType -eq 'DocumentType'
+	if($doctype.PublicId -like '-//W3C//DTD XHTML *')
+	{[xml]@"
+<xsl:output $declaration method="xhtml" doctype-public="$($doctype.PublicId)" doctype-system="$($doctype.SystemId)" $ns />
+"@}
+	elseif($doctype.name -eq 'html')
+	{[xml]@"
+<xsl:output $declaration method="html" doctype-public="$($doctype.PublicId)" doctype-system="$($doctype.SystemId)" $ns />
+"@}
+	elseif($doctype)
+	{[xml]@"
+<xsl:output $declaration method="xml" doctype-public="$($doctype.PublicId)" doctype-system="$($doctype.SystemId)" $ns />
+"@}
+[xml]@"
+<xsl:template match="@*|node()" $ns><xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy></xsl:template>
+"@
 	#TODO: (certain) nodes before and after document element, using longest common subsequence
 	Compare-XmlElement $ReferenceDocument.DocumentElement $DifferenceDocument.DocumentElement
 }
@@ -190,11 +214,11 @@ function Compare-XmlNode
 
 [xml]$value = @'
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:template match="@*|node()"><xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy></xsl:template>
 </xsl:transform>
 '@
 foreach($template in Compare-XmlNode $ReferenceXml $DifferenceXml)
 {
+	$template.DocumentElement.RemoveAttribute('xmlns:xsl')
 	[void]$value.DocumentElement.AppendChild($value.ImportNode([XmlNode]$template.DocumentElement,$true))
 }
 $value
