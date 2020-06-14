@@ -14,7 +14,7 @@
 	/a/b/@c
 
 .Example
-	'<a>one<!-- two -->three</a>' |Select-Xml '//text()' |Resolve-Xml.ps1
+	'<a>one<!-- two -->three</a>' |Select-Xml '//text()' |Resolve-XPath.ps1
 
 	/a/text()[1]
 	/a/text()[2]
