@@ -33,12 +33,12 @@ Begin
 		if(!($Node.PreviousSibling -or $Node.NextSibling)) {return}
 		for($i,$n = 0,$Node; $n; $n = $n.PreviousSibling)
 		{
-			if($n.NodeType -eq $Node.NodeType -and $n.Name -eq $Node.Name) {$i++}
+			if($n.NodeType -eq $Node.NodeType -and $n.get_Name() -eq $Node.get_Name()) {$i++}
 		}
 		if($i -gt 1) {return "[$i]"}
 		for($i,$n = 0,$Node; $n; $n = $n.NextSibling)
 		{
-			if($n.NodeType -eq $Node.NodeType -and $n.Name -eq $Node.Name) {$i++}
+			if($n.NodeType -eq $Node.NodeType -and $n.get_Name() -eq $Node.get_Name()) {$i++}
 		}
 		if($i -gt 1) {return '[1]'}
 		else {return}
@@ -48,13 +48,13 @@ Begin
 	{
 		switch($Node.NodeType)
 		{
-			Attribute {return "$(Resolve-XmlNode $Node.OwnerElement)/@$($Node.Name)"}
+			Attribute {return "$(Resolve-XmlNode $Node.OwnerElement)/@$($Node.get_Name())"}
 			CDATA {return "$(Resolve-XmlNode $Node.ParentNode)/text()$(Measure-XmlNodePosition $Node)"}
 			Comment {return "$(Resolve-XmlNode $Node.ParentNode)/comment()$(Measure-XmlNodePosition $Node)"}
-			Document {if((Get-PSCallStack)[1].Command -ne $MyInvocation.MyCommand.Name){return '/'}}
-			Element {return "$(Resolve-XmlNode $Node.ParentNode)/$($Node.Name)$(Measure-XmlNodePosition $Node)"}
+			Document {if((Get-PSCallStack)[1].Command -ne $MyInvocation.MyCommand.get_Name()){return '/'}}
+			Element {return "$(Resolve-XmlNode $Node.ParentNode)/$($Node.get_Name())$(Measure-XmlNodePosition $Node)"}
 			ProcessingInstruction {return
-				"$(Resolve-XmlNode $Node.ParentNode)/processing-instruction('$($Node.Name)')$(Measure-XmlNodePosition $Node)"}
+				"$(Resolve-XmlNode $Node.ParentNode)/processing-instruction('$($Node.get_Name())')$(Measure-XmlNodePosition $Node)"}
 			SignificantWhitespace {return "$(Resolve-XmlNode $Node.ParentNode)/text()$(Measure-XmlNodePosition $Node)"}
 			Text {return "$(Resolve-XmlNode $Node.ParentNode)/text()$(Measure-XmlNodePosition $Node)"}
 			Whitespace {return "$(Resolve-XmlNode $Node.ParentNode)/text()$(Measure-XmlNodePosition $Node)"}
