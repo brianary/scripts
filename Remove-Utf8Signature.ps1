@@ -5,6 +5,9 @@
 .Parameter Path
     The file to remove the utf-8 signature from.
 
+.Inputs
+	System.String containing the path to the file to be updated.
+
 .Link
     https://msdn.microsoft.com/library/dd383463.aspx
 
