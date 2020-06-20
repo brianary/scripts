@@ -7,7 +7,10 @@
     within the ParsedHtml property.
 
 .Inputs
-    A __ComObject contained within an Invoke-WebRequest response's ParsedHtml document.
+	A __ComObject contained within an Invoke-WebRequest response's ParsedHtml document.
+
+.Outputs
+	System.Management.Automation.PSCustomObject for each table row.
 
 .Link
     Invoke-WebRequest
@@ -35,8 +38,8 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
-[Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][__ComObject]$TableElement
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+[Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][__ComObject] $TableElement
 )
 Process
 {

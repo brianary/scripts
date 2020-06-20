@@ -36,7 +36,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([timespan])] Param(
 [Parameter(Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments)]
 [ValidatePattern('\AP\d(?:\w+|\d\d\d(?:-\d\d){2}T\d\d(?::\d\d){2})\z')]
 [string[]] $InputObject,

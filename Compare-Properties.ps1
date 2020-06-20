@@ -14,6 +14,19 @@
 .Parameter IncludeEqual
 	Indicates equal values should be included.
 
+.Inputs
+	System.Management.Automation.PSObject with properties to compare.
+
+.Outputs
+	System.Management.Automation.PSCustomObject for each relevant property comparison,
+	with these fields:
+
+		* PropertyName
+		* Reference
+		* Value
+		* Difference
+		* DifferentValue
+
 .Link
 	https://docs.microsoft.com/dotnet/api/system.management.automation.psmemberset
 
@@ -40,9 +53,9 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
-[PSObject] $ReferenceObject,
-[PSObject] $DifferenceObject,
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+[Parameter(Position=0)][PSObject] $ReferenceObject,
+[Parameter(Position=1,ValueFromPipeline=$true)][PSObject] $DifferenceObject,
 [switch] $ExcludeDifferent,
 [switch] $IncludeEqual
 )

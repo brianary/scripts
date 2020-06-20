@@ -139,7 +139,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Web.HttpBrowserCapabilities])] Param(
 [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)][string]$UserAgent
 )
 Begin

@@ -69,7 +69,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
 [Parameter(Position=1)][type] $Type,
 [int] $Position = -2147483648,

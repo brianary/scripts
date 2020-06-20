@@ -1,6 +1,6 @@
 <#
 .Synopsis
-	Converts bytes or text to base-64-encoded text.
+	Converts bytes or text to base64-encoded text.
 
 .Parameter Data
 	Binary data to convert.
@@ -12,12 +12,15 @@
 	The text encoding to use when converting text to binary data.
 
 .Parameter UriStyle
-	Indicates that the URI-friendly variant of the base-64 algorithm should be used.
+	Indicates that the URI-friendly variant of the base64 algorithm should be used.
 	This variant, as used by JWTs, uses - instead of +, and _ instead of /, and trims the = padding at the end
 	to avoid extra escaping within URLs or URL-encoded data.
 
+.Inputs
+	System.String or System.Byte[] of data to base64-encode.
+
 .Outputs
-	System.String containing the base-64-encoded data.
+	System.String containing the base64-encoded data.
 
 .Link
 	https://docs.microsoft.com/dotnet/api/system.convert.tobase64string

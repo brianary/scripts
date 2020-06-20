@@ -7,7 +7,7 @@
 #>
 
 #Requires -RunAsAdministrator
-[CmdletBinding()] Param()
+[CmdletBinding()][OutputType([void])] Param()
 
 function Disable-SchUseStrongCrypto($path)
 {
