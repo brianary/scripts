@@ -142,6 +142,16 @@ function Format-VBAScripts
         }
 }
 
+function Format-SysCfgScripts
+{
+    ls $PSScriptRoot\syscfg\*.ps1 |
+        % {Get-Help $_.FullName} |
+        % {
+            $name = Split-Path $_.Name -Leaf
+            "- **[$name]($name)**: $($_.Synopsis)"
+        }
+}
+
 function Format-PS5Scripts
 {
     ls $PSScriptRoot\PS5\*.ps1 |
@@ -150,6 +160,21 @@ function Format-PS5Scripts
             $name = Split-Path $_.Name -Leaf
             "- **[$name]($name)**: $($_.Synopsis)"
         }
+}
+
+function Format-SysCfgReadme
+{
+	$local:OFS="`n"
+	@"
+PowerShell System Configuration Scripts
+=======================================
+
+A collection of scripts that only need to be run once to modify a system.
+
+$(Format-PS5Scripts)
+
+<!-- generated $(Get-Date) -->
+"@
 }
 
 function Format-PS5Readme
@@ -178,6 +203,8 @@ Useful General-Purpose Scripts
 
 This repo contains a collection of generally useful scripts (mostly Windows PowerShell).
 
+See [PS5](PS5) for legacy scripts, [syscfg](syscfg) for single-use system config scripts.
+
 PowerShell Scripts
 ------------------
 ![script dependencies]($DependenciesImage)
@@ -196,4 +223,5 @@ $(Format-VBAScripts)
 "@}
 
 Format-Readme |Out-File $PSScriptRoot\README.md -Encoding utf8 -Width ([int]::MaxValue)
+Format-SysCfgReadme |Out-File $PSScriptRoot\syscfg\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Format-PS5Readme |Out-File $PSScriptRoot\PS5\README.md -Encoding utf8 -Width ([int]::MaxValue)
