@@ -3,7 +3,10 @@
 	Gets the path of the VSCode settings.config file.
 
 .Parameter Workspace
-	Indicates that the current workspace settings should be
+	Indicates that the current workspace settings should be parsed instead of the user settings.
+
+.Outputs
+	System.String containing the path of the settings.config file.
 
 .Link
 	https://code.visualstudio.com/docs/getstarted/settings
@@ -34,7 +37,7 @@
 	C:\Users\zaphodb\GitHub\scripts\.vscode\settings.json
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [switch] $Workspace
 )
 

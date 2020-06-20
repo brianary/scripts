@@ -9,7 +9,7 @@
     System.Type of an Enum to get the values for.
 
 .Outputs
-    System.Management.Automation.PSObject with the Value and Name for each defined
+    System.Management.Automation.PSCustomObject with the Value and Name for each defined
     value of the Enum.
 
 .Example
@@ -87,11 +87,10 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([psobject[]])] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Type]$Type
 )
 Process
 {
-    [enum]::GetNames($Type) |
-        % {New-Object PSObject -Property ([ordered]@{Value=[int][enum]::Parse($Type,$_);Name=$_})}
+    [enum]::GetNames($Type) |foreach {[pscustomobject]@{Value=[int][enum]::Parse($Type,$_);Name=$_}}
 }

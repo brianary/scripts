@@ -37,7 +37,7 @@
 	System.Object (any object) to serialize.
 
 .Outputs
-	System.String[] containing lines of the object serialized to PowerShell literal statements.
+	System.String containing the object serialized to PowerShell literal statements.
 
 .Example
 	ConvertFrom-Json '[{"a":1,"b":2,"c":{"d":"\/Date(1490216371478)\/","e":null}}]' |Format-PSLiterals.ps1
@@ -55,7 +55,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding(DefaultParameterSetName='GenerateKey')][OutputType([string[]])] Param(
+[CmdletBinding(DefaultParameterSetName='GenerateKey')][OutputType([string])] Param(
 [Parameter(Position=0,ValueFromPipeline=$true)] $Value,
 [string] $Indent = '',
 [string] $IndentBy = "`t",

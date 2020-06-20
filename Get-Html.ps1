@@ -9,7 +9,10 @@
     The Invoke-WebRequest output to parse.
 
 .Inputs
-    Microsoft.PowerShell.Commands.HtmlWebResponseObject to parse elements from.
+	Microsoft.PowerShell.Commands.HtmlWebResponseObject to parse elements from.
+
+.Outputs
+	System.__ComObject containing the parsed element COM object.
 
 .Link
     Invoke-WebRequest
@@ -29,7 +32,7 @@
         5
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([__ComObject])] Param(
 [Parameter(Position=0,Mandatory=$true)][Alias('ElementName')][string]$TagName,
 [Parameter(Position=1,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.HtmlWebResponseObject]$Response

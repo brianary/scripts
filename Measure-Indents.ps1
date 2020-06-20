@@ -11,10 +11,10 @@
 .Outputs
     System.Management.Automation.PSObject[] with properties indictating indentation counts.
 
-    * Tab: Lines starting with tabs.
-    * Space: Lines starting with spaces.
-    * Mix: Lines starting with both tabs and spaces.
-    * Other: Lines starting with any other whitespace characters than tab or space.
+		* Tab: Lines starting with tabs.
+		* Space: Lines starting with spaces.
+		* Mix: Lines starting with both tabs and spaces.
+		* Other: Lines starting with any other whitespace characters than tab or space.
 
 .Example
     Measure-Indents.ps1 Program.cs

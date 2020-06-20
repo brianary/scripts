@@ -8,7 +8,7 @@
 
 #Requires -Version 3
 #Requires -Module SqlServer
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [string]$DependenciesImage = 'dependencies.svg',
 [string]$StatusAge = '2 weeks ago'
 )

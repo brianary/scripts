@@ -30,8 +30,8 @@
 #>
 
 ##Requires -RunAsAdministrator # not supported in legacy PowerShell
-[CmdletBinding()] Param(
-[string]$Path = "Import-${env:ComputerName}.ps1"
+[CmdletBinding()][OutputType([void])] Param(
+[string] $Path = "Import-${env:ComputerName}.ps1"
 )
 
 function Test-Administrator

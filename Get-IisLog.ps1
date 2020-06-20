@@ -39,18 +39,18 @@
 	System.Management.Automation.PSObject[] with properties from the log file
 	for each request found:
 
-	* Time: DateTime of the request.
-	* Server: Address of the server.
-	* Filename: Which log file the request was found in.
-	* Line: The line of the log file containing the request detail.
-	* IpAddr: The client address.
-	* Username: The username of an authenticated request.
-	* UserAgent: The browser identification string send by the client.
-	* Method: The HTTP verb used by the request.
-	* UriPath: The location on the web server requested.
-	* Query: The GET query parameters requested.
-	* Referrer: The location that linked to this request, if provided.
-	* Status: The HTTP success/error code of the response.
+		* Time: DateTime of the request.
+		* Server: Address of the server.
+		* Filename: Which log file the request was found in.
+		* Line: The line of the log file containing the request detail.
+		* IpAddr: The client address.
+		* Username: The username of an authenticated request.
+		* UserAgent: The browser identification string send by the client.
+		* Method: The HTTP verb used by the request.
+		* UriPath: The location on the web server requested.
+		* Query: The GET query parameters requested.
+		* Referrer: The location that linked to this request, if provided.
+		* Status: The HTTP success/error code of the response.
 
 .Component
 	LogParser
@@ -101,7 +101,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([psobject[]])] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(ParameterSetName='Server')][Alias('Server','CN')][string[]] $ComputerName,
 [Parameter(ParameterSetName='Directory')][Alias('Dir')][IO.DirectoryInfo[]] $LogDirectory = $PWD.ProviderPath,
 [Parameter(Position=1)][datetime] $After = [datetime]::MinValue,

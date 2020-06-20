@@ -26,7 +26,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [ValidateSet('dot','circo','sfdp','twopi')][string] $Renderer = 'dot',
 [ValidateSet('bmp','gif','gv','jpg','pdf','png','ps','svg','svgz','tiff','vml','vmlz')]
 [string] $Format = 'svg',

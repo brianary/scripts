@@ -11,7 +11,7 @@
     System.Object (any object) to serialize.
 
 .Outputs
-    System.String[] for each XML-serialized value or property.
+    System.String for each XML-serialized value or property.
 
 .Example
     Format-XmlElements.ps1 @{html=@{body=@{p='Some text.'}}}
@@ -41,13 +41,13 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([string[]])] Param(
-[Parameter(Position=0,ValueFromPipeline=$true)]$Value
+[CmdletBinding()][OutputType([string])] Param(
+[Parameter(Position=0,ValueFromPipeline=$true)] $Value
 )
 Begin {$Script:OFS = "`n"}
 Process
 {
-    if($Value -eq $null) {}
+    if($null -eq $Value) {}
     elseif($Value -is [Array])
     { $Value |Format-XmlElements.ps1 }
     elseif([bool],[byte],[DateTimeOffset],[decimal],[double],[float],[guid],[int],[int16],[long],[sbyte],[timespan],[uint16],[uint32],[uint64] -contains $Value.GetType())

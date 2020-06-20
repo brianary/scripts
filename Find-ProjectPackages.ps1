@@ -20,7 +20,7 @@
     System.String containing a package name (wildcards supported).
 
 .Outputs
-    System.Management.Automation.PSObject[] each with properties for the Name, 
+    System.Management.Automation.PSCustomObject each with properties for the Name,
     Version, and File of packages found.
 
 .Link
@@ -41,18 +41,14 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([psobject[]])] Param(
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$PackageName,
-[string]$Path = $PWD,
-[version]$MinVersion,
-[version]$MaxVersion
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $PackageName,
+[string] $Path = $PWD,
+[version] $MinVersion,
+[version] $MaxVersion
 )
 Begin
 {
-    function New-PackageInfo([string]$name,[string]$version,[string]$file)
-    {
-        New-Object psobject -Property ([ordered]@{Name=$name;Version=$version;File=$file})
-    }
     function Compare-Version([string]$version)
     {
         if(!$MinVersion -and !$MaxVersion) {return $true}
@@ -89,11 +85,11 @@ Begin
         Write-Progress $action "Parsing *proj package files: found $($projFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+60)
         $p = Select-Xml //msbuild:HintPath $file -Namespace @{'msbuild'='http://schemas.microsoft.com/developer/msbuild/2003'}
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange([object[]]( $p |% {$dll = Join-Path (Split-Path $_.Path) $_.Node.InnerText; @{
+        [void]$packages.AddRange([object[]]( $p |% {$dll = Join-Path (Split-Path $_.Path) $_.Node.InnerText; [pscustomobject]@{
             name    = $_.Node.ParentNode.Attributes['Include'].Value
             version = $(if(Test-Path $dll -PathType Leaf) {ls $dll |% VersionInfo |% ProductVersion})
             file    = $file
-        }} |% {New-PackageInfo @_} ))
+        }}))
     }
     foreach($file in $nugetFiles)
     {
@@ -101,11 +97,11 @@ Begin
         Write-Progress $action "Parsing NuGet package files: found $($nugetFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+70)
         $p = Select-Xml /packages/package $file |% Node
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange([object[]]( $p |% {@{
+        [void]$packages.AddRange([object[]]( $p |% {[pscustomobject]@{
             name    = $_.id
             version = $_.version
             file    = $file
-        }} |% {New-PackageInfo @_} ))
+        }}))
     }
     foreach($file in $npmFiles)
     {
@@ -115,11 +111,11 @@ Begin
         if(!(Get-Member -InputObject $j -Name dependencies)) {Write-Verbose "No dependencies found in $file"; continue}
         $p = Get-Member -InputObject $j.dependencies -MemberType NoteProperty |% Name
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange([object[]]( $p |% {@{
+        [void]$packages.AddRange([object[]]( $p |% {[pscustomobject]@{
             name    = $_
             version = $j.dependencies.$_
             file    = $file
-        }} |% {New-PackageInfo @_} ))
+        }}))
     }
     foreach($file in $paketFiles)
     {
@@ -128,11 +124,11 @@ Begin
         $lockpattern = '\A\s{4}(?<Name>\w\S+)\s\((?:>= )?(?<Version>\d+(?:\.\d+)+)\b'
         $p = Get-Content $file |% {if($_ -match $lockpattern){[pscustomobject]@{Name=$Matches.Name;Version=$Matches.Version}}}
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange([object[]]( $p |% {@{
+        [void]$packages.AddRange([object[]]( $p |% {[pscustomobject]@{
             name    = $_.Name
             version = $_.Version
             file    = $file
-        }} |% {New-PackageInfo @_} ))
+        }}))
     }
     $max = $packages.Count
 }

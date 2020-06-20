@@ -3,7 +3,10 @@
     Exports scheduled tasks as a PowerShell script that can be run to restore them.
 
 .Parameter TaskPath
-    Specifies the task path to export from.
+	Specifies the task path to export from.
+
+.Outputs
+	System.String containing a PowerShell script to create each task.
 
 .Link
     Export-ScheduledTask
@@ -14,13 +17,13 @@
     Exports all scheduled tasks as PowerShell Register-ScheduledJob cmdlet strings.
 #>
 
-[CmdletBinding()]Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0)][string]$TaskPath = '\'
 )
 
 function Export-ScheduledTaskAsXml
 {
-[CmdletBinding()]Param(
+[CmdletBinding()] Param(
 [Parameter(Position=0,ValueFromPipeline=$true)][Microsoft.Management.Infrastructure.CimInstance]$Task
 )
 Process
