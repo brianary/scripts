@@ -1,8 +1,7 @@
-﻿PowerShell 5.1 Scripts
-======================
+﻿PowerShell System Configuration Scripts
+=======================================
 
-A collection of legacy scripts that have been supplanted by newer scripts or modules for PowerShell 6+,
-or have dependencies that are no longer available in PowerShell 6+.
+A collection of scripts that only need to be run once to modify a system.
 
 - **[Add-Xml.ps1](Add-Xml.ps1)**: Insert XML into an XML document relative to a node found by Select-Xml.
 - **[Disable-Certificate.ps1](Disable-Certificate.ps1)**: Sets the Archived property on a certificate.
@@ -27,4 +26,4 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Suspend-HttpListener.ps1](Suspend-HttpListener.ps1)**: Pauses an HTTP listener.
 - **[Write-WebResponse.ps1](Write-WebResponse.ps1)**: Sends a text or binary response body to the HTTP listener client.
 
-<!-- generated 06/20/2020 14:53:04 -->
+<!-- generated 06/20/2020 14:53:03 -->
