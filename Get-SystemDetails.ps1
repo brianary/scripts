@@ -9,19 +9,19 @@
     Get all of the available details, rather than just the most pertinent ones.
 
 .Outputs
-    System.Management.Automation.PSObject with properties about the computer:
+    System.Management.Automation.PSCustomObject with properties about the computer:
 
-    * Name: The computer name.
-    * Status: The reported computer status name.
-    * Manufacturer: The reported computer manufacturer name.
-    * Model: The reported computer model name.
-    * PrimaryOwnerName: The reported name of the owner of the computer, if available.
-    * Memory: The reported memory in the computer, and amount unused.
-    * OperatingSystem: The name and type of operating system used by the computer.
-    * Processors: CPU hardware detais.
-    * Drives: Storage drives found on the computer.
-    * Shares: The file shares configured, if any.
-    * NetVersions: The versions of .NET on the system.
+		* Name: The computer name.
+		* Status: The reported computer status name.
+		* Manufacturer: The reported computer manufacturer name.
+		* Model: The reported computer model name.
+		* PrimaryOwnerName: The reported name of the owner of the computer, if available.
+		* Memory: The reported memory in the computer, and amount unused.
+		* OperatingSystem: The name and type of operating system used by the computer.
+		* Processors: CPU hardware detais.
+		* Drives: Storage drives found on the computer.
+		* Shares: The file shares configured, if any.
+		* NetVersions: The versions of .NET on the system.
 
 .Example
     Get-SystemDetails.ps1
@@ -40,7 +40,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([psobject])] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(Position=0,ValueFromRemainingArguments=$true)]
 [Alias('CN','Server')][string[]]$ComputerName=$env:COMPUTERNAME,
 [Parameter()][switch]$All

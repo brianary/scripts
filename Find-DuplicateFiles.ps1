@@ -6,7 +6,10 @@
     A list of files to search for duplicates.
 
 .Inputs
-    System.IO.FileInfo list, typically piped from Get-ChildItem.
+	System.IO.FileInfo list, typically piped from Get-ChildItem.
+
+.Outputs
+	System.String containing the full paths of the both matching files.
 
 .Example
     Get-ChildItem -Recurse -File |Find-DuplicateFiles.ps1 |Remove-Item

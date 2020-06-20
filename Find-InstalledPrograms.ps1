@@ -3,7 +3,10 @@
     Searches installed programs.
 
 .Parameter Name
-    The product name to search for. SQL-style "like" wildcards are supported.
+	The product name to search for. SQL-style "like" wildcards are supported.
+
+.Outputs
+	System.Management.ManagementObject for each program found.
 
 .Link
     Get-WmiObject
@@ -22,7 +25,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Management.ManagementObject])] Param(
 [string] $Name
 )
 

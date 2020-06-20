@@ -105,5 +105,5 @@
     psvariableproperty           System.Management.Automation.PSVariableProperty
 #>
 
-[OutputType([Collections.Generic.Dictionary[string,type]])][CmdletBinding()]Param()
+[CmdletBinding()][OutputType([Collections.Generic.Dictionary[string,type]])] Param()
 [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')::Get

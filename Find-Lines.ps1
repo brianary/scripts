@@ -44,7 +44,10 @@
     Invokes files that contain matches.
 
 .Parameter Blame
-    Returns git blame info for matching lines.
+	Returns git blame info for matching lines.
+
+.Outputs
+	Microsoft.PowerShell.Commands.MatchInfo with each match found.
 
 .Example
     Find-Lines 'using System;' *.cs "$env:USERPROFILE\Documents\Visual Studio*\Projects" -CaseSensitive -List
@@ -54,32 +57,32 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding(DefaultParameterSetName='Default')]Param(
-    [Parameter(Position=0,Mandatory=$true)][string[]]$Pattern,
-    [Parameter(Position=1)][string[]]$Filters,
-    [Parameter(Position=2)][string[]]$Path,
-    [string[]]$Include,
-    [string[]]$Exclude = @('*.dll','*.exe','*.pdb','*.bin','*.cache','*.png','*.gif','*.jpg','*.ico','*.psd','*.obj','*.iso',
-        '*.docx','*.xls','*.xlsx','*.pdf','*.rtf','*.swf','*.chm','*.ttf','*.woff','*.eot','*.otf','*.mdf','*.ldf','*.pack',
-        '*.zip','*.gz','*.tgz','*.jar','*.nupkg','*.vspscc','*.vsmdi','*.vssscc','*.vsd','*.vscontent','*.vssettings','*.suo',
-        '*.dbmdl','*.tdf','*.optdata','*.sigdata','*.lib'),
-    [switch]$CaseSensitive,
-    [switch]$List,
-    [switch]$NotMatch,
-    [switch]$SimpleMatch,
-    [switch]$NoRecurse,
-    [Alias('Pick')][switch]$ChooseMatches,
-    [Parameter(ParameterSetName='Open')][Alias('View')][switch]$Open,
-    [Parameter(ParameterSetName='Blame')][Alias('Who')][switch]$Blame
+[CmdletBinding(DefaultParameterSetName='Default')][OutputType([Microsoft.PowerShell.Commands.MatchInfo])] Param(
+[Parameter(Position=0,Mandatory=$true)][string[]] $Pattern,
+[Parameter(Position=1)][string[]] $Filters,
+[Parameter(Position=2)][string[]] $Path,
+[string[]] $Include,
+[string[]] $Exclude = @('*.dll','*.exe','*.pdb','*.bin','*.cache','*.png','*.gif','*.jpg','*.ico','*.psd','*.obj','*.iso',
+	'*.docx','*.xls','*.xlsx','*.pdf','*.rtf','*.swf','*.chm','*.ttf','*.woff','*.eot','*.otf','*.mdf','*.ldf','*.pack',
+	'*.zip','*.gz','*.tgz','*.jar','*.nupkg','*.vspscc','*.vsmdi','*.vssscc','*.vsd','*.vscontent','*.vssettings','*.suo',
+	'*.dbmdl','*.tdf','*.optdata','*.sigdata','*.lib'),
+[switch] $CaseSensitive,
+[switch] $List,
+[switch] $NotMatch,
+[switch] $SimpleMatch,
+[switch] $NoRecurse,
+[Alias('Pick')][switch] $ChooseMatches,
+[Parameter(ParameterSetName='Open')][Alias('View')][switch] $Open,
+[Parameter(ParameterSetName='Blame')][Alias('Who')][switch] $Blame
 )
 
-function ConvertTo-DateTimeOffset([Parameter(Position=0)][int]$UnixTime,[Parameter(Position=1)][string]$TimeZone)
+function ConvertTo-DateTimeOffset([Parameter(Position=0)][int] $UnixTime,[Parameter(Position=1)][string] $TimeZone)
 {
     [DateTimeOffset]::Parse(([DateTime]'1970-01-01Z').AddSeconds($UnixTime).ToString('s')+$TimeZone)
 }
 
 $culturetextinfo = (Get-Culture).TextInfo
-function Get-LineBlameInfo([Parameter(Position=0)][string]$Path,[Parameter(Position=1)][int]$LineNumber)
+function Get-LineBlameInfo([Parameter(Position=0)][string] $Path,[Parameter(Position=1)][int] $LineNumber)
 {
     pushd "$([IO.Path]::GetDirectoryName($Path))"
     $lineinfo = [Collections.Generic.List[string]]@(git blame -l -p -L "$LineNumber,$LineNumber" -- $Path)
@@ -97,7 +100,7 @@ function Get-LineBlameInfo([Parameter(Position=0)][string]$Path,[Parameter(Posit
     $linehash.Remove('AuthorTz')
     $linehash['CommitterTime'] = ConvertTo-DateTimeOffset $linehash['CommitterTime'] $linehash['CommitterTz']
     $linehash.Remove('CommitterTz')
-    New-Object psobject -Property $linehash
+    [pscustomobject]$linehash
 }
 
 # set up splatting

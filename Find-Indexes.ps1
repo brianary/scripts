@@ -16,7 +16,19 @@
     The connection string name from the ConfigurationManager to use.
 
 .Parameter ColumnName
-    The column name to search for.
+	The column name to search for.
+
+.Outputs
+	System.Management.Automation.PSCustomObject with these properties:
+
+		* SchemaName
+		* TableName
+		* IndexName
+		* IndexOrdinal
+		* IsUnique
+		* IsClustered
+		* IsDisabled
+		* ColumnsInIndex
 
 .Link
     Invoke-Sqlcmd
@@ -42,7 +54,7 @@
 
 #Requires -Version 3
 #Requires -Module SqlServer
-[CmdletBinding()][OutputType([string])] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,

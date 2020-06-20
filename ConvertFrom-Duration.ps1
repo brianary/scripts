@@ -5,10 +5,10 @@
 .Parameter InputObject
     An ISO8601 duration string in one of four formats:
 
-      * PnYnMnDTnHnMnS
-      * PnW
-      * Pyyyy-MM-ddTHH:mm:ss
-      * PyyyyMMddTHHmmss
+        * PnYnMnDTnHnMnS
+        * PnW
+        * Pyyyy-MM-ddTHH:mm:ss
+        * PyyyyMMddTHHmmss
 
 .Parameter NoWarnings
     Supresses warnings about approximate conversions.

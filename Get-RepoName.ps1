@@ -3,10 +3,19 @@
     Gets the name of the repo.
 
 .Parameter Path
-    The path to the git repo to get the name for.
+	The path to the git repo to get the name for.
+
+.Inputs
+	Objects with System.String Path or FullName properties.
+
+.Outputs
+	System.String of the repo name (the final segment of the first remote location).
+
+.Example
+	Get-RepoName.ps1
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)]
 [Alias('FullName')][string] $Path = $PWD.Path
 )

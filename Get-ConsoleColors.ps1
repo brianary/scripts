@@ -1,6 +1,9 @@
 <#
 .Synopsis
-    Gets current console color details.
+	Gets current console color details.
+
+.Outputs
+	System.Management.Automation.PSCustomObject of each console color setting.
 
 .Component
     System.Drawing
@@ -29,7 +32,7 @@
 #>
 
 #Require -Verbose 3
-[CmdletBinding()] Param()
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param()
 try{[void][Drawing.Color]}catch{Add-Type -AN System.Drawing}
 try{[void][ConsoleColors]}catch{Add-Type -TypeDefinition @'
 using System;

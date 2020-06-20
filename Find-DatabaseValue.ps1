@@ -10,15 +10,17 @@
 
 .Parameter Value
     The value to search for. The datatype is significant, e.g. searching for money/smallmoney columns, cast the type to decimal: [decimal]13.55
-    Searches, by type:
-      * string: varchar, char, nvarchar, nchar (char length must be at least as long as value)
-      * byte: tinyint
-      * int: bigint, int
-      * long: bigint, numeric or decimal (where scale is zero)
-      * decimal: money, smallmoney
-      * double or float: float, real, numeric, decimal
-      * datetime: date (if no time specified), datetime, datetime2, datetimeoffset, smalldatetime
-      * timespan: time
+	Searches, by type:
+
+        * string: varchar, char, nvarchar, nchar (char length must be at least as long as value)
+        * byte: tinyint
+        * int: bigint, int
+        * long: bigint, numeric or decimal (where scale is zero)
+        * decimal: money, smallmoney
+        * double or float: float, real, numeric, decimal
+        * datetime: date (if no time specified), datetime, datetime2, datetimeoffset, smalldatetime
+		* timespan: time
+
     If the -LikeValue switch is specified, the type of value is assumed to be string.
 
 .Parameter IncludeSchemata
@@ -50,6 +52,10 @@
 
 .Parameter LikeValue
     Interpret the value as a like-pattern (% for zero-or-more characters, _ for a single character, \ is escape).
+
+.Outputs
+	System.Management.Automation.PSCustomObject for each found row, including the #TableName,
+	#ColumnName, and all fields.
 
 .Component
     System.Configuration
@@ -119,13 +125,13 @@
     ModifiedDate       : 08/11/2013 00:00:00
 #>
 
-#requires -version 2
-[CmdletBinding()] Param(
+#Requires -Version 3
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(Position=0,Mandatory=$true)] $Value,
 [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string] $ServerInstance,
 [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string] $Database,
-[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
-[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,
+[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string] $ConnectionString,
+[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string] $ConnectionName,
 [string[]] $IncludeSchemata,
 [string[]] $ExcludeSchemata,
 [string[]] $IncludeTables,

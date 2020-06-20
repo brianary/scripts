@@ -9,11 +9,11 @@
 .Parameter Level
 	The lowest level of importance to include.
 
-	* All, ActivityTracing, and Verbose include everything.
-	* Information includes that level, plus Warning and Error.
-	* Warning includes that level, plus Error.
-	* Error only includes that level.
-	* Critical and Off will exclude everything, since those levels aren't used.
+		* All, ActivityTracing, and Verbose include everything.
+		* Information includes that level, plus Warning and Error.
+		* Warning includes that level, plus Error.
+		* Error only includes that level.
+		* Critical and Off will exclude everything, since those levels aren't used.
 
 .Link
 	https://chocolatey.org/

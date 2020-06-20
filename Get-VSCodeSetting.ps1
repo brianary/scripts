@@ -8,6 +8,9 @@
 .Parameter Workspace
 	Indicates that the current workspace settings should be
 
+.Outputs
+	System.String, System.Double, System.Int32, System.Boolean depending on VS Code JSON value type.
+
 .Link
 	https://code.visualstudio.com/docs/getstarted/settings
 
@@ -36,7 +39,7 @@
 	PowerShell ISE
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string],[double],[int],[bool])] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
 [switch] $Workspace
 )

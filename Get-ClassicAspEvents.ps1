@@ -15,11 +15,14 @@
     Skip events newer than this datetime.
 
 .Parameter Newest
-    The maximum number of the most recent events to return.
+	The maximum number of the most recent events to return.
+
+.Outputs
+	System.Diagnostics.EventLogEntry of Classic ASP events.
 #>
 
 #requires -version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([System.Diagnostics.EventLogEntry])] Param(
 [Parameter(Position=0)][Alias('CN','Server')][string[]]$ComputerName = $env:COMPUTERNAME,
 [ValidateSet('Information','Warning','Error')][string[]]$EntryType,
 [DateTime]$After,

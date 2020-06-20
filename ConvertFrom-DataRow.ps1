@@ -27,7 +27,7 @@
 
 #Requires -Version 3
 [CmdletBinding(DefaultParameterSetName='AsObject')]
-[OutputType([psobject],ParameterSetName='AsObject')]
+[OutputType([Management.Automation.PSCustomObject],ParameterSetName='AsObject')]
 [OutputType([object[]],ParameterSetName='AsValues')]
 [OutputType([Collections.Specialized.OrderedDictionary],ParameterSetName='AsDictionary')] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Data.DataRow]$DataRow,

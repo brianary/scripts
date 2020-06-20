@@ -6,7 +6,19 @@
     Some characters such as apostrophes and parentheses are legal for URLs,
     but are a hassle within certain formats (Markdown, JSON, SQL, &c).
 
-    This script URL-escapes these characters to %xx format.
+	This script URL-escapes these characters to %xx format.
+
+.Parameter Uri
+	The URL to format for maximum compatibility.
+
+.Parameter Clipboard
+	Indicates that the URL comes from the clipboard, and is updated on the clipboard.
+
+.Inputs
+	System.Uri to escape.
+
+.Outputs
+	System.String containing the URL escaped for maximum compatibility.
 
 .Example
     Format-EscapedUrl.ps1 -Clipboard
@@ -20,7 +32,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(ParameterSetName='Uri',Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments=$true,Mandatory=$true)]
 [Alias('Url')][uri[]]$Uri,
 [Parameter(ParameterSetName='Clipboard')][switch]$Clipboard

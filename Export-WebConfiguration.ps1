@@ -116,7 +116,7 @@
 #Requires -Version 3
 ##Requires -RunAsAdministrator
 #Requires -Module WebAdministration
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [string]$Path = "Import-${env:ComputerName}WebConfiguration.ps1",
 [Security.Cryptography.X509Certificates.X509Store[]] $Stores =
     ((Get-Item 'Cert:\LocalMachine\My'), (Get-Item 'Cert:\LocalMachine\TrustedPeople')),

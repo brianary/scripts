@@ -8,10 +8,10 @@
 .Parameter Position
     Where to insert the new node(s), relative to the node found by Select-Xml.
 
-    * AppendChild: At the end of the node's children. This is the default.
-    * InsertAfter: Following the node.
-    * InsertBefore: Preceding the node.
-    * PrependChild: At the beginning of the node's children.
+		* AppendChild: At the end of the node's children. This is the default.
+		* InsertAfter: Following the node.
+		* InsertBefore: Preceding the node.
+		* PrependChild: At the beginning of the node's children.
 
 .Parameter UnlessXPath
     An XPath, rooted from the node found by Select-Xml, that will cancel the insert if it exists.

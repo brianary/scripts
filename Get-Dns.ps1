@@ -7,7 +7,14 @@
 
 .Parameter OnlyAddresses
     Indicates that only the string versions of addresses belonging to the specified family should be returned.
-    "Unknown" returns all addresses.
+	"Unknown" returns all addresses.
+
+.Inputs
+	System.String of host names to look up.
+
+.Outputs
+	System.Net.IPHostEntry of host DNS entries, or
+	System.String of network addresses found.
 
 .Link
     https://msdn.microsoft.com/library/ms143998.aspx
@@ -20,7 +27,7 @@
     www.google.com {}      {172.217.10.132}
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Net.IPHostEntry],[string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromRemainingArguments=$true,ValueFromPipeline=$true)]
 [Alias('Address','HostAddress','Name')][string[]] $HostName,
 [Net.Sockets.AddressFamily] $OnlyAddresses

@@ -19,51 +19,52 @@
     connect to the server.
 
 .Outputs
-    System.Data.DataRow[] each with an ObjectType property that
-    indicates what other properties are available:
+    Management.Automation.PSCustomObject each with an ObjectType property that
+	indicates what other properties are available:
 
-    Column: A table column with the following properties.
+	Column
 
-      * ColumnName: The fully-qualified name of the column.
-      * DataType: Which deprecated type the column currently is
-        (text, ntext, or image).
-      * ValuesCount: The number of rows in the table, including
-        null values in the column.
-      * RowsUnder8K: The new "(max)" large data types store values
-        under 8K in size in-row, rather than externally, which is
-        faster. This is a count of how many values can be stored
-        in-row after conversion.
-      * MinDataLength: The minimum data length of the field, in
-        bytes, excluding nulls.
-      * AvgDataLength: The median average data length of the field,
-        in bytes, excluding nulls.
-      * MaxDataLength: The maximum data length of the field, in
-        bytes, excluding nulls.
-      * Sigma1: The impact of reducing the maximum data length of
-        the field to within one standard deviation of the mean.
-      * Sigma2: The impact of reducing the maximum data length of
-        the field to within two standard deviations of the mean.
-      * Sigma3: The impact of reducing the maximum data length of
-        the field to within three standard deviations of the mean.
-      * Sigma4: The impact of reducing the maximum data length of
-        the field to within four standard deviations of the mean.
-      * Sigma5: The impact of reducing the maximum data length of
-        the field to within five standard deviations of the mean.
-      * Sigma6: The impact of reducing the maximum data length of
-        the field to within six standard deviations of the mean.
-      * Sigma7: The impact of reducing the maximum data length of
-        the field to within seven standard deviations of the mean.
-      * Sigma8: The impact of reducing the maximum data length of
-        the field to within eight standard deviations of the mean.
-      * IsUserTable: True when the column's table is a user table.
-        False for tables in the "sys" schema, and other system tables.
-      * IsMsShipped: True for tables created by Microsoft, such as
-        dtproperties, false otherwise.
-      * IsMsDbTools: True for tables created by Microsoft Tools,
-        such as sysdiagrams, otherwise false.
-      * ConvertSqlScript: The SQL script that can be used to convert
-        the column from the deprecated large data type to the new
-        "(max)" type.
+        * ObjectType: "Column"
+        * ColumnName: The fully-qualified name of the column.
+        * DataType: Which deprecated type the column currently is
+          (text, ntext, or image).
+        * ValuesCount: The number of rows in the table, including
+          null values in the column.
+        * RowsUnder8K: The new "(max)" large data types store values
+          under 8K in size in-row, rather than externally, which is
+          faster. This is a count of how many values can be stored
+          in-row after conversion.
+        * MinDataLength: The minimum data length of the field, in
+          bytes, excluding nulls.
+        * AvgDataLength: The median average data length of the field,
+          in bytes, excluding nulls.
+        * MaxDataLength: The maximum data length of the field, in
+          bytes, excluding nulls.
+        * Sigma1: The impact of reducing the maximum data length of
+          the field to within one standard deviation of the mean.
+        * Sigma2: The impact of reducing the maximum data length of
+          the field to within two standard deviations of the mean.
+        * Sigma3: The impact of reducing the maximum data length of
+          the field to within three standard deviations of the mean.
+        * Sigma4: The impact of reducing the maximum data length of
+          the field to within four standard deviations of the mean.
+        * Sigma5: The impact of reducing the maximum data length of
+          the field to within five standard deviations of the mean.
+        * Sigma6: The impact of reducing the maximum data length of
+          the field to within six standard deviations of the mean.
+        * Sigma7: The impact of reducing the maximum data length of
+          the field to within seven standard deviations of the mean.
+        * Sigma8: The impact of reducing the maximum data length of
+          the field to within eight standard deviations of the mean.
+        * IsUserTable: True when the column's table is a user table.
+          False for tables in the "sys" schema, and other system tables.
+        * IsMsShipped: True for tables created by Microsoft, such as
+          dtproperties, false otherwise.
+        * IsMsDbTools: True for tables created by Microsoft Tools,
+          such as sysdiagrams, otherwise false.
+        * ConvertSqlScript: The SQL script that can be used to convert
+          the column from the deprecated large data type to the new
+          "(max)" type.
 
     Parameter
 
@@ -89,7 +90,7 @@
 
 #Requires -Version 3
 #Requires -Module SqlServer
-[CmdletBinding()][OutputType([Data.DataRow[]])] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
@@ -171,7 +172,7 @@ select 'Column' [ObjectType],
            then 1 else 0 end as bit) IsMsDbTools,
        '$($updatesql -replace "'","''")' ConvertSqlScript
   from $table;
-"@ |% {Write-Verbose $_ ; Invoke-Sqlcmd $_}
+"@ |% {Write-Verbose $_ ; Invoke-Sqlcmd $_ |ConvertFrom-DataRow.ps1}
     }
 <#
 TODO: params

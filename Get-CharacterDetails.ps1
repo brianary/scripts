@@ -21,7 +21,7 @@
     System.String to get details on each character of.
 
 .Outputs
-    System.Management.Automation.PSObject with the following properties:
+    System.Management.Automation.PSCustomObject with the following properties:
 
     Character
         The character these details apply to.
@@ -302,7 +302,7 @@
 #>
 
 #Requires -Version 2
-[CmdletBinding()][OutputType([psobject[]])] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(ParameterSetName='Block',Position=0)]
 [ValidateSet('BasicMultilingualPlane','BMP','ASCII','0x2xxx','BasicLatin','Latin1Supplement',
 'LatinExtendedA','LatinExtendedB','IPAExtensions','SpacingModifierLetters','CombiningDiacriticalMarks',

@@ -1,6 +1,9 @@
 <#
 .Synopsis
-    Exports scheduled jobs as a PowerShell script that can be run to restore them.
+	Exports scheduled jobs as a PowerShell script that can be run to restore them.
+
+.Outputs
+	Microsoft.PowerShell.ScheduledJob.ScheduledJobDefinition for each scheduled job.
 
 .Link
     https://docs.microsoft.com/powershell/module/psscheduledjob/about/about_scheduled_jobs
@@ -98,7 +101,7 @@ Process
     # CommandParameterCollection contains CommandParameter name-value pairs which are not a hash.
     $cmd = @{}
     $Job.InvocationInfo.Parameters[0] |% {[void]$cmd.Add($_.Name,$_.Value)}
-    $FileOrScript = 
+    $FileOrScript =
         if($cmd.ContainsKey('FilePath')) {"FilePath             = $($cmd.FilePath |Format-PSLiterals.ps1)"}
         elseif($cmd.ContainsKey('ScriptBlock')) {"ScriptBlock          = $($cmd.ScriptBlock |Format-PSLiterals.ps1)"}
 @"

@@ -9,7 +9,7 @@
     System.String of the path to a .NET config file with connection strings.
 
 .Outputs
-    System.Management.Automation.PSObject with the Name and ConnectionString 
+    System.Management.Automation.PSCustomObject with the Name and ConnectionString
     (a ConnectionStringBuilder) for each connection string found.
 
 .Link
@@ -22,18 +22,18 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([psobject])] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
 )
 Process
 {
     Select-Xml '//connectionStrings/add' $Path |
-        % { 
+        % {
             $provider = $_.Node.Attributes.GetNamedItem('providerName')
             if($provider){$provider=$provider.Value}
-            New-Object psobject -Property ([ordered]@{
+            [pscustomobject]@{
                 Name = $_.Node.name
                 ConnectionString = New-DbProviderObject.ps1 $provider ConnectionStringBuilder $_.Node.connectionString
-            })
+            }
         }
 }

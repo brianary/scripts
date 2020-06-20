@@ -3,7 +3,8 @@
     Returns true if the given date is a U.S. federal holiday.
 
 .Description
-    The following holidays are checked:
+	The following holidays are checked:
+
         * New Year's Day, January 1 (± 1 day, if observed)
         * Birthday of Martin Luther King, Jr., Third Monday in January
         * Washington's Birthday, Third Monday in February

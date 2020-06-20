@@ -14,7 +14,7 @@
     any object with a Uri or Url property
 
 .Outputs
-    System.Management.Automation.PSCustomObject containing the parsed policy
+    System.Management.Automation.PSCustomObject containing the parsed policy.
 
 .Link
     https://content-security-policy.com/
@@ -32,11 +32,11 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()]Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(ParameterSetName='Uri',Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-[Alias('Url')][Uri]$Uri,
+[Alias('Url')][Uri] $Uri,
 [Parameter(ParameterSetName='Response',Mandatory=$true,ValueFromPipeline=$true)]
-[Microsoft.PowerShell.Commands.WebResponseObject]$Response
+[Microsoft.PowerShell.Commands.WebResponseObject] $Response
 )
 Process
 {

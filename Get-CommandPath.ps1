@@ -5,16 +5,16 @@
 .Description
     Returns the full path to an application found in a directory in $env:Path,
     optionally with an extension from $env:PathExt.
-    
+
 .Parameter ApplicationName
     The name of the executable program to look for in the $env:Path directories,
     if the extension is omitted, $env:PathExt will be used to find one.
 
 .Inputs
-    System.String[] of commands to get the location details of.
+    System.String of commands to get the location details of.
 
 .Outputs
-    System.String[] of location details for the specified commands that were found.
+    System.String of location details for the specified commands that were found.
 
 .Link
     Get-Command
@@ -26,7 +26,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([string[]])] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
 [Alias('Name','AN')][string[]]$ApplicationName
 )

@@ -1,6 +1,10 @@
 <#
 .Synopsis
-    Gets the namespaces from a document as a dictionary.
+	Gets the namespaces from a document as a dictionary.
+
+.Outputs
+	System.Collections.Generic.Dictionary[System.String,System.String] containing namespace
+	prefixes as keys and namespace URIs as values.
 
 .Link
     https://stackoverflow.com/a/26786080/54323
@@ -23,11 +27,10 @@
     x       urn:guid:f203a737-cebb-419d-9fbe-a684f1f13591
     wsdl    http://schemas.xmlsoap.org/wsdl/
             http://www.w3.org/1999/xhtml
-    default http://www.w3.org/1999/xhtml
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Collections.Generic.Dictionary[string,string]])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
 )
 Process
@@ -35,7 +38,5 @@ Process
     $doc = [xml](Get-Content $Path -Raw)
     $nav = $doc.DocumentElement.CreateNavigator()
     [void]$nav.MoveToFollowing('Element')
-    $ns = $nav.GetNamespacesInScope('All')
-    if($ns.ContainsKey('')) {$ns.Add('default',$ns[''])}
-    $ns
+    $nav.GetNamespacesInScope('All')
 }
