@@ -32,7 +32,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true)][Alias('Name')][string]$ProfileName,
 [Parameter(Position=1,Mandatory=$true)][Alias('Server','DataSource')][string]$ServerInstance,
 [Parameter(Position=2,Mandatory=$true)][Alias('InitialCatalog')][string]$Database,

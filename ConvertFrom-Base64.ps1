@@ -1,17 +1,23 @@
 <#
 .Synopsis
-	Converts base-64-encoded text to bytes or text.
+	Converts base64-encoded text to bytes or text.
 
 .Parameter Data
-	The base-64-encoded data.
+	The base64-encoded data.
 
 .Parameter Encoding
 	Uses the specified encoding to convert the bytes in the data to text.
 
 	If no encoding is provided, the data will be returned as a byte array.
 
+.Inputs
+	System.String of base64-encoded text to decode.
+
+.Outputs
+	System.String or System.Byte[] of decoded text or data.
+
 .Parameter UriStyle
-	Indicates that the URI-friendly variant of the base-64 algorithm should be used.
+	Indicates that the URI-friendly variant of the base64 algorithm should be used.
 	This variant, as used by JWTs, uses - instead of +, and _ instead of /, and trims the = padding at the end
 	to avoid extra escaping within URLs or URL-encoded data.
 
@@ -25,7 +31,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string],[byte[]])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $Data,
 [Parameter(Position=1)][ValidateSet('ascii','byte','utf16','utf16BE','utf32','utf32BE','utf7','utf8')]
 [string] $Encoding = 'byte',

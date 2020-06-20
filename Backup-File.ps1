@@ -15,7 +15,7 @@
     Copies logfile.log to logfile-201612311159.log (on that date & time).
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
 [string]$Path
 )

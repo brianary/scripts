@@ -35,7 +35,7 @@
 
 #Requires -Version 3
 #Requires -RunAsAdministrator
-[CmdletBinding(ConfirmImpact='Medium',SupportsShouldProcess=$true)] Param(
+[CmdletBinding(ConfirmImpact='Medium',SupportsShouldProcess=$true)][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
 )

@@ -111,34 +111,34 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='Medium')]Param(
-[string[]]$DefaultOwner,
-[hashtable]$Owners = @{},
-[string[]]$VendorCode = @('**/packages/**','**/lib/**'),
-[string[]]$DocumentationCode,
-[string[]]$GeneratedCode = @('"**/Service References/**"','"**/Web References/**"'),
-[string]$IssueTemplate,
-[string]$PullRequestTemplate,
-[string]$ContributingFile,
-[string]$LicenseFile,
-[string]$DefaultCharset = $OutputEncoding.WebName,
-[string]$DefaultLineEndings = $(switch([Environment]::NewLine){"`n"{'lf'}"`r"{'cr'}default{'crlf'}}),
-[int]$DefaultIndentSize = 4,
-[switch]$DefaultUsesTabs,
-[switch]$DefaultKeepTrailingSpace,
-[switch]$DefaultNoFinalNewLine
+[CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='Medium')][OutputType([void])] Param(
+[string[]] $DefaultOwner,
+[hashtable] $Owners = @{},
+[string[]] $VendorCode = @('**/packages/**','**/lib/**'),
+[string[]] $DocumentationCode,
+[string[]] $GeneratedCode = @('"**/Service References/**"','"**/Web References/**"'),
+[string] $IssueTemplate,
+[string] $PullRequestTemplate,
+[string] $ContributingFile,
+[string] $LicenseFile,
+[string] $DefaultCharset = $OutputEncoding.WebName,
+[string] $DefaultLineEndings = $(switch([Environment]::NewLine){"`n"{'lf'}"`r"{'cr'}default{'crlf'}}),
+[int] $DefaultIndentSize = 4,
+[switch] $DefaultUsesTabs,
+[switch] $DefaultKeepTrailingSpace,
+[switch] $DefaultNoFinalNewLine
 )
 
 function Resolve-RepoPath
 {
-    [CmdletBinding()] Param([Parameter(ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path)
+    [CmdletBinding()] Param([Parameter(ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path)
     Process { (Resolve-Path $Path -Relative) -replace '^.\\','' -replace '\\','/' }
 }
 
 function Test-SkipFile
 {
     [CmdletBinding(SupportsShouldProcess=$true)] Param(
-    [Parameter(Position=0)][string]$Filename
+    [Parameter(Position=0)][string] $Filename
     )
     if((Test-Path $Filename) -and !$PSCmdlet.ShouldProcess($Filename,'overwrite'))
     { Write-Verbose "File $Filename exists!"; return $true }
@@ -149,8 +149,8 @@ function Test-SkipFile
 function Copy-GitHubFile
 {
     [CmdletBinding()] Param(
-    [Parameter(Position=0,Mandatory=$true)][string]$Filename,
-    [Parameter(Position=1,Mandatory=$true)][Alias('Path','Url')][uri]$Source
+    [Parameter(Position=0,Mandatory=$true)][string] $Filename,
+    [Parameter(Position=1,Mandatory=$true)][Alias('Path','Url')][uri] $Source
     )
     if(!"$Source"){ Write-Verbose "No file to copy."; return }
     else{Write-Host "$Source $($MyInvocation.CommandOrigin)" -ForegroundColor Cyan}
@@ -167,11 +167,11 @@ function Add-GitHubDirectory
 function Add-File
 {
     [CmdletBinding()] Param(
-    [Parameter(Position=0,Mandatory=$true)][string]$Filename,
-    [Parameter(Position=1,Mandatory=$true)][string]$Contents,
-    [Parameter(Position=2)][ValidateSet('utf8','ASCII')][string]$Encoding = 'utf8',
-    [switch]$Warn,
-    [switch]$Force
+    [Parameter(Position=0,Mandatory=$true)][string] $Filename,
+    [Parameter(Position=1,Mandatory=$true)][string] $Contents,
+    [Parameter(Position=2)][ValidateSet('utf8','ASCII')][string] $Encoding = 'utf8',
+    [switch] $Warn,
+    [switch] $Force
     )
     if(!$Contents){Write-Verbose "No contents to add to $Filename."; return }
     if(!$Force -and (Test-SkipFile $Filename)){ Write-Verbose "File $Filename exists!"; return }
@@ -181,7 +181,7 @@ function Add-File
     Write-Verbose "Added $Filename"
 }
 
-function Add-Readme([string]$name = (git rev-parse --show-toplevel |Split-Path -Leaf))
+function Add-Readme([string] $name = (git rev-parse --show-toplevel |Split-Path -Leaf))
 {
     if(Test-Path README.md -PathType Leaf){return}
     Add-File README.md @"
@@ -211,10 +211,10 @@ function Add-CodeOwners
             Select-String '^\s*(?<Commits>\d+)\s+(?<Name>\b[^>]+\b)\s+<(?<Email>[^>]+)>$' |
             Add-CapturesToMatches.ps1
         $authors |Out-String |Write-Verbose
-        [int]$max = ($authors |measure Commits -Maximum).Maximum
-        [int]$oneSigmaFromTop = $max - (Measure-StandardDeviation.ps1 $authors.Commits)
+        [int] $max = ($authors |measure Commits -Maximum).Maximum
+        [int] $oneSigmaFromTop = $max - (Measure-StandardDeviation.ps1 $authors.Commits)
         Write-Verbose "Authors with $oneSigmaFromTop or more commits will be included as default code owners."
-        $DefaultOwner = $authors |? {[int]$_.Commits -ge $oneSigmaFromTop} |% Email
+        $DefaultOwner = $authors |? {[int] $_.Commits -ge $oneSigmaFromTop} |% Email
         Write-Verbose "Default code owners determined to be $DefaultOwner."
     }
     Add-File .github/CODEOWNERS @"

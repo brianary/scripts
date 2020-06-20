@@ -46,7 +46,7 @@
 	1.2KB  Get-XmlNamespaces.ps1
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void],[psobject])] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
 [Parameter(Position=1,Mandatory=$true)][ScriptBlock] $Value,
 [Alias('Import')][string[]] $Properties = @(),

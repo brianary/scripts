@@ -24,7 +24,7 @@
 #>
 
 #Requires -Version 4
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
 )
 Process

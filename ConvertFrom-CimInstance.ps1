@@ -18,7 +18,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(Position=0,ValueFromPipeline=$true)]
 [Microsoft.Management.Infrastructure.CimInstance] $InputObject
 )

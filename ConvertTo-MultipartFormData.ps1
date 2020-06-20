@@ -4,7 +4,13 @@
 
 .Parameter Fields
     The fields to pass, as a Hashtable or other dictionary.
-    Values of the System.IO.FileInfo type will be read, as for a file upload.
+	Values of the System.IO.FileInfo type will be read, as for a file upload.
+
+.Inputs
+	Any System.Collections.IDictionary type of key-value pairs to encode.
+
+.Outputs
+	System.Byte[] of encoded key-value data.
 
 .Link
     https://docs.microsoft.com/dotnet/api/system.net.http.multipartformdatacontent
@@ -25,7 +31,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([byte[]])] Param(
 [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][Collections.IDictionary] $Fields
 )
 DynamicParam

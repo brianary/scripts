@@ -6,6 +6,12 @@
 	An HTML or XML string that may include emoji or other Unicode characters outside
 	the 7-bit ASCII range.
 
+.Inputs
+	System.String of HTML or XML data to encode.
+
+.Outputs
+	System.String of HTML or XML data, encoded.
+
 .Link
 	https://docs.microsoft.com/dotnet/api/system.char.issurrogatepair
 
@@ -27,7 +33,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject
 )
 Process

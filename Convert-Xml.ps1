@@ -1,6 +1,6 @@
 <#
 .Synopsis
-    Transform XML using an XSLT template.
+	Transform XML using an XSLT template.
 
 .Parameter TransformFile
     The XSLT file to use to transform the XML.
@@ -21,11 +21,11 @@
     (Writes schema.html)
 #>
 
-[CmdletBinding(SupportsShouldProcess=$true)]Param(
-[Parameter(Position=0,Mandatory=$true)][Alias('TemplateFile','XsltTemplateFile')][string]$TransformFile,
-[Parameter(Position=1,ValueFromPipelineByPropertyName=$true)][Alias('XmlFile','FullName')][string]$Path,
-[Parameter(Position=2)][string]$OutFile,
-[switch]$TrustedXslt
+[CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
+[Parameter(Position=0,Mandatory=$true)][Alias('TemplateFile','XsltTemplateFile')][string] $TransformFile,
+[Parameter(Position=1,ValueFromPipelineByPropertyName=$true)][Alias('XmlFile','FullName')][string] $Path,
+[Parameter(Position=2)][string] $OutFile,
+[switch] $TrustedXslt
 )
 Begin
 {

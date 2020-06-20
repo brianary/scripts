@@ -48,7 +48,7 @@
 #Requires -RunAsAdministrator
 using module PSScheduledJob
 using namespace System.Xml
-[CmdletBinding(SupportsShouldProcess=$true)] Param(
+[CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
 [Parameter(Position=0)][string]$TaskPath = '\'
 )
 
