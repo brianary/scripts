@@ -171,7 +171,7 @@ PowerShell System Configuration Scripts
 
 A collection of scripts that only need to be run once to modify a system.
 
-$(Format-PS5Scripts)
+$(Format-SysCfgScripts)
 
 <!-- generated $(Get-Date) -->
 "@
