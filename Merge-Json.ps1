@@ -40,7 +40,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([PSObject])] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)][string[]] $InputObject,
 [switch]$Compress
 )

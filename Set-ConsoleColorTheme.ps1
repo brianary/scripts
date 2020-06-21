@@ -40,7 +40,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true)]
 [ValidateSet('Dracula','SolarizedDark','SolarizedLight','Zenburn')]
 [string]$ThemeName,

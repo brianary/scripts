@@ -21,7 +21,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding(SupportsShouldProcess=$true)] Param(
+[CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
 [Parameter(Position=0,ValueFromPipelineByPropertyName=$true,ValueFromPipeline=$true,Mandatory=$true)][string[]] $Path,
 [ValidateScript({Test-Path $_ -PathType Container})][Parameter(Position=1)][string] $Destination,
 [switch] $NewerOnly
@@ -33,7 +33,7 @@ Process
     {
         $destfile = Join-Path $Destination ([IO.Path]::GetFileName($file))
         if(!(Test-Path $destfile -PathType Leaf)) {continue}
-        if((!$NewerOnly -or (Test-NewerFile.ps1 "$destfile" "$file")) -and 
+        if((!$NewerOnly -or (Test-NewerFile.ps1 "$destfile" "$file")) -and
             $PSCmdlet.ShouldProcess("'$destfile' over '$file'",'copy'))
         {cp $file $destfile}
     }

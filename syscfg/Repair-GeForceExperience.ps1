@@ -17,7 +17,7 @@
 
 #Requires -Version 3
 #Requires -RunAsAdministrator
-[CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='High')] Param(
+[CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='High')][OutputType([void])] Param(
 [switch] $Finish
 )
 

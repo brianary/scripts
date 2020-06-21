@@ -8,6 +8,15 @@
 .Parameter TableIndex
     Which table to import, by the element's document position (zero-based).
 
+.Inputs
+	Objects with one or more of these properties:
+
+		* System.Uri named Uri
+		* System.UInt32 named TableIndex
+
+.Outputs
+	System.__ComObject containing the parsed element COM object.
+
 .Link
     ConvertFrom-Html.ps1
 
@@ -29,8 +38,8 @@
     …
 #>
 
-[CmdletBinding()] Param(
-[Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)][uri]$Uri,
+[CmdletBinding()][OutputType([__ComObject])] Param(
+[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][uri]$Uri,
 [Parameter(Position=1,ValueFromPipelineByPropertyName=$true)]
 [Alias('Index','Position','Number')][uint32]$TableIndex = 0
 )

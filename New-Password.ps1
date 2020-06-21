@@ -32,6 +32,10 @@
 .Parameter HasSpecial
 	Indicates the password must contain a special character (something that isn't a letter or number).
 
+.Outputs
+	System.String containing a generated password, or
+	System.Security.SecureString containing a generated password if requested.
+
 .Link
 	Invoke-RestMethod
 
@@ -55,7 +59,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string],[SecureString])] Param(
 [Parameter(Position=0,Mandatory=$true)][int] $Length,
 [int] $MaxRepeats,
 [regex] $ValidMatch,

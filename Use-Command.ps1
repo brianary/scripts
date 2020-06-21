@@ -103,8 +103,8 @@
 
 #requires -Version 2
 #requires -Modules Microsoft.PowerShell.Utility
-[CmdletBinding(SupportsShouldProcess=$true)]
-Param([Parameter(Position=0,Mandatory=$true)][string] $Name,
+[CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
+[Parameter(Position=0,Mandatory=$true)][string] $Name,
 [Parameter(Position=1,Mandatory=$true)][string] $Path,
 [Parameter(ParameterSetName='WindowsFeature')][Alias('WinFeature')][string] $WindowsFeature,
 [Parameter(ParameterSetName='ChocolateyPackage')][Alias('ChocoPackage','chocopkg','cinst')][string] $ChocolateyPackage,

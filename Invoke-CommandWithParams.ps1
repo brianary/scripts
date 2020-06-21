@@ -60,7 +60,7 @@ Begin
 }
 Process
 {
-    $selectedParams = 
+    $selectedParams =
         if($OnlyMatches) {$Dictionary |Select-DictionaryKeys.ps1 -Keys $params -SkipNullValues}
         else {$Dictionary}
     Write-Verbose "$Name $($selectedParams.Keys |% {"-$_ $(Format-PSLiterals.ps1 $selectedParams.$_ -IndentBy '')"})"

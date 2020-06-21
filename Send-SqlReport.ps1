@@ -86,7 +86,7 @@
 
 #Requires -Version 3
 #Requires -Module SqlServer
-[CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='None')] Param(
+[CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='None')][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true)][string]$Subject,
 [Parameter(Position=1,Mandatory=$true)][string[]]$To,
 [Parameter(Position=2,Mandatory=$true)][string]$Sql,

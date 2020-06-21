@@ -25,7 +25,7 @@
 
     Passes objects through the pipeline that have a property containing "Addr" in the name.
 #>
-Param(
+[CmdletBinding()][OutputType([bool])] Param(
 [Parameter(Mandatory=$true,Position=0)][string] $Name,
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][psobject]$InputObject
 )

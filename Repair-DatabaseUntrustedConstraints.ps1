@@ -34,7 +34,7 @@
 
 #Requires -Version 3
 #Requires -Module SqlServer
-[CmdletBinding(SupportsShouldProcess=$true)] Param(
+[CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,

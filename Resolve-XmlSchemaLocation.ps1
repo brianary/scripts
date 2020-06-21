@@ -8,6 +8,13 @@
 .Parameter Path
 	A file to check.
 
+.Inputs
+	System.Xml.XmlDocument or System.String containing the path to an XML file.
+
+.Outputs
+	System.Management.Automation.PSCustomObject for each namespace, with Path,
+	Node, Alias, Urn, and Url properties.
+
 .Link
 	https://www.w3.org/TR/xmlschema-1/#schema-loc
 
@@ -31,7 +38,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(ParameterSetName='Xml',Position=0,Mandatory=$true,ValueFromPipeline=$true)][xml] $Xml,
 [Parameter(ParameterSetName='Path',Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
 [Alias('FullName')][ValidateScript({Test-Path $_ -PathType Leaf})][string] $Path

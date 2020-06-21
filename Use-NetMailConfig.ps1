@@ -31,7 +31,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param()
+[CmdletBinding()][OutputType([void])] Param()
 try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration}
 $smtp = [Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp')
 $value = @{ 'Send-MailMessage:From' = $smtp.From }

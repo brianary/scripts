@@ -19,6 +19,22 @@
     Microsoft.SqlServer.Management.Smo.Column to calculate statistics for,
     or Microsoft.SqlServer.Management.Smo.Table to select a column from by name.
 
+.Outputs
+	System.Management.Automation.PSCustomObject that describes the column:
+
+		* ColumnName
+		* SqlType
+		* NullValues
+		* IsUnique
+		* UniqueValues
+		* MinimumValue
+		* MaximumValue
+		* MeanAverage
+		* ModeAverage
+		* Variance
+		* StandardDeviation
+		* additonal properties, depending on type
+
 .Link
     https://www.powershellgallery.com/packages/SqlServer/
 
@@ -110,7 +126,7 @@
 
 #Requires -Version 3
 #Requires -Module SqlServer
-[CmdletBinding(ConfirmImpact='Medium')] Param(
+[CmdletBinding(ConfirmImpact='Medium')][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ParameterSetName='Column')]
 [Microsoft.SqlServer.Management.Smo.Column] $Column,
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='ColumnName')][string] $ColumnName,

@@ -34,7 +34,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSObject] $InputObject,
 [Alias('Type')][Management.Automation.PSMemberTypes] $MemberType = 'Properties',
 [string] $Scope = '1'

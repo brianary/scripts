@@ -35,9 +35,9 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true)][string]$Action,
-[Parameter(Position=1)][Management.Automation.ErrorRecord]$ErrorRecord = 
+[Parameter(Position=1)][Management.Automation.ErrorRecord]$ErrorRecord =
     ((Get-Variable _ -Scope 1 -ValueOnly -EA SilentlyContinue) -as [Management.Automation.ErrorRecord]),
 [Parameter(Position=2)][ValidateSet('Verbose','Debug','Information','Warning','Error','Fatal')][string] $Level = 'Error',
 [Alias('Scope')][string] $InvocationScope = '1',

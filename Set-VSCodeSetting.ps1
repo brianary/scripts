@@ -36,7 +36,7 @@
 	Sets {"workbench.colorTheme": "PowerShell ISE"} in the VSCode workspace settings.
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
 [Parameter(Position=1,Mandatory=$true)][AllowEmptyString()][AllowEmptyCollection()][AllowNull()]
 [psobject] $Value,

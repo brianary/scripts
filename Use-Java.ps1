@@ -12,10 +12,10 @@
     Use-Java.ps1 "$env:ProgramFiles\OpenJDK\jdk-11.0.1"
 #>
 
-[CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName)]
+[CmdletBinding()][OutputType([void])] Param(
+[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
 [ValidateScript({(Test-Path $_ -PathType Container) -and (Test-Path "$_\bin\java.exe" -PathType Leaf)})]
-[Alias('FullName')][string]$Path
+[Alias('FullName')][string] $Path
 )
 
 $env:JAVA_HOME = $Path

@@ -40,7 +40,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param()
+[CmdletBinding()][OutputType([void])] Param()
 
 function Get-ConfigConnections
 {
