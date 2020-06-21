@@ -5,6 +5,12 @@
 .Parameter XmlNode
 	An XML node to retrieve the XPath for.
 
+.Inputs
+	System.Xml.XmlNode or property of that type named XmlNode or Node.
+
+.Outputs
+	System.String containing an XPath that locates the node.
+
 .Link
 	https://docs.microsoft.com/dotnet/api/system.xml.xmlnode
 
@@ -22,7 +28,7 @@
 
 #Requires -Version 3
 using namespace System.Xml
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Alias('Node')][Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
 [XmlNode] $XmlNode
 )

@@ -28,9 +28,9 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
-[Parameter(Position=0)][string]$Path = 'tasks.xml',
-[string]$Exclude = '*\*'
+[CmdletBinding()][OutputType([void])] Param(
+[Parameter(Position=0)][string] $Path = 'tasks.xml',
+[string] $Exclude = '*\*'
 )
 $credentials = @{}
 $xmldecl = "<?xml version=`"1.0`" encoding=`"UTF-16`" ?>`r`n`r`n"

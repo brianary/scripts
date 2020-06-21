@@ -1,6 +1,9 @@
 ﻿<#
 .Synopsis
-    Display an HTML view of an XML schema or WSDL using Saxon.
+	Display an HTML view of an XML schema or WSDL using Saxon.
+
+.Parameter SchemaFile
+	System.String containing the path to an XML Schema or WSDL file.
 
 .Example
     Show-DataRef.ps1 DataModel.xsd
@@ -9,7 +12,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$SchemaFile
 )
 Begin

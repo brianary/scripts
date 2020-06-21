@@ -41,7 +41,7 @@
     Creates an Explorer shortcut on the desktop that runs as admin.
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true)][Alias('Name')][string] $Path,
 [Parameter(Position=1,Mandatory=$true)][string] $TargetPath,
 [Parameter(Position=2)][string] $Arguments,

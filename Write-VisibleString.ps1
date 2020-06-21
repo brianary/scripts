@@ -11,6 +11,9 @@
 .Parameter AsSymbols
 	Print control characters as control picture symbols rather than hex values.
 
+.Inputs
+	System.Object to serialize with nonprintable characters made visible as a hex pair.
+
 .Example
 	Write-VisibleString.ps1 "a`tb`nc"
 
@@ -18,7 +21,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][object] $InputObject,
 [ConsoleColor] $AltColor = 'DarkYellow',
 [switch] $AsSymbols

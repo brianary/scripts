@@ -6,7 +6,10 @@
     The URL to download.
 
 .Parameter Open
-    When present, invokes the file after it is downloaded.
+	When present, invokes the file after it is downloaded.
+
+.Inputs
+	Object with System.Uri property named Uri.
 
 .Link
     https://tools.ietf.org/html/rfc2183
@@ -35,7 +38,7 @@
     Saves f1040.pdf (or else a filename specified in the Content-Disposition header) and opens it.
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][uri]$Uri,
 [switch]$Open
 )

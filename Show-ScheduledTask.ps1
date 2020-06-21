@@ -6,7 +6,17 @@
     A scheduled task, piped from Get-ScheduledTask.
 
 .Inputs
-    Microsoft.Management.Infrastructure.CimInstance returned from Get-ScheduledTask.
+	Microsoft.Management.Infrastructure.CimInstance returned from Get-ScheduledTask.
+
+.Outputs
+	System.Management.Automation.PSCustomObject describing each task, with the properties:
+
+		* PSComputerName
+		* TaskName
+		* State
+		* Action
+		* Trigger
+		* Description
 
 .Link
     https://docs.microsoft.com/dotnet/api/microsoft.management.infrastructure.ciminstance
@@ -21,7 +31,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(ValueFromPipeline=$true)]
 [ValidateScript({$_.CimClass -and $_.CimClass.CimClassName -eq 'MSFT_ScheduledTask'})]
 [Microsoft.Management.Infrastructure.CimInstance]$Task

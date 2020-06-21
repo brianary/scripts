@@ -25,7 +25,7 @@
 
 .Example
     Send-MailMessageFiles.ps1
-    
+
     Sends all .eml files in the current directory.
 
 .Example
@@ -35,7 +35,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding(SupportsShouldProcess=$true)] Param(
+[CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
 [Parameter(Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
 [Alias('Eml')][IO.FileInfo[]]$MailFile = (Get-ChildItem *.eml),
 [string]$From,
@@ -73,7 +73,7 @@ Process
         if($priority) {[void]$msg.Add('Priority',$priority)}
         if($eml.HTMLBody) {[void]$msg.Add('Body',$eml.HTMLBody);[void]$msg.Add('BodyAsHtml',$true)}
         else {[void]$msg.Add('Body',$eml.TextBody)}
-        [string[]]$atts = 
+        [string[]]$atts =
             if($eml.Attachments.Count) {$eml.Attachments |% {$f = "$env:TEMP\$([guid]::NewGuid())"; $_.SaveToFile($f); $f}}
             else {@()}
         if($atts) {[void]$msg.Add('Attachments',$atts)}

@@ -73,7 +73,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(ParameterSetName='CatchBlock',Position=0)]
 [Parameter(ParameterSetName='Detailed',Mandatory=$true,Position=0)][Type] $ExceptionType,
 [Parameter(ParameterSetName='CatchBlock',Position=1)]

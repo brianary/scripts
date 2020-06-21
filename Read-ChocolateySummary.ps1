@@ -15,6 +15,10 @@
 		* Error only includes that level.
 		* Critical and Off will exclude everything, since those levels aren't used.
 
+.Outputs
+	System.Management.Automation.PSCustomObject with LogTime, Level, and Text of the last
+	Chocolatey log entries.
+
 .Link
 	https://chocolatey.org/
 
@@ -60,7 +64,7 @@
 
 #Requires -Version 5.1
 using namespace System.Diagnostics
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(Position=0)][int] $Position = -1,
 [Parameter(Position=1)][Alias('Verbosity')][SourceLevels] $Level = 'Warning'
 )

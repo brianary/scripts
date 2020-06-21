@@ -16,7 +16,7 @@
 #>
 
 #requires -Version 4
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Mandatory=$true)][uri] $Server,
 [string] $ApiKey
 )

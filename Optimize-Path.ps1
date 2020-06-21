@@ -8,7 +8,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)] Param(
+[CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)][OutputType([void])] Param(
 [switch]$ResolveConflicts
 )
 
@@ -52,7 +52,7 @@ function Get-PathDetail([Parameter(Position=0,Mandatory=$true)][EnvironmentVaria
     }
     $ev = $evmatch |? {$Entry -match $_.Value} |select -First 1
     if($ev) {Write-Verbose "$Target Path: $entry matches $($ev.Name) /$($ev.Value)/"}
-    $evpath = 
+    $evpath =
         if($Entry -like '%*') {$Entry}
         elseif(!$ev) {$fullpath}
         else {$Entry -ireplace $ev.Value,"%$($ev.Name)%"}

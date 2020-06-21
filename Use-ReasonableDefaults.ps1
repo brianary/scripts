@@ -15,7 +15,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param()
+[CmdletBinding()][OutputType([void])] Param()
 [Net.ServicePointManager]::SecurityProtocol = 'Tls12'
 $Global:PSDefaultParameterValues['Out-File:Width'] = [int]::MaxValue
 $Global:PSDefaultParameterValues['Out-File:Encoding'] = 'UTF8'

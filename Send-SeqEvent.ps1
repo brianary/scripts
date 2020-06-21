@@ -46,7 +46,7 @@
 #>
 
 #requires -Version 4
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0)][Alias('Text')][string] $Message = '{Message}',
 [Parameter(Mandatory=$true,Position=1,ValueFromPipeline=$true)][Alias('Parameters')] $Properties,
 [ValidateSet('Verbose','Debug','Information','Warning','Error','Fatal')][string] $Level = 'Information',

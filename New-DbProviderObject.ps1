@@ -9,7 +9,7 @@
     The type of object to create.
 
 .Parameter InitialValue
-    A value to initialize the object with, such as CommandText for a Command object, or 
+    A value to initialize the object with, such as CommandText for a Command object, or
     a ConnectionString for a Connection or ConnectionStringBuilder.
 
 .Parameter ConnectionString
@@ -27,7 +27,7 @@
     System.String to initialize the database object.
 
 .Outputs
-    System.Data.Common.DbCommand (e.g. System.Data.SqlClient.SqlCommand) or 
+    System.Data.Common.DbCommand (e.g. System.Data.SqlClient.SqlCommand) or
     System.Data.Common.DbConnection (e.g. System.Data.SqlClient.SqlConnection) or
     System.Data.Common.DbConnectionStringBuilder (e.g. System.Data.SqlClient.SqlConnectionStringBuilder),
     as requested.
@@ -38,11 +38,11 @@
 .Example
     New-DbProviderObject.ps1 SqlClient ConnectionStringBuilder 'Server=ServerName;Database=DbName;Integrated Security=True'
 
-    Key                 Value     
-    ---                 -----     
+    Key                 Value
+    ---                 -----
     Data Source         ServerName
-    Initial Catalog     DbName    
-    Integrated Security True    
+    Initial Catalog     DbName
+    Integrated Security True
 
 .Example
     $conn = New-DbProviderObject.ps1 SqlClient Connection $connstr -Open
@@ -56,7 +56,8 @@
 #>
 
 #Requires -Version 4
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([Data.Common.DbCommand],[Data.Common.DbConnection],
+[Data.Common.DbConnectionStringBuilder])] Param(
 [Parameter(Mandatory=$true,Position=0)][AllowEmptyString()][string]$ProviderName,
 [ValidateSet('Command','Connection','ConnectionStringBuilder')]
 [Parameter(Mandatory=$true,Position=1)][string]$TypeName,

@@ -9,7 +9,7 @@
     System.String file path to examine.
 
 .Outputs
-    System.Management.Automation.PSObject[] with properties indictating indentation counts.
+    System.Management.Automation.PSCustomObject with properties indictating indentation counts.
 
 		* Tab: Lines starting with tabs.
 		* Space: Lines starting with spaces.
@@ -25,7 +25,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([psobject])] Param(
+[CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$Path
 )
 Begin { $Count = [pscustomobject]@{Tab=0;Space=0;Mix=0;Other=0} }

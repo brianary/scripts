@@ -1,12 +1,10 @@
 <#
 .Synopsis
-    Cleans up old modules.
+	Cleans up old modules.
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
-[switch] $KeepOldModules
-)
+[CmdletBinding()][OutputType([void])] Param()
 
 Update-Module -Force
 foreach($module in Get-Module -List |group Name |where Count -gt 1)

@@ -78,7 +78,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=1,Mandatory=$true)][string] $NameNoun,
 [string] $Synopsis,
 [Management.Automation.RuntimeDefinedParameterDictionary] $Parameters,
@@ -104,7 +104,7 @@
 )
 DynamicParam
 {
-    Add-DynamicParam.ps1 NameVerb string -Position 0 -Mandatory -ValidateSet (Get-Verb |% Verb)
+    Get-Verb |foreach Verb |Add-DynamicParam.ps1 NameVerb string -Position 0 -Mandatory
     $DynamicParams
 }
 Process

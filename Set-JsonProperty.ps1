@@ -31,6 +31,12 @@
 .Parameter InputObject
 	The JSON string to set the property in.
 
+.Inputs
+	System.String containing JSON.
+
+.Outputs
+	System.String containing updated JSON.
+
 .Link
 	ConvertFrom-Json
 
@@ -53,7 +59,7 @@
 	}
 #>
 
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 [Alias('Name')][Parameter(Position=0,Mandatory=$true)][string] $PropertyName,
 [Parameter(Position=1,Mandatory=$true)][AllowEmptyString()][AllowEmptyCollection()][AllowNull()]
 [Alias('Value')][psobject] $PropertyValue,

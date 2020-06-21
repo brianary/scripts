@@ -138,7 +138,7 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([void])] Param(
 [Parameter(ParameterSetName='ByContext')][Alias('FG')][int]$ForegroundColor,
 [Parameter(ParameterSetName='ByContext')][Alias('BG')][int]$BackgroundColor,
 [Parameter(ParameterSetName='ByContext')][Alias('EFG')][int]$ErrorForegroundColor,
