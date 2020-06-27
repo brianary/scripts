@@ -16,6 +16,25 @@
 			<xsl:attribute name="b"><![CDATA[y]]></xsl:attribute>
 		</xsl:template>
 	</xsl:transform>
+
+.Example
+	Compare-Xml.ps1 '<a b="z"/>' '<a c="y"/>' |Format-Xml.ps1
+
+	<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+		<xsl:output omit-xml-declaration="yes" method="xml" />
+		<xsl:template match="@*|node()">
+			<xsl:copy>
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:copy>
+		</xsl:template>
+		<xsl:template match="/a/@b" />
+		<xsl:template match="/a">
+			<xsl:copy>
+				<xsl:attribute name="c"><![CDATA[y]]></xsl:attribute>
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:copy>
+		</xsl:template>
+	</xsl:transform>
 #>
 
 #Requires -Version 3
@@ -25,20 +44,33 @@ using namespace System.Xml
 [Parameter(Position=1,Mandatory=$true)][xml] $DifferenceXml
 )
 
+function Add-XmlNamespace
+{
+	[CmdletBinding()] Param(
+	[Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][string] $Prefix,
+	[Parameter(Position=1,ValueFromPipelineByPropertyName=$true)][string] $NamespaceURI,
+	[Parameter(ValueFromPipeline=$true)][XmlNode] $Node
+	)
+	if($Prefix) {return "xmlns:$Prefix='$NamespaceURI'"}
+}
+
 function Compare-XmlAttribute
 {
 	Param(
 	[Parameter(Position=0,Mandatory=$true)][XmlAttribute] $ReferenceAttribute,
-	[Parameter(Position=1,Mandatory=$true)][XmlAttribute] $DifferenceAttribute
+	[Parameter(Position=1)][XmlAttribute] $DifferenceAttribute
 	)
-	#TODO: check for nulls (diff only?)
-	#TODO: normalize all whitespace to spaces: https://www.w3.org/TR/xml11/#AVNormalize
+	if($DifferenceAttribute -eq $null)
+	{return [xml]@"
+<xsl:template match="$(Resolve-XPath.ps1 $ReferenceAttribute)"
+	$($DifferenceAttribute |Add-XmlNamespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>
+"@}
 	if($ReferenceAttribute.LocalName -ceq $DifferenceAttribute.LocalName -and
 		$ReferenceAttribute.NamespaceURI -ceq $DifferenceAttribute.NamespaceURI -and
 		$ReferenceAttribute.Value -ceq $DifferenceAttribute.Value) {return}
-	$ns = if($DifferenceAttribute.Prefix) {"xmlns:$($DifferenceAttribute.Prefix)='$($DifferenceAttribute.NamespaceURI)' "}
 	return [xml]@"
-<xsl:template match="$(Resolve-XPath.ps1 $ReferenceAttribute)" ${ns}xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template match="$(Resolve-XPath.ps1 $ReferenceAttribute)"
+	$($DifferenceAttribute |Add-XmlNamespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:attribute name="$($DifferenceAttribute.Name)"><![CDATA[$($DifferenceAttribute.Value)]]></xsl:attribute>
 </xsl:template>
 "@
@@ -122,13 +154,27 @@ function Compare-XmlDocument
 		}
 		Compare-XmlNodes $refpre $diffpre
 	}
+	#TODO: if ref and diff have no similarities, maybe just modify diff into a simplified stylesheet
+	# https://www.w3.org/TR/1999/REC-xslt-19991116#result-element-stylesheet
 	Compare-XmlElement $ReferenceDocument.DocumentElement $DifferenceDocument.DocumentElement
 	if($ReferenceDocument.DocumentElement.NextSibling -or $DifferenceDocument.DocumentElement.NextSibling)
 	{
-		$refpre = for($node = $ReferenceDocument.DocumentElement.NextSibling; $node; $node = $node.NextSibling) {$node}
-		$diffpre = for($node = $DifferenceDocument.DocumentElement.NextSibling; $node; $node = $node.NextSibling) {$node}
-		Compare-XmlNodes $refpre $diffpre
+		$refpost = for($node = $ReferenceDocument.DocumentElement.NextSibling; $node; $node = $node.NextSibling) {$node}
+		$diffpost = for($node = $DifferenceDocument.DocumentElement.NextSibling; $node; $node = $node.NextSibling) {$node}
+		Compare-XmlNodes $refpost $diffpost
 	}
+}
+
+function Add-XmlAttribute
+{
+	[CmdletBinding()] Param(
+	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
+	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $LocalName,
+	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Value,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Prefix,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $NamespaceURI
+	)
+	return "<xsl:attribute name='$Name' $(Add-XmlNamespace $Prefix $NamespaceURI)><![CDATA[$Value]]></xsl:attribute>"
 }
 
 function Compare-XmlElement
@@ -137,22 +183,37 @@ function Compare-XmlElement
 	[Parameter(Position=0,Mandatory=$true)][XmlElement] $ReferenceElement,
 	[Parameter(Position=1,Mandatory=$true)][XmlElement] $DifferenceElement
 	)
-	${+},${-},${=} = @(),@(),@()
+	${+} = @()
 	foreach(${@} in $DifferenceElement.Attributes)
 	{
-		if(${@}.NamespaceURI) {if(!$ReferenceElement.HasAttribute(${@}.LocalName,${@}.NamespaceURI)) {${+} += ${@}; continue}}
-		elseif(!$ReferenceElement.HasAttribute(${@}.Name)) {${+} += ${@}}
-		else {${=} += ${@}}
+		if(${@}.NamespaceURI)
+		{
+			if(!$ReferenceElement.HasAttribute(${@}.LocalName,${@}.NamespaceURI)) {${+} += ${@}}
+			else {Compare-XmlAttribute $ReferenceElement.GetAttributeNode(${@}.LocalName,${@}.NamespaceURI) ${@}}
+		}
+		else
+		{
+			if(!$ReferenceElement.HasAttribute(${@}.Name)) {${+} += ${@}}
+			else {Compare-XmlAttribute $ReferenceElement.GetAttributeNode(${@}.Name) ${@}}
+		}
 	}
 	foreach(${@} in $ReferenceElement.Attributes)
 	{
-		if(${@}.NamespaceURI) {if($DifferenceElement.HasAttribute(${@}.LocalName,${@}.NamespaceURI)) {continue}}
-		elseif($DifferenceElement.HasAttribute(${@}.LocalName)) {continue}
-		else {${-} += ${@}}
+		if(!${@}.NamespaceURI) {if(!$DifferenceElement.HasAttribute(${@}.LocalName)) {Compare-XmlAttribute ${@} $null}}
+		elseif(!$DifferenceElement.HasAttribute(${@}.LocalName,${@}.NamespaceURI)) {Compare-XmlAttribute ${@} $null}
 	}
-	#TODO: if +, create a template for the element that adds the attributes and applies the atts and children
-	#TODO: compare atts rather than adding them to =
-	#TODO: if -, create an empty/no-op template for them
+	if(${+})
+	{
+		[xml]@"
+<xsl:template match="$(Resolve-XPath.ps1 $ReferenceElement)"
+	$($DifferenceAttribute |Add-XmlNamespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:copy>
+		$(${+} |Add-XmlAttribute)
+		<xsl:apply-templates select="@*|node()" />
+	</xsl:copy>
+</xsl:template>
+"@
+	}
 	Compare-XmlNodes $ReferenceElement.ChildNodes $DifferenceElement.ChildNodes
 }
 
