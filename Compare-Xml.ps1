@@ -32,9 +32,10 @@ function Compare-XmlAttribute
 	[Parameter(Position=1,Mandatory=$true)][XmlAttribute] $DifferenceAttribute
 	)
 	#TODO: check for nulls (diff only?)
-	if($ReferenceAttribute.LocalName -eq $DifferenceAttribute.LocalName -and
-		$ReferenceAttribute.NamespaceURI -eq $DifferenceAttribute.NamespaceURI -and
-		$ReferenceAttribute.Value -eq $DifferenceAttribute.Value) {return}
+	#TODO: normalize all whitespace to spaces: https://www.w3.org/TR/xml11/#AVNormalize
+	if($ReferenceAttribute.LocalName -ceq $DifferenceAttribute.LocalName -and
+		$ReferenceAttribute.NamespaceURI -ceq $DifferenceAttribute.NamespaceURI -and
+		$ReferenceAttribute.Value -ceq $DifferenceAttribute.Value) {return}
 	$ns = if($DifferenceAttribute.Prefix) {"xmlns:$($DifferenceAttribute.Prefix)='$($DifferenceAttribute.NamespaceURI)' "}
 	return [xml]@"
 <xsl:template match="$(Resolve-XPath.ps1 $ReferenceAttribute)" ${ns}xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -49,7 +50,7 @@ function Compare-XmlCData
 	[Parameter(Position=0,Mandatory=$true)][XmlCDataSection] $ReferenceCData,
 	[Parameter(Position=1,Mandatory=$true)][XmlCDataSection] $DifferenceCData
 	)
-	if($ReferenceCData.Value -eq $DifferenceCData.Value) {return}
+	if($ReferenceCData.Value -ceq $DifferenceCData.Value) {return}
 	return [xml]@"
 <xsl:template match="$(Resolve-XPath.ps1 $ReferenceCData)" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:text><![CDATA[$($DifferenceCData.Value)">]]></xsl:text>
@@ -63,7 +64,7 @@ function Compare-XmlComment
 	[Parameter(Position=0,Mandatory=$true)][XmlComment] $ReferenceComment,
 	[Parameter(Position=1,Mandatory=$true)][XmlComment] $DifferenceComment
 	)
-	if($ReferenceComment.Value -eq $DifferenceComment.Value) {return}
+	if($ReferenceComment.Value -ceq $DifferenceComment.Value) {return}
 	return [xml]@"
 <xsl:template match="$(Resolve-XPath.ps1 $ReferenceComment)" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:comment><![CDATA[$($DifferenceComment.Value)">]]></xsl:comment>
@@ -87,12 +88,12 @@ function Compare-XmlDocument
 			$standalone = $DifferenceDocument.FirstChild.Standalone
 			if($standalone) {"standalone='$standalone'"}
 		}
-	$doctype = $DifferenceDocument.ChildNodes |where NodeType -eq 'DocumentType'
+	$doctype = $DifferenceDocument.ChildNodes |where NodeType -ceq 'DocumentType'
 	if($doctype.PublicId -like '-//W3C//DTD XHTML *')
 	{[xml]@"
 <xsl:output $declaration method="xhtml" doctype-public="$($doctype.PublicId)" doctype-system="$($doctype.SystemId)" $ns />
 "@}
-	elseif($doctype.name -eq 'html')
+	elseif($doctype.name -ceq 'html')
 	{[xml]@"
 <xsl:output $declaration method="html" doctype-public="$($doctype.PublicId)" doctype-system="$($doctype.SystemId)" $ns />
 "@}
@@ -111,12 +112,12 @@ function Compare-XmlDocument
 	{
 		$refpre = foreach($node in $ReferenceDocument.ChildNodes)
 		{
-			if($node.NodeType -eq 'Element') {break}
+			if($node.NodeType -ceq 'Element') {break}
 			elseif($node.NodeType -notin 'XmlDeclaration','DocumentType') {$node}
 		}
 		$diffpre = foreach($node in $DifferenceDocument.ChildNodes)
 		{
-			if($node.NodeType -eq 'Element') {break}
+			if($node.NodeType -ceq 'Element') {break}
 			elseif($node.NodeType -notin 'XmlDeclaration','DocumentType') {$node}
 		}
 		Compare-XmlNodes $refpre $diffpre
@@ -136,39 +137,22 @@ function Compare-XmlElement
 	[Parameter(Position=0,Mandatory=$true)][XmlElement] $ReferenceElement,
 	[Parameter(Position=1,Mandatory=$true)][XmlElement] $DifferenceElement
 	)
-	foreach($att in $DifferenceElement.Attributes)
+	${+},${-},${=} = @(),@(),@()
+	foreach(${@} in $DifferenceElement.Attributes)
 	{
-		if($att.NamespaceURI)
-		{
-			if(!$ReferenceElement.HasAttribute($att.LocalName,$att.NamespaceURI))
-			{
-				#TODO: add attribute to this element; accumulate element changes for a single template
-			}
-		}
+		if(${@}.NamespaceURI) {if(!$ReferenceElement.HasAttribute(${@}.LocalName,${@}.NamespaceURI)) {${+} += ${@}; continue}}
+		elseif(!$ReferenceElement.HasAttribute(${@}.Name)) {${+} += ${@}}
+		else {${=} += ${@}}
 	}
-	foreach($att in $ReferenceElement.Attributes)
+	foreach(${@} in $ReferenceElement.Attributes)
 	{
-		if($att.NamespaceURI)
-		{
-			if($DifferenceElement.HasAttribute($att.LocalName,$att.NamespaceURI))
-			{
-				Compare-XmlNode $att ($DifferenceElement.GetAttributeNode($att.LocalName,$att.NamespaceURI))
-			}
-			else
-			{
-				#TODO: put attribute in "remove" list
-			}
-			#TODO: else (check namespace for change?) remove attribute
-		}
-		else
-		{
-			if($DifferenceElement.HasAttribute($att.LocalName))
-			{
-				Compare-XmlNode $att ($DifferenceElement.GetAttributeNode($att.LocalName))
-			}
-			#TODO: else remove attribute
-		}
+		if(${@}.NamespaceURI) {if($DifferenceElement.HasAttribute(${@}.LocalName,${@}.NamespaceURI)) {continue}}
+		elseif($DifferenceElement.HasAttribute(${@}.LocalName)) {continue}
+		else {${-} += ${@}}
 	}
+	#TODO: if +, create a template for the element that adds the attributes and applies the atts and children
+	#TODO: compare atts rather than adding them to =
+	#TODO: if -, create an empty/no-op template for them
 	Compare-XmlNodes $ReferenceElement.ChildNodes $DifferenceElement.ChildNodes
 }
 
@@ -178,7 +162,7 @@ function Compare-XmlProcessingInstruction
 	[Parameter(Position=0,Mandatory=$true)][XmlProcessingInstruction] $ReferenceProcessingInstruction,
 	[Parameter(Position=1,Mandatory=$true)][XmlProcessingInstruction] $DifferenceProcessingInstruction
 	)
-	if($ReferenceComment.Value -eq $DifferenceComment.Value) {return}
+	if($ReferenceComment.Value -ceq $DifferenceComment.Value) {return}
 	return [xml]@"
 <xsl:template match="$(Resolve-XPath.ps1 $ReferenceProcessingInstruction)" ${ns}xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:processing-instruction name="$($DifferenceProcessingInstruction.Name)">
@@ -194,7 +178,7 @@ function Compare-XmlSignificantWhitespace
 	[Parameter(Position=0,Mandatory=$true)][XmlSignificantWhitespace] $ReferenceSignificantWhitespace,
 	[Parameter(Position=1,Mandatory=$true)][XmlSignificantWhitespace] $DifferenceSignificantWhitespace
 	)
-	if($ReferenceSignificantWhitespace.Value -eq $DifferenceSignificantWhitespace.Value) {return}
+	if($ReferenceSignificantWhitespace.Value -ceq $DifferenceSignificantWhitespace.Value) {return}
 	return [xml]@"
 <xsl:template match="$(Resolve-XPath.ps1 $ReferenceSignificantWhitespace)" ${ns}xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:text><![CDATA[$($DifferenceSignificantWhitespace.Value)">]]></xsl:text>
@@ -208,7 +192,7 @@ function Compare-XmlText
 	[Parameter(Position=0,Mandatory=$true)][XmlText] $ReferenceText,
 	[Parameter(Position=1,Mandatory=$true)][XmlText] $DifferenceText
 	)
-	if($ReferenceText.Value -eq $DifferenceText.Value) {return}
+	if($ReferenceText.Value -ceq $DifferenceText.Value) {return}
 	return [xml]@"
 <xsl:template match="$(Resolve-XPath.ps1 $ReferenceText)" ${ns}xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:text><![CDATA[$($DifferenceText.Value)">]]></xsl:text>
@@ -222,7 +206,7 @@ function Compare-XmlWhitespace
 	[Parameter(Position=0,Mandatory=$true)][XmlWhitespace] $ReferenceWhitespace,
 	[Parameter(Position=1,Mandatory=$true)][XmlWhitespace] $DifferenceWhitespace
 	)
-	if($ReferenceWhitespace.Value -eq $DifferenceWhitespace.Value) {return}
+	if($ReferenceWhitespace.Value -ceq $DifferenceWhitespace.Value) {return}
 	return [xml]@"
 <xsl:template match="$(Resolve-XPath.ps1 $ReferenceWhitespace)" ${ns}xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:text>$($DifferenceWhitespace.Value)"></xsl:text>
@@ -236,7 +220,7 @@ function Compare-XmlNode
 	[Parameter(Position=1,Mandatory=$true)][XmlNode] $DifferenceNode
 	)
 	#TODO: Handle nulls? (diff only?)
-	if($RefenenceNode.OuterXml -eq $DifferenceNode.OuterXml) {return}
+	if($RefenenceNode.OuterXml -ceq $DifferenceNode.OuterXml) {return}
 	switch($DifferenceNode.NodeType)
 	{
 		Attribute {Compare-XmlAttribute $ReferenceNode $DifferenceNode}
