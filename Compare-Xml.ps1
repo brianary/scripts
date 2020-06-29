@@ -52,7 +52,7 @@ function Test-XmlNodeMatch
 	)
 	if($null -eq $RefereneceNode -or $null -eq $DifferenceNode) {return}
 	elseif($ReferenceNode.NodeType -ne $DifferenceNode.NodeType) {return}
-	elseif($ReferenceNode.NamespaceURI -cne $DifferenceN1ode.NamespaceURI) {return}
+	elseif($ReferenceNode.NamespaceURI -cne $DifferenceNode.NamespaceURI) {return}
 	elseif($RefenenceNode.LocalName -cne $DifferenceNode.LocalName) {return}
 	else {return $true}
 }
@@ -65,6 +65,7 @@ function Test-XmlNodeEqual
 	)
 	if($ReferenceNode.OuterXml -ceq $DifferenceNode.OuterXml) {return $true}
 	elseif(!(Test-XmlNodeMatch $RefereneceNode $DifferenceNode)) {return}
+	#TODO: compare attributes
 	else {return ($ReferenceNode.Value -ceq $DifferenceNode.Value)}
 }
 
@@ -184,7 +185,28 @@ function Merge-XmlNodes
 	[Parameter(Position=0,Mandatory=$true)][AllowEmptyCollection()][XmlNode[]] $ReferenceNodes,
 	[Parameter(Position=1,Mandatory=$true)][AllowEmptyCollection()][XmlNode[]] $DifferenceNodes
 	)
-	#TODO: Longest common subsequence
+	for($d,$r,$seq = 0,0,@(); $d -lt $DifferenceNodes.Length; $d++)
+	{
+		$diff = $DifferenceNodes[$d]
+		[int[]]$matches = $r..($ReferenceNodes.Length-1) |where {Test-XmlNodeMatch $ReferenceNodes[$_] $diff}
+		[int]$r =
+			if($matches.Length -eq 0) {-1}
+			elseif($matches.Length -eq 1) {$matches[0]}
+			else
+			{
+				$equals = $matches |where {Test-XmlNodeEqual $ReferenceNodes[$_] $diff} |select -First 1
+				if($equals.Length -eq 0) {$matches[0]}
+				else {$equals[0]}
+			}
+		[pscustomobject]@{
+			ReferenceNode   = if($r -eq -1) {$null} else {$ReferenceNodes[$r]}
+			ReferenceIndex  = $r
+			DifferenceNode  = $DifferenceNodes[$d]
+			DifferenceIndex = $d
+			Template        = if($r -eq -1) {$null} else {ConvertTo-XmlNodeTemplates $Reference[$r] $diff}
+		}
+		if($r -ne -1) {$ReferenceNodes[$r] = [xml]'<null/>'} #TODO: confirm this doesn't impact original array
+	}
 }
 
 function Add-XmlAttribute
@@ -224,6 +246,7 @@ function ConvertTo-XmlElementTemplates
 		if(!${@}.NamespaceURI) {if(!$DifferenceElement.HasAttribute(${@}.LocalName)) {ConvertTo-XmlNodeTemplates ${@} $null}}
 		elseif(!$DifferenceElement.HasAttribute(${@}.LocalName,${@}.NamespaceURI)) {ConvertTo-XmlNodeTemplates ${@} $null}
 	}
+	#TODO: collect and use merged nodes
 	Merge-XmlNodes $ReferenceElement.ChildNodes $DifferenceElement.ChildNodes
 	if(${+})
 	{
@@ -287,6 +310,7 @@ function ConvertTo-XmlDocumentTemplates
 			if($node.NodeType -ceq 'Element') {break}
 			elseif($node.NodeType -notin 'XmlDeclaration','DocumentType') {$node}
 		}
+		#TODO: collect and use merged nodes
 		Merge-XmlNodes $refpre $diffpre
 	}
 	ConvertTo-XmlElementTemplates $ReferenceDocument.DocumentElement $DifferenceDocument.DocumentElement
@@ -294,6 +318,7 @@ function ConvertTo-XmlDocumentTemplates
 	{
 		$refpost = for($node = $ReferenceDocument.DocumentElement.NextSibling; $node; $node = $node.NextSibling) {$node}
 		$diffpost = for($node = $DifferenceDocument.DocumentElement.NextSibling; $node; $node = $node.NextSibling) {$node}
+		#TODO: collect and use merged nodes
 		Merge-XmlNodes $refpost $diffpost
 	}
 }
