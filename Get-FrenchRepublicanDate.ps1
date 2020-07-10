@@ -174,18 +174,20 @@ Process
 	[int] ${jour de l'année} = $d.DayOfYear + $frcleaps - $gregleaps
 	if(${jour de l'année} -lt 1) {${l'année}--; ${jour de l'année} = $lastyearlength + ${jour de l'année}}
 	elseif(${jour de l'année} -gt $yearlength) {${l'année}++; ${jour de l'année} -= $yearlength}
-	[int] $mois = [math]::Floor(${jour de l'année}/30)
+	[int] $mois = [math]::Floor((${jour de l'année}-1)/30)
 	[pscustomobject]@{ #TODO: Roman numeral year
 		Year = ${l'année}
 		Month = $mois +1
 		MonthName = $months[$mois]
 		Mois = ${les mois}[$mois]
-		Day = ${jour de l'année} % 30
+		Day = 1 + ((${jour de l'année} -1) % 30)
 		DayOfYear = ${jour de l'année}
 		Jour = ${les jours}[${jour de l'année}-1]
 		DayName = $days[${jour de l'année}-1]
 		Decade = 1 + [math]::Floor((${jour de l'année} -1) / 10)
 		DayOfDecade = 1 + ((${jour de l'année} -1) % 10)
 		DecadeOrdinal = ${les jours du decade}[(${jour de l'année} -1) % 10]
+		DecimalTime = '{0:0:00:00}' -f [math]::Floor($Date.TimeOfDay.Ticks / 8640000)
+		GregorianDate = $Date
 	}
 }
