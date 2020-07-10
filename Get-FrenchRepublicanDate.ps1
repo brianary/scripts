@@ -8,6 +8,29 @@
 .Parameter Method
 	Which method to use to calculate leap years, of the competing choices.
 
+.Inputs
+	System.DateTime containing the Gregorian date and time to convert.
+
+.Outputs
+	System.Management.Automation.PSCustomObject containing a French Republican Calendar
+	date and time in these properties:
+
+	* Year: the numeric year
+	* Annee: the Roman numeral year
+	* AnneeUnicode: the Unicode Roman numeral year
+	* Month: the numeric month
+	* MonthName: the English month name
+	* Mois: the French month name
+	* Day: the numeric day of the month
+	* DayOfYear: the numeric day of the year
+	* Jour: the French name of the day of the year
+	* DayName: the English name of the day of the year
+	* Decade: the number of the 10-day "week" of the year
+	* DayOfDecade: the numeric day of the 10-day "week"
+	* DecadeOrdinal: the name of the day of the 10-day "week"
+	* DecimalTime: the decimal time (10 hours/day, 100 minutes/hour, 100 seconds/minute)
+	* GregorianDate: the original Gregorian date, as provided
+
 .Link
 	https://wikipedia.org/wiki/French_Republican_calendar
 
@@ -36,6 +59,8 @@
 	Get-FrenchRepublicanDate.ps1 2020-07-08
 
 	Year          : 228
+	Annee         : CCXXVIII
+	AnneeUnicode  : ⅭⅭⅩⅩⅧ
 	Month         : 10
 	MonthName     : Harvest
 	Mois          : Messidor
@@ -46,11 +71,13 @@
 	Decade        : 30
 	DayOfDecade   : 1
 	DecadeOrdinal : Primidi
+	DecimalTime   : 0:00:00
+	GregorianDate : 2020-07-08 00:00:00
 #>
 
 #Requires -Version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0,ValueFromPipeline)][datetime] $Date = (Get-Date),
+[Parameter(Position=0,ValueFromPipeline=$true)][datetime] $Date = (Get-Date),
 [ValidateSet('Equinox','Romme','Continuous','128Year')][string] $Method = 'Romme'
 )
 Begin
@@ -175,8 +202,10 @@ Process
 	if(${jour de l'année} -lt 1) {${l'année}--; ${jour de l'année} = $lastyearlength + ${jour de l'année}}
 	elseif(${jour de l'année} -gt $yearlength) {${l'année}++; ${jour de l'année} -= $yearlength}
 	[int] $mois = [math]::Floor((${jour de l'année}-1)/30)
-	[pscustomobject]@{ #TODO: Roman numeral year
+	[pscustomobject]@{
 		Year = ${l'année}
+		Annee = ConvertTo-RomanNumeral.ps1 ${l'année}
+		AnneeUnicode = ConvertTo-RomanNumeral.ps1 ${l'année} -Unicode
 		Month = $mois +1
 		MonthName = $months[$mois]
 		Mois = ${les mois}[$mois]
