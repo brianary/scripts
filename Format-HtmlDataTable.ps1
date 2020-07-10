@@ -9,7 +9,10 @@
     The background CSS value for even rows.
 
 .Parameter TableAttributes
-    Any table attributes desired (cellpadding, cellspacing, style, &c.).
+	Any table attributes desired (cellpadding, cellspacing, style, &c.).
+
+.Parameter NumericFormat
+	Applies a standard .NET formatting pattern to numbers, such as N or '#,##0.000;(#,##0.000);zero'.
 
 .Parameter Html
     The HTML table data to be piped in.
@@ -48,6 +51,7 @@
 [Parameter(Position=2)][string]$EvenRowBackground,
 [Alias('TableAtts')][string]$TableAttributes = 'cellpadding="2" cellspacing="0" style="font:x-small ''Lucida Console'',monospace"',
 [Alias('CaptionAtts','CapAtts')][string]$CaptionAttributes = 'style="font:bold small serif;border:1px inset #DDD;padding:1ex 0;background:#FFF"',
+[string]$NumericFormat,
 [Parameter(ValueFromPipeline=$true)][string]$Html
 )
 Begin
@@ -59,7 +63,17 @@ Begin
 Process
 {
     $odd = !$odd
-    $Html = $Html -replace '<td>([-$]?\d+(?:,\d{3})*(?:\.\d+)?)</td>','<td align="right">$1</td>'
+	$Html =
+		if($NumericFormat)
+		{
+			[regex]::Replace($Html,'<td>([-$]?)(\d+(?:,\d{3})*(?:\.\d+)?)</td>',
+				{
+					Param($match)
+					'<td align="right">',$match.Groups[1].Value,
+						([decimal]$match.Groups[2].Value).ToString($NumericFormat),'</td>' -join ''
+				})
+		}
+		else {$Html -replace '<td>([-$]?\d+(?:,\d{3})*(?:\.\d+)?)</td>','<td align="right">$1</td>'}
     if($Html -like '*<table>*')
     {
         if($Caption) {$Html = $Html -replace '<table>',"<table><caption $CaptionAttributes>$([Net.WebUtility]::HtmlEncode($Caption))</caption>"}
