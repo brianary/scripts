@@ -38,14 +38,17 @@
 )
 Begin
 {
-	${1000} = if($Unicode) {@('ⅯⅯⅯ','ⅯⅯ','Ⅿ')} else {@('MMM','MM','M')}
-	${100} = if($Unicode) {@('ⅭⅯ','ⅮⅭⅭⅭ','ⅮⅭⅭ','ⅮⅭ','Ⅾ','ⅭⅮ','ⅭⅭⅭ','ⅭⅭ','Ⅽ')} else {@('CM','DCCC','DCC','DC','D','CD','CCC','CC','C')}
-	${10} = if($Unicode) {@('ⅩⅭ','ⅬⅩⅩⅩ','ⅬⅩⅩ','ⅬⅩ','Ⅼ','ⅩⅬ','ⅩⅩⅩ','ⅩⅩ','Ⅹ')} else {@('XC','LXXX','LXX','LX','L','XL','XXX','XX','X')}
-	${1} = if($Unicode) {@('Ⅸ','Ⅷ','Ⅶ','Ⅵ','Ⅴ','Ⅳ','Ⅲ','Ⅱ','Ⅰ')} else {@('IX','VIII','VII','VI','V','IV','III','II','I')}
+	${1000} = if($Unicode) {@('Ⅿ','ⅯⅯ','ⅯⅯⅯ')} else {@('M','MM','MMM')}
+	${100} = if($Unicode) {@('Ⅽ','ⅭⅭ','ⅭⅭⅭ','ⅭⅮ','Ⅾ','ⅮⅭ','ⅮⅭⅭ','ⅮⅭⅭⅭ','ⅭⅯ')} else {@('C','CC','CCC','CD','D','DC','DCC','DCCC','CM')}
+	${10} = if($Unicode) {@('Ⅹ','ⅩⅩ','ⅩⅩⅩ','ⅩⅬ','Ⅼ','ⅬⅩ','ⅬⅩⅩ','ⅬⅩⅩⅩ','ⅩⅭ')} else {@('X','XX','XXX','XL','L','LX','LXX','LXXX','XC')}
+	${1} = if($Unicode) {@('Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ','Ⅵ','Ⅶ','Ⅷ','Ⅸ')} else {@('I','II','III','IV','V','VI','VII','VIII','IX')}
 	function Split-Magnitude([int]$x,[int]$magnitude,[string]$acc='')
 	{
+		Write-Verbose "x: $x  mag: $magnitude  acc: $acc"
 		$m = Get-Variable $magnitude -ValueOnly
-		return ($acc+$m[$m.Length - [math]::Floor($x/$magnitude)]),($x % $magnitude)
+		$i = [math]::Floor($x/$magnitude) -1
+		if($i -lt 0 -or $i -ge $m.Length) {return $acc,$x}
+		else {return ($acc+$m[$i]),($x % $magnitude)}
 	}
 }
 Process
