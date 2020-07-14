@@ -375,7 +375,7 @@ Process
         Database = $table.Parent.Name
         ServerInstance = $table.Parent.Parent.Name
 	} |
-        ? {$PSCmdlet.ShouldProcess("column $fqtn.$ColumnName","query $($table.RowCount) rows")} |
-        % {Invoke-Sqlcmd @_} |
+        where {$PSCmdlet.ShouldProcess("column $fqtn.$ColumnName","query $($table.RowCount) rows")} |
+        foreach {Invoke-Sqlcmd @_} |
         ConvertFrom-DataRow.ps1
 }
