@@ -9,7 +9,7 @@
 	The value of the setting to set.
 
 .Parameter Workspace
-	Indicates that the current workspace settings should be
+	Indicates that the current workspace settings should be set, rather than the user settings.
 
 .Link
 	https://code.visualstudio.com/docs/getstarted/settings
