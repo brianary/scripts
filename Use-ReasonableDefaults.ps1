@@ -1,17 +1,17 @@
 ﻿<#
 .Synopsis
-    Sets certain cmdlet parameter defaults to rational, useful values.
+	Sets certain cmdlet parameter defaults to rational, useful values.
 
 .Example
-    Use-ReasonableDefaults.ps1
+	Use-ReasonableDefaults.ps1
 
-    Sets the security protocol to TLS 1.2.
+	Sets the security protocol to TLS 1.2.
 
-    Sets default values:
-        Out-File -Encoding UTF8 -Width ([int]::MaxValue)
-        Export-Csv -NoTypeInformation
-        Invoke-WebRequest -UseBasicParsing
-        Select-Xml -Namespace @{ a bunch of standard namespaces }
+	Sets default values:
+		Out-File -Encoding UTF8 -Width ([int]::MaxValue)
+		Export-Csv -NoTypeInformation
+		Invoke-WebRequest -UseBasicParsing
+		Select-Xml -Namespace @{ a bunch of standard namespaces }
 #>
 
 #Requires -Version 3
@@ -36,6 +36,7 @@ rdf      = 'http://www.w3.org/1999/02/22-rdf-syntax-ns'
 rdfs     = 'http://www.w3.org/2000/01/rdf-schema'
 xsd      = 'http://www.w3.org/2001/XMLSchema'
 msb      = 'http://schemas.microsoft.com/developer/msbuild/2003'
+pom      = 'http://maven.apache.org/POM/4.0.0'
 owl      = 'http://www.w3.org/2002/07/owl'
 dc       = 'http://purl.org/dc/terms/'
 cc       = 'http://creativecommons.org/ns#'
