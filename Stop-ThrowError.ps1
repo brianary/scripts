@@ -119,7 +119,6 @@
 			'ObjectNotFound',$SearchContext
 	}
 }
-[Exception] $ex = New-Object $ExceptionType.FullName $ExceptionArguments
 [Management.Automation.PSCmdlet] $caller = Get-Variable PSCmdlet -ValueOnly -Scope 1 -ErrorAction SilentlyContinue
 if(!$caller) {$caller = $PSCmdlet}
 $caller.ThrowTerminatingError((New-Object Management.Automation.ErrorRecord $params))
