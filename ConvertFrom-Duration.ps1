@@ -61,8 +61,7 @@ Process
         }
         if(!$matched)
         {
-            Stop-ThrowError.ps1 ArgumentException "Could not parse '$o' as an ISO8601 duration.",
-                'InputObject' InvalidArgument $o 'BADFORMAT'
+            Stop-ThrowError.ps1 "Could not parse '$o' as an ISO8601 duration." -Argument InputObject
         }
         Import-Variables.ps1 $Matches
         [timespan]$value = 0

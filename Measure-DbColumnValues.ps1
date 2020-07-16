@@ -61,11 +61,7 @@ Process
 	else
 	{
 		$Column = $Table.Columns[$ColumnName]
-		if(!$Column)
-		{
-			Stop-ThrowError.ps1 ArgumentException "Column '$ColumnName' not found in table '$($Table.Name)'",
-				'ColumnName' InvalidArgument $Table 'NOCOL'
-		}
+		if(!$Column) {Stop-ThrowError.ps1 "Column '$ColumnName' not found in table '$($Table.Name)'" -Argument ColumnName}
 	}
 	$table = $Column.Parent
 	$fqtn = "$($table.Parent.Parent.Name).$($table.Parent.Name).$($table.Name)"

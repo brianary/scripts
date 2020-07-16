@@ -32,10 +32,7 @@ Begin
     [version] $xsltversion = Select-Xml '/xsl:transform/@version' $TransformFile -Namespace @{
         xsl='http://www.w3.org/1999/XSL/Transform'} |Select-XmlNodeValue.ps1
     if($xsltversion -gt '1.0')
-    {
-        Stop-ThrowError.ps1 ArgumentException "XSLT version $xsltversion is not supported by the CLR.",
-            'TransformFile' InvalidArgument $TransformFile 'XSLTv'
-    }
+    { Stop-ThrowError.ps1 "XSLT version $xsltversion is not supported by the CLR." -Argument TransformFile }
     $xslt = New-Object Xml.Xsl.XslCompiledTransform
     try
     {

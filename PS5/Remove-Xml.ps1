@@ -31,11 +31,7 @@ Process
     [xml]$doc = $node.OwnerDocument
     Write-Verbose "Removing $($node.OuterXml)"
 
-    if(!$node.ParentNode)
-    {
-        Stop-ThrowError.ps1 ArgumentException 'Unable to remove root node',
-            SelectXmlInfo InvalidArgument $SelectXmlInfo RootRequired
-    }
+    if(!$node.ParentNode) {Stop-ThrowError.ps1 'Unable to remove root node' -Argument SelectXmlInfo}
     [void]$node.ParentNode.RemoveChild($node)
 
     if($SelectXmlInfo.Path -and $SelectXmlInfo.Path -ne 'InputStream')

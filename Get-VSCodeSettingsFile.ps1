@@ -82,8 +82,8 @@ ${settings.json} =
 		}
 		else
 		{
-			Stop-ThrowError.ps1 InvalidOperationException 'Unable to determine location of VSCode settings.json' `
-				InvalidOperation $null OS
+			Stop-ThrowError.ps1 'Unable to determine location of VSCode settings.json' `
+				-OperationContext "$([environment]::OSVersion)"
 		}
 	}
 Write-Verbose "Using VSCode settings ${settings.json}"

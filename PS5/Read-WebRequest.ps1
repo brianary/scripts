@@ -27,7 +27,7 @@ function Read-BinaryWebRequest
 {
 	if(!$Request.HasEntityBody) {return}
 	if(!$Request.InputStream.CanRead)
-	{Stop-ThrowError.ps1 InvalidOperationException 'Unable to read HTTP request.' InvalidOperation $Request NOREAD}
+	{ Stop-ThrowError.ps1 'Unable to read HTTP request.' -OperationContext $Request }
 	if($Request.ContentLength64 -lt 1)
 	{
 		$read = 0
@@ -44,7 +44,7 @@ function Read-BinaryWebRequest
 	{
 		[byte[]] $data = New-Object byte[] $Request.ContentLength64
 		if(!$Request.InputStream.Read($data,0,$data.Length))
-		{Stop-ThrowError.ps1 InvalidOperationException 'No data read from HTTP request.' InvalidOperation $Request ZEROREAD}
+		{ Stop-ThrowError.ps1 'No data read from HTTP request.' -OperationContext $Request}
 	}
 	,$data
 }

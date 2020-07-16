@@ -42,7 +42,10 @@ catch{Add-Type -AN Net.HttpListener |Out-Null}
 try{[void][Web.HttpContext]}
 catch{Add-Type -AN System.Web |Out-Null}
 if(![Net.HttpListener]::IsSupported)
-{Stop-ThrowError.ps1 InvalidOperationException "This $($env:os) doesn't support .NET HTTP listeners." InvalidOperation $env:os OS}
+{
+	Stop-ThrowError.ps1 "This $($env:os) doesn't support .NET HTTP listeners." `
+		-Operation "$([environment]::OSVersion)"
+}
 [Net.HttpListener]$Listener = New-Object Net.HttpListener -Property @{AuthenticationSchemes=$AuthenticationSchemes}
 $Port |foreach {$Listener.Prefixes.Add("http://*:$_/")}
 $Listener.Start()

@@ -76,10 +76,7 @@ while($true)
 {
 	$i++
 	if($i -gt $TryMaxTimes)
-	{
-		Stop-ThrowError.ps1 InvalidOperationException 'Failed to meet requirements after 100 tries.' `
-			InvalidOperation $PSBoundParameters 'GIVEUP'
-	}
+	{ Stop-ThrowError.ps1 'Failed to meet requirements after 100 tries.' -OperationContext $PSBoundParameters }
 	$pwd =
 		try{[Web.Security.Membership]::GeneratePassword($Length,3)}
 		catch

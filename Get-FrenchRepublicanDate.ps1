@@ -177,11 +177,7 @@ Begin
 }
 Process
 { # 1792-09-22 = 1 Vendémiaire Ⅰ
-	if($Date -lt [datetime]'1792-09-22')
-	{
-		Stop-ThrowError.ps1 NotImplementedException 'Dates prior to September 22, 1792 are not yet supported.' `
-			NotImplemented $Date NEGATIVE
-	}
+	if($Date -lt [datetime]'1792-09-22') {Stop-ThrowError.ps1 'Dates prior to September 22, 1792 are not yet supported.' -NotImplemented}
 	[int] $lastleapt = if([datetime]::IsLeapYear($Date.Year) -and $Date.DayOfYear -gt 59) {$Date.Year} else {$Date.Year -1}
 	[int] $gregleaps = Measure-LeapDays $lastleapt {[datetime]::IsLeapYear($_)} 1796
 	[datetime] $d = $Date.AddDays(-265).AddYears(-1791)
@@ -190,7 +186,7 @@ Process
 		{ #TODO: implement equinox
 			128Year {{!($_ % 4) -and ($_ % 128)}}
 			Continuous {{[datetime]::IsLeapYear($_+1)}}
-			Equinox {Stop-ThrowError.ps1 NotImplementedException 'Equinox isn supported yet' NotImplemented $Date EQUINOX}
+			Equinox {Stop-ThrowError.ps1 'Equinox isn supported yet' -NotImplemented}
 			Romme {{$_ -gt 0 -and [datetime]::IsLeapYear($_)}}
 		}
 	[int] $lastyearlength = if($isLeapYear.InvokeWithContext($null,[psvariable[]]@(New-Object psvariable '_',($d.Year-1)),$null)) {366} else {365}

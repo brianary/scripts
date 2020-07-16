@@ -357,11 +357,7 @@ Process
 	else
 	{
 		$Column = $Table.Columns[$ColumnName]
-		if(!$Column)
-		{
-			Stop-ThrowError.ps1 ArgumentException "Column '$ColumnName' not found in table '$($Table.Name)'",
-				'ColumnName' InvalidArgument $Table 'NOCOL'
-		}
+		if(!$Column) {Stop-ThrowError.ps1 "Column '$ColumnName' not found in table '$($Table.Name)'" -Argument ColumnName}
 	}
     $datatype = $Column.DataType
     $querytype,$typefmt = $typeinfo[$datatype.Name]
