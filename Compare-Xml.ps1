@@ -57,27 +57,47 @@ function Test-XmlNodeMatch
 	else {return $true}
 }
 
-function Test-XmlNodeEqual
+function Test-XmlAttributesEqual
+{
+	Param(
+	[Parameter(Position=0)][XmlElement] $ReferenceElement,
+	[Parameter(Position=1)][XmlElement] $DifferenceElement
+	)
+	if($ReferenceElement.Attributes.Count -ne $DifferenceElement.Attributes.Count) {return $false}
+	foreach(${@} in $ReferenceElement.Attributes)
+	{
+		if(${@}.NamespaceURI)
+		{
+			if(!$DifferenceElement.HasAttribute(${@}.LocalName,${@}.NamespaceURI) -or
+				$DifferenceElement.GetAttribute(${@}.LocalName,${@}.NamespaceURI) -ne ${@}.Value) {return $false}
+		}
+		else
+		{
+			if(!$DifferenceElement.HasAttribute(${@}.LocalName) -or
+				$DifferenceElement.GetAttribute(${@}.LocalName) -ne ${@}.Value) {return $false}
+		}
+	}
+	return $true
+}
+
+function Test-XmlNodesEqual
 {
 	Param(
 	[Parameter(Position=0)][XmlNode] $ReferenceNode,
 	[Parameter(Position=1)][XmlNode] $DifferenceNode
 	)
 	if($ReferenceNode.OuterXml -ceq $DifferenceNode.OuterXml) {return $true}
-	elseif(!(Test-XmlNodeMatch $RefereneceNode $DifferenceNode)) {return}
-	#TODO: compare attributes
-	else {return ($ReferenceNode.Value -ceq $DifferenceNode.Value)}
+	elseif(!(Test-XmlNodeMatch $RefereneceNode $DifferenceNode)) {return $false}
+	elseif($ReferenceNode.NodeType -eq 'Element' -and
+		!(Test-XmlAttributesEqual $RefereneceNode $DifferenceAttribute)) {return $false}
+	else {return $ReferenceNode.Value -ceq $DifferenceNode.Value}
 }
 
-function Add-XmlNamespace
+function Format-XPathMatch
 {
-	[CmdletBinding()] Param(
-	[Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][string] $Prefix,
-	[Parameter(Position=1,ValueFromPipelineByPropertyName=$true)][string] $NamespaceURI,
-	[Parameter(ValueFromPipeline=$true)][XmlNode] $Node
-	)
-	$ns = if($Node.ParentNode) {$Node.ParentNode |Add-XmlNamespace}
-	if($Prefix) {return "xmlns:$Prefix='$NamespaceURI'$(if($ns){" $ns"})"}
+	Param([Parameter(Position=0,Mandatory=$true)][XmlNode] $XmlNode)
+	$xpath = Resolve-XPath.ps1 $XmlNode
+	"match='$($xpath.XPath)' $($xpath.Namespace.GetEnumerator() |foreach {"xmlns:$($_.Name)='$($_.Value)'"})"
 }
 
 function ConvertTo-XmlAttributeTemplate
@@ -87,8 +107,7 @@ function ConvertTo-XmlAttributeTemplate
 	[Parameter(Position=1,Mandatory=$true)][XmlAttribute] $DifferenceAttribute
 	)
 	return [xml]@"
-<xsl:template match="$(Resolve-XPath.ps1 $ReferenceAttribute)"
-	$($ReferenceAttribute |Add-XmlNamespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template $(Format-XPathMatch $ReferenceAttribute) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:attribute name="$($DifferenceAttribute.Name)"><![CDATA[$($DifferenceAttribute.Value)]]></xsl:attribute>
 </xsl:template>
 "@
@@ -101,7 +120,7 @@ function ConvertTo-XmlCDataTemplate
 	[Parameter(Position=1,Mandatory=$true)][XmlCDataSection] $DifferenceCData
 	)
 	return [xml]@"
-<xsl:template match="$(Resolve-XPath.ps1 $ReferenceCData)" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template $(Format-XPathMatch $ReferenceCData) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:text><![CDATA[$($DifferenceCData.Value)">]]></xsl:text>
 </xsl:template>
 "@
@@ -114,7 +133,7 @@ function ConvertTo-XmlCommentTemplate
 	[Parameter(Position=1,Mandatory=$true)][XmlComment] $DifferenceComment
 	)
 	return [xml]@"
-<xsl:template match="$(Resolve-XPath.ps1 $ReferenceComment)" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template $(Format-XPathMatch $ReferenceComment) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:comment><![CDATA[$($DifferenceComment.Value)">]]></xsl:comment>
 </xsl:template>
 "@
@@ -127,8 +146,7 @@ function ConvertTo-XmlProcessingInstructionTemplate
 	[Parameter(Position=1,Mandatory=$true)][XmlProcessingInstruction] $DifferenceProcessingInstruction
 	)
 	return [xml]@"
-<xsl:template match="$(Resolve-XPath.ps1 $ReferenceProcessingInstruction)"
-	$($ReferenceProcessingInstruction |Add-XmlNamespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template $(Format-XPathMatch $ReferenceProcessingInstruction) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:processing-instruction name="$($DifferenceProcessingInstruction.Name)">
 		<![CDATA[$($DifferenceProcessingInstruction.Value)">]]>
 	</xsl:processing-instruction>
@@ -143,8 +161,7 @@ function ConvertTo-XmlSignificantWhitespaceTemplate
 	[Parameter(Position=1,Mandatory=$true)][XmlSignificantWhitespace] $DifferenceSignificantWhitespace
 	)
 	return [xml]@"
-<xsl:template match="$(Resolve-XPath.ps1 $ReferenceSignificantWhitespace)"
-	$($ReferenceSignificantWhitespace |Add-XmlNamespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template $(Format-XPathMatch $ReferenceSignificantWhitespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:text><![CDATA[$($DifferenceSignificantWhitespace.Value)">]]></xsl:text>
 </xsl:template>
 "@
@@ -157,8 +174,7 @@ function ConvertTo-XmlTextTemplate
 	[Parameter(Position=1,Mandatory=$true)][XmlText] $DifferenceText
 	)
 	return [xml]@"
-<xsl:template match="$(Resolve-XPath.ps1 $ReferenceText)"
-	$($ReferenceText |Add-XmlNamespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template $(Format-XPathMatch $ReferenceText) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:text><![CDATA[$($DifferenceText.Value)">]]></xsl:text>
 </xsl:template>
 "@
@@ -172,8 +188,7 @@ function ConvertTo-XmlWhitespaceTemplate
 	)
 	if($ReferenceWhitespace.Value -ceq $DifferenceWhitespace.Value) {return}
 	return [xml]@"
-<xsl:template match="$(Resolve-XPath.ps1 $ReferenceWhitespace)"
-	$($ReferenceWhitespace |Add-XmlNamespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template $(Format-XPathMatch $ReferenceWhitespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:text>$($DifferenceWhitespace.Value)"></xsl:text>
 </xsl:template>
 "@
@@ -205,7 +220,7 @@ function Merge-XmlNodes
 			DifferenceIndex = $d
 			Template        = if($r -eq -1) {$null} else {ConvertTo-XmlNodeTemplates $Reference[$r] $diff}
 		}
-		if($r -ne -1) {$ReferenceNodes[$r] = [xml]'<null/>'} #TODO: confirm this doesn't impact original array
+		if($r -ne -1) {$ReferenceNodes[$r] = [xml]'<null/>'}
 	}
 }
 
@@ -218,7 +233,12 @@ function Add-XmlAttribute
 	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Prefix,
 	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $NamespaceURI
 	)
-	return "<xsl:attribute name='$Name' $(Add-XmlNamespace $Prefix $NamespaceURI)><![CDATA[$Value]]></xsl:attribute>"
+	if($NamespaceURI)
+	{
+		if(!$Prefix) {$Prefix = 'ns'}
+		return "<xsl:attribute name='${Prefix}:$LocalName' xmlns:$Prefix='$NamespaceURI'><![CDATA[$Value]]></xsl:attribute>"
+	}
+	else {return "<xsl:attribute name='$Name'><![CDATA[$Value]]></xsl:attribute>"}
 }
 
 function ConvertTo-XmlElementTemplates
@@ -251,8 +271,7 @@ function ConvertTo-XmlElementTemplates
 	if(${+})
 	{
 		[xml]@"
-<xsl:template match="$(Resolve-XPath.ps1 $ReferenceElement)"
-	$($ReferenceAttribute |Add-XmlNamespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:template $(Format-XPathMatch $ReferenceElement) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:copy>
 		$(${+} |Add-XmlAttribute)
 		<xsl:apply-templates select="@*|node()" />
@@ -330,8 +349,7 @@ function ConvertTo-XmlNodeTemplates
 	[Parameter(Position=1)][XmlNode] $DifferenceNode
 	)
 	if($null -eq $DifferenceNode) {return [xml]@"
-<xsl:template match="$(Resolve-XPath.ps1 $ReferenceNode)"
-	$($ReferenceNode |Add-XmlNamespace) xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>
+<xsl:template $(Format-XPathMatch $ReferenceNode) xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>
 "@}
 	if(Test-XmlNodeEqual $ReferenceNode $DifferenceNode) {return}
 	switch($DifferenceNode.NodeType)
