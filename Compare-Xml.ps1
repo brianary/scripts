@@ -35,6 +35,25 @@
 			</xsl:copy>
 		</xsl:template>
 	</xsl:transform>
+
+.Example
+	Compare-Xml.ps1 '<a><b/><c/><!-- d --></a>' '<a><c/><b/></a>' |Format-Xml.ps1
+
+	<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+		<xsl:output omit-xml-declaration="yes" method="xml" />
+		<xsl:template match="@*|node()">
+			<xsl:copy>
+				<xsl:apply-templates select="@*|node()" />
+			</xsl:copy>
+		</xsl:template>
+		<xsl:template match="/a">
+			<xsl:copy>
+				<xsl:apply-templates select="@*|node()" />
+				<xsl:apply-templates select="c" />
+				<xsl:apply-templates select="b" />
+			</xsl:copy>
+		</xsl:template>
+	</xsl:transform>
 #>
 
 #Requires -Version 3
@@ -44,16 +63,17 @@ using namespace System.Xml
 [Parameter(Position=1,Mandatory=$true)][xml] $DifferenceXml
 )
 
-function Test-XmlNodeMatch
+function Test-XmlNodesMatch
 {
 	Param(
 	[Parameter(Position=0)][XmlNode] $ReferenceNode,
 	[Parameter(Position=1)][XmlNode] $DifferenceNode
 	)
-	if($null -eq $RefereneceNode -or $null -eq $DifferenceNode) {return}
+	if($null -eq $ReferenceNode) {return}
+	elseif($null -eq $DifferenceNode) {return}
 	elseif($ReferenceNode.NodeType -ne $DifferenceNode.NodeType) {return}
 	elseif($ReferenceNode.NamespaceURI -cne $DifferenceNode.NamespaceURI) {return}
-	elseif($RefenenceNode.LocalName -cne $DifferenceNode.LocalName) {return}
+	elseif($ReferenceNode.LocalName -cne $DifferenceNode.LocalName) {return}
 	else {return $true}
 }
 
@@ -87,7 +107,7 @@ function Test-XmlNodesEqual
 	[Parameter(Position=1)][XmlNode] $DifferenceNode
 	)
 	if($ReferenceNode.OuterXml -ceq $DifferenceNode.OuterXml) {return $true}
-	elseif(!(Test-XmlNodeMatch $RefereneceNode $DifferenceNode)) {return $false}
+	elseif(!(Test-XmlNodesMatch $RefereneceNode $DifferenceNode)) {return $false}
 	elseif($ReferenceNode.NodeType -eq 'Element' -and
 		!(Test-XmlAttributesEqual $RefereneceNode $DifferenceAttribute)) {return $false}
 	else {return $ReferenceNode.Value -ceq $DifferenceNode.Value}
@@ -194,40 +214,85 @@ function ConvertTo-XmlWhitespaceTemplate
 "@
 }
 
+function Measure-XmlNodePosition([Parameter(Position=0,Mandatory=$true)][XmlNode]$Node)
+{
+	if(!($Node.PreviousSibling -or $Node.NextSibling)) {return}
+	for($i,$n = 0,$Node; $n; $n = $n.PreviousSibling) {if(Test-XmlNodesMatch $n $Node) {$i++}}
+	if($i -gt 1) {return "[$i]"}
+	for($i,$n = 0,$Node.NextSibling; $n; $n = $n.NextSibling) {if(Test-XmlNodesMatch $n $Node) {$i++; break}}
+	if($i -gt 0) {return '[1]'}
+	else {return}
+}
+
+function Format-ApplyTemplates
+{
+	[CmdletBinding()] Param(
+	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][XmlNodeType] $NodeType,
+	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ValidateNotNullOrEmpty()][string] $Name,
+	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $LocalName,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Prefix,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $NamespaceURI,
+	[Parameter(ValueFromPipeline=$true)][XmlNode] $Node
+	)
+	$fullname = if($NamespaceURI -and !$Prefix) {$Prefix = 'ns'; "ns:$LocalName"} else {$Name}
+	$xpath = switch($NodeType)
+	{
+		Attribute {"@$fullname"}
+		CDATA {"text()$(Measure-XmlNodePosition $Node)"}
+		Comment {"comment()$(Measure-XmlNodePosition $Node)"}
+		Document {'/'}
+		Element {"$fullname$(Measure-XmlNodePosition $Node)"}
+		ProcessingInstruction {"processing-instruction('$name')$(Measure-XmlNodePosition $Node)"}
+		SignificantWhitespace {"text()$(Measure-XmlNodePosition $Node)"}
+		Text {"text()$(Measure-XmlNodePosition $Node)"}
+		Whitespace {"text()$(Measure-XmlNodePosition $Node)"}
+		default {return}
+	}
+	if(!$NamespaceURI) {return "<xsl:apply-templates select='$xpath'/>"}
+	else {return "<xsl:apply-templates select='$xpath' xmlns:$Prefix='$NamespaceURI'/>"}
+}
+
 function Merge-XmlNodes
 {
 	Param(
 	[Parameter(Position=0,Mandatory=$true)][AllowEmptyCollection()][XmlNode[]] $ReferenceNodes,
 	[Parameter(Position=1,Mandatory=$true)][AllowEmptyCollection()][XmlNode[]] $DifferenceNodes
 	)
-	for($d,$r,$seq = 0,0,@(); $d -lt $DifferenceNodes.Length; $d++)
+	for($d,$list = 0,@(); $d -lt $DifferenceNodes.Length; $d++)
 	{
 		$diff = $DifferenceNodes[$d]
-		[int[]]$matches = $r..($ReferenceNodes.Length-1) |where {Test-XmlNodeMatch $ReferenceNodes[$_] $diff}
-		[int]$r =
+		[int[]] $matches = 0..($ReferenceNodes.Length-1) |where {Test-XmlNodesMatch $ReferenceNodes[$_] $diff}
+		[int] $r =
 			if($matches.Length -eq 0) {-1}
 			elseif($matches.Length -eq 1) {$matches[0]}
 			else
 			{
-				$equals = $matches |where {Test-XmlNodeEqual $ReferenceNodes[$_] $diff} |select -First 1
+				$equals = $matches |where {Test-XmlNodesEqual $ReferenceNodes[$_] $diff} |select -First 1
 				if($equals.Length -eq 0) {$matches[0]}
 				else {$equals[0]}
 			}
-		[pscustomobject]@{
+		$list += [pscustomobject]@{
 			ReferenceNode   = if($r -eq -1) {$null} else {$ReferenceNodes[$r]}
 			ReferenceIndex  = $r
 			DifferenceNode  = $DifferenceNodes[$d]
 			DifferenceIndex = $d
-			Template        = if($r -eq -1) {$null} else {ConvertTo-XmlNodeTemplates $Reference[$r] $diff}
+			Template        = if($r -eq -1) {$null} else {ConvertTo-XmlNodeTemplates $ReferenceNodes[$r] $diff}
 		}
 		if($r -ne -1) {$ReferenceNodes[$r] = [xml]'<null/>'}
 	}
+	return ([pscustomobject]@{
+		HasDifferentOrder = !!($list |where {$_.ReferenceIndex -ne $_.DifferenceInfo})
+		ApplyTemplates    = ($list |
+			foreach {if($_.ReferenceNode) {$_.ReferenceNode |Format-ApplyTemplates} else {$_.DifferenceNode.OuterXml}}
+		) -join "`r`n"
+		Templates         = $list |where Template -ne $null |foreach Template
+	})
 }
 
 function Add-XmlAttribute
 {
 	[CmdletBinding()] Param(
-	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
+	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ValidateNotNullOrEmpty()][string] $Name,
 	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $LocalName,
 	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Value,
 	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Prefix,
@@ -266,19 +331,18 @@ function ConvertTo-XmlElementTemplates
 		if(!${@}.NamespaceURI) {if(!$DifferenceElement.HasAttribute(${@}.LocalName)) {ConvertTo-XmlNodeTemplates ${@} $null}}
 		elseif(!$DifferenceElement.HasAttribute(${@}.LocalName,${@}.NamespaceURI)) {ConvertTo-XmlNodeTemplates ${@} $null}
 	}
-	#TODO: collect and use merged nodes
-	Merge-XmlNodes $ReferenceElement.ChildNodes $DifferenceElement.ChildNodes
-	if(${+})
-	{
-		[xml]@"
+	$merge = Merge-XmlNodes $ReferenceElement.ChildNodes $DifferenceElement.ChildNodes
+	$merge.Templates
+	if(${+} -or $merge.HasDifferentOrder)
+	{[xml]@"
 <xsl:template $(Format-XPathMatch $ReferenceElement) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:copy>
-		$(${+} |Add-XmlAttribute)
+		$(if(${+}) {${+} |Add-XmlAttribute})
 		<xsl:apply-templates select="@*|node()" />
+		$($merge.ApplyTemplates)
 	</xsl:copy>
 </xsl:template>
-"@
-	}
+"@}
 }
 
 function ConvertTo-XmlDocumentTemplates
@@ -329,17 +393,24 @@ function ConvertTo-XmlDocumentTemplates
 			if($node.NodeType -ceq 'Element') {break}
 			elseif($node.NodeType -notin 'XmlDeclaration','DocumentType') {$node}
 		}
-		#TODO: collect and use merged nodes
-		Merge-XmlNodes $refpre $diffpre
+		$mergepre = Merge-XmlNodes $refpre $diffpre
 	}
 	ConvertTo-XmlElementTemplates $ReferenceDocument.DocumentElement $DifferenceDocument.DocumentElement
 	if($ReferenceDocument.DocumentElement.NextSibling -or $DifferenceDocument.DocumentElement.NextSibling)
 	{
 		$refpost = for($node = $ReferenceDocument.DocumentElement.NextSibling; $node; $node = $node.NextSibling) {$node}
 		$diffpost = for($node = $DifferenceDocument.DocumentElement.NextSibling; $node; $node = $node.NextSibling) {$node}
-		#TODO: collect and use merged nodes
-		Merge-XmlNodes $refpost $diffpost
+		$mergepost = Merge-XmlNodes $refpost $diffpost
 	}
+	$mergepre.Templates
+	$mergepost.Templates
+	if($mergepre.HasDifferentOrder -or $mergepost.HasDifferentOrder)
+	{[xml]@"
+<xsl:template match="/" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	$($mergepre.ApplyTemplates)
+	$($mergepost.ApplyTemplates)
+</xsl:template>
+"@}
 }
 
 function ConvertTo-XmlNodeTemplates
@@ -351,7 +422,7 @@ function ConvertTo-XmlNodeTemplates
 	if($null -eq $DifferenceNode) {return [xml]@"
 <xsl:template $(Format-XPathMatch $ReferenceNode) xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>
 "@}
-	if(Test-XmlNodeEqual $ReferenceNode $DifferenceNode) {return}
+	if(Test-XmlNodesEqual $ReferenceNode $DifferenceNode) {return}
 	switch($DifferenceNode.NodeType)
 	{
 		Attribute {ConvertTo-XmlAttributeTemplate $ReferenceNode $DifferenceNode}
@@ -381,6 +452,7 @@ function Compare-Xml
 		[xml]$value = '<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>'
 		foreach($template in ConvertTo-XmlNodeTemplates $ReferenceXml $DifferenceXml)
 		{
+			if($template -eq $null) {continue}
 			$template.DocumentElement.RemoveAttribute('xmlns:xsl')
 			[void]$value.DocumentElement.AppendChild($value.ImportNode([XmlNode]$template.DocumentElement,$true))
 		}
