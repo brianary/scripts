@@ -8,6 +8,9 @@
 .Outputs
 	System.Boolean indicating that the file contains binary data.
 
+.Link
+	Tests-TextFile.ps1
+
 .Example
 	Test-BinaryFile.ps1 avatar.jpg
 

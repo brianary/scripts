@@ -8,6 +8,9 @@
 .Outputs
 	System.Boolean indicating that the file contains text.
 
+.Link
+	Test-FileTypeMagicNumber.ps1
+
 .Example
 	Test-TextFile.ps1 README.md
 

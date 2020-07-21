@@ -15,6 +15,9 @@
 	System.Xml.XmlDocument containing XSLT that can be applied to the reference XML to
 	transform it to the difference XML. It contains templates for changed nodes.
 
+.Link
+	Resolve-XPath.ps1
+
 .Example
 	Compare-Xml.ps1 '<a b="z"/>' '<a b="y"/>' |Format-Xml.ps1
 
