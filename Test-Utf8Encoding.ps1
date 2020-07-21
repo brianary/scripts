@@ -20,9 +20,8 @@
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
-	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-	[Alias('FullName')]
-	[string] $Path
+[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
+[Alias('FullName')][string] $Path
 )
 Process
 {

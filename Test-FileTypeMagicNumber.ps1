@@ -54,8 +54,9 @@
 [ValidateSet('7z','aiff','avi','bmp','cab','dataweave','exe','flac','flif','gif','gzip','ico','iso','javaclass',
 'jpeg','midi','mkv','mp3','mpeg','msoffice','ogg','pdf','png','postscript','psd','raml','rar','rtf','tar','text',
 'tiff','utf16','utf16be','utf32','utf32be','utf8','wasm','wav','webm','webp','wmv','xml','yaml','zip')]
-[string]$FileType,
-[Parameter(Position=2,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
+[string] $FileType,
+[Parameter(Position=1,ValueFromPipelineByPropertyName=$true)]
+[ValidateScript({Test-Path $_ -Type Leaf})][Alias('FullName')][string] $Path
 )
 Begin
 {

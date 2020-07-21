@@ -48,7 +48,7 @@
 
 [CmdletBinding()][OutputType([bool])] Param(
 [Parameter(ParameterSetName='Path',Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-[Alias('FullName')][ValidateScript({Test-Path $_ -PathType Leaf})][string] $Path,
+[ValidateScript({Test-Path $_ -PathType Leaf})][Alias('FullName')][string] $Path,
 [Parameter(ParameterSetName='Xml',Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
 [ValidateScript({!(Test-Path $_ -PathType Leaf)})][string] $Xml,
 [Alias('Schemas')][hashtable] $Schemata,

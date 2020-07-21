@@ -43,7 +43,8 @@
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
 [Parameter(Position=0,Mandatory=$true)][byte[]]$Bytes,
-[Parameter(Position=2,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path,
+[Parameter(Position=2,ValueFromPipelineByPropertyName=$true)]
+[ValidateScript({Test-Path $_ -Type Leaf})][Alias('FullName')][string]$Path,
 [int] $Offset = 0
 )
 Begin
@@ -60,7 +61,8 @@ Begin
 Process
 {
     Write-Verbose "Testing for magic number in $Path"
-    [byte[]]$data = &$GetBytes $Path
+	[byte[]]$data = &$GetBytes $Path
+	if(!$data -or !$data.Length) {return $false}
     for($i = 0; $i -lt $Bytes.Count; $i++){if($data[$i] -ne $Bytes[$i]){return $false}}
     return $true
 }

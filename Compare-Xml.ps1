@@ -2,6 +2,19 @@
 .Synopsis
 	Compares two XML documents and returns the differences.
 
+.Parameter ReferenceXml
+	The original XML document to be compared.
+
+.Parameter DifferenceXml
+	An XML document to compare to.
+
+.Inputs
+	System.Xml.XmlDocument to compare to the reference XML.
+
+.Outputs
+	System.Xml.XmlDocument containing XSLT that can be applied to the reference XML to
+	transform it to the difference XML. It contains templates for changed nodes.
+
 .Example
 	Compare-Xml.ps1 '<a b="z"/>' '<a b="y"/>' |Format-Xml.ps1
 
@@ -58,7 +71,7 @@
 
 #Requires -Version 3
 using namespace System.Xml
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([xml])] Param(
 [Parameter(Position=0,Mandatory=$true)][xml] $ReferenceXml,
 [Parameter(Position=1,Mandatory=$true)][xml] $DifferenceXml
 )
