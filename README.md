@@ -42,7 +42,7 @@ PowerShell Scripts
 - **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1)**: Exports MS SQL script for an object from the given server.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-Fake4TargetsGraph.ps1](Export-Fake4TargetsGraph.ps1)**: Exports a graph of a Fake4 build script's targets.
-- **[Export-Readme.ps1](Export-Readme.ps1)**: Generate README.md file for the scripts repo.
+- :up: **[Export-Readme.ps1](Export-Readme.ps1)**: Generate README.md file for the scripts repo.
 - **[Export-ScheduledJobs.ps1](Export-ScheduledJobs.ps1)**: Exports scheduled jobs as a PowerShell script that can be run to restore them.
 - **[Export-ScheduledTasks.ps1](Export-ScheduledTasks.ps1)**: Exports scheduled tasks as a PowerShell script that can be run to restore them.
 - **[Export-Server.ps1](Export-Server.ps1)**: Exports web server settings, shares, ODBC DSNs, and installed MSAs as PowerShell scripts and data.
@@ -130,21 +130,23 @@ PowerShell Scripts
 - **[Show-ScheduledTask.ps1](Show-ScheduledTask.ps1)**: Provides a human-readable view of a scheduled task returned by Get-ScheduledTasks.
 - **[Split-FileName.ps1](Split-FileName.ps1)**: Returns the specified part of the filename.
 - :up: **[Stop-ThrowError.ps1](Stop-ThrowError.ps1)**: Throws a better error than "throw".
+- :new: **[Test-BinaryFile.ps1](Test-BinaryFile.ps1)**: Indicates that a file contains binary data.
 - **[Test-DateTime.ps1](Test-DateTime.ps1)**: Tests whether the given string can be parsed as a date.
-- **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1)**: Tests for a given common file type by magic number.
+- :up: **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1)**: Tests for a given common file type by magic number.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1)**: Scan sites using Mozilla's Observatory.
 - **[Test-Interactive.ps1](Test-Interactive.ps1)**: Determines whether both the user and process are interactive.
 - **[Test-Json.ps1](Test-Json.ps1)**: Determines whether a string is valid JSON.
 - **[Test-Jwt.ps1](Test-Jwt.ps1)**: Determines whether a string is a valid JWT.
 - **[Test-LockedFile.ps1](Test-LockedFile.ps1)**: Returns true if the specified file is locked.
-- **[Test-MagicNumber.ps1](Test-MagicNumber.ps1)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
+- :up: **[Test-MagicNumber.ps1](Test-MagicNumber.ps1)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
 - **[Test-NewerFile.ps1](Test-NewerFile.ps1)**: Returns true if the difference file is newer than the reference file.
 - **[Test-NoteProperty.ps1](Test-NoteProperty.ps1)**: Looks for any matching NoteProperties on an object.
+- :new: **[Test-TextFile.ps1](Test-TextFile.ps1)**: Indicates that a file contains text.
 - **[Test-Uri.ps1](Test-Uri.ps1)**: Determines whether a string is a valid URI.
 - **[Test-USFederalHoliday.ps1](Test-USFederalHoliday.ps1)**: Returns true if the given date is a U.S. federal holiday.
-- **[Test-Utf8Encoding.ps1](Test-Utf8Encoding.ps1)**: Determines whether a file can be parsed as UTF-8 successfully.
+- :up: **[Test-Utf8Encoding.ps1](Test-Utf8Encoding.ps1)**: Determines whether a file can be parsed as UTF-8 successfully.
 - **[Test-Variable.ps1](Test-Variable.ps1)**: Indicates whether a variable has been defined.
-- **[Test-Xml.ps1](Test-Xml.ps1)**: Try parsing text as XML, and validating it if a schema is provided.
+- :up: **[Test-Xml.ps1](Test-Xml.ps1)**: Try parsing text as XML, and validating it if a schema is provided.
 - **[Uninstall-OldModules.ps1](Uninstall-OldModules.ps1)**: Uninstalls old module versions.
 - **[Update-Files.ps1](Update-Files.ps1)**: Copies specified source files that exist in the destination directory.
 - **[Update-Modules.ps1](Update-Modules.ps1)**: Cleans up old modules.
@@ -167,4 +169,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 07/19/2020 17:09:02 -->
+<!-- generated 07/20/2020 20:13:58 -->

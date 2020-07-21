@@ -7,7 +7,7 @@
 #>
 
 #Requires -Version 3
-#Requires -Module SqlServer
+#Requires -Modules SqlServer,PSScheduledJob
 [CmdletBinding()][OutputType([void])] Param(
 [string]$DependenciesImage = 'dependencies.svg',
 [string]$StatusAge = '2 weeks ago'
@@ -222,6 +222,7 @@ $(Format-VBAScripts)
 <!-- generated $(Get-Date) -->
 "@}
 
+Add-Type -AN System.Web
 Format-Readme |Out-File $PSScriptRoot\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Format-SysCfgReadme |Out-File $PSScriptRoot\syscfg\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Format-PS5Readme |Out-File $PSScriptRoot\PS5\README.md -Encoding utf8 -Width ([int]::MaxValue)
