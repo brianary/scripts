@@ -46,8 +46,8 @@
 		<xsl:template match="/a/@b" />
 		<xsl:template match="/a">
 			<xsl:copy>
+				<xsl:apply-templates select="@*" />
 				<xsl:attribute name="c"><![CDATA[y]]></xsl:attribute>
-				<xsl:apply-templates select="@*|node()" />
 			</xsl:copy>
 		</xsl:template>
 	</xsl:transform>
@@ -56,7 +56,24 @@
 	Compare-Xml.ps1 '<a><b/><c/><!-- d --></a>' '<a><c/><b/></a>' |Format-Xml.ps1
 
 	<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-		<xsl:output omit-xml-declaration="yes" method="xml" />
+		<xsl:template match="@*|node()">
+			<xsl:copy>
+			<xsl:apply-templates select="@*|node()" />
+			</xsl:copy>
+		</xsl:template>
+		<xsl:template match="/a">
+			<xsl:copy>
+			<xsl:apply-templates select="@*" />
+			<xsl:apply-templates select="c" />
+			<xsl:apply-templates select="b" />
+			</xsl:copy>
+		</xsl:template>
+	</xsl:transform>
+
+.Example
+	Compare-Xml.ps1 '<a/>' '<a><!-- annotation --><new/><?node details?></a>' |Format-Xml.ps1
+
+	<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 		<xsl:template match="@*|node()">
 			<xsl:copy>
 				<xsl:apply-templates select="@*|node()" />
@@ -64,9 +81,9 @@
 		</xsl:template>
 		<xsl:template match="/a">
 			<xsl:copy>
-				<xsl:apply-templates select="@*|node()" />
-				<xsl:apply-templates select="c" />
-				<xsl:apply-templates select="b" />
+				<xsl:comment><![CDATA[ annotation ]]></xsl:comment>
+				<new />
+				<xsl:processing-instruction name="node"><![CDATA[details]]></xsl:processing-instruction>
 			</xsl:copy>
 		</xsl:template>
 	</xsl:transform>
@@ -276,6 +293,24 @@ function Format-ApplyTemplates
 	else {return "<xsl:apply-templates select='$xpath' xmlns:$Prefix='$NamespaceURI'/>"}
 }
 
+function ConvertTo-XmlNodeLiteral
+{
+	[CmdletBinding()] Param([Parameter(Position=0,Mandatory=$true)][XmlNode] $Node)
+	$ns = 'xmlns:xsl="http://www.w3.org/1999/XSL/Transform"'
+	switch($Node.NodeType)
+	{
+		CDATA {"<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
+		Comment {"<xsl:comment><![CDATA[$($Node.Value)]]></xsl:comment>"}
+		Element {$Node.OuterXml}
+		ProcessingInstruction {("<{0} name='$($Node.Name)'><![CDATA[$($Node.Value)]]></{0}>" -f
+			'xsl:processing-instruction')}
+		SignificantWhitespace {"<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
+		Text {"<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
+		Whitespace {"<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
+		default {return}
+	}
+}
+
 function Merge-XmlNodes
 {
 	Param(
@@ -307,7 +342,10 @@ function Merge-XmlNodes
 	return ([pscustomobject]@{
 		HasDifferentOrder = !!($list |where {$_.ReferenceIndex -ne $_.DifferenceIndex})
 		ApplyTemplates    = ($list |
-			foreach {if($_.ReferenceNode) {$_.ReferenceNode |Format-ApplyTemplates} else {$_.DifferenceNode.OuterXml}}
+			foreach {
+				if($_.ReferenceNode) {$_.ReferenceNode |Format-ApplyTemplates}
+				else {ConvertTo-XmlNodeLiteral $_.DifferenceNode}
+			}
 		) -join "`r`n"
 		Templates         = $list |where Template -ne $null |foreach Template
 	})
@@ -361,8 +399,8 @@ function ConvertTo-XmlElementTemplates
 	{[xml]@"
 <xsl:template $(Format-XPathMatch $ReferenceElement) xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:copy>
+		$(if($ReferenceElement.HasAttributes) {'<xsl:apply-templates select="@*" />'})
 		$(if(${+}) {${+} |Add-XmlAttribute})
-		<xsl:apply-templates select="@*|node()" />
 		$($merge.ApplyTemplates)
 	</xsl:copy>
 </xsl:template>
@@ -408,7 +446,7 @@ function ConvertTo-XmlDocumentTemplates
 [xml]@"
 <xsl:template match="@*|node()" $ns><xsl:copy><xsl:apply-templates select="@*|node()" /></xsl:copy></xsl:template>
 "@
-	$reorder,$applytemplates = $false,@()
+	$reorder = $false
 	if($ReferenceDocument.DocumentElement.PreviousSibling -or $DifferenceDocument.DocumentElement.PreviousSibling)
 	{
 		$refpre = foreach($node in $ReferenceDocument.ChildNodes)
@@ -416,30 +454,34 @@ function ConvertTo-XmlDocumentTemplates
 			if($node.NodeType -ceq 'Element') {break}
 			elseif($node.NodeType -notin 'XmlDeclaration','DocumentType') {$node}
 		}
+		if($null -eq $refpre) {$refpre = @()}
 		$diffpre = foreach($node in $DifferenceDocument.ChildNodes)
 		{
 			if($node.NodeType -ceq 'Element') {break}
 			elseif($node.NodeType -notin 'XmlDeclaration','DocumentType') {$node}
 		}
+		if($null -eq $diffpre) {$diffpre = @()}
 		$mergepre = Merge-XmlNodes $refpre $diffpre
 		$reorder = $mergepre.HasDifferentOrder
-		$applytemplates = $mergepre.ApplyTemplates
 		$mergepre.Templates
 	}
 	ConvertTo-XmlElementTemplates $ReferenceDocument.DocumentElement $DifferenceDocument.DocumentElement
 	if($ReferenceDocument.DocumentElement.NextSibling -or $DifferenceDocument.DocumentElement.NextSibling)
 	{
 		$refpost = for($node = $ReferenceDocument.DocumentElement.NextSibling; $node; $node = $node.NextSibling) {$node}
+		if($null -eq $refpost) {$refpost = @()}
 		$diffpost = for($node = $DifferenceDocument.DocumentElement.NextSibling; $node; $node = $node.NextSibling) {$node}
+		if($null -eq $diffpost) {$diffpost = @()}
 		$mergepost = Merge-XmlNodes $refpost $diffpost
 		if(!$reorder) {$reorder = $mergepost.HasDifferentOrder}
-		$applytemplates += $mergepost.ApplyTemplates
 		$mergepost.Templates
 	}
 	if($reorder)
 	{[xml]@"
 <xsl:template match="/" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	$applytemplates
+	$($mergepre.ApplyTemplates)
+	<xsl:apply-templates select="*"/>
+	$($mergepost.ApplyTemplates)
 </xsl:template>
 "@}
 }
@@ -483,7 +525,7 @@ function Compare-Xml
 		[xml]$value = '<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>'
 		foreach($template in ConvertTo-XmlNodeTemplates $ReferenceXml $DifferenceXml)
 		{
-			if($template -eq $null) {continue}
+			if($null -eq $template) {continue}
 			$template.DocumentElement.RemoveAttribute('xmlns:xsl')
 			[void]$value.DocumentElement.AppendChild($value.ImportNode([XmlNode]$template.DocumentElement,$true))
 		}
