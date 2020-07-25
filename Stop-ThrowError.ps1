@@ -98,8 +98,7 @@
 	Detailed {(New-Object $ExceptionType.FullName $ExceptionArguments),$ErrorId,$ErrorCategory,$TargetObject}
 	InvalidArgument
 	{
-		[Management.Automation.PSBoundParametersDictionary] $ScriptParams =
-			Get-Variable PSBoundParameters -ValueOnly -Scope 1 -ErrorAction SilentlyContinue
+		$ScriptParams = Get-Variable PSBoundParameters -ValueOnly -Scope 1 -ErrorAction SilentlyContinue
 		$paramValue = if($ScriptParams -and $ScriptParams.ContainsKey($Argument)) {$ScriptParams[$Argument]}
 		(New-Object ArgumentException $Message,$Argument),$Argument,'InvalidArgument',$paramValue
 	}
