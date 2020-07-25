@@ -320,9 +320,11 @@ function Merge-XmlNodes
 	for($d,$list = 0,@(); $d -lt $DifferenceNodes.Length; $d++)
 	{
 		$diff = $DifferenceNodes[$d]
-		[int[]] $matches = 0..($ReferenceNodes.Length-1) |where {Test-XmlNodesMatch $ReferenceNodes[$_] $diff}
+		[int[]] $matches =
+			if($ReferenceNodes.Length -le 0) {@()}
+			else {0..($ReferenceNodes.Length-1) |where {Test-XmlNodesMatch $ReferenceNodes[$_] $diff}}
 		[int] $r =
-			if($matches.Length -eq 0) {-1}
+			if(!$matches -or $matches.Length -eq 0) {-1}
 			elseif($matches.Length -eq 1) {$matches[0]}
 			else
 			{
