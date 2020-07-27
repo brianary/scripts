@@ -60,6 +60,7 @@ Process
 {
 	$crlf,$cr,$lf,$lines = 0,0,0,0
 	$indent = @{ht=0;sp=0;htsp=0;count=0;size=0}
+	$Path = Resolve-Path $Path
 	$sr = New-Object IO.StreamReader $Path,$true
 	for($c = $sr.Read(); !$sr.EndOfStream; $c = $sr.Read())
 	{
