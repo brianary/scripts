@@ -144,13 +144,6 @@
 [switch] $LikeValue
 )
 try{[void][Configuration.ConfigurationManager]}catch{Add-Type -AssemblyName System.Configuration}
-function ConvertTo-Filename([string]$s)
-{
-    $s = $s -replace '\\','-'
-    $s = $s -replace '\[|\]',''
-    foreach($c in [IO.Path]::GetInvalidFileNameChars()){$s = $s -replace "\$c",''};
-    $s
-}
 function Format-LikeCondition([string]$column,[string[]]$patterns,[switch]$not)
 {
     $like,$andOr = if($not){'not like','and'}else{'like','or'}
