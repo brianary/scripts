@@ -11,5 +11,6 @@
             "password": ""
         }
     ],
-    "workbench.colorTheme": "PowerShell ISE"
+    "workbench.colorTheme": "PowerShell ISE",
+    "powershell.codeFormatting.addWhitespaceAroundPipe": true
 }

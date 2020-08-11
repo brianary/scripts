@@ -31,7 +31,10 @@
 [Parameter(ParameterSetName='Binary')][Alias('BinaryData','Data')][byte[]] $Bytes,
 [Parameter(ParameterSetName='File')][string] $Path
 )
+$readbytes =
+	if((Get-Command Get-Content).Parameters.Encoding.ParameterType -eq [Text.Encoding]) {@{AsByteStream=$true}}
+	else {@{Encoding='Byte'}}
 if($Text) {[byte[]]$Bytes = $Encoding.GetBytes($Text)}
-elseif($Path) {[byte[]]$Bytes = Get-Content $Path -Encoding byte}
+elseif($Path) {[byte[]]$Bytes = Get-Content $Path @readbytes}
 $Response.OutputStream.Write($Bytes,0,$Bytes.Length)
 $Response.Close()

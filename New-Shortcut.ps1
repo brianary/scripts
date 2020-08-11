@@ -1,44 +1,44 @@
 ﻿<#
 .Synopsis
-    Create a Windows shortcut.
+	Create a Windows shortcut.
 
 .Parameter Name
-    The filename of the shortcut, typically including a .lnk extension.
+	The filename of the shortcut, typically including a .lnk extension.
 
 .Parameter TargetPath
-    The path of the file the shortcut will point to.
+	The path of the file the shortcut will point to.
 
 .Parameter Arguments
-    Any command-line parameters to pass to the TargetPath, if it is a program.
+	Any command-line parameters to pass to the TargetPath, if it is a program.
 
 .Parameter WorkingDirectory
-    The folder to run TargetPath in.
+	The folder to run TargetPath in.
 
 .Parameter Description
-    Some descriptive text for the shortcut.
+	Some descriptive text for the shortcut.
 
 .Parameter Hotkey
-    A Windows Explorer key combination to open the shortcut, usually starting with
-    "Ctrl + Alt +".
+	A Windows Explorer key combination to open the shortcut, usually starting with
+	"Ctrl + Alt +".
 
 .Parameter IconLocation
-    The path to a file with an icon to use, and an index, e.g.
+	The path to a file with an icon to use, and an index, e.g.
 
-        %SystemRoot%\system32\SHELL32.dll,244
+		%SystemRoot%\system32\SHELL32.dll,244
 
 .Parameter WindowStyle
-    The state the window should start in: Normal, Maximized, or Minimized.
+	The state the window should start in: Normal, Maximized, or Minimized.
 
 .Parameter RunAsAdministrator
-    Indicates the shortcut should invoke UAC and run as an admin.
+	Indicates the shortcut should invoke UAC and run as an admin.
 
 .Link
-    https://ss64.com/vb/shortcut.html
+	https://ss64.com/vb/shortcut.html
 
 .Example
-    New-Shortcut -Path "$Home\Desktop\Explorer.lnk" -TargetPath '%SystemRoot%\explorer.exe' -RunAsAdministrator
+	New-Shortcut -Path "$Home\Desktop\Explorer.lnk" -TargetPath '%SystemRoot%\explorer.exe' -RunAsAdministrator
 
-    Creates an Explorer shortcut on the desktop that runs as admin.
+	Creates an Explorer shortcut on the desktop that runs as admin.
 #>
 
 [CmdletBinding()][OutputType([void])] Param(
@@ -69,21 +69,24 @@ if($Hotkey)           {$lnk.Hotkey = $Hotkey}
 if($IconLocation)     {$lnk.IconLocation = $IconLocation}
 if($WindowStyle)
 {
-    $lnk.WindowStyle =
-        switch($WindowStyle)
-        {
-            Normal    {1}
-            Maximized {3}
-            Minimized {7}
-        }
+	$lnk.WindowStyle =
+		switch($WindowStyle)
+		{
+			Normal    {1}
+			Maximized {3}
+			Minimized {7}
+		}
 }
 $lnk.Save()
 $lnk = $null
 $sh = $null
 if($RunAsAdministrator)
 { # klugdy hack
-    [byte[]]$lnkdata = Get-Content $fullname -Encoding Byte
-    $lnkdata[0x15] = 0x20
-    $lnkdata |Set-Content $fullname -Encoding Byte
+	$readbytes =
+		if((Get-Command Get-Content).Parameters.Encoding.ParameterType -eq [Text.Encoding]) {@{AsByteStream=$true}}
+		else {@{Encoding='Byte'}}
+	[byte[]]$lnkdata = Get-Content $fullname @readbytes
+	$lnkdata[0x15] = 0x20
+	$lnkdata |Set-Content $fullname @readbytes
 }
 Rename-Item $fullname ([Net.WebUtility]::UrlDecode($file))

@@ -61,6 +61,9 @@
 Begin
 {
     Write-Verbose "Testing for $FileType magic number"
+	$readbytes =
+		if((Get-Command Get-Content).Parameters.Encoding.ParameterType -eq [Text.Encoding]) {@{AsByteStream=$true}}
+		else {@{Encoding='Byte'}}
     [scriptblock]$test =
         switch($FileType)
         {
@@ -70,8 +73,8 @@ Begin
                     (Test-MagicNumber.ps1 0xFE,0xFF $f) -or          # UTF-16 BOM (big-endian)
                     (Test-MagicNumber.ps1 0xFF,0xFE $f) -or          # UTF-16 BOM (little-endian)
                     # US-ASCII (POSIX)
-                    ((Test-MagicNumber.ps1 0x0A $f -Offset -1) -and (0 -notin (Get-Content $f -Encoding Byte -Total 1KB))) -or
-                    (!(Get-Content $f -Encoding Byte -Total 1KB |? {$_ -gt 0x7F -or $_ -eq 0}))
+                    ((Test-MagicNumber.ps1 0x0A $f -Offset -1) -and (0 -notin (Get-Content $f @readbytes -Total 1KB))) -or
+                    (!(Get-Content $f @readbytes -Total 1KB |? {$_ -gt 0x7F -or $_ -eq 0}))
             }}
             xml
             {{ param($f)

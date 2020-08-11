@@ -30,7 +30,10 @@
 $http = Start-HttpListener.ps1 -Port $Port
 $context = Receive-WebRequest.ps1 $http
 $context.Request.Headers.Keys |foreach {Write-Verbose "${_}: $($context.Request.Headers[$_])"}
-Read-WebRequest.ps1 $context.Request -Encoding byte
+$readbytes =
+	if((Get-Command Get-Content).Parameters.Encoding.ParameterType -eq [Text.Encoding]) {@{AsByteStream=$true}}
+	else {@{Encoding='Byte'}}
+Read-WebRequest.ps1 $context.Request @readbytes
 $context.Response.StatusCode = 204
 $context.Response.Close()
 Stop-HttpListener.ps1 $http

@@ -37,9 +37,12 @@ if($ReferenceFile.LinkType -and $DifferenceFile.LinkType)
 }
 if($ReferenceFile.Length -eq $DifferenceFile.Length)
 {
+	$readbytes =
+		if((Get-Command Get-Content).Parameters.Encoding.ParameterType -eq [Text.Encoding]) {@{AsByteStream=$true}}
+		else {@{Encoding='Byte'}}
     if(Get-Command -Verb Get -Noun FileHash) {if((Get-FileHash $ReferenceFile).Hash -eq (Get-FileHash $DifferenceFile).Hash)
     {Write-Verbose 'Identical hash values.'; return $false}}
-    elseif(!(compare (Get-Content $ReferenceFile -Encoding Byte) (Get-Content $DifferenceFile -Encoding Byte)))
+    elseif(!(compare (Get-Content $ReferenceFile @readbytes) (Get-Content $DifferenceFile @readbytes)))
     {Write-Verbose 'Identical contents.'; return $false}
 }
 if($ReferenceFile.LastWriteTimeUtc -lt $DifferenceFile.LastWriteTimeUtc)
