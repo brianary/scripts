@@ -59,7 +59,7 @@
 [Parameter(Position=0,ValueFromPipeline=$true)] $Value,
 [string] $Indent = '',
 [string] $IndentBy = "`t",
-[string] $Newline = "`r`n",
+[string] $Newline = [environment]::NewLine,
 [switch] $SkipInitialIndent,
 [Parameter(ParameterSetName='GenerateKey')][Alias('PortableKey')][switch] $GenerateKey,
 [Parameter(ParameterSetName='SecureKey',Mandatory=$true)][securestring] $SecureKey,

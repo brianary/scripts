@@ -348,7 +348,7 @@ function Merge-XmlNodes
 				if($_.ReferenceNode) {$_.ReferenceNode |Format-ApplyTemplates}
 				else {ConvertTo-XmlNodeLiteral $_.DifferenceNode}
 			}
-		) -join "`r`n"
+		) -join [environment]::NewLine
 		Templates         = $list |where Template -ne $null |foreach Template
 	})
 }

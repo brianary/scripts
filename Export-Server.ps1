@@ -200,7 +200,7 @@ function Import-ChocolateyPackages
 {
     [CmdletBinding(SupportsShouldProcess=`$true)] Param()
     if(!`$PSCmdlet.ShouldProcess('$($cinst.Count) chocolatey packages','install')) {return}
-    $($cinst -join "`r`n    ")
+    $($cinst -join "$([environment]::NewLine)    ")
 }
 "@
 }
@@ -229,7 +229,7 @@ function Import-WebPlatformInstallerPackages
 {
     [CmdletBinding(SupportsShouldProcess=`$true)] Param()
     if(!`$PSCmdlet.ShouldProcess('$($webpicmd.Count) web platform installer packages','install')) {return}
-    $($webpicmd -join "`r`n    ")
+    $($webpicmd -join "$([environment]::NewLine)    ")
 }
 "@
 }

@@ -224,7 +224,7 @@ function Add-CodeOwners
 
 # default owner(s)
 * $DefaultOwner
-$(if($Owners){'','# targeted owners' -join "`r`n"})
+$(if($Owners){'','# targeted owners' -join [environment]::NewLine})
 $($Owners.Keys |% {"$_ $($Owners[$_] -join ' ')"})
 "@ ASCII -Warn -Force
 }

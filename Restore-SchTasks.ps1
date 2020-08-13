@@ -33,7 +33,7 @@
 [string] $Exclude = '*\*'
 )
 $credentials = @{}
-$xmldecl = "<?xml version=`"1.0`" encoding=`"UTF-16`" ?>`r`n`r`n"
+$xmldecl = "<?xml version=`"1.0`" encoding=`"UTF-16`" ?>{0}{0}" -f [environment]::NewLine
 $Script:PSDefaultParameterValues = @{'Select-Xml:Namespace'=@{task='http://schemas.microsoft.com/windows/2004/02/mit/task'}}
 foreach($task in ((Get-Content $Path -Raw) -replace '(?<=\A|>)\s*</?Tasks>\s*(?=\S|\z)','') -split '(?<=</Task>)\s*?(?=<!--)')
 {

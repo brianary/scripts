@@ -137,14 +137,14 @@ select quotename(COLUMN_NAME) as COLUMN_NAME
    and TABLE_NAME = $tablename
  order by ORDINAL_POSITION;
 "@ |% COLUMN_NAME
-$dataupdates = ($columns |? {$_ -notin $pk} |% {"{0} = source.{0}" -f $_}) -join ",`r`n"
+$dataupdates = ($columns |? {$_ -notin $pk} |% {"{0} = source.{0}" -f $_}) -join ",$([environment]::NewLine)"
 $dataupdates =
     if($dataupdates) {"when matched then${EOL}update set $dataupdates"}
     else {"-- skip 'matched' condition (no non-key columns to update)"}
 $targetlist = $columns -join ','
 $sourcelist = ($columns |% {"source.{0}" -f $_}) -join ','
 
-$data = ($data |% {($_.ItemArray |% {Format-SqlValue $_}) -join ','} |% {"($_)"}) -join ",`r`n"
+$data = ($data |% {($_.ItemArray |% {Format-SqlValue $_}) -join ','} |% {"($_)"}) -join ",$([environment]::NewLine)"
 
 @"
 if exists (select * from information_schema.columns where table_schema = $schemaname and table_name = $tablename

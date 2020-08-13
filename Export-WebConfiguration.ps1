@@ -212,7 +212,7 @@ function Export-CertificateFrom([Parameter(Position=0)][Security.Cryptography.X5
 {Begin{$i = 0} Process{
     $location,$name,$secret,$percent,$certname,$Local:OFS =
         $store.Location,$store.Name,[Web.Security.Membership]::GeneratePassword(40,12),
-        [math]::Floor($i++/$PercentDenominator),(Format-Certificate.ps1 $cert),"`r`n    "
+        [math]::Floor($i++/$PercentDenominator),(Format-Certificate.ps1 $cert),"$([environment]::NewLine)    "
     Write-Progress "Exporting certificates from $storepath" $certname -Current $cert.Subject -Percent $percent
     $qcertname = "$($certname -replace "'","''")"
     $action =
@@ -256,7 +256,7 @@ function Get-StoreImportName([Parameter(ValueFromPipeline=$true)]
 function Export-CertificatesFrom([Parameter(ValueFromPipeline=$true)]
     [Security.Cryptography.X509Certificates.X509Store]$store)
 {Process{ # Export-PfxCertificate is easier, but not available in PS3
-    $location,$name,$Local:OFS = $store.Location,$store.Name,"`r`n    "
+    $location,$name,$Local:OFS = $store.Location,$store.Name,"$([environment]::NewLine)    "
     $storepath = "Cert:\$location\$name"
     $certs = Get-ChildItem $storepath
     $certs |Export-CertificateFrom $store $storepath ($certs.Length/100)
@@ -279,7 +279,7 @@ function $(Get-StoreImportName $store)
 
 function Export-Certificates
 {
-    $Local:OFS = "`r`n    "
+    $Local:OFS = "$([environment]::NewLine)    "
     $Stores |Export-CertificatesFrom
     @"
 
@@ -362,7 +362,7 @@ function $functionname
 function Export-CertificatePermissionsFrom([Parameter(ValueFromPipeline=$true)]
     [Security.Cryptography.X509Certificates.X509Store]$store)
 {Process{
-    $location,$name,$Local:OFS = $store.Location,$store.Name,"`r`n    "
+    $location,$name,$Local:OFS = $store.Location,$store.Name,"$([environment]::NewLine)    "
     $storepath = "Cert:\$location\$name"
     $certs = Get-ChildItem $storepath
     $certs |Export-CertificatePermissions $storepath ($certs.Length/100)
@@ -385,7 +385,7 @@ function $(Get-StoreImportName $store)_Permissions
 
 function Export-CertificatesPermissions
 {
-    $Local:OFS = "`r`n    "
+    $Local:OFS = "$([environment]::NewLine)    "
     $Stores |Export-CertificatePermissionsFrom
     @"
 
@@ -630,7 +630,7 @@ function $funcname
 
 function Import-WebApplications
 {
-    $($functions -join "`r`n    ")
+    $($functions -join "$([environment]::NewLine)    ")
     Write-Progress 'Importing web applications' -Completed
 }
 "@
