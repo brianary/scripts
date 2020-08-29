@@ -10,6 +10,6 @@
 
 #Requires -Version 3
 [CmdletBinding()] Param()
-ConvertFrom-ClipboardTsv.ps1 |
+Import-ClipboardTsv.ps1 |
 	ConvertTo-Html -Fragment |
 	Set-Clipboard -AsHtml
