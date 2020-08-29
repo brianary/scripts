@@ -13,6 +13,8 @@
 
 .Example
 	Repair-Encoding.ps1 'SmartQuotes Arenâ€™t'
+
+	SmartQuotes Aren’t
 #>
 
 #Requires -Version 3
