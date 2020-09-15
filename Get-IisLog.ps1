@@ -279,6 +279,6 @@ logparser $sql -i:IISW3C -o:TSV -headers:off -stats:off |
 		$_.Status = [Net.HttpStatusCode]$_.StatusCode
 		$iisFullStatus = $_.StatusCode + '.' + $_.SubStatusCode
 		if($iisSubStatus.ContainsKey($iisFullStatus)) {$_.SubStatus = $iisSubStatus[$iisFullStatus]}
-		$_.WinStatus = [ComponentModel.Win32Exception][int]$_.WinStatusCode
+		$_.WinStatus = [ComponentModel.Win32Exception][uint32]$_.WinStatusCode
 		$_
 	}
