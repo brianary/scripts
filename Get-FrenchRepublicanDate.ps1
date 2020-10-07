@@ -214,5 +214,6 @@ Process
 		DecadeOrdinal = ${les jours du decade}[(${jour de l'année} -1) % 10]
 		DecimalTime = '{0:0:00:00}' -f [math]::Floor($Date.TimeOfDay.Ticks / 8640000)
 		GregorianDate = $Date
-	}
+	} |Add-Member ScriptMethod ToString -Force -PassThru `
+		{"$($this.Jour) ($($this.DayName)), $($this.Day) $($this.Mois) ($($this.MonthName)) $($this.AnneeUnicode)"}
 }
