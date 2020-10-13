@@ -5,13 +5,17 @@
 .Parameter HostName
 	The ssh server to connect to.
 
+.Parameter UserName
+	The remote username to use to connect.
+
 .Example
-	Connect-SshKey.ps1 crowpi
+	Connect-SshKey.ps1 crowpi -UserName pi
 #>
 
 #Requires -Version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][string] $HostName
+[Parameter(Position=0,Mandatory=$true)][string] $HostName,
+[Alias('AsUserName')][string] $UserName = $env:UserName
 )
 
 if(!(Test-Path $env:USERPROFILE\.ssh\id_rsa.pub -Type Leaf) -or !((Get-Item $env:USERPROFILE\.ssh\id_rsa.pub).Length))
@@ -19,4 +23,4 @@ if(!(Test-Path $env:USERPROFILE\.ssh\id_rsa.pub -Type Leaf) -or !((Get-Item $env
 	Use-Command.ps1 ssh-keygen "$env:SystemRoot\system32\openssh\ssh-keygen.exe" -WindowsFeature 'OpenSSH.Client~~~~0.0.1.0'
 	ssh-keygen
 }
-Get-Content $env:USERPROFILE\.ssh\id_rsa.pub |ssh "$env:UserName@$HostName" 'cat >> .ssh/authorized_keys'
+Get-Content $env:USERPROFILE\.ssh\id_rsa.pub |ssh "$UserName@$HostName" 'cat >> .ssh/authorized_keys'
