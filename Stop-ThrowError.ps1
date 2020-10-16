@@ -48,6 +48,24 @@
 	An string unique to the script that identifies the error.
 	By default this will use the line number it is called from.
 
+.Parameter Format
+	The data format the string failed to parse as.
+
+.Parameter InputString
+	The string that failed to parse.
+
+.Parameter Argument
+	The parameter name that had a bad value.
+
+.Parameter OperationContext
+	An object containing the state that failed to process.
+
+.Parameter SearchContext
+	An object containing the search detail that failed.
+
+.Parameter NotImplemented
+	Indicates that the exception represents incomplete functionality.
+
 .Link
 	https://docs.microsoft.com/dotnet/api/system.management.automation.cmdlet.throwterminatingerror
 
@@ -70,6 +88,11 @@
 	+                       ~~~~~~~~~~~~~~
 		+ CategoryInfo          : InvalidArgument: (<a />:SelectXmlInfo) [Remove-Xml.ps1], ArgumentException
 		+ FullyQualifiedErrorId : SelectXmlInfo,Remove-Xml.ps1
+
+.Example
+	if(Test-Uri.ps1 $u) {[uri]$u} else {Stop-ThrowError.ps1 'Bad URL' -Format URL -InputString $u}
+
+	(Fails for non-uri values of $u.)
 #>
 
 #Requires -Version 3
@@ -82,11 +105,14 @@
 [Parameter(ParameterSetName='Detailed',Mandatory=$true,Position=3)][object] $TargetObject,
 [Parameter(ParameterSetName='Detailed',Position=4)][string] $ErrorId =
 	"L$(Get-PSCallStack |select -First 1 |% ScriptLineNumber)",
+[Parameter(Position=0,ParameterSetName='Format',Mandatory=$true)]
 [Parameter(Position=0,ParameterSetName='InvalidArgument',Mandatory=$true)]
 [Parameter(Position=0,ParameterSetName='InvalidOperation',Mandatory=$true)]
 [Parameter(Position=0,ParameterSetName='ObjectNotFound',Mandatory=$true)]
 [Parameter(Position=0,ParameterSetName='NotImplemented',Mandatory=$true)]
 [string] $Message,
+[Parameter(ParameterSetName='Format',Mandatory=$true)][string] $Format,
+[Parameter(ParameterSetName='Format',Mandatory=$true)][string] $InputString,
 [Parameter(ParameterSetName='InvalidArgument',Mandatory=$true)][Alias('InvalidArgument')][string] $Argument,
 [Parameter(ParameterSetName='InvalidOperation',Mandatory=$true)][Alias('InvalidOperation')] $OperationContext,
 [Parameter(ParameterSetName='ItemNotFound',Mandatory=$true)][Alias('ObjectNotFound')] $SearchContext,
@@ -96,6 +122,7 @@
 {
 	CatchBlock {(Get-Variable PSItem -ValueOnly -Scope 1),(New-Object $ExceptionType.FullName $ExceptionArguments)}
 	Detailed {(New-Object $ExceptionType.FullName $ExceptionArguments),$ErrorId,$ErrorCategory,$TargetObject}
+	Format {(New-Object FormatException $Message),$Format,'ParserError',$InputString}
 	InvalidArgument
 	{
 		$ScriptParams = Get-Variable PSBoundParameters -ValueOnly -Scope 1 -ErrorAction SilentlyContinue
