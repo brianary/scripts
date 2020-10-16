@@ -860,7 +860,11 @@ VerticalForms
         $properties.UnicodeBlock = $b
         $properties.MatchesBlock = if($notablock -contains $b) {'Error'} else {$c -match "\p{Is$b}"}
         New-Object PSObject -Property $properties
-    }
+	}
+	function Get-CharactersDetails([Parameter(ValueFromPipeline=$true)][string]$Chars)
+	{
+		foreach($c in $Chars.GetEnumerator()) {Get-CharacterDetail $c}
+	}
     function Get-CharacterRangeDetails([int]$start,[int]$stop)
     {
         $i,$max = 0,(($stop - $start)/100)
@@ -878,8 +882,12 @@ Process
     switch($PSCmdlet.ParameterSetName)
     {
         Block { $start,$stop = Convert-UnicodeBlockToRange $Block; Get-CharacterRangeDetails $start $stop }
-        Char  { foreach($c in $Char.GetEnumerator()) {Get-CharacterDetail $c} }
-        Value { Get-CharacterDetail $Value }
+        Char  { $Char |Get-CharactersDetails }
         Range { Get-CharacterRangeDetails $StartValue $StopValue }
+		Value
+		{
+			if($Value -gt [char]::MaxValue) { [char]::ConvertFromUtf32($Value) |Get-CharactersDetails }
+			else { Get-CharacterDetail $Value }
+		}
     }
 }
