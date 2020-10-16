@@ -2,6 +2,18 @@
 .Synopsis
 	Sets certain cmdlet parameter defaults to rational, useful values.
 
+.Parameter LatestSecurityProtocol
+	Use the greatest value of the System.Net.SecurityProtocolType enum.
+
+.Link
+	Use-NetMailConfig.ps1
+
+.Link
+	Set-ParameterDefault.ps1
+
+.Link
+	Get-EnumValues.ps1
+
 .Example
 	Use-ReasonableDefaults.ps1
 

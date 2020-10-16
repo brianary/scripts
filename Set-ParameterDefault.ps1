@@ -18,6 +18,9 @@
 	System.Object containing the default value to assign.
 
 .Link
+	Add-ScopeLevel.ps1
+
+.Link
 	Stop-ThrowError.ps1
 
 .Link

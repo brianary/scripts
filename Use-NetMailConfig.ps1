@@ -17,8 +17,20 @@
     The values for Send-MailMessage's From, SmtpServer, and UseSsl will be
     taken from whatever is set in the machine.config (or more localized config).
 
+.Parameter Scope
+	The scope to create the defaults in.
+
+.Parameter Private
+	Indicates the defaults should not be visible to child scopes.
+
 .Component
     System.Configuration
+
+.Link
+	Add-ScopeLevel.ps1
+
+.Link
+	Set-ParameterDefault.ps1
 
 .Link
     Send-MailMessage

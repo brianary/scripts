@@ -18,6 +18,9 @@
 	System.Object containing a default value to include.
 
 .Link
+	Add-ScopeLevel.ps1
+
+.Link
 	Stop-ThrowError.ps1
 
 .Link

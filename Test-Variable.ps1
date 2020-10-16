@@ -12,6 +12,9 @@
     System.Boolean indicating whether the variable name is defined.
 
 .Link
+	Add-ScopeLevel.ps1
+
+.Link
     Get-Variable
 
 .Example

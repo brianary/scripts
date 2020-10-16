@@ -4,6 +4,7 @@
 A collection of legacy scripts that have been supplanted by newer scripts or modules for PowerShell 6+,
 or have dependencies that are no longer available in PowerShell 6+.
 
+- **[Add-SelectXmlDetails.ps1](Add-SelectXmlDetails.ps1)**: Adds OuterXml, Value, XPath, and Namespace properties to Select-Xml output.
 - **[Add-Xml.ps1](Add-Xml.ps1)**: Insert XML into an XML document relative to a node found by Select-Xml.
 - **[Disable-Certificate.ps1](Disable-Certificate.ps1)**: Sets the Archived property on a certificate.
 - **[Enable-Certificate.ps1](Enable-Certificate.ps1)**: Unsets the Archived property on a certificate.
@@ -27,4 +28,4 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Suspend-HttpListener.ps1](Suspend-HttpListener.ps1)**: Pauses an HTTP listener.
 - **[Write-WebResponse.ps1](Write-WebResponse.ps1)**: Sends a text or binary response body to the HTTP listener client.
 
-<!-- generated 09/18/2020 21:21:25 -->
+<!-- generated 10/16/2020 14:21:33 -->

@@ -15,6 +15,9 @@
 	An object with a ParameterName property that identifies a property to remove a default for.
 
 .Link
+	Add-ScopeLevel.ps1
+
+.Link
 	Stop-ThrowError.ps1
 
 .Link

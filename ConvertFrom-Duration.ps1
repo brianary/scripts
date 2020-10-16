@@ -20,7 +20,16 @@
     System.Timespan containing the duration, as parsed and converted to a Timespan.
 
 .Link
-    https://en.wikipedia.org/wiki/ISO_8601#Durations
+	https://en.wikipedia.org/wiki/ISO_8601#Durations
+
+.Link
+	Import-Variables.ps1
+
+.Link
+	Test-Variable.ps1
+
+.Link
+	Stop-ThrowError.ps1
 
 .Example
     "$(ConvertFrom-Duration.ps1 P1D)"

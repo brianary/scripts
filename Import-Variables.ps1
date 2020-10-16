@@ -20,6 +20,9 @@
     System.Collections.IDictionary with keys and values to import as variables,
     or System.Management.Automation.PSCustomObject with properties to import as variables.
 
+.Link
+	Add-ScopeLevel.ps1
+
 .Example
     if($line -match '\AProject\("(?<TypeGuid>[^"]+)"\)') {Import-Variables.ps1 $Matches}
 

@@ -6,7 +6,10 @@
 	The requested scope from the caller of the caller of this script.
 
 .Link
-	Stap-ThrowError.ps1
+	Add-ScopeLevel.ps1
+
+.Link
+	Stop-ThrowError.ps1
 
 .link
 	Get-PSCallStack

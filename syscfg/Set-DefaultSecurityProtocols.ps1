@@ -14,6 +14,15 @@
 .Link
     http://thelowercasew.com/script-to-disable-protocols-older-than-tls-1-2-and-turn-off-rdp
 
+.Link
+	Test-Variable.ps1
+
+.Link
+	Set-RegistryValue
+
+.Link
+	Set-ItemProperty
+
 .Example
     Set-DefaultSecurityProtocols.ps1
 
