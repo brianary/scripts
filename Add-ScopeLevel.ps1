@@ -6,9 +6,6 @@
 	The requested scope from the caller of the caller of this script.
 
 .Link
-	Add-ScopeLevel.ps1
-
-.Link
 	Stop-ThrowError.ps1
 
 .link
