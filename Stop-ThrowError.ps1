@@ -114,8 +114,7 @@
 	}
 	NotImplemented
 	{
-		(New-Object Management.Automation.ItemNotFoundException $Message),($SearchContext.GetType().Name),
-			'ObjectNotFound',$SearchContext
+		(New-Object NotImplementedException $Message),'NotImplementedException','NotImplemented',$null
 	}
 }
 [Management.Automation.PSCmdlet] $caller = Get-Variable PSCmdlet -ValueOnly -Scope 1 -ErrorAction SilentlyContinue

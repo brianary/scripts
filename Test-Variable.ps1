@@ -53,8 +53,8 @@
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][AllowEmptyString()][AllowNull()][string]$Name,
-[Parameter(Position=1)][ValidatePattern('\A(?:Global|Script|Local|\d+)\z')][string]$Scope = 'All'
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][AllowEmptyString()][AllowNull()][string] $Name,
+[Parameter(Position=1)][string] $Scope
 )
 Process
 {
@@ -62,22 +62,19 @@ Process
     {
         return $false
     }
-    elseif($Scope -eq 'All')
+    elseif(!$Scope)
     {
-        $allscopes = 'Script','Global'
-        $scopedepth = (Get-PSCallStack).Count -1
-        if($scopedepth -gt 1) {$allscopes += 1..$scopedepth}
-        foreach($s in $allscopes)
-        {
-            if(Get-Variable -Name $Name -Scope $s -ErrorAction SilentlyContinue) {return $true}
-            Write-Debug "$($MyInvocation.MyCommand.Name): $Name not found in scope $s"
-        }
+		if(Get-Variable -Name $Name -ErrorAction SilentlyContinue) {return $true}
+		$Error.RemoveAt(0)
+		Write-Debug "$($MyInvocation.MyCommand.Name): $Name not found in default scope"
         return $false
     }
     else
     {
-        if($Scope -eq 'Local') {$Scope = 1}
-        elseif($Scope -match '\d+') {$Scope = 1+$Scope}
-        return [bool](Get-Variable -Name $Name -Scope $Scope -ErrorAction SilentlyContinue)
+		$Scope = Add-ScopeLevel.ps1 $Scope
+		if(Get-Variable -Name $Name -Scope $Scope -ErrorAction SilentlyContinue) {return $true}
+		$Error.RemoveAt(0)
+		Write-Debug "$($MyInvocation.MyCommand.Name): $Name not found in $Scope scope"
+		return $false
     }
 }

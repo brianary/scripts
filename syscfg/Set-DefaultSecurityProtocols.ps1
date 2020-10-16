@@ -60,13 +60,13 @@ function Set-RegistryValue
 }
 
 Write-Progress 'Preparing' 'Checking Windows version' -PercentComplete 0
-if(!(Get-Variable WindowsVersion -ErrorAction SilentlyContinue))
+if(!(Test-Variable.ps1 WindowsVersion))
 {[version]$Global:WindowsVersion = (Get-WmiObject Win32_OperatingSystem).Version}
 if($WindowsVersion -lt 6.1 -or $WindowsVersion -gt 6.3) {throw 'This fix is only for Windows 7-8.1'}
 if($WindowsVersion -ge 6.1 -and $WindowsVersion -lt 6.2)
 {
     Write-Progress 'Preparing' 'Checking if KB3140245 is installed' -PercentComplete 20
-    if(!((Get-Variable KB3140245 -ErrorAction SilentlyContinue) -or (Get-HotFix KB3140245)))
+    if(!((Test-Variable.ps1 KB3140245) -or (Get-HotFix KB3140245)))
     {throw 'KB3140245 needs to be installed'}
     $Global:KB3140245 = $true
 }

@@ -31,20 +31,18 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([void])] Param()
+[CmdletBinding()][OutputType([void])] Param(
+[string] $Scope = 'Local',
+[switch] $Private
+)
 try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration}
+$Scope = Add-ScopeLevel.ps1 $Scope
+$sv = if($Private) {@{Scope=$Scope;Option='Private'}} else {@{Scope=$Scope}}
 $smtp = [Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp')
-$value = @{ 'Send-MailMessage:From' = $smtp.From }
+Set-ParameterDefault.ps1 Send-MailMessage From $smtp.From @sv
 if($smtp.DeliveryMethod -eq 'Network')
 {
-    $value += @{
-        'Send-MailMessage:SmtpServer' = $smtp.Network.Host
-        'Send-MailMessage:UseSsl'     = $smtp.Network.EnableSsl
-    }
+	Set-ParameterDefault.ps1 Send-MailMessage SmtpServer $smtp.Network.Host @sv
+	Set-ParameterDefault.ps1 Send-MailMessage UseSsl $smtp.Network.EnableSsl @sv
 }
-$defaults = Get-Variable -Scope 1 -Name PSDefaultParameterValues -EA SilentlyContinue
-if($defaults) {$value.Keys |? {$value.$_ -and $defaults.Value.Contains($_)} |% {$defaults.Value.Remove($_)}; $defaults.Value += $value}
-else {Set-Variable -Scope 1 -Name PSDefaultParameterValues -Value $value}
-$server = Get-Variable -Scope 1 -Name PSEmailServer -EA SilentlyContinue
-if($server) {$server.Value = $smtp.Network.Host}
-else {$Global:PSEmailServer = $smtp.Network.Host}
+Set-Variable PSEmailServer $smtp.Network.Host @sv

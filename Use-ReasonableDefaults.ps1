@@ -15,14 +15,35 @@
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([void])] Param()
-[Net.ServicePointManager]::SecurityProtocol = 'Tls12'
-$Global:PSDefaultParameterValues['Out-File:Width'] = [int]::MaxValue
-$Global:PSDefaultParameterValues['Out-File:Encoding'] = 'UTF8'
-$Global:PSDefaultParameterValues['Get-ChildItem:Force'] = $True
-$Global:PSDefaultParameterValues['Export-Csv:NoTypeInformation'] = $True
-$Global:PSDefaultParameterValues['Invoke-WebRequest:UseBasicParsing'] = $True
-$Global:PSDefaultParameterValues['Select-Xml:Namespace'] = @{
+[CmdletBinding()][OutputType([void])] Param(
+[switch] $LatestSecurityProtocol
+)
+if(!$LatestSecurityProtocol)
+{
+	[Net.ServicePointManager]::SecurityProtocol = 'Tls12'
+	if($PSVersionTable.ContainsKey('CLRVersion')) {Use-NetMailConfig.ps1 -Scope Global}
+}
+else
+{
+	if($PSVersionTable.ContainsKey('CLRVersion'))
+	{
+	    Use-NetMailConfig.ps1 -Scope Global
+	    if($PSVersionTable.CLRVersion -lt '4.7.1')
+	    {
+	        if([Net.ServicePointManager]::SecurityProtocol -band [Net.SecurityProtocolType]'Ssl3')
+	        {
+	            [Net.ServicePointManager]::SecurityProtocol =
+	                Get-EnumValues.ps1 Net.SecurityProtocolType |select -Last 1 -ExpandProperty Name
+	        }
+	    }
+	}
+}
+Set-ParameterDefault.ps1 Out-File Width ([int]::MaxValue) -Scope Global
+Set-ParameterDefault.ps1 Out-File Encoding UTF8 -Scope Global
+Set-ParameterDefault.ps1 Get-ChildItem Force $true -Scope Global
+Set-ParameterDefault.ps1 Export-Csv NoTypeInformation $true -Scope Global
+Set-ParameterDefault.ps1 Invoke-WebRequest UseBasicParsing $true -Scope Global
+Set-ParameterDefault.ps1 Select-Xml Namespace -Scope Global -Value @{
 xhtml    = 'http://www.w3.org/1999/xhtml'
 svg      = 'http://www.w3.org/2000/svg'
 xsl      = 'http://www.w3.org/1999/XSL/Transform'
