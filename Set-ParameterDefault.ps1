@@ -12,7 +12,7 @@
 	The value to assign as a default.
 
 .Parameter Scope
-	The scope +1 of this default, 1=Local, 2=Parent, ..., Global=Global.
+	The scope of this default.
 
 .Inputs
 	System.Object containing the default value to assign.
@@ -43,10 +43,11 @@
 [Parameter(Position=0,Mandatory=$true)][ValidateNotNullOrEmpty()][Alias('CmdletName')][string] $CommandName,
 [Parameter(Position=1,Mandatory=$true)][ValidateNotNullOrEmpty()][string] $ParameterName,
 [Parameter(Position=2,Mandatory=$true,ValueFromPipeline=$true)] $Value,
-[string] $Scope = '1'
+[string] $Scope = 'Local'
 )
 Begin
 {
+	$Scope = Add-ScopeLevel.ps1 $Scope
 	$cmd = Get-Command $CommandName -ErrorAction SilentlyContinue
 	if(!$cmd) {Stop-ThrowError.ps1 "Could not find command '$CommandName'" -Argument CommandName}
 	if($cmd.CommandType -eq 'Alias') {$cmd = Get-Command $cmd.ResolvedCommandName}
@@ -56,10 +57,14 @@ Begin
 		try {"$($cmd.Name):$($cmd.ResolveParameter($ParameterName).Name)"}
 		catch {Stop-ThrowError.ps1 "Could not find parameter '$ParameterName' for cmdlet '$CommandName'" -Argument ParameterName}
 	$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction SilentlyContinue
+	if(!$defaults)
+	{
+		Set-Variable PSDefaultParameterValues @{} -Scope $Scope
+		$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction SilentlyContinue
+	}
 }
 Process
 {
-	Write-Verbose "Setting '$name' to '$Value'"
-	if(!$defaults) {Set-Variable PSDefaultParameterValues @{$name=$Value} -Scope 1}
-	else {$defaults.Value[$name] = $Value}
+	Write-Verbose "Setting default parameter '$name' to '$Value'"
+	$defaults.Value[$name] = $Value
 }

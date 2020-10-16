@@ -9,7 +9,7 @@
 	The name or alias of the parameter to remove a default value from.
 
 .Parameter Scope
-	The scope +1 of this default, 1=Local, 2=Parent, ..., Global=Global.
+	The scope of this default.
 
 .Inputs
 	An object with a ParameterName property that identifies a property to remove a default for.
@@ -39,23 +39,24 @@
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true)][ValidateNotNullOrEmpty()][Alias('CmdletName')][string] $CommandName,
 [Parameter(Position=1,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ValidateNotNullOrEmpty()][string] $ParameterName,
-[string] $Scope = '1'
+[string] $Scope = 'Local'
 )
 Begin
 {
+	$Scope = Add-ScopeLevel.ps1 $Scope
 	$cmd = Get-Command $CommandName -ErrorAction SilentlyContinue
 	if(!$cmd) {Stop-ThrowError.ps1 "Could not find command '$CommandName'" -Argument CommandName}
 	if($cmd.CommandType -eq 'Alias') {$cmd = Get-Command $cmd.ResolvedCommandName}
 	if($cmd.CommandType -notin 'Cmdlet','ExternalScript','Function','Script')
 	{Stop-ThrowError.ps1 "Command '$CommandName' ($($cmd.CommandType)) not supported" -Argument CommandName}
+	$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction SilentlyContinue
 }
 Process
 {
+	if(!$defaults) {return}
 	$name =
 		try {"$($cmd.Name):$($cmd.ResolveParameter($ParameterName).Name)"}
 		catch {Stop-ThrowError.ps1 "Could not find parameter '$ParameterName' for cmdlet '$CommandName'" -Argument ParameterName}
-	$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction SilentlyContinue
-	if(!$defaults) {return}
-	Write-Verbose "Removing '$name'"
+	Write-Verbose "Removing default parameter '$name'"
 	if($defaults.Value.ContainsKey($name)) {$defaults.Value.Remove($name)}
 }

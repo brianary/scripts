@@ -5,7 +5,16 @@
 .Parameter InputObject
     A hash of string names to any values to set as variables,
     or a DataRow or object with properties to set as variables.
-    Works with DataRows.
+	Works with DataRows.
+
+.Parameter MemberType
+	The type of object members to convert to variables.
+
+.Parameter Scope
+	The scope of the variables to create.
+
+.Parameter Private
+	Indicates that created variables should be hidden from child scopes.
 
 .Inputs
     System.Collections.IDictionary with keys and values to import as variables,
@@ -37,8 +46,14 @@
 [CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSObject] $InputObject,
 [Alias('Type')][Management.Automation.PSMemberTypes] $MemberType = 'Properties',
-[string] $Scope = '1'
+[string] $Scope = 'Local',
+[switch] $Private
 )
+Begin
+{
+	$Scope = Add-ScopeLevel.ps1 $Scope
+	$sv = if($Private) {@{Scope=$Scope;Option='Private'}} else {@{Scope=$Scope}}
+}
 Process
 {
     $isDict = $InputObject -is [Collections.IDictionary]
@@ -47,5 +62,5 @@ Process
         else {Get-Member -InputObject $InputObject -MemberType $MemberType |% Name}
     if(!$vars){return}
     Write-Verbose "Importing $($vars.Count) $(if($isDict){'keys'}else{"$MemberType properties"}): $vars"
-    foreach($var in $vars) {Set-Variable $var $InputObject.$var -Scope $Scope}
+    foreach($var in $vars) {Set-Variable $var $InputObject.$var @sv}
 }
