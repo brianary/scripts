@@ -43,6 +43,7 @@
 #>
 
 #Requires -Version 3
+#Requires -Modules @{ ModuleName='Microsoft.PowerShell.Utility'; MaximumVersion='3.1.0.0' }
 [CmdletBinding()][OutputType([void])] Param(
 [string] $Scope = 'Local',
 [switch] $Private
@@ -51,10 +52,14 @@ try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configu
 $Scope = Add-ScopeLevel.ps1 $Scope
 $sv = if($Private) {@{Scope=$Scope;Option='Private'}} else {@{Scope=$Scope}}
 $smtp = [Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp')
-Set-ParameterDefault.ps1 Send-MailMessage From $smtp.From @sv
-if($smtp.DeliveryMethod -eq 'Network')
+if($smtp.From) { Set-ParameterDefault.ps1 Send-MailMessage From $smtp.From @sv }
+if($smtp.DeliveryMethod -eq 'Network' -and $smtp.Network)
 {
-	Set-ParameterDefault.ps1 Send-MailMessage SmtpServer $smtp.Network.Host @sv
-	Set-ParameterDefault.ps1 Send-MailMessage UseSsl $smtp.Network.EnableSsl @sv
+	if($smtp.Network.Host) {Set-ParameterDefault.ps1 Send-MailMessage SmtpServer $smtp.Network.Host @sv}
+	if($smtp.Network.EnableSsl) {Set-ParameterDefault.ps1 Send-MailMessage UseSsl $smtp.Network.EnableSsl @sv}
+}
+else
+{
+	Write-Verbose 'Delivery method is not configured as Network'
 }
 Set-Variable PSEmailServer $smtp.Network.Host @sv

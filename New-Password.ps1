@@ -59,6 +59,8 @@
 #>
 
 #Requires -Version 3
+#Requires -Assembly System.Web
+using assembly System.Web
 [CmdletBinding()][OutputType([string],[SecureString])] Param(
 [Parameter(Position=0,Mandatory=$true)][int] $Length,
 [int] $MaxRepeats,
@@ -78,11 +80,11 @@ while($true)
 	if($i -gt $TryMaxTimes)
 	{ Stop-ThrowError.ps1 "Failed to meet requirements after $TryMaxTimes tries." -OperationContext $PSBoundParameters }
 	$pwd =
-		try{[Web.Security.Membership]::GeneratePassword($Length,3)}
+		try {[Web.Security.Membership]::GeneratePassword($Length,3)}
 		catch
 		{
 			$a = Invoke-RestMethod "https://api.duckduckgo.com/?q=pwgen+strong+$Length&format=json"
-			[Net.HttpUtility]::HtmlDecode($a.Answer) -replace ' \(random password\)\z',''
+			[Web.HttpUtility]::HtmlDecode($a.Answer) -replace ' \(random password\)\z',''
 		}
 	if($MaxRepeats -gt 1 -and $pwd -match "(.)$('\1' * $MaxRepeats)")
 	{Write-Verbose "Password #$i has too many duplicate characters"; continue}
