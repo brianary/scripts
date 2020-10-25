@@ -181,6 +181,14 @@ Begin
 			default {"[$name()]"}
 		}
 	}}
+
+	function Format-Children($InputObject,[switch]$UseKeys)
+	{
+		if($InputObject -eq $null) {return}
+		$(if($UseKeys){$InputObject.Keys}else{Get-Member -InputObject $InputObject -MemberType Properties |foreach Name}) |
+			where {$_ -notmatch '\W'} |
+			foreach {"$tab$_ = $(Format-PSLiterals.ps1 $InputObject.$_ -SkipInitialIndent)"}
+	}
 }
 Process
 {
@@ -203,11 +211,11 @@ Process
 	elseif($Value -is [string])
 	{ Format-PSString $Value }
 	elseif($Value -is [array])
-	{
-		"${itab}@("
-		$Value |% {Format-PSLiterals.ps1 $_}
-		"${tab})"
-	}
+	{@"
+$itab@(
+$($Value |% {Format-PSLiterals.ps1 $_})
+$tab)
+"@}
 	elseif($Value -is [securestring])
 	{
 		$password = (ConvertFrom-SecureString $Value |Format-WrapString) -join "' +$Newline${tabtab}'"
@@ -216,55 +224,52 @@ Process
 	elseif($Value -is [pscredential])
 	{
 		$username = "'$($Value.UserName -replace "'","''")'"
-		$password = (ConvertFrom-SecureString $Value.Password |Format-WrapString) -join "' +$Newline${tabtab}'"
-		$password = "(ConvertTo-SecureString ($Newline${tabtab}'$password')$keyopt)"
+		$password =
+			if(!$Value.Password) {'$null'}
+			else
+			{
+				$p = (ConvertFrom-SecureString $Value.Password |Format-WrapString) -join "' +$Newline${tabtab}'"
+				"(ConvertTo-SecureString ($Newline${tabtab}'$p')$keyopt)"
+			}
 		"${itab}New-Object pscredential $username,$password$dpapiwarn"
 	}
 	elseif($Value -is [Management.Automation.RuntimeDefinedParameterDictionary])
-	{
-		"${itab}Param("
-		($Value.GetEnumerator() |% {"$tabtab$(Format-PSLiterals.ps1 $_.Value)"}) -join ','
-		"${itab})"
-	}
+	{@"
+${itab}Param(
+$(($Value.GetEnumerator() |% {"$tabtab$(Format-PSLiterals.ps1 $_.Value)"}) -join ',')
+$tab)
+"@}
 	elseif($Value -is [Management.Automation.RuntimeDefinedParameter])
-	{
-		"$($Value.Attributes |Format-ParameterAttribute)"
-		"$itab$($Value |Format-ParameterType) `$$($Value.Name)"
-	}
+	{@"
+$($Value.Attributes |Format-ParameterAttribute)
+$itab$($Value |Format-ParameterType) `$$($Value.Name)
+"@}
 	elseif($Value -is [ScriptBlock])
 	{ "{$Value}" }
 	elseif($Value -is [Collections.Specialized.OrderedDictionary])
-	{
-		"${itab}([ordered]@{"
-		$Value.Keys |? {$_ -match '^\w+$'} |% {"$tabtab$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
-		"${tab}})"
-	}
+	{@"
+$itab[ordered]@{
+$tab$(Format-Children $Value -UseKeys)
+$tab}
+"@}
 	elseif($Value -is [Hashtable])
-	{
-		"${itab}@{"
-		$Value.Keys |? {$_ -match '^\w+$'} |% {"$tabtab$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
-		"${tab}}"
-	}
+	{@"
+$itab@{
+$tab$(Format-Children $Value -UseKeys)
+$tab}
+"@}
 	elseif($Value -is [xml])
 	{ "[xml]$(Format-PSString $Value.OuterXml)" }
 	elseif($Value -is [PSObject])
-	{
-		"${itab}[PSCustomObject]@{"
-		$Value |
-			Get-Member -MemberType Properties |
-			? Name -NotLike '\W' |
-			% Name |
-			% {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
-		"${tab}}"
-	}
+	{@"
+$itab[pscustomobject]@{
+$tab$(Format-Children $Value)
+$tab}
+"@}
 	else
-	{
-		"${itab}@{"
-		$Value |
-			Get-Member -MemberType Properties |
-			? Name -NotLike '\W' |
-			% Name |
-			% {"$Indent$IndentBy$_ = $(Format-PSLiterals.ps1 $Value.$_ -SkipInitialIndent)"}
-		"${tab}}"
-	}
+	{@"
+$itab@{
+$tab$(Format-Children $Value)
+$tab}
+"@}
 }
