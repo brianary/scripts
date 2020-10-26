@@ -135,7 +135,7 @@ Process
     if($SupportsShouldProcess) {$cmdletbinding += "SupportsShouldProcess=$SupportsShouldProcess"}
     if($PositionalBinding) {$cmdletbinding += "PositionalBinding=$PositionalBinding"}
     $outtype = if($OutputType) {"[OutputType([$OutputType])]"} else {''}
-    if($Parameters -and $Parameters.Count) {$params = $Parameters |Format-PSLiterals.ps1}
+    if($Parameters -and $Parameters.Count) {$params = $Parameters |ConvertTo-PowerShell.ps1}
     $blocks = @()
     if($DynamicParam) {$blocks += 'DynamicParam','{',"$Indent$DynamicParam",'}'}
     if($Begin) {$blocks += 'Begin','{',"$Indent$Begin",'}'}

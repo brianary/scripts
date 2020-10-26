@@ -31,19 +31,19 @@ Process
 {@"
 
     @{
-        ContinueIfGoingOnBattery = $(!$Options.StopIfGoingOnBatteries |Format-PSLiterals.ps1)
-        DoNotAllowDemandStart    = $($Options.DoNotAllowDemandStart |Format-PSLiterals.ps1)
-        HideInTaskScheduler      = $(!$Options.ShowInTaskScheduler |Format-PSLiterals.ps1)
-        IdleDuration             = $($Options.IdleDuration |Format-PSLiterals.ps1)
-        IdleTimeout              = $($Options.IdleTimeout |Format-PSLiterals.ps1)
-        MultipleInstancePolicy   = $([string]$Options.MultipleInstancePolicy |Format-PSLiterals.ps1)
-        RequireNetwork           = $(!$Options.RunWithoutNetwork |Format-PSLiterals.ps1)
-        RestartOnIdleResume      = $($Options.RestartOnIdleResume |Format-PSLiterals.ps1)
-        RunElevated              = $($Options.RunElevated |Format-PSLiterals.ps1)
-        StartIfIdle              = $(!$Options.StartIfNotIdle |Format-PSLiterals.ps1)
-        StartIfOnBattery         = $($Options.StartIfOnBatteries |Format-PSLiterals.ps1)
-        StopIfGoingOffIdle       = $($Options.StopIfGoingOffIdle |Format-PSLiterals.ps1)
-        WakeToRun                = $($Options.WakeToRun |Format-PSLiterals.ps1)
+        ContinueIfGoingOnBattery = $(!$Options.StopIfGoingOnBatteries |ConvertTo-PowerShell.ps1)
+        DoNotAllowDemandStart    = $($Options.DoNotAllowDemandStart |ConvertTo-PowerShell.ps1)
+        HideInTaskScheduler      = $(!$Options.ShowInTaskScheduler |ConvertTo-PowerShell.ps1)
+        IdleDuration             = $($Options.IdleDuration |ConvertTo-PowerShell.ps1)
+        IdleTimeout              = $($Options.IdleTimeout |ConvertTo-PowerShell.ps1)
+        MultipleInstancePolicy   = $([string]$Options.MultipleInstancePolicy |ConvertTo-PowerShell.ps1)
+        RequireNetwork           = $(!$Options.RunWithoutNetwork |ConvertTo-PowerShell.ps1)
+        RestartOnIdleResume      = $($Options.RestartOnIdleResume |ConvertTo-PowerShell.ps1)
+        RunElevated              = $($Options.RunElevated |ConvertTo-PowerShell.ps1)
+        StartIfIdle              = $(!$Options.StartIfNotIdle |ConvertTo-PowerShell.ps1)
+        StartIfOnBattery         = $($Options.StartIfOnBatteries |ConvertTo-PowerShell.ps1)
+        StopIfGoingOffIdle       = $($Options.StopIfGoingOffIdle |ConvertTo-PowerShell.ps1)
+        WakeToRun                = $($Options.WakeToRun |ConvertTo-PowerShell.ps1)
     } |% {New-ScheduledJobOption @_}
 "@}
 }
@@ -81,7 +81,7 @@ Process
             }
             AtLogon
             {
-                $user = if($trigger.User){" -User $($trigger.User |Format-PSLiterals.ps1)"}
+                $user = if($trigger.User){" -User $($trigger.User |ConvertTo-PowerShell.ps1)"}
                 "(New-JobTrigger -AtLogon$user$delay)"
             }
             AtStartup {"(New-JobTrigger -AtStartup$delay)"}
@@ -102,20 +102,20 @@ Process
     $cmd = @{}
     $Job.InvocationInfo.Parameters[0] |% {[void]$cmd.Add($_.Name,$_.Value)}
     $FileOrScript =
-        if($cmd.ContainsKey('FilePath')) {"FilePath             = $($cmd.FilePath |Format-PSLiterals.ps1)"}
-        elseif($cmd.ContainsKey('ScriptBlock')) {"ScriptBlock          = $($cmd.ScriptBlock |Format-PSLiterals.ps1)"}
+        if($cmd.ContainsKey('FilePath')) {"FilePath             = $($cmd.FilePath |ConvertTo-PowerShell.ps1)"}
+        elseif($cmd.ContainsKey('ScriptBlock')) {"ScriptBlock          = $($cmd.ScriptBlock |ConvertTo-PowerShell.ps1)"}
 @"
 @{
-    Name                 = $($Job.Name |Format-PSLiterals.ps1)
+    Name                 = $($Job.Name |ConvertTo-PowerShell.ps1)
     $FileOrScript
-    ArgumentList         = $($cmd.ArgumentList |Format-PSLiterals.ps1)
-    InitializationScript = $($cmd.InitializationScript |Format-PSLiterals.ps1)
+    ArgumentList         = $($cmd.ArgumentList |ConvertTo-PowerShell.ps1)
+    InitializationScript = $($cmd.InitializationScript |ConvertTo-PowerShell.ps1)
     ScheduledJobOption   = $(Export-ScheduledJobOptions $Job.Options)
     Trigger              = $(($Job.JobTriggers |Export-ScheduledJobTrigger) -join ',')
     MaxResultCount       = $($Job.ExecutionHistoryLength)
-    RunAs32              = $($cmd.RunAs32 |Format-PSLiterals.ps1)
+    RunAs32              = $($cmd.RunAs32 |ConvertTo-PowerShell.ps1)
     Authentication       = $($cmd.Authentication)
-    Credential           = Get-Credential -Message $($Job.Name |Format-PSLiterals.ps1)
+    Credential           = Get-Credential -Message $($Job.Name |ConvertTo-PowerShell.ps1)
 } |% {Register-ScheduledJob @_}
 "@
 }

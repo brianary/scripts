@@ -29,7 +29,7 @@ function Export-ScheduledTaskAsXml
 Process
 {@"
 @{
-    TaskName = $($Task.TaskName |Format-PSLiterals.ps1)
+    TaskName = $($Task.TaskName |ConvertTo-PowerShell.ps1)
     Xml      = @'
 $((Export-ScheduledTask $Task.TaskName $Task.TaskPath) -replace "(?m)^'@$",'&#39;@')
 '@

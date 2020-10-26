@@ -18,7 +18,7 @@
 	System.Management.Automation.PSCredential containing a credential to serialize.
 
 .Link
-	Format-PSLiterals.ps1
+	ConvertTo-PowerShell.ps1
 
 .Link
 	https://docs.microsoft.com/dotnet/api/system.security.cryptography.rngcryptoserviceprovider
@@ -67,5 +67,5 @@ Begin
 }
 Process
 {
-	"Set-Variable '$Name' ($($Credential |Format-PSLiterals.ps1 -KeyBytes $key))" |Add-Content $Path
+	"Set-Variable '$Name' ($($Credential |ConvertTo-PowerShell.ps1 -KeyBytes $key))" |Add-Content $Path
 }

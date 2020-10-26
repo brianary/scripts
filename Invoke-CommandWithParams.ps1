@@ -23,7 +23,7 @@
     Select-DictionaryKeys.ps1
 
 .Link
-    Format-PSLiterals.ps1
+    ConvertTo-PowerShell.ps1
 
 .Link
     Get-Command
@@ -63,6 +63,6 @@ Process
     $selectedParams =
         if($OnlyMatches) {$Dictionary |Select-DictionaryKeys.ps1 -Keys $params -SkipNullValues}
         else {$Dictionary}
-    Write-Verbose "$Name $($selectedParams.Keys |% {"-$_ $(Format-PSLiterals.ps1 $selectedParams.$_ -IndentBy '')"})"
+    Write-Verbose "$Name $($selectedParams.Keys |% {"-$_ $(ConvertTo-PowerShell.ps1 $selectedParams.$_ -IndentBy '')"})"
     &$Name @selectedParams
 }
