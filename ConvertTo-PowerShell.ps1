@@ -40,6 +40,11 @@
 	System.String containing the object serialized to PowerShell literal statements.
 
 .Example
+	4096LMB |ConvertTo-PowerShell.ps1
+
+	4LGB
+
+.Example
 	ConvertFrom-Json '[{"a":1,"b":2,"c":{"d":"\/Date(1490216371478)\/","e":null}}]' |ConvertTo-PowerShell.ps1
 
 	@(
@@ -76,6 +81,7 @@ Begin
 	$itab = if($SkipInitialIndent){''}else{$Indent}
 	$tab = $Indent
 	$tabtab = "$Indent$IndentBy"
+	$units = @{ 1LKB = 'KB'; 1LMB = 'MB'; 1LGB = 'GB'; 1LTB = 'TB'; 1LPB = 'PB' }
 	if($GenerateKey)
 	{
 		[byte[]] $KeyBytes = New-Object byte[] 32
@@ -194,12 +200,40 @@ Process
 {
 	if($null -eq $Value)
 	{ "$itab`$null" }
-	elseif($Value -is [int])
-	{ "$itab$Value" }
 	elseif($Value -is [bool])
 	{ "$itab`$$Value" }
-	elseif([byte],[decimal],[double],[float],[int16],[long],[sbyte],[uint16],[uint32],[uint64] -contains $Value.GetType())
-	{ "$itab[$($Value.GetType().Name)]$Value" }
+	elseif([int],[long],[byte],[decimal],[double],[float],[short],[sbyte],[uint16],[uint32],[uint64],[bigint] -contains $Value.GetType())
+	{
+		$number,$unit = $Value,''
+		for($magnitude = 1LKB; $magnitude -le 1PB -and !($Value % $magnitude); $magnitude *= 1LKB)
+		{
+			$number = $Value / $magnitude
+			$unit = $units[$magnitude]
+		}
+		$suffix,$prefix =
+			if($Value -is [int]) {}
+			elseif($Value -is [long]) { 'L' }
+			elseif($Value -is [decimal]) { 'd' }
+			elseif($Value -is [bigint])
+			{
+				if($PSVersionTable.PSVersion.Major -lt 7) { "'","[bigint]'" }
+				else { 'n' }
+			}
+			elseif($PSVersionTable.PSVersion.Major -lt 7) { '',"[$($Value.GetType().Name)]" }
+			else
+			{
+				switch($Value.GetType().Name)
+				{
+					Byte   { 'uy' }
+					Int16  { 's'  }
+					SByte  { 'y'  }
+					UInt16 { 'us' }
+					UInt32 { 'u'  }
+					UInt64 { 'ul' }
+				}
+			}
+		"$itab$prefix$number$suffix$unit"
+	}
 	elseif([guid],[timespan],[char] -contains $Value.GetType())
 	{ "$itab[$($Value.GetType().Name)]'$Value'" }
 	elseif($Value -is [datetimeoffset])
