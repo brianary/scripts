@@ -43,7 +43,7 @@ digraph ScriptDependencies
 
 function Export-Dependencies($image)
 {
-    Use-Command.ps1 dot ${env:ProgramFiles(x86)}\Graphviz*\bin\dot.exe -msi http://graphviz.org/pub/graphviz/stable/windows/graphviz-2.38.msi
+    Use-Command.ps1 dot "$env:ChocolateyInstall\bin\dot.exe" -cinst graphviz
     $gv = Join-Path $PSScriptRoot ([IO.Path]::ChangeExtension($image,'gv'))
     Format-Dependencies |Out-File $gv -Encoding ascii -Width ([int]::MaxValue)
     $ext = [IO.Path]::GetExtension($image).Trim('.')
