@@ -78,7 +78,7 @@
 #Requires -Version 3
 [CmdletBinding()] Param(
 [Parameter(Position=0,ValueFromPipeline=$true)][datetime] $Date = (Get-Date),
-[ValidateSet('Equinox','Romme','Continuous','128Year')][string] $Method = 'Romme'
+[ValidateSet('Equinox','Romme','Continuous','128Year')][string] $Method = '128Year'
 )
 Begin
 {
@@ -180,7 +180,7 @@ Process
 	if($Date -lt [datetime]'1792-09-22') {Stop-ThrowError.ps1 'Dates prior to September 22, 1792 are not yet supported.' -NotImplemented}
 	[int] $lastleapt = if([datetime]::IsLeapYear($Date.Year) -and $Date.DayOfYear -gt 59) {$Date.Year} else {$Date.Year -1}
 	[int] $gregleaps = Measure-LeapDays $lastleapt {[datetime]::IsLeapYear($_)} 1796
-	[datetime] $d = $Date.AddDays(-265).AddYears(-1791)
+	[datetime] $d = $Date.AddYears(-1791).AddDays(-265)
 	[ScriptBlock] $isLeapYear =
 		switch($Method)
 		{ #TODO: implement equinox
@@ -193,7 +193,7 @@ Process
 	[int] $yearlength = if($isLeapYear.InvokeWithContext($null,[psvariable[]]@(New-Object psvariable '_',($d.Year)),$null)) {366} else {365}
 	[int] $frcleaps = Measure-LeapDays ($d.Year-1) $isLeapYear
 	[int] ${l'année} = $d.Year
-	Write-Verbose "day of year $($d.DayOfYear) • year length $yearlength • FRC leaps $frcleaps • Gregorian leaps $gregleaps"
+	Write-Verbose "year $($d.Year) • day of year $($d.DayOfYear) • year length $yearlength • FRC leaps $frcleaps • Gregorian leaps $gregleaps"
 	[int] ${jour de l'année} = $d.DayOfYear + $frcleaps - $gregleaps
 	if(${jour de l'année} -lt 1) {${l'année}--; ${jour de l'année} = $lastyearlength + ${jour de l'année}}
 	elseif(${jour de l'année} -gt $yearlength) {${l'année}++; ${jour de l'année} -= $yearlength}
