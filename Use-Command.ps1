@@ -159,7 +159,8 @@ switch($PSCmdlet.ParameterSetName)
         if($PSCmdlet.ShouldProcess($ChocolateyPackage,'Chocolatey install'))
         {
             if($Version) {cinst $ChocolateyPackage -y --version=$Version}
-            else {cinst $ChocolateyPackage -y}
+			else {cinst $ChocolateyPackage -y}
+			if($ChocolateyPackage -eq 'dot') {Write-Warning "You must run 'dot -c' as admin before Graphviz will work"}
             Set-ResolvedAlias $Name $Path
         }
         else { Write-Warning "Installation of $ChocolateyPackage was cancelled." }
