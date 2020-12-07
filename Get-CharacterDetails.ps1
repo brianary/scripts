@@ -250,7 +250,10 @@
     https://technet.microsoft.com/library/bb726984.aspx
 
 .Link
-    https://msdn.microsoft.com/library/system.io.path.getinvalidfilenamechars.aspx
+	https://msdn.microsoft.com/library/system.io.path.getinvalidfilenamechars.aspx
+
+.Link
+	https://docs.microsoft.com/dotnet/core/compatibility/3.1-5.0#unicode-category-changed-for-some-latin-1-characters
 
 .Example
     Get-CharacterDetails.ps1 ASCII |Out-GridView
