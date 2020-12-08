@@ -25,8 +25,8 @@
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true)]
-[ValidateSet('Iso8601','Iso8601Date','Iso8601OrdinalDate','Iso8601Week','Iso8601WeekDate','Iso8601Z',
-'Rfc1123')]
+[ValidateSet('FrenchRepublicanDateTime','Iso8601','Iso8601Date','Iso8601OrdinalDate',
+'Iso8601Week','Iso8601WeekDate','Iso8601Z','Rfc1123')]
 [string] $Format,
 [Parameter(Position=1,ValueFromPipeline=$true)][datetime] $Date = (Get-Date)
 )
@@ -34,6 +34,7 @@ Process
 {
 	switch($Format)
 	{
+		FrenchRepublicanDateTime {"$(Get-FrenchRepublicanDate.ps1 $Date)"}
 		Iso8601 {Get-Date $Date -f "yyyy'-'MM'-'dd'T'HH':'mm':'sszzzz"}
 		Iso8601Date {Get-Date $Date -uf %F}
 		Iso8601OrdinalDate {Get-Date $Date -uf "%Y-$('{0:000}' -f $Date.DayOfYear)"}
