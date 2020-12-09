@@ -37,7 +37,7 @@
 [CmdletBinding()][OutputType([void])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromRemainingArguments=$true)]
 [ValidateSet('FrenchRepublicanDateTime','Iso8601','Iso8601Date','Iso8601OrdinalDate',
-'Iso8601Week','Iso8601WeekDate','Iso8601Z','Rfc1123')]
+'Iso8601Week','Iso8601WeekDate','Iso8601Z','LocalLongDate','LocalLongDateTime','Rfc1123','Rfc1123Gmt')]
 [string[]] $Format,
 [Parameter(ValueFromPipeline=$true)][datetime] $Date = (Get-Date),
 [string] $Separator = " $(Get-Unicode.ps1 0x2022) ",
@@ -45,10 +45,9 @@
 [consolecolor] $BackgroundColor = $host.UI.RawUI.ForegroundColor
 )
 
-Set-Alias U+ Get-Unicode.ps1 -Scope Local
-Write-Host (U+ 0xE0B6) -ForegroundColor $BackgroundColor -NoNewline
+Write-Host (Get-Unicode.ps1 0xE0B6) -ForegroundColor $BackgroundColor -NoNewline
 Write-Host ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
 Write-Host (($Format |foreach {Format-Date.ps1 $_ -Date $Date}) -join $Separator) `
 	-ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
 Write-Host ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
-Write-Host (U+ 0xE0B4) -fore $BackgroundColor
+Write-Host (Get-Unicode.ps1 0xE0B4) -fore $BackgroundColor

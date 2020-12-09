@@ -26,7 +26,7 @@
 [CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true)]
 [ValidateSet('FrenchRepublicanDateTime','Iso8601','Iso8601Date','Iso8601OrdinalDate',
-'Iso8601Week','Iso8601WeekDate','Iso8601Z','Rfc1123')]
+'Iso8601Week','Iso8601WeekDate','Iso8601Z','LocalLongDate','LocalLongDateTime','Rfc1123','Rfc1123Gmt')]
 [string] $Format,
 [Parameter(Position=1,ValueFromPipeline=$true)][datetime] $Date = (Get-Date)
 )
@@ -40,7 +40,10 @@ Process
 		Iso8601OrdinalDate {Get-Date $Date -uf "%Y-$('{0:000}' -f $Date.DayOfYear)"}
 		Iso8601Week {Get-Date $Date -uf %Y-W%V}
 		Iso8601WeekDate {$w = [int]$Date.DayOfWeek; if($w -eq 0) {$w = 7}; Get-Date $Date -uf %Y-W%V-$w}
-		Iso8601Z {Get-Date $Date.ToUniversalTime() -f "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"}
+		Iso8601Z {"$(Get-Date $Date.ToUniversalTime() -f s)Z"}
+		LocalLongDate {Get-Date $Date -f D}
+		LocalLongDateTime {Get-Date $Date -f F}
 		Rfc1123 {Get-Date $Date -uf '%a, %e %b %Y %T %Z'}
+		Rfc1123Gmt {Get-Date $Date.ToUniversalTime() -f R}
 	}
 }
