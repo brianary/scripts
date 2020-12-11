@@ -23,11 +23,11 @@
 	Path         : .\README.md
 	CreateCommit : 1fde7af
 	CreateAuthor : Brian Lalonde
-	CreateEmail  : brianary@gmail.com
+	CreateEmail  : brianary@example.com
 	CreateDate   : 01/19/2015 11:44:15
 	LastCommit   : dbe27ba
 	LastAuthor   : Brian Lalonde
-	LastEmail    : brianary@gmail.com
+	LastEmail    : brianary@example.com
 	LastDate     : 12/07/2020 20:17:15
 #>
 
