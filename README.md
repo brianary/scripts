@@ -56,6 +56,7 @@ PowerShell Scripts
 - **[Export-SmbShares.ps1](Export-SmbShares.ps1)**: Export SMB shares using old NET SHARE command, to new New-SmbShare PowerShell commands.
 - **[Export-TableMerge.ps1](Export-TableMerge.ps1)**: Exports table data as a T-SQL MERGE statement.
 - **[Export-WebConfiguration.ps1](Export-WebConfiguration.ps1)**: Exports IIS websites, app pools, and web apps as an idempotent PowerShell script to recreate them.
+- :new: **[Find-Comics.ps1](Find-Comics.ps1)**: Finds comics.
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1)**: Searches an entire database for a field value.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1)**: Searches for database columns.
 - **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1)**: Removes duplicates from a list of files.
@@ -75,6 +76,7 @@ PowerShell Scripts
 - **[Get-AssemblyFramework.ps1](Get-AssemblyFramework.ps1)**: Gets the framework version an assembly was compiled for.
 - :up: **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-ClassicAspEvents.ps1](Get-ClassicAspEvents.ps1)**: Gets Classic ASP errors from the event log on the given server.
+- :new: **[Get-Comics.ps1](Get-Comics.ps1)**: Returns a cached list of comics from the Shortboxed API.
 - **[Get-CommandPath.ps1](Get-CommandPath.ps1)**: Locates a command.
 - **[Get-ConfigConnectionStringBuilders.ps1](Get-ConfigConnectionStringBuilders.ps1)**: Return named connection string builders for connection strings in a config file.
 - **[Get-ConsoleColors.ps1](Get-ConsoleColors.ps1)**: Gets current console color details.
@@ -82,6 +84,7 @@ PowerShell Scripts
 - **[Get-Dns.ps1](Get-Dns.ps1)**: Looks up DNS info, given a hostname or address.
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1)**: Returns the possible values of the specified enumeration.
 - :up: **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1)**: Returns a date and time converted to the French Republican Calendar.
+- :new: **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-Html.ps1](Get-Html.ps1)**: Gets elements from a web response by tag name.
 - **[Get-IisLog.ps1](Get-IisLog.ps1)**: Easily query IIS logs.
 - **[Get-LibraryVulnerabilityInfo.ps1](Get-LibraryVulnerabilityInfo.ps1)**: Get the list of module/package/library vulnerabilities from the RetireJS or SafeNuGet projects.
@@ -117,6 +120,7 @@ PowerShell Scripts
 - **[New-Password.ps1](New-Password.ps1)**: Generate a new password.
 - **[New-Script.ps1](New-Script.ps1)**: Creates a simple boilerplate script.
 - **[New-Shortcut.ps1](New-Shortcut.ps1)**: Create a Windows shortcut.
+- :new: **[Open-Comic.ps1](Open-Comic.ps1)**: Opens a comic's PreviewsWorld page.
 - **[Optimize-Path.ps1](Optimize-Path.ps1)**: Sorts, prunes, and normalizes both user and system Path entries.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1)**: Pushes the current VS Code editor workspace location to the location stack.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1)**: Retrieves the a summary from the Chocolatey log.
@@ -187,4 +191,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 12/07/2020 20:16:53 -->
+<!-- generated 12/18/2020 20:47:28 -->
