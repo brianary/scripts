@@ -33,6 +33,9 @@
 .Link
 	https://api.shortboxed.com/
 
+.Link
+	Get-Comics.ps1
+
 .Example
 	Find-Comics.ps1 -Creator 'Grant Morrison','Matt Fraction','David Aja','Kyle Higgins' |Format-Table publisher,title,creators
 
