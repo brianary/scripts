@@ -57,8 +57,8 @@
 )
 switch($PSCmdlet.ParameterSetName)
 {
-	Title {Get-Comics.ps1 $ReleaseWeek -pv c |where {$Title |where {$c.title -like "*$_*"}}}
-	Creator {Get-Comics.ps1 $ReleaseWeek -pv c |where {$Creator |where {$c.creators -like "*$_*"}}}
+	Title {Get-Comics.ps1 $ReleaseWeek -pv c |where {$Title |where {$c -and $c.title -like "*$_*"}}}
+	Creator {Get-Comics.ps1 $ReleaseWeek -pv c |where {$Creator |where {$c -and $c.creators -like "*$_*"}}}
 	TitleMatch {Get-Comics.ps1 $ReleaseWeek |where {$_.title -match $TitleMatch}}
 	CreatorMatch {Get-Comics.ps1 $ReleaseWeek |where {$_.creators -match $CreatorMatch}}
 	Condition {Get-Comics.ps1 $ReleaseWeek |where $Condition}
