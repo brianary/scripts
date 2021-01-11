@@ -40,14 +40,16 @@ Process
 		Iso8601OrdinalDate {Get-Date $Date -uf "%Y-$('{0:000}' -f $Date.DayOfYear)"}
 		Iso8601Week
 		{
-			if(53 -eq (Get-Date $Date -uf %V) -and $Date.Month -eq 1) {"$($Date.Year-1)-W$(Get-Date -uf %V)"}
-			else {Get-Date $Date -uf %Y-W%V}
+			$V = '{0:00}' -f [int](Get-Date $Date -uf %V)
+			if(53 -eq (Get-Date $Date -uf %V) -and $Date.Month -eq 1) {"$($Date.Year-1)-W$V"}
+			else {Get-Date $Date -uf %Y-W$V}
 		}
 		Iso8601WeekDate
 		{
 			$w = [int]$Date.DayOfWeek; if($w -eq 0) {$w = 7}
-			if(53 -eq (Get-Date $Date -uf %V) -and $Date.Month -eq 1) {"$($Date.Year-1)-W$(Get-Date -uf %V)-$w"}
-			else {Get-Date $Date -uf %Y-W%V-$w}
+			$V = '{0:00}' -f [int](Get-Date $Date -uf %V)
+			if(53 -eq (Get-Date $Date -uf %V) -and $Date.Month -eq 1) {"$($Date.Year-1)-W$V-$w"}
+			else {Get-Date $Date -uf %Y-W$V-$w}
 		}
 		Iso8601Z {"$(Get-Date $Date.ToUniversalTime() -f s)Z"}
 		LocalLongDate {Get-Date $Date -f D}
