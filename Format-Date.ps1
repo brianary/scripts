@@ -55,6 +55,6 @@ Process
 		LocalLongDate {Get-Date $Date -f D}
 		LocalLongDateTime {Get-Date $Date -f F}
 		Rfc1123 {Get-Date $Date -uf '%a, %e %b %Y %T %Z'} # CLR R format zero-pads date instead of space-padding like %e
-		Rfc1123Gmt {Get-Date $Date.ToUniversalTime() -uf '%a, %e %b %Y %T %Z'}
+		Rfc1123Gmt {Get-Date $Date.ToUniversalTime() -uf '%a, %e %b %Y %T GMT'}
 	}
 }
