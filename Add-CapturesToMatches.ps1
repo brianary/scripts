@@ -32,18 +32,18 @@
 )
 Process
 {
-    if($PSVersionTable.CLRVersion -lt [version]4.7)
+    if($PSVersionTable.PSEdition -eq 'Desktop' -and $PSVersionTable.CLRVersion -lt [version]4.7)
     { # old CLR is really tedious to get group names
         [regex]$regex = $MatchInfo.Pattern
         $regex.GetGroupNames() |
-            ? {$_ -Match '\D'} |
-            % {Add-Member -InputObject $MatchInfo $_ $MatchInfo.Matches.Groups[$regex.GroupNumberFromName($_)].Value}
+            where {$_ -Match '\D'} |
+            foreach {Add-Member -InputObject $MatchInfo $_ $MatchInfo.Matches.Groups[$regex.GroupNumberFromName($_)].Value}
     }
     else
     {
         $MatchInfo.Matches.Groups |
-            ? Name -Match '\D' |
-            % {Add-Member -InputObject $MatchInfo $_.Name $_.Value}
+            where Name -Match '\D' |
+            foreach {Add-Member -InputObject $MatchInfo $_.Name $_.Value}
     }
     $MatchInfo
 }
