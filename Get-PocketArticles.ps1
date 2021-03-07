@@ -36,6 +36,13 @@
 	System.Management.Automation.PSObject containing article details.
 	See https://getpocket.com/developer/docs/v3/retrieve for fields.
 
+.Notes
+	You'll need a "consumer key" (API key; see the link below to "create new app").
+	You'll be prompted for that, and to authorize it to your account.
+
+.Link
+	https://getpocket.com/developer/
+
 .Link
 	Set-ParameterDefault.ps1
 
