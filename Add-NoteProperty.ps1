@@ -35,7 +35,6 @@
 	1.4KB  Get-ContentSecurityPolicy.ps1
 	617    Get-Dns.ps1
 	2.4KB  Get-EnumValues.ps1
-	1.1KB  Get-Html.ps1
 	6KB    Get-IisLog.ps1
 	1.9KB  Get-LibraryVulnerabilityInfo.ps1
 	2.7KB  Get-NetFrameworkVersions.ps1
