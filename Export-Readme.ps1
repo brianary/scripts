@@ -90,12 +90,24 @@ function Export-FSharpFormatting
 		if(!(Test-Path .config/dotnet-tools.json -Type Leaf)) {dotnet new tool-manifest}
 		dotnet tool install FSharp.Formatting.CommandTool
 	}
-    $tmp = "$PSScriptRoot\.fsxtmp"
-    if(Test-Path $tmp -PathType Container) {rm -Force -Recurse $tmp}
-    mkdir $tmp |Out-Null
-    cp $PSScriptRoot\*.fsx $tmp
-	dotnet fsdocs build --input $tmp --output fsdocs 2>&1 |Out-Null
-    rm -Force -Recurse $tmp
+    $input,$output = "$PSScriptRoot\.fsxtmp","$PSScriptRoot\fsdocs"
+    if(Test-Path $input -PathType Container) {rm -Force -Recurse $input}
+    mkdir $input |Out-Null
+    Copy-Item $PSScriptRoot\*.fsx $input
+	if(!(Test-Path $output -Type Container)) {mkdir $output}
+	dotnet fsdocs build --input $input --output $output --parameters fsdocs-list-of-namespaces . 2>&1 |Out-Null
+    Remove-Item -Force -Recurse $input
+	$replace = [ordered]@{
+		'"/scripts/"' = '"https://github.com/brianary/scripts/"'
+		'"/scripts/img/logo.png"' = '"https://fsprojects.github.io/FSharp.Formatting/img/logo.png"'
+		'"/scripts/' = '"'
+	}
+	foreach($file in Get-Item $output/*.html)
+	{
+		$html = Get-Content $file -Raw
+		$replace.Keys |foreach {$html = $html.Replace($_,$replace[$_])}
+		$html |Out-File $file utf8
+	}
 }
 
 function Format-FSScripts
