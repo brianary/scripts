@@ -7,7 +7,7 @@
 #>
 
 #Requires -Version 3
-#Requires -Modules SqlServer,PSScheduledJob
+#Requires -Modules SqlServer
 [CmdletBinding()][OutputType([void])] Param(
 [string]$DependenciesImage = 'dependencies.svg',
 [string]$StatusAge = '2 weeks ago'
@@ -82,35 +82,26 @@ function Format-PSScripts
         }
 }
 
-function Install-RequiredPackages
-{
-    Use-Command.ps1 paket $PSScriptRoot -url (irm http://fsprojects.github.io/Paket/stable)
-    if(Test-Path paket.lock -PathType Leaf) {paket restore}
-    else {paket install |Write-Host}
-}
-
 function Export-FSharpFormatting
 {
-    $tmp = "$PSScriptRoot\fsxtmp"
+	Use-Command.ps1 dotnet "$env:ProgramFiles\dotnet\dotnet.exe" -cinst dotnet-sdk
+	if("$(dotnet fsdocs version 2>&1)" -notmatch 'fsdocs *')
+	{
+		if(!(Test-Path .config/dotnet-tools.json -Type Leaf)) {dotnet new tool-manifest}
+		dotnet tool install FSharp.Formatting.CommandTool
+	}
+    $tmp = "$PSScriptRoot\.fsxtmp"
     if(Test-Path $tmp -PathType Container) {rm -Force -Recurse $tmp}
     mkdir $tmp |Out-Null
     cp $PSScriptRoot\*.fsx $tmp
-    ${fsformatting.exe} = "$PSScriptRoot\packages\FSharp.Formatting.CommandTool\tools\fsformatting.exe"
-    if(!(Test-Path ${fsformatting.exe} -PathType Leaf)) {Install-RequiredPackages}
-    $fmtargs = @(
-        'literate','--processDirectory','--inputDirectory',"$PSScriptRoot\fsxtmp",'--templateFile',
-        "$PSScriptRoot\fsxfmt\template.html"
-    )
-    Write-Verbose "${fsformatting.exe} $fmtargs"
-    & ${fsformatting.exe} @fmtargs |Write-Verbose
-    cp $tmp\*.html $PSScriptRoot
+	dotnet fsdocs build --input $tmp --output fsdocs 2>&1 |Out-Null
     rm -Force -Recurse $tmp
 }
 
 function Format-FSScripts
 {
     Export-FSharpFormatting
-    $base = 'https://cdn.rawgit.com/brianary/scripts/master/'
+    $base = 'https://cdn.rawgit.com/brianary/scripts/master/fsdocs/'
     $FSFHeadPattern = @'
 (?mx) \A \s*
 ^\(\*\* \s* $ \s*
@@ -154,12 +145,16 @@ function Format-SysCfgScripts
 
 function Format-PS5Scripts
 {
-    ls $PSScriptRoot\PS5\*.ps1 |
-        % {Get-Help $_.FullName} |
-        % {
-            $name = Split-Path $_.Name -Leaf
-            "- **[$name]($name)**: $($_.Synopsis)"
-        }
+	Use-Command.ps1 powershell "$env:SystemRoot\system32\windowspowershell\v1.0\powershell.exe" -Message 'Missing PowerShell 5!'
+	powershell -nol -nop -noni -Command @"
+	& {
+		Import-Module Microsoft.PowerShell.Utility
+		Add-Type -AN System.Web
+		Get-Item $PSScriptRoot\PS5\*.ps1 |
+			foreach {Get-Help `$_.FullName} |
+			foreach {'- **[{0}]({0})**: {1}' -f (Split-Path `$_.Name -Leaf),`$_.Synopsis}
+	}
+"@
 }
 
 function Format-SysCfgReadme
