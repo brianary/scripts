@@ -25,9 +25,9 @@ digraph ScriptDependencies
 '@
 	$path = $env:Path
 	$env:Path = $PSScriptRoot
-	[pscustomobject[]] $help = Get-Help *.ps1
-	$i,$max = 0,($help.Count/100)
-	foreach($help in Get-Help *.ps1)
+	[pscustomobject[]] $scripthelp = Get-Help *.ps1
+	$i,$max = 0,($scripthelp.Count/100)
+	foreach($help in $scripthelp)
 	{
 		Write-Progress 'Building dependency graph' 'Parsing dependencies' -curr $help.Name -percent ($i++/$max)
 		Write-Verbose $help.Name
@@ -35,9 +35,9 @@ digraph ScriptDependencies
 			!(Get-Member relatedLinks -InputObject $help -MemberType Properties)) {continue}
 		$help.relatedLinks.navigationLink |
 			? {Get-Member linkText -InputObject $_ -MemberType Properties} |
-			% {$_.linkText} |
+			foreach {$_.linkText} |
 			? {$_ -like '*.ps1'} |
-			% {"    `"$(Split-Path $help.Name -Leaf)`" -> `"$_`" "}
+			foreach {"    `"$(Split-Path $help.Name -Leaf)`" -> `"$_`" "}
 	}
 	$env:Path = $path
 	@'
@@ -54,7 +54,7 @@ function Export-Dependencies($image)
 	Format-Dependencies |Out-File $gv -Encoding ascii -Width ([int]::MaxValue)
 	$ext = [IO.Path]::GetExtension($image).Trim('.')
 	dot "-T$ext" -o $PSScriptRoot\$image $gv
-	rm $gv
+	Remove-Item $gv
 	Write-Progress 'Creating dependency image' -Completed
 }
 
@@ -80,12 +80,12 @@ function Format-PSScripts
 	Write-Progress 'Enumerating PowerShell scripts' 'Getting list of recent changes'
 	$status = @{}
 	git diff --name-status $(git rev-list -1 --before="$StatusAge" master) |
-		% {if($_ -match '^(?<Status>\w)\t(?<Script>\S.*)') {$status[$Matches.Script] = Get-StatusSymbol $Matches.Status}}
+		foreach {if($_ -match '^(?<Status>\w)\t(?<Script>\S.*)') {$status[$Matches.Script] = Get-StatusSymbol $Matches.Status}}
 	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\*.ps1
 	$i,$max = 0,($scripts.Count/100)
 	$scripts |
-		% {Get-Help $_.FullName} |
-		% {
+		foreach {Get-Help $_.FullName} |
+		foreach {
 			$name = Split-Path $_.Name -Leaf
 			Write-Progress 'Enumerating PowerShell scripts' 'Writing list' -curr $name -percent ($i++/$max)
 			$symbol = if($status.ContainsKey($name)){$status[$name]}
@@ -111,9 +111,6 @@ function Export-FSharpFormatting
 	if(!(Test-Path $output -Type Container)) {mkdir $output}
 	dotnet fsdocs build --input $input --output $output --parameters fsdocs-list-of-namespaces . 2>&1 |Out-Null
 	Remove-Item -Force -Recurse $input
-	$replace = [ordered]@{
-		'"/scripts/img/logo.png"' = '"https://fsprojects.github.io/FSharp.Formatting/img/logo.png"'
-	}
 	Write-Progress 'Exporting F# script documentation' -Completed
 }
 
@@ -132,9 +129,9 @@ function Format-FSScripts
 	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\*.fsx
 	$i,$max = 0,($scripts.Count/100)
 	$scripts |
-		% {(Resolve-Path $_.FullName -Relative) -replace '\\','/' -replace '\A\./',''} |
+		foreach {(Resolve-Path $_.FullName -Relative) -replace '\\','/' -replace '\A\./',''} |
 		? {(Get-Content $_ -TotalCount 1) -match '\A\s*\(\*\*\s*\z'} |
-		% {
+		foreach {
 			Write-Progress 'Enumerating F# scripts' 'Writing list' -curr $_ -percent ($i++/$max)
 			if((Get-Content $_ -Raw) -match $FSFHeadPattern)
 			{
@@ -151,8 +148,8 @@ function Format-VBAScripts
 	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\*.vba
 	$i,$max = 0,($scripts.Count/100)
 	$scripts |
-		% {(Resolve-Path $_.FullName -Relative) -replace '\\','/' -replace '\A\./',''} |
-		% {
+		foreach {(Resolve-Path $_.FullName -Relative) -replace '\\','/' -replace '\A\./',''} |
+		foreach {
 			Write-Progress 'Enumerating VisualBasic for Applications scripts' 'Writing list' -curr $_ -percent ($i++/$max)
 			if((Get-Content $_ -Raw) -match $VBAHeadPattern)
 			{
@@ -168,8 +165,8 @@ function Format-SysCfgScripts
 	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\syscfg\*.ps1
 	$i,$max = 0,($scripts.Count/100)
 	$scripts |
-		% {Get-Help $_.FullName} |
-		% {
+		foreach {Get-Help $_.FullName} |
+		foreach {
 			Write-Progress 'Enumerating System Configuration PowerShell scripts' 'Writing list' -curr $_.Name -percent ($i++/$max)
 			$name = Split-Path $_.Name -Leaf
 			"- **[$name]($name)**: $($_.Synopsis)"
