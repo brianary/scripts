@@ -259,7 +259,25 @@ $(Format-VBAScripts)
 	Write-Progress 'Building readme' -Completed
 }
 
+function Export-PSScriptPages
+{
+	Import-Module platyPS
+	Write-Progress 'Export PowerShell script help pages' 'Removing docs for old scripts'
+	Get-Item $PSScriptRoot\docs\*.ps1.md |
+		where {!(Test-Path "$PSScriptRoot\$([IO.Path]::GetFileNameWithoutExtension($_.Name))" -Type Leaf)} |
+		Remove-Item
+	Write-Progress 'Export PowerShell script help pages' 'Updating script docs'
+	Update-MarkdownHelp $PSScriptRoot\docs\*.ps1.md |Write-Verbose
+	Write-Progress 'Export PowerShell script help pages' 'Adding docs for new scripts'
+	Get-Item $PSScriptRoot\*.ps1 |
+		where {!(Test-Path "$PSScriptRoot\$($_.Name).md" -Type Leaf)} |
+		foreach {New-MarkdownHelp -Command $_.Name -OutputFolder docs} |
+		Write-Verbose
+	Write-Progress 'Export PowerShell script help pages' -Completed
+}
+
 Add-Type -AN System.Web
 Format-Readme |Out-File $PSScriptRoot\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Format-SysCfgReadme |Out-File $PSScriptRoot\syscfg\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Format-PS5Readme |Out-File $PSScriptRoot\PS5\README.md -Encoding utf8 -Width ([int]::MaxValue)
+Export-PSScriptPages
