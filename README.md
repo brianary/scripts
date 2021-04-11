@@ -180,9 +180,8 @@ PowerShell Scripts
 
 F# Scripts
 ----------
-A:\scripts\fsdocs
-- **[NCrontab Schedule Test](https://cdn.rawgit.com/brianary/scripts/master/fsdocs/Test-NCrontab.html)**: Returns a sampling of the next several date & times scheduled by an NCrontab string.
-- **[US Federal Holiday Detection](https://cdn.rawgit.com/brianary/scripts/master/fsdocs/USFederalHolidays.html)**: Here's how to determine whether a date is a US federal holiday using F#.
+- **[NCrontab Schedule Test](https://webcoder.info/scripts/Test-NCrontab.html)**: Returns a sampling of the next several date & times scheduled by an NCrontab string.
+- **[US Federal Holiday Detection](https://webcoder.info/scripts/USFederalHolidays.html)**: Here's how to determine whether a date is a US federal holiday using F#.
 
 Office VBA Scripts
 ------------------
@@ -190,4 +189,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 04/09/2021 14:18:21 -->
+<!-- generated 04/11/2021 13:41:43 -->
