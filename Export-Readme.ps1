@@ -109,7 +109,7 @@ function Export-FSharpFormatting
 	mkdir $input |Out-Null
 	Copy-Item $PSScriptRoot\*.fsx $input
 	if(!(Test-Path $output -Type Container)) {mkdir $output}
-	dotnet fsdocs build --input $input --output $output --parameters fsdocs-list-of-namespaces . 2>&1 |Out-Null
+	dotnet fsdocs build --input $input --output $output --noapidocs --parameters root / fsdocs-list-of-namespaces . 2>&1 |Write-Verbose
 	Remove-Item -Force -Recurse $input
 	Write-Progress 'Exporting F# script documentation' -Completed
 }
