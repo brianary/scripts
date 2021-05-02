@@ -16,14 +16,15 @@ Easily query IIS logs.
 ```
 Get-IisLog.ps1 [-ComputerName <String[]>] [[-After] <DateTime>] [[-Before] <DateTime>] [-IpAddr <String[]>]
  [-Username <String[]>] [-Status <Int32[]>] [-Method <WebRequestMethod[]>] [-UriPathLike <String>]
- [-QueryLike <String>] [-ReferrerLike <String>] [<CommonParameters>]
+ [-QueryLike <String>] [-ReferrerLike <String>] [-LogFormat <String>] [<CommonParameters>]
 ```
 
 ### Directory
 ```
 Get-IisLog.ps1 [-LogDirectory <DirectoryInfo[]>] [[-After] <DateTime>] [[-Before] <DateTime>]
  [-IpAddr <String[]>] [-Username <String[]>] [-Status <Int32[]>] [-Method <WebRequestMethod[]>]
- [-UriPathLike <String>] [-QueryLike <String>] [-ReferrerLike <String>] [<CommonParameters>]
+ [-UriPathLike <String>] [-QueryLike <String>] [-ReferrerLike <String>] [-LogFormat <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -220,6 +221,21 @@ Aliases: RefererLike
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LogFormat
+{{ Fill LogFormat Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Iisw3c
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
