@@ -5,37 +5,67 @@ online version: https://msdn.microsoft.com/library/microsoft.sqlserver.managemen
 schema: 2.0.0
 ---
 
-# Export-DatabaseScripts.ps1
+# Export-DatabaseObjectScript.ps1
 
 ## SYNOPSIS
-Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+Exports MS SQL script for an object from the given server.
 
 ## SYNTAX
 
+### Urn
 ```
-Export-DatabaseScripts.ps1 [-Server] <String> [-Database] <String> [[-Encoding] <String>]
- [[-ScriptingOptions] <String[]>] [-SqlVersion <SqlServerVersion>] [<CommonParameters>]
+Export-DatabaseObjectScript.ps1 [-Server] <String> [-Database] <String> -Urn <String> [-Schema <String>]
+ -FilePath <String> [-Encoding <String>] [-Append] [-ScriptingOptions <String[]>]
+ [-SqlVersion <SqlServerVersion>] [<CommonParameters>]
+```
+
+### Table
+```
+Export-DatabaseObjectScript.ps1 [-Server] <String> [-Database] <String> -Table <String> [-Schema <String>]
+ -FilePath <String> [-Encoding <String>] [-Append] [-ScriptingOptions <String[]>]
+ [-SqlVersion <SqlServerVersion>] [<CommonParameters>]
+```
+
+### View
+```
+Export-DatabaseObjectScript.ps1 [-Server] <String> [-Database] <String> -View <String> [-Schema <String>]
+ -FilePath <String> [-Encoding <String>] [-Append] [-ScriptingOptions <String[]>]
+ [-SqlVersion <SqlServerVersion>] [<CommonParameters>]
+```
+
+### StoredProcedure
+```
+Export-DatabaseObjectScript.ps1 [-Server] <String> [-Database] <String> -StoredProcedure <String>
+ [-Schema <String>] -FilePath <String> [-Encoding <String>] [-Append] [-ScriptingOptions <String[]>]
+ [-SqlVersion <SqlServerVersion>] [<CommonParameters>]
+```
+
+### UserDefinedFunction
+```
+Export-DatabaseObjectScript.ps1 [-Server] <String> [-Database] <String> -UserDefinedFunction <String>
+ [-Schema <String>] -FilePath <String> [-Encoding <String>] [-Append] [-ScriptingOptions <String[]>]
+ [-SqlVersion <SqlServerVersion>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This script exports all database objects as scripts into a subdirectory with the same name as the database,
-and further subdirectories by object type.
-The directory is deleted and recreated each time this script is
-run, to clean up objects that have been deleted from the database.
+This allows exporting a single database object to a SQL script, rather than
+a whole database as Export-DatabaseScripts.ps1 does.
 
-There are a default set of SMO scripting options set to do a typical export, though these may be overridden
-(see the link below for a list of these options).
-
-This does require SMO to be installed on the machine (it comes with SQL Management Studio).
+It can be particularly useful for creating an object-drop script, with all dependencies.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Export-SqlScripts.ps1 ServerName\instance AdventureWorks2014
+Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath Sales.Customer.sql
+Exports table creation script to Sales.Customer.sql as UTF8.
 ```
 
-Outputs SQL scripts to files.
+### EXAMPLE 2
+```
+Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath DropCustomer.sql ScriptDrops WithDependencies SchemaQualify IncludeDatabaseContext
+Exports drop script of Sales.Customer and dependencies to DropCustomer.sql.
+```
 
 ## PARAMETERS
 
@@ -45,7 +75,7 @@ The name of the server (and instance) to connect to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: ServerInstance
 
 Required: True
 Position: 1
@@ -60,10 +90,121 @@ The name of the database to connect to on the server.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: TABLE_CATALOG, ROUTINE_CATALOG
 
 Required: True
 Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Urn
+The Urn of the database object to script.
+Example: "Server\[@Name='ServerName\Instance'\]/Database\[@Name='DatabaseName'\]/Table\[@Name='TableName' and @Schema='dbo'\]"
+
+```yaml
+Type: String
+Parameter Sets: Urn
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Table
+The unquoted name of the table to script.
+Resolved using the Schema parameter.
+
+```yaml
+Type: String
+Parameter Sets: Table
+Aliases: TABLE_NAME
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -View
+The unquoted name of the view to script.
+Resolved using the Schema parameter.
+
+```yaml
+Type: String
+Parameter Sets: View
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StoredProcedure
+The unquoted name of the stored procedure to script.
+Resolved using the Schema parameter.
+
+```yaml
+Type: String
+Parameter Sets: StoredProcedure
+Aliases: ROUTINE_NAME, Procedure, SProcedure
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -UserDefinedFunction
+The unquoted name of the user defined function to script.
+Resolved using the Schema parameter.
+
+```yaml
+Type: String
+Parameter Sets: UserDefinedFunction
+Aliases: UDF, Function
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Schema
+The unquoted name of the schema to use with the Table, View, StoredProcedure, or UserDefinedFunction parameters.
+Defaults to dbo.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: TABLE_SCHEMA, ROUTINE_SCHEMA
+
+Required: False
+Position: Named
+Default value: Dbo
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -FilePath
+The file to export the script to.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -78,8 +219,24 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: UTF8
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Append
+Indicates the file should be appended to, rather than replaced.
+Useful when piping a list of objects to be scripted to a file.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -93,10 +250,8 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
-Default value: (@'
-EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers ScriptBatchTerminator
-'@.Trim() -split '\W+')
+Position: Named
+Default value: 'EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers ScriptBatchTerminator' -split '\s+'
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -124,6 +279,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### System.Data.DataRow, INFORMATION_SCHEMA.TABLES or INFORMATION_SCHEMA.ROUTINES records.
 ## OUTPUTS
 
 ### System.Void
@@ -131,9 +287,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
+[Export-DatabaseScripts.ps1]()
+
+[Install-SqlServerModule.ps1]()
+
 [https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx](https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx)
 
 [https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx](https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx)
 
-[Install-SqlServerModule.ps1]()
+[https://msdn.microsoft.com/library/cc646021.aspx](https://msdn.microsoft.com/library/cc646021.aspx)
 
