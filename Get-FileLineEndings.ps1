@@ -11,11 +11,14 @@
 .Outputs
 	System.String containing:
 
-	* CRLF if the file only contains CRLF line endings
+	* CRLF if the file only contains CRLF line endings.
 	* LF if the file only contains LF line endings.
 	* CR if the file only contains CR line endings.
-	* Mixed (CRLF=n, LF=m, CR=k) if the file contains different line endings.
+	* Mixed (CRLF=n, LF=m, CR=k) if the file contains multiple different line endings.
 	* None if the file contains no line endings.
+
+.Link
+	Get-FileEncoding.ps1
 
 .Link
 	Get-Content
@@ -36,7 +39,7 @@ Process
 	[scriptblock] $gc, [scriptblock] $toValue =
 		if($PSVersionTable.PSEdition -eq 'Core')
 		{
-			switch((Get-Encoding.ps1 $Path).WebName)
+			switch((Get-FileEncoding.ps1 $Path).WebName)
 			{
 				'utf-16'   { {Get-Content $Path -ReadCount 2 -AsByteStream}.GetNewClosure(), {[bitconverter]::ToInt16($_,0)} }
 				'utf-16be' { {Get-Content $Path -ReadCount 2 -AsByteStream}.GetNewClosure(), {[array]::Reverse($_);[bitconverter]::ToInt16($_,0)} }
@@ -47,7 +50,7 @@ Process
 		}
 		else
 		{
-			switch(Get-Encoding.ps1 $Path)
+			switch(Get-FileEncoding.ps1 $Path)
 			{
 				unicode          { {Get-Content $Path -ReadCount 2 -Encoding Byte}.GetNewClosure(), {[bitconverter]::ToInt16($_,0)} }
 				bigendianunicode { {Get-Content $Path -ReadCount 2 -Encoding Byte}.GetNewClosure(), {[array]::Reverse($_);[bitconverter]::ToInt16($_,0)} }

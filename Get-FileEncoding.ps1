@@ -16,7 +16,23 @@
 	Test-FileTypeMagicNumber.ps1
 
 .Example
-	Get-Encoding.ps1 readme.md
+	Get-FileEncoding.ps1 README.md
+
+	IsSingleByte      : True
+	Preamble          :
+	BodyName          : us-ascii
+	EncodingName      : US-ASCII
+	HeaderName        : us-ascii
+	WebName           : us-ascii
+	WindowsCodePage   : 1252
+	IsBrowserDisplay  : False
+	IsBrowserSave     : False
+	IsMailNewsDisplay : True
+	IsMailNewsSave    : True
+	EncoderFallback   : System.Text.EncoderReplacementFallback
+	DecoderFallback   : System.Text.DecoderReplacementFallback
+	IsReadOnly        : True
+	CodePage          : 20127
 #>
 
 #Requires -Version 3
