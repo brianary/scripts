@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-Encoding.ps1
+# Get-FileEncoding.ps1
 
 ## SYNOPSIS
 Returns the encoding for a given file, suitable for passing to encoding parameters.
@@ -13,7 +13,7 @@ Returns the encoding for a given file, suitable for passing to encoding paramete
 ## SYNTAX
 
 ```
-Get-Encoding.ps1 [-Path] <String> [<CommonParameters>]
+Get-FileEncoding.ps1 [-Path] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,8 +23,24 @@ Get-Encoding.ps1 [-Path] <String> [<CommonParameters>]
 
 ### EXAMPLE 1
 ```
-Get-Encoding.ps1 readme.md
+Get-FileEncoding.ps1 README.md
 ```
+
+IsSingleByte      : True
+Preamble          :
+BodyName          : us-ascii
+EncodingName      : US-ASCII
+HeaderName        : us-ascii
+WebName           : us-ascii
+WindowsCodePage   : 1252
+IsBrowserDisplay  : False
+IsBrowserSave     : False
+IsMailNewsDisplay : True
+IsMailNewsSave    : True
+EncoderFallback   : System.Text.EncoderReplacementFallback
+DecoderFallback   : System.Text.DecoderReplacementFallback
+IsReadOnly        : True
+CodePage          : 20127
 
 ## PARAMETERS
 
