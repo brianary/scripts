@@ -283,7 +283,8 @@ logparser $sql -i:$LogFormat -o:TSV -headers:off -stats:off |
         [Net.IpAddress]$_.IpAddress = $_.IpAddress
         [Microsoft.PowerShell.Commands.WebRequestMethod]$_.Method = $_.Method
         [uri]$_.Referrer = $_.Referrer
-        $_.Status = [Net.HttpStatusCode]$_.StatusCode
+        $code = $_.StatusCode
+        $_.Status = try{[Net.HttpStatusCode]$code}catch{"$code"}
         $iisFullStatus = $_.StatusCode + '.' + $_.SubStatusCode
         if($iisSubStatus.ContainsKey($iisFullStatus)) {$_.SubStatus = $iisSubStatus[$iisFullStatus]}
         $_.WinStatus = [ComponentModel.Win32Exception][uint32]$_.WinStatusCode
