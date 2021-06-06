@@ -63,6 +63,7 @@
 using assembly System.Web
 [CmdletBinding()][OutputType([string],[SecureString])] Param(
 [Parameter(Position=0,Mandatory=$true)][int] $Length,
+[string] $ExcludeCharacters,
 [int] $MaxRepeats,
 [regex] $ValidMatch,
 [regex] $InvalidMatch,
@@ -86,6 +87,8 @@ while($true)
 			$a = Invoke-RestMethod "https://api.duckduckgo.com/?q=pwgen+strong+$Length&format=json"
 			[Web.HttpUtility]::HtmlDecode($a.Answer) -replace ' \(random password\)\z',''
 		}
+	if($ExcludeCharacters -and $pwd.IndexOfAny($ExcludeCharacters) -gt -1)
+	{Write-Verbose "Password #$i has invalid characters.; continue"}
 	if($MaxRepeats -gt 1 -and $pwd -match "(.)$('\1' * $MaxRepeats)")
 	{Write-Verbose "Password #$i has too many duplicate characters"; continue}
 	if($ValidMatch -and $pwd -notmatch $ValidMatch) {Write-Verbose "Password #$i not valid: $pwd"; continue}
