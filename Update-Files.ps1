@@ -34,7 +34,7 @@ Process
         $destfile = Join-Path $Destination ([IO.Path]::GetFileName($file))
         if(!(Test-Path $destfile -PathType Leaf)) {continue}
         if((!$NewerOnly -or (Test-NewerFile.ps1 "$destfile" "$file")) -and
-            $PSCmdlet.ShouldProcess("'$destfile' over '$file'",'copy'))
+            $PSCmdlet.ShouldProcess("'$file' over '$destfile'",'copy'))
         {cp $file $destfile}
     }
 }
