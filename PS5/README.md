@@ -35,7 +35,8 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Start-HttpListener.ps1](Start-HttpListener.ps1)**: Creates and starts an HTTP listener, for testing HTTP clients.
 - **[Stop-HttpListener.ps1](Stop-HttpListener.ps1)**: Closes an HTTP listener.
 - **[Suspend-HttpListener.ps1](Suspend-HttpListener.ps1)**: Pauses an HTTP listener.
+- **[Sync-NewCertPermissions.ps1](Sync-NewCertPermissions.ps1)**: Updates permissions on certs when there is an older cert with the same friendly name.
 - **[Wait-DriveNotBusy.ps1](Wait-DriveNotBusy.ps1)**: Uses WMI to check a physical drive for busyness, and waits until a threshhold is value is confirmed.
 - **[Write-WebResponse.ps1](Write-WebResponse.ps1)**: Sends a text or binary response body to the HTTP listener client.
 
-<!-- generated 06/06/2021 12:10:07 -->
+<!-- generated 06/06/2021 12:50:10 -->
