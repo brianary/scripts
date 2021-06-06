@@ -30,7 +30,7 @@
 #TODO: Require version 4 to get access to Get-ChildItem -Directory switch param
 [CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
-[System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
+[System.Security.Cryptography.X509Certificates.X509Certificate2] $Certificate
 )
 Begin
 {
