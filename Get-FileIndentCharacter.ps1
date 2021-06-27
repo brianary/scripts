@@ -9,23 +9,33 @@
 	Any object with a Path or FullName property to use for a file location.
 
 .Outputs
-	System.String containing:
+	System.Management.Automation.PSCustomObject with the following properties:
 
-	* Tabs if the file only contains HT indents.
-	* Spaces if the file only contains PS indents.
-	* Mixed (HT=n, SP=m, other/combined=k) if the file contains multiple different indents.
-	* None if the file contains no indents.
+	* Path, a string containing the location of the file.
+	* Indents, one of: Tabs, Spaces, Mixed, Other, or None.
+	* HT, a count of the lines indented with tabs.
+	* SP, a count of the lines indented with spaces.
+	* MixedIndents, a count of the lines indented with multiple types of space characters.
+	* OtherIndents, a count of the lines indented with a space character other than tab or space.
 
 .Link
 	Select-String
 
 .Example
 	Get-FileIndentCharacter.ps1 Get-FileIndentCharacter.ps1
+
+	Path         : A:\scripts\Get-FileIndentCharacter.ps1
+	Indents      : Tabs
+	HT           : 40
+	SP           : 0
+	MixedIndents : 0
+	OtherIndents : 0
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path
+[CmdletBinding()][OutputType([psobject])] Param(
+[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
+[Alias('FullName')][string] $Path
 )
 Begin
 {
@@ -34,16 +44,30 @@ Begin
 }
 Process
 {
-	$countTab,$countSpace,$countMixed = 0,0,0
-	foreach($indent in Select-String '^(\s+)' $Path |foreach {$_.Matches.Groups[0].Value})
+	foreach($file in (Resolve-Path $Path).Path)
 	{
-		if($indent.Trim(@($HT)) -eq '') {$countTab++}
-		elseif($indent.Trim(@($SP)) -eq '') {$countSpace++}
-		else {$countMixed++}
+		$countTab,$countSpace,$countMixed,$countOther = 0,0,0,0
+		foreach($indent in Select-String '^(\s+)' $file |foreach {$_.Matches.Groups[0].Value})
+		{
+			if($indent.Trim(@($HT)) -eq '') {$countTab++}
+			elseif($indent.Trim(@($SP)) -eq '') {$countSpace++}
+			elseif(($indent.GetEnumerator() |select -Unique).Count -gt 1) {$countMixed++}
+			else {$countOther++}
+		}
+		Write-Verbose "Indent counts: HT=$countTab, SP=$countSpace, other/combined=$countOther"
+		$indents =
+			if($countMixed) {'Mixed'}
+			elseif($countTab) { if($countSpace -or $countOther) {'Mixed'} else {'Tabs'} }
+			elseif($countSpace) { if($countOther) {'Mixed'} else {'Spaces'} }
+			elseif($countOther) {'Other'}
+			else {'None'}
+		[pscustomobject]@{
+			Path         = $file
+			Indents      = $indents
+			HT           = $countTab
+			SP           = $countSpace
+			MixedIndents = $countMixed
+			OtherIndents = $countOther
+		} |Add-Member ScriptMethod ToString -Force -PassThru {$this.Indents}
 	}
-	Write-Verbose "Indent counts: HT=$countTab, SP=$countSpace, other/combined=$countMixed"
-	if($countTab) { if($countSpace -or $countMixed) {"Mixed (HT=$countTab, SP=$countSpace, other/combined=$countMixed)"} else {'Tabs'} }
-	elseif($countSpace) { if($countMixed) {"Mixed (HT=$countTab, SP=$countSpace, other/combined=$countMixed)"} else {'Spaces'} }
-	elseif($countMixed) {"Mixed (HT=$countTab, SP=$countSpace, other/combined=$countMixed)"}
-	else {'None'}
 }

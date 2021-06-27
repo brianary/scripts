@@ -5,13 +5,6 @@
 .Parameter Path
 	The path to a file.
 
-.Inputs
-	Any object with a Path or FullName property to use as the file path.
-
-.Outputs
-	System.Text.Encoding (for PowerShell Core),
-	or System.String with the encoding name (for legacy Windows PowerShell).
-
 .Link
 	Test-FileTypeMagicNumber.ps1
 
@@ -37,7 +30,7 @@
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Text.Encoding])] Param(
-[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path
+[Parameter(Position=0,Mandatory=$true)][Alias('FullName')][string] $Path
 )
 Process
 {

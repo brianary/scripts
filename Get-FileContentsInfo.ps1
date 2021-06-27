@@ -29,28 +29,32 @@
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([pscustomobject])] Param(
-[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path
+[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
+[Alias('FullName')][string] $Path
 )
 Process
 {
-	if(Test-FileTypeMagicNumber.ps1 text $Path)
+	foreach($file in (Resolve-Path $Path).Path)
 	{
-		return [pscustomobject]@{
-			Path        = Resolve-Path $Path
-			IsBinary    = $false
-			Encoding    = Get-FileEncoding.ps1 $Path
-			LineEndings = Get-FileLineEndings.ps1 $Path
-			Indents     = Get-FileIndentCharacter.ps1 $Path
+		if(Test-FileTypeMagicNumber.ps1 text $file)
+		{
+			[pscustomobject]@{
+				Path        = Resolve-Path $file
+				IsBinary    = $false
+				Encoding    = Get-FileEncoding.ps1 $file
+				LineEndings = Get-FileLineEndings.ps1 $file
+				Indents     = Get-FileIndentCharacter.ps1 $file
+			}
 		}
-	}
-	else
-	{
-		return [pscustomobject]@{
-			Path        = Resolve-Path $Path
-			IsBinary    = $true
-			Encoding    = $null
-			LineEndings = $null
-			Indents     = $null
+		else
+		{
+			[pscustomobject]@{
+				Path        = Resolve-Path $file
+				IsBinary    = $true
+				Encoding    = $null
+				LineEndings = $null
+				Indents     = $null
+			}
 		}
 	}
 }
