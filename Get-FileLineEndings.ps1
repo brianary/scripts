@@ -24,7 +24,7 @@
 	Get-Content
 
 .Example
-	Get-FileLineEndings.ps1 info.txt
+	Get-FileLineEndings.ps1 Get-FileLineEndings.ps1
 
 	CRLF
 #>
@@ -33,9 +33,14 @@
 [CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path
 )
+Begin
+{
+	Set-Variable CR 0xD -Option Constant
+	Set-Variable LF 0xA -Option Constant
+}
 Process
 {
-	$cr,$lf,$countCrLf,$countLf,$countCr = 0xD,0xA,0,0,0
+	$countCrLf,$countLf,$countCr = 0,0,0
 	[scriptblock] $gc, [scriptblock] $toValue =
 		if($PSVersionTable.PSEdition -eq 'Core')
 		{
@@ -62,8 +67,8 @@ Process
 	$prev = $null
 	foreach($c in $gc.InvokeReturnAsIs() |foreach $toValue)
 	{
-		if($c -eq $lf) { if($prev -eq $cr) {$countCrLf++} else {$countLf++} }
-		elseif($prev -eq $cr) {$countCr++}
+		if($c -eq $LF) { if($prev -eq $CR) {$countCrLf++} else {$countLf++} }
+		elseif($prev -eq $CR) {$countCr++}
 		$prev = $c
 	}
 	Write-Verbose "EOL counts: CRLF=$countCrLf, LF=$countLf, CR=$countCr"

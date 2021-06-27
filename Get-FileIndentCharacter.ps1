@@ -20,20 +20,25 @@
 	Select-String
 
 .Example
-	Get-FileIndentCharacter.ps1 Get-FileIdentCharacter.ps1
+	Get-FileIndentCharacter.ps1 Get-FileIndentCharacter.ps1
 #>
 
 #Requires -Version 3
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path
 )
+Begin
+{
+	Set-Variable HT ([char]0x9) -Option Constant
+	Set-Variable SP ([char]0x20) -Option Constant
+}
 Process
 {
 	$countTab,$countSpace,$countMixed = 0,0,0
 	foreach($indent in Select-String '^(\s+)' $Path |foreach {$_.Matches.Groups[0].Value})
 	{
-		if($indent.Trim((,[char]0x9)) -eq '') {$countTab++}
-		elseif($indent.Trim((,[char]0x20)) -eq '') {$countSpace++}
+		if($indent.Trim(@($HT)) -eq '') {$countTab++}
+		elseif($indent.Trim(@($SP)) -eq '') {$countSpace++}
 		else {$countMixed++}
 	}
 	Write-Verbose "Indent counts: HT=$countTab, SP=$countSpace, other/combined=$countMixed"
