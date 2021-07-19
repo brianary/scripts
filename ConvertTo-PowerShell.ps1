@@ -84,10 +84,7 @@ Begin
 	$units = @{ 1LKB = 'KB'; 1LMB = 'MB'; 1LGB = 'GB'; 1LTB = 'TB'; 1LPB = 'PB' }
 	if($GenerateKey)
 	{
-		[byte[]] $KeyBytes = New-Object byte[] 32
-		$rng = New-Object Security.Cryptography.RNGCryptoServiceProvider
-		$rng.GetBytes($KeyBytes)
-		$rng.Dispose(); $rng = $null
+		[byte[]] $KeyBytes = Get-RandomBytes.ps1 32
 		"[byte[]]`$key = $($KeyBytes -join ',')"
 	}
 	elseif($SecureKey)
@@ -96,11 +93,8 @@ Begin
 	}
 	if($Credential)
 	{
-		[byte[]] $salt = New-Object byte[] 8
-		$rng = New-Object Security.Cryptography.RNGCryptoServiceProvider
-		$rng.GetBytes($salt)
-		$rng.Dispose(); $rng = $null
-		$hash = New-Object Security.Cryptography.Rfc2898DeriveBytes `
+		[byte[]] $salt = Get-RandomBytes.ps1 8
+\		$hash = New-Object Security.Cryptography.Rfc2898DeriveBytes `
 			([Text.Encoding]::UTF8.GetBytes($Credential.GetNetworkCredential().Password)),$salt,
 			(Get-Random 9999 -Minimum 1000)
 		$iterations = $hash.IterationCount

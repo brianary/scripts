@@ -20,9 +20,6 @@
 .Link
 	ConvertTo-PowerShell.ps1
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.security.cryptography.rngcryptoserviceprovider
-
 .Example
 #>
 
@@ -40,10 +37,7 @@ Begin
 		else {@{Encoding='Byte'}}
 	function Register-PSKey
 	{
-		[byte[]] $key = New-Object byte[] 32
-		$rng = New-Object Security.Cryptography.RNGCryptoServiceProvider
-		$rng.GetBytes($key)
-		$rng.Dispose(); $rng = $null
+		[byte[]] $key = Get-RandomBytes.ps1 32
 		Set-Content $keyfile $key @asbytes
 		$f = Get-Item $keyfile
 		$f.Attributes = $f.Attributes -bor 'Hidden'
