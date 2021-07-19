@@ -11,12 +11,12 @@ PowerShell Scripts
 
 - **[Add-CapturesToMatches.ps1](Add-CapturesToMatches.ps1)**: Adds named capture groups as note properties to Select-String's MatchInfo objects.
 - **[Add-Counter.ps1](Add-Counter.ps1)**: Adds a incrementing integer property to each pipeline object.
-- **[Add-DynamicParam.ps1](Add-DynamicParam.ps1)**: Adds a dynamic parameter to a script, within a DynamicParam block.
+- :up: **[Add-DynamicParam.ps1](Add-DynamicParam.ps1)**: Adds a dynamic parameter to a script, within a DynamicParam block.
 - **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
 - **[Add-NoteProperty.ps1](Add-NoteProperty.ps1)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
 - **[Add-ParameterDefault.ps1](Add-ParameterDefault.ps1)**: Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1)**: Convert a scope level to account for another call stack level.
-- **[Add-ScriptCredential.ps1](Add-ScriptCredential.ps1)**: Serializes a an encrypted credential to a PowerShell script using 32-byte random key file.
+- :up: **[Add-ScriptCredential.ps1](Add-ScriptCredential.ps1)**: Serializes a an encrypted credential to a PowerShell script using 32-byte random key file.
 - **[Add-TimeSpan.ps1](Add-TimeSpan.ps1)**: Adds a timespan to DateTime values.
 - **[Add-Utf8Signature.ps1](Add-Utf8Signature.ps1)**: Adds the utf-8 signature (BOM) to a file.
 - **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1)**: Adds a VS Code MSSQL database connection to the repo.
@@ -40,7 +40,7 @@ PowerShell Scripts
 - **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1)**: Formats a datetime as a LogParser literal.
 - **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1)**: Creates multipart/form-data to send as a request body.
 - **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1)**: Converts an object to an ordered dictionary of properties and values.
-- **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1)**: Serializes complex content into PowerShell literals.
+- :up: **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1)**: Serializes complex content into PowerShell literals.
 - **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1)**: Convert a number to a Roman numeral.
 - **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 - **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1)**: Serializes complex content into XML elements.
@@ -56,7 +56,7 @@ PowerShell Scripts
 - **[Find-Comics.ps1](Find-Comics.ps1)**: Finds comics.
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1)**: Searches an entire database for a field value.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1)**: Searches for database columns.
-- **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1)**: Removes duplicates from a list of files.
+- :up: **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1)**: Removes duplicates from a list of files.
 - **[Find-Indexes.ps1](Find-Indexes.ps1)**: Returns indexes using a column with the given name.
 - **[Find-InstalledPrograms.ps1](Find-InstalledPrograms.ps1)**: Searches installed programs.
 - **[Find-Lines.ps1](Find-Lines.ps1)**: Searches a specific subset of files for lines matching a pattern.
@@ -81,17 +81,19 @@ PowerShell Scripts
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1)**: Returns the content security policy at from the given URL.
 - **[Get-Dns.ps1](Get-Dns.ps1)**: Looks up DNS info, given a hostname or address.
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1)**: Returns the possible values of the specified enumeration.
-- :new: **[Get-FileContentsInfo.ps1](Get-FileContentsInfo.ps1)**: Returns whether the file is binary or text, and what encoding, line endings, and indents text files contain.
-- :new: **[Get-FileEncoding.ps1](Get-FileEncoding.ps1)**: Returns the encoding for a given file, suitable for passing to encoding parameters.
-- :new: **[Get-FileIndentCharacter.ps1](Get-FileIndentCharacter.ps1)**: Determines the indent characters used in a text file.
-- :new: **[Get-FileLineEndings.ps1](Get-FileLineEndings.ps1)**: Determines a file's line endings.
+- **[Get-FileContentsInfo.ps1](Get-FileContentsInfo.ps1)**: Returns whether the file is binary or text, and what encoding, line endings, and indents text files contain.
+- **[Get-FileEncoding.ps1](Get-FileEncoding.ps1)**: Returns the encoding for a given file, suitable for passing to encoding parameters.
+- **[Get-FileIndentCharacter.ps1](Get-FileIndentCharacter.ps1)**: Determines the indent characters used in a text file.
+- **[Get-FileLineEndings.ps1](Get-FileLineEndings.ps1)**: Determines a file's line endings.
 - **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1)**: Returns a date and time converted to the French Republican Calendar.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1)**: Gets the SHA-1 hash of the first commit of the current repo.
-- :up: **[Get-IisLog.ps1](Get-IisLog.ps1)**: Easily query IIS logs.
+- **[Get-IisLog.ps1](Get-IisLog.ps1)**: Easily query IIS logs.
 - **[Get-LibraryVulnerabilityInfo.ps1](Get-LibraryVulnerabilityInfo.ps1)**: Get the list of module/package/library vulnerabilities from the RetireJS or SafeNuGet projects.
-- :up: **[Get-NetFrameworkVersions.ps1](Get-NetFrameworkVersions.ps1)**: Determine which .NET Frameworks are installed on the requested system.
+- **[Get-NetFrameworkVersions.ps1](Get-NetFrameworkVersions.ps1)**: Determine which .NET Frameworks are installed on the requested system.
 - **[Get-PocketArticles.ps1](Get-PocketArticles.ps1)**: Retrieves a list of saved articles from a Pocket account.
+- :new: **[Get-RandomBytes.ps1](Get-RandomBytes.ps1)**: Get-RandomBytes.ps1 [-Count] <int> [<CommonParameters>]
+
 - **[Get-RepoName.ps1](Get-RepoName.ps1)**: Gets the name of the repo.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1)**: Collects some useful system hardware and operating system details via WMI.
@@ -147,7 +149,7 @@ PowerShell Scripts
 - **[Set-ConsoleColorTheme.ps1](Set-ConsoleColorTheme.ps1)**: Overrides ConsoleClass window color palette entries with a preset color theme.
 - **[Set-JsonProperty.ps1](Set-JsonProperty.ps1)**: Sets a property of arbitrary depth in a JSON string.
 - **[Set-ParameterDefault.ps1](Set-ParameterDefault.ps1)**: Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
-- :new: **[Set-RegexReplace.ps1](Set-RegexReplace.ps1)**: Updates text found with Select-String, using a regular expression replacement template.
+- **[Set-RegexReplace.ps1](Set-RegexReplace.ps1)**: Updates text found with Select-String, using a regular expression replacement template.
 - **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1)**: Sets a VSCode setting.
 - **[Show-DataRef.ps1](Show-DataRef.ps1)**: Display an HTML view of an XML schema or WSDL using Saxon.
 - **[Show-Time.ps1](Show-Time.ps1)**: Displays a formatted date using powerline font characters.
@@ -173,7 +175,7 @@ PowerShell Scripts
 - **[Test-Xml.ps1](Test-Xml.ps1)**: Try parsing text as XML, and validating it if a schema is provided.
 - **[Trace-GitRepoTest.ps1](Trace-GitRepoTest.ps1)**: Uses git bisect to search for the point in the repo history that the test script starts returning true.
 - **[Uninstall-OldModules.ps1](Uninstall-OldModules.ps1)**: Uninstalls old module versions.
-- :up: **[Update-Files.ps1](Update-Files.ps1)**: Copies specified source files that exist in the destination directory.
+- **[Update-Files.ps1](Update-Files.ps1)**: Copies specified source files that exist in the destination directory.
 - **[Update-Modules.ps1](Update-Modules.ps1)**: Cleans up old modules.
 - **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 - **[Use-Java.ps1](Use-Java.ps1)**: Switch the Java version for the current process by modifying environment variables.
@@ -194,4 +196,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 06/06/2021 12:50:07 -->
+<!-- generated 07/18/2021 20:45:45 -->
