@@ -26,15 +26,10 @@ Begin
     if(!(Get-Command Get-FileHash -CommandType Function -Module Microsoft.PowerShell.Utility))
     {throw "Get-FileHash not found."}
     $total,$totalsize = 0,0
-    [IO.FileInfo[]]$filesAccumulated = @()
-}
-Process
-{
-    $filesAccumulated += @($Files)
 }
 End
 {
-    foreach($size in ($filesAccumulated |group Length |? Count -gt 1))
+    foreach($size in ($input |group Length |? Count -gt 1))
     {
         foreach($hash in ($size.Group |group @{e={(Get-FileHash $_.FullName).Hash}} |? Count -gt 1))
         {

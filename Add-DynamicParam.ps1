@@ -91,8 +91,6 @@
 [Alias('PipelineProperties','PipeName')][switch] $ValueFromPipelineByPropertyName,
 [Alias('RemainingArgs')][switch] $ValueFromRemainingArguments
 )
-Begin {$values = @()}
-Process {$values += $ValidateSet}
 End
 {
 	$DynamicParams = Get-Variable DynamicParams -Scope 1 -ErrorAction SilentlyContinue
@@ -131,7 +129,7 @@ End
 	if($ValidatePattern) {$atts.Add((New-Object Management.Automation.ValidatePatternAttribute $ValidatePattern))}
 	if($ValidateRange) {$atts.Add((New-Object Management.Automation.ValidateRangeAttribute $ValidateRange))}
 	if($ValidateScript) {$atts.Add((New-Object Management.Automation.ValidateScriptAttribute $ValidateScript))}
-	if($values) {$ValidateSet = $values}
+	if($input) {$ValidateSet = $input}
 	if($ValidateSet) {$atts.Add((New-Object Management.Automation.ValidateSetAttribute $ValidateSet))}
 	if($TrustedData) {$atts.Add((New-Object Management.Automation.ValidateTrustedDataAttribute))}
 	if($UserDrive) {$atts.Add((New-Object Management.Automation.ValidateUserDriveAttribute))}
