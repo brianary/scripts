@@ -13,7 +13,8 @@ Downloads a given URL to a file, automatically determining the filename.
 ## SYNTAX
 
 ```
-Save-WebRequest.ps1 [-Uri] <Uri> [-Open] [<CommonParameters>]
+Save-WebRequest.ps1 [-Uri] <Uri> [-CreationTime <DateTime>] [-LastWriteTime <DateTime>] [-Open]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,12 +37,42 @@ The URL to download.
 ```yaml
 Type: Uri
 Parameter Sets: (All)
-Aliases:
+Aliases: Url
 
 Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -CreationTime
+Sets the creation time on the file to the given value.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LastWriteTime
+Sets the creation time on the file to the given value.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
