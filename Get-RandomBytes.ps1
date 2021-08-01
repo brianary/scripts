@@ -2,7 +2,7 @@
 .Synopsis
     Returns random bytes.
 
-.Output
+.Outputs
     System.Byte[] of random bytes.
 
 .Parameter Count

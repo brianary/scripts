@@ -1,19 +1,19 @@
 ---
 external help file: -help.xml
 Module Name:
-online version:
+online version: https://docs.microsoft.com/dotnet/api/system.security.cryptography.rngcryptoserviceprovider
 schema: 2.0.0
 ---
 
 # Get-RandomBytes.ps1
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Returns random bytes.
 
 ## SYNTAX
 
 ```
-Get-RandomBytes.ps1 -Count <Int32> [<CommonParameters>]
+Get-RandomBytes.ps1 [-Count] <Int32> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,17 +21,24 @@ Get-RandomBytes.ps1 -Count <Int32> [<CommonParameters>]
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Get-RandomBytes.ps1 8
 ```
 
-{{ Add example description here }}
+103
+235
+194
+199
+151
+83
+240
+152
 
 ## PARAMETERS
 
 ### -Count
-{{ Fill Count Description }}
+The number of random bytes to return.
 
 ```yaml
 Type: Int32
@@ -39,8 +46,8 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
+Position: 1
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -52,6 +59,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### System.Byte[] of random bytes.
 ## NOTES
 
 ## RELATED LINKS
+
+[https://docs.microsoft.com/dotnet/api/system.security.cryptography.rngcryptoserviceprovider](https://docs.microsoft.com/dotnet/api/system.security.cryptography.rngcryptoserviceprovider)
+
