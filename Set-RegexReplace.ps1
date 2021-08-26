@@ -62,7 +62,7 @@ Process
 	if($InputObject.Path -eq 'InputStream')
 	{
 		Write-Verbose "Line: $($InputObject.Line)"
-		if($InputObject.Context -eq $null)
+		if($null -eq $InputObject.Context)
 		{
 			return ($InputObject.Line -replace $InputObject.Pattern,$Replacement)
 		}
@@ -92,8 +92,8 @@ End
 	{
 		$pattern = $files[$file]
 		Write-Progress 'Performing file replace' "$pattern" -curr $file -percent ($i++/$max)
-		Write-Verbose "$Path : -replace '$Pattern','$Replacement'"
-		(Get-Content $file -Raw) -replace $pattern,$Replacement |Out-File $file (Get-Encoding.ps1 $file)
+		Write-Verbose "$($InputObject.Path) : -replace '$($InputObject.Pattern)','$Replacement'"
+		(Get-Content $file -Raw) -replace $pattern,$Replacement |Out-File $file (Get-FileEncoding.ps1 $file)
 	}
 	Write-Progress 'Performing file replace' 'Complete' -Completed
 }
