@@ -39,6 +39,7 @@ $entry = ConvertTo-Base64.ps1 -Data $hashalg.ComputeHash([Text.Encoding]::UTF8.G
 $file = Join-Path $credcache $entry
 if($Force -or !(Test-Path $file -Type Leaf))
 {
+	if(!(Test-Interactive.ps1)) {Throw-StopError.ps1 'Credential has not been cached.' -OperationContext $PSBoundParameters}
     $cred = Get-Credential $UserName -Message $Message
     if($cred.UserName -ne $UserName) {Stop-ThrowError.ps1 "Credential is only valid for username $UserName" -OperationContext $cred}
     ConvertFrom-SecureString $cred.Password |Out-File $file
