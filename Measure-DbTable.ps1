@@ -64,9 +64,15 @@ Begin
 {
 	function Format-ColumnRange([string]$colname)
 	{@"
-cast(count(*) - count([$colname]) as varchar(max)) + ' nulls, ' +
-       cast(count(distinct [$colname]) as varchar(max)) + ' values: ' +
-       cast(min([$colname]) as varchar(max)) + ' .. ' + cast(max([$colname]) as varchar(max))
+case count([$colname])
+		when count(*) then 'not null, ' +
+			cast(count(distinct [$colname]) as varchar(max)) + ' values: ' +
+			cast(min([$colname]) as varchar(max)) + ' .. ' + cast(max([$colname]) as varchar(max))
+		when 0 then 'null'
+		else cast(count(*) - count([$colname]) as varchar(max)) + ' nulls, ' +
+			cast(count(distinct [$colname]) as varchar(max)) + ' values: ' +
+			cast(min([$colname]) as varchar(max)) + ' .. ' + cast(max([$colname]) as varchar(max))
+		end
 "@}
 	function Format-ColumnCount([Parameter(ValueFromPipeline=$true)]
 		[Microsoft.SqlServer.Management.Smo.Column]$column)
@@ -77,22 +83,36 @@ cast(count(*) - count([$colname]) as varchar(max)) + ' nulls, ' +
 			{$_ -in 'bit','Flag'}
 			{@"
 ,
-       'bit: ' + cast(count(*) - count([$colname]) as varchar(max)) + ' nulls, ' +
-	   cast(sum(cast([$colname] as int)) as varchar(max)) + ' ones, ' +
-	   cast(count([$colname]) - sum(cast([$colname] as int)) as varchar(max)) + ' zeros' [$colname]
+			'bit: ' +
+			cast(count(*) - count([$colname]) as varchar(max)) + ' nulls, ' +
+			cast(sum(cast([$colname] as int)) as varchar(max)) + ' ones, ' +
+			cast(count([$colname]) - sum(cast([$colname] as int)) as varchar(max)) + ' zeros'
+			[$colname]
+"@}
+			{$_ -in 'text','image'}
+			{@"
+,
+			'text/image: ' +
+			case sum(case when [$colname] is null then 1 else 0 end)
+			when 0 then 'not null'
+			when count(*) then 'null'
+			else cast(count(*) - sum(case when [$colname] is null then 1 else 0 end) as varchar(max)) + ' nulls, ' +
+			cast(sum(case when [$colname] is null then 1 else 0 end) as varchar(max)) + ' values'
+			end
+			[$colname]
 "@}
 			default
 			{@"
 ,
-       case count(distinct [$colname])
-       when 0 then 'null'
-       when 1 then cast(min([$colname]) as varchar(max))
-       when count(*) then 'unique, ' + $(Format-ColumnRange $colname)
-       when count([$colname]) then 'nullable unique (no duplicates), ' + $(Format-ColumnRange $colname)
-       else $(Format-ColumnRange $colname)
-       end [$colname]
-"@
-			}
+			case count(distinct [$colname])
+			when 0 then 'null'
+			when 1 then cast(min([$colname]) as varchar(max))
+			when count(*) then 'unique, ' + $(Format-ColumnRange $colname)
+			when count([$colname]) then 'nullable unique (no duplicates), ' + $(Format-ColumnRange $colname)
+			else $(Format-ColumnRange $colname)
+			end
+			[$colname]
+"@}
 		}
 	}}
 	$SOQ = "select '[{0}].[{1}]' #TableName, count(*) #RowCount"
