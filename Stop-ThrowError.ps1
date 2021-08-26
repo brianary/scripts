@@ -109,6 +109,7 @@
 [Parameter(Position=0,ParameterSetName='InvalidArgument',Mandatory=$true)]
 [Parameter(Position=0,ParameterSetName='InvalidOperation',Mandatory=$true)]
 [Parameter(Position=0,ParameterSetName='ObjectNotFound',Mandatory=$true)]
+[Parameter(Position=0,ParameterSetName='ItemNotFound',Mandatory=$true)]
 [Parameter(Position=0,ParameterSetName='NotImplemented',Mandatory=$true)]
 [string] $Message,
 [Parameter(ParameterSetName='Format',Mandatory=$true)][string] $Format,
