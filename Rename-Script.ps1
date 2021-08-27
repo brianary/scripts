@@ -26,7 +26,7 @@
 [Parameter(Position=0,Mandatory=$true)][ValidateNotNullOrEmpty()][Alias('From')][string] $OldName,
 [Parameter(Position=1,Mandatory=$true)][ValidateNotNullOrEmpty()][Alias('To')][string] $NewName,
 [Parameter(Position=2,ValueFromRemainingArguments=$true)][ValidateNotNullOrEmpty()][Alias('Directory')]
-[string[]] $ScriptDirectory = $PSScriptRoot
+[string[]] $ScriptDirectory = '.'
 )
 
 if($OldName -notlike '*.ps1') {$OldName += '.ps1'}
@@ -45,13 +45,20 @@ Write-Progress "Renaming $OldName to $NewName" -Completed
 Write-Progress "Updating uses of $OldName to $NewName" 'Finding uses'
 $scope = $ScriptDirectory |foreach {"$_\*.ps1"}
 [Microsoft.PowerShell.Commands.MatchInfo[]] $uses =
-	Select-String "\b$([regex]::Escape([io.path]::GetFileNameWithoutExtension($OldName)))(?:\.ps1)?\b" $scope
-$i,$max = 0,(100/$uses.Length)
-foreach($use in $uses)
+	@(Select-String "\b$([regex]::Escape([io.path]::GetFileNameWithoutExtension($OldName)))(?:\.ps1)?\b" $scope)
+if($uses.Length -eq 0)
 {
-	Write-Progress "Updating uses of $OldName to $NewName" "Updating script $($use.Path)" -curr $use.Line `
-		-Percent ($i++/$max)
-	if(!$PSCmdlet.ShouldProcess("$use","Update to $NewName")) {continue}
-	$use |Set-RegexReplace.ps1 $NewName
+	Write-Warning "No uses of $OldName found!"
+}
+else
+{
+	$i,$max = 0,(100/$uses.Length)
+	foreach($use in $uses)
+	{
+		Write-Progress "Updating uses of $OldName to $NewName" "Updating script $($use.Path)" -curr $use.Line `
+			-Percent ($i++/$max)
+		if(!$PSCmdlet.ShouldProcess("$use","Update to $NewName")) {continue}
+		$use |Set-RegexReplace.ps1 $NewName
+	}
 }
 Write-Progress "Updating uses of $OldName to $NewName" -Completed
