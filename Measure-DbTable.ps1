@@ -89,7 +89,7 @@ case count([$colname])
 			cast(count([$colname]) - sum(cast([$colname] as int)) as varchar(max)) + ' zeros'
 			[$colname]
 "@}
-			{$_ -in 'text','image'}
+			{$_ -in 'text','ntext','image'}
 			{@"
 ,
 			'text/image: ' +
