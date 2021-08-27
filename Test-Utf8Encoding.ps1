@@ -3,9 +3,10 @@
 	Determines whether a file can be parsed as UTF-8 successfully.
 
 .Parameter Path
+    The file to test.
 
 .Inputs
-	System.IO.FileInfo file to test for UTF-8 validity.
+	System.IO.FileInfo file or similar object to test for UTF-8 validity.
 
 .Outputs
 	System.Boolean indicating whether the file parses sucessfully.

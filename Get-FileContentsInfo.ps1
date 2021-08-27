@@ -2,6 +2,9 @@
 .Synopsis
 	Returns whether the file is binary or text, and what encoding, line endings, and indents text files contain.
 
+.Notes
+	TODO: indent size, trailing whitespace, max line length, 2σ (95% max line length)
+
 .Parameter Path
 	The location of a file.
 
@@ -20,11 +23,13 @@
 .Example
 	Get-FileContentsInfo.ps1 Get-FileContentsInfo.ps1
 
-	Path        : A:\Scripts\Get-FileContentsInfo.ps1
-	IsBinary    : False
-	Encoding    : System.Text.ASCIIEncoding+ASCIIEncodingSealed
-	LineEndings : CRLF
-	Indents     : Tabs
+	Path          : A:\scripts\Get-FileContentsInfo.ps1
+	IsBinary      : False
+	Encoding      : System.Text.ASCIIEncoding+ASCIIEncodingSealed
+	Utf8Signature : False
+	LineEndings   : CRLF
+	Indents       : Tabs
+	FinalNewline  : True
 #>
 
 #Requires -Version 3
@@ -39,21 +44,25 @@ Process
 		if(Test-FileTypeMagicNumber.ps1 text $file)
 		{
 			[pscustomobject]@{
-				Path        = Resolve-Path $file
-				IsBinary    = $false
-				Encoding    = Get-FileEncoding.ps1 $file
-				LineEndings = Get-FileLineEndings.ps1 $file
-				Indents     = Get-FileIndentCharacter.ps1 $file
+				Path          = Resolve-Path $file
+				IsBinary      = $false
+				Encoding      = Get-FileEncoding.ps1 $file
+				Utf8Signature = Test-Utf8Signature.ps1 $file
+				LineEndings   = Get-FileLineEndings.ps1 $file
+				Indents       = Get-FileIndentCharacter.ps1 $file
+				FinalNewline  = Test-FinalNewline.ps1 $file
 			}
 		}
 		else
 		{
 			[pscustomobject]@{
-				Path        = Resolve-Path $file
-				IsBinary    = $true
-				Encoding    = $null
-				LineEndings = $null
-				Indents     = $null
+				Path          = Resolve-Path $file
+				IsBinary      = $true
+				Encoding      = $null
+				Utf8Signature = $null
+				LineEndings   = $null
+				Indents       = $null
+				FinalNewline  = $null
 			}
 		}
 	}
