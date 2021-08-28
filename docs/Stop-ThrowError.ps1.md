@@ -28,6 +28,11 @@ Stop-ThrowError.ps1 [[-ExceptionType] <Type>] [[-ExceptionArguments] <Object[]>]
 Stop-ThrowError.ps1 [-Message] <String> [-NotImplemented] [<CommonParameters>]
 ```
 
+### ItemNotFound
+```
+Stop-ThrowError.ps1 [-Message] <String> -SearchContext <Object> [<CommonParameters>]
+```
+
 ### ObjectNotFound
 ```
 Stop-ThrowError.ps1 [-Message] <String> [<CommonParameters>]
@@ -46,11 +51,6 @@ Stop-ThrowError.ps1 [-Message] <String> -Argument <String> [<CommonParameters>]
 ### Format
 ```
 Stop-ThrowError.ps1 [-Message] <String> -Format <String> -InputString <String> [<CommonParameters>]
-```
-
-### ItemNotFound
-```
-Stop-ThrowError.ps1 -SearchContext <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -214,7 +214,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: NotImplemented, ObjectNotFound, InvalidOperation, InvalidArgument, Format
+Parameter Sets: NotImplemented, ItemNotFound, ObjectNotFound, InvalidOperation, InvalidArgument, Format
 Aliases:
 
 Required: True
