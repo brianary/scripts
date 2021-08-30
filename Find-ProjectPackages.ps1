@@ -32,7 +32,6 @@
 .Example
     Find-ProjectModule.ps1 jQuery*
 
-
     Name               Version File
     ----               ------- ----
     jquery.datatables  1.10.9  C:\Repo\packages.config

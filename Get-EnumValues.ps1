@@ -49,7 +49,6 @@
 .Example
     Get-EnumValues.ps1 System.Web.Security.AntiXss.MidCodeCharts
 
-
     ·   Value Name
         ----- ----
             0 None

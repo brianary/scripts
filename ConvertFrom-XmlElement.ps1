@@ -1,7 +1,7 @@
 ﻿<#
 .Synopsis
     Converts named nodes of an element to properties of a PSObject, recursively.
-    
+
 .Parameter Element
     The element to convert to a PSObject.
 
@@ -19,7 +19,6 @@
 
 .Example
     Select-Xml /configuration/appSettings/add web.config |ConvertFrom-XmlElement.ps1
-
 
     key              value
     ---              -----
@@ -50,7 +49,7 @@ Process
                 foreach($node in $Element.ChildNodes |? {$_.Name -and $_.Name -ne '#whitespace'})
                 {
                     $subelements = $node.SelectNodes('*') |group Name
-                    $value = 
+                    $value =
                         if($node.InnerText -and !$subelements)
                         {
                             $node.InnerText

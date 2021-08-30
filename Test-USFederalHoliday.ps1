@@ -3,7 +3,7 @@
     Returns true if the given date is a U.S. federal holiday.
 
 .Description
-	The following holidays are checked:
+    The following holidays are checked:
 
         * New Year's Day, January 1 (± 1 day, if observed)
         * Birthday of Martin Luther King, Jr., Third Monday in January
@@ -46,12 +46,10 @@
 .Example
     Test-USFederalHoliday.ps1 2016-11-11
 
-
     Veterans Day
 
 .Example
     Test-USFederalHoliday.ps1 2017-02-20
-
 
     Washington's Birthday
 

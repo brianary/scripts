@@ -19,7 +19,6 @@
 
         Directory: C:\Program Files (x86)\Minecraft\runtime\jre-x64\1.8.0_25\bin
 
-
     Mode                LastWriteTime         Length Name
     ----                -------------         ------ ----
     -a----       2017-02-05     15:03         190888 java.exe

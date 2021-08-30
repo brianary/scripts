@@ -16,19 +16,16 @@
 .Example
     ConvertTo-XmlElements.ps1 @{html=@{body=@{p='Some text.'}}}
 
-
     <html><body><p>Some text.</p></body></html>
 
 .Example
     [pscustomobject]@{UserName=$env:USERNAME;Computer=$env:COMPUTERNAME} |ConvertTo-XmlElements.ps1
-
 
     <Computer>COMPUTERNAME</Computer>
     <UserName>username</UserName>
 
 .Example
     Get-ChildItem *.txt |ConvertTo-XmlElements.ps1
-
 
     <PSPath>Microsoft.PowerShell.Core\FileSystem::C:\temp\test.txt</PSPath>
     <PSParentPath>Microsoft.PowerShell.Core\FileSystem::C:\scripts</PSParentPath>
