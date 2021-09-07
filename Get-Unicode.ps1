@@ -12,8 +12,8 @@
 	The integer value of a Unicode codepoint to convert into a .NET string.
 	
 .Parameter AsEmoji
-	Adds a U+FE0F VARIATION SELECTOR-16 suffix to the character, which suggests an emoji presentation
-	for characters that support a simple text presentation as well as a color emoji-style one.
+	Appends a U+FE0F VARIATION SELECTOR-16 suffix to the character, which suggests an emoji presentation
+	for characters that support both a simple text presentation as well as a color emoji-style one.
 	
 .Inputs
 	System.Int32 value of a Unicode codepoint.
