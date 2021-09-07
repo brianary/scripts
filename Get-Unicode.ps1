@@ -44,7 +44,7 @@
 Begin { [char[]] $c = @() }
 Process
 {
-	char]::ConvertFromUtf32($Codepoint).GetEnumerator() |foreach {$c += $_}
+	[char]::ConvertFromUtf32($Codepoint).GetEnumerator() |foreach {$c += $_}
 	if($AsEmoji) {$c += 0xFE0F}
 }
 End { New-Object string (,$c) }
