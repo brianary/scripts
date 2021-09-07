@@ -2,9 +2,6 @@
 .Synopsis
 	Rename a git repository branch.
 
-.Parameter OldName
-	The current branch name.
-
 .Parameter NewName
 	The new branch name.
 
