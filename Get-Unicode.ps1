@@ -45,6 +45,6 @@ Begin { [char[]] $c = @() }
 Process
 {
 	$c += [char]::ConvertFromUtf32($Codepoint)
-	if($AsEmoji) {$c += 0xFE0F
+	if($AsEmoji) {$c += 0xFE0F}
 }
 End { New-Object string (,$c) }
