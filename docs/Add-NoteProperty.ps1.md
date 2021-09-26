@@ -43,7 +43,7 @@ Size   Name
 2.4KB  Get-EnumValues.ps1
 6KB    Get-IisLog.ps1
 1.9KB  Get-LibraryVulnerabilityInfo.ps1
-2.7KB  Get-NetFrameworkVersions.ps1
+2.7KB  Get-DotNetFrameworkVersions.ps1
 969    Get-RepoName.ps1
 3.3KB  Get-SslDetails.ps1
 4.2KB  Get-SystemDetails.ps1

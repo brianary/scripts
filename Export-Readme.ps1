@@ -176,23 +176,22 @@ function Format-SysCfgScripts
 
 function Format-PS5Scripts
 {
-	Use-Command.ps1 powershell "$env:SystemRoot\system32\windowspowershell\v1.0\powershell.exe" -Message 'Missing PowerShell 5!'
-	powershell -nol -nop -noni -Command @"
-	& {
+	Invoke-WindowsPowerShell.ps1 {
+		Param($repo)
 		Write-Progress 'Enumerating Windows PowerShell 5.x scripts'
 		Import-Module Microsoft.PowerShell.Utility
 		Add-Type -AN System.Web
-		[IO.FileInfo[]] `$scripts = Get-Item $PSScriptRoot\PS5\*.ps1
-		`$i,`$max = 0,(`$scripts.Count/100)
-		`$scripts |
-			foreach {Get-Help `$_.FullName} |
+		[IO.FileInfo[]] $scripts = Get-Item $repo\PS5\*.ps1
+		$i,$max = 0,($scripts.Count/100)
+		$scripts |
+			foreach {Get-Help $_.FullName} |
 			foreach {
-				Write-Progress 'Enumerating Windows PowerShell 5.x scripts' 'Writing list' -curr `$_.Name -percent (`$i++/`$max)
-				'- **[{0}]({0})**: {1}' -f (Split-Path `$_.Name -Leaf),`$_.Synopsis
+				Write-Progress 'Enumerating Windows PowerShell 5.x scripts' 'Writing list' `
+					-curr $_.Name -percent ($i++/$max)
+				'- **[{0}]({0})**: {1}' -f (Split-Path $_.Name -Leaf),$_.Synopsis
 			}
 		Write-Progress 'Enumerating Windows PowerShell 5.x scripts' -Completed
-	}
-"@
+	} $PSScriptRoot
 }
 
 function Format-SysCfgReadme

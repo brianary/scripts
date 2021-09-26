@@ -13,7 +13,7 @@
 	Microsoft.Win32.RegistryKey
 
 .Example
-	Get-NetFrameworkVersions.ps1
+	Get-DotNetFrameworkVersions.ps1
 
 	Name                           Value
 	----                           -----

@@ -13,7 +13,7 @@ Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a s
 ## SYNTAX
 
 ```
-Get-Unicode.ps1 [-Codepoint] <Int32> [<CommonParameters>]
+Get-Unicode.ps1 [-Codepoint] <Int32> [-AsEmoji] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -42,6 +42,22 @@ Required: True
 Position: 1
 Default value: 0
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -AsEmoji
+Appends a U+FE0F VARIATION SELECTOR-16 suffix to the character, which suggests an emoji presentation
+for characters that support both a simple text presentation as well as a color emoji-style one.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -68,7 +68,7 @@ foreach($computer in $ComputerName)
         $value.Shares= (Get-WmiObject Win32_Share @wmiargs |
             ? {$_.Type -eq 0} |
             % {"$($_.Name)=$($_.Path)"})
-        $value.NetVersions = (Get-NetFrameworkVersions.ps1 $computer)
+        $value.NetVersions = (Get-DotNetFrameworkVersions.ps1 $computer)
     }
     else
     {
@@ -91,7 +91,7 @@ foreach($computer in $ComputerName)
             Shares= (Get-WmiObject Win32_Share @wmiargs |
                 ? {$_.Type -eq 0} |
                 % {"$($_.Name)=$($_.Path)"})
-            NetVersions = (Get-NetFrameworkVersions.ps1 $computer)
+            NetVersions = (Get-DotNetFrameworkVersions.ps1 $computer)
         }
     }
     [PSCustomObject]$value
