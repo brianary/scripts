@@ -15,9 +15,6 @@
 	Use-Command.ps1
 
 .Link
-	ConvertTo-Base64.ps1
-
-.Link
 	Stop-ThrowError.ps1
 
 .Example
@@ -66,8 +63,7 @@ $PSModulePath = $env:PSModulePath # save current module path
 $env:PSModulePath = $Global:WPSModulePath # use Windows PowerShell module path
 if($PSCmdlet.ParameterSetName -eq 'CommandText')
 {
-	& "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -NonInteractive `
-		-EncodedCommand (ConvertTo-Base64.ps1 $CommandText -Encoding utf16)
+	$CommandText |& "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -NonInteractive -Command -
 }
 else
 {
