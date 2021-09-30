@@ -78,21 +78,37 @@
 #Requires -Version 3
 [CmdletBinding()] Param(
 [Parameter(Position=0,ValueFromPipeline=$true)][datetime] $Date = (Get-Date),
-[ValidateSet('Equinox','Romme','Continuous','128Year')][string] $Method = '128Year'
+[ValidateSet('Equinox','Romme','Continuous','128Year')][string] $Method = 'Romme'
 )
 Begin
 {
-	function Measure-LeapDays
+	function Get-128YearLeapDays([int]$year)
 	{
-		[CmdletBinding()] Param(
-		[Parameter(Position=0,Mandatory=$true)][int] $ToYear,
-		[Parameter(Position=1,Mandatory=$true)][ScriptBlock] $Condition,
-		[Parameter(Position=2)][int] $FromYear = 1
-		)
-		Write-Verbose "ToYear: $ToYear, Condition: { $Condition }, FromYear: $FromYear"
-		if($FromYear -ge $ToYear) {return 0}
-		else {return ($FromYear..($ToYear-1) |where $Condition |measure).Count}
+		[int] $remainder = 0
+		[int] $pastdays = 31 * [math]::DivRem($year,128,[ref]$remainder) +
+			[math]::Floor($remainder/4)
+		[int] $yearlength = 365+[int](!($year % 4) -and ($year % 128))
+		return $pastdays,$yearlength
 	}
+	function Get-ContinuousLeapDays([int]$year)
+	{
+		[int] $remainder = 0
+		[int] $pastdays = (97 * [math]::DivRem($year+1,400,[ref]$remainder)) +
+			(24 * [math]::DivRem($remainder,100,[ref]$remainder)) +
+			[math]::Floor($remainder/4)
+		[int] $yearlength = 365+[int]([datetime]::IsLeapYear($year+1))
+		return $pastdays,$yearlength
+	}
+	function Get-RommeLeapDays([int]$year)
+	{
+		[int] $remainder = 0
+		[int] $pastdays = (97 * [math]::DivRem($year,400,[ref]$remainder)) +
+			(24 * [math]::DivRem($remainder,100,[ref]$remainder)) +
+			[math]::Floor($remainder/4)
+		[int] $yearlength = 365+[int]([datetime]::IsLeapYear($year))
+		return $pastdays,$yearlength
+	}
+		$origin = [datetime]'1792-09-22'
 	${les mois} = 'Vendémiaire','Brumaire','Frimaire','Nivôse','Pluviôse','Ventôse',
 		'Germinal','Floréal','Prairial','Messidor','Thermidor','Fructidor','Sansculottides'
 	$months = 'Grape Harvest','Fog','Frost','Snowy','Rainy','Windy',
@@ -177,41 +193,42 @@ Begin
 }
 Process
 { # 1792-09-22 = 1 Vendémiaire Ⅰ
-	if($Date -lt [datetime]'1792-09-22') {Stop-ThrowError.ps1 'Dates prior to September 22, 1792 are not yet supported.' -NotImplemented}
-	[int] $lastleapt = if([datetime]::IsLeapYear($Date.Year) -and $Date.DayOfYear -gt 59) {$Date.Year} else {$Date.Year -1}
-	[int] $gregleaps = Measure-LeapDays $lastleapt {[datetime]::IsLeapYear($_)} 1796
-	[datetime] $d = $Date.AddYears(-1791).AddDays(-265)
-	[ScriptBlock] $isLeapYear =
-		switch($Method)
-		{ #TODO: implement equinox
-			128Year {{!($_ % 4) -and ($_ % 128)}}
-			Continuous {{[datetime]::IsLeapYear($_+1)}}
-			Equinox {Stop-ThrowError.ps1 'Equinox isn supported yet' -NotImplemented}
-			Romme {{$_ -gt 0 -and [datetime]::IsLeapYear($_)}}
+	if($Date -lt $origin) {Stop-ThrowError.ps1 ('Dates prior to {0:MMMM d, yyyy} are not yet supported.' -f $origin) -NotImplemented}
+	[int] ${jour de l'année}, [int] ${l'année} = ($Date.Date - $origin).TotalDays, 1
+	if(${jour de l'année} -gt 364)
+	{
+		[int] $lastyear = [math]::DivRem(${jour de l'année},365,[ref]${jour de l'année})
+		[int] ${past leap days}, [int] ${last year length} = switch($Method)
+		{
+			128Year {Get-128YearLeapDays $lastyear}
+			Coninuous {Get-ContinuousLeapDays $lastyear}
+			Equinox {Stop-ThrowError.ps1 'Equinox isn''t supported yet' -NotImplemented}
+			Romme {Get-RommeLeapDays $lastyear}
 		}
-	[int] $lastyearlength = if($isLeapYear.InvokeWithContext($null,[psvariable[]]@(New-Object psvariable '_',($d.Year-1)),$null)) {366} else {365}
-	[int] $yearlength = if($isLeapYear.InvokeWithContext($null,[psvariable[]]@(New-Object psvariable '_',($d.Year)),$null)) {366} else {365}
-	[int] $frcleaps = Measure-LeapDays ($d.Year-1) $isLeapYear
-	[int] ${l'année} = $d.Year
-	Write-Verbose "year $($d.Year) • day of year $($d.DayOfYear) • year length $yearlength • FRC leaps $frcleaps • Gregorian leaps $gregleaps"
-	[int] ${jour de l'année} = $d.DayOfYear + $frcleaps - $gregleaps
-	if(${jour de l'année} -lt 1) {${l'année}--; ${jour de l'année} = $lastyearlength + ${jour de l'année}}
-	elseif(${jour de l'année} -gt $yearlength) {${l'année}++; ${jour de l'année} -= $yearlength}
-	[int] $mois = [math]::Floor((${jour de l'année}-1)/30)
+		${jour de l'année} -= ${past leap days}
+		if(${jour de l'année} -gt -1) {${l'année} = $lastyear +1; ${jour de l'année}++}
+		else {${l'année} = $lastyear; ${jour de l'année} += ${last year length} +1}
+	}
+	[int] ${jour du mois} = 1
+	[int] $mois = 1+[math]::DivRem(${jour de l'année}-1,30,[ref]${jour du mois})
+	${jour du mois}++
+	${jour de decade} = 1
+	$decade = 1+[math]::DivRem(${jour de l'année}-1,10,[ref]${jour de decade})
+	${jour de decade}++
 	[pscustomobject]@{
 		Year = ${l'année}
 		Annee = ConvertTo-RomanNumeral.ps1 ${l'année}
 		AnneeUnicode = ConvertTo-RomanNumeral.ps1 ${l'année} -Unicode
-		Month = $mois +1
+		Month = $mois
 		MonthName = $months[$mois]
 		Mois = ${les mois}[$mois]
-		Day = 1 + ((${jour de l'année} -1) % 30)
+		Day = ${jour du mois}
 		DayOfYear = ${jour de l'année}
 		Jour = ${les jours}[${jour de l'année}-1]
 		DayName = $days[${jour de l'année}-1]
-		Decade = 1 + [math]::Floor((${jour de l'année} -1) / 10)
-		DayOfDecade = 1 + ((${jour de l'année} -1) % 10)
-		DecadeOrdinal = ${les jours du decade}[(${jour de l'année} -1) % 10]
+		Decade = $decade
+		DayOfDecade = ${jour de decade}
+		DecadeOrdinal = ${les jours du decade}[${jour de decade}-1]
 		DecimalTime = '{0:0:00:00}' -f [math]::Floor($Date.TimeOfDay.Ticks / 8640000)
 		GregorianDate = $Date
 	} |Add-Member ScriptMethod ToString -Force -PassThru `
