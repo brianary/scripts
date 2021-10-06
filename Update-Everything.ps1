@@ -14,3 +14,8 @@ if((Get-Command dotnet -ErrorAction SilentlyContinue))
 	Write-Verbose 'dotnet global tools updates'
 	Get-DotNetGlobalTools.ps1 |foreach {dotnet tool update -g $_.Package}
 }
+if((Get-Module PSWindowsUpdate -ListAvailable))
+{
+	Get-WindowsUpdate
+	Install-WindowsUpdate
+}
