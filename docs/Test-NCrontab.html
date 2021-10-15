@@ -8,13 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="">
 
-    <link rel="stylesheet" id="theme_link" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/materia/bootstrap.min.css">
+    <link rel="stylesheet" id="theme_link" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/materia/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
     <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
-    <link type="text/css" rel="stylesheet" href="/content/navbar-fixed-right.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="/content/navbar-fixed-left.css" />
     <link type="text/css" rel="stylesheet" href="/content/fsdocs-default.css" />
     <link type="text/css" rel="stylesheet" href="/content/fsdocs-custom.css" />
     <script type="text/javascript" src="/content/fsdocs-tips.js"></script>
@@ -29,11 +30,11 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-secondary fixed-right" id="fsdocs-menu">
+    <nav class="navbar navbar-expand-md navbar-light bg-secondary fixed-left" id="fsdocs-nav">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <div class="collapse navbar-collapse navbar-nav-scroll" id="navbarsExampleDefault">
             <a href="/"><img id="fsdocs-logo" src="/img/logo.png" /></a>
             <!-- BEGIN SEARCH BOX: this adds support for the search box -->
             <div id="header">
@@ -51,7 +52,7 @@
             <!-- END SEARCH BOX: this adds support for the search box -->
             <ul class="navbar-nav">
                 <li class="nav-header">Links</li>
-                <li class="nav-item" id="fsdocs-license-link"><a class="nav-link" href="{{fsdocs-license-link}}">License (Apache 2.0)</a></li>
+                <li class="nav-item" id="fsdocs-license-link"><a class="nav-link" href="{{fsdocs-license-link}}">License</a></li>
                 <li class="nav-item" id="fsdocs-release-notes-link"><a class="nav-link" href="{{fsdocs-release-notes-link}}">Release Notes</a></li>
                 <li class="nav-item" id="fsdocs-repository-link"><a class="nav-link" href="{{fsdocs-repository-link}}">Source Repository</a></li>
                 <li class="nav-header">
@@ -75,7 +76,7 @@
     </nav>
     <div class="container">
         <div class="masthead">
-            <h3 class="muted"><a href="/">scripts</a></h3>
+            <h3 class="muted"><a href="/">Scripts</a></h3>
         </div>
         <hr />
         <div class="container" id="fsdocs-content">
@@ -114,31 +115,102 @@
 <div class="fsdocs-tip" id="fs4">val s : string</div>
 <div class="fsdocs-tip" id="fs5">val cron : NCrontab.CrontabSchedule</div>
 <div class="fsdocs-tip" id="fs6">namespace NCrontab</div>
-<div class="fsdocs-tip" id="fs7">type CrontabSchedule =<br />&#160;&#160;new : seconds: CrontabField * minutes: CrontabField * hours: CrontabField * days: CrontabField * months: CrontabField * daysOfWeek: CrontabField -&gt; unit<br />&#160;&#160;member GetNextOccurrence : baseTime: DateTime -&gt; DateTime + 1 overload<br />&#160;&#160;member GetNextOccurrences : baseTime: DateTime * endTime: DateTime -&gt; IEnumerable&lt;DateTime&gt;<br />&#160;&#160;member ToString : unit -&gt; string<br />&#160;&#160;member TryGetNextOccurrence : baseTime: DateTime * endTime: DateTime -&gt; Nullable&lt;DateTime&gt;<br />&#160;&#160;static member Parse : expression: string -&gt; CrontabSchedule + 1 overload<br />&#160;&#160;static member TryParse : expression: string -&gt; CrontabSchedule + 3 overloads<br />&#160;&#160;static val SecondZero : CrontabField<br />&#160;&#160;static member Calendar : Calendar</div>
+<div class="fsdocs-tip" id="fs7">type CrontabSchedule =
+  new : seconds: CrontabField * minutes: CrontabField * hours: CrontabField * days: CrontabField * months: CrontabField * daysOfWeek: CrontabField -&gt; unit
+  member GetNextOccurrence : baseTime: DateTime -&gt; DateTime + 1 overload
+  member GetNextOccurrences : baseTime: DateTime * endTime: DateTime -&gt; IEnumerable&lt;DateTime&gt;
+  member ToString : unit -&gt; string
+  member TryGetNextOccurrence : baseTime: DateTime * endTime: DateTime -&gt; Nullable&lt;DateTime&gt;
+  static member Parse : expression: string -&gt; CrontabSchedule + 1 overload
+  static member TryParse : expression: string -&gt; CrontabSchedule + 3 overloads
+  static val SecondZero : CrontabField
+  static member Calendar : Calendar</div>
 <div class="fsdocs-tip" id="fs8">NCrontab.CrontabSchedule.Parse(expression: string) : NCrontab.CrontabSchedule<br />NCrontab.CrontabSchedule.Parse(expression: string, options: NCrontab.CrontabSchedule.ParseOptions) : NCrontab.CrontabSchedule</div>
 <div class="fsdocs-tip" id="fs9">val times : seq&lt;DateTime&gt;</div>
-<div class="fsdocs-tip" id="fs10">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
-<div class="fsdocs-tip" id="fs11">val unfold : generator:(&#39;State -&gt; (&#39;T * &#39;State) option) -&gt; state:&#39;State -&gt; seq&lt;&#39;T&gt;</div>
+<div class="fsdocs-tip" id="fs10">module Seq
+
+from Microsoft.FSharp.Collections<br /><em>&lt;summary&gt;Contains operations for working with values of type &lt;see cref=&quot;T:Microsoft.FSharp.Collections.seq`1&quot; /&gt;.&lt;/summary&gt;</em></div>
+<div class="fsdocs-tip" id="fs11">val unfold : generator:(&#39;State -&gt; (&#39;T * &#39;State) option) -&gt; state:&#39;State -&gt; seq&lt;&#39;T&gt;<br /><em>&lt;summary&gt;Returns a sequence that contains the elements generated by the given computation.
+ The given initial &lt;c&gt;state&lt;/c&gt; argument is passed to the element generator.
+ For each IEnumerator elements in the stream are generated on-demand by applying the element
+ generator, until a None value is returned by the element generator. Each call to the element
+ generator returns a new residual &lt;c&gt;state&lt;/c&gt;.&lt;/summary&gt;<br />&lt;remarks&gt;The stream will be recomputed each time an IEnumerator is requested and iterated for the Seq.&lt;/remarks&gt;<br />&lt;param name=&quot;generator&quot;&gt;A function that takes in the current state and returns an option tuple of the next
+ element of the sequence and the next state value.&lt;/param&gt;<br />&lt;param name=&quot;state&quot;&gt;The initial state value.&lt;/param&gt;<br />&lt;returns&gt;The result sequence.&lt;/returns&gt;</em></div>
 <div class="fsdocs-tip" id="fs12">val d : DateTime</div>
 <div class="fsdocs-tip" id="fs13">NCrontab.CrontabSchedule.GetNextOccurrence(baseTime: DateTime) : DateTime<br />NCrontab.CrontabSchedule.GetNextOccurrence(baseTime: DateTime, endTime: DateTime) : DateTime</div>
 <div class="fsdocs-tip" id="fs14">val x : DateTime</div>
-<div class="fsdocs-tip" id="fs15">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
-<div class="fsdocs-tip" id="fs16">Multiple items<br />[&lt;Struct&gt;]<br />type DateTime =<br />&#160;&#160;new : year: int * month: int * day: int -&gt; unit + 10 overloads<br />&#160;&#160;member Add : value: TimeSpan -&gt; DateTime<br />&#160;&#160;member AddDays : value: float -&gt; DateTime<br />&#160;&#160;member AddHours : value: float -&gt; DateTime<br />&#160;&#160;member AddMilliseconds : value: float -&gt; DateTime<br />&#160;&#160;member AddMinutes : value: float -&gt; DateTime<br />&#160;&#160;member AddMonths : months: int -&gt; DateTime<br />&#160;&#160;member AddSeconds : value: float -&gt; DateTime<br />&#160;&#160;member AddTicks : value: int64 -&gt; DateTime<br />&#160;&#160;member AddYears : value: int -&gt; DateTime<br />&#160;&#160;...<br /><br />--------------------<br />DateTime ()<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(ticks: int64) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(ticks: int64, kind: DateTimeKind) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, calendar: Globalization.Calendar) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, kind: DateTimeKind) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, calendar: Globalization.Calendar) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, millisecond: int) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, millisecond: int, kind: DateTimeKind) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em></div>
-<div class="fsdocs-tip" id="fs17">property DateTime.Now: DateTime with get</div>
-<div class="fsdocs-tip" id="fs18">val take : count:int -&gt; source:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;T&gt;</div>
-<div class="fsdocs-tip" id="fs19">val iter : action:(&#39;T -&gt; unit) -&gt; source:seq&lt;&#39;T&gt; -&gt; unit</div>
-<div class="fsdocs-tip" id="fs20">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="fsdocs-tip" id="fs15">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;<br /><em>&lt;summary&gt;The representation of &quot;Value of type &#39;T&quot;&lt;/summary&gt;<br />&lt;param name=&quot;Value&quot;&gt;The input value.&lt;/param&gt;<br />&lt;returns&gt;An option representing the value.&lt;/returns&gt;</em></div>
+<div class="fsdocs-tip" id="fs16">Multiple items<br />[&lt;Struct&gt;]
+type DateTime =
+  new : year: int * month: int * day: int -&gt; unit + 10 overloads
+  member Add : value: TimeSpan -&gt; DateTime
+  member AddDays : value: float -&gt; DateTime
+  member AddHours : value: float -&gt; DateTime
+  member AddMilliseconds : value: float -&gt; DateTime
+  member AddMinutes : value: float -&gt; DateTime
+  member AddMonths : months: int -&gt; DateTime
+  member AddSeconds : value: float -&gt; DateTime
+  member AddTicks : value: int64 -&gt; DateTime
+  member AddYears : value: int -&gt; DateTime
+  ...<br /><em>&lt;summary&gt;Represents an instant in time, typically expressed as a date and time of day.&lt;/summary&gt;</em><br /><br />--------------------<br />DateTime ()<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(ticks: int64) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(ticks: int64, kind: DateTimeKind) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, calendar: Globalization.Calendar) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, kind: DateTimeKind) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, calendar: Globalization.Calendar) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, millisecond: int) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em><br />DateTime(year: int, month: int, day: int, hour: int, minute: int, second: int, millisecond: int, kind: DateTimeKind) : DateTime<br />&#160;&#160;&#160;<em>(+0 other overloads)</em></div>
+<div class="fsdocs-tip" id="fs17">property DateTime.Now: DateTime with get<br /><em>&lt;summary&gt;Gets a &lt;see cref=&quot;T:System.DateTime&quot; /&gt; object that is set to the current date and time on this computer, expressed as the local time.&lt;/summary&gt;<br />&lt;returns&gt;An object whose value is the current local date and time.&lt;/returns&gt;</em></div>
+<div class="fsdocs-tip" id="fs18">val take : count:int -&gt; source:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;T&gt;<br /><em>&lt;summary&gt;Returns the first N elements of the sequence.&lt;/summary&gt;<br />&lt;remarks&gt;Throws &lt;c&gt;InvalidOperationException&lt;/c&gt;
+ if the count exceeds the number of elements in the sequence. &lt;c&gt;Seq.truncate&lt;/c&gt;
+ returns as many items as the sequence contains instead of throwing an exception.&lt;/remarks&gt;<br />&lt;param name=&quot;count&quot;&gt;The number of items to take.&lt;/param&gt;<br />&lt;param name=&quot;source&quot;&gt;The input sequence.&lt;/param&gt;<br />&lt;returns&gt;The result sequence.&lt;/returns&gt;<br />&lt;exception cref=&quot;T:System.ArgumentNullException&quot;&gt;Thrown when the input sequence is null.&lt;/exception&gt;<br />&lt;exception cref=&quot;T:System.ArgumentException&quot;&gt;Thrown when the input sequence is empty.&lt;/exception&gt;<br />&lt;exception cref=&quot;T:System.InvalidOperationException&quot;&gt;Thrown when count exceeds the number of elements
+ in the sequence.&lt;/exception&gt;</em></div>
+<div class="fsdocs-tip" id="fs19">val iter : action:(&#39;T -&gt; unit) -&gt; source:seq&lt;&#39;T&gt; -&gt; unit<br /><em>&lt;summary&gt;Applies the given function to each element of the collection.&lt;/summary&gt;<br />&lt;param name=&quot;action&quot;&gt;A function to apply to each element of the sequence.&lt;/param&gt;<br />&lt;param name=&quot;source&quot;&gt;The input sequence.&lt;/param&gt;<br />&lt;exception cref=&quot;T:System.ArgumentNullException&quot;&gt;Thrown when the input sequence is null.&lt;/exception&gt;</em></div>
+<div class="fsdocs-tip" id="fs20">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><em>&lt;summary&gt;Print to &lt;c&gt;stdout&lt;/c&gt; using the given format, and add a newline.&lt;/summary&gt;<br />&lt;param name=&quot;format&quot;&gt;The formatter.&lt;/param&gt;<br />&lt;returns&gt;The formatted result.&lt;/returns&gt;</em></div>
 <div class="fsdocs-tip" id="fs21">val readNCrontab : unit -&gt; bool</div>
-<div class="fsdocs-tip" id="fs22">val printf : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
-<div class="fsdocs-tip" id="fs23">type Console =<br />&#160;&#160;static member Beep : unit -&gt; unit + 1 overload<br />&#160;&#160;static member Clear : unit -&gt; unit<br />&#160;&#160;static member GetCursorPosition : unit -&gt; struct (int * int)<br />&#160;&#160;static member MoveBufferArea : sourceLeft: int * sourceTop: int * sourceWidth: int * sourceHeight: int * targetLeft: int * targetTop: int -&gt; unit + 1 overload<br />&#160;&#160;static member OpenStandardError : unit -&gt; Stream + 1 overload<br />&#160;&#160;static member OpenStandardInput : unit -&gt; Stream + 1 overload<br />&#160;&#160;static member OpenStandardOutput : unit -&gt; Stream + 1 overload<br />&#160;&#160;static member Read : unit -&gt; int<br />&#160;&#160;static member ReadKey : unit -&gt; ConsoleKeyInfo + 1 overload<br />&#160;&#160;static member ReadLine : unit -&gt; string<br />&#160;&#160;...</div>
+<div class="fsdocs-tip" id="fs22">val printf : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><em>&lt;summary&gt;Print to &lt;c&gt;stdout&lt;/c&gt; using the given format.&lt;/summary&gt;<br />&lt;param name=&quot;format&quot;&gt;The formatter.&lt;/param&gt;<br />&lt;returns&gt;The formatted result.&lt;/returns&gt;</em></div>
+<div class="fsdocs-tip" id="fs23">type Console =
+  static member Beep : unit -&gt; unit + 1 overload
+  static member Clear : unit -&gt; unit
+  static member GetCursorPosition : unit -&gt; struct (int * int)
+  static member MoveBufferArea : sourceLeft: int * sourceTop: int * sourceWidth: int * sourceHeight: int * targetLeft: int * targetTop: int -&gt; unit + 1 overload
+  static member OpenStandardError : unit -&gt; Stream + 1 overload
+  static member OpenStandardInput : unit -&gt; Stream + 1 overload
+  static member OpenStandardOutput : unit -&gt; Stream + 1 overload
+  static member Read : unit -&gt; int
+  static member ReadKey : unit -&gt; ConsoleKeyInfo + 1 overload
+  static member ReadLine : unit -&gt; string
+  ...<br /><em>&lt;summary&gt;Represents the standard input, output, and error streams for console applications. This class cannot be inherited.&lt;/summary&gt;</em></div>
 <div class="fsdocs-tip" id="fs24">Console.ReadLine() : string</div>
-<div class="fsdocs-tip" id="fs25">[&lt;Struct&gt;]<br />type Int32 =<br />&#160;&#160;member CompareTo : value: int -&gt; int + 1 overload<br />&#160;&#160;member Equals : obj: int -&gt; bool + 1 overload<br />&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;member GetTypeCode : unit -&gt; TypeCode<br />&#160;&#160;member System.IConvertible.ToBoolean : provider: IFormatProvider -&gt; bool<br />&#160;&#160;member System.IConvertible.ToByte : provider: IFormatProvider -&gt; byte<br />&#160;&#160;member System.IConvertible.ToChar : provider: IFormatProvider -&gt; char<br />&#160;&#160;member System.IConvertible.ToDateTime : provider: IFormatProvider -&gt; DateTime<br />&#160;&#160;member System.IConvertible.ToDecimal : provider: IFormatProvider -&gt; decimal<br />&#160;&#160;member System.IConvertible.ToDouble : provider: IFormatProvider -&gt; float<br />&#160;&#160;...</div>
+<div class="fsdocs-tip" id="fs25">[&lt;Struct&gt;]
+type Int32 =
+  member CompareTo : value: int -&gt; int + 1 overload
+  member Equals : obj: int -&gt; bool + 1 overload
+  member GetHashCode : unit -&gt; int
+  member GetTypeCode : unit -&gt; TypeCode
+  member System.IConvertible.ToBoolean : provider: IFormatProvider -&gt; bool
+  member System.IConvertible.ToByte : provider: IFormatProvider -&gt; byte
+  member System.IConvertible.ToChar : provider: IFormatProvider -&gt; char
+  member System.IConvertible.ToDateTime : provider: IFormatProvider -&gt; DateTime
+  member System.IConvertible.ToDecimal : provider: IFormatProvider -&gt; decimal
+  member System.IConvertible.ToDouble : provider: IFormatProvider -&gt; float
+  ...<br /><em>&lt;summary&gt;Represents a 32-bit signed integer.&lt;/summary&gt;</em></div>
 <div class="fsdocs-tip" id="fs26">Int32.TryParse(s: string, result: byref&lt;int&gt;) : bool<br />Int32.TryParse(s: ReadOnlySpan&lt;char&gt;, result: byref&lt;int&gt;) : bool<br />Int32.TryParse(s: string, style: Globalization.NumberStyles, provider: IFormatProvider, result: byref&lt;int&gt;) : bool<br />Int32.TryParse(s: ReadOnlySpan&lt;char&gt;, style: Globalization.NumberStyles, provider: IFormatProvider, result: byref&lt;int&gt;) : bool</div>
-<div class="fsdocs-tip" id="fs27">type Array =<br />&#160;&#160;interface ICollection<br />&#160;&#160;interface IEnumerable<br />&#160;&#160;interface IList<br />&#160;&#160;interface IStructuralComparable<br />&#160;&#160;interface IStructuralEquatable<br />&#160;&#160;interface ICloneable<br />&#160;&#160;new : unit -&gt; unit<br />&#160;&#160;member Clone : unit -&gt; obj<br />&#160;&#160;member CopyTo : array: Array * index: int -&gt; unit + 1 overload<br />&#160;&#160;member GetEnumerator : unit -&gt; IEnumerator<br />&#160;&#160;...</div>
-<div class="fsdocs-tip" id="fs28">val tryItem : index:int -&gt; array:&#39;T [] -&gt; &#39;T option</div>
-<div class="fsdocs-tip" id="fs29">module Option<br /><br />from Microsoft.FSharp.Core</div>
-<div class="fsdocs-tip" id="fs30">val defaultValue : value:&#39;T -&gt; option:&#39;T option -&gt; &#39;T</div>
-<div class="fsdocs-tip" id="fs31">val get : array:&#39;T [] -&gt; index:int -&gt; &#39;T</div>
+<div class="fsdocs-tip" id="fs27">type Array =
+  interface ICollection
+  interface IEnumerable
+  interface IList
+  interface IStructuralComparable
+  interface IStructuralEquatable
+  interface ICloneable
+  new : unit -&gt; unit
+  member Clone : unit -&gt; obj
+  member CopyTo : array: Array * index: int -&gt; unit + 1 overload
+  member GetEnumerator : unit -&gt; IEnumerator
+  ...<br /><em>&lt;summary&gt;Provides methods for creating, manipulating, searching, and sorting arrays, thereby serving as the base class for all arrays in the common language runtime.&lt;/summary&gt;</em></div>
+<div class="fsdocs-tip" id="fs28">val tryItem : index:int -&gt; array:&#39;T [] -&gt; &#39;T option<br /><em>&lt;summary&gt;Tries to find the nth element in the array.
+ Returns &lt;c&gt;None&lt;/c&gt; if index is negative or the input array does not contain enough elements.&lt;/summary&gt;<br />&lt;param name=&quot;index&quot;&gt;The index of element to retrieve.&lt;/param&gt;<br />&lt;param name=&quot;array&quot;&gt;The input array.&lt;/param&gt;<br />&lt;returns&gt;The nth element of the array or &lt;c&gt;None&lt;/c&gt;.&lt;/returns&gt;<br />&lt;exception cref=&quot;T:System.ArgumentNullException&quot;&gt;Thrown when the input array is null.&lt;/exception&gt;</em></div>
+<div class="fsdocs-tip" id="fs29">module Option
+
+from Microsoft.FSharp.Core<br /><em>&lt;summary&gt;Contains operations for working with options.&lt;/summary&gt;<br />&lt;category&gt;Options&lt;/category&gt;</em></div>
+<div class="fsdocs-tip" id="fs30">val defaultValue : value:&#39;T -&gt; option:&#39;T option -&gt; &#39;T<br /><em>&lt;summary&gt;Gets the value of the option if the option is &lt;c&gt;Some&lt;/c&gt;, otherwise returns the specified default value.&lt;/summary&gt;<br />&lt;param name=&quot;value&quot;&gt;The specified default value.&lt;/param&gt;<br />&lt;param name=&quot;option&quot;&gt;The input option.&lt;/param&gt;<br />&lt;returns&gt;The option if the option is Some, else the default value.&lt;/returns&gt;<br />&lt;remarks&gt;Identical to the built-in &lt;see cref=&quot;defaultArg&quot; /&gt; operator, except with the arguments swapped.&lt;/remarks&gt;<br />&lt;example&gt;&lt;code&gt;
+     (99, None) ||&amp;gt; Option.defaultValue // evaluates to 99
+     (99, Some 42) ||&amp;gt; Option.defaultValue // evaluates to 42
+ &lt;/code&gt;&lt;/example&gt;</em></div>
+<div class="fsdocs-tip" id="fs31">val get : array:&#39;T [] -&gt; index:int -&gt; &#39;T<br /><em>&lt;summary&gt;Gets an element from an array.&lt;/summary&gt;<br />&lt;param name=&quot;array&quot;&gt;The input array.&lt;/param&gt;<br />&lt;param name=&quot;index&quot;&gt;The input index.&lt;/param&gt;<br />&lt;returns&gt;The value of the array at the given index.&lt;/returns&gt;<br />&lt;exception cref=&quot;T:System.NullReferenceException&quot;&gt;Thrown when the input array is null.&lt;/exception&gt;<br />&lt;exception cref=&quot;T:System.IndexOutOfRangeException&quot;&gt;Thrown when the index is negative or the input array does not contain enough elements.&lt;/exception&gt;</em></div>
 
         </div>
 
@@ -153,4 +225,3 @@
 </body>
 
 </html>
-
