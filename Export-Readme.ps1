@@ -79,7 +79,7 @@ function Format-PSScripts
 {
 	Write-Progress 'Enumerating PowerShell scripts' 'Getting list of recent changes'
 	$status = @{}
-	git diff --name-status $(git rev-list -1 --before="$StatusAge" master) |
+	git diff --name-status $(git rev-list -1 --before="$StatusAge" main) |
 		foreach {if($_ -match '^(?<Status>\w)\t(?<Script>\S.*)') {$status[$Matches.Script] = Get-StatusSymbol $Matches.Status}}
 	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\*.ps1
 	$i,$max = 0,($scripts.Count/100)
@@ -266,11 +266,11 @@ function Export-PSScriptPages
 		where {!(Test-Path "$PSScriptRoot\$([IO.Path]::GetFileNameWithoutExtension($_.Name))" -Type Leaf)} |
 		Remove-Item
 	Write-Progress 'Export PowerShell script help pages' 'Updating script docs'
-	Update-MarkdownHelp $PSScriptRoot\docs\*.ps1.md |Write-Verbose
+	Update-MarkdownHelp $PSScriptRoot\docs\*.ps1.md -EA 0 |Write-Verbose
 	Write-Progress 'Export PowerShell script help pages' 'Adding docs for new scripts'
 	Get-Item $PSScriptRoot\*.ps1 |
 		where {!(Test-Path "$PSScriptRoot\$($_.Name).md" -Type Leaf)} |
-		foreach {New-MarkdownHelp -Command $_.Name -OutputFolder docs} |
+		foreach {New-MarkdownHelp -Command $_.Name -OutputFolder docs -EA 0} |
 		Write-Verbose
 	Write-Progress 'Export PowerShell script help pages' -Completed
 }
