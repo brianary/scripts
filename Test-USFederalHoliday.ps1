@@ -9,6 +9,7 @@
         * Birthday of Martin Luther King, Jr., Third Monday in January
         * Washington's Birthday, Third Monday in February
         * Memorial Day, Last Monday in May
+		* Juneteenth, June 19 (± 1 day, if observed)
         * Independence Day, July 4 (± 1 day, if observed)
         * Labor Day, First Monday in September
         * Columbus Day, Second Monday in October
@@ -85,6 +86,7 @@ Process
                 switch($MMdd)
                 {
                     '0102' {Write-Verbose "$showdate is New Year's Day (Observed)"; return $true}
+                    '0620' {Write-Verbose "$showdate is Juneteenth (Observed)"; return $true}
                     '0705' {Write-Verbose "$showdate is Independence Day (Observed)"; return $true}
                     '1112' {Write-Verbose "$showdate is Veterans Day (Observed)"; return $true}
                     '1226' {Write-Verbose "$showdate is Christmas Day (Observed)"; return $true}
@@ -102,6 +104,7 @@ Process
                 switch($MMdd)
                 {
                     '1231' {Write-Verbose "$showdate is New Year's Day (Observed)"; return $true}
+                    '0618' {Write-Verbose "$showdate is Juneteenth (Observed)"; return $true}
                     '0703' {Write-Verbose "$showdate is Independence Day (Observed)"; return $true}
                     '1110' {Write-Verbose "$showdate is Veteran's Day (Observed)"; return $true}
                     '1224' {Write-Verbose "$showdate is Christmas Day (Observed)"; return $true}
@@ -112,6 +115,7 @@ Process
     switch($MMdd)
     {
         '0101' {Write-Verbose "$showdate is New Year's Day"; return $true}
+        '0619' {Write-Verbose "$showdate is Juneteenth"; return $true}
         '0704' {Write-Verbose "$showdate is Independence Day"; return $true}
         '1111' {Write-Verbose "$showdate is Veteran's Day"; return $true}
         '1225' {Write-Verbose "$showdate is Christmas Day"; return $true}

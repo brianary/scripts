@@ -24,6 +24,7 @@ The following holidays are checked:
        * Birthday of Martin Luther King, Jr., Third Monday in January
        * Washington's Birthday, Third Monday in February
        * Memorial Day, Last Monday in May
+       * Juneteenth, June 19 (± 1 day, if observed)
        * Independence Day, July 4 (± 1 day, if observed)
        * Labor Day, First Monday in September
        * Columbus Day, Second Monday in October
