@@ -18,7 +18,6 @@ PowerShell Scripts
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1)**: Convert a scope level to account for another call stack level.
 - **[Add-ScriptCredential.ps1](Add-ScriptCredential.ps1)**: Serializes a an encrypted credential to a PowerShell script using 32-byte random key file.
 - **[Add-TimeSpan.ps1](Add-TimeSpan.ps1)**: Adds a timespan to DateTime values.
-- **[Add-Utf8Signature.ps1](Add-Utf8Signature.ps1)**: Adds the utf-8 signature (BOM) to a file.
 - **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1)**: Adds a VS Code MSSQL database connection to the repo.
 - **[Backup-File.ps1](Backup-File.ps1)**: Create a backup as a sibling to a file, with date and time values in the name.
 - **[Backup-SchTasks.ps1](Backup-SchTasks.ps1)**: Exports the local list of Scheduled Tasks into a single XML file.
@@ -81,13 +80,10 @@ PowerShell Scripts
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1)**: Returns the content security policy at from the given URL.
 - **[Get-Dns.ps1](Get-Dns.ps1)**: Looks up DNS info, given a hostname or address.
 - **[Get-DotNetFrameworkVersions.ps1](Get-DotNetFrameworkVersions.ps1)**: Determine which .NET Frameworks are installed on the requested system.
+- **[Get-DotNetGlobalTools.ps1](Get-DotNetGlobalTools.ps1)**: Returns a list of global dotnet tools.
 - **[Get-DotNetVersions.ps1](Get-DotNetVersions.ps1)**: Get-DotNetVersions.ps1 [<CommonParameters>]
 
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1)**: Returns the possible values of the specified enumeration.
-- **[Get-FileContentsInfo.ps1](Get-FileContentsInfo.ps1)**: Returns whether the file is binary or text, and what encoding, line endings, and indents text files contain.
-- **[Get-FileEncoding.ps1](Get-FileEncoding.ps1)**: Returns the encoding for a given file, suitable for passing to encoding parameters.
-- **[Get-FileIndentCharacter.ps1](Get-FileIndentCharacter.ps1)**: Determines the indent characters used in a text file.
-- **[Get-FileLineEndings.ps1](Get-FileLineEndings.ps1)**: Determines a file's line endings.
 - **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1)**: Returns a date and time converted to the French Republican Calendar.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1)**: Gets the SHA-1 hash of the first commit of the current repo.
@@ -138,12 +134,10 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1)**: Removes a file that may be prone to locking.
 - **[Remove-NullValues.ps1](Remove-NullValues.ps1)**: Removes dictionary entries with null vaules.
 - **[Remove-ParameterDefault.ps1](Remove-ParameterDefault.ps1)**: Removes a value that would have been used for a parameter if none was specified, if one existed.
-- **[Remove-Utf8Signature.ps1](Remove-Utf8Signature.ps1)**: Removes the utf-8 signature (BOM) from a file.
 - **[Rename-GitHubLocalBranch.ps1](Rename-GitHubLocalBranch.ps1)**: Rename a git repository branch.
 - **[Rename-Script.ps1](Rename-Script.ps1)**: Renames all instances of a script, and updates any usage of it.
 - **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1)**: Finds database constraints with system-generated names and gives them deterministic names.
 - **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1)**: Finds database constraints that have been incompletely re-enabled.
-- **[Repair-Encoding.ps1](Repair-Encoding.ps1)**: Re-encodes Windows-1252 text that has been misinterpreted as UTF-8.
 - **[Reset-ConsoleColors.ps1](Reset-ConsoleColors.ps1)**: Resets console color palette.
 - **[Resolve-XmlSchemaLocation.ps1](Resolve-XmlSchemaLocation.ps1)**: Gets the namespaces and their URIs and URLs from a document.
 - **[Resolve-XPath.ps1](Resolve-XPath.ps1)**: Returns the XPath of the location of an XML node.
@@ -165,10 +159,8 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Show-Time.ps1](Show-Time.ps1)**: Displays a formatted date using powerline font characters.
 - **[Split-FileName.ps1](Split-FileName.ps1)**: Returns the specified part of the filename.
 - **[Stop-ThrowError.ps1](Stop-ThrowError.ps1)**: Throws a better error than "throw".
-- **[Test-BinaryFile.ps1](Test-BinaryFile.ps1)**: Indicates that a file contains binary data.
 - **[Test-DateTime.ps1](Test-DateTime.ps1)**: Tests whether the given string can be parsed as a date.
 - **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1)**: Tests for a given common file type by magic number.
-- **[Test-FinalNewline.ps1](Test-FinalNewline.ps1)**: Returns true if a file ends with a newline as required by the POSIX standard.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1)**: Scan sites using Mozilla's Observatory.
 - **[Test-Interactive.ps1](Test-Interactive.ps1)**: Determines whether both the user and process are interactive.
 - **[Test-Json.ps1](Test-Json.ps1)**: Determines whether a string is valid JSON.
@@ -177,16 +169,14 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Test-MagicNumber.ps1](Test-MagicNumber.ps1)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
 - **[Test-NewerFile.ps1](Test-NewerFile.ps1)**: Returns true if the difference file is newer than the reference file.
 - **[Test-NoteProperty.ps1](Test-NoteProperty.ps1)**: Looks for any matching NoteProperties on an object.
-- **[Test-TextFile.ps1](Test-TextFile.ps1)**: Indicates that a file contains text.
 - **[Test-Uri.ps1](Test-Uri.ps1)**: Determines whether a string is a valid URI.
 - **[Test-USFederalHoliday.ps1](Test-USFederalHoliday.ps1)**: Returns true if the given date is a U.S. federal holiday.
-- **[Test-Utf8Encoding.ps1](Test-Utf8Encoding.ps1)**: Determines whether a file can be parsed as UTF-8 successfully.
-- **[Test-Utf8Signature.ps1](Test-Utf8Signature.ps1)**: Returns true if a file starts with a utf-8 signature (BOM).
 - **[Test-Variable.ps1](Test-Variable.ps1)**: Indicates whether a variable has been defined.
 - **[Test-Windows1252.ps1](Test-Windows1252.ps1)**: Determines whether a file contains Windows-1252 bytes that are invalid UTF-8 bytes.
 - **[Test-Xml.ps1](Test-Xml.ps1)**: Try parsing text as XML, and validating it if a schema is provided.
 - **[Trace-GitRepoTest.ps1](Trace-GitRepoTest.ps1)**: Uses git bisect to search for the point in the repo history that the test script starts returning true.
 - **[Uninstall-OldModules.ps1](Uninstall-OldModules.ps1)**: Uninstalls old module versions.
+- **[Update-Everything.ps1](Update-Everything.ps1)**: Updates all packages it can.
 - **[Update-Files.ps1](Update-Files.ps1)**: Copies specified source files that exist in the destination directory.
 - **[Update-Modules.ps1](Update-Modules.ps1)**: Cleans up old modules.
 - **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
@@ -208,4 +198,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 09/25/2021 19:29:12 -->
+<!-- generated 10/14/2021 18:30:47 -->
