@@ -722,7 +722,7 @@ public class PasswordCharacter
 	function Find-UnicodeCategoryClasses([char]$c)
 	{
 		@('Lu','Ll','Lt','Lm','Lo','L','Mn','Mc','Me','M','Nd','Nl','No','N','Pc','Pd','Ps','Pe','Pi',
-		  'Pf','Po','P','Sm','Sc','Sk','So','S','Zs','Zl','Zp','Z','Cc','Cf','Cs','Co','Cn','C') |
+			'Pf','Po','P','Sm','Sc','Sk','So','S','Zs','Zl','Zp','Z','Cc','Cf','Cs','Co','Cn','C') |
 			? {$c -cmatch "\p{$_}"}
 	}
 	$invalidUserNameChars = '"/\[]:;|=,+*?<>'.ToCharArray() # https://technet.microsoft.com/en-us/library/bb726984.aspx
