@@ -18,7 +18,7 @@
 	https://docs.microsoft.com/dotnet/api/system.xml.xmlnode
 
 .Example
-	'<a><b c="value"/></a>' |Select-Xml //@c |Resolve-Xml.ps1
+	'<a><b c="value"/></a>' |Select-Xml //@c |Resolve-XPath.ps1
 
 	/a/b/@c
 

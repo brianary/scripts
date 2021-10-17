@@ -7,7 +7,7 @@
 	detail or context:
 
 		Unable to remove root node.
-		At C:\Scripts\Remove-Xml.ps1:34 char:37
+		At C:\Scripts\PS5\Remove-Xml.ps1:34 char:37
 		+ ...  if($node.ParentNode -eq $null) {throw 'Unable to remove root node.'}
 		+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			+ CategoryInfo          : OperationStopped: (Unable to remove root node.:String) [], RuntimeException
@@ -17,7 +17,7 @@
 
 	Using $PSCmdlet.ThrowTerminatingError() does a much better job:
 
-		C:\Scripts\Remove-Xml.ps1 : Unable to remove root node
+		C:\Scripts\PS5\Remove-Xml.ps1 : Unable to remove root node
 		Parameter name: SelectXmlInfo
 		At C:\Scripts\Test-Error.ps1:2 char:23
 		+ '<a/>' |Select-Xml / |Remove-Xml.ps1
@@ -81,7 +81,7 @@
 .Example
 	Stop-ThrowError.ps1 'Unable to remove root node' -Argument SelectXmlInfo
 
-	C:\Scripts\Remove-Xml.ps1 : Unable to remove root node
+	C:\Scripts\PS5\Remove-Xml.ps1 : Unable to remove root node
 	Parameter name: SelectXmlInfo
 	At C:\Scripts\Test-Error.ps1:2 char:23
 	+ '<a/>' |Select-Xml / |Remove-Xml.ps1

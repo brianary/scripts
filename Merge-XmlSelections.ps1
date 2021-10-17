@@ -18,7 +18,7 @@
 	System.Management.Automation.PSCustomObject object with the selected properties.
 
 .Link
-	Select-XmlNodeValue.ps1
+	https://github.com/brianary/Detextive/
 
 .Example
 	Merge-XmlSelections.ps1 @{Version='/*/@version';Format='/xsl:output/@method'} *.xsl* -Namespace @{xsl='http://www.w3.org/1999/XSL/Transform'}
@@ -30,6 +30,7 @@
 #>
 
 #Requires -Version 3
+#Requires -Modules SelectXmlExtensions
 [CmdletBinding()][OutputType([psobject])] Param(
 [Parameter(Position=0,Mandatory=$true)][Collections.IDictionary] $XPaths,
 [Parameter(ParameterSetName='Xml',Position=1,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
@@ -48,7 +49,7 @@ Process
 			$value = [ordered]@{Path='InputStream';Xml=$x.OwnerDocument}
 			foreach($prop in $XPaths.GetEnumerator())
 			{
-				$value.Add($prop.Key,($x |Select-Xml $prop.Value @ns |Select-XmlNodeValue.ps1))
+				$value.Add($prop.Key,($x |Select-Xml $prop.Value @ns |Get-XmlValue))
 			}
 			[pscustomobject]$value
 		}
@@ -60,7 +61,7 @@ Process
 			$value = [ordered]@{Path=$f}
 			foreach($prop in $XPaths.GetEnumerator())
 			{
-				$value.Add($prop.Key,(Select-Xml $prop.Value -Path $f @ns |Select-XmlNodeValue.ps1))
+				$value.Add($prop.Key,(Select-Xml $prop.Value -Path $f @ns |Get-XmlValue))
 			}
 			[pscustomobject]$value
 		}

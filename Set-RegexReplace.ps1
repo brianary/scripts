@@ -29,7 +29,7 @@
 	https://docs.microsoft.com/dotnet/standard/base-types/substitutions-in-regular-expressions
 
 .Link
-	Get-Encoding.ps1
+	https://github.com/brianary/Detextive/
 
 .Example
 	Select-String '(<!-- generated) .*? (-->)' README.md |Set-RegexReplace.ps1 "`$1 $(Get-Date) `$2"
@@ -47,6 +47,7 @@
 #>
 
 #Requires -Version 3
+#Requires -Modules Detextive
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $Replacement,
 [Parameter(ValueFromPipeline=$true)][Microsoft.PowerShell.Commands.MatchInfo] $InputObject
@@ -93,7 +94,7 @@ End
 		$pattern = $files[$file]
 		Write-Progress 'Performing file replace' "$pattern" -curr $file -percent ($i++/$max)
 		Write-Verbose "$($InputObject.Path) : -replace '$($InputObject.Pattern)','$Replacement'"
-		(Get-Content $file -Raw) -replace $pattern,$Replacement |Out-File $file (Get-FileEncoding.ps1 $file)
+		(Get-Content $file -Raw) -replace $pattern,$Replacement |Out-File $file (Get-FileEncoding $file)
 	}
 	Write-Progress 'Performing file replace' 'Complete' -Completed
 }

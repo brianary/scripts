@@ -92,7 +92,10 @@
     http://editorconfig.org/
 
 .Link
-    Add-CaptureToMatches.ps1
+    https://github.com/brianary/Detextive/
+
+.Link
+    Add-CapturesToMatches.ps1
 
 .Link
     Measure-StandardDeviation.ps1
@@ -101,16 +104,16 @@
     Test-FileTypeMagicNumber.ps1
 
 .Link
-    Remove-Utf8Signature.ps1
-
-.Link
     Use-Command.ps1
 
 .Example
-    Add-LinguistOverrides.ps1
+    Add-GitHubMetadata.ps1 -DefaultOwner arthurd@example.com -DefaultUsesTabs
+
+    Sets up the CODEOWNERS file and assigns a user, and sets the indent default.
 #>
 
 #Requires -Version 3
+#Requires -Modules Detextive
 [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='Medium')][OutputType([void])] Param(
 [string[]] $DefaultOwner,
 [hashtable] $Owners = @{},
@@ -201,7 +204,7 @@ function Add-CodeOwners
 {
     if(Test-SkipFile .github/CODEOWNERS)
     {
-        if(Test-FileTypeMagicNumber.ps1 utf8 .github/CODEOWNERS){Remove-Utf8Signature.ps1 .github/CODEOWNERS}
+        if(Test-FileTypeMagicNumber.ps1 utf8 .github/CODEOWNERS){Remove-Utf8Signature .github/CODEOWNERS}
         return
     }
     if(!$DefaultOwner)
@@ -239,7 +242,7 @@ function Add-LinguistOverrides
     }
     else
     {
-        if(Test-FileTypeMagicNumber.ps1 utf8 .gitattributes){Remove-Utf8Signature.ps1 .gitattributes}
+        if(Test-FileTypeMagicNumber.ps1 utf8 .gitattributes){Remove-Utf8Signature .gitattributes}
         if(Select-String '^# Linguist overrides' .gitattributes)
         {
             Select-String '^# Linguist overrides|\blinguist-\w+' .gitattributes |Out-String |Write-Verbose

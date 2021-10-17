@@ -69,9 +69,6 @@
 	Export-DatabaseScripts.ps1
 
 .Link
-	Install-SqlServerModule.ps1
-
-.Link
 	https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
 
 .Link

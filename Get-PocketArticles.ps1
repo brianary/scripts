@@ -56,7 +56,7 @@
 	Remove-NullValues.ps1
 
 .Example
-	Export-PocketArticles.ps1 2020-02-15 2021-03-01 -State Archive -Tag Programming -Sort Newest |Format-Table -Auto
+	Get-PocketArticles.ps1 2020-02-15 2021-03-01 -State Archive -Tag Programming -Sort Newest |Format-Table -Auto
 
 	item_id    resolved_id given_url                                                                             given_title                                                                 favorite status time_added time_updated time_read  time_favorited
 	-------    ----------- ---------                                                                             -----------                                                                 -------- ------ ---------- ------------ ---------  --------------

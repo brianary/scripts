@@ -32,6 +32,8 @@
 	(Writes schema.html)
 #>
 
+#Requires -Version 3
+#Requires -Modules SelectXmlExtensions
 [CmdletBinding(SupportsShouldProcess=$true)]
 [OutputType(ParameterSetName='Xml',[void])][OutputType(ParameterSetName='File',[void])] Param(
 [Parameter(ParameterSetName='Xml',Position=0,Mandatory=$true)][xml] $TransformXslt,
@@ -45,7 +47,7 @@ Begin
 {
 	if($PSCmdlet.ParameterSetName -eq 'File') {[xml] $TransformXslt = Resolve-Path $TransformFile |Get-Content -Raw}
 	[version] $xsltversion = Select-Xml '/*/@version' $TransformXslt -Namespace @{
-			xsl='http://www.w3.org/1999/XSL/Transform'} |Select-XmlNodeValue.ps1
+			xsl='http://www.w3.org/1999/XSL/Transform'} |Get-XmlValue
 	if($xsltversion -gt '1.0')
 	{ Stop-ThrowError.ps1 "XSLT version $xsltversion is not supported by the CLR." -Argument TransformFile }
 	$xslt = New-Object Xml.Xsl.XslCompiledTransform

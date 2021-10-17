@@ -41,11 +41,8 @@
 .Link
 	https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
 
-.Link
-	Install-SqlServerModule.ps1
-
 .Example
-	Export-SqlScripts.ps1 ServerName\instance AdventureWorks2014
+	Export-DatabaseScripts.ps1 ServerName\instance AdventureWorks2014
 
 	Outputs SQL scripts to files.
 #>

@@ -24,7 +24,7 @@
     Use-NetMailConfig.ps1
 
 .Example
-    Send-MailMessageFiles.ps1
+    Send-MailMessageFile.ps1
 
     Sends all .eml files in the current directory.
 

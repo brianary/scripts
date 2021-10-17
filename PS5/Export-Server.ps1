@@ -12,10 +12,10 @@
     Export-WebConfiguration.ps1
 
 .Link
-    Export-SmbShare.ps1
+    Export-SmbShares.ps1
 
 .Example
-    Export-WebServer.ps1
+    Export-Server.ps1
 
     Exports server settings as PowerShell scripts and data, including any of:
 

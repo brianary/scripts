@@ -25,8 +25,6 @@
 	----   ----
 	8.1KB  Get-AspNetEvents.ps1
 	840    Get-AssemblyFramework.ps1
-	7KB    Get-CertificatePath.ps1
-	1.5KB  Get-CertificatePermissions.ps1
 	38.3KB Get-CharacterDetails.ps1
 	1.1KB  Get-ClassicAspEvents.ps1
 	1.3KB  Get-CommandPath.ps1

@@ -1,28 +1,28 @@
 <#
 .Synopsis
-    Adds named capture groups as note properties to Select-String's MatchInfo objects.
+	Adds named capture group values as note properties to Select-String MatchInfo objects.
 
 .Parameter MatchInfo
-    The MatchInfo output from Select-String to augment with named capture groups.
+	The MatchInfo output from Select-String to augment with named capture group values.
 
 .Inputs
-    Microsoft.PowerShell.Commands.MatchInfo, output from Select-String that used a pattern
-    with named capture groups.
+	Microsoft.PowerShell.Commands.MatchInfo, output from Select-String that used a pattern
+	with named capture groups.
 
 .Outputs
-    Microsoft.PowerShell.Commands.MatchInfo with additional note properties for each named
-    capture group.
+	Microsoft.PowerShell.Commands.MatchInfo with additional note properties for each named
+	capture group.
 
 .Link
-    Add-Member
+	Add-Member
 
 .Example
-    Select-String '^(?<Name>.*?\b)\s*(?<Email>\S+@\S+)$' addrbook.txt |Add-CapturesToMatches.ps1 |select Name,Phone,Filename
+	Select-String '^(?<Name>.*?\b)\s*(?<Email>\S+@\S+)$' addrbook.txt |Add-CapturesToMatches.ps1 |select Name,Email,Filename
 
-    Name            Email                Filename
-    ----            -----                --------
-    Arthur Dent     adent@example.org    addrbook.txt
-    Tricia McMillan trillian@example.com addrbook.txt
+	Name            Email                Filename
+	----            -----                --------
+	Arthur Dent     adent@example.org    addrbook.txt
+	Tricia McMillan trillian@example.com addrbook.txt
 #>
 
 #Requires -Version 3
@@ -32,18 +32,18 @@
 )
 Process
 {
-    if($PSVersionTable.PSEdition -eq 'Desktop' -and $PSVersionTable.CLRVersion -lt [version]4.7)
-    { # old CLR is really tedious to get group names
-        [regex]$regex = $MatchInfo.Pattern
-        $regex.GetGroupNames() |
-            where {$_ -Match '\D'} |
-            foreach {Add-Member -InputObject $MatchInfo $_ $MatchInfo.Matches.Groups[$regex.GroupNumberFromName($_)].Value}
-    }
-    else
-    {
-        $MatchInfo.Matches.Groups |
-            where Name -Match '\D' |
-            foreach {Add-Member -InputObject $MatchInfo $_.Name $_.Value}
-    }
-    $MatchInfo
+	if($PSVersionTable.PSEdition -eq 'Desktop' -and $PSVersionTable.CLRVersion -lt [version]4.7)
+	{ # old CLR is really tedious to get group names
+		[regex]$regex = $MatchInfo.Pattern
+		$regex.GetGroupNames() |
+			where {$_ -Match '\D'} |
+			foreach {Add-Member -InputObject $MatchInfo $_ $MatchInfo.Matches.Groups[$regex.GroupNumberFromName($_)].Value}
+	}
+	else
+	{
+		$MatchInfo.Matches.Groups |
+			where Name -Match '\D' |
+			foreach {Add-Member -InputObject $MatchInfo $_.Name $_.Value}
+	}
+	$MatchInfo
 }
