@@ -19,3 +19,4 @@ if((Get-Module PSWindowsUpdate -ListAvailable))
 	Get-WindowsUpdate
 	Install-WindowsUpdate
 }
+Update-Help
