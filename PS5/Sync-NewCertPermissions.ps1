@@ -35,13 +35,12 @@
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2[]] $Certificate
 )
-Begin { $certs = @() }
-Process { $Certificate |foreach {$certs += $_} }
 End
 {
 	# ignore untethered SIDs and inherited perms
 	$isRelevant = { $(try { $_.IdentityReference.Translate([Security.Principal.NTAccount]).Value }catch { $false }) -and !$_.IsInherited }
 	$toJsonRule = { "[$(($_.IdentityReference.Value |ConvertTo-Json),[int]$_.FileSystemRights,[int]$_.AccessControlType -join ',')]" }
+	[System.Security.Cryptography.X509Certificates.X509Certificate2[]] $certs = $input.ForEach({$_}) # flatten nested arrays
 	$newcert, $prevcert = $certs.Group |sort NotAfter -Descending
 	$newcertname = Format-Certificate.ps1 $newcert
 	[string[]] $prevperms = @(Get-CertificatePermissions.ps1 $prevcert |where $isRelevant |foreach $toJsonRule |sort)
