@@ -59,6 +59,7 @@ PowerShell Scripts
 - **[Find-NewestFile.ps1](Find-NewestFile.ps1)**: Finds the most recent file.
 - **[Find-ProjectPackages.ps1](Find-ProjectPackages.ps1)**: Find modules used in projects.
 - **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1)**: Reports text, ntext, and image datatypes found in a given database.
+- :new: **[ForEach-Progress.ps1](ForEach-Progress.ps1)**: Performs an operation against each item in a collection of input objects, with a progress bar.
 - **[Format-ByteUnits.ps1](Format-ByteUnits.ps1)**: Converts bytes to largest possible units, to improve readability.
 - **[Format-Date.ps1](Format-Date.ps1)**: Returns a date/time as a named format.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1)**: Escape URLs more aggressively.
@@ -196,4 +197,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 12/04/2021 14:11:27 -->
+<!-- generated 12/04/2021 20:16:59 -->
