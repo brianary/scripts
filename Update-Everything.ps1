@@ -17,6 +17,6 @@ if((Get-Command dotnet -ErrorAction SilentlyContinue))
 if((Get-Module PSWindowsUpdate -ListAvailable))
 {
 	Get-WindowsUpdate
-	Install-WindowsUpdate
+	Install-WindowsUpdate |Format-Table X,Result,KB,Size,Title
 }
 Update-Help
