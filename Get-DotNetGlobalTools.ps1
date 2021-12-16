@@ -8,7 +8,7 @@
 
 Use-Command.ps1 dotnet "$env:ProgramFiles\dotnet\dotnet.exe" -cinst dotnet-sdk
 
-foreach($line in dotnet tool list -g |select -Skip 2)
+foreach($line in dotnet tool list -g |where {$_ -match '^\S+\s+\d+(?:\.\d+)+\b'})
 {
 	$package,$version,$commands = $line -split '\s\s+',3
 	[pscustomobject]@{
