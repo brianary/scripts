@@ -13,7 +13,8 @@ Create a new PSObject by recursively combining the properties of PSObjects.
 ## SYNTAX
 
 ```
-Merge-PSObject.ps1 [[-ReferenceObject] <PSObject>] [-InputObject] <PSObject[]> [-Force] [<CommonParameters>]
+Merge-PSObject.ps1 [[-ReferenceObject] <PSObject>] [-InputObject] <PSObject> [-Accumulate] [-Force]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -69,7 +70,7 @@ PSObject descendant properties are recursively merged.
 Primitive values are overwritten by any matching ones in the new PSObject.
 
 ```yaml
-Type: PSObject[]
+Type: PSObject
 Parameter Sets: (All)
 Aliases:
 
@@ -77,6 +78,21 @@ Required: True
 Position: 2
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Accumulate
+{{ Fill Accumulate Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

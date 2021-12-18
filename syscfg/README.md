@@ -12,4 +12,4 @@ A collection of scripts that only need to be run once to modify a system.
 - **[Set-DefaultSecurityProtocols.ps1](Set-DefaultSecurityProtocols.ps1)**: Enable TLS versions in Outlook on Windows 7.
 - **[Use-SystemCrypto.ps1](Use-SystemCrypto.ps1)**: Sets the .NET Frameworks prior to 4.7.1 to inherit the system TLS settings.
 
-<!-- generated 12/15/2021 21:28:20 -->
+<!-- generated 12/18/2021 15:48:06 -->

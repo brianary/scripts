@@ -13,7 +13,7 @@ Create a new dictionary by recursively combining the key-value pairs provided di
 ## SYNTAX
 
 ```
-Merge-Dictionary.ps1 [[-ReferenceObject] <IDictionary>] [-InputObject] <IDictionary[]> [-Force]
+Merge-Dictionary.ps1 [[-ReferenceObject] <IDictionary>] [-InputObject] <IDictionary> [-Accumulate] [-Force]
  [<CommonParameters>]
 ```
 
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 Hashtables or other dictionaries to combine.
 
 ```yaml
-Type: IDictionary[]
+Type: IDictionary
 Parameter Sets: (All)
 Aliases:
 
@@ -85,6 +85,22 @@ Required: True
 Position: 2
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Accumulate
+Indicates that the ReferenceObject should be updated with each input dictionary,
+rather than the default behavior of combining the original ReferenceObject with each.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
