@@ -1,12 +1,16 @@
 <#
 .Synopsis
-	Create a new dictionary by recursively combining the key-value pairs provided dictionaries.
+	Combines dictionaries together into a single dictionary.
 
 .Parameter ReferenceObject
 	Initial dictionary value to combine.
 
 .Parameter InputObject
 	Hashtables or other dictionaries to combine.
+
+.Parameter Accumulate
+	Indicates that the ReferenceObject should be updated with each input dictionary,
+	rather than the default behavior of combining the original ReferenceObject with each.
 
 .Parameter Force
 	For matching keys, overwrites old values with new ones.
@@ -28,17 +32,19 @@
 	a                              1
 
 .Example
-	@{b=0;c=3},@{c=4;d=5} |Merge-Dictionary.ps1 @{a=1;b=2} -Force
+	@{b=0;c=3},@{c=4;d=5} |Merge-Dictionary.ps1 @{a=1;b=2} -Force |foreach {$_ |ConvertTo-Json -Compress}
 
-	Name                           Value
-	----                           -----
-	b                              0
-	c                              4
-	a                              1
-	d                              5
+	{"c":3,"b":0,"a":1}
+	{"d":5,"b":2,"c":4,"a":1}
 
 .Example
-	@{b=0;c=3},@{c=4;d=5} |Merge-Dictionary.ps1
+	@{b=0;c=3},@{c=4;d=5} |Merge-Dictionary.ps1 @{a=1;b=2} -Force -Accumulate |foreach {$_ |ConvertTo-Json -Compress}
+
+	{"c":3,"b":0,"a":1}
+	{"c":4,"b":0,"d":5,"a":1}
+
+.Example
+	@{b=0;c=3},@{c=4;d=5} |Merge-Dictionary.ps1 -Accumulate |select -Last 1
 
 	Name                           Value
 	----                           -----
@@ -50,23 +56,18 @@
 #Requires -Version 3
 [CmdletBinding()][OutputType([Collections.IDictionary])] Param(
 [Parameter(Position=0)][Collections.IDictionary] $ReferenceObject = @{},
-[Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)][Collections.IDictionary[]] $InputObject,
+[Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)][Collections.IDictionary] $InputObject,
+[switch] $Accumulate,
 [switch] $Force
 )
-Begin
-{
-	$value = $ReferenceObject
-	$resolve =
-		if($Force) {{Param($key,$diff); Write-Debug "Resolve: overwrite '$key'"; $value.Remove($key)}}
-		else {{Param($key,$diff); Write-Debug "Resolve: skip new '$key'"; $diff.Remove($key)}}
-}
+Begin {if($Accumulate) {$value = $ReferenceObject.Clone()}}
 Process
 {
-	foreach($hash in $InputObject)
+	if(!$Accumulate) {$value = $ReferenceObject.Clone()}
+	foreach($key in $InputObject.Keys)
 	{
-		$h = $hash.Clone()
-		$h.Keys |where {$value.ContainsKey($_)} |foreach {$resolve.Invoke($_,$h)}
-		$value += $h
+		if(!$value.ContainsKey($key)) {$value.Add($key,$InputObject[$key])}
+		elseif($Force) {$value[$key] = $InputObject[$key]}
 	}
+	return $value
 }
-End {$value}

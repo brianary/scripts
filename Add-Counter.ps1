@@ -15,17 +15,17 @@
 	Add-Member
 
 .Example
-	Get-PSProvider |Add-Counter Position |select Position,Name
+	Get-PSProvider |Add-Counter Position |select Name,Position
 
-	Position Name
-	-------- ----
-	       1 Registry
-	       2 Alias
-	       3 Environment
-	       4 FileSystem
-	       5 Function
-	       6 Variable
-	       7 Certificate
+	Name        Position
+	----        --------
+	Registry           1
+	Alias              2
+	Environment        3
+	FileSystem         4
+	Function           5
+	Variable           6
+	Certificate        7
 #>
 
 #Requires -Version 3
