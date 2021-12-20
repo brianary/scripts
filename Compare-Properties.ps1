@@ -62,11 +62,13 @@
 
 Begin
 {
-	[string[]] $referenceProperties = $ReferenceObject.PSObject.Properties.Match('*','Properties').Name
+	[string[]] $referenceProperties = @()
+	$referenceProperties += $ReferenceObject.PSObject.Properties.Match('*','Properties') |foreach Name
 }
 Process
 {
-	[string[]] $differenceProperties = $DifferenceObject.PSObject.Properties.Match('*','Properties').Name
+	[string[]] $differenceProperties = @()
+	$differenceProperties += $DifferenceObject.PSObject.Properties.Match('*','Properties') |foreach Name
 	foreach($property in $referenceProperties)
 	{
 		$referenceValue = $ReferenceObject.$property
