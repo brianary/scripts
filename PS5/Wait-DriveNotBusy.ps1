@@ -1,11 +1,11 @@
 <#
 .Synopsis
-	Uses WMI to check a physical drive for busyness, and waits until a threshhold is value is confirmed.
+	Uses CIM to check a physical drive for busyness, and waits until a threshhold is value is confirmed.
 
 .Parameter DriveName
-	The WMI drive name to check. Use this to list the available drives:
+	The CIM drive name to check. Use this to list the available drives:
 
-		(Get-WMIObject Win32_PerfFormattedData_PerfDisk_PhysicalDisk).Name
+		(Get-CimInstance Win32_PerfFormattedData_PerfDisk_PhysicalDisk).Name
 
 .Parameter Interval
 	The frequency to check the drive busyness, as a TimeSpan.
@@ -32,7 +32,7 @@
 $met = 0
 do
 {
-	$p = (Get-WMIObject Win32_PerfFormattedData_PerfDisk_PhysicalDisk `
+	$p = (Get-CimInstance Win32_PerfFormattedData_PerfDisk_PhysicalDisk `
 		-Filter "Name = '$($DriveName -replace "'","''")'").PercentDiskTime
 	Write-Verbose "$(Get-Date -f G) $DriveName disk time $p%"
 	if($p -lt $Threshhold) {$met++} else {$met = 0}
