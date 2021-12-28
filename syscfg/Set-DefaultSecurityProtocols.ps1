@@ -70,7 +70,7 @@ function Set-RegistryValue
 
 Write-Progress 'Preparing' 'Checking Windows version' -PercentComplete 0
 if(!(Test-Variable.ps1 WindowsVersion))
-{[version]$Global:WindowsVersion = (Get-CimInstance Win32_OperatingSystem).Version}
+{[version]$Global:WindowsVersion = (Get-CimInstance CIM_OperatingSystem).Version}
 if($WindowsVersion -lt 6.1 -or $WindowsVersion -gt 6.3) {throw 'This fix is only for Windows 7-8.1'}
 if($WindowsVersion -ge 6.1 -and $WindowsVersion -lt 6.2)
 {

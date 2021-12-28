@@ -238,7 +238,7 @@ function Export-InstalledApplications
 {
 	Write-Verbose "Exporting list of installed applications to InstalledApplications.txt"
 	Write-Progress "Exporting $env:ComputerName" "Exporting InstalledApplications.txt" -Id 1 -percent 80
-	Get-CimInstance Win32_Product -Filter "Vendor <> 'Microsoft Corporation'" |
+	Get-CimInstance CIM_Product -Filter "Vendor <> 'Microsoft Corporation'" |
 		Sort-Object Caption |
 		ForEach-Object {"$($_.Caption) ($($_.Version))"} |
 		Out-File InstalledApplications.txt utf8

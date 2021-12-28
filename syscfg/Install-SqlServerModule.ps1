@@ -82,7 +82,7 @@ function Update-PSModulePathProcess
 
 function Uninstall-OldModules
 {
-	Get-CimInstance Win32_Product -Filter "Name like '%PowerShell Extensions for SQL Server %'" |
+	Get-CimInstance CIM_Product -Filter "Name like '%PowerShell Extensions for SQL Server %'" |
 		? {$PSCmdlet.ShouldProcess($_.Name,'Uninstall')} |
 		% {Start-Process -FilePath msiexec.exe -ArgumentList '/x',$_.IdentifyingNumber,'/passive','/norestart' -Wait -NoNewWindow}
 }

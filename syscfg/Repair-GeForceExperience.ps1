@@ -25,7 +25,7 @@ $scriptname= $MyInvocation.MyCommand.Name
 if(!$Finish)
 {
 	Use-Command.ps1 bcdedit "$env:windir\system32\bcdedit.exe" -Fail
-	if((Get-CimInstance Win32_ComputerSystem).BootupState -notlike 'Fail-safe *')
+	if((Get-CimInstance CIM_ComputerSystem).BootupState -notlike 'Fail-safe *')
 	{
 		Write-Host "Reboot in Safe Mode before running $scriptname" -fore Magenta
 		if($PSCmdlet.ShouldProcess($env:ComputerName,'reboot into safe mode'))

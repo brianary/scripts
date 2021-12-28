@@ -44,8 +44,8 @@
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param()
-$cs = Get-CimInstance Win32_ComputerSystem
-$os = Get-CimInstance Win32_OperatingSystem
+$cs = Get-CimInstance CIM_ComputerSystem
+$os = Get-CimInstance CIM_OperatingSystem
 [pscustomobject]@{
 	Name = $cs.Name
 	Status = $cs.Status
@@ -55,10 +55,10 @@ $os = Get-CimInstance Win32_OperatingSystem
 	Memory = (Format-ByteUnits $cs.TotalPhysicalMemory -si -dot 2) +
 		" ($('{0:p}' -f (1KB*$os.FreePhysicalMemory/$cs.TotalPhysicalMemory)) free)"
 	OperatingSystem = $os.Caption + $(try{ $os.OSArchitecture }catch{''}) + ' ' + $os.CSDVersion + ' (' + $os.Version + ')'
-	Processors = (Get-CimInstance Win32_Processor |
+	Processors = (Get-CimInstance CIM_Processor |
 		% Name |
 		% {$_ -replace '\s{2,}',' '})
-	Drives = (Get-CimInstance Win32_Volume |
+	Drives = (Get-CimInstance CIM_StorageVolume |
 		? {$_.DriveType -eq 3 -and $_.DriveLetter -and $_.Capacity} |
 		sort DriveLetter |
 		% {"$($_.DriveLetter) $(Format-ByteUnits $_.Capacity -si -dot 2) ($('{0:p}' -f ($_.FreeSpace/$_.Capacity)) free)"})

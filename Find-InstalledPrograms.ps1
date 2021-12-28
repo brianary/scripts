@@ -28,4 +28,4 @@
 [CmdletBinding()][OutputType([Management.ManagementObject])] Param(
 [string] $Name
 )
-Get-CimInstance Win32_Product -Filter "Name like '$($Name -replace "'","''")'"
+Get-CimInstance CIM_Product -Filter "Name like '$($Name -replace "'","''")'"
