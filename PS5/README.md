@@ -51,7 +51,7 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Test-TextFile.ps1](Test-TextFile.ps1)**: Indicates that a file contains text.
 - **[Test-Utf8Encoding.ps1](Test-Utf8Encoding.ps1)**: Determines whether a file can be parsed as UTF-8 successfully.
 - **[Test-Utf8Signature.ps1](Test-Utf8Signature.ps1)**: Returns true if a file starts with a utf-8 signature (BOM).
-- **[Wait-DriveNotBusy.ps1](Wait-DriveNotBusy.ps1)**: Uses WMI to check a physical drive for busyness, and waits until a threshhold is value is confirmed.
+- **[Wait-DriveNotBusy.ps1](Wait-DriveNotBusy.ps1)**: Uses CIM to check a physical drive for busyness, and waits until a threshhold is value is confirmed.
 - **[Write-WebResponse.ps1](Write-WebResponse.ps1)**: Sends a text or binary response body to the HTTP listener client.
 
-<!-- generated 12/18/2021 15:48:07 -->
+<!-- generated 12/28/2021 23:01:47 -->

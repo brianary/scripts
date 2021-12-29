@@ -5,16 +5,15 @@ online version: True
 schema: 2.0.0
 ---
 
-# Test-Range.ps1
+# Test-NoteProperty.ps1
 
 ## SYNOPSIS
-Returns true from an initial condition until a terminating condition; a latching test.
+Looks for any matching NoteProperties on an object.
 
 ## SYNTAX
 
 ```
-Test-Range.ps1 [-After] <ScriptBlock> [-Before] <ScriptBlock> -InputObject <Object> [-Filter]
- [<CommonParameters>]
+Test-NoteProperty.ps1 [-Name] <String> -InputObject <PSObject> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -24,31 +23,26 @@ Test-Range.ps1 [-After] <ScriptBlock> [-Before] <ScriptBlock> -InputObject <Obje
 
 ### EXAMPLE 1
 ```
-Get-Item *.ps1 |Test-Range.ps1 {$_.Name -like 'Join-*.ps1'} {$_.Name -like 'New-*.ps1'} -Filter |select Name
+$r = Invoke-RestMethod @args; if(Test-NoteProperty.ps1 -Name Status -InputObject $r) { … }
 ```
 
-Name
-----
-Join-FileName.ps1
-Measure-DbColumn.ps1
-Measure-DbColumnValues.ps1
-Measure-DbTable.ps1
-Measure-Indents.ps1
-Measure-StandardDeviation.ps1
-Measure-TextFile.ps1
-Merge-Dictionary.ps1
-Merge-Json.ps1
-Merge-PSObject.ps1
-Merge-XmlSelections.ps1
+Executes the "if" block if there is a status NoteProperty present.
+
+### EXAMPLE 2
+```
+Get-Content records.json |ConvertFrom-Json |? {$_ |Test-NoteProperty.ps1 *Addr*} |…
+```
+
+Passes objects through the pipeline that have a property containing "Addr" in the name.
 
 ## PARAMETERS
 
-### -After
-Latch: The initial condition which will begin the matching range.
-Inclusive: Includes the input object that this condition evaluates a true value for.
+### -Name
+The name of the property to look for.
+Wildcards are supported.
 
 ```yaml
-Type: ScriptBlock
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -59,27 +53,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Before
-Unlatch: The terminating condition for the matching range.
-Exclusive: Excludes the input object that this condition evaluates a true value for.
-
-```yaml
-Type: ScriptBlock
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -InputObject
-{{ Fill InputObject Description }}
+The object to examine.
 
 ```yaml
-Type: Object
+Type: PSObject
 Parameter Sets: (All)
 Aliases:
 
@@ -90,30 +68,16 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Filter
-{{ Fill Filter Description }}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
-### Any object to test.
+### System.Management.Automation.PSObject, perhaps created via [PSCustomObject]@{ … }
+### or ConvertFrom-Json or Invoke-RestMethod that may have NoteProperties.
 ## OUTPUTS
 
-### System.Boolean, or the input object if -Filter is specified.
+### System.Boolean indicating at least one matching NoteProperty was found.
 ## NOTES
 
 ## RELATED LINKS
