@@ -73,15 +73,15 @@ function Get-AttributeValue($value) { return "$value".Trim() -replace '\s\s+',' 
 function ConvertTo-Name($value) { return "$value".Trim() -replace '\W+','' }
 
 $hash = @{}
-[Collections.Generic.List[psobject]] $values = $hash
+[Collections.Generic.List[psobject]] $values = ,$hash
 
 function Add-Text($e) {$values.Add($e.innerText)}
 
-function Add-Input($e) {$hash.Add($e.name, (Get-AttributeValue $e.value))}
+function Add-Input($e) {$hash.Add($e.id ?? $e.name, (Get-AttributeValue $e.value))}
 
 function Add-Select($e)
 {
-	$hash.Add($e.name, (Get-AttributeValue ($e.options[$e.selectedIndex].label ??
+	$hash.Add($e.id ?? $e.name, (Get-AttributeValue ($e.options[$e.selectedIndex].label ??
 		$e.options[$e.selectedIndex].innerText)))
 }
 
@@ -97,6 +97,11 @@ function Add-Attributes($e)
 	{
 		$hash.Add($att.nodeName, (Get-AttributeValue $att.nodeValue))
 	}
+}
+
+function Add-List($e)
+{
+	$e.getElementsByTagName('li') |foreach {$values.Add($_.innerText)}
 }
 
 function Add-Table($e)
@@ -161,6 +166,28 @@ function Get-Elements
 	}
 }
 
+function Add-Element($e)
+{
+	switch($e.nodeName)
+	{
+		table    {Add-Table $e}
+		ol       {Add-List $e}
+		ul       {Add-List $e}
+		menu     {Add-List $e}
+		meta     {Add-Meta $e}
+		input    {Add-Input $e}
+		button   {Add-Input $e}
+		textarea {Add-Input $e}
+		select   {Add-Select $e}
+		form     {$e.elements |foreach {Add-Element $_}}
+		default
+		{
+			Add-Attributes $e
+			if($e.innerText) {Add-Text $e}
+		}
+	}
+}
+
 function Get-Html
 {
 	$html =
@@ -169,24 +196,7 @@ function Get-Html
 		else {Invoke-RestMethod $Uri |Out-String}
 	if($IgnoreScript) {$html = $html -replace '<script.*?</script>',''}
 	$dom.write(([Text.Encoding]::Unicode.GetBytes($html)))
-	foreach($e in Get-Elements)
-	{
-		Write-Debug $e.outerHTML
-		switch($e.nodeName)
-		{
-			table {Add-Table $e}
-			meta {Add-Meta $e}
-			input {Add-Input $e}
-			button {Add-Input $e}
-			textarea {Add-Input $e}
-			select {Add-Select $e}
-			default
-			{
-				Add-Attributes $e
-				if($e.innerText) {Add-Text $e}
-			}
-		}
-	}
+	Get-Elements |foreach {Write-Debug "$($_.outerHTML)"; Add-Element $_}
 	return $values
 }
 
