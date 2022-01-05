@@ -13,7 +13,7 @@ Performs an operation against each item in a collection of input objects, with a
 ## SYNTAX
 
 ```
-ForEach-Progress.ps1 [-Activity] <String> [-Status] <ScriptBlock> [-Process] <ScriptBlock>
+ForEach-Progress.ps1 [-Activity] <String> [[-Status] <ScriptBlock>] [[-Process] <ScriptBlock>]
  -InputObject <PSObject> [<CommonParameters>]
 ```
 
@@ -52,7 +52,7 @@ Type: ScriptBlock
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 2
 Default value: None
 Accept pipeline input: False
@@ -67,7 +67,7 @@ Type: ScriptBlock
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 3
 Default value: None
 Accept pipeline input: False
