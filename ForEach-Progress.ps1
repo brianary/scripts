@@ -18,12 +18,19 @@
 	System.Management.Automation.PSObject to process.
 
 .Example
-	1..10 |ForEach-Progress.ps1 -Activity 'Testing' {"$_"} {Write-Host "item: $_"; sleep 2}
+	1..10 |ForEach-Progress.ps1 -Activity 'Processing' {"$_"} {Write-Host "item: $_"; sleep 2}
+	
+	Provides a progress indicator for a script block.
+	
+.Example
+	1..10 |ForEach-Progress.ps1 |foreach {Write-Host "item: $_"; sleep 2}
+	
+	Same as previous example, but adds a progress indicator within an existing pipeline.
 #>
 
 #Requires -Version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][string] $Activity,
+[Parameter(Position=0)][string] $Activity = 'Processing',
 [Parameter(Position=1)][scriptblock] $Status = {$_ |ConvertTo-Json -Compress},
 [Parameter(Position=2)][scriptblock] $Process = {$_},
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][psobject] $InputObject
