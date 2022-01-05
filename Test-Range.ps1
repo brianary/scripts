@@ -36,8 +36,8 @@
 
 #Requires -Version 3
 [CmdletBinding()] Param(
-[Parameter(Position=0,Mandatory=$true)][scriptblock] $After,
-[Parameter(Position=1,Mandatory=$true)][scriptblock] $Before,
+[Parameter(Position=0)][scriptblock] $After = {$true},
+[Parameter(Position=1)][scriptblock] $Before = {$false},
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)] $InputObject,
 [switch] $Filter
 )

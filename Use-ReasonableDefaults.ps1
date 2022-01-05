@@ -3,7 +3,7 @@
 	Sets certain cmdlet parameter defaults to rational, useful values.
 
 .Parameter LatestSecurityProtocol
-	Use the greatest value of the System.Net.SecurityProtocolType enum.
+	Use the greatest value of the System.Net.SecurityProtocolType enum.
 
 .Link
 	Use-NetMailConfig.ps1
@@ -21,7 +21,7 @@
 
 	Sets default values:
 		Out-File -Encoding UTF8 -Width ([int]::MaxValue)
-		Export-Csv -NoTypeInformation
+		Export-Csv -NoTypeInformation -UseQuotes AsNeeded
 		Invoke-WebRequest -UseBasicParsing
 		Select-Xml -Namespace @{ a bunch of standard namespaces }
 #>
@@ -39,15 +39,15 @@ else
 {
 	if($PSVersionTable.ContainsKey('CLRVersion'))
 	{
-	    Use-NetMailConfig.ps1 -Scope Global
-	    if($PSVersionTable.CLRVersion -lt '4.7.1')
-	    {
-	        if([Net.ServicePointManager]::SecurityProtocol -band [Net.SecurityProtocolType]'Ssl3')
-	        {
-	            [Net.ServicePointManager]::SecurityProtocol =
-	                Get-EnumValues.ps1 Net.SecurityProtocolType |select -Last 1 -ExpandProperty Name
-	        }
-	    }
+		Use-NetMailConfig.ps1 -Scope Global
+		if($PSVersionTable.CLRVersion -lt '4.7.1')
+		{
+			if([Net.ServicePointManager]::SecurityProtocol -band [Net.SecurityProtocolType]'Ssl3')
+			{
+				[Net.ServicePointManager]::SecurityProtocol =
+					Get-EnumValues.ps1 Net.SecurityProtocolType |select -Last 1 -ExpandProperty Name
+			}
+		}
 	}
 }
 Set-ParameterDefault.ps1 Out-File Width ([int]::MaxValue) -Scope Global
@@ -55,6 +55,10 @@ Set-ParameterDefault.ps1 Out-File Encoding UTF8 -Scope Global
 Set-ParameterDefault.ps1 Get-ChildItem Force $true -Scope Global
 Set-ParameterDefault.ps1 Export-Csv NoTypeInformation $true -Scope Global
 Set-ParameterDefault.ps1 Invoke-WebRequest UseBasicParsing $true -Scope Global
+if((Get-Command Export-Csv -ParameterName UseQuotes -EA 0))
+{
+	Set-ParameterDefault.ps1 Export-Csv UseQuotes AsNeeded -Scope Global
+}
 Set-ParameterDefault.ps1 Select-Xml Namespace -Scope Global -Value @{
 xhtml    = 'http://www.w3.org/1999/xhtml'
 svg      = 'http://www.w3.org/2000/svg'

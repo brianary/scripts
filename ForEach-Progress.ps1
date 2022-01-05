@@ -24,8 +24,8 @@
 #Requires -Version 3
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $Activity,
-[Parameter(Position=1,Mandatory=$true)][scriptblock] $Status,
-[Parameter(Position=2,Mandatory=$true)][scriptblock] $Process,
+[Parameter(Position=1)][scriptblock] $Status = {$_ |ConvertTo-Json -Compress},
+[Parameter(Position=2)][scriptblock] $Process = {$_},
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][psobject] $InputObject
 )
 End
