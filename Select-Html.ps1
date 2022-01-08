@@ -1,24 +1,27 @@
-<#
+﻿<#
 .Synopsis
 	Returns content from the HTML retrieved from a URL.
 
 .Parameter Uri
 	The URL to read the HTML from.
 
-.Parameter TagName
-	The name of elements to return all occurrences of.
+.Parameter Select
+	The name of elements to return all occurrences of,
+	or a dot followed by the class of elements to return all occurrences of,
+	or a hash followed by the ID of elements to return all occurrences of.
 
-.Parameter ClassName
-	The class of elements to return all occurrences of.
-
-.Parameter ElementId
-	The ID of elements to return all occurrences of.
+.Parameter Contains
+	Only elements whose inner text contain this value are included.
 
 .Parameter Index
 	The position of an individual element to select, or all matching elements by default.
 
-.Parameter IgnoreScript
-	Removes <script> elements that can cause parsing issues.
+.Parameter IncludeScript
+	Includes <script> elements that can otherwise cause parsing issues,
+	usually these are removed first.
+
+.Parameter IgnoreAttributes
+	Don't include an attribute hash in the output.
 
 .Link
 	Invoke-WebRequest
@@ -27,6 +30,11 @@
 	Select-Html.ps1 https://www.h2g2.com/ title
 
 	h2g2 - The Guide to Life, The Universe and Everything
+
+.Example
+	Select-Html.ps1 https://www.githubstatus.com/ .page-status -IgnoreAttributes
+
+	All Systems Operational
 
 .Example
 	Select-Html.ps1 https://www.irs.gov/e-file-providers/foreign-country-code-listing-for-modernized-e-file
@@ -39,7 +47,7 @@
 	...
 
 .Example
-	Select-Html.ps1 https://www.federalreserve.gov/aboutthefed/k8.htm -IgnoreScript |Format-Table -AutoSize
+	Select-Html.ps1 https://www.federalreserve.gov/aboutthefed/k8.htm |Format-Table -AutoSize
 
 	Column_0                             2021         2022          2023         2024        2025
 	--------                             ----         ----          ----         ----        ----
@@ -54,19 +62,27 @@
 	Veterans Day                         November 11  November 11   November 11* November 11 November 11
 	Thanksgiving Day                     November 25  November 24   November 23  November 28 November 27
 	Christmas Day                        December 25* December 25** December 25  December 25 December 25
+
+.Example
+	Select-Html.ps1 https://docs.microsoft.com/en-us/dotnet/core/compatibility/6.0 table -Contains AddProvider
+
+	Title                                                      Binarycompatible Sourcecompatible Introduced
+	-----                                                      ---------------- ---------------- ----------
+	AddProvider checks for non-null provider                   ✔️               ❌                RC 1
+	FileConfigurationProvider.Load throws InvalidDataException ✔️               ❌                RC 1
+	Resolving disposed ServiceProvider throws exception        ✔️               ❌                RC 1
 #>
 
 #Requires -Version 7
-[CmdletBinding(DefaultParameterSetName='TagName')] Param(
+[CmdletBinding(DefaultParameterSetName='__AllParameterSets')] Param(
 [Parameter(Position=0,Mandatory=$true)][uri] $Uri,
-[Parameter(ParameterSetName='TagName',Position=1)]
-[ValidatePattern('\A\w+\z')][string] $TagName = 'table',
-[Parameter(ParameterSetName='ClassName',Mandatory=$true)][string] $ClassName,
-[Parameter(ParameterSetName='ElementId',Mandatory=$true)][string] $ElementId,
-[Parameter(ParameterSetName='TagName',Position=2)]
-[Parameter(ParameterSetName='ClassName',Position=2)]
+[Parameter(Position=1)][ValidatePattern('\A(?:\w+|[.#]\w+(?:-\w+)*)\z')]
+[Alias('Element','TagName','ClassName','ElementId')][string] $Select = 'table',
+[Parameter(ParameterSetName='Contains')][string] $Contains,
+[Parameter(ParameterSetName='Index')]
 [Alias('Position','Number')][int] $Index = -1,
-[switch] $IgnoreScript
+[switch] $IncludeScript,
+[switch] $IgnoreAttributes
 )
 
 function Get-AttributeValue($value) { return "$value".Trim() -replace '\s\s+',' ' }
@@ -93,6 +109,7 @@ function Add-Meta($e)
 
 function Add-Attributes($e)
 {
+	if($IgnoreAttributes) {return}
 	foreach($att in $e.attributes |where specified -eq $true)
 	{
 		$hash.Add($att.nodeName, (Get-AttributeValue $att.nodeValue))
@@ -142,32 +159,22 @@ function Add-Table($e)
 $dom = New-Object -ComObject HTMLFile
 function Get-Elements
 {
-	switch($PSCmdlet.ParameterSetName)
+	if($Select -like '#*') {,$dom.getElementById($Select.Trim('#'))}
+	else
 	{
-		ElementId {@($dom.getElementById($ElementId))}
-		ClassName
+		$found = $Select -like '.*' ? $dom.getElementsByClassName($Select.Trim('.')) :  $dom.getElementsByTagName($Select)
+		switch($PSCmdlet.ParameterSetName)
 		{
-			if($Index -gt -1) {@($dom.getElementsByClassName($TagName)[$Index])}
-			else
-			{
-				$found = $dom.getElementsByClassName($TagName)
-				for($i = 0; $i -lt $found.length; $i++) {$found[$i]}
-			}
-		}
-		TagName
-		{
-			if($Index -gt -1) {@($dom.getElementsByTagName($TagName)[$Index])}
-			else
-			{
-				$found = $dom.getElementsByTagName($TagName)
-				for($i = 0; $i -lt $found.length; $i++) {$found[$i]}
-			}
+			Index {if($Index -gt -1) {,$found[$Index]}}
+			Contains {for($i = 0; $i -lt $found.length; $i++) {if($found[$i].innerText.Contains($Contains)) {$found[$i]}}}
+			default {for($i = 0; $i -lt $found.length; $i++) {$found[$i]}}
 		}
 	}
 }
 
 function Add-Element($e)
 {
+	if(!$e) {return}
 	switch($e.nodeName)
 	{
 		table    {Add-Table $e}
@@ -194,9 +201,9 @@ function Get-Html
 		if(Test-Path $Uri.OriginalString -Type Leaf) {Get-Content $Uri.OriginalString -Raw}
 		elseif($Uri.IsFile -or $Uri.IsUnc) {Get-Content $Uri.LocalPath -Raw}
 		else {Invoke-RestMethod $Uri |Out-String}
-	if($IgnoreScript) {$html = $html -replace '<script.*?</script>',''}
+	if(!$IncludeScript) {$html = $html -replace '<script.*?</script>',''}
 	$dom.write(([Text.Encoding]::Unicode.GetBytes($html)))
-	Get-Elements |foreach {Write-Debug "$($_.outerHTML)"; Add-Element $_}
+	Get-Elements |foreach {Write-Debug "$($_ -eq $null ? '(null)' : $_.outerHTML)"; Add-Element $_}
 	return $values
 }
 
