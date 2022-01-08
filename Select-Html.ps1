@@ -49,7 +49,7 @@
 .Example
 	Select-Html.ps1 https://www.federalreserve.gov/aboutthefed/k8.htm |Format-Table -AutoSize
 
-	Column_0                             2021         2022          2023         2024        2025
+	_0                                   2021         2022          2023         2024        2025
 	--------                             ----         ----          ----         ----        ----
 	New Year's Day                       January 1    January 1*    January 1**  January 1   January 1
 	Birthday of Martin Luther King, Jr.  January 18   January 17    January 16   January 15  January 20
@@ -135,9 +135,7 @@ function Add-Table($e)
 				$headers[$c] += ConvertTo-Name $row.cells[$c].innerText
 			}
 		}
-		0..($headers.length-1) |
-			where {[string]::IsNullOrWhiteSpace($headers[$_])} |
-			foreach {$headers[$_] = 'Column_{0}' -f $_}
+		0..($headers.length-1) |where {!$headers[$_]} |foreach {$headers[$_] = "_$_"}
 		$rows = $e.tBodies |foreach {$_.rows}
 	}
 	else
