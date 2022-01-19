@@ -113,7 +113,7 @@
 [string] $UriPathLike,
 [string] $QueryLike,
 [Alias("RefererLike")][string] $ReferrerLike,
-[ValidateSet('IIS','IISW3C','W3C')][string] $LogFormat = 'iisw3c'
+[ValidateSet('IIS','IISW3C','W3C')][string] $LogFormat = 'W3C'
 )
 
 Use-Command.ps1 logparser "${env:ProgramFiles(x86)}\Log Parser 2.2\LogParser.exe" `
