@@ -14,7 +14,7 @@ federal holiday.
 ## SYNTAX
 
 ```
-Test-USFederalHoliday.ps1 [-Date] <DateTime> [-SatToFri] [-SunToMon] [<CommonParameters>]
+Test-USFederalHoliday.ps1 [-Date] <DateTime> [-AsHolidayName] [-SatToFri] [-SunToMon] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -69,6 +69,21 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -AsHolidayName
+Return the holiday name?
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: ReturnName, ReturnHolidayName
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

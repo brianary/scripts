@@ -12,19 +12,21 @@ Returns content from the HTML retrieved from a URL.
 
 ## SYNTAX
 
-### TagName (Default)
+### __AllParameterSets (Default)
 ```
-Select-Html.ps1 [-Uri] <Uri> [[-TagName] <String>] [[-Index] <Int32>] [-IgnoreScript] [<CommonParameters>]
-```
-
-### ClassName
-```
-Select-Html.ps1 [-Uri] <Uri> -ClassName <String> [[-Index] <Int32>] [-IgnoreScript] [<CommonParameters>]
+Select-Html.ps1 [-Uri] <Uri> [[-Select] <String>] [-IncludeScript] [-IgnoreAttributes] [<CommonParameters>]
 ```
 
-### ElementId
+### Contains
 ```
-Select-Html.ps1 [-Uri] <Uri> -ElementId <String> [-IgnoreScript] [<CommonParameters>]
+Select-Html.ps1 [-Uri] <Uri> [[-Select] <String>] [-Contains <String>] [-IncludeScript] [-IgnoreAttributes]
+ [<CommonParameters>]
+```
+
+### Index
+```
+Select-Html.ps1 [-Uri] <Uri> [[-Select] <String>] [-Index <Int32>] [-IncludeScript] [-IgnoreAttributes]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -88,13 +90,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TagName
-The name of elements to return all occurrences of.
+### -Select
+The name of elements to return all occurrences of,
+or a dot followed by the class of elements to return all occurrences of,
+or a hash followed by the ID of elements to return all occurrences of.
 
 ```yaml
 Type: String
-Parameter Sets: TagName
-Aliases:
+Parameter Sets: (All)
+Aliases: Element, TagName, ClassName, ElementId
 
 Required: False
 Position: 2
@@ -103,30 +107,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ClassName
-The class of elements to return all occurrences of.
+### -Contains
+Only elements whose inner text contain this value are included.
 
 ```yaml
 Type: String
-Parameter Sets: ClassName
+Parameter Sets: Contains
 Aliases:
 
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ElementId
-The ID of elements to return all occurrences of.
-
-```yaml
-Type: String
-Parameter Sets: ElementId
-Aliases:
-
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -138,18 +127,34 @@ The position of an individual element to select, or all matching elements by def
 
 ```yaml
 Type: Int32
-Parameter Sets: TagName, ClassName
+Parameter Sets: Index
 Aliases: Position, Number
 
 Required: False
-Position: 3
+Position: Named
 Default value: -1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IgnoreScript
-Removes \<script\> elements that can cause parsing issues.
+### -IncludeScript
+Includes <script> elements that can otherwise cause parsing issues,
+usually these are removed first.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IgnoreAttributes
+Don't include an attribute hash in the output.
 
 ```yaml
 Type: SwitchParameter
