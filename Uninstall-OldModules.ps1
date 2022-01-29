@@ -12,6 +12,7 @@
 )
 
 Get-Module -List |
+	where {$PSVersionTable.PSVersion -lt [version]'6.0' -or $_.ModuleBase -notlike '*\WindowsPowerShell\*'} |
     group Name |
     where Count -gt 1 |
     foreach {$_.Group |sort Version -Descending |select -Skip 1} |
