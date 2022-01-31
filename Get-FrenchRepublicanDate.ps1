@@ -221,7 +221,7 @@ Process
 		AnneeUnicode = ConvertTo-RomanNumeral.ps1 ${l'année} -Unicode
 		Month = $mois
 		MonthName = $months[$mois-1]
-		Mois = ${les mois}[$mois]
+		Mois = ${les mois}[$mois-1]
 		Day = ${jour du mois}
 		DayOfYear = ${jour de l'année}
 		Jour = ${les jours}[${jour de l'année}-1]
