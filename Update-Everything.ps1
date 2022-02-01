@@ -34,10 +34,19 @@ if((Get-Command npm -ErrorAction SilentlyContinue))
 if((Get-Command dotnet -ErrorAction SilentlyContinue))
 {
 	Write-Host "$(Get-Unicode.ps1 0x1F199) Updating dotnet global tools" -fore White -back DarkGray
-	Get-DotNetGlobalTools.ps1 |foreach {dotnet tool update -g $_.Package}
+	Get-DotNetGlobalTools.ps1 |
+		where {$_.Version -lt (Find-DotNetGlobalTools.ps1 $_.PackageName |where PackageName -eq $_.PackageName).Version} |
+		foreach {dotnet tool update -g $_.PackageName}
 }
 Write-Host "$(Get-Unicode.ps1 0x1F199) Updating PowerShell modules" -fore White -back DarkGray
-Update-Module -Force
+Get-Module -ListAvailable |
+	group Name |
+	where {
+		$found = Find-Module $_.Name -ErrorAction SilentlyContinue
+		if(!$found) {return $false}
+		($_.Group |measure Version -Maximum).Maximum -lt [version]$found.Version
+	} |
+	Update-Module -Force
 if((Get-Command Uninstall-OldModules.ps1 -ErrorAction SilentlyContinue))
 {
 	Write-Host "$(Get-Unicode.ps1 0x1F199) Uninstalling old PowerShell modules" -fore White -back DarkGray
