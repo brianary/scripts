@@ -24,6 +24,12 @@ Use-Command.ps1 [-Name] <String> [-Path] <String> [-ChocolateyPackage <String>] 
  [-Confirm] [<CommonParameters>]
 ```
 
+### DotNetTool
+```
+Use-Command.ps1 [-Name] <String> [-Path] <String> [-DotNetTool <String>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
+```
+
 ### NugetPackage
 ```
 Use-Command.ps1 [-Name] <String> [-Path] <String> [-NugetPackage <String>] [-Version <String>]
@@ -161,6 +167,21 @@ The name of the Chocolatey package to install if the command is missing.
 Type: String
 Parameter Sets: ChocolateyPackage
 Aliases: ChocoPackage, chocopkg, cinst
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DotNetTool
+The name of the .NET global tool to install if the command is missing.
+
+```yaml
+Type: String
+Parameter Sets: DotNetTool
+Aliases: DotNetGlobalTool, dotnet
 
 Required: False
 Position: Named
