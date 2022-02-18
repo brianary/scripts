@@ -1,27 +1,27 @@
 <#
 .Synopsis
-    Searches for database columns.
+	Searches for database columns.
 
 .Parameter ServerInstance
-    The server and instance to connect to.
+	The server and instance to connect to.
 
 .Parameter Database
-    The database to use.
+	The database to use.
 
 .Parameter IncludeSchemata
-    A like-pattern of database schemata to include (will only include these).
+	A like-pattern of database schemata to include (will only include these).
 
 .Parameter ExcludeSchemata
-    A like-pattern of database schemata to exclude.
+	A like-pattern of database schemata to exclude.
 
 .Parameter IncludeTables
-    A like-pattern of database tables to include (will only include these).
+	A like-pattern of database tables to include (will only include these).
 
 .Parameter ExcludeTables
-    A like-pattern of database tables to exclude.
+	A like-pattern of database tables to exclude.
 
 .Parameter IncludeColumns
-    A like-pattern of database columns to include (will only include these).
+	A like-pattern of database columns to include (will only include these).
 
 .Parameter ExcludeColumns
 	A like-pattern of database columns to exclude.
@@ -46,13 +46,13 @@
 	* DefaultValue
 
 .Component
-    System.Configuration
+	System.Configuration
 
 .Link
-    ConvertFrom-DataRow.ps1
+	ConvertFrom-DataRow.ps1
 
 .Link
-    Stop-ThrowError.ps1
+	Stop-ThrowError.ps1
 
 .Link
 	Invoke-Sqlcmd
@@ -90,7 +90,7 @@
 try{[void][Configuration.ConfigurationManager]}catch{Add-Type -AssemblyName System.Configuration}
 function Format-LikeCondition([string]$column,[string[]]$patterns,[switch]$not)
 {
-    $like,$andOr = if($not){'not like','and'}else{'like','or'}
+	$like,$andOr = if($not){'not like','and'}else{'like','or'}
 @"
 
    and ( $(($patterns |% {"$column $like '$($_ -replace '''','''''')' escape '\'"}) -join " $andOr ") )

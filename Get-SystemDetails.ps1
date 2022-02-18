@@ -18,7 +18,8 @@
 		* PrimaryOwnerName: The reported name of the owner of the computer, if available.
 		* Memory: The reported memory in the computer, and amount unused.
 		* OperatingSystem: The name and type of operating system used by the computer.
-		* Processors: CPU hardware detais.
+		* Processors: CPU hardware details.
+		* Video: Video controller hardware name.
 		* Drives: Storage drives found on the computer.
 		* Shares: The file shares configured, if any.
 		* NetVersions: The versions of .NET on the system.
@@ -37,6 +38,7 @@
 	Memory           : 3.93 GiB (25.68 % free)
 	OperatingSystem  : Microsoft Windows 10 Pro64-bit  (10.0.14393)
 	Processors       : Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz
+	Video            : NVIDIA GeForce GTX 670
 	Drives           : C: 118 GiB (31.47 % free)
 	Shares           :
 	NetVersions      : {v4.6.2+win10ann, v3.5, v2.0.50727, v3.0}
@@ -58,6 +60,7 @@ $os = Get-CimInstance CIM_OperatingSystem
 	Processors = (Get-CimInstance CIM_Processor |
 		% Name |
 		% {$_ -replace '\s{2,}',' '})
+	Video = Get-CimInstance CIM_VideoController |% Name
 	Drives = (Get-CimInstance CIM_StorageVolume |
 		? {$_.DriveType -eq 3 -and $_.DriveLetter -and $_.Capacity} |
 		sort DriveLetter |
