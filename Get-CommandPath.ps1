@@ -10,6 +10,9 @@
     The name of the executable program to look for in the $env:Path directories,
     if the extension is omitted, $env:PathExt will be used to find one.
 
+.Parameter FindAllInPath
+    Indicates that every directory in the Path should be searched for the command.
+
 .Inputs
     System.String of commands to get the location details of.
 
@@ -23,20 +26,43 @@
     Get-CommandPath.ps1 powershell
 
     C:\windows\System32\WindowsPowerShell\v1.0\powershell.exe
+
+.Example
+    Get-CommandPath.ps1 dotnet -FindAllInPath
+
+    C:\Program Files\dotnet\dotnet.exe
+    C:\Program Files (x86)\dotnet\dotnet.exe
 #>
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-[Alias('Name','AN')][string[]]$ApplicationName
+[Alias('Name','AN')][string[]] $ApplicationName,
+[switch] $FindAllInPath
 )
 Process
 {
-    foreach($cmd in Get-Command $ApplicationName)
+    if($FindAllInPath)
     {
-        if($cmd -is [Management.Automation.ApplicationInfo]) {$cmd.Path}
-        elseif($cmd -is [Management.Automation.ExternalScriptInfo]) {$cmd.Path}
-        elseif($cmd -is [Management.Automation.AliasInfo]) {$cmd.Definition}
-        else {Write-Error "$ApplicationName is $($cmd.GetType().FullName)"}
+        $files =
+            if([io.path]::GetExtension($ApplicationName)) {$ApplicationName}
+            else {$env:PATHEXT.ToLower() -split ';' |foreach {[io.path]::ChangeExtension($ApplicationName,$_)}}
+        Write-Verbose "Searching Path for $($files -join ', ')"
+        foreach($p in $env:Path -split ';')
+        {
+            $files |
+                foreach {Join-Path $p $_} |
+                where {Test-Path $_ -Type Leaf}
+        }
+    }
+    else
+    {
+        foreach($cmd in Get-Command $ApplicationName)
+        {
+            if($cmd -is [Management.Automation.ApplicationInfo]) {$cmd.Path}
+            elseif($cmd -is [Management.Automation.ExternalScriptInfo]) {$cmd.Path}
+            elseif($cmd -is [Management.Automation.AliasInfo]) {$cmd.Definition}
+            else {Write-Error "$ApplicationName is $($cmd.GetType().FullName)"}
+        }
     }
 }
