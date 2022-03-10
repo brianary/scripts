@@ -18,6 +18,9 @@
 	https://docs.microsoft.com/dotnet/core/tools/global-tools
 
 .Link
+	https://www.dell.com/support/kbdoc/000177325/dell-command-update
+
+.Link
 	Update-Everything.cmd
 
 .Link
@@ -129,6 +132,13 @@ if((Get-Command Uninstall-OldModules.ps1 -ErrorAction SilentlyContinue))
 }
 Write-Host "${UP!} Updating PowerShell help" -fore White -back DarkGray
 Update-Help
+if(Test-Path "$env:ProgramFiles\Dell\CommandUpdate\dcu-cli.exe" -Type Leaf)
+{
+	Write-Host "${UP!} Updating Dell firmware & system software" -fore White -back DarkGray
+	Set-Alias dcu-cli "$env:ProgramFiles\Dell\CommandUpdate\dcu-cli.exe"
+	dcu-cli /scan
+	dcu-cli /applyUpdates -reboot=enable
+}
 if((Get-Module PSWindowsUpdate -ListAvailable))
 {
 	Write-Host "${UP!} Updating Windows" -fore White -back DarkGray
