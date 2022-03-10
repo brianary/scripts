@@ -13,7 +13,7 @@ Locates a command.
 ## SYNTAX
 
 ```
-Get-CommandPath.ps1 [-ApplicationName] <String[]> [<CommonParameters>]
+Get-CommandPath.ps1 [-ApplicationName] <String[]> [-FindAllInPath] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +44,21 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -FindAllInPath
+Indicates that every directory in the Path should be searched for the command.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
