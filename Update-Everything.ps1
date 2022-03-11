@@ -137,7 +137,7 @@ if(Test-Path "$env:ProgramFiles\Dell\CommandUpdate\dcu-cli.exe" -Type Leaf)
 	Write-Host "${UP!} Updating Dell firmware & system software" -fore White -back DarkGray
 	Set-Alias dcu-cli "$env:ProgramFiles\Dell\CommandUpdate\dcu-cli.exe"
 	dcu-cli /scan
-	dcu-cli /applyUpdates -reboot=enable
+	if($LASTEXITCODE -ne 500) {dcu-cli /applyUpdates -reboot=enable}
 }
 if((Get-Module PSWindowsUpdate -ListAvailable))
 {
