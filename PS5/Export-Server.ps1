@@ -184,14 +184,14 @@ function Export-ChocolateyPackages
 	Write-Verbose "Exporting list of installed Chocolatey packages to $Path"
 	Write-Progress "Exporting $env:ComputerName" "Exporting Chocolatey packages to $Path" -Id 1 -percent 60
 	$cinst =
-		if(!(Get-Command clist -CommandType Application -ErrorAction SilentlyContinue)) {@()}
+		if(!(Get-Command choco -CommandType Application -ErrorAction SilentlyContinue)) {@()}
 		else
 		{
-			clist -lr |
+			choco list -lr |
 				Select-Object -Skip 1 |
 				ForEach-Object {
 					$pkg,$ver = $_ -split '\|',2
-					"if(`$PSCmdlet.ShouldProcess('$($pkg -replace "'","''")','install')) {cinst $pkg -y} # $ver"
+					"if(`$PSCmdlet.ShouldProcess('$($pkg -replace "'","''")','install')) {choco install $pkg -y} # $ver"
 				}
 		}
 	@"

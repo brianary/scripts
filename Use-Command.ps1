@@ -161,12 +161,12 @@ switch($PSCmdlet.ParameterSetName)
 
 	ChocolateyPackage
 	{
-		if(!(Get-Command cinst -ErrorAction SilentlyContinue))
-		{ throw "Chocolatey installer ""cinst"" not found, unable to install $ChocolateyPackage." }
+		if(!(Get-Command choco -ErrorAction SilentlyContinue))
+		{ throw "Chocolatey installer ""choco"" not found, unable to install $ChocolateyPackage." }
 		if($PSCmdlet.ShouldProcess($ChocolateyPackage,'Chocolatey install'))
 		{
-			if($Version) {cinst $ChocolateyPackage -y --version=$Version}
-			else {cinst $ChocolateyPackage -y}
+			if($Version) {choco install $ChocolateyPackage -y --version=$Version}
+			else {choco install $ChocolateyPackage -y}
 			if($ChocolateyPackage -eq 'dot') {Write-Warning "You must run 'dot -c' as admin before Graphviz will work"}
 			Set-ResolvedAlias $Name $Path
 		}

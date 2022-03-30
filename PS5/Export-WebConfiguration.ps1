@@ -176,7 +176,7 @@ function Ping-GlobalModules
         AppWarmupModule                 = 'iis-application-initialization'
         RewriteModule                   = 'urlrewrite'
     }
-    if(!(Get-Command cinst -CommandType Application)) {`$modulepkg.Clear()}
+    if(!(Get-Command choco -CommandType Application)) {`$modulepkg.Clear()}
 "@
     [object[]]$globalModules = Get-WebGlobalModule
     $i,$max = 0,($globalModules.Count/100.)
@@ -189,7 +189,7 @@ function Ping-GlobalModules
     if(!(Get-WebGlobalModule '$name'))
     {Write-Todo 'Install missing global module $name if needed ($($globalModule.Image))'}
     elseif(`$modulepkg.ContainsKey('$name') -and `$PSCmdlet.ShouldProcess(`$modulepkg['$name'],'install'))
-    {try{cinst (`$modulepkg['$name']) -y}catch{Write-Error "Unable to install $name. Is Chocolatey installed?"}}
+    {try{choco install (`$modulepkg['$name']) -y}catch{Write-Error "Unable to install $name. Is Chocolatey installed?"}}
     else
     {Write-Verbose 'Global module $name found'}
 "@

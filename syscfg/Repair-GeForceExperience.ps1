@@ -46,8 +46,8 @@ if(!$Finish)
 }
 else
 {
-	Use-Command.ps1 cinst "$env:ChocolateyInstall\bin\cinst.exe" -ExecutePowerShell https://chocolatey.org/install.ps1
-	cinst nvidia-display-driver -y
-	cinst geforce-experience -y
+	Use-Command.ps1 choco "$env:ChocolateyInstall\bin\choco.exe" -ExecutePowerShell https://chocolatey.org/install.ps1
+	choco install nvidia-display-driver -y
+	choco install geforce-experience -y
 	Set-Service wuauserv -StartupType Manual
 }

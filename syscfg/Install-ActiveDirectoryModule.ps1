@@ -34,11 +34,11 @@ if((Get-Command Install-WindowsFeature -CommandType Cmdlet -ErrorAction Silently
 {
     Install-WindowsFeature RSAT,RSAT-Role-Tools,RSAT-AD-Tools,RSAT-AD-PowerShell
 }
-Use-Command.ps1 cinst "$env:ChocolateyInstall\bin\cinst.exe" -ExecutePowerShell https://chocolatey.org/install.ps1
-if((Get-Command cinst -CommandType Application -ErrorAction SilentlyContinue))
+Use-Command.ps1 choco "$env:ChocolateyInstall\bin\choco.exe" -ExecutePowerShell https://chocolatey.org/install.ps1
+if((Get-Command choco -CommandType Application -ErrorAction SilentlyContinue))
 {
     Write-Verbose "Installing RSAT via Chocolatey"
-    cinst rsat -params '"/Server:2016"' -y
+    choco install rsat -params '"/Server:2016"' -y
     return
 }
 if([Environment]::OSVersion.Version -gt [version]'9.0')
