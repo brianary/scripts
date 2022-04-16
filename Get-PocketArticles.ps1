@@ -1,4 +1,4 @@
-<#
+﻿<#
 .Synopsis
 	Retrieves a list of saved articles from a Pocket account.
 
@@ -26,6 +26,10 @@
 .Parameter ContentType
 	Return only video, image, or text articles as specified.
 
+.Parameter Vault
+	The name of the secret vault to retrieve the Pocket API consumer key from.
+	By default, the default vault is used.
+
 .Parameter Favorite
 	Return only favorite articles.
 
@@ -40,14 +44,20 @@
 	You'll need a "consumer key" (API key; see the link below to "create new app").
 	You'll be prompted for that, and to authorize it to your account.
 
+	You'll also need to have a registered secret vault to store the consumer key.
+
+	Register-SecretVault Microsoft.PowerShell.SecretStore -name $VaultName [-DefaultVault]
+
+	You can control whether the vault prompts for a password using Set-SecretStoreConfiguration
+
 .Link
 	https://getpocket.com/developer/
 
 .Link
-	Set-ParameterDefault.ps1
+	https://devblogs.microsoft.com/powershell/secretmanagement-and-secretstore-are-generally-available/
 
 .Link
-	Get-CachedCredential.ps1
+	Set-ParameterDefault.ps1
 
 .Link
 	ConvertTo-EpochTime.ps1
@@ -71,6 +81,7 @@
 #>
 
 #Requires -Version 3
+#Requires -Modules Microsoft.PowerShell.SecretManagement,Microsoft.PowerShell.SecretStore
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([psobject])] Param(
 [Parameter(Position=1,Mandatory=$true)][datetime] $After,
 [Parameter(Position=2,Mandatory=$true)][datetime] $Before,
@@ -80,13 +91,21 @@
 [string] $Tag,
 [ValidateSet('Newest','Oldest','Title','Site')][string] $Sort,
 [ValidateSet('Article','Video','Image')][string] $ContentType,
+[string] $Vault,
 [switch] $Favorite,
 [switch] $Detailed
 )
 Set-ParameterDefault.ps1 Invoke-RestMethod Method Post
 Set-ParameterDefault.ps1 Invoke-RestMethod ContentType application/json
 Set-ParameterDefault.ps1 Invoke-RestMethod Headers @{'X-Accept'='application/json'}
-$consumerKey = (Get-CachedCredential.ps1 $MyInvocation.MyCommand.Name 'Pocket API consumer key').GetNetworkCredential().Password
+$consumerKey = (New-Object PSCredential PocketApiConsumerKey,
+	(Get-Secret PocketApiConsumerKey -Vault $Vault -ErrorAction SilentlyContinue)).GetNetworkCredential().Password
+if(!$consumerKey)
+{
+	$consumerKey = Get-Credential PocketApiConsumerKey -Message 'Pocket API consumer key'
+	Set-Secret PocketApiConsumerKey $consumerKey.Password -Vault $Vault
+	$consumerKey = $consumerKey.GetNetworkCredential().Password
+}
 $tokenfile = Join-Path ~ .pocket
 $token =
 	if(Test-Path $tokenfile -Type Leaf)
@@ -96,22 +115,21 @@ $token =
 	else
 	{
 		$redirectUri = 'https://webcoder.info/auth-success.html'
-		$code = (Invoke-RestMethod https://getpocket.com/v3/oauth/request -Body (@{
-			consumer_key = $consumerKey
-			redirect_uri = $redirectUri
-		} |ConvertTo-Json -Compress)).code
+		$code = @{consumer_key=$consumerKey;redirect_uri=$redirectUri} |
+			ConvertTo-Json -Compress |
+			Invoke-RestMethod https://getpocket.com/v3/oauth/request -ContentType application/json |
+			ForEach-Object code
 		Start-Process "https://getpocket.com/auth/authorize?request_token=$code&redirect_uri=$([uri]::EscapeDataString($redirectUri))" -Wait
 		if(!$PSCmdlet.ShouldContinue('Has the token been authorized?','Authorize')) {return}
-		$code = (Invoke-RestMethod https://getpocket.com/v3/oauth/authorize -Body (@{
-			consumer_key = $consumerKey
-			code         = $code
-		} |ConvertTo-Json -Compress))
+		$code = @{consumer_key=$consumerKey;code=$code} |
+			ConvertTo-Json -Compress |
+			Invoke-RestMethod https://getpocket.com/v3/oauth/authorize -Method Post -ContentType application/json
 		Write-Verbose "Authenticated token for $($code.username)"
 		$code.access_token |ConvertTo-SecureString -AsPlainText -Force |ConvertFrom-SecureString |Out-File $tokenfile
 		$code.access_token
 	}
 Write-Verbose "Using key $consumerKey and token $token"
-$articles = Invoke-RestMethod https://getpocket.com/v3/get -Body (@{
+$articles = @{
 	consumer_key = $consumerKey
 	access_token = $token
 	state        = $State.ToLower()
@@ -123,5 +141,11 @@ $articles = Invoke-RestMethod https://getpocket.com/v3/get -Body (@{
 	search       = $Search
 	domain       = $Domain
 	since        = ConvertTo-EpochTime.ps1 $After
-} |Remove-NullValues.ps1 |ConvertTo-Json -Compress)
-if($articles.list) {$articles.list.PSObject.Properties.Value |where time_read -lt (ConvertTo-EpochTime.ps1 $Before)}
+} |
+	Remove-NullValues.ps1 |
+	ConvertTo-Json -Compress |
+	Invoke-RestMethod https://getpocket.com/v3/get
+if($articles -and $articles.list)
+{
+	$articles.list.PSObject.Properties.Value |Where-Object time_read -lt (ConvertTo-EpochTime.ps1 $Before)
+}
