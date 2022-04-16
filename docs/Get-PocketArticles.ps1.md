@@ -14,8 +14,8 @@ Retrieves a list of saved articles from a Pocket account.
 
 ```
 Get-PocketArticles.ps1 [-After] <DateTime> [-Before] <DateTime> [[-Search] <String>] [-Domain <String>]
- [-State <String>] [-Tag <String>] [-Sort <String>] [-ContentType <String>] [-Favorite] [-Detailed] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [-State <String>] [-Tag <String>] [-Sort <String>] [-ContentType <String>] [-Vault <String>] [-Favorite]
+ [-Detailed] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -151,6 +151,22 @@ Accept wildcard characters: False
 
 ### -ContentType
 Return only video, image, or text articles as specified.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Vault
+The name of the secret vault to retrieve the Pocket API consumer key from.
+By default, the default vault is used.
 
 ```yaml
 Type: String

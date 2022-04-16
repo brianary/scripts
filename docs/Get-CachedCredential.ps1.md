@@ -13,7 +13,8 @@ Return a credential from secure storage, or prompt the user for it if not found.
 ## SYNTAX
 
 ```
-Get-CachedCredential.ps1 [-UserName] <String> [-Message] <String> [-Force] [<CommonParameters>]
+Get-CachedCredential.ps1 [-UserName] <String> [-Message] <String> [-Vault <String>] [-UseFile] [-Force]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,6 +57,37 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Vault
+The name of the secret vault to retrieve the Pocket API consumer key from.
+By default, the default vault is used.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UseFile
+Indicates that the old-style filesystem-based credential store should be used.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

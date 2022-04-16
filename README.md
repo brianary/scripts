@@ -73,7 +73,7 @@ PowerShell Scripts
 - **[Format-Xml.ps1](Format-Xml.ps1)**: Pretty-print XML.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-AssemblyFramework.ps1](Get-AssemblyFramework.ps1)**: Gets the framework version an assembly was compiled for.
-- **[Get-CachedCredential.ps1](Get-CachedCredential.ps1)**: Return a credential from secure storage, or prompt the user for it if not found.
+- :up: **[Get-CachedCredential.ps1](Get-CachedCredential.ps1)**: Return a credential from secure storage, or prompt the user for it if not found.
 - **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-ClassicAspEvents.ps1](Get-ClassicAspEvents.ps1)**: Gets Classic ASP errors from the event log on the given server.
 - **[Get-Comics.ps1](Get-Comics.ps1)**: Returns a cached list of comics from the Shortboxed API.
@@ -93,7 +93,7 @@ PowerShell Scripts
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1)**: Gets the SHA-1 hash of the first commit of the current repo.
 - **[Get-IisLog.ps1](Get-IisLog.ps1)**: Easily query IIS logs.
 - **[Get-LibraryVulnerabilityInfo.ps1](Get-LibraryVulnerabilityInfo.ps1)**: Get the list of module/package/library vulnerabilities from the RetireJS or SafeNuGet projects.
-- **[Get-PocketArticles.ps1](Get-PocketArticles.ps1)**: Retrieves a list of saved articles from a Pocket account.
+- :up: **[Get-PocketArticles.ps1](Get-PocketArticles.ps1)**: Retrieves a list of saved articles from a Pocket account.
 - **[Get-RandomBytes.ps1](Get-RandomBytes.ps1)**: Returns random bytes.
 - **[Get-RepoName.ps1](Get-RepoName.ps1)**: Gets the name of the repo.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
@@ -151,7 +151,6 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Save-WebRequest.ps1](Save-WebRequest.ps1)**: Downloads a given URL to a file, automatically determining the filename.
 - **[Select-CapturesFromMatches.ps1](Select-CapturesFromMatches.ps1)**: Selects named capture group values as note properties from Select-String MatchInfo objects.
 - **[Select-DictionaryKeys.ps1](Select-DictionaryKeys.ps1)**: Constructs an OrderedDictionary by selecting keys from a given IDictionary.
-- **[Select-Html.ps1](Select-Html.ps1)**: Returns content from the HTML retrieved from a URL.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1)**: Sends emails from a drop folder using .NET config defaults.
 - **[Send-SeqEvent.ps1](Send-SeqEvent.ps1)**: Send an event to a Seq server.
 - **[Send-SeqScriptEvent.ps1](Send-SeqScriptEvent.ps1)**: Sends an event (often an error) from a script to a Seq server, including script info.
@@ -208,4 +207,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 04/15/2022 12:21:37 -->
+<!-- generated 04/16/2022 14:10:16 -->

@@ -37,21 +37,5 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Repair-Encoding.ps1](Repair-Encoding.ps1)**: Re-encodes Windows-1252 text that has been misinterpreted as UTF-8.
 - **[Restart-HttpListener.ps1](Restart-HttpListener.ps1)**: Stops and restarts an HTTP listener.
 - **[Save-CertificatePermissions.ps1](Save-CertificatePermissions.ps1)**: Saves the permissions of found certificates to a file.
-- **[Select-XmlNodeValue.ps1](Select-XmlNodeValue.ps1)**: Returns the value of an XML node found by Select-Xml.
-- **[Set-XmlAttribute.ps1](Set-XmlAttribute.ps1)**: Adds an XML attribute to an XML element found by Select-Xml.
-- **[Set-XmlNodeValue.ps1](Set-XmlNodeValue.ps1)**: Sets the value of a node found by Select-Xml.
-- **[Show-CertificatePermissions.ps1](Show-CertificatePermissions.ps1)**: Shows the permissions of a certificate's private key file.
-- **[Show-ScheduledTask.ps1](Show-ScheduledTask.ps1)**: Provides a human-readable view of a scheduled task returned by Get-ScheduledTasks.
-- **[Start-HttpListener.ps1](Start-HttpListener.ps1)**: Creates and starts an HTTP listener, for testing HTTP clients.
-- **[Stop-HttpListener.ps1](Stop-HttpListener.ps1)**: Closes an HTTP listener.
-- **[Suspend-HttpListener.ps1](Suspend-HttpListener.ps1)**: Pauses an HTTP listener.
-- **[Sync-NewCertPermissions.ps1](Sync-NewCertPermissions.ps1)**: Updates permissions on certs when there is an older cert with the same friendly name.
-- **[Test-BinaryFile.ps1](Test-BinaryFile.ps1)**: Indicates that a file contains binary data.
-- **[Test-FinalNewline.ps1](Test-FinalNewline.ps1)**: Returns true if a file ends with a newline as required by the POSIX standard.
-- **[Test-TextFile.ps1](Test-TextFile.ps1)**: Indicates that a file contains text.
-- **[Test-Utf8Encoding.ps1](Test-Utf8Encoding.ps1)**: Determines whether a file can be parsed as UTF-8 successfully.
-- **[Test-Utf8Signature.ps1](Test-Utf8Signature.ps1)**: Returns true if a file starts with a utf-8 signature (BOM).
-- **[Wait-DriveNotBusy.ps1](Wait-DriveNotBusy.ps1)**: Uses CIM to check a physical drive for busyness, and waits until a threshhold is value is confirmed.
-- **[Write-WebResponse.ps1](Write-WebResponse.ps1)**: Sends a text or binary response body to the HTTP listener client.
 
-<!-- generated 04/15/2022 12:21:43 -->
+<!-- generated 04/16/2022 14:10:26 -->
