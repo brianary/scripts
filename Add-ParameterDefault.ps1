@@ -1,44 +1,44 @@
-<#
-.Synopsis
-	Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
+﻿<#
+.SYNOPSIS
+Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
 
-.Parameter CommandName
-	The name of a cmdlet, function, script, or alias to include a default parameter value for.
+.PARAMETER CommandName
+The name of a cmdlet, function, script, or alias to include a default parameter value for.
 
-.Parameter ParameterName
-	The name or alias of the parameter to include a default value for.
+.PARAMETER ParameterName
+The name or alias of the parameter to include a default value for.
 
-.Parameter Value
-	The value to include as a default.
+.PARAMETER Value
+The value to include as a default.
 
-.Parameter Scope
-	The scope of this default.
+.PARAMETER Scope
+The scope of this default.
 
-.Inputs
-	System.Object containing a default value to include.
+.INPUTS
+System.Object containing a default value to include.
 
-.Link
-	Add-ScopeLevel.ps1
+.LINK
+Add-ScopeLevel.ps1
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Link
-	Get-Command
+.LINK
+Get-Command
 
-.Link
-	about_Scopes
+.LINK
+about_Scopes
 
-.Example
-	Add-ParameterDefault.ps1 epcsv nti $true -Scope Global
+.EXAMPLE
+Add-ParameterDefault.ps1 epcsv nti $true -Scope Global
 
-	Establishes that the -NoTypeInformation param of the Export-Csv cmdlet will be true if not otherwise specified,
-	globally for the PowerShell session.
+Establishes that the -NoTypeInformation param of the Export-Csv cmdlet will be true if not otherwise specified,
+globally for the PowerShell session.
 
-.Example
-	Add-ParameterDefault.ps1 Select-Xml Namespace @{svg = 'http://www.w3.org/2000/svg'}
+.EXAMPLE
+Add-ParameterDefault.ps1 Select-Xml Namespace @{svg = 'http://www.w3.org/2000/svg'}
 
-	Adds the SVG namespace to any existing namespaces used by Select-Xml when none are given explicitly.
+Adds the SVG namespace to any existing namespaces used by Select-Xml when none are given explicitly.
 #>
 
 #Requires -Version 3

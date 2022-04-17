@@ -1,29 +1,29 @@
 ﻿<#
-.Synopsis
-    Gets the physical path on disk of a certificate's private key.
+.SYNOPSIS
+Gets the physical path on disk of a certificate's private key.
 
-.Parameter Certificate
-    The X509Certificate2 to look up the path for.
+.PARAMETER Certificate
+The X509Certificate2 to look up the path for.
 
-.Inputs
-    System.Security.Cryptography.X509Certificates.X509Certificate2 to find the private key file for.
+.INPUTS
+System.Security.Cryptography.X509Certificates.X509Certificate2 to find the private key file for.
 
-.Outputs
-    System.String of the path to the private key file (if found).
+.OUTPUTS
+System.String of the path to the private key file (if found).
 
-.Link
-    Find-Certificate.ps1
+.LINK
+Find-Certificate.ps1
 
-.Link
-    Format-Certificate.ps1
+.LINK
+Format-Certificate.ps1
 
-.Link
-    https://github.com/MicrosoftArchive/clrsecurity/blob/master/Security.Cryptography/src/X509Certificates/X509Certificate2ExtensionMethods.cs#L58
+.LINK
+https://github.com/MicrosoftArchive/clrsecurity/blob/master/Security.Cryptography/src/X509Certificates/X509Certificate2ExtensionMethods.cs#L58
 
-.Example
-    Find-Certificate.ps1 localhost FindBySubjectName My LocalMachine |Get-CertificatePath.ps1
+.EXAMPLE
+Find-Certificate.ps1 localhost FindBySubjectName My LocalMachine |Get-CertificatePath.ps1
 
-    C:\ProgramData\Microsoft\crypto\rsa\machinekeys\abd662b361941f26a1173357adb3c12d_b4d34fe9-d85e-45e3-83dd-a52fa93c8551
+C:\ProgramData\Microsoft\crypto\rsa\machinekeys\abd662b361941f26a1173357adb3c12d_b4d34fe9-d85e-45e3-83dd-a52fa93c8551
 #>
 
 #Requires -Version 3

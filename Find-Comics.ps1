@@ -1,49 +1,49 @@
-<#
-.Synopsis
-	Finds comics.
+﻿<#
+.SYNOPSIS
+Finds comics.
 
-.Parameter Title
-	Text to search titles. Comics with titles containing this text will be returned.
+.PARAMETER Title
+Text to search titles. Comics with titles containing this text will be returned.
 
-.Parameter Creator
-	Text to search creators. Comics with creators containing this text will be returned.
+.PARAMETER Creator
+Text to search creators. Comics with creators containing this text will be returned.
 
-.Parameter TitleMatch
-	A regular exression to match titles. Comics with matching titles will be returned.
+.PARAMETER TitleMatch
+A regular exression to match titles. Comics with matching titles will be returned.
 
-.Parameter CreatorMatch
-	A regular expression to search the list of creators for.
-	Comics with a matching list of creators will be returned.
-	The regex will match against a complete list of creators, so anchor with word breaks (\b)
-	rather than the beginning or end of the string (^ or $ or \A or \z).
+.PARAMETER CreatorMatch
+A regular expression to search the list of creators for.
+Comics with a matching list of creators will be returned.
+The regex will match against a complete list of creators, so anchor with word breaks (\b)
+rather than the beginning or end of the string (^ or $ or \A or \z).
 
-	e.g. (W) Jason Aaron (A/CA) Russell Dauterman
+e.g. (W) Jason Aaron (A/CA) Russell Dauterman
 
-	W = writer
-	A = artist
-	CA = color artist
+W = writer
+A = artist
+CA = color artist
 
-.Parameter Condition
-	A filtering script block with the comic as the PSItem ($_) that evaluates to true to
-	return the comic.
+.PARAMETER Condition
+A filtering script block with the comic as the PSItem ($_) that evaluates to true to
+return the comic.
 
-.Parameter ReleaseWeek
-	Specifies which week (relative to the current week) to return comics for.
+.PARAMETER ReleaseWeek
+Specifies which week (relative to the current week) to return comics for.
 
-.Link
-	https://api.shortboxed.com/
+.LINK
+https://api.shortboxed.com/
 
-.Link
-	Get-Comics.ps1
+.LINK
+Get-Comics.ps1
 
-.Example
-	Find-Comics.ps1 -Creator 'Grant Morrison','Matt Fraction','David Aja','Kyle Higgins' |Format-Table publisher,title,creators
+.EXAMPLE
+Find-Comics.ps1 -Creator 'Grant Morrison','Matt Fraction','David Aja','Kyle Higgins' |Format-Table publisher,title,creators
 
-	publisher         title                                creators
-	---------         -----                                --------
-	BOOM! STUDIOS     KLAUS HC LIFE & TIMES OF SANTA CLAUS (W) Grant Morrison (A/CA) Dan Mora
-	DARK HORSE COMICS SEEDS TP                             (W) Ann Nocenti (A/CA) David Aja
-	MARVEL COMICS     MARVEL-VERSE GN-TP WANDA & VISION    (W) Kyle Higgins, More (A) Stephane Perger, More (CA) Daniel Acuna, Jim Cheung
+publisher         title                                creators
+---------         -----                                --------
+BOOM! STUDIOS     KLAUS HC LIFE & TIMES OF SANTA CLAUS (W) Grant Morrison (A/CA) Dan Mora
+DARK HORSE COMICS SEEDS TP                             (W) Ann Nocenti (A/CA) David Aja
+MARVEL COMICS     MARVEL-VERSE GN-TP WANDA & VISION    (W) Kyle Higgins, More (A) Stephane Perger, More (CA) Daniel Acuna, Jim Cheung
 #>
 
 #Requires -Version 3

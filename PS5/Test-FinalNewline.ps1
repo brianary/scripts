@@ -1,23 +1,23 @@
-<#
-.Synopsis
-	Returns true if a file ends with a newline as required by the POSIX standard.
+﻿<#
+.SYNOPSIS
+Returns true if a file ends with a newline as required by the POSIX standard.
 
-.Parameter Path
-    The file to test.
+.PARAMETER Path
+The file to test.
 
-.Inputs
-	System.IO.FileInfo file or similar object to test for UTF-8 validity.
+.INPUTS
+System.IO.FileInfo file or similar object to test for UTF-8 validity.
 
-.Outputs
-	System.Boolean indicating whether the file ends with a newline.
+.OUTPUTS
+System.Boolean indicating whether the file ends with a newline.
 
-.Link
-	Test-MagicNumber.ps1
+.LINK
+Test-MagicNumber.ps1
 
-.Example
-	Test-FinalNewline.ps1 README.md
+.EXAMPLE
+Test-FinalNewline.ps1 README.md
 
-	True
+True
 #>
 
 #Requires -Version 3

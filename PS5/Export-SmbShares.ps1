@@ -1,17 +1,17 @@
 ﻿<#
-.Synopsis
-	Export SMB shares using old NET SHARE command, to new New-SmbShare PowerShell commands.
+.SYNOPSIS
+Export SMB shares using old NET SHARE command, to new New-SmbShare PowerShell commands.
 
-.Description
-	This script is intended to be used to export shares from old machines to new ones.
+.DESCRIPTION
+This script is intended to be used to export shares from old machines to new ones.
 
-.Outputs
-	System.String[] of PowerShell commands to duplicate the local machine's shares.
+.OUTPUTS
+System.String[] of PowerShell commands to duplicate the local machine's shares.
 
-.Example
-	Export-SmbShares.ps1
+.EXAMPLE
+Export-SmbShares.ps1
 
-	New-SmbShare -Name 'Data' -Path 'C:\Data' -ChangeAccess 'Everyone'
+New-SmbShare -Name 'Data' -Path 'C:\Data' -ChangeAccess 'Everyone'
 #>
 
 #Requires -Version 3
@@ -26,8 +26,8 @@ function Export-SmbShares
 {
 	@"
 <#
-.Synopsis
-	Imports SMB file shares exported from $env:ComputerName
+.SYNOPSIS
+Imports SMB file shares exported from $env:ComputerName
 #>
 
 #Requires -Version 3

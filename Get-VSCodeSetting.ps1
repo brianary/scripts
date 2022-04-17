@@ -1,42 +1,42 @@
-<#
-.Synopsis
-	Sets a VSCode setting.
+﻿<#
+.SYNOPSIS
+Sets a VSCode setting.
 
-.Parameter Name
-	The name of the setting to set, use / as a path separator for deeper structures.
+.PARAMETER Name
+The name of the setting to set, use / as a path separator for deeper structures.
 
-.Parameter Workspace
-	Indicates that the current workspace settings should be
+.PARAMETER Workspace
+Indicates that the current workspace settings should be
 
-.Outputs
-	System.String, System.Double, System.Int32, System.Boolean depending on VS Code JSON value type.
+.OUTPUTS
+System.String, System.Double, System.Int32, System.Boolean depending on VS Code JSON value type.
 
-.Link
-	https://code.visualstudio.com/docs/getstarted/settings
+.LINK
+https://code.visualstudio.com/docs/getstarted/settings
 
-.Link
-	Get-VSCodeSettingsFile.ps1
+.LINK
+Get-VSCodeSettingsFile.ps1
 
-.Link
-	ConvertFrom-Json
+.LINK
+ConvertFrom-Json
 
-.Link
-	Get-Content
+.LINK
+Get-Content
 
-.Example
-	Get-VSCodeSetting.ps1 gitlens.advanced.messages/suppressShowKeyBindingsNotice
+.EXAMPLE
+Get-VSCodeSetting.ps1 gitlens.advanced.messages/suppressShowKeyBindingsNotice
 
-	True
+True
 
-.Example
-	Get-VSCodeSetting.ps1 powershell.codeFormatting.preset -Workspace
+.EXAMPLE
+Get-VSCodeSetting.ps1 powershell.codeFormatting.preset -Workspace
 
-	Allman
+Allman
 
-.Example
-	Get-VSCodeSetting.ps1 workbench.colorTheme -Workspace
+.EXAMPLE
+Get-VSCodeSetting.ps1 workbench.colorTheme -Workspace
 
-	PowerShell ISE
+PowerShell ISE
 #>
 
 [CmdletBinding()][OutputType([string],[double],[int],[bool])] Param(

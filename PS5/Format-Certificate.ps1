@@ -1,74 +1,74 @@
-<#
-.Synopsis
-    Generates a formatted name/description from a certificate.
+﻿<#
+.SYNOPSIS
+Generates a formatted name/description from a certificate.
 
-.Parameter Certificate
-    The certificate to generate a formatted string from.
+.PARAMETER Certificate
+The certificate to generate a formatted string from.
 
-.Parameter Format
-    The case-sensitive format string to use. The following letters emit the following values,
-    all other letters are emitted unchanged, backslash escapes letters:
+.PARAMETER Format
+The case-sensitive format string to use. The following letters emit the following values,
+all other letters are emitted unchanged, backslash escapes letters:
 
-        a  expiration date (NotAfter; RFC1123)
-        A  expiration date (NotAfter; ISO8601)
-        b  effective date (NotBefore; RFC1123)
-        B  effective date (NotBefore; ISO8601)
-        d  domain name
-        D  all domain names (in punycode)
-        e  email
-        f  friendly name
-        F  effective date string (MS short date with long time)
-        g  signature algorithm name
-        G  key algorithm parameters
-        i  first issuer name field found (of simple, email, UPN, DNS, SAN, URL)
-        I  full issuer name
-        j  expiration date day of month (zero-padded to two digits)
-        J  effective date day of month (zero-padded to two digits)
-        k  key usages
-        K  extended key usages
-        m  expiration date month (three letter abbreviation)
-        M  effective date month (three letter abbreviation)
-        n  first short name field found (of friendly, simple, email, UPN, DNS, SAN, URL, thumbprint)
-        N  serial number
-        o  @ when the certificate is marked to send as a trusted issuer (otherwise a space)
-        O  [SendAsTrustedIssuer] when the certificate is marked to send as a trusted issuer
-        p  * when a private key is present (otherwise a space)
-        P  [HasPrivateKey] when a private key is present
-        q  same as n, but with each non-word character sequence replaced by an underscore
-        r  ~ when certificate has been archived (otherwise a space)
-        R  [Archived] when certificate has been archived
-        s  subject
-        S  simple name
-        t  partial thumbprint (first six digits)
-        T  thumbprint (SHA1 hash)
-        u  user principal name
-        U  URL name
-        v  version
-        w  expiration date day of week (three letter abbreviation)
-        W  effective date day of week (three letter abbreviation)
-        x  expiration date string (MS short date with long time)
-        y  expiration date year
-        Y  effective date year
-		\  escape character
+a  expiration date (NotAfter; RFC1123)
+A  expiration date (NotAfter; ISO8601)
+b  effective date (NotBefore; RFC1123)
+B  effective date (NotBefore; ISO8601)
+d  domain name
+D  all domain names (in punycode)
+e  email
+f  friendly name
+F  effective date string (MS short date with long time)
+g  signature algorithm name
+G  key algorithm parameters
+i  first issuer name field found (of simple, email, UPN, DNS, SAN, URL)
+I  full issuer name
+j  expiration date day of month (zero-padded to two digits)
+J  effective date day of month (zero-padded to two digits)
+k  key usages
+K  extended key usages
+m  expiration date month (three letter abbreviation)
+M  effective date month (three letter abbreviation)
+n  first short name field found (of friendly, simple, email, UPN, DNS, SAN, URL, thumbprint)
+N  serial number
+o  @ when the certificate is marked to send as a trusted issuer (otherwise a space)
+O  [SendAsTrustedIssuer] when the certificate is marked to send as a trusted issuer
+p  * when a private key is present (otherwise a space)
+P  [HasPrivateKey] when a private key is present
+q  same as n, but with each non-word character sequence replaced by an underscore
+r  ~ when certificate has been archived (otherwise a space)
+R  [Archived] when certificate has been archived
+s  subject
+S  simple name
+t  partial thumbprint (first six digits)
+T  thumbprint (SHA1 hash)
+u  user principal name
+U  URL name
+v  version
+w  expiration date day of week (three letter abbreviation)
+W  effective date day of week (three letter abbreviation)
+x  expiration date string (MS short date with long time)
+y  expiration date year
+Y  effective date year
+\  escape character
 
-.Inputs
-	System.Security.Cryptography.X509Certificates.X509Certificate2 to format.
+.INPUTS
+System.Security.Cryptography.X509Certificates.X509Certificate2 to format.
 
-.Outputs
-	System.String of the formatted certificate.
+.OUTPUTS
+System.String of the formatted certificate.
 
-.Link
-    https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509certificate2.aspx
+.LINK
+https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509certificate2.aspx
 
-.Example
-    Format-Certificate.ps1 $cert
+.EXAMPLE
+Format-Certificate.ps1 $cert
 
-    0CAD75*  example-cert-name, expires Sat, 13 Mar 2021 11:31:30 GMT
+0CAD75*  example-cert-name, expires Sat, 13 Mar 2021 11:31:30 GMT
 
-.Example
-    Format-Certificate.ps1 $cert -Format 'n P T A r'
+.EXAMPLE
+Format-Certificate.ps1 $cert -Format 'n P T A r'
 
-    example-cert-name [HasPrivateKey] 0CAD7530A40BD2F7160B19DA77A3FCF7CAEB08D0 2021-03-13T11:31:30
+example-cert-name [HasPrivateKey] 0CAD7530A40BD2F7160B19DA77A3FCF7CAEB08D0 2021-03-13T11:31:30
 #>
 
 [CmdletBinding()][OutputType([string])] Param(

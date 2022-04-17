@@ -1,36 +1,36 @@
-<#
-.Synopsis
-	Determines a file's line endings.
+﻿<#
+.SYNOPSIS
+Determines a file's line endings.
 
-.Parameter Path
-	The location of a file.
+.PARAMETER Path
+The location of a file.
 
-.Inputs
-	Any object with a Path or FullName property to use for a file location.
+.INPUTS
+Any object with a Path or FullName property to use for a file location.
 
-.Outputs
-	System.Management.Automation.PSCustomObject with the following properties:
+.OUTPUTS
+System.Management.Automation.PSCustomObject with the following properties:
 
-	* Path, a string containing the location of the file.
-	* LineEndings, one of: CRLF, LF, CR, Mixed or None.
-	* CRLF, a count of the CR LF line endings found.
-	* LF, a count of the LF line endings found.
-	* CR, a count of the CR line endings found.
+* Path, a string containing the location of the file.
+* LineEndings, one of: CRLF, LF, CR, Mixed or None.
+* CRLF, a count of the CR LF line endings found.
+* LF, a count of the LF line endings found.
+* CR, a count of the CR line endings found.
 
-.Link
-	Get-FileEncoding.ps1
+.LINK
+Get-FileEncoding.ps1
 
-.Link
-	Get-Content
+.LINK
+Get-Content
 
-.Example
-	Get-FileLineEndings.ps1 Get-FileLineEndings.ps1
+.EXAMPLE
+Get-FileLineEndings.ps1 Get-FileLineEndings.ps1
 
-	Path        : A:\scripts\Get-FileLineEndings.ps1
-	LineEndings : CRLF
-	CRLF        : 90
-	LF          : 0
-	CR          : 0
+Path        : A:\scripts\Get-FileLineEndings.ps1
+LineEndings : CRLF
+CRLF        : 90
+LF          : 0
+CR          : 0
 #>
 
 #Requires -Version 3

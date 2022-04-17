@@ -1,58 +1,58 @@
 ﻿<#
-.Synopsis
-    Create a common database object.
+.SYNOPSIS
+Create a common database object.
 
-.Parameter ProviderName
-    The invariant name of the DbProviderFactory to use to create the requested object.
+.PARAMETER ProviderName
+The invariant name of the DbProviderFactory to use to create the requested object.
 
-.Parameter TypeName
-    The type of object to create.
+.PARAMETER TypeName
+The type of object to create.
 
-.Parameter InitialValue
-    A value to initialize the object with, such as CommandText for a Command object, or
-    a ConnectionString for a Connection or ConnectionStringBuilder.
+.PARAMETER InitialValue
+A value to initialize the object with, such as CommandText for a Command object, or
+a ConnectionString for a Connection or ConnectionStringBuilder.
 
-.Parameter ConnectionString
-    A connection string to use (when creating a Command object).
-    No connection will be made if not specified.
+.PARAMETER ConnectionString
+A connection string to use (when creating a Command object).
+No connection will be made if not specified.
 
-.Parameter StoredProcedure
-    Sets the CommandType property of a Command object to StoredProcedure.
-    Ignored for other objects.
+.PARAMETER StoredProcedure
+Sets the CommandType property of a Command object to StoredProcedure.
+Ignored for other objects.
 
-.Parameter OpenConnection
-    Opens the Connection object (or Command connection) if an InitialValue was provided, ignored otherwise.
+.PARAMETER OpenConnection
+Opens the Connection object (or Command connection) if an InitialValue was provided, ignored otherwise.
 
-.Inputs
-    System.String to initialize the database object.
+.INPUTS
+System.String to initialize the database object.
 
-.Outputs
-    System.Data.Common.DbCommand (e.g. System.Data.SqlClient.SqlCommand) or
-    System.Data.Common.DbConnection (e.g. System.Data.SqlClient.SqlConnection) or
-    System.Data.Common.DbConnectionStringBuilder (e.g. System.Data.SqlClient.SqlConnectionStringBuilder),
-    as requested.
+.OUTPUTS
+System.Data.Common.DbCommand (e.g. System.Data.SqlClient.SqlCommand) or
+System.Data.Common.DbConnection (e.g. System.Data.SqlClient.SqlConnection) or
+System.Data.Common.DbConnectionStringBuilder (e.g. System.Data.SqlClient.SqlConnectionStringBuilder),
+as requested.
 
-.Link
-    https://msdn.microsoft.com/library/system.data.common.dbproviderfactories.aspx
+.LINK
+https://msdn.microsoft.com/library/system.data.common.dbproviderfactories.aspx
 
-.Example
-    New-DbProviderObject.ps1 SqlClient ConnectionStringBuilder 'Server=ServerName;Database=DbName;Integrated Security=True'
+.EXAMPLE
+New-DbProviderObject.ps1 SqlClient ConnectionStringBuilder 'Server=ServerName;Database=DbName;Integrated Security=True'
 
-    Key                 Value
-    ---                 -----
-    Data Source         ServerName
-    Initial Catalog     DbName
-    Integrated Security True
+Key                 Value
+---                 -----
+Data Source         ServerName
+Initial Catalog     DbName
+Integrated Security True
 
-.Example
-    $conn = New-DbProviderObject.ps1 SqlClient Connection $connstr -Open
+.EXAMPLE
+$conn = New-DbProviderObject.ps1 SqlClient Connection $connstr -Open
 
-    ($conn contains an open DbConnection object.)
+($conn contains an open DbConnection object.)
 
-.Example
-    $cmd = New-DbProviderObject.ps1 odbc Command -ConnectionString $connstr -StoredProcedure -OpenConnection
+.EXAMPLE
+$cmd = New-DbProviderObject.ps1 odbc Command -ConnectionString $connstr -StoredProcedure -OpenConnection
 
-    ($cmd contains a DbCommand with a CommandType of StoredProcedure and an open connection to $connstr.)
+($cmd contains a DbCommand with a CommandType of StoredProcedure and an open connection to $connstr.)
 #>
 
 #Requires -Version 4

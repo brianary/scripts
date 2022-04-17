@@ -1,78 +1,78 @@
 ﻿<#
-.Synopsis
-	Returns a date and time converted to the French Republican Calendar.
+.SYNOPSIS
+Returns a date and time converted to the French Republican Calendar.
 
-.Parameter Date
-	The Gregorian calendar date and time to convert.
+.PARAMETER Date
+The Gregorian calendar date and time to convert.
 
-.Parameter Method
-	Which method to use to calculate leap years, of the competing choices.
+.PARAMETER Method
+Which method to use to calculate leap years, of the competing choices.
 
-.Inputs
-	System.DateTime containing the Gregorian date and time to convert.
+.INPUTS
+System.DateTime containing the Gregorian date and time to convert.
 
-.Outputs
-	System.Management.Automation.PSCustomObject containing a French Republican Calendar
-	date and time in these properties:
+.OUTPUTS
+System.Management.Automation.PSCustomObject containing a French Republican Calendar
+date and time in these properties:
 
-	* Year: the numeric year
-	* Annee: the Roman numeral year
-	* AnneeUnicode: the Unicode Roman numeral year
-	* Month: the numeric month
-	* MonthName: the English month name
-	* Mois: the French month name
-	* Day: the numeric day of the month
-	* DayOfYear: the numeric day of the year
-	* Jour: the French name of the day of the year
-	* DayName: the English name of the day of the year
-	* Decade: the number of the 10-day "week" of the year
-	* DayOfDecade: the numeric day of the 10-day "week"
-	* DecadeOrdinal: the name of the day of the 10-day "week"
-	* DecimalTime: the decimal time (10 hours/day, 100 minutes/hour, 100 seconds/minute)
-	* GregorianDate: the original Gregorian date, as provided
+* Year: the numeric year
+* Annee: the Roman numeral year
+* AnneeUnicode: the Unicode Roman numeral year
+* Month: the numeric month
+* MonthName: the English month name
+* Mois: the French month name
+* Day: the numeric day of the month
+* DayOfYear: the numeric day of the year
+* Jour: the French name of the day of the year
+* DayName: the English name of the day of the year
+* Decade: the number of the 10-day "week" of the year
+* DayOfDecade: the numeric day of the 10-day "week"
+* DecadeOrdinal: the name of the day of the 10-day "week"
+* DecimalTime: the decimal time (10 hours/day, 100 minutes/hour, 100 seconds/minute)
+* GregorianDate: the original Gregorian date, as provided
 
-.Link
-	https://wikipedia.org/wiki/French_Republican_calendar
+.LINK
+https://wikipedia.org/wiki/French_Republican_calendar
 
-.Link
-	https://wikipedia.org/wiki/Equinox
+.LINK
+https://wikipedia.org/wiki/Equinox
 
-.Link
-	https://www.timeanddate.com/calendar/seasons.html
+.LINK
+https://www.timeanddate.com/calendar/seasons.html
 
-.Link
-	https://www.projectpluto.com/calendar.htm
+.LINK
+https://www.projectpluto.com/calendar.htm
 
-.Link
-	https://github.com/Bill-Gray/lunar/blob/master/date.cpp#L340
+.LINK
+https://github.com/Bill-Gray/lunar/blob/master/date.cpp#L340
 
-.Link
-	http://rosettacode.org/wiki/French_Republican_calendar
+.LINK
+http://rosettacode.org/wiki/French_Republican_calendar
 
-.Link
-	http://www.windhorst.org/calendar/
+.LINK
+http://www.windhorst.org/calendar/
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Example
-	Get-FrenchRepublicanDate.ps1 2020-07-08
+.EXAMPLE
+Get-FrenchRepublicanDate.ps1 2020-07-08
 
-	Year          : 228
-	Annee         : CCXXVIII
-	AnneeUnicode  : ⅭⅭⅩⅩⅧ
-	Month         : 10
-	MonthName     : Harvest
-	Mois          : Messidor
-	Day           : 21
-	DayOfYear     : 291
-	Jour          : Menthe
-	DayName       : Mint
-	Decade        : 30
-	DayOfDecade   : 1
-	DecadeOrdinal : Primidi
-	DecimalTime   : 0:00:00
-	GregorianDate : 2020-07-08 00:00:00
+Year          : 228
+Annee         : CCXXVIII
+AnneeUnicode  : ⅭⅭⅩⅩⅧ
+Month         : 10
+MonthName     : Harvest
+Mois          : Messidor
+Day           : 21
+DayOfYear     : 291
+Jour          : Menthe
+DayName       : Mint
+Decade        : 30
+DayOfDecade   : 1
+DecadeOrdinal : Primidi
+DecimalTime   : 0:00:00
+GregorianDate : 2020-07-08 00:00:00
 #>
 
 #Requires -Version 3

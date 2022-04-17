@@ -1,35 +1,35 @@
-<#
-.Synopsis
-	Transform XML using an XSLT template.
+﻿<#
+.SYNOPSIS
+Transform XML using an XSLT template.
 
-.Parameter TransformXslt
-	An XML document containing an XSLT transform.
+.PARAMETER TransformXslt
+An XML document containing an XSLT transform.
 
-.Parameter Xml
-	An XML document to transform.
+.PARAMETER Xml
+An XML document to transform.
 
-.Parameter TransformFile
-	The XSLT file to use to transform the XML.
+.PARAMETER TransformFile
+The XSLT file to use to transform the XML.
 
-.Parameter Path
-	The XML file to transform.
+.PARAMETER Path
+The XML file to transform.
 
-.Parameter OutFile
-	The file to write the transformed XML to.
+.PARAMETER OutFile
+The file to write the transformed XML to.
 
-.Parameter TrustedXslt
-	When specified, indicates the XSLT is trusted, enabling the document()
-	function and embedded script blocks.
+.PARAMETER TrustedXslt
+When specified, indicates the XSLT is trusted, enabling the document()
+function and embedded script blocks.
 
-.Example
-	Convert-Xml.ps1 '<a xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>' '<z/>' |Format-Xml.ps1
+.EXAMPLE
+Convert-Xml.ps1 '<a xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>' '<z/>' |Format-Xml.ps1
 
-	<a />
+<a />
 
-.Example
-	Convert-Xml.ps1 xsd2html.xslt schema.xsd schema.html
+.EXAMPLE
+Convert-Xml.ps1 xsd2html.xslt schema.xsd schema.html
 
-	(Writes schema.html)
+(Writes schema.html)
 #>
 
 #Requires -Version 3

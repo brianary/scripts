@@ -1,128 +1,128 @@
 ﻿<#
-.Synopsis
-    Searches an entire database for a field value.
+.SYNOPSIS
+Searches an entire database for a field value.
 
-.Parameter ServerInstance
-    The server and instance to connect to.
+.PARAMETER ServerInstance
+The server and instance to connect to.
 
-.Parameter Database
-    The database to use.
+.PARAMETER Database
+The database to use.
 
-.Parameter Value
-    The value to search for. The datatype is significant, e.g. searching for money/smallmoney columns, cast the type to decimal: [decimal]13.55
-	Searches, by type:
+.PARAMETER Value
+The value to search for. The datatype is significant, e.g. searching for money/smallmoney columns, cast the type to decimal: [decimal]13.55
+Searches, by type:
 
-        * string: varchar, char, nvarchar, nchar (char length must be at least as long as value)
-        * byte: tinyint
-        * int: bigint, int
-        * long: bigint, numeric or decimal (where scale is zero)
-        * decimal: money, smallmoney
-        * double or float: float, real, numeric, decimal
-        * datetime: date (if no time specified), datetime, datetime2, datetimeoffset, smalldatetime
-		* timespan: time
+* string: varchar, char, nvarchar, nchar (char length must be at least as long as value)
+* byte: tinyint
+* int: bigint, int
+* long: bigint, numeric or decimal (where scale is zero)
+* decimal: money, smallmoney
+* double or float: float, real, numeric, decimal
+* datetime: date (if no time specified), datetime, datetime2, datetimeoffset, smalldatetime
+* timespan: time
 
-    If the -LikeValue switch is specified, the type of value is assumed to be string.
+If the -LikeValue switch is specified, the type of value is assumed to be string.
 
-.Parameter IncludeSchemata
-    A like-pattern of database schemata to include (will only include these).
+.PARAMETER IncludeSchemata
+A like-pattern of database schemata to include (will only include these).
 
-.Parameter ExcludeSchemata
-    A like-pattern of database schemata to exclude.
+.PARAMETER ExcludeSchemata
+A like-pattern of database schemata to exclude.
 
-.Parameter IncludeTables
-    A like-pattern of database tables to include (will only include these).
+.PARAMETER IncludeTables
+A like-pattern of database tables to include (will only include these).
 
-.Parameter ExcludeTables
-    A like-pattern of database tables to exclude.
+.PARAMETER ExcludeTables
+A like-pattern of database tables to exclude.
 
-.Parameter IncludeColumns
-    A like-pattern of database columns to include (will only include these).
+.PARAMETER IncludeColumns
+A like-pattern of database columns to include (will only include these).
 
-.Parameter ExcludeColumns
-    A like-pattern of database columns to exclude.
+.PARAMETER ExcludeColumns
+A like-pattern of database columns to exclude.
 
-.Parameter MinRows
-    Tables with more rows than this value will be skipped.
+.PARAMETER MinRows
+Tables with more rows than this value will be skipped.
 
-.Parameter MaxRows
-    Tables with more rows than this value will be skipped.
+.PARAMETER MaxRows
+Tables with more rows than this value will be skipped.
 
-.Parameter FindFirst
-    Quit as soon as the first value is found.
+.PARAMETER FindFirst
+Quit as soon as the first value is found.
 
-.Parameter LikeValue
-    Interpret the value as a like-pattern (% for zero-or-more characters, _ for a single character, \ is escape).
+.PARAMETER LikeValue
+Interpret the value as a like-pattern (% for zero-or-more characters, _ for a single character, \ is escape).
 
-.Outputs
-	System.Management.Automation.PSCustomObject for each found row, including the #TableName,
-	#ColumnName, and all fields.
+.OUTPUTS
+System.Management.Automation.PSCustomObject for each found row, including the #TableName,
+#ColumnName, and all fields.
 
-.Component
-    System.Configuration
+.COMPONENT
+System.Configuration
 
-.Link
-    ConvertFrom-DataRow.ps1
+.LINK
+ConvertFrom-DataRow.ps1
 
-.Link
-    Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Link
-    Invoke-Sqlcmd
+.LINK
+Invoke-Sqlcmd
 
-.Example
-    Find-DatabaseValue.ps1 FR -IncludeSchemata Sales -MaxRows 100 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016
+.EXAMPLE
+Find-DatabaseValue.ps1 FR -IncludeSchemata Sales -MaxRows 100 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016
 
-    TableName         : [Sales].[SalesTerritory]
-    TerritoryID       : 7
-    Name              : France
-    CountryRegionCode : FR
-    Group             : Europe
-    SalesYTD          : 4772398.3078
-    SalesLastYear     : 2396539.7601
-    CostYTD           : 0.0000
-    CostLastYear      : 0.0000
-    rowguid           : bf806804-9b4c-4b07-9d19-706f2e689552
-    ModifiedDate      : 04/30/2008 00:00:00
+TableName         : [Sales].[SalesTerritory]
+TerritoryID       : 7
+Name              : France
+CountryRegionCode : FR
+Group             : Europe
+SalesYTD          : 4772398.3078
+SalesLastYear     : 2396539.7601
+CostYTD           : 0.0000
+CostLastYear      : 0.0000
+rowguid           : bf806804-9b4c-4b07-9d19-706f2e689552
+ModifiedDate      : 04/30/2008 00:00:00
 
-.Example
-    Find-DatabaseValue.ps1 41636 -IncludeColumns %OrderID -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016 |tee order41636.txt
+.EXAMPLE
+Find-DatabaseValue.ps1 41636 -IncludeColumns %OrderID -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016 |tee order41636.txt
 
-    TableName            : [Production].[TransactionHistory]
-    TransactionID        : 100046
-    ProductID            : 826
-    ReferenceOrderID     : 41636
-    ReferenceOrderLineID : 0
-    TransactionDate      : 07/31/2013 00:00:00
-    TransactionType      : W
-    Quantity             : 4
-    ActualCost           : 0.0000
-    ModifiedDate         : 07/31/2013 00:00:00
+TableName            : [Production].[TransactionHistory]
+TransactionID        : 100046
+ProductID            : 826
+ReferenceOrderID     : 41636
+ReferenceOrderLineID : 0
+TransactionDate      : 07/31/2013 00:00:00
+TransactionType      : W
+Quantity             : 4
+ActualCost           : 0.0000
+ModifiedDate         : 07/31/2013 00:00:00
 
-    TableName     : [Production].[WorkOrder]
-    WorkOrderID   : 41636
-    ProductID     : 826
-    OrderQty      : 4
-    StockedQty    : 4
-    ScrappedQty   : 0
-    StartDate     : 07/31/2013 00:00:00
-    EndDate       : 08/11/2013 00:00:00
-    DueDate       : 08/11/2013 00:00:00
-    ScrapReasonID :
-    ModifiedDate  : 08/11/2013 00:00:00
+TableName     : [Production].[WorkOrder]
+WorkOrderID   : 41636
+ProductID     : 826
+OrderQty      : 4
+StockedQty    : 4
+ScrappedQty   : 0
+StartDate     : 07/31/2013 00:00:00
+EndDate       : 08/11/2013 00:00:00
+DueDate       : 08/11/2013 00:00:00
+ScrapReasonID :
+ModifiedDate  : 08/11/2013 00:00:00
 
-    TableName          : [Production].[WorkOrderRouting]
-    WorkOrderID        : 41636
-    ProductID          : 826
-    OperationSequence  : 6
-    LocationID         : 50
-    ScheduledStartDate : 07/31/2013 00:00:00
-    ScheduledEndDate   : 08/11/2013 00:00:00
-    ActualStartDate    : 08/01/2013 00:00:00
-    ActualEndDate      : 08/11/2013 00:00:00
-    ActualResourceHrs  : 3.0000
-    PlannedCost        : 36.7500
-    ActualCost         : 36.7500
-    ModifiedDate       : 08/11/2013 00:00:00
+TableName          : [Production].[WorkOrderRouting]
+WorkOrderID        : 41636
+ProductID          : 826
+OperationSequence  : 6
+LocationID         : 50
+ScheduledStartDate : 07/31/2013 00:00:00
+ScheduledEndDate   : 08/11/2013 00:00:00
+ActualStartDate    : 08/01/2013 00:00:00
+ActualEndDate      : 08/11/2013 00:00:00
+ActualResourceHrs  : 3.0000
+PlannedCost        : 36.7500
+ActualCost         : 36.7500
+ModifiedDate       : 08/11/2013 00:00:00
 #>
 
 #Requires -Version 3

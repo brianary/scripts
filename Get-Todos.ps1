@@ -1,11 +1,11 @@
-<#
-.Synopsis
-    Returns the TODOs for the current git repo, which can help document technical debt.
+﻿<#
+.SYNOPSIS
+Returns the TODOs for the current git repo, which can help document technical debt.
 
-.Example
-    Get-Todos.ps1 |Out-GridView -Title "$((Get-Item $(git rev-parse --show-toplevel)).Name) TODOs"
+.EXAMPLE
+Get-Todos.ps1 |Out-GridView -Title "$((Get-Item $(git rev-parse --show-toplevel)).Name) TODOs"
 
-    Shows TODOs in this repo.
+Shows TODOs in this repo.
 #>
 
 #Requires -Version 3

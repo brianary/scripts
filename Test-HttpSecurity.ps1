@@ -1,83 +1,83 @@
 ﻿<#
-.Synopsis
-    Scan sites using Mozilla's Observatory.
+.SYNOPSIS
+Scan sites using Mozilla's Observatory.
 
-.Parameter Hosts
-    Hostnames to scan, e.g. www.example.org
+.PARAMETER Hosts
+Hostnames to scan, e.g. www.example.org
 
-.Parameter Force
-    Indicates a new scan should be performed, rather than returning a cached one.
+.PARAMETER Force
+Indicates a new scan should be performed, rather than returning a cached one.
 
-.Parameter Public
-    Indicates the scan results may be posted publically.
-    By default, scans are unlisted.
+.PARAMETER Public
+Indicates the scan results may be posted publically.
+By default, scans are unlisted.
 
-.Parameter IncludeResults
-    Indicates the detailed scan results should be fetched rather than simply providing a URL for them.
-    
-.Parameter PollingInterval 
-    The number of milliseconds to wait between polling the hostnames for scan completion.
+.PARAMETER IncludeResults
+Indicates the detailed scan results should be fetched rather than simply providing a URL for them.
 
-.Parameter Endpoint
-    The address of the Observatory web service.
+.PARAMETER PollingInterval
+The number of milliseconds to wait between polling the hostnames for scan completion.
 
-.Inputs
-    System.String containing a URL host to check.
+.PARAMETER Endpoint
+The address of the Observatory web service.
 
-.Outputs
-    System.Management.Automation.PSObject containing scan results.
+.INPUTS
+System.String containing a URL host to check.
 
-.Link
-    Invoke-RestMethod
+.OUTPUTS
+System.Management.Automation.PSObject containing scan results.
 
-.Link
-    https://observatory.mozilla.org/
+.LINK
+Invoke-RestMethod
 
-.Example
-    Test-HttpSecurity.ps1 www.example.net -Public
+.LINK
+https://observatory.mozilla.org/
 
-    end_time             : Thu, 22 Dec 2016 00:09:31 GMT
-    grade                : F
-    hidden               : False
-    likelihood_indicator : MEDIUM
-    response_headers     : @{Accept-Ranges=bytes; Cache-Control=max-age=604800; Content-Encoding=gzip; 
-                           Content-Length=606; Content-Type=text/html; Date=Thu, 22 Dec 2016 00:09:31 GMT; 
-                           Etag="359670651+gzip"; Expires=Thu, 29 Dec 2016 00:09:31 GMT; Last-Modified=Fri, 09 Aug 
-                           2013 23:54:35 GMT; Server=ECS (sjc/4E3B); Vary=Accept-Encoding; X-Cache=HIT; 
-                           x-ec-custom-error=1}
-    scan_id              : 2899791
-    score                : 0
-    start_time           : Thu, 22 Dec 2016 00:09:29 GMT
-    state                : FINISHED
-    tests_failed         : 6
-    tests_passed         : 6
-    tests_quantity       : 12
-    results              : https://http-observatory.security.mozilla.org/api/v1/getScanResults?scan=2899791
-    host                 : www.example.net
+.EXAMPLE
+Test-HttpSecurity.ps1 www.example.net -Public
 
-.Example
-    Test-HttpSecurity.ps1 www.example.com -IncludeResults
+| end_time             : Thu, 22 Dec 2016 00:09:31 GMT
+| grade                : F
+| hidden               : False
+| likelihood_indicator : MEDIUM
+| response_headers     : @{Accept-Ranges=bytes; Cache-Control=max-age=604800; Content-Encoding=gzip;
+|                        Content-Length=606; Content-Type=text/html; Date=Thu, 22 Dec 2016 00:09:31 GMT;
+|                        Etag="359670651+gzip"; Expires=Thu, 29 Dec 2016 00:09:31 GMT; Last-Modified=Fri, 09 Aug
+|                        2013 23:54:35 GMT; Server=ECS (sjc/4E3B); Vary=Accept-Encoding; X-Cache=HIT;
+|                        x-ec-custom-error=1}
+| scan_id              : 2899791
+| score                : 0
+| start_time           : Thu, 22 Dec 2016 00:09:29 GMT
+| state                : FINISHED
+| tests_failed         : 6
+| tests_passed         : 6
+| tests_quantity       : 12
+| results              : https://http-observatory.security.mozilla.org/api/v1/getScanResults?scan=2899791
+| host                 : www.example.net
 
-    end_time             : Thu, 22 Dec 2016 16:17:17 GMT
-    grade                : F
-    hidden               : True
-    likelihood_indicator : MEDIUM
-    response_headers     : @{Accept-Ranges=bytes; Cache-Control=max-age=604800; Content-Encoding=gzip; 
-                           Content-Length=606; Content-Type=text/html; Date=Thu, 22 Dec 2016 16:17:17 GMT; 
-                           Etag="359670651+gzip"; Expires=Thu, 29 Dec 2016 16:17:17 GMT; Last-Modified=Fri, 09 Aug 
-                           2013 23:54:35 GMT; Server=ECS (sjc/4E5C); Vary=Accept-Encoding; X-Cache=HIT; 
-                           x-ec-custom-error=1}
-    scan_id              : 2903851
-    score                : 0
-    start_time           : Thu, 22 Dec 2016 16:17:16 GMT
-    state                : FINISHED
-    tests_failed         : 6
-    tests_passed         : 6
-    tests_quantity       : 12
-    results              : @{content-security-policy=; contribute=; cookies=; cross-origin-resource-sharing=; 
-                           public-key-pinning=; redirection=; referrer-policy=; strict-transport-security=; 
-                           subresource-integrity=; x-content-type-options=; x-frame-options=; x-xss-protection=}
-    host                 : www.example.com
+.EXAMPLE
+Test-HttpSecurity.ps1 www.example.com -IncludeResults
+
+| end_time             : Thu, 22 Dec 2016 16:17:17 GMT
+| grade                : F
+| hidden               : True
+| likelihood_indicator : MEDIUM
+| response_headers     : @{Accept-Ranges=bytes; Cache-Control=max-age=604800; Content-Encoding=gzip;
+|                        Content-Length=606; Content-Type=text/html; Date=Thu, 22 Dec 2016 16:17:17 GMT;
+|                        Etag="359670651+gzip"; Expires=Thu, 29 Dec 2016 16:17:17 GMT; Last-Modified=Fri, 09 Aug
+|                        2013 23:54:35 GMT; Server=ECS (sjc/4E5C); Vary=Accept-Encoding; X-Cache=HIT;
+|                        x-ec-custom-error=1}
+| scan_id              : 2903851
+| score                : 0
+| start_time           : Thu, 22 Dec 2016 16:17:16 GMT
+| state                : FINISHED
+| tests_failed         : 6
+| tests_passed         : 6
+| tests_quantity       : 12
+| results              : @{content-security-policy=; contribute=; cookies=; cross-origin-resource-sharing=;
+|                        public-key-pinning=; redirection=; referrer-policy=; strict-transport-security=;
+|                        subresource-integrity=; x-content-type-options=; x-frame-options=; x-xss-protection=}
+| host                 : www.example.com
 #>
 
 #Requires -Version 3
@@ -99,7 +99,7 @@ Process
         $scan.Add($_,(Invoke-RestMethod "$Endpoint/analyze?host=$_" -Body @{hidden=!$Public;rescan=$Force} -Method Post))
     }
 
-    while([string[]]$pending = $scan.Keys |? {$scan.$_.state -like '*ING' -or 
+    while([string[]]$pending = $scan.Keys |? {$scan.$_.state -like '*ING' -or
         !(Get-Member state -InputObject $scan.$_ -MemberType Properties)})
     {
         Write-Progress 'Mozilla Observatory Scan' "Waiting $PollingInterval ms" -PercentComplete ($pending.Count/$max)

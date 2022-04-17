@@ -1,35 +1,35 @@
-<#
-.Synopsis
-    Gets elements from a web response by tag name.
+﻿<#
+.SYNOPSIS
+Gets elements from a web response by tag name.
 
-.Parameter TagName
-    The name of elements to return all occurrences of.
+.PARAMETER TagName
+The name of elements to return all occurrences of.
 
-.Parameter Response
-    The Invoke-WebRequest output to parse.
+.PARAMETER Response
+The Invoke-WebRequest output to parse.
 
-.Inputs
-	Microsoft.PowerShell.Commands.HtmlWebResponseObject to parse elements from.
+.INPUTS
+Microsoft.PowerShell.Commands.HtmlWebResponseObject to parse elements from.
 
-.Outputs
-	System.__ComObject containing the parsed element COM object.
+.OUTPUTS
+System.__ComObject containing the parsed element COM object.
 
-.Link
-    Invoke-WebRequest
+.LINK
+Invoke-WebRequest
 
-.Example
-    Invoke-WebRequest https://www.h2g2.com/ -UseBasicParsing:$false |Get-Html.ps1 title |select text
+.EXAMPLE
+Invoke-WebRequest https://www.h2g2.com/ -UseBasicParsing:$false |Get-Html.ps1 title |select text
 
-    text
-    ----
-    h2g2 - The Guide to Life, The Universe and Everything
+text
+----
+h2g2 - The Guide to Life, The Universe and Everything
 
-.Example
-    Invoke-WebRequest https://http.cat/ -UseBasicParsing:$false |Get-Html.ps1 script |measure |select Count
+.EXAMPLE
+Invoke-WebRequest https://http.cat/ -UseBasicParsing:$false |Get-Html.ps1 script |measure |select Count
 
-    Count
-    -----
-        5
+Count
+-----
+5
 #>
 
 [CmdletBinding()][OutputType([__ComObject])] Param(

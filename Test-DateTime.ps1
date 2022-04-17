@@ -1,41 +1,41 @@
 ﻿<#
-.Synopsis
-    Tests whether the given string can be parsed as a date.
+.SYNOPSIS
+Tests whether the given string can be parsed as a date.
 
-.Parameter Date
-    The string to test for datetime parseability.
+.PARAMETER Date
+The string to test for datetime parseability.
 
-.Parameter Format
-    Precise, known format(s) to use to try parsing the datetime.
+.PARAMETER Format
+Precise, known format(s) to use to try parsing the datetime.
 
-.Inputs
-    System.String containing a possible date to test parse.
+.INPUTS
+System.String containing a possible date to test parse.
 
-.Outputs
-    System.Boolean indicating the string is a parseable date.
+.OUTPUTS
+System.Boolean indicating the string is a parseable date.
 
-.Link
-    https://msdn.microsoft.com/library/8kb3ddd4.aspx
+.LINK
+https://msdn.microsoft.com/library/8kb3ddd4.aspx
 
-.Example
-    Test-DateTime.ps1 '2017-02-29T11:38:00'
+.EXAMPLE
+Test-DateTime.ps1 '2017-02-29T11:38:00'
 
-    False
+False
 
-.Example
-    Test-DateTime.ps1 '2000-2-29T9:33:00' -Format 'yyyy-M-dTH:mm:ss'
+.EXAMPLE
+Test-DateTime.ps1 '2000-2-29T9:33:00' -Format 'yyyy-M-dTH:mm:ss'
 
-    True
+True
 
-.Example
-    Test-Datetime.ps1 970313 -Format 'yyMMdd'
+.EXAMPLE
+Test-Datetime.ps1 970313 -Format 'yyMMdd'
 
-    True
+True
 
-.Example
-    Test-DateTime.ps1 '1900-02-29'
+.EXAMPLE
+Test-DateTime.ps1 '1900-02-29'
 
-    False
+False
 #>
 
 [CmdletBinding()][OutputType([bool])] Param(

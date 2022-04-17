@@ -1,34 +1,34 @@
-<#
-.Synopsis
-	Counts each type of indent and line ending.
+﻿<#
+.SYNOPSIS
+Counts each type of indent and line ending.
 
-.Parameter Path
-	A file to examine.
+.PARAMETER Path
+A file to examine.
 
-.Inputs
-	System.String containing a filename to examine.
+.INPUTS
+System.String containing a filename to examine.
 
-.Outputs
-	System.Management.Automation.PSCustomObject containing these properties:
+.OUTPUTS
+System.Management.Automation.PSCustomObject containing these properties:
 
-	* Path: The original file path.
-	* Encoding: The name of the file encoding.
-	* Lines: The number of lines in the text file.
-	* LineEndings: CRLF, CR, and/or LF
-	* Indentation: Tabs, Spaces, or Mixed (with proportions).
-	* IndentSize: Number of spaces per indent (or 1 for Tabs).
-	* FinalNewline: A boolean indicating whether the file properly ends with an end-of-line.
+* Path: The original file path.
+* Encoding: The name of the file encoding.
+* Lines: The number of lines in the text file.
+* LineEndings: CRLF, CR, and/or LF
+* Indentation: Tabs, Spaces, or Mixed (with proportions).
+* IndentSize: Number of spaces per indent (or 1 for Tabs).
+* FinalNewline: A boolean indicating whether the file properly ends with an end-of-line.
 
-.Example
-	Measure-TextFile.ps1 .\Measure-TextFile.ps1
+.EXAMPLE
+Measure-TextFile.ps1 .\Measure-TextFile.ps1
 
-	Path         : A:\scripts\Measure-TextFile.ps1
-	Encoding     : Unicode (UTF-8)
-	Lines        : 88
-	LineEndings  : CRLF
-	Indentation  : Tabs
-	IndentSize   : 1
-	FinalNewline : True
+Path         : A:\scripts\Measure-TextFile.ps1
+Encoding     : Unicode (UTF-8)
+Lines        : 88
+LineEndings  : CRLF
+Indentation  : Tabs
+IndentSize   : 1
+FinalNewline : True
 #>
 
 #Requires -Version 3

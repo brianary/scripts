@@ -1,24 +1,24 @@
-<#
-.Synopsis
-	Renames all instances of a script, and updates any usage of it.
+﻿<#
+.SYNOPSIS
+Renames all instances of a script, and updates any usage of it.
 
-.Parameter OldName
-	The current name of the script to change.
+.PARAMETER OldName
+The current name of the script to change.
 
-.Parameter NewName
-	The desired name of the script to change to.
+.PARAMETER NewName
+The desired name of the script to change to.
 
-.Parameter ScriptDirectory
-	Any directories within which to rename the script (and any usage).
+.PARAMETER ScriptDirectory
+Any directories within which to rename the script (and any usage).
 
-.Link
-	Set-RegexReplace.ps1
+.LINK
+Set-RegexReplace.ps1
 
-.Example
-	Rename-Script.ps1 Get-RomanNumeral.ps1 ConvertTo-RomanNumeral.ps1
+.EXAMPLE
+Rename-Script.ps1 Get-RomanNumeral.ps1 ConvertTo-RomanNumeral.ps1
 
-	Renames the script file, and searches other script files for references to it,
-	and updates them.
+Renames the script file, and searches other script files for references to it,
+and updates them.
 #>
 
 #Requires -Version 3

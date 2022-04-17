@@ -1,26 +1,26 @@
-<#
-.Synopsis
-	Adds the utf-8 signature (BOM) to a file.
+﻿<#
+.SYNOPSIS
+Adds the utf-8 signature (BOM) to a file.
 
-.Parameter Path
-	The file to add the utf-8 signature to.
+.PARAMETER Path
+The file to add the utf-8 signature to.
 
-.Inputs
-	System.String containing the path to the file to be updated.
+.INPUTS
+System.String containing the path to the file to be updated.
 
-.Link
-	https://msdn.microsoft.com/library/s064f8w2aspx
+.LINK
+https://msdn.microsoft.com/library/s064f8w2aspx
 
-.Link
-	https://msdn.microsoft.com/library/ms143376aspx
+.LINK
+https://msdn.microsoft.com/library/ms143376aspx
 
-.Link
-	Get-Content
+.LINK
+Get-Content
 
-.Example
-	Add-Utf8Signature.ps1 README.md
+.EXAMPLE
+Add-Utf8Signature.ps1 README.md
 
-	Adds the EF BB BF at the beginning of the file, warns if it isn't found.
+Adds the EF BB BF at the beginning of the file, warns if it isn't found.
 #>
 
 #Requires -Version 4

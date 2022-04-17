@@ -1,25 +1,25 @@
-<#
-.Synopsis
-    Gets the framework version an assembly was compiled for.
+﻿<#
+.SYNOPSIS
+Gets the framework version an assembly was compiled for.
 
-.Parameter Path
-	The assembly to get the framework version of.
+.PARAMETER Path
+The assembly to get the framework version of.
 
-.Inputs
-	Objects with System.String properties named Path or FullName.
+.INPUTS
+Objects with System.String properties named Path or FullName.
 
-.Outputs
-	System.Management.Automation.PSCustomObject with RuntimeVersion and CompileVersion properties.
+.OUTPUTS
+System.Management.Automation.PSCustomObject with RuntimeVersion and CompileVersion properties.
 
-.Link
-    https://stackoverflow.com/questions/3460982/determine-net-framework-version-for-dll#25649840
+.LINK
+https://stackoverflow.com/questions/3460982/determine-net-framework-version-for-dll#25649840
 
-.Example
-    Get-AssemblyFramework.ps1 Program.exe
+.EXAMPLE
+Get-AssemblyFramework.ps1 Program.exe
 
-    RuntimeVersion CompileVersion
-    -------------- --------------
-    v4.0.30319     .NETFramework,Version=v4.7.2
+RuntimeVersion CompileVersion
+-------------- --------------
+v4.0.30319     .NETFramework,Version=v4.7.2
 #>
 
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(

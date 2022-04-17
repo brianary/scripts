@@ -1,32 +1,32 @@
-<#
-.Synopsis
-	Exports web server settings, shares, ODBC DSNs, and installed MSAs as PowerShell scripts and data.
+﻿<#
+.SYNOPSIS
+Exports web server settings, shares, ODBC DSNs, and installed MSAs as PowerShell scripts and data.
 
-.Parameter Path
-	The path of the script to create.
+.PARAMETER Path
+The path of the script to create.
 
-.Link
-	https://chocolatey.org/
+.LINK
+https://chocolatey.org/
 
-.Link
-	Export-WebConfiguration.ps1
+.LINK
+Export-WebConfiguration.ps1
 
-.Link
-	Export-SmbShares.ps1
+.LINK
+Export-SmbShares.ps1
 
-.Example
-	Export-Server.ps1
+.EXAMPLE
+Export-Server.ps1
 
-	Exports server settings as PowerShell scripts and data, including any of:
+Exports server settings as PowerShell scripts and data, including any of:
 
-	- An editable script specified by the Path parameter (Import-${env:ComputerName}.ps1 by default)
-	- Import-${env:ComputerName}WebConfiguration.ps1 for IIS settings
-	- Import-${env:ComputerName}SmbShares.ps1 for Windows file shares
-	- hosts containing customized hosts file entries
-	- ODBC.reg containing ODBC system DSNs
-	- *.dsn, each an ODBC file DSN found in the default file DSN path ${env:CommonProgramFiles}\ODBC\Data Sources
-	- InstalledApplications.txt containing a list of non-Microsoft applications in "Programs and Features"
-	  (Add/Remove Programs in older Windows versions)
+* An editable script specified by the Path parameter (Import-${env:ComputerName}.ps1 by default)
+* Import-${env:ComputerName}WebConfiguration.ps1 for IIS settings
+* Import-${env:ComputerName}SmbShares.ps1 for Windows file shares
+* hosts containing customized hosts file entries
+* ODBC.reg containing ODBC system DSNs
+* *.dsn, each an ODBC file DSN found in the default file DSN path ${env:CommonProgramFiles}\ODBC\Data Sources
+* InstalledApplications.txt containing a list of non-Microsoft applications in "Programs and Features"
+| (Add/Remove Programs in older Windows versions)
 #>
 
 ##Requires -RunAsAdministrator # not supported in legacy PowerShell
@@ -46,8 +46,8 @@ function Export-Header
 	Write-Progress "Exporting $env:ComputerName" "Creating script $Path" -Id 1 -percent 0
 	@"
 <#
-.Synopsis
-	Imports web server settings, shares, and installed MSAs exported from ${env:ComputerName}.
+.SYNOPSIS
+Imports web server settings, shares, and installed MSAs exported from ${env:ComputerName}.
 #>
 
 #Requires -Version 3

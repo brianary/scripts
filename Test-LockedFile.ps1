@@ -1,15 +1,15 @@
-<#
-.Synopsis
-	Returns true if the specified file is locked.
+﻿<#
+.SYNOPSIS
+Returns true if the specified file is locked.
 
-.Parameter Path
-	A path to a file to test.
+.PARAMETER Path
+A path to a file to test.
 
-.Inputs
-	Object with System.String property named Path containing the path to a file to test.
+.INPUTS
+Object with System.String property named Path containing the path to a file to test.
 
-.Outputs
-	System.Boolean indicating whether the file is locked.
+.OUTPUTS
+System.Boolean indicating whether the file is locked.
 #>
 
 #Requires -Version 3

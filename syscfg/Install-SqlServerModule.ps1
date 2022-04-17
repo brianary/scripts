@@ -1,53 +1,53 @@
-<#
-.Synopsis
-	Installs SqlServer module and dependencies.
+﻿<#
+.SYNOPSIS
+Installs SqlServer module and dependencies.
 
-.Parameter Version
-	The version number to install.
-	Used to determine which installed versions are too old.
-	Defaults to the latest.
+.PARAMETER Version
+The version number to install.
+Used to determine which installed versions are too old.
+Defaults to the latest.
 
-.Parameter Source
-	A file directory or base URI to download the required MSI files from.
-	Defaults to the latest.
+.PARAMETER Source
+A file directory or base URI to download the required MSI files from.
+Defaults to the latest.
 
-.Notes
-	SQL Server Feature Pack Versions
-	SQL Name      Version        Source
-	2016          13.0.1601.5    https://www.microsoft.com/download/details.aspx?id=52676
-	2014          12.0.2000.8    https://www.microsoft.com/download/details.aspx?id=42295
-	2012          11.0.2100.60   https://www.microsoft.com/download/details.aspx?id=29065
-	2008R2        10.50.1600.1   https://www.microsoft.com/download/details.aspx?id=16978
-	2008sp2       10.00.4000.00  https://www.microsoft.com/download/details.aspx?id=6375
-	2005/Feb2007  9.00.3042 *    https://www.microsoft.com/download/details.aspx?id=24793
+.NOTES
+SQL Server Feature Pack Versions
+SQL Name      Version        Source
+2016          13.0.1601.5    https://www.microsoft.com/download/details.aspx?id=52676
+2014          12.0.2000.8    https://www.microsoft.com/download/details.aspx?id=42295
+2012          11.0.2100.60   https://www.microsoft.com/download/details.aspx?id=29065
+2008R2        10.50.1600.1   https://www.microsoft.com/download/details.aspx?id=16978
+2008sp2       10.00.4000.00  https://www.microsoft.com/download/details.aspx?id=6375
+2005/Feb2007  9.00.3042 *    https://www.microsoft.com/download/details.aspx?id=24793
 
-	* no SqlServer module/SQLPS/SMO/SQLCLR
+* no SqlServer module/SQLPS/SMO/SQLCLR
 
-	SSMS 2016 16.4.1 - 16.5.3 included the first SqlServer module, replacing SQLPS.
+SSMS 2016 16.4.1 - 16.5.3 included the first SqlServer module, replacing SQLPS.
 
-	Starting with SSMS 2017, the SqlServer module is installed separately, using
-	the "Install-Module SqlServer" command (from the PowerShellGet module).
+Starting with SSMS 2017, the SqlServer module is installed separately, using
+the "Install-Module SqlServer" command (from the PowerShellGet module).
 
-.Link
-	Install-Module
+.LINK
+Install-Module
 
-.Link
-	Start-Process
+.LINK
+Start-Process
 
-.Link
-	Get-Module
+.LINK
+Get-Module
 
-.Link
-	Import-Module
+.LINK
+Import-Module
 
-.Link
-	https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-ps-module
+.LINK
+https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-ps-module
 
-.Example
-	Install-SqlServerModule.ps1
+.EXAMPLE
+Install-SqlServerModule.ps1
 
 
-	Removes old SQLPS modules and installs the latest, as needed.
+Removes old SQLPS modules and installs the latest, as needed.
 #>
 
 #Requires -Version 3

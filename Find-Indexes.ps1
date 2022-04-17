@@ -1,55 +1,55 @@
-<#
-.Synopsis
-    Returns indexes using a column with the given name.
+﻿<#
+.SYNOPSIS
+Returns indexes using a column with the given name.
 
-.Parameter ServerInstance
-    The name of a server (and optional instance) to connect and use for the query.
-    May be used with optional Database, Credential, and ConnectionProperties parameters.
+.PARAMETER ServerInstance
+The name of a server (and optional instance) to connect and use for the query.
+May be used with optional Database, Credential, and ConnectionProperties parameters.
 
-.Parameter Database
-    The the database to connect to on the server.
+.PARAMETER Database
+The the database to connect to on the server.
 
-.Parameter ConnectionString
-    Specifies a connection string to connect to the server.
+.PARAMETER ConnectionString
+Specifies a connection string to connect to the server.
 
-.Parameter ConnectionName
-    The connection string name from the ConfigurationManager to use.
+.PARAMETER ConnectionName
+The connection string name from the ConfigurationManager to use.
 
-.Parameter ColumnName
-	The column name to search for.
+.PARAMETER ColumnName
+The column name to search for.
 
-.Outputs
-	System.Management.Automation.PSCustomObject with these properties:
+.OUTPUTS
+System.Management.Automation.PSCustomObject with these properties:
 
-		* SchemaName
-		* TableName
-		* IndexName
-		* IndexOrdinal
-		* IsUnique
-		* IsClustered
-		* IsDisabled
-		* ColumnsInIndex
+* SchemaName
+* TableName
+* IndexName
+* IndexOrdinal
+* IsUnique
+* IsClustered
+* IsDisabled
+* ColumnsInIndex
 
-.Link
-    Invoke-Sqlcmd
+.LINK
+Invoke-Sqlcmd
 
-.Link
-    ConvertFrom-DataRow.ps1
+.LINK
+ConvertFrom-DataRow.ps1
 
-.Link
-    https://docs.microsoft.com/sql/relational-databases/system-catalog-views/sys-index-columns-transact-sql
+.LINK
+https://docs.microsoft.com/sql/relational-databases/system-catalog-views/sys-index-columns-transact-sql
 
-.Example
-    Find-Indexes.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2014 -ColumnName ErrorLogID
+.EXAMPLE
+Find-Indexes.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2014 -ColumnName ErrorLogID
 
-    SchemaName     : dbo
-    TableName      : ErrorLog
-    IndexName      : PK_ErrorLog_ErrorLogID
-    IndexOrdinal   : 1
-    IsUnique       : 1
-    IsClustered    : 1
-    IsDisabled     : 0
-    ColumnsInIndex : 1
+SchemaName     : dbo
+TableName      : ErrorLog
+IndexName      : PK_ErrorLog_ErrorLogID
+IndexOrdinal   : 1
+IsUnique       : 1
+IsClustered    : 1
+IsDisabled     : 0
+ColumnsInIndex : 1
 #>
 
 #Requires -Version 3

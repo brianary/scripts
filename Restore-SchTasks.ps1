@@ -1,30 +1,30 @@
 ﻿<#
-.Synopsis
-    Imports from a single XML file into the local Scheduled Tasks.
+.SYNOPSIS
+Imports from a single XML file into the local Scheduled Tasks.
 
-.Parameter Path
-    The file to import tasks from, as exported from Backup-SchTasks.ps1.
+.PARAMETER Path
+The file to import tasks from, as exported from Backup-SchTasks.ps1.
 
-.Parameter Exclude
-    A wildcard pattern to match task "paths" (including folders) to skip.
+.PARAMETER Exclude
+A wildcard pattern to match task "paths" (including folders) to skip.
 
-    User tasks are usually just in the root, and generally machine-specific
-    tasks Microsoft automatically sets up are in folders so this is *\* by
-    default to exclude the weird magic tasks.
+User tasks are usually just in the root, and generally machine-specific
+tasks Microsoft automatically sets up are in folders so this is *\* by
+default to exclude the weird magic tasks.
 
-.Link
-    https://msdn.microsoft.com/library/windows/desktop/bb736357.aspx
+.LINK
+https://msdn.microsoft.com/library/windows/desktop/bb736357.aspx
 
-.Link
-    Select-Xml
+.LINK
+Select-Xml
 
-.Link
-    Get-Credential
+.LINK
+Get-Credential
 
-.Example
-    Restore-SchTasks.ps1
+.EXAMPLE
+Restore-SchTasks.ps1
 
-    (Imports scheduled tasks from tasks.xml, prompting for passwords as needed.)
+(Imports scheduled tasks from tasks.xml, prompting for passwords as needed.)
 #>
 
 #Requires -Version 3

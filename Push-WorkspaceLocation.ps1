@@ -1,20 +1,20 @@
-<#
-.Synopsis
-    Pushes the current VS Code editor workspace location to the location stack.
+﻿<#
+.SYNOPSIS
+Pushes the current VS Code editor workspace location to the location stack.
 
-.Link
-	Test-Variable.ps1
+.LINK
+Test-Variable.ps1
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Link
-	Push-Location
+.LINK
+Push-Location
 
-.Example
-	Push-WorkspaceLocation.ps1
+.EXAMPLE
+Push-WorkspaceLocation.ps1
 
-	Pushes the current directory onto the stack, and changes to the workspace directory.
+Pushes the current directory onto the stack, and changes to the workspace directory.
 #>
 
 #Requires -Version 3

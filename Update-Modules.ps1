@@ -1,6 +1,6 @@
-<#
-.Synopsis
-	Cleans up old modules.
+﻿<#
+.SYNOPSIS
+Cleans up old modules.
 #>
 
 #Requires -Version 3

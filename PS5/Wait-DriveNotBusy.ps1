@@ -1,25 +1,25 @@
-<#
-.Synopsis
-	Uses CIM to check a physical drive for busyness, and waits until a threshhold is value is confirmed.
+﻿<#
+.SYNOPSIS
+Uses CIM to check a physical drive for busyness, and waits until a threshhold is value is confirmed.
 
-.Parameter DriveName
-	The CIM drive name to check. Use this to list the available drives:
+.PARAMETER DriveName
+The CIM drive name to check. Use this to list the available drives:
 
-		(Get-CimInstance Win32_PerfFormattedData_PerfDisk_PhysicalDisk).Name
+(Get-CimInstance Win32_PerfFormattedData_PerfDisk_PhysicalDisk).Name
 
-.Parameter Interval
-	The frequency to check the drive busyness, as a TimeSpan.
+.PARAMETER Interval
+The frequency to check the drive busyness, as a TimeSpan.
 
-.Parameter Threshhold
-	The percentage busyness below which the drive must measure consecutively.
+.PARAMETER Threshhold
+The percentage busyness below which the drive must measure consecutively.
 
-.Parameter Consecutive
-	The number of times in a row that the busyness must by measured below the threshhold.
+.PARAMETER Consecutive
+The number of times in a row that the busyness must by measured below the threshhold.
 
-.Example
-	Wait-DriveNotBusy.ps1
+.EXAMPLE
+Wait-DriveNotBusy.ps1
 
-	Waits until the system drive activity falls below 20% twice over a minute.
+Waits until the system drive activity falls below 20% twice over a minute.
 #>
 #Requires -Version 3
 [CmdletBinding()] Param(

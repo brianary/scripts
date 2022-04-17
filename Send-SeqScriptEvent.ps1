@@ -1,37 +1,37 @@
 ﻿<#
-.Synopsis
-    Sends an event (often an error) from a script to a Seq server, including script info.
+.SYNOPSIS
+Sends an event (often an error) from a script to a Seq server, including script info.
 
-.Parameter Action
-    A description of what was being attempted.
+.PARAMETER Action
+A description of what was being attempted.
 
-.Parameter ErrorRecord
-    An optional PowerShell ErrorRecord object to record.
-    Will try to automatically find $_ in a calling "catch{}"" block.
+.PARAMETER ErrorRecord
+An optional PowerShell ErrorRecord object to record.
+Will try to automatically find $_ in a calling "catch{}"" block.
 
-.Parameter Level
-    The type of event to record.
-    Defaults to Error if an ErrorRecord is found, Information otherwise.
+.PARAMETER Level
+The type of event to record.
+Defaults to Error if an ErrorRecord is found, Information otherwise.
 
-.Parameter InvocationScope
-    The scope of the script InvocationInfo to use.
-    Defaults to 1 (the script calling Send-SeqScriptEvent.ps1).
-    Sending a 2 will try to use the script calling the script calling this one.
+.PARAMETER InvocationScope
+The scope of the script InvocationInfo to use.
+Defaults to 1 (the script calling Send-SeqScriptEvent.ps1).
+Sending a 2 will try to use the script calling the script calling this one.
 
-.Parameter Server
-    The URL of the Seq server.
+.PARAMETER Server
+The URL of the Seq server.
 
-.Parameter ApiKey
-    The Seq API key to use.
+.PARAMETER ApiKey
+The Seq API key to use.
 
-.Link
-    Send-SeqEvent.ps1
+.LINK
+Send-SeqEvent.ps1
 
-.Link
-    https://getseq.net/
+.LINK
+https://getseq.net/
 
-.Example
-    try { Connect-Thing } catch { Send-SeqScriptEvent.ps1 'Trying to connect' $_ -Level Error -Server http://my-seq }
+.EXAMPLE
+try { Connect-Thing } catch { Send-SeqScriptEvent.ps1 'Trying to connect' $_ -Level Error -Server http://my-seq }
 #>
 
 #Requires -Version 3

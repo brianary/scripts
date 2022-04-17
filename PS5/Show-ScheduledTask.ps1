@@ -1,33 +1,33 @@
-<#
-.Synopsis
-    Provides a human-readable view of a scheduled task returned by Get-ScheduledTasks.
+﻿<#
+.SYNOPSIS
+Provides a human-readable view of a scheduled task returned by Get-ScheduledTasks.
 
-.Parameter Task
-    A scheduled task, piped from Get-ScheduledTask.
+.PARAMETER Task
+A scheduled task, piped from Get-ScheduledTask.
 
-.Inputs
-	Microsoft.Management.Infrastructure.CimInstance returned from Get-ScheduledTask.
+.INPUTS
+Microsoft.Management.Infrastructure.CimInstance returned from Get-ScheduledTask.
 
-.Outputs
-	System.Management.Automation.PSCustomObject describing each task, with the properties:
+.OUTPUTS
+System.Management.Automation.PSCustomObject describing each task, with the properties:
 
-		* PSComputerName
-		* TaskName
-		* State
-		* Action
-		* Trigger
-		* Description
+* PSComputerName
+* TaskName
+* State
+* Action
+* Trigger
+* Description
 
-.Link
-    https://docs.microsoft.com/dotnet/api/microsoft.management.infrastructure.ciminstance
+.LINK
+https://docs.microsoft.com/dotnet/api/microsoft.management.infrastructure.ciminstance
 
-.Link
-    Get-ScheduledTask
+.LINK
+Get-ScheduledTask
 
-.Example
-    Get-ScheduledTask |Show-ScheduledTask.ps1
+.EXAMPLE
+Get-ScheduledTask |Show-ScheduledTask.ps1
 
-    (Returns a readable list of scheduled tasks.)
+(Returns a readable list of scheduled tasks.)
 #>
 
 #Requires -Version 3

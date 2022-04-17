@@ -1,25 +1,25 @@
-<#
-.Synopsis
-	Sends a text or binary response body to the HTTP listener client.
+﻿<#
+.SYNOPSIS
+Sends a text or binary response body to the HTTP listener client.
 
-.Parameter Listener
-    The HTTP listener response object to send content to the client through.
+.PARAMETER Listener
+The HTTP listener response object to send content to the client through.
 
-.Inputs
-	System.String containing the text to return to the HTTP client.
+.INPUTS
+System.String containing the text to return to the HTTP client.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.net.httplistener
+.LINK
+https://docs.microsoft.com/dotnet/api/system.net.httplistener
 
-.Example
-    Write-WebResponse.ps1 $httpContext.Response 'Success'
+.EXAMPLE
+Write-WebResponse.ps1 $httpContext.Response 'Success'
 
-    Sends the string "Success" to the HTTP listener client as text/plain.
+Sends the string "Success" to the HTTP listener client as text/plain.
 
-.Example
-    ConvertTo-Json $data |Write-WebResponse.ps1 $httpContext.Response -ContentType application/json
+.EXAMPLE
+ConvertTo-Json $data |Write-WebResponse.ps1 $httpContext.Response -ContentType application/json
 
-    Sends the JSON data to the HTTP listener client.
+Sends the JSON data to the HTTP listener client.
 #>
 
 #Requires -Version 3

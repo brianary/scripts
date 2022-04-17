@@ -1,17 +1,17 @@
-<#
-.Synopsis
-	Disables ANSI terminal colors.
+﻿<#
+.SYNOPSIS
+Disables ANSI terminal colors.
 
-.Parameter HostOnly
-	Disable colors only for text redirected to files.
+.PARAMETER HostOnly
+Disable colors only for text redirected to files.
 
-.Link
-	https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_ansi_terminals
+.LINK
+https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_ansi_terminals
 
-.Example
-	Disable-AnsiColor.ps1
+.EXAMPLE
+Disable-AnsiColor.ps1
 
-	Disables ANSI terminal colors.
+Disables ANSI terminal colors.
 #>
 
 #Requires -Version 7.2

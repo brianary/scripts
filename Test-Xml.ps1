@@ -1,49 +1,49 @@
 ﻿<#
-.Synopsis
-	Try parsing text as XML, and validating it if a schema is provided.
+.SYNOPSIS
+Try parsing text as XML, and validating it if a schema is provided.
 
-.Parameter Path
-	A file to check.
+.PARAMETER Path
+A file to check.
 
-.Parameter Xml
-	The string to check.
+.PARAMETER Xml
+The string to check.
 
-.Parameter Schemata
-	A hashtable of schema namespaces to schema locations (in addition to the xsi:schemaLocation attribute).
+.PARAMETER Schemata
+A hashtable of schema namespaces to schema locations (in addition to the xsi:schemaLocation attribute).
 
-.Parameter SkipValidation
-	Indicates that XML Schema validation should not be performed, only XML well-formedness will be checked.
+.PARAMETER SkipValidation
+Indicates that XML Schema validation should not be performed, only XML well-formedness will be checked.
 
-.Parameter Warning
-	Indicates that well-formedness or validation errors will result in warnings being written.
+.PARAMETER Warning
+Indicates that well-formedness or validation errors will result in warnings being written.
 
-.Parameter ErrorMessage
-	When present, returns the well-formedness or validation error messages instead of a boolean value,
-	or nothing if successful. This effectively reverses the truthiness of the return value.
+.PARAMETER ErrorMessage
+When present, returns the well-formedness or validation error messages instead of a boolean value,
+or nothing if successful. This effectively reverses the truthiness of the return value.
 
-.Inputs
-	System.String containing a file path or potential XML data.
+.INPUTS
+System.String containing a file path or potential XML data.
 
-.Outputs
-	System.Boolean indicating the XML is parseable, or System.String containing the
-	parse error if -ErrorMessage is present and the XML isn't parseable.
+.OUTPUTS
+System.Boolean indicating the XML is parseable, or System.String containing the
+parse error if -ErrorMessage is present and the XML isn't parseable.
 
-.Link
-	https://www.w3.org/TR/xmlschema-1/#xsi_schemaLocation
+.LINK
+https://www.w3.org/TR/xmlschema-1/#xsi_schemaLocation
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.xml.xmlresolver
+.LINK
+https://docs.microsoft.com/dotnet/api/system.xml.xmlresolver
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.xml.schema.validationeventhandler
+.LINK
+https://docs.microsoft.com/dotnet/api/system.xml.schema.validationeventhandler
 
-.Link
-	Resolve-XmlSchemaLocation.ps1
+.LINK
+Resolve-XmlSchemaLocation.ps1
 
-.Example
-	Test-Xml.ps1 -Xml '</>'
+.EXAMPLE
+Test-Xml.ps1 -Xml '</>'
 
-	False
+False
 #>
 
 [CmdletBinding()][OutputType([bool])] Param(

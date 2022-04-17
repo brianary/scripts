@@ -1,32 +1,32 @@
-<#
-.Synopsis
-	Gets the namespaces from a document as a dictionary.
+﻿<#
+.SYNOPSIS
+Gets the namespaces from a document as a dictionary.
 
-.Outputs
-	System.Collections.Generic.Dictionary[System.String,System.String] containing namespace
-	prefixes as keys and namespace URIs as values.
+.OUTPUTS
+System.Collections.Generic.Dictionary[System.String,System.String] containing namespace
+prefixes as keys and namespace URIs as values.
 
-.Link
-    https://stackoverflow.com/a/26786080/54323
+.LINK
+https://stackoverflow.com/a/26786080/54323
 
-.Example
-    Select-Xml /xsl:transform .\dataref.xslt -Namespace (Get-XmlNamespaces.ps1 .\dataref.xslt)
+.EXAMPLE
+Select-Xml /xsl:transform .\dataref.xslt -Namespace (Get-XmlNamespaces.ps1 .\dataref.xslt)
 
-    Node      Path                                       Pattern
-    ----      ----                                       -------
-    transform C:\Users\brian\GitHub\scripts\dataref.xslt /xsl:transform
+Node      Path                                       Pattern
+----      ----                                       -------
+transform C:\Users\brian\GitHub\scripts\dataref.xslt /xsl:transform
 
-.Example
-    Get-XmlNamespaces.ps1 .\dataref.xslt
+.EXAMPLE
+Get-XmlNamespaces.ps1 .\dataref.xslt
 
-    Key     Value
-    ---     -----
-    xml     http://www.w3.org/XML/1998/namespace
-    xsl     http://www.w3.org/1999/XSL/Transform
-    xs      http://www.w3.org/2001/XMLSchema
-    x       urn:guid:f203a737-cebb-419d-9fbe-a684f1f13591
-    wsdl    http://schemas.xmlsoap.org/wsdl/
-            http://www.w3.org/1999/xhtml
+| Key     Value
+| ---     -----
+| xml     http://www.w3.org/XML/1998/namespace
+| xsl     http://www.w3.org/1999/XSL/Transform
+| xs      http://www.w3.org/2001/XMLSchema
+| x       urn:guid:f203a737-cebb-419d-9fbe-a684f1f13591
+| wsdl    http://schemas.xmlsoap.org/wsdl/
+|         http://www.w3.org/1999/xhtml
 #>
 
 #Requires -Version 3

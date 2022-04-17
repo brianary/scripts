@@ -1,23 +1,23 @@
-<#
-.Synopsis
-    Removes a credential from secure storage.
+﻿<#
+.SYNOPSIS
+Removes a credential from secure storage.
 
-.Parameter UserName
-    Specifies a user or account name that was used to create the credential.
+.PARAMETER UserName
+Specifies a user or account name that was used to create the credential.
 
-.Parameter Message
-    Provides a login prompt for the user that should be a globally unique description of the purpose of the login.
+.PARAMETER Message
+Provides a login prompt for the user that should be a globally unique description of the purpose of the login.
 
-.Link
-    ConvertTo-Base64.ps1
+.LINK
+ConvertTo-Base64.ps1
 
-.Link
-    Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Example
-    Remove-CachedCredential.ps1 exampleuser 'OpenTV API login'
+.EXAMPLE
+Remove-CachedCredential.ps1 exampleuser 'OpenTV API login'
 
-    The credential is removed from secure storage.
+The credential is removed from secure storage.
 #>
 
 #Requires -Version 3

@@ -1,42 +1,40 @@
 ﻿<#
-.Synopsis
-    Use the calling script parameters to set Invoke-Sqlcmd defaults.
+.SYNOPSIS
+Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
-.Description
-    This script uses the ParameterSetName in use in the calling script to determine
-    which set of the calling script's parameters to set as defaults for the
-    Invoke-Sqlcmd cmdlet.
+.DESCRIPTION
+This script uses the ParameterSetName in use in the calling script to determine
+which set of the calling script's parameters to set as defaults for the
+Invoke-Sqlcmd cmdlet.
 
-    The same ParameterSetNames as Invoke-Sqlcmd are used, plus ConnectionName to
-    pull a connection string from the .NET configuration.
+The same ParameterSetNames as Invoke-Sqlcmd are used, plus ConnectionName to
+pull a connection string from the .NET configuration.
 
-    To use this script, add any or all of these parameter sets:
+To use this script, add any or all of these parameter sets:
 
-    [CmdletBinding()] Param(
-    [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string]$ServerInstance,
-    [Parameter(ParameterSetName='ByConnectionParameters')][string]$Database,
-    [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
-    [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
-    # ...
-    )
+[CmdletBinding()] Param(
+[Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string]$ServerInstance,
+[Parameter(ParameterSetName='ByConnectionParameters')][string]$Database,
+[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
+[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
+# ...
+)
 
-    Or, if you wish to support Use-SqlcmdParams.ps1 in scripts that call your script:
+Or, if you wish to support Use-SqlcmdParams.ps1 in scripts that call your script:
 
-    [CmdletBinding()] Param(
-    [Parameter(ParameterSetName='ByConnectionParameters')][string]$ServerInstance =
-        $PSDefaultParameterValues['Invoke-Sqlcmd:ServerInstance'],
-    [Parameter(ParameterSetName='ByConnectionParameters')][string]$Database =
-        $PSDefaultParameterValues['Invoke-Sqlcmd:Database'],
-    [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
-    [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
-    # ...
-    )
+[CmdletBinding()] Param(
+[Parameter(ParameterSetName='ByConnectionParameters')][string]$ServerInstance = $PSDefaultParameterValues['Invoke-Sqlcmd:ServerInstance'],
+[Parameter(ParameterSetName='ByConnectionParameters')][string]$Database = $PSDefaultParameterValues['Invoke-Sqlcmd:Database'],
+[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
+[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
+# ...
+)
 
-.Component
-    System.Configuration
+.COMPONENT
+System.Configuration
 
-.Link
-    Import-Variables.ps1
+.LINK
+Import-Variables.ps1
 #>
 
 #Requires -Version 3

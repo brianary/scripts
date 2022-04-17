@@ -1,10 +1,10 @@
 ﻿<#
-.Synopsis
-    Sorts, prunes, and normalizes both user and system Path entries.
+.SYNOPSIS
+Sorts, prunes, and normalizes both user and system Path entries.
 
-.Parameter ResolveConflicts
-    Look for commands with the same name within multiple Path entries, and move the entry
-    with the newest version ahead of the others.
+.PARAMETER ResolveConflicts
+Look for commands with the same name within multiple Path entries, and move the entry
+with the newest version ahead of the others.
 #>
 
 #Requires -Version 3

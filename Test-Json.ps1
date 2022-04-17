@@ -1,30 +1,30 @@
 ﻿<#
-.Synopsis
-	Determines whether a string is valid JSON.
+.SYNOPSIS
+Determines whether a string is valid JSON.
 
-.Parameter InputObject
-    The string to test.
+.PARAMETER InputObject
+The string to test.
 
-.Inputs
-	System.String value to test for a valid JSON format.
+.INPUTS
+System.String value to test for a valid JSON format.
 
-.Outputs
-	System.Boolean indicating that the string can be parsed as JSON.
+.OUTPUTS
+System.Boolean indicating that the string can be parsed as JSON.
 
-.Example
-	Test-Json.ps1 '{"value":6}'
+.EXAMPLE
+Test-Json.ps1 '{"value":6}'
 
-    True
+True
 
-.Example
-    Test-Json.ps1 0
+.EXAMPLE
+Test-Json.ps1 0
 
-    True
+True
 
-.Example
-    Test-Json.ps1 '{'
+.EXAMPLE
+Test-Json.ps1 '{'
 
-    False
+False
 #>
 
 #Requires -Version 3

@@ -1,20 +1,20 @@
-<#
-.Synopsis
-    Uses git bisect to search for the point in the repo history that the test script starts returning true.
+﻿<#
+.SYNOPSIS
+Uses git bisect to search for the point in the repo history that the test script starts returning true.
 
-.Parameter TestScript
-    A script block that returns a boolean corresponding to a state introduced at some point in the repo history.
+.PARAMETER TestScript
+A script block that returns a boolean corresponding to a state introduced at some point in the repo history.
 
-.Parameter GoodCommit
-    A commit from the repo history without the new state.
+.PARAMETER GoodCommit
+A commit from the repo history without the new state.
 
-.Parameter BadCommit
-    A commit from the repo history with the new state.
+.PARAMETER BadCommit
+A commit from the repo history with the new state.
 
-.Example
-    Trace-GitRepoTest.ps1 { dotnet build; !$? }
+.EXAMPLE
+Trace-GitRepoTest.ps1 { dotnet build; !$? }
 
-    Searches the full repo history for the point at which the build broke.
+Searches the full repo history for the point at which the build broke.
 #>
 
 #Requires -Version 3

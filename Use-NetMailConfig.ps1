@@ -1,45 +1,45 @@
 ﻿<#
-.Synopsis
-    Use .NET configuration to set defaults for Send-MailMessage.
+.SYNOPSIS
+Use .NET configuration to set defaults for Send-MailMessage.
 
-.Description
+.DESCRIPTION
 
-    The configuration system provides a place to set email defaults:
+The configuration system provides a place to set email defaults:
 
-    <system.net>
-      <mailSettings>
-        <smtp from="source@example.org" deliveryMethod="network">
-          <network host="mail.example.org" enableSsl="true" />
-        </smtp>
-      </mailSettings>
-    </system.net>
+| <system.net>
+|   <mailSettings>
+|     <smtp from="source@example.org" deliveryMethod="network">
+|       <network host="mail.example.org" enableSsl="true" />
+|     </smtp>
+|   </mailSettings>
+| </system.net>
 
-    The values for Send-MailMessage's From, SmtpServer, and UseSsl will be
-    taken from whatever is set in the machine.config (or more localized config).
+The values for Send-MailMessage's From, SmtpServer, and UseSsl will be
+taken from whatever is set in the machine.config (or more localized config).
 
-.Parameter Scope
-	The scope to create the defaults in.
+.PARAMETER Scope
+The scope to create the defaults in.
 
-.Parameter Private
-	Indicates the defaults should not be visible to child scopes.
+.PARAMETER Private
+Indicates the defaults should not be visible to child scopes.
 
-.Component
-    System.Configuration
+.COMPONENT
+System.Configuration
 
-.Link
-	Add-ScopeLevel.ps1
+.LINK
+Add-ScopeLevel.ps1
 
-.Link
-	Set-ParameterDefault.ps1
+.LINK
+Set-ParameterDefault.ps1
 
-.Link
-    Send-MailMessage
+.LINK
+Send-MailMessage
 
-.Example
-    Use-NetMailConfig.ps1
+.EXAMPLE
+Use-NetMailConfig.ps1
 
-    Sets Send-MailMessage defaults for From, SmtpServer, and UseSsl to
-    values from the ConfigurationManager.
+Sets Send-MailMessage defaults for From, SmtpServer, and UseSsl to
+values from the ConfigurationManager.
 #>
 
 #Requires -Version 3

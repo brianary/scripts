@@ -1,43 +1,43 @@
 ﻿<#
-.Synopsis
-    Converts bytes to largest possible units, to improve readability.
-    
-.Parameter Bytes
-    The number of bytes to express in larger units.
-    
-.Parameter Precision
-    The maximum number of digits after the decimal to keep.
-    The default is 16 (the maximum).
-    
-.Parameter UseSI
-    Displays unambiguous SI units (with a space).
-    By default, native PowerShell units are used
-    (without a space, to allow round-tripping the value,
-    though there may be significant rounding loss depending on precision).
-    
-.Inputs
-    System.Numerics.BigInteger representing a number of bytes.
+.SYNOPSIS
+Converts bytes to largest possible units, to improve readability.
 
-.Outputs
-    System.String containing the number of bytes scaled to fit the appropriate units.
-    
-.Link
-    http://en.wikipedia.org/wiki/Binary_prefix
-    
-.Link
-    http://physics.nist.gov/cuu/Units/binary.html
+.PARAMETER Bytes
+The number of bytes to express in larger units.
 
-.Example
-    Format-ByteUnits 65536
-    64KB
-    
-.Example
-    Format-ByteUnits 9685059 -dot 1 -si
-    9.2 MiB
-    
-.Example
-    ls *.log |measure -sum Length |select -exp Sum |Format-ByteUnits -dot 2 -si
-    302.39 MiB
+.PARAMETER Precision
+The maximum number of digits after the decimal to keep.
+The default is 16 (the maximum).
+
+.PARAMETER UseSI
+Displays unambiguous SI units (with a space).
+By default, native PowerShell units are used
+(without a space, to allow round-tripping the value,
+though there may be significant rounding loss depending on precision).
+
+.INPUTS
+System.Numerics.BigInteger representing a number of bytes.
+
+.OUTPUTS
+System.String containing the number of bytes scaled to fit the appropriate units.
+
+.LINK
+http://en.wikipedia.org/wiki/Binary_prefix
+
+.LINK
+http://physics.nist.gov/cuu/Units/binary.html
+
+.EXAMPLE
+Format-ByteUnits 65536
+64KB
+
+.EXAMPLE
+Format-ByteUnits 9685059 -dot 1 -si
+9.2 MiB
+
+.EXAMPLE
+ls *.log |measure -sum Length |select -exp Sum |Format-ByteUnits -dot 2 -si
+302.39 MiB
 #>
 
 #Requires -Version 2

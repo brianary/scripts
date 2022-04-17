@@ -1,21 +1,21 @@
 ﻿<#
-.Synopsis
-    Durably installs the PowerShell ActiveDirectory module.
+.SYNOPSIS
+Durably installs the PowerShell ActiveDirectory module.
 
-.Link
-    Install-WindowsFeature
+.LINK
+Install-WindowsFeature
 
-.Link
-    https://docs.microsoft.com/windows-hardware/manufacture/desktop/dism-image-management-command-line-options-s14
+.LINK
+https://docs.microsoft.com/windows-hardware/manufacture/desktop/dism-image-management-command-line-options-s14
 
-.Link
-    https://www.microsoft.com/en-us/download/details.aspx?id=45520
+.LINK
+https://www.microsoft.com/en-us/download/details.aspx?id=45520
 
-.Link
-    https://bit.ly/Win10RSATinstall2
+.LINK
+https://bit.ly/Win10RSATinstall2
 
-.Link
-    https://chocolatey.org/
+.LINK
+https://chocolatey.org/
 #>
 
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)][OutputType([void])] Param()

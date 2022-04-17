@@ -1,39 +1,39 @@
-<#
-.Synopsis
-	Sets a VSCode setting.
+﻿<#
+.SYNOPSIS
+Sets a VSCode setting.
 
-.Parameter Name
-	The name of the setting to set, use / as a path separator for deeper structures.
+.PARAMETER Name
+The name of the setting to set, use / as a path separator for deeper structures.
 
-.Parameter Value
-	The value of the setting to set.
+.PARAMETER Value
+The value of the setting to set.
 
-.Parameter Workspace
-	Indicates that the current workspace settings should be set, rather than the user settings.
+.PARAMETER Workspace
+Indicates that the current workspace settings should be set, rather than the user settings.
 
-.Link
-	https://code.visualstudio.com/docs/getstarted/settings
+.LINK
+https://code.visualstudio.com/docs/getstarted/settings
 
-.Link
-	Get-VSCodeSettingsFile.ps1
+.LINK
+Get-VSCodeSettingsFile.ps1
 
-.Link
-	Set-JsonProperty.ps1
+.LINK
+Set-JsonProperty.ps1
 
-.Example
-	Set-VSCodeSetting.ps1 git.autofetch $true -Workspace
+.EXAMPLE
+Set-VSCodeSetting.ps1 git.autofetch $true -Workspace
 
-	Sets {"git.autofetch": true} in the VSCode user settings.
+Sets {"git.autofetch": true} in the VSCode user settings.
 
-.Example
-	Set-VSCodeSetting.ps1 powershell.codeFormatting.preset Allman -Workspace
+.EXAMPLE
+Set-VSCodeSetting.ps1 powershell.codeFormatting.preset Allman -Workspace
 
-	Sets {"powershell.codeFormatting.preset": "Allman"} in the VSCode workspace settings.
+Sets {"powershell.codeFormatting.preset": "Allman"} in the VSCode workspace settings.
 
-.Example
-	Set-VSCodeSetting.ps1 workbench.colorTheme 'PowerShell ISE' -Workspace
+.EXAMPLE
+Set-VSCodeSetting.ps1 workbench.colorTheme 'PowerShell ISE' -Workspace
 
-	Sets {"workbench.colorTheme": "PowerShell ISE"} in the VSCode workspace settings.
+Sets {"workbench.colorTheme": "PowerShell ISE"} in the VSCode workspace settings.
 #>
 
 [CmdletBinding()][OutputType([void])] Param(

@@ -1,31 +1,31 @@
-<#
-.Synopsis
-	Adds a incrementing integer property to each pipeline object.
+﻿<#
+.SYNOPSIS
+Adds a incrementing integer property to each pipeline object.
 
-.Parameter PropertyName
-	The name of the property to add.
+.PARAMETER PropertyName
+The name of the property to add.
 
-.Parameter InitialValue
-	The starting number to count from.
+.PARAMETER InitialValue
+The starting number to count from.
 
-.Parameter InputObject
-	The object to add the property to.
+.PARAMETER InputObject
+The object to add the property to.
 
-.Link
-	Add-Member
+.LINK
+Add-Member
 
-.Example
-	Get-PSProvider |Add-Counter Position |select Name,Position
+.EXAMPLE
+Get-PSProvider |Add-Counter Position |select Name,Position
 
-	Name        Position
-	----        --------
-	Registry           1
-	Alias              2
-	Environment        3
-	FileSystem         4
-	Function           5
-	Variable           6
-	Certificate        7
+Name        Position
+----        --------
+Registry           1
+Alias              2
+Environment        3
+FileSystem         4
+Function           5
+Variable           6
+Certificate        7
 #>
 
 #Requires -Version 3

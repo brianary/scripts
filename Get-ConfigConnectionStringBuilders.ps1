@@ -1,24 +1,24 @@
 ﻿<#
-.Synopsis
-    Return named connection string builders for connection strings in a config file.
+.SYNOPSIS
+Return named connection string builders for connection strings in a config file.
 
-.Parameter Path
-    The .NET config file containing connection strings.
+.PARAMETER Path
+The .NET config file containing connection strings.
 
-.Inputs
-    System.String of the path to a .NET config file with connection strings.
+.INPUTS
+System.String of the path to a .NET config file with connection strings.
 
-.Outputs
-    System.Management.Automation.PSCustomObject with the Name and ConnectionString
-    (a ConnectionStringBuilder) for each connection string found.
+.OUTPUTS
+System.Management.Automation.PSCustomObject with the Name and ConnectionString
+(a ConnectionStringBuilder) for each connection string found.
 
-.Link
-    Select-Xml
+.LINK
+Select-Xml
 
-.Example
-    Get-ConfigConnectionStringBuilders.ps1 web.Debug.config
+.EXAMPLE
+Get-ConfigConnectionStringBuilders.ps1 web.Debug.config
 
-    Returns the connection strings found in the debug web.config XDT.
+Returns the connection strings found in the debug web.config XDT.
 #>
 
 #Requires -Version 3

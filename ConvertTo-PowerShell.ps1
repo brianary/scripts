@@ -1,62 +1,60 @@
 ﻿<#
-.Synopsis
-	Serializes complex content into PowerShell literals.
+.SYNOPSIS
+Serializes complex content into PowerShell literals.
 
-.Parameter Value
-	An array, hash, object, or value type that can be represented as a PowerShell literal.
+.PARAMETER Value
+An array, hash, object, or value type that can be represented as a PowerShell literal.
 
-.Parameter Indent
-	The starting indent value. You can probably ignore this.
+.PARAMETER Indent
+The starting indent value. You can probably ignore this.
 
-.Parameter IndentBy
-	The string to use for incremental indentation.
+.PARAMETER IndentBy
+The string to use for incremental indentation.
 
-.Parameter Newline
-	The line ending sequence to use.
+.PARAMETER Newline
+The line ending sequence to use.
 
-.Parameter SkipInitialIndent
-	Indicates the first line has already been indented. You can probably ignore this.
+.PARAMETER SkipInitialIndent
+Indicates the first line has already been indented. You can probably ignore this.
 
-.Parameter GenerateKey
-	Generates a key to use for encrypting credential and secure string literals.
-	If this is omitted, credentials will be encrypted using DPAPI, which will only be
-	decryptable on the same Windows machine where they were encrypted.
+.PARAMETER GenerateKey
+Generates a key to use for encrypting credential and secure string literals.
+If this is omitted, credentials will be encrypted using DPAPI, which will only be
+decryptable on the same Windows machine where they were encrypted.
 
-.Parameter SecureKey
-	The key to use for encrypting credentials and secure strings, as a secure string to be
-	encoded into UTF-8 bytes.
+.PARAMETER SecureKey
+The key to use for encrypting credentials and secure strings, as a secure string to be
+encoded into UTF-8 bytes.
 
-.Parameter Credential
-	A credential containing a password (the username is ignored) to be used for encrypting
-	credentials and secure strings, after encoding to UTF-8 bytes.
+.PARAMETER Credential
+A credential containing a password (the username is ignored) to be used for encrypting
+credentials and secure strings, after encoding to UTF-8 bytes.
 
-.Parameter KeyBytes
-	The key to use for encrypting credentials and secure strings, as a byte array.
+.PARAMETER KeyBytes
+The key to use for encrypting credentials and secure strings, as a byte array.
 
-.Inputs
-	System.Object (any object) to serialize.
+.INPUTS
+System.Object (any object) to serialize.
 
-.Outputs
-	System.String containing the object serialized to PowerShell literal statements.
+.OUTPUTS
+System.String containing the object serialized to PowerShell literal statements.
 
-.Example
-	4096LMB |ConvertTo-PowerShell.ps1
+.EXAMPLE
+4096LMB |ConvertTo-PowerShell.ps1
 
-	4LGB
+4LGB
 
-.Example
-	ConvertFrom-Json '[{"a":1,"b":2,"c":{"d":"\/Date(1490216371478)\/","e":null}}]' |ConvertTo-PowerShell.ps1
+.EXAMPLE
+ConvertFrom-Json '[{"a":1,"b":2,"c":{"d":"\/Date(1490216371478)\/","e":null}}]' |ConvertTo-PowerShell.ps1
 
-	@(
-			[PSCustomObject]@{
-					a = 1
-					b = 2
-					c = [PSCustomObject]@{
-									d = [datetime]'2017-03-22T20:59:31'
-									e = $null
-							}
-			}
-	)
+| [pscustomobject]@{
+|         a = 1L
+|         b = 2L
+|         c = [pscustomobject]@{
+|                 d = [datetime]'2017-03-22T20:59:31'
+|                 e = $null
+|         }
+| }
 #>
 
 #Requires -Version 3
@@ -94,7 +92,7 @@ Begin
 	if($Credential)
 	{
 		[byte[]] $salt = Get-RandomBytes.ps1 8
-\		$hash = New-Object Security.Cryptography.Rfc2898DeriveBytes `
+		$hash = New-Object Security.Cryptography.Rfc2898DeriveBytes `
 			([Text.Encoding]::UTF8.GetBytes($Credential.GetNetworkCredential().Password)),$salt,
 			(Get-Random 9999 -Minimum 1000)
 		$iterations = $hash.IterationCount
@@ -187,7 +185,7 @@ Begin
 		if($InputObject -eq $null) {return}
 		$(if($UseKeys){$InputObject.Keys}else{Get-Member -InputObject $InputObject -MemberType Properties |foreach Name}) |
 			where {$_ -notmatch '\W'} |
-			foreach {"$tab$_ = $(ConvertTo-PowerShell.ps1 $InputObject.$_ -SkipInitialIndent)"}
+			foreach {"$IndentBy$_ = $(ConvertTo-PowerShell.ps1 $InputObject.$_ -Indent "$tab$IndentBy" -SkipInitialIndent)"}
 	}
 }
 Process

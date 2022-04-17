@@ -1,44 +1,44 @@
-<#
-.Synopsis
-	Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
+﻿<#
+.SYNOPSIS
+Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
 
-.Parameter CommandName
-	The name of a cmdlet, function, script, or alias to assign a default parameter value to.
+.PARAMETER CommandName
+The name of a cmdlet, function, script, or alias to assign a default parameter value to.
 
-.Parameter ParameterName
-	The name or alias of the parameter to assign a default value to.
+.PARAMETER ParameterName
+The name or alias of the parameter to assign a default value to.
 
-.Parameter Value
-	The value to assign as a default.
+.PARAMETER Value
+The value to assign as a default.
 
-.Parameter Scope
-	The scope of this default.
+.PARAMETER Scope
+The scope of this default.
 
-.Inputs
-	System.Object containing the default value to assign.
+.INPUTS
+System.Object containing the default value to assign.
 
-.Link
-	Add-ScopeLevel.ps1
+.LINK
+Add-ScopeLevel.ps1
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Link
-	Get-Command
+.LINK
+Get-Command
 
-.Link
-	about_Scopes
+.LINK
+about_Scopes
 
-.Example
-	Set-ParameterDefault.ps1 epcsv nti $true -Scope Global
+.EXAMPLE
+Set-ParameterDefault.ps1 epcsv nti $true -Scope Global
 
-	Establishes that the -NoTypeInformation param of the Export-Csv cmdlet will be true if not otherwise specified,
-	globally for the PowerShell session.
+Establishes that the -NoTypeInformation param of the Export-Csv cmdlet will be true if not otherwise specified,
+globally for the PowerShell session.
 
-.Example
-	Set-ParameterDefault.ps1 Select-Xml Namespace @{svg = 'http://www.w3.org/2000/svg'}
+.EXAMPLE
+Set-ParameterDefault.ps1 Select-Xml Namespace @{svg = 'http://www.w3.org/2000/svg'}
 
-	Uses only the SVG namespace for Select-Xml when none are given explicitly.
+Uses only the SVG namespace for Select-Xml when none are given explicitly.
 #>
 
 #Requires -Version 3

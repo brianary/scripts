@@ -1,6 +1,6 @@
-<#
-.Synopsis
-    Resets console color palette.
+﻿<#
+.SYNOPSIS
+Resets console color palette.
 #>
 
 #Requires -Version 3

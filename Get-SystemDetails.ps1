@@ -1,47 +1,47 @@
 ﻿<#
-.Synopsis
-	Collects some useful system hardware and operating system details via CIM.
+.SYNOPSIS
+Collects some useful system hardware and operating system details via CIM.
 
-.Parameter ComputerName
-	The computer from which to get CIM details.
+.PARAMETER ComputerName
+The computer from which to get CIM details.
 
-.Parameter All
-	Get all of the available details, rather than just the most pertinent ones.
+.PARAMETER All
+Get all of the available details, rather than just the most pertinent ones.
 
-.Outputs
-	System.Management.Automation.PSCustomObject with properties about the computer:
+.OUTPUTS
+System.Management.Automation.PSCustomObject with properties about the computer:
 
-		* Name: The computer name.
-		* Status: The reported computer status name.
-		* Manufacturer: The reported computer manufacturer name.
-		* Model: The reported computer model name.
-		* PrimaryOwnerName: The reported name of the owner of the computer, if available.
-		* Memory: The reported memory in the computer, and amount unused.
-		* OperatingSystem: The name and type of operating system used by the computer.
-		* Processors: CPU hardware details.
-		* Video: Video controller hardware name.
-		* Drives: Storage drives found on the computer.
-		* Shares: The file shares configured, if any.
-		* NetVersions: The versions of .NET on the system.
+* Name: The computer name.
+* Status: The reported computer status name.
+* Manufacturer: The reported computer manufacturer name.
+* Model: The reported computer model name.
+* PrimaryOwnerName: The reported name of the owner of the computer, if available.
+* Memory: The reported memory in the computer, and amount unused.
+* OperatingSystem: The name and type of operating system used by the computer.
+* Processors: CPU hardware details.
+* Video: Video controller hardware name.
+* Drives: Storage drives found on the computer.
+* Shares: The file shares configured, if any.
+* NetVersions: The versions of .NET on the system.
 
-.Link
-	Get-CimInstance
+.LINK
+Get-CimInstance
 
-.Example
-	Get-SystemDetails.ps1
+.EXAMPLE
+Get-SystemDetails.ps1
 
-	Name             : DEEPTHOUGHT
-	Status           : OK
-	Manufacturer     : Microsoft Corporation
-	Model            : Surface Pro 4
-	PrimaryOwnerName :
-	Memory           : 3.93 GiB (25.68 % free)
-	OperatingSystem  : Microsoft Windows 10 Pro64-bit  (10.0.14393)
-	Processors       : Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz
-	Video            : NVIDIA GeForce GTX 670
-	Drives           : C: 118 GiB (31.47 % free)
-	Shares           :
-	NetVersions      : {v4.6.2+win10ann, v3.5, v2.0.50727, v3.0}
+Name             : DEEPTHOUGHT
+Status           : OK
+Manufacturer     : Microsoft Corporation
+Model            : Surface Pro 4
+PrimaryOwnerName :
+Memory           : 3.93 GiB (25.68 % free)
+OperatingSystem  : Microsoft Windows 10 Pro64-bit  (10.0.14393)
+Processors       : Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz
+Video            : NVIDIA GeForce GTX 670
+Drives           : C: 118 GiB (31.47 % free)
+Shares           :
+NetVersions      : {v4.6.2+win10ann, v3.5, v2.0.50727, v3.0}
 #>
 
 #Requires -Version 3

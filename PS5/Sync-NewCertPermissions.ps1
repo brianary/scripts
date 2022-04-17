@@ -1,32 +1,32 @@
-<#
-.Synopsis
-    Updates permissions on certs when there is an older cert with the same friendly name.
+﻿<#
+.SYNOPSIS
+Updates permissions on certs when there is an older cert with the same friendly name.
 
-.Parameter Certificate
-    X509Certificate2 to copy permissions between.
+.PARAMETER Certificate
+X509Certificate2 to copy permissions between.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemaccessrule
+.LINK
+https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemaccessrule
 
-.Link
-	Format-Certificate.ps1
+.LINK
+Format-Certificate.ps1
 
-.Link
-	Get-CertificatePermissions.ps1
+.LINK
+Get-CertificatePermissions.ps1
 
-.Link
-	Get-CertificatePath.ps1
+.LINK
+Get-CertificatePath.ps1
 
-.Link
-	Get-Acl
+.LINK
+Get-Acl
 
-.Link
-	Set-Acl
+.LINK
+Set-Acl
 
-.Example
-    Find-Certificate.ps1 subject.name FindBySubjectName TrustedPeople LocalMachine |Sync-NewCertificatePermissions.ps1
+.EXAMPLE
+Find-Certificate.ps1 subject.name FindBySubjectName TrustedPeople LocalMachine |Sync-NewCertificatePermissions.ps1
 
-    Updates permissions on the newest certificate using the second newest as a template.
+Updates permissions on the newest certificate using the second newest as a template.
 #>
 
 #Requires -RunAsAdministrator

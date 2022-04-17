@@ -1,71 +1,71 @@
 ﻿<#
-.Synopsis
-	Generates a JSON Web Token (JWT)
+.SYNOPSIS
+Generates a JSON Web Token (JWT)
 
-.Parameter Body
-	A hash of JWT body elements.
+.PARAMETER Body
+A hash of JWT body elements.
 
-.Parameter Headers
-	Custom headers (beyond typ and alg) to add to the JWT.
+.PARAMETER Headers
+Custom headers (beyond typ and alg) to add to the JWT.
 
-.Parameter Secret
-	A secret used to sign the JWT.
+.PARAMETER Secret
+A secret used to sign the JWT.
 
-.Parameter Algorithm
-	The hashing algorithm class to use when signing the JWT.
+.PARAMETER Algorithm
+The hashing algorithm class to use when signing the JWT.
 
-.Parameter NotBefore
-	When the JWT becomes valid.
+.PARAMETER NotBefore
+When the JWT becomes valid.
 
-.Parameter IssuedAt
-	Specifies when the JWT was issued.
+.PARAMETER IssuedAt
+Specifies when the JWT was issued.
 
-.Parameter IncludeIssuedAt
-	Indicates the issued time should be included, based on the current datetime (ignored if IssuedAt is provided).
+.PARAMETER IncludeIssuedAt
+Indicates the issued time should be included, based on the current datetime (ignored if IssuedAt is provided).
 
-.Parameter ExpirationTime
-	When the JWT expires.
+.PARAMETER ExpirationTime
+When the JWT expires.
 
-.Parameter ExpiresAfter
-	How long from now until the JWT expires (ignored if ExpirationTime is provided).
+.PARAMETER ExpiresAfter
+How long from now until the JWT expires (ignored if ExpirationTime is provided).
 
-.Parameter JwtId
-	A unique (at least within a given issuer) identifier for the JWT.
+.PARAMETER JwtId
+A unique (at least within a given issuer) identifier for the JWT.
 
-.Parameter Issuer
-	A string or URI (if it contains a colon) indicating the entity that issued the JWT.
+.PARAMETER Issuer
+A string or URI (if it contains a colon) indicating the entity that issued the JWT.
 
-.Parameter Subject
-	The principal (user) of the JWT as a string or URI (if it contains a colon).
+.PARAMETER Subject
+The principal (user) of the JWT as a string or URI (if it contains a colon).
 
-.Parameter Audience
-	A string or URI (if it contains a colon), or a list of string or URIs that indicates who the JWT is intended for.
+.PARAMETER Audience
+A string or URI (if it contains a colon), or a list of string or URIs that indicates who the JWT is intended for.
 
-.Parameter Claims
-	Additional claims to add to the body of the JWT.
+.PARAMETER Claims
+Additional claims to add to the body of the JWT.
 
-.Outputs
-	System.String of an encoded, signed JWT
+.OUTPUTS
+System.String of an encoded, signed JWT
 
-.Link
-	ConvertTo-Base64.ps1
+.LINK
+ConvertTo-Base64.ps1
 
-.Link
-	Test-Uri.ps1
+.LINK
+Test-Uri.ps1
 
-.Link
-	https://tools.ietf.org/html/rfc7519
+.LINK
+https://tools.ietf.org/html/rfc7519
 
-.Link
-	https://jwt.io/
+.LINK
+https://jwt.io/
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.security.cryptography.hmac
+.LINK
+https://docs.microsoft.com/dotnet/api/system.security.cryptography.hmac
 
-.Example
-	New-Jwt.ps1 -Subject 1234567890 -IssuedAt 2018-01-18T01:30:22Z -Secret (ConvertTo-SecureString swordfish -AsPlainText -Force)
+.EXAMPLE
+New-Jwt.ps1 -Subject 1234567890 -IssuedAt 2018-01-18T01:30:22Z -Secret (ConvertTo-SecureString swordfish -AsPlainText -Force)
 
-	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.59noQVrGQKetFM3RRTe9m4MVBUMkLo3WxqqpPf1xJ-U
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.59noQVrGQKetFM3RRTe9m4MVBUMkLo3WxqqpPf1xJ-U
 #>
 
 #Requires -Version 3

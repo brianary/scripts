@@ -1,23 +1,23 @@
 ﻿<#
-.Synopsis
-	Determines whether a string is a valid JWT.
+.SYNOPSIS
+Determines whether a string is a valid JWT.
 
-.Parameter InputObject
-    The string to test.
+.PARAMETER InputObject
+The string to test.
 
-.Parameter Secret
-    The secret used to sign the JWT.
+.PARAMETER Secret
+The secret used to sign the JWT.
 
-.Inputs
-	System.String value to test for a valid URI format.
+.INPUTS
+System.String value to test for a valid URI format.
 
-.Outputs
-	System.Boolean indicating that the string can be parsed as a URI.
+.OUTPUTS
+System.Boolean indicating that the string can be parsed as a URI.
 
-.Example
-	Test-Jwt.ps1 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOjE1MTYyMzkwMjIsInN1YiI6IjEyMzQ1Njc4OTAifQ.-zAn1et1mf6QHakJbOTt5-p4gv33R7cIikKy8-9aiNs' (ConvertTo-SecureString swordfish -AsPlainText -Force)
+.EXAMPLE
+Test-Jwt.ps1 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOjE1MTYyMzkwMjIsInN1YiI6IjEyMzQ1Njc4OTAifQ.-zAn1et1mf6QHakJbOTt5-p4gv33R7cIikKy8-9aiNs' (ConvertTo-SecureString swordfish -AsPlainText -Force)
 
-    True
+True
 #>
 
 #Requires -Version 3

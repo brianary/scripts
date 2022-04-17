@@ -1,14 +1,14 @@
 ﻿<#
-.Synopsis
-	Display an HTML view of an XML schema or WSDL using Saxon.
+.SYNOPSIS
+Display an HTML view of an XML schema or WSDL using Saxon.
 
-.Parameter SchemaFile
-	System.String containing the path to an XML Schema or WSDL file.
+.PARAMETER SchemaFile
+System.String containing the path to an XML Schema or WSDL file.
 
-.Example
-    Show-DataRef.ps1 DataModel.xsd
+.EXAMPLE
+Show-DataRef.ps1 DataModel.xsd
 
-    (Renders the XML schema as HTML.)
+(Renders the XML schema as HTML.)
 #>
 
 #Requires -Version 3

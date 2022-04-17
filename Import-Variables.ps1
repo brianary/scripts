@@ -1,48 +1,48 @@
 ﻿<#
-.Synopsis
-    Creates local variables from a data row or dictionary (hashtable).
+.SYNOPSIS
+Creates local variables from a data row or dictionary (hashtable).
 
-.Parameter InputObject
-    A hash of string names to any values to set as variables,
-    or a DataRow or object with properties to set as variables.
-	Works with DataRows.
+.PARAMETER InputObject
+A hash of string names to any values to set as variables,
+or a DataRow or object with properties to set as variables.
+Works with DataRows.
 
-.Parameter MemberType
-	The type of object members to convert to variables.
+.PARAMETER MemberType
+The type of object members to convert to variables.
 
-.Parameter Scope
-	The scope of the variables to create.
+.PARAMETER Scope
+The scope of the variables to create.
 
-.Parameter Private
-	Indicates that created variables should be hidden from child scopes.
+.PARAMETER Private
+Indicates that created variables should be hidden from child scopes.
 
-.Inputs
-    System.Collections.IDictionary with keys and values to import as variables,
-    or System.Management.Automation.PSCustomObject with properties to import as variables.
+.INPUTS
+System.Collections.IDictionary with keys and values to import as variables,
+or System.Management.Automation.PSCustomObject with properties to import as variables.
 
-.Link
-	Add-ScopeLevel.ps1
+.LINK
+Add-ScopeLevel.ps1
 
-.Example
-    if($line -match '\AProject\("(?<TypeGuid>[^"]+)"\)') {Import-Variables.ps1 $Matches}
+.EXAMPLE
+if($line -match '\AProject\("(?<TypeGuid>[^"]+)"\)') {Import-Variables.ps1 $Matches}
 
-    Copies $Matches.TypeGuid to $TypeGuid if a match is found.
+Copies $Matches.TypeGuid to $TypeGuid if a match is found.
 
-.Example
-    Invoke-Sqlcmd "select ProductID, Name, ListPrice from Production.Product where ProductID = 1;" -Server 'Server\instance' -Database AdventureWorks |Import-Variables.ps1
+.EXAMPLE
+Invoke-Sqlcmd "select ProductID, Name, ListPrice from Production.Product where ProductID = 1;" -Server 'Server\instance' -Database AdventureWorks |Import-Variables.ps1
 
-    Copies field values into $ProductID, $Name, and $ListPrice.
+Copies field values into $ProductID, $Name, and $ListPrice.
 
-.Example
-    if($env:ComSpec -match '^(?<ComPath>.*?\\)(?<ComExe>[^\\]+$)'){Import-Variables.ps1 $Matches -Verbose}
+.EXAMPLE
+if($env:ComSpec -match '^(?<ComPath>.*?\\)(?<ComExe>[^\\]+$)'){Import-Variables.ps1 $Matches -Verbose}
 
-    Sets $ComPath and $ComExe from the regex captures if the regex matches.
+Sets $ComPath and $ComExe from the regex captures if the regex matches.
 
-.Example
-    Invoke-RestMethod https://api.github.com/ |Import-Variables.ps1 ; Invoke-RestMethod $emojis_url
+.EXAMPLE
+Invoke-RestMethod https://api.github.com/ |Import-Variables.ps1 ; Invoke-RestMethod $emojis_url
 
-    Sets variables from the fields returned by the web service: $current_user_url, $emojis_url, &c.
-    Then fetches the list of GitHub emojis.
+Sets variables from the fields returned by the web service: $current_user_url, $emojis_url, &c.
+Then fetches the list of GitHub emojis.
 #>
 
 #Requires -Version 3

@@ -1,42 +1,42 @@
 ﻿<#
-.Synopsis
-    Find modules used in projects.
+.SYNOPSIS
+Find modules used in projects.
 
-.Parameter PackageName
-    The name of a package to search for.
-    Wildcards (as supported by -like) are allowed.
+.PARAMETER PackageName
+The name of a package to search for.
+Wildcards (as supported by -like) are allowed.
 
-.Parameter Path
-    The path of a folder to search within.
-    Uses the current working directory ($PWD) by default.
+.PARAMETER Path
+The path of a folder to search within.
+Uses the current working directory ($PWD) by default.
 
-.Parameter MinVersion
-    The minimum (inclusive) version of the package to return.
+.PARAMETER MinVersion
+The minimum (inclusive) version of the package to return.
 
-.Parameter MaxVersion
-    The maximum (inclusive) version of the package to return.
+.PARAMETER MaxVersion
+The maximum (inclusive) version of the package to return.
 
-.Inputs
-    System.String containing a package name (wildcards supported).
+.INPUTS
+System.String containing a package name (wildcards supported).
 
-.Outputs
-    System.Management.Automation.PSCustomObject each with properties for the Name,
-    Version, and File of packages found.
+.OUTPUTS
+System.Management.Automation.PSCustomObject each with properties for the Name,
+Version, and File of packages found.
 
-.Link
-    Select-Xml
+.LINK
+Select-Xml
 
-.Link
-    ConvertFrom-Json
+.LINK
+ConvertFrom-Json
 
-.Example
-    Find-ProjectModule.ps1 jQuery*
+.EXAMPLE
+Find-ProjectModule.ps1 jQuery*
 
-    Name               Version File
-    ----               ------- ----
-    jquery.datatables  1.10.9  C:\Repo\packages.config
-    jQuery             1.7     C:\Repo\packages.config
-    jQuery             1.8.3   C:\OtherRepo\packages.config
+Name               Version File
+----               ------- ----
+jquery.datatables  1.10.9  C:\Repo\packages.config
+jQuery             1.7     C:\Repo\packages.config
+jQuery             1.8.3   C:\OtherRepo\packages.config
 #>
 
 #Requires -Version 3

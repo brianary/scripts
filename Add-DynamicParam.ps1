@@ -1,71 +1,71 @@
-<#
-.Synopsis
-	Adds a dynamic parameter to a script, within a DynamicParam block.
+﻿<#
+.SYNOPSIS
+Adds a dynamic parameter to a script, within a DynamicParam block.
 
-.Parameter Name
-	The name of the parameter.
+.PARAMETER Name
+The name of the parameter.
 
-.Parameter Type
-	The data type of the parameter.
+.PARAMETER Type
+The data type of the parameter.
 
-.Parameter Position
-	The position of the parameter when not specifying the parameter names.
+.PARAMETER Position
+The position of the parameter when not specifying the parameter names.
 
-.Parameter ParameterSetName
-	The name of the set of parameters this parameter belongs to.
+.PARAMETER ParameterSetName
+The name of the set of parameters this parameter belongs to.
 
-.Parameter ValidateCount
-	The valid number of values for a parameter that accepts a collection.
-	A range can be specified with a list of two integers.
+.PARAMETER ValidateCount
+The valid number of values for a parameter that accepts a collection.
+A range can be specified with a list of two integers.
 
-.Parameter ValidateDrive
-	Valid root drive(s) for parameters that accept paths.
+.PARAMETER ValidateDrive
+Valid root drive(s) for parameters that accept paths.
 
-.Parameter ValidateLength
-	The valid length for a string parameter.
-	A range can be specified with a list of two integers.
+.PARAMETER ValidateLength
+The valid length for a string parameter.
+A range can be specified with a list of two integers.
 
-.Parameter ValidatePattern
-	The valid regular expression pattern to match for a string parameter.
+.PARAMETER ValidatePattern
+The valid regular expression pattern to match for a string parameter.
 
-.Parameter ValidateRange
-	The valid range of values for a numeric parameter.
+.PARAMETER ValidateRange
+The valid range of values for a numeric parameter.
 
-.Parameter ValidateScript
-	A script block to validate a parameter's value.
-	Any true result will validate the value, any false result will reject it.
+.PARAMETER ValidateScript
+A script block to validate a parameter's value.
+Any true result will validate the value, any false result will reject it.
 
-.Parameter ValidateSet
-	A set of valid values for the parameter.
-	This will enable tab-completion.
+.PARAMETER ValidateSet
+A set of valid values for the parameter.
+This will enable tab-completion.
 
-.Parameter NotNull
-	Requires parameter to be non-null.
+.PARAMETER NotNull
+Requires parameter to be non-null.
 
-.Parameter NotNullOrEmpty
-	Requires parameter to be non-null and non-empty.
+.PARAMETER NotNullOrEmpty
+Requires parameter to be non-null and non-empty.
 
-.Parameter TrustedData
-	Requires the parameter value to be Trusted data.
+.PARAMETER TrustedData
+Requires the parameter value to be Trusted data.
 
-.Parameter UserDrive
-	Requires a path parameter to be on a User drive.
+.PARAMETER UserDrive
+Requires a path parameter to be on a User drive.
 
-.Parameter Mandatory
-	Indicates a required parameter.
+.PARAMETER Mandatory
+Indicates a required parameter.
 
-.Parameter ValueFromPipeline
-	Indicates a parameter that can accept values from the pipeline.
+.PARAMETER ValueFromPipeline
+Indicates a parameter that can accept values from the pipeline.
 
-.Parameter ValueFromPipelineByPropertyName
-	Indicates a parameter that can accept values from the pipeline by matching the property name of pipeline objects to the
-	parameter name or alias.
+.PARAMETER ValueFromPipelineByPropertyName
+Indicates a parameter that can accept values from the pipeline by matching the property name of pipeline objects to the
+parameter name or alias.
 
-.Inputs
-	System.Object[] a list of possible values for this parameter to validate against.
+.INPUTS
+System.Object[] a list of possible values for this parameter to validate against.
 
-.Example
-	DynamicParam { Add-DynamicParam.ps1 Path string -Mandatory; $DynamicParams } Process { Import-Variables.ps1 $PSBoundParameters; ... }
+.EXAMPLE
+DynamicParam { Add-DynamicParam.ps1 Path string -Mandatory; $DynamicParams } Process { Import-Variables.ps1 $PSBoundParameters; ... }
 #>
 
 #Requires -Version 3

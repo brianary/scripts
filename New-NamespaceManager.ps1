@@ -1,22 +1,22 @@
-<#
-.Synopsis
-	Creates an object to lookup XML namespace prefixes.
+﻿<#
+.SYNOPSIS
+Creates an object to lookup XML namespace prefixes.
 
-.Parameter Namespaces
-	A dictionary of prefixes and their namespace URLs.
-	If a default Namespace value for Select-Xml exists, this will use it.
+.PARAMETER Namespaces
+A dictionary of prefixes and their namespace URLs.
+If a default Namespace value for Select-Xml exists, this will use it.
 
-.Outputs
-	System.Xml.XmlNamespaceManager containing the given namespaces.
+.OUTPUTS
+System.Xml.XmlNamespaceManager containing the given namespaces.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.xml.xmlnamespacemanager
+.LINK
+https://docs.microsoft.com/dotnet/api/system.xml.xmlnamespacemanager
 
-.Example
-	Use-ReasonableDefaults.ps1; $n = New-NamespaceManager.ps1; (Select-Xml //xhtml:td dataref.xslt).Node.SelectSingleNode('xhtml:var',$n).OuterXml
+.EXAMPLE
+Use-ReasonableDefaults.ps1; $n = New-NamespaceManager.ps1; (Select-Xml //xhtml:td dataref.xslt).Node.SelectSingleNode('xhtml:var',$n).OuterXml
 
-	<var xmlns="http://www.w3.org/1999/xhtml">ANY</var>
-	<var xmlns="http://www.w3.org/1999/xhtml">ANY</var>
+<var xmlns="http://www.w3.org/1999/xhtml">ANY</var>
+<var xmlns="http://www.w3.org/1999/xhtml">ANY</var>
 #>
 
 #Requires -Version 3

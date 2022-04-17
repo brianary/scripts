@@ -1,21 +1,21 @@
 ﻿<#
-.Synopsis
-    Converts an object to an ordered dictionary of properties and values.
+.SYNOPSIS
+Converts an object to an ordered dictionary of properties and values.
 
-.Parameter InputObject
-    An object to convert to a dictionary.
+.PARAMETER InputObject
+An object to convert to a dictionary.
 
-.Inputs
-    Any .NET object to convert into a properties hash.
+.INPUTS
+Any .NET object to convert into a properties hash.
 
-.Outputs
-    System.Collections.Specialized.OrderedDictionary of the object's property names and values.
+.OUTPUTS
+System.Collections.Specialized.OrderedDictionary of the object's property names and values.
 
-.Link
-    Get-Member
+.LINK
+Get-Member
 
-.Example
-    ls *.txt |ConvertTo-OrderedDictionary.ps1
+.EXAMPLE
+ls *.txt |ConvertTo-OrderedDictionary.ps1
 #>
 
 #Requires -Version 3

@@ -1,40 +1,40 @@
-<#
-.Synopsis
-	Gets the path of the VSCode settings.config file.
+﻿<#
+.SYNOPSIS
+Gets the path of the VSCode settings.config file.
 
-.Parameter Workspace
-	Indicates that the current workspace settings should be parsed instead of the user settings.
+.PARAMETER Workspace
+Indicates that the current workspace settings should be parsed instead of the user settings.
 
-.Outputs
-	System.String containing the path of the settings.config file.
+.OUTPUTS
+System.String containing the path of the settings.config file.
 
-.Link
-	https://code.visualstudio.com/docs/getstarted/settings
+.LINK
+https://code.visualstudio.com/docs/getstarted/settings
 
-.Link
-	https://powershell.github.io/PowerShellEditorServices/api/Microsoft.PowerShell.EditorServices.Extensions.EditorObject.html
+.LINK
+https://powershell.github.io/PowerShellEditorServices/api/Microsoft.PowerShell.EditorServices.Extensions.EditorObject.html
 
-.Link
-	https://git-scm.com/docs/git-rev-parse
+.LINK
+https://git-scm.com/docs/git-rev-parse
 
-.Link
-	Join-Path
+.LINK
+Join-Path
 
-.Link
-	Get-Command
+.LINK
+Get-Command
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Example
-	Get-VSCodeSettingsFile.ps1
+.EXAMPLE
+Get-VSCodeSettingsFile.ps1
 
-	C:\Users\zaphodb\AppData\Roaming\Code\User\settings.json
+C:\Users\zaphodb\AppData\Roaming\Code\User\settings.json
 
-.Example
-	Get-VSCodeSettingsFile.ps1 -Workspace
+.EXAMPLE
+Get-VSCodeSettingsFile.ps1 -Workspace
 
-	C:\Users\zaphodb\GitHub\scripts\.vscode\settings.json
+C:\Users\zaphodb\GitHub\scripts\.vscode\settings.json
 #>
 
 [CmdletBinding()][OutputType([string])] Param(

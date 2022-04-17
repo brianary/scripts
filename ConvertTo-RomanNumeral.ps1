@@ -1,34 +1,34 @@
 ﻿<#
-.Synopsis
-	Convert a number to a Roman numeral.
+.SYNOPSIS
+Convert a number to a Roman numeral.
 
-.Parameter Value
-	The numeric value to convert into a Roman numeral string.
+.PARAMETER Value
+The numeric value to convert into a Roman numeral string.
 
-.Parameter Unicode
-	Indicates that Unicode Roman numeral characters should be used (U+2160-U+216F).
+.PARAMETER Unicode
+Indicates that Unicode Roman numeral characters should be used (U+2160-U+216F).
 
-.Inputs
-	System.Int32 value to convert to a Roman numeral string.
+.INPUTS
+System.Int32 value to convert to a Roman numeral string.
 
-.Outputs
-	System.String containing a Roman numeral.
+.OUTPUTS
+System.String containing a Roman numeral.
 
-.Link
-	https://www.c-sharpcorner.com/blogs/converting-to-and-from-roman-numerals1
+.LINK
+https://www.c-sharpcorner.com/blogs/converting-to-and-from-roman-numerals1
 
-.Link
-	Get-Variable
+.LINK
+Get-Variable
 
-.Example
-	ConvertTo-RomanNumeral.ps1 2020
+.EXAMPLE
+ConvertTo-RomanNumeral.ps1 2020
 
-	MMXX
+MMXX
 
-.Example
-	ConvertTo-RomanNumeral.ps1 8
+.EXAMPLE
+ConvertTo-RomanNumeral.ps1 8
 
-	VIII
+VIII
 #>
 
 #Requires -Version 3

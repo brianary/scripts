@@ -1,35 +1,35 @@
 ﻿<#
-.Synopsis
-    Finds database constraints that have been incompletely re-enabled.
+.SYNOPSIS
+Finds database constraints that have been incompletely re-enabled.
 
-.Parameter ServerInstance
-    The name of a server (and optional instance) to connect to.
+.PARAMETER ServerInstance
+The name of a server (and optional instance) to connect to.
 
-.Parameter Database
-    The the database to connect to on the server.
+.PARAMETER Database
+The the database to connect to on the server.
 
-.Parameter ConnectionString
-    Specifies a connection string to connect to the server.
+.PARAMETER ConnectionString
+Specifies a connection string to connect to the server.
 
-.Parameter ConnectionName
-    The connection string name from the ConfigurationManager to use.
+.PARAMETER ConnectionName
+The connection string name from the ConfigurationManager to use.
 
-.Parameter Update
-    Update the database when present, otherwise simply outputs the changes as script.
+.PARAMETER Update
+Update the database when present, otherwise simply outputs the changes as script.
 
-.Link
-    Use-SqlcmdParams.ps1
+.LINK
+Use-SqlcmdParams.ps1
 
-.Link
-    Invoke-Sqlcmd
+.LINK
+Invoke-Sqlcmd
 
-.Link
-    https://www.brentozar.com/blitz/foreign-key-trusted/
+.LINK
+https://www.brentozar.com/blitz/foreign-key-trusted/
 
-.Example
-    Repair-DatabaseUntrustedConstraints.ps1 SqlServerName DatabaseName -Update
+.EXAMPLE
+Repair-DatabaseUntrustedConstraints.ps1 SqlServerName DatabaseName -Update
 
-    WARNING: Checked 2 constraints
+WARNING: Checked 2 constraints
 #>
 
 #Requires -Version 3
@@ -47,18 +47,18 @@ Use-SqlcmdParams.ps1
 function Resolve-SqlcmdResults([string]$Action,[string]$Query)
 {
     <#
-    .Synopsis
-        Executes SQL that generates SQL strings, and optionally executes the generated SQL.
+.SYNOPSIS
+Executes SQL that generates SQL strings, and optionally executes the generated SQL.
 
-    .Parameter Action
-        Descriptive text for the commands produced, with two format arguments:
-          0: Verb tense, e.g. 'Renam{0:e;ing;ed}'
-          1: Command count
+.PARAMETER Action
+Descriptive text for the commands produced, with two format arguments:
+0: Verb tense, e.g. 'Renam{0:e;ing;ed}'
+1: Command count
 
-    .Parameter Query
-        A SQL query that produces a single-column result set, named "command", containing
-        executable SQL.
-    #>
+.PARAMETER Query
+A SQL query that produces a single-column result set, named "command", containing
+executable SQL.
+#>
     $count,$i = 0,0
     [string[]]$commands = Invoke-Sqlcmd $Query |% command
     if(!$commands){return}

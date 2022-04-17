@@ -1,63 +1,63 @@
 ﻿<#
-.Synopsis
-	Returns true if the given date is a U.S. federal holiday.
+.SYNOPSIS
+Returns true if the given date is a U.S. federal holiday.
 
-.Description
-	The following holidays are checked:
+.DESCRIPTION
+The following holidays are checked:
 
-		* New Year's Day, January 1 (± 1 day, if observed)
-		* Birthday of Martin Luther King, Jr., Third Monday in January
-		* Washington's Birthday, Third Monday in February
-		* Memorial Day, Last Monday in May
-		* Juneteenth, June 19 (± 1 day, if observed)
-		* Independence Day, July 4 (± 1 day, if observed)
-		* Labor Day, First Monday in September
-		* Columbus Day, Second Monday in October
-		* Veterans Day, November 11 (±1 day, if observed)
-		* Thanksgiving Day, Fourth Thursday in November
-		* Christmas Day, December 25 (±1 day, if observed)
+* New Year's Day, January 1 (± 1 day, if observed)
+* Birthday of Martin Luther King, Jr., Third Monday in January
+* Washington's Birthday, Third Monday in February
+* Memorial Day, Last Monday in May
+* Juneteenth, June 19 (± 1 day, if observed)
+* Independence Day, July 4 (± 1 day, if observed)
+* Labor Day, First Monday in September
+* Columbus Day, Second Monday in October
+* Veterans Day, November 11 (±1 day, if observed)
+* Thanksgiving Day, Fourth Thursday in November
+* Christmas Day, December 25 (±1 day, if observed)
 
-.Parameter Date
-	The date to check.
+.PARAMETER Date
+The date to check.
 
-.Parameter SatToFri
-	Indicates Saturday holidays are observed on Fridays.
+.PARAMETER SatToFri
+Indicates Saturday holidays are observed on Fridays.
 
-.Parameter SunToMon
-	Indicates Sunday holidays are observed on Mondays.
+.PARAMETER SunToMon
+Indicates Sunday holidays are observed on Mondays.
 
-.Notes
-	Thanks to the Uniform Monday Holiday Act, Washington's "Birthday" always falls
-	*between* Washington's birthdays. He had two, and we still decided to celebrate
-	a third day.
+.NOTES
+Thanks to the Uniform Monday Holiday Act, Washington's "Birthday" always falls
+*between* Washington's birthdays. He had two, and we still decided to celebrate
+a third day.
 
-	https://en.wikipedia.org/wiki/Uniform_Monday_Holiday_Act
+https://en.wikipedia.org/wiki/Uniform_Monday_Holiday_Act
 
-	https://en.wikipedia.org/wiki/Washington%27s_Birthday#History
+https://en.wikipedia.org/wiki/Washington%27s_Birthday#History
 
-.Inputs
-	System.DateTime values to check.
+.INPUTS
+System.DateTime values to check.
 
-.Outputs
-	System.Boolean indicating whether the date is a holiday.
+.OUTPUTS
+System.Boolean indicating whether the date is a holiday.
 
-.Link
-	http://www.federalreserve.gov/aboutthefed/k8.htm
+.LINK
+http://www.federalreserve.gov/aboutthefed/k8.htm
 
-.Example
-	Test-USFederalHoliday.ps1 2016-11-11
+.EXAMPLE
+Test-USFederalHoliday.ps1 2016-11-11
 
-	Veterans Day
+Veterans Day
 
-.Example
-	Test-USFederalHoliday.ps1 2017-02-20
+.EXAMPLE
+Test-USFederalHoliday.ps1 2017-02-20
 
-	Washington's Birthday
+Washington's Birthday
 
-.Example
-	if(Test-USFederalHoliday.ps1 (Get-Date)) { return }
+.EXAMPLE
+if(Test-USFederalHoliday.ps1 (Get-Date)) { return }
 
-	Returns from a function or script if today is a holiday.
+Returns from a function or script if today is a holiday.
 #>
 
 [CmdletBinding()][OutputType([bool])] Param(

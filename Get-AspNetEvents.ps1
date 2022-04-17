@@ -1,28 +1,28 @@
 ﻿<#
-.Synopsis
-    Parses ASP.NET errors from the event log on the given server.
+.SYNOPSIS
+Parses ASP.NET errors from the event log on the given server.
 
-.Parameter ComputerName
-    The name of the server on which the error occurred.
+.PARAMETER ComputerName
+The name of the server on which the error occurred.
 
-.Parameter After
-    Skip events older than this datetime.
-    Defaults to 00:00 today.
+.PARAMETER After
+Skip events older than this datetime.
+Defaults to 00:00 today.
 
-.Parameter Before
-    Skip events newer than this datetime.
-    Defaults to now.
+.PARAMETER Before
+Skip events newer than this datetime.
+Defaults to now.
 
-.Outputs
-    System.Management.Automation.PSObject containing the fields stored in the event.
+.OUTPUTS
+System.Management.Automation.PSObject containing the fields stored in the event.
 
-.Link
-    Get-WinEvent
+.LINK
+Get-WinEvent
 
-.Example
-    Get-AspNetEvents.ps1 WebServer
+.EXAMPLE
+Get-AspNetEvents.ps1 WebServer
 
-    Returns any ASP.NET-related events from the WebServer Application event log that occurred today.
+Returns any ASP.NET-related events from the WebServer Application event log that occurred today.
 #>
 
 #Requires -Version 3

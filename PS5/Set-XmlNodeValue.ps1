@@ -1,27 +1,27 @@
 ﻿<#
-.Synopsis
-    Sets the value of a node found by Select-Xml.
+.SYNOPSIS
+Sets the value of a node found by Select-Xml.
 
-.Parameter Value
-    The value to set.
+.PARAMETER Value
+The value to set.
 
-.Parameter SelectXmlInfo
-    Output from the Select-Xml cmdlet.
+.PARAMETER SelectXmlInfo
+Output from the Select-Xml cmdlet.
 
-.Inputs
-    Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
+.INPUTS
+Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
 
-.Outputs
-    System.Xml.XmlDocument
-    Returned when Select-Xml queries an in-memory XML document or string, null when querying a file.
+.OUTPUTS
+System.Xml.XmlDocument
+Returned when Select-Xml queries an in-memory XML document or string, null when querying a file.
 
-.Link
-    Select-Xml
+.LINK
+Select-Xml
 
-.Example
-    Select-Xml '/configuration/appSettings/add[@key="Version"]/@value' app.config |Set-XmlNodeValue.ps1 '3.0'
+.EXAMPLE
+Select-Xml '/configuration/appSettings/add[@key="Version"]/@value' app.config |Set-XmlNodeValue.ps1 '3.0'
 
-    (Sets attribute value to '3.0', if found.)
+(Sets attribute value to '3.0', if found.)
 #>
 
 [CmdletBinding()][OutputType([xml])] Param(

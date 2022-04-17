@@ -1,23 +1,23 @@
 ﻿<#
-.Synopsis
-    Parse escaped XML into XML and serialize it.
+.SYNOPSIS
+Parse escaped XML into XML and serialize it.
 
-.Parameter EscapedXml
-    The escaped XML text.
+.PARAMETER EscapedXml
+The escaped XML text.
 
-.Parameter NoIndent
-    Outputs the XML without indentation.
+.PARAMETER NoIndent
+Outputs the XML without indentation.
 
-.Inputs
-    System.String, some escaped XML.
+.INPUTS
+System.String, some escaped XML.
 
-.Outputs
-    System.String, the XML parsed and serialized.
+.OUTPUTS
+System.String, the XML parsed and serialized.
 
-.Example
-    ConvertFrom-EscapedXml.ps1 '&lt;a href=&quot;http://example.org&quot;&gt;link&lt;/a&gt;'
+.EXAMPLE
+ConvertFrom-EscapedXml.ps1 '&lt;a href=&quot;http://example.org&quot;&gt;link&lt;/a&gt;'
 
-    <a href="http://example.org">link</a>
+<a href="http://example.org">link</a>
 #>
 
 #Requires -Version 2

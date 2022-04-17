@@ -1,37 +1,37 @@
 ﻿<#
-.Synopsis
-    Sends emails from a drop folder using .NET config defaults.
+.SYNOPSIS
+Sends emails from a drop folder using .NET config defaults.
 
-.Parameter MailFile
-    The .eml file to parse and send.
+.PARAMETER MailFile
+The .eml file to parse and send.
 
-.Parameter Delete
-    Indicates sent files should be deleted.
+.PARAMETER Delete
+Indicates sent files should be deleted.
 
-.Inputs
-    System.IO.FileInfo of .eml files to send.
+.INPUTS
+System.IO.FileInfo of .eml files to send.
 
-.Component
-    ADODB.Stream
+.COMPONENT
+ADODB.Stream
 
-.Component
-    CDO.Message
+.COMPONENT
+CDO.Message
 
-.Link
-    Send-MailMessage
+.LINK
+Send-MailMessage
 
-.Link
-    Use-NetMailConfig.ps1
+.LINK
+Use-NetMailConfig.ps1
 
-.Example
-    Send-MailMessageFile.ps1
+.EXAMPLE
+Send-MailMessageFile.ps1
 
-    Sends all .eml files in the current directory.
+Sends all .eml files in the current directory.
 
-.Example
-    ls C:\Inetpub\mailroot\*.eml |Send-MailMessageFile.ps1
+.EXAMPLE
+ls C:\Inetpub\mailroot\*.eml |Send-MailMessageFile.ps1
 
-    Sends emails from drop directory.
+Sends emails from drop directory.
 #>
 
 #Requires -Version 3

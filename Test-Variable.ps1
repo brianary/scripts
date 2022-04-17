@@ -1,57 +1,57 @@
-<#
-.Synopsis
-    Indicates whether a variable has been defined.
+﻿<#
+.SYNOPSIS
+Indicates whether a variable has been defined.
 
-.Parameter Name
-    A variable name to test the existence of.
+.PARAMETER Name
+A variable name to test the existence of.
 
-.Inputs
-    System.String name of a variable.
+.INPUTS
+System.String name of a variable.
 
-.Outputs
-    System.Boolean indicating whether the variable name is defined.
+.OUTPUTS
+System.Boolean indicating whether the variable name is defined.
 
-.Link
-	Add-ScopeLevel.ps1
+.LINK
+Add-ScopeLevel.ps1
 
-.Link
-    Get-Variable
+.LINK
+Get-Variable
 
-.Example
-    Test-Variable.ps1 true
+.EXAMPLE
+Test-Variable.ps1 true
 
-    True
+True
 
-.Example
-    Test-Variable.ps1 ''
+.EXAMPLE
+Test-Variable.ps1 ''
 
-    False
+False
 
-    A variable can't have an empty string for a name.
+A variable can't have an empty string for a name.
 
-.Example
-    Test-Variable.ps1 $null
+.EXAMPLE
+Test-Variable.ps1 $null
 
-    False
+False
 
-    A variable can't have a null name.
+A variable can't have a null name.
 
-.Example
-    Test-Variable.ps1 null
+.EXAMPLE
+Test-Variable.ps1 null
 
-    True
+True
 
-.Example
-    'PSVersionTable','false' |Test-Variable.ps1
+.EXAMPLE
+'PSVersionTable','false' |Test-Variable.ps1
 
-    True
-    True
+True
+True
 
-.Example
-    'PWD','PID' |Test-Variable.ps1 -Scope Global
+.EXAMPLE
+'PWD','PID' |Test-Variable.ps1 -Scope Global
 
-    True
-    True
+True
+True
 #>
 
 #Requires -Version 3

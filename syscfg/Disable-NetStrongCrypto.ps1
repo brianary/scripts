@@ -1,9 +1,9 @@
-<#
-.Synopsis
-    Disable strong crypto for .NET 3.5 & 4.5.
+﻿<#
+.SYNOPSIS
+Disable strong crypto for .NET 3.5 & 4.5.
 
-.Link
-    https://docs.microsoft.com/en-us/security-updates/SecurityAdvisories/2015/2960358#suggested-actions
+.LINK
+https://docs.microsoft.com/en-us/security-updates/SecurityAdvisories/2015/2960358#suggested-actions
 #>
 
 #Requires -RunAsAdministrator

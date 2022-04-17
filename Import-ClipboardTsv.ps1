@@ -1,28 +1,28 @@
-<#
-.Synopsis
-	Parses TSV clipboard data into objects.
+﻿<#
+.SYNOPSIS
+Parses TSV clipboard data into objects.
 
-.Parameter Delimiter
-	The field separator character.
+.PARAMETER Delimiter
+The field separator character.
 
-.Link
-	Get-Clipboard
+.LINK
+Get-Clipboard
 
-.Link
-	ConvertFrom-Csv
+.LINK
+ConvertFrom-Csv
 
-.Example
-	Import-ClipboardTsv.ps1 |Format-Table -AutoSize
+.EXAMPLE
+Import-ClipboardTsv.ps1 |Format-Table -AutoSize
 
-	Name              Alias        Actor
-	----              -----        -----
-	Rita Farr         Elasti-Girl  April Bowlby
-	Larry Trainor     Negative Man Matt Bomer/Mathew Zuk
-	Kay Challis       Crazy Jane   Diane Guerrero
-	Cliff Steele      Robotman     Brendan Fraser/Riley Shanahan
-	Victor Stone      Cyborg       Joivan Wade
-	Dr. Niles Caulder The Chief    Timothy Dalton
-	Eric Morden       Mr. Nobody   Alan Tudyk
+Name              Alias        Actor
+----              -----        -----
+Rita Farr         Elasti-Girl  April Bowlby
+Larry Trainor     Negative Man Matt Bomer/Mathew Zuk
+Kay Challis       Crazy Jane   Diane Guerrero
+Cliff Steele      Robotman     Brendan Fraser/Riley Shanahan
+Victor Stone      Cyborg       Joivan Wade
+Dr. Niles Caulder The Chief    Timothy Dalton
+Eric Morden       Mr. Nobody   Alan Tudyk
 #>
 
 #Requires -Version 3

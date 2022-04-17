@@ -1,47 +1,47 @@
-<#
-.Synopsis
-	Downloads a given URL to a file, automatically determining the filename.
+﻿<#
+.SYNOPSIS
+Downloads a given URL to a file, automatically determining the filename.
 
-.Parameter Uri
-	The URL to download.
+.PARAMETER Uri
+The URL to download.
 
-.Parameter CreationTime
-	Sets the creation time on the file to the given value.
+.PARAMETER CreationTime
+Sets the creation time on the file to the given value.
 
-.Parameter LastWriteTime
-	Sets the creation time on the file to the given value.
+.PARAMETER LastWriteTime
+Sets the creation time on the file to the given value.
 
-.Parameter Open
-	When present, invokes the file after it is downloaded.
+.PARAMETER Open
+When present, invokes the file after it is downloaded.
 
-.Inputs
-	Object with System.Uri property named Uri.
+.INPUTS
+Object with System.Uri property named Uri.
 
-.Link
-	https://tools.ietf.org/html/rfc2183
+.LINK
+https://tools.ietf.org/html/rfc2183
 
-.Link
-	http://test.greenbytes.de/tech/tc2231/
+.LINK
+http://test.greenbytes.de/tech/tc2231/
 
-.Link
-	https://msdn.microsoft.com/library/system.net.mime.contentdisposition.filename.aspx
+.LINK
+https://msdn.microsoft.com/library/system.net.mime.contentdisposition.filename.aspx
 
-.Link
-	https://msdn.microsoft.com/library/system.io.path.getinvalidfilenamechars.aspx
+.LINK
+https://msdn.microsoft.com/library/system.io.path.getinvalidfilenamechars.aspx
 
-.Link
-	Invoke-WebRequest
+.LINK
+Invoke-WebRequest
 
-.Link
-	Invoke-Item
+.LINK
+Invoke-Item
 
-.Link
-	Move-Item
+.LINK
+Move-Item
 
-.Example
-	Save-WebRequest.ps1 https://www.irs.gov/pub/irs-pdf/f1040.pdf -Open
+.EXAMPLE
+Save-WebRequest.ps1 https://www.irs.gov/pub/irs-pdf/f1040.pdf -Open
 
-	Saves f1040.pdf (or else a filename specified in the Content-Disposition header) and opens it.
+Saves f1040.pdf (or else a filename specified in the Content-Disposition header) and opens it.
 #>
 
 [CmdletBinding()][OutputType([void])] Param(

@@ -1,18 +1,18 @@
 ﻿<#
-.Synopsis
-    Create a backup as a sibling to a file, with date and time values in the name.
+.SYNOPSIS
+Create a backup as a sibling to a file, with date and time values in the name.
 
-.Parameter Path
-    Specifies a path to the items being removed. Wildcards are permitted.
-    The parameter name ("-Path") is optional.
+.PARAMETER Path
+Specifies a path to the items being removed. Wildcards are permitted.
+The parameter name ("-Path") is optional.
 
-.Inputs
-    System.String, a file path to back up.
+.INPUTS
+System.String, a file path to back up.
 
-.Example
-    Backup-File.ps1 logfile.log
+.EXAMPLE
+Backup-File.ps1 logfile.log
 
-    Copies logfile.log to logfile-201612311159.log (on that date & time).
+Copies logfile.log to logfile-201612311159.log (on that date & time).
 #>
 
 [CmdletBinding()][OutputType([void])] Param(

@@ -1,17 +1,17 @@
-<#
-.Synopsis
-	Enables ANSI terminal colors.
+﻿<#
+.SYNOPSIS
+Enables ANSI terminal colors.
 
-.Parameter HostOnly
-	Enable colors only for host console output.
+.PARAMETER HostOnly
+Enable colors only for host console output.
 
-.Link
-	https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_ansi_terminals
+.LINK
+https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_ansi_terminals
 
-.Example
-	Enable-AnsiColor.ps1
+.EXAMPLE
+Enable-AnsiColor.ps1
 
-	Enables ANSI terminal colors.
+Enables ANSI terminal colors.
 #>
 
 #Requires -Version 7.2

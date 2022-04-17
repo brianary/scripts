@@ -1,36 +1,35 @@
-<#
-.Synopsis
-	Provides sorted counts of SQL Server column values.
+﻿<#
+.SYNOPSIS
+Provides sorted counts of SQL Server column values.
 
-.Parameter Column
-	An SMO column object associated to the database column to examine.
+.PARAMETER Column
+An SMO column object associated to the database column to examine.
 
-.Parameter ColumnName
-	The name of the column to examine in the table associated with the SMO Table object.
+.PARAMETER ColumnName
+The name of the column to examine in the table associated with the SMO Table object.
 
-.Parameter Table
-	An SMO table object associated to the database to examine.
+.PARAMETER Table
+An SMO table object associated to the database to examine.
 
-.Parameter Condition
-	Conditions to be provided as a SQL WHERE clause to filter the column values to examine.
-	Useful for databases that implement "soft deletes" as specific field values.
+.PARAMETER Condition
+Conditions to be provided as a SQL WHERE clause to filter the column values to examine.
+Useful for databases that implement "soft deletes" as specific field values.
 
-.Parameter MinimumCount
-	Excludes values with fewer than this number of occurrences.
+.PARAMETER MinimumCount
+Excludes values with fewer than this number of occurrences.
 
-.Inputs
-	Microsoft.SqlServer.Management.Smo.Column to calculate statistics for,
-	or Microsoft.SqlServer.Management.Smo.Table to select a column from by name.
+.INPUTS
+Microsoft.SqlServer.Management.Smo.Column to calculate statistics for,
+or Microsoft.SqlServer.Management.Smo.Table to select a column from by name.
 
-.Outputs
-	System.Management.Automation.PSCustomObject that describes each counted value.
+.OUTPUTS
+System.Management.Automation.PSCustomObject that describes each counted value.
 
-.Link
-	https://www.powershellgallery.com/packages/SqlServer/
+.LINK
+https://www.powershellgallery.com/packages/SqlServer/
 
-.Link
-	https://dbatools.io/
-
+.LINK
+https://dbatools.io/
 #>
 
 #Requires -Version 3

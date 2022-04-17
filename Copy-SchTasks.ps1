@@ -1,17 +1,17 @@
 ﻿<#
-.Synopsis
-    Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
+.SYNOPSIS
+Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
 
-.Parameter ComputerName
-    The name of the computer to copy jobs from.
+.PARAMETER ComputerName
+The name of the computer to copy jobs from.
 
-.Parameter DestinationComputerName
-    The name of the computer to copy jobs to (local computer by default).
+.PARAMETER DestinationComputerName
+The name of the computer to copy jobs to (local computer by default).
 
-.Example
-    Copy-SchTasks.ps1 SourceComputer DestComputer
+.EXAMPLE
+Copy-SchTasks.ps1 SourceComputer DestComputer
 
-    Attempts to copy tasks from SourceComputer to DestComputer.
+Attempts to copy tasks from SourceComputer to DestComputer.
 #>
 
 #Requires -Version 2

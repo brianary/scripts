@@ -1,34 +1,34 @@
-<#
-.Synopsis
-	Adds a VS Code MSSQL database connection to the repo.
+﻿<#
+.SYNOPSIS
+Adds a VS Code MSSQL database connection to the repo.
 
-.Parameter ProfileName
-	The name of the connection.
+.PARAMETER ProfileName
+The name of the connection.
 
-.Parameter ServerInstance
-	The name of a server (and optional instance) to connect and use for the query.
+.PARAMETER ServerInstance
+The name of a server (and optional instance) to connect and use for the query.
 
-.Parameter Database
-	The the database to connect to on the server.
+.PARAMETER Database
+The the database to connect to on the server.
 
-.Parameter UserName
-	The username to connect with. No password will be stored.
-	If no username is given, a trusted connection will be created.
+.PARAMETER UserName
+The username to connect with. No password will be stored.
+If no username is given, a trusted connection will be created.
 
-.Link
-	https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql
+.LINK
+https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql
 
-.Link
-	Get-VSCodeSetting.ps1
+.LINK
+Get-VSCodeSetting.ps1
 
-.Link
-	Set-VSCodeSetting.ps1
+.LINK
+Set-VSCodeSetting.ps1
 
-.Example
-	Add-VsCodeDatabaseConnection.ps1 ConnectionName ServerName\instance DatabaseName
+.EXAMPLE
+Add-VsCodeDatabaseConnection.ps1 ConnectionName ServerName\instance DatabaseName
 
-	Adds an MSSQL extension trusted connection named ConnectionName that
-	connects to the server ServerName\instance and database DatabaseName.
+Adds an MSSQL extension trusted connection named ConnectionName that
+connects to the server ServerName\instance and database DatabaseName.
 #>
 
 #Requires -Version 3

@@ -1,32 +1,32 @@
-<#
-.Synopsis
-	Returns the XPath of the location of an XML node.
+﻿<#
+.SYNOPSIS
+Returns the XPath of the location of an XML node.
 
-.Parameter XmlNode
-	An XML node to retrieve the XPath for.
+.PARAMETER XmlNode
+An XML node to retrieve the XPath for.
 
-.Inputs
-	System.Xml.XmlNode or property of that type named XmlNode or Node.
+.INPUTS
+System.Xml.XmlNode or property of that type named XmlNode or Node.
 
-.Outputs
-	System.Management.Automation.PSCustomObject with the following properties:
+.OUTPUTS
+System.Management.Automation.PSCustomObject with the following properties:
 
-	* XPath: The XPath that locates the node.
-	* Namespace: The namespace table used to select the node.
+* XPath: The XPath that locates the node.
+* Namespace: The namespace table used to select the node.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.xml.xmlnode
+.LINK
+https://docs.microsoft.com/dotnet/api/system.xml.xmlnode
 
-.Example
-	'<a><b c="value"/></a>' |Select-Xml //@c |Resolve-XPath.ps1
+.EXAMPLE
+'<a><b c="value"/></a>' |Select-Xml //@c |Resolve-XPath.ps1
 
-	/a/b/@c
+/a/b/@c
 
-.Example
-	'<a>one<!-- two -->three</a>' |Select-Xml '//text()' |Resolve-XPath.ps1
+.EXAMPLE
+'<a>one<!-- two -->three</a>' |Select-Xml '//text()' |Resolve-XPath.ps1
 
-	/a/text()[1]
-	/a/text()[2]
+/a/text()[1]
+/a/text()[2]
 #>
 
 #Requires -Version 3

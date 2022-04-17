@@ -1,50 +1,50 @@
 ﻿<#
-.Synopsis
-	Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+.SYNOPSIS
+Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 
-.Description
-	This script exports all database objects as scripts into a subdirectory with the same name as the database,
-	and further subdirectories by object type. The directory is deleted and recreated each time this script is
-	run, to clean up objects that have been deleted from the database.
+.DESCRIPTION
+This script exports all database objects as scripts into a subdirectory with the same name as the database,
+and further subdirectories by object type. The directory is deleted and recreated each time this script is
+run, to clean up objects that have been deleted from the database.
 
-	There are a default set of SMO scripting options set to do a typical export, though these may be overridden
-	(see the link below for a list of these options).
+There are a default set of SMO scripting options set to do a typical export, though these may be overridden
+(see the link below for a list of these options).
 
-	This does require SMO to be installed on the machine (it comes with SQL Management Studio).
+This does require SMO to be installed on the machine (it comes with SQL Management Studio).
 
-.Parameter Server
-	The name of the server (and instance) to connect to.
+.PARAMETER Server
+The name of the server (and instance) to connect to.
 
-.Parameter Database
-	The name of the database to connect to on the server.
+.PARAMETER Database
+The name of the database to connect to on the server.
 
-.Parameter Encoding
-	The file encoding to use for the SQL scripts.
+.PARAMETER Encoding
+The file encoding to use for the SQL scripts.
 
-.Parameter ScriptingOptions
-	Provides a list of boolean SMO ScriptingOptions properties to set to true.
+.PARAMETER ScriptingOptions
+Provides a list of boolean SMO ScriptingOptions properties to set to true.
 
-.Parameter SqlVersion
-	The SQL version to target when scripting.
-	By default, uses the version from the source server.
-	Versions greater than the source server's version may fail.
+.PARAMETER SqlVersion
+The SQL version to target when scripting.
+By default, uses the version from the source server.
+Versions greater than the source server's version may fail.
 
-.Component
-	Microsoft.SqlServer.Smo.Server
+.COMPONENT
+Microsoft.SqlServer.Smo.Server
 
-.Component
-	Microsoft.SqlServer.Management.Smo.ScriptingOptions
+.COMPONENT
+Microsoft.SqlServer.Management.Smo.ScriptingOptions
 
-.Link
-	https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
+.LINK
+https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
 
-.Link
-	https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
+.LINK
+https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
 
-.Example
-	Export-DatabaseScripts.ps1 ServerName\instance AdventureWorks2014
+.EXAMPLE
+Export-DatabaseScripts.ps1 ServerName\instance AdventureWorks2014
 
-	Outputs SQL scripts to files.
+Outputs SQL scripts to files.
 #>
 
 #Requires -Version 3

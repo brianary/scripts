@@ -1,44 +1,44 @@
 ﻿<#
-.Synopsis
-    Returns the specified part of the filename.
+.SYNOPSIS
+Returns the specified part of the filename.
 
-.Description
-    Split-FileName returns only the specified part of a filename: 
-    either the filename without extension (default) or extension.
-    It can also tell whether the filename has an extension.
+.DESCRIPTION
+Split-FileName returns only the specified part of a filename: 
+either the filename without extension (default) or extension.
+It can also tell whether the filename has an extension.
 
-.Parameter Path
-    A file path to extract a part of; the base name without extension by default.
+.PARAMETER Path
+A file path to extract a part of; the base name without extension by default.
 
-.Parameter HasExtension
-    Indicates that the path should be checked for the presence of an extension,
-    returning a boolean value.
+.PARAMETER HasExtension
+Indicates that the path should be checked for the presence of an extension,
+returning a boolean value.
 
-.Parameter Extension
-    Indicates the path's extension should be returned.
+.PARAMETER Extension
+Indicates the path's extension should be returned.
 
-.Inputs
-    System.String file path to parse.
+.INPUTS
+System.String file path to parse.
 
-.Outputs
-    System.String containing the base file name (or extension),
-    or System.Boolean if the -HasAttribute switch is present.
+.OUTPUTS
+System.String containing the base file name (or extension),
+or System.Boolean if the -HasAttribute switch is present.
 
-.Example
-    Split-FileName.ps1 readme.txt
+.EXAMPLE
+Split-FileName.ps1 readme.txt
 
-    readme
+readme
 
-.Example
-    Split-FileName.ps1 readme.txt -Extension
+.EXAMPLE
+Split-FileName.ps1 readme.txt -Extension
 
-    ․txt
-    (the leading . is included, but can't be entered as such in this example)
+․txt
+(the leading . is included, but can't be entered as such in this example)
 
-.Example
-    Split-FileName.ps1 readme.txt -HasExtension
+.EXAMPLE
+Split-FileName.ps1 readme.txt -HasExtension
 
-    True
+True
 #>
 
 [CmdletBinding(DefaultParameterSetName='__AllParameterSets')][OutputType([string])][OutputType([bool],ParameterSetName='HasExtension')] Param(

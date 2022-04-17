@@ -1,25 +1,25 @@
-<#
-.Synopsis
-	Returns a date/time as a named format.
+﻿<#
+.SYNOPSIS
+Returns a date/time as a named format.
 
-.Parameter Format
-	The format to serialize the date as.
+.PARAMETER Format
+The format to serialize the date as.
 
-.Parameter Date
-	The date/time value to format.
+.PARAMETER Date
+The date/time value to format.
 
-.Link
-	Get-Date
+.LINK
+Get-Date
 
-.Example
-	Format-Date Iso8601WeekDate 2021-01-20
+.EXAMPLE
+Format-Date Iso8601WeekDate 2021-01-20
 
-	2021-W03-3
+2021-W03-3
 
-.Example
-	'Feb 2, 2020 8:20 PM +00:00' |Format-Date Iso8601Z
+.EXAMPLE
+'Feb 2, 2020 8:20 PM +00:00' |Format-Date Iso8601Z
 
-	2020-02-02T20:20:00Z
+2020-02-02T20:20:00Z
 #>
 
 #Requires -Version 3

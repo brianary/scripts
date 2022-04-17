@@ -1,23 +1,23 @@
-<#
-.Synopsis
-	Displays a string, showing nonprintable characters.
+﻿<#
+.SYNOPSIS
+Displays a string, showing nonprintable characters.
 
-.Parameter InputObject
-	The string to show.
+.PARAMETER InputObject
+The string to show.
 
-.Parameter AltColor
-	The color to use for nonprintable chars.
+.PARAMETER AltColor
+The color to use for nonprintable chars.
 
-.Parameter AsSymbols
-	Print control characters as control picture symbols rather than hex values.
+.PARAMETER AsSymbols
+Print control characters as control picture symbols rather than hex values.
 
-.Inputs
-	System.Object to serialize with nonprintable characters made visible as a hex pair.
+.INPUTS
+System.Object to serialize with nonprintable characters made visible as a hex pair.
 
-.Example
-	Write-VisibleString.ps1 "a`tb`nc"
+.EXAMPLE
+Write-VisibleString.ps1 "a`tb`nc"
 
-	a 09 b 0a c
+a 09 b 0a c
 #>
 
 #Requires -Version 3

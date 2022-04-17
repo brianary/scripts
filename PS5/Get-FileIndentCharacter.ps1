@@ -1,35 +1,35 @@
-<#
-.Synopsis
-	Determines the indent characters used in a text file.
+﻿<#
+.SYNOPSIS
+Determines the indent characters used in a text file.
 
-.Parameter Path
-	The location of a file.
+.PARAMETER Path
+The location of a file.
 
-.Inputs
-	Any object with a Path or FullName property to use for a file location.
+.INPUTS
+Any object with a Path or FullName property to use for a file location.
 
-.Outputs
-	System.Management.Automation.PSCustomObject with the following properties:
+.OUTPUTS
+System.Management.Automation.PSCustomObject with the following properties:
 
-	* Path, a string containing the location of the file.
-	* Indents, one of: Tabs, Spaces, Mixed, Other, or None.
-	* HT, a count of the lines indented with tabs.
-	* SP, a count of the lines indented with spaces.
-	* MixedIndents, a count of the lines indented with multiple types of space characters.
-	* OtherIndents, a count of the lines indented with a space character other than tab or space.
+* Path, a string containing the location of the file.
+* Indents, one of: Tabs, Spaces, Mixed, Other, or None.
+* HT, a count of the lines indented with tabs.
+* SP, a count of the lines indented with spaces.
+* MixedIndents, a count of the lines indented with multiple types of space characters.
+* OtherIndents, a count of the lines indented with a space character other than tab or space.
 
-.Link
-	Select-String
+.LINK
+Select-String
 
-.Example
-	Get-FileIndentCharacter.ps1 Get-FileIndentCharacter.ps1
+.EXAMPLE
+Get-FileIndentCharacter.ps1 Get-FileIndentCharacter.ps1
 
-	Path         : A:\scripts\Get-FileIndentCharacter.ps1
-	Indents      : Tabs
-	HT           : 40
-	SP           : 0
-	MixedIndents : 0
-	OtherIndents : 0
+Path         : A:\scripts\Get-FileIndentCharacter.ps1
+Indents      : Tabs
+HT           : 40
+SP           : 0
+MixedIndents : 0
+OtherIndents : 0
 #>
 
 #Requires -Version 3

@@ -1,116 +1,116 @@
-<#
-.Synopsis
-    Exports IIS websites, app pools, and web apps as an idempotent PowerShell script to recreate them.
+﻿<#
+.SYNOPSIS
+Exports IIS websites, app pools, and web apps as an idempotent PowerShell script to recreate them.
 
-.Description
-    This script writes an import script that can be used to reproduce the IIS settings of the server
-    the export is run on.
+.DESCRIPTION
+This script writes an import script that can be used to reproduce the IIS settings of the server
+the export is run on.
 
-    The goal is to create an import script that is understandable, editable, can be stepped through,
-    and fails recoverably with intuitive remediation rather than failing catastrophically with
-    no remediation steps or clarity.
+The goal is to create an import script that is understandable, editable, can be stepped through,
+and fails recoverably with intuitive remediation rather than failing catastrophically with
+no remediation steps or clarity.
 
-    Special emphasis is made on supporting running the export on older versions of PowerShell & Windows
-    (IIS7+), with an expectation to run the import on a slightly newer version (IIS8+).
+Special emphasis is made on supporting running the export on older versions of PowerShell & Windows
+(IIS7+), with an expectation to run the import on a slightly newer version (IIS8+).
 
-.Parameter Path
-    File to write import script text to.
+.PARAMETER Path
+File to write import script text to.
 
-.Component
-    System.Web
+.COMPONENT
+System.Web
 
-.Link
-    https://chocolatey.org/
+.LINK
+https://chocolatey.org/
 
-.Link
-    https://docs.microsoft.com/en-us/iis/configuration/system.webserver/
+.LINK
+https://docs.microsoft.com/en-us/iis/configuration/system.webserver/
 
-.Link
-    https://docs.microsoft.com/en-us/iis/manage/powershell/powershell-snap-in-creating-web-sites-web-applications-virtual-directories-and-application-pools
+.LINK
+https://docs.microsoft.com/en-us/iis/manage/powershell/powershell-snap-in-creating-web-sites-web-applications-virtual-directories-and-application-pools
 
-.Link
-    https://blog.kloud.com.au/2013/04/18/an-overview-of-server-name-indication-sni-and-creating-an-iis-sni-web-ssl-binding-using-powershell-in-windows-server-2012/
+.LINK
+https://blog.kloud.com.au/2013/04/18/an-overview-of-server-name-indication-sni-and-creating-an-iis-sni-web-ssl-binding-using-powershell-in-windows-server-2012/
 
-.Link
-    https://stackoverflow.com/a/26391894/54323
+.LINK
+https://stackoverflow.com/a/26391894/54323
 
-.Link
-    https://docs.microsoft.com/en-us/iis/configuration/system.applicationHost/applicationPools/add/processModel
+.LINK
+https://docs.microsoft.com/en-us/iis/configuration/system.applicationHost/applicationPools/add/processModel
 
-.Link
-    https://docs.microsoft.com/en-us/iis/manage/powershell/powershell-snap-in-changing-simple-settings-in-configuration-sections
+.LINK
+https://docs.microsoft.com/en-us/iis/manage/powershell/powershell-snap-in-changing-simple-settings-in-configuration-sections
 
-.Link
-    https://stackoverflow.com/a/14879480/54323
+.LINK
+https://stackoverflow.com/a/14879480/54323
 
-.Link
-    https://stackoverflow.com/a/25807484/54323
+.LINK
+https://stackoverflow.com/a/25807484/54323
 
-.Link
-    https://blogs.iis.net/jeonghwan/examples-of-iis-powershell-cmdlets
+.LINK
+https://blogs.iis.net/jeonghwan/examples-of-iis-powershell-cmdlets
 
-.Link
-    https://docs.microsoft.com/en-us/iis/manage/powershell/powershell-snap-in-configuring-ssl-with-the-iis-powershell-snap-in
+.LINK
+https://docs.microsoft.com/en-us/iis/manage/powershell/powershell-snap-in-configuring-ssl-with-the-iis-powershell-snap-in
 
-.Link
-    https://github.com/PowerShell/xWebAdministration
+.LINK
+https://github.com/PowerShell/xWebAdministration
 
-.Link
-    https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509certificate2.aspx
+.LINK
+https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509certificate2.aspx
 
-.Link
-    https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509store.aspx
+.LINK
+https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509store.aspx
 
-.Link
-    https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509keystorageflags.aspx
+.LINK
+https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509keystorageflags.aspx
 
-.Link
-    https://msdn.microsoft.com/library/system.convert.aspx
+.LINK
+https://msdn.microsoft.com/library/system.convert.aspx
 
-.Link
-    Format-Certificate.ps1
+.LINK
+Format-Certificate.ps1
 
-.Link
-    Get-WebGlobalModule
+.LINK
+Get-WebGlobalModule
 
-.Link
-    New-WebAppPool
+.LINK
+New-WebAppPool
 
-.Link
-    Get-Website
+.LINK
+Get-Website
 
-.Link
-    New-Website
+.LINK
+New-Website
 
-.Link
-    Get-WebBinding
+.LINK
+Get-WebBinding
 
-.Link
-    New-WebBinding
+.LINK
+New-WebBinding
 
-.Link
-    Get-WebApplication
+.LINK
+Get-WebApplication
 
-.Link
-    New-WebApplication
+.LINK
+New-WebApplication
 
-.Link
-    Set-WebConfigurationProperty
+.LINK
+Set-WebConfigurationProperty
 
-.Link
-    Write-Progress
+.LINK
+Write-Progress
 
-.Link
-    Get-Item
+.LINK
+Get-Item
 
-.Link
-    Get-ItemProperty
+.LINK
+Get-ItemProperty
 
-.Link
-    Set-ItemProperty
+.LINK
+Set-ItemProperty
 
-.Example
-    Export-WebConfiguration.ps1
+.EXAMPLE
+Export-WebConfiguration.ps1
 #>
 
 #Requires -Version 3
@@ -135,8 +135,8 @@ function Export-Header
 {
     @"
 <#
-.Synopsis
-    Imports IIS websites, app pools, and web apps exported from $env:ComputerName
+.SYNOPSIS
+Imports IIS websites, app pools, and web apps exported from $env:ComputerName
 #>
 
 #Requires -Version 3

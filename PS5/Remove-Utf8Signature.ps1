@@ -1,26 +1,26 @@
-<#
-.Synopsis
-    Removes the utf-8 signature (BOM) from a file.
+﻿<#
+.SYNOPSIS
+Removes the utf-8 signature (BOM) from a file.
 
-.Parameter Path
-    The file to remove the utf-8 signature from.
+.PARAMETER Path
+The file to remove the utf-8 signature from.
 
-.Inputs
-	System.String containing the path to the file to be updated.
+.INPUTS
+System.String containing the path to the file to be updated.
 
-.Link
-    https://msdn.microsoft.com/library/dd383463.aspx
+.LINK
+https://msdn.microsoft.com/library/dd383463.aspx
 
-.Link
-    https://msdn.microsoft.com/library/s064f8w2.aspx
+.LINK
+https://msdn.microsoft.com/library/s064f8w2.aspx
 
-.Link
-    Get-Content
+.LINK
+Get-Content
 
-.Example
-    Remove-Utf8Signature.ps1 README.md
+.EXAMPLE
+Remove-Utf8Signature.ps1 README.md
 
-    Removes the EF BB BF at the beginning of the file, warns if it isn't found.
+Removes the EF BB BF at the beginning of the file, warns if it isn't found.
 #>
 
 #Requires -Version 4

@@ -1,31 +1,31 @@
-<#
-.Synopsis
-	Performs an operation against each item in a collection of input objects, with a progress bar.
+﻿<#
+.SYNOPSIS
+Performs an operation against each item in a collection of input objects, with a progress bar.
 
-.Parameter Activity
-	The progress title text to display.
+.PARAMETER Activity
+The progress title text to display.
 
-.Parameter Status
-	A script block to generate status text from each $PSItem ($_).
+.PARAMETER Status
+A script block to generate status text from each $PSItem ($_).
 
-.Parameter Process
-	A script block to execute for each $PSItem ($_).
+.PARAMETER Process
+A script block to execute for each $PSItem ($_).
 
-.Parameter InputObject
-	An item to process.
+.PARAMETER InputObject
+An item to process.
 
-.Inputs
-	System.Management.Automation.PSObject to process.
+.INPUTS
+System.Management.Automation.PSObject to process.
 
-.Example
-	1..10 |ForEach-Progress.ps1 -Activity 'Processing' {"$_"} {Write-Host "item: $_"; sleep 2}
-	
-	Provides a progress indicator for a script block.
-	
-.Example
-	1..10 |ForEach-Progress.ps1 |foreach {Write-Host "item: $_"; sleep 2}
-	
-	Same as previous example, but adds a progress indicator within an existing pipeline.
+.EXAMPLE
+1..10 |ForEach-Progress.ps1 -Activity 'Processing' {"$_"} {Write-Host "item: $_"; sleep 2}
+
+Provides a progress indicator for a script block.
+
+.EXAMPLE
+1..10 |ForEach-Progress.ps1 |foreach {Write-Host "item: $_"; sleep 2}
+
+Same as previous example, but adds a progress indicator within an existing pipeline.
 #>
 
 #Requires -Version 3

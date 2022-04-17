@@ -1,51 +1,51 @@
 ﻿<#
-.Synopsis
-	Returns choice selected from a list of options.
+.SYNOPSIS
+Returns choice selected from a list of options.
 
-.Parameter Choices
-	A list of choice strings. Use & in front of a letter to make it a hotkey.
+.PARAMETER Choices
+A list of choice strings. Use & in front of a letter to make it a hotkey.
 
-.Parameter ChoiceHash
-	An ordered hash of choices mapped to help text descriptions.
-	Use & in front of a letter to make it a hotkey.
+.PARAMETER ChoiceHash
+An ordered hash of choices mapped to help text descriptions.
+Use & in front of a letter to make it a hotkey.
 
-.Parameter Caption
-	A title to use for the prompt.
+.PARAMETER Caption
+A title to use for the prompt.
 
-.Parameter Message
-	Instructional text to provide in the prompt.
+.PARAMETER Message
+Instructional text to provide in the prompt.
 
-.Parameter DefaultIndex
-	The index of the default choice.
-	Use -1 to for no default.
-	Otherwise, the first item (index 0) is the default.
+.PARAMETER DefaultIndex
+The index of the default choice.
+Use -1 to for no default.
+Otherwise, the first item (index 0) is the default.
 
-.Inputs
-	System.String containing a choice to offer.
+.INPUTS
+System.String containing a choice to offer.
 
-.Outputs
-	System.String containing the choice that was selected.
+.OUTPUTS
+System.String containing the choice that was selected.
 
-.Link
-	https://msdn.microsoft.com/library/system.management.automation.host.pshostuserinterface.promptforchoice.aspx
+.LINK
+https://msdn.microsoft.com/library/system.management.automation.host.pshostuserinterface.promptforchoice.aspx
 
-.Example
-	Read-Choice.ps1 one,two,three
+.EXAMPLE
+Read-Choice.ps1 one,two,three
 
-	Please select:
-	[] one  [] two  [] three  [?] Help (default is "one"):
-	one
+Please select:
+[] one  [] two  [] three  [?] Help (default is "one"):
+one
 
-.Example
-	Read-Choice.ps1 ([ordered]@{'&one'='first thing';'&two'='second thing';'t&hree'='third thing'}) -Message 'Pick:'
+.EXAMPLE
+Read-Choice.ps1 ([ordered]@{'&one'='first thing';'&two'='second thing';'t&hree'='third thing'}) -Message 'Pick:'
 
-	Pick:
-	[O] one  [T] two  [H] three  [?] Help (default is "O"): ?
-	O - first thing
-	T - second thing
-	H - third thing
-	[O] one  [T] two  [H] three  [?] Help (default is "O"):
-	&one
+Pick:
+[O] one  [T] two  [H] three  [?] Help (default is "O"): ?
+O - first thing
+T - second thing
+H - third thing
+[O] one  [T] two  [H] three  [?] Help (default is "O"):
+&one
 #>
 
 #Requires -Version 3

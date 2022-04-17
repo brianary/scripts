@@ -1,20 +1,20 @@
-<#
-.Synopsis
-	Convert a CimInstance object to a PSObject.
+﻿<#
+.SYNOPSIS
+Convert a CimInstance object to a PSObject.
 
-.Parameter InputObject
-	The CimInstance object to convert to a PSObject.
+.PARAMETER InputObject
+The CimInstance object to convert to a PSObject.
 
-.Inputs
-	Microsoft.Management.Infrastructure.CimInstance to convert to a PSObject.
+.INPUTS
+Microsoft.Management.Infrastructure.CimInstance to convert to a PSObject.
 
-.Outputs
-	PSObject converted from the CimInstance entered.
+.OUTPUTS
+PSObject converted from the CimInstance entered.
 
-.Example
-	$tasks = Get-ScheduledTask |ConvertFrom-CimInstance.ps1
+.EXAMPLE
+$tasks = Get-ScheduledTask |ConvertFrom-CimInstance.ps1
 
-	Gets the scheduled tasks as PSObjects that support tab completion and can be serialized and exported.
+Gets the scheduled tasks as PSObjects that support tab completion and can be serialized and exported.
 #>
 
 #Requires -Version 3

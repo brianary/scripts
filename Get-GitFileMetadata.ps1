@@ -1,34 +1,34 @@
-<#
-.Synopsis
-	Returns the creation and last modification metadata for a file in a git repo.
+﻿<#
+.SYNOPSIS
+Returns the creation and last modification metadata for a file in a git repo.
 
-.Parameter Path
-	The path (or paths) to get metadata for.
+.PARAMETER Path
+The path (or paths) to get metadata for.
 
-.Parameter Recurse
-	Recurse into subdirectories.
+.PARAMETER Recurse
+Recurse into subdirectories.
 
-.Link
-	Use-Command.ps1
+.LINK
+Use-Command.ps1
 
-.Link
-	Get-ChildItem
+.LINK
+Get-ChildItem
 
-.Link
-	Resolve-Path
+.LINK
+Resolve-Path
 
-.Example
-	Get-GitFileMetadata.ps1 README.md
+.EXAMPLE
+Get-GitFileMetadata.ps1 README.md
 
-	Path         : .\README.md
-	CreateCommit : 1fde7af
-	CreateAuthor : Brian Lalonde
-	CreateEmail  : brianary@example.com
-	CreateDate   : 01/19/2015 11:44:15
-	LastCommit   : dbe27ba
-	LastAuthor   : Brian Lalonde
-	LastEmail    : brianary@example.com
-	LastDate     : 12/07/2020 20:17:15
+Path         : .\README.md
+CreateCommit : 1fde7af
+CreateAuthor : Brian Lalonde
+CreateEmail  : brianary@example.com
+CreateDate   : 01/19/2015 11:44:15
+LastCommit   : dbe27ba
+LastAuthor   : Brian Lalonde
+LastEmail    : brianary@example.com
+LastDate     : 12/07/2020 20:17:15
 #>
 
 #Requires -Version 3

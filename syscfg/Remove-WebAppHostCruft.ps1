@@ -1,20 +1,20 @@
-<#
-.Synopsis
-    Removes unused web application settings that have accumulated.
+﻿<#
+.SYNOPSIS
+Removes unused web application settings that have accumulated.
 
-.Link
-    Get-Website
+.LINK
+Get-Website
 
-.Link
-    Get-WebApplication
+.LINK
+Get-WebApplication
 
-.Link
-    Remove-Xml.ps1
+.LINK
+Remove-Xml.ps1
 
-.Example
-    Remove-WebAppHostCruft.ps1 -WhatIf
+.EXAMPLE
+Remove-WebAppHostCruft.ps1 -WhatIf
 
-    Shows what settings would be removed.
+Shows what settings would be removed.
 #>
 
 #Requires -Version 3

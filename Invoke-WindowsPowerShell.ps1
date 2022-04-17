@@ -1,37 +1,37 @@
-<#
-.Synopsis
-	Runs commands in Windows PowerShell (typically from PowerShell Core).
+﻿<#
+.SYNOPSIS
+Runs commands in Windows PowerShell (typically from PowerShell Core).
 
-.Parameter CommandBlock
-	A script block to run.
+.PARAMETER CommandBlock
+A script block to run.
 
-.Parameter BlockArgs
-	Parameters to the script block.
+.PARAMETER BlockArgs
+Parameters to the script block.
 
-.Parameter CommandText
-	The text of the command to run.
+.PARAMETER CommandText
+The text of the command to run.
 
-.Link
-	Use-Command.ps1
+.LINK
+Use-Command.ps1
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Example
-	Invoke-WindowsPowerShell.ps1 '$PSVersionTable.PSEdition'
+.EXAMPLE
+Invoke-WindowsPowerShell.ps1 '$PSVersionTable.PSEdition'
 
-	Desktop
+Desktop
 
-.Example
-	Invoke-WindowsPowerShell.ps1 {Param($n); Get-WmiObject Win32_Process -Filter "Name like '$n'" |foreach ProcessName} power%
+.EXAMPLE
+Invoke-WindowsPowerShell.ps1 {Param($n); Get-WmiObject Win32_Process -Filter "Name like '$n'" |foreach ProcessName} power%
 
-	PowerToys.exe
-	PowerToys.Awake.exe
-	PowerToys.FancyZones.exe
-	PowerToys.KeyboardManagerEngine.exe
-	PowerLauncher.exe
-	powershell.exe
-	powershell.exe
+PowerToys.exe
+PowerToys.Awake.exe
+PowerToys.FancyZones.exe
+PowerToys.KeyboardManagerEngine.exe
+PowerLauncher.exe
+powershell.exe
+powershell.exe
 #>
 
 #Requires -Version 5

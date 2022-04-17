@@ -1,9 +1,9 @@
 ﻿<#
-.Synopsis
-	Generate README.md file for the scripts repo.
+.SYNOPSIS
+Generate README.md file for the scripts repo.
 
-.Link
-	https://www.microsoft.com/download/details.aspx?id=40760
+.LINK
+https://www.microsoft.com/download/details.aspx?id=40760
 #>
 
 #Requires -Version 3

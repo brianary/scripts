@@ -1,25 +1,25 @@
-<#
-.Synopsis
-	Indicates that a file contains binary data.
+﻿<#
+.SYNOPSIS
+Indicates that a file contains binary data.
 
-.Parameter Path
-	A file to test.
+.PARAMETER Path
+A file to test.
 
-.Outputs
-	System.Boolean indicating that the file contains binary data.
+.OUTPUTS
+System.Boolean indicating that the file contains binary data.
 
-.Link
-	Test-TextFile.ps1
+.LINK
+Test-TextFile.ps1
 
-.Example
-	Test-BinaryFile.ps1 avatar.jpg
+.EXAMPLE
+Test-BinaryFile.ps1 avatar.jpg
 
-	True
+True
 
-.Example
-	Test-BinaryFile.ps1 README.md
+.EXAMPLE
+Test-BinaryFile.ps1 README.md
 
-	False
+False
 #>
 
 #Requires -Version 3

@@ -1,32 +1,32 @@
-<#
-.Synopsis
-	Enable TLS versions in Outlook on Windows 7.
+﻿<#
+.SYNOPSIS
+Enable TLS versions in Outlook on Windows 7.
 
-.Parameter Protocols
-	The Protocols to use. SSL versions are ignored, only TLS versions are used.
+.PARAMETER Protocols
+The Protocols to use. SSL versions are ignored, only TLS versions are used.
 
-.Link
-	https://support.microsoft.com/help/3140245/update-to-enable-tls-1-1-and-tls-1-2-as-a-default-secure-protocols-in
+.LINK
+https://support.microsoft.com/help/3140245/update-to-enable-tls-1-1-and-tls-1-2-as-a-default-secure-protocols-in
 
-.Link
-	https://blogs.technet.microsoft.com/schrimsher/2016/07/08/enabling-tls-1-1-and-1-2-in-outlook-on-windows-7/
+.LINK
+https://blogs.technet.microsoft.com/schrimsher/2016/07/08/enabling-tls-1-1-and-1-2-in-outlook-on-windows-7/
 
-.Link
-	http://thelowercasew.com/script-to-disable-protocols-older-than-tls-1-2-and-turn-off-rdp
+.LINK
+http://thelowercasew.com/script-to-disable-protocols-older-than-tls-1-2-and-turn-off-rdp
 
-.Link
-	Test-Variable.ps1
+.LINK
+Test-Variable.ps1
 
-.Link
-	Set-RegistryValue
+.LINK
+Set-RegistryValue
 
-.Link
-	Set-ItemProperty
+.LINK
+Set-ItemProperty
 
-.Example
-	Set-DefaultSecurityProtocols.ps1
+.EXAMPLE
+Set-DefaultSecurityProtocols.ps1
 
-	Enables TLS 1.2 only by default.
+Enables TLS 1.2 only by default.
 #>
 
 #Requires -Version 4

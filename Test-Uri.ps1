@@ -1,28 +1,28 @@
 ﻿<#
-.Synopsis
-	Determines whether a string is a valid URI.
+.SYNOPSIS
+Determines whether a string is a valid URI.
 
-.Parameter InputObject
-    The string to test.
+.PARAMETER InputObject
+The string to test.
 
-.Parameter UriKind
-    What kind of URI to test for: Absolute, Relative, or RelativeOrAbsolute.
+.PARAMETER UriKind
+What kind of URI to test for: Absolute, Relative, or RelativeOrAbsolute.
 
-.Inputs
-	System.String value to test for a valid URI format.
+.INPUTS
+System.String value to test for a valid URI format.
 
-.Outputs
-	System.Boolean indicating that the string can be parsed as a URI.
+.OUTPUTS
+System.Boolean indicating that the string can be parsed as a URI.
 
-.Example
-	Test-Uri.ps1 http://example.org
+.EXAMPLE
+Test-Uri.ps1 http://example.org
 
-    True
+True
 
-.Example
-    Test-Uri.ps1 0
+.EXAMPLE
+Test-Uri.ps1 0
 
-    False
+False
 #>
 
 #Requires -Version 3

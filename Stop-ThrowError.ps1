@@ -1,98 +1,98 @@
-<#
-.Synopsis
-	Throws a better error than "throw".
+﻿<#
+.SYNOPSIS
+Throws a better error than "throw".
 
-.Description
-	The PowerShell "throw" keyword doesn't do a good job of providing actionable
-	detail or context:
+.DESCRIPTION
+The PowerShell "throw" keyword doesn't do a good job of providing actionable
+detail or context:
 
-		Unable to remove root node.
-		At C:\Scripts\PS5\Remove-Xml.ps1:34 char:37
-		+ ...  if($node.ParentNode -eq $null) {throw 'Unable to remove root node.'}
-		+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			+ CategoryInfo          : OperationStopped: (Unable to remove root node.:String) [], RuntimeException
-			+ FullyQualifiedErrorId : Unable to remove root node.
+| Unable to remove root node.
+| At C:\Scripts\PS5\Remove-Xml.ps1:34 char:37
+| + ...  if($node.ParentNode -eq $null) {throw 'Unable to remove root node.'}
+| +                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+|     + CategoryInfo          : OperationStopped: (Unable to remove root node.:String) [], RuntimeException
+|     + FullyQualifiedErrorId : Unable to remove root node.
 
-	It only shows where the "throw" was used in the called script!
+It only shows where the "throw" was used in the called script!
 
-	Using $PSCmdlet.ThrowTerminatingError() does a much better job:
+Using $PSCmdlet.ThrowTerminatingError() does a much better job:
 
-		C:\Scripts\PS5\Remove-Xml.ps1 : Unable to remove root node
-		Parameter name: SelectXmlInfo
-		At C:\Scripts\Test-Error.ps1:2 char:23
-		+ '<a/>' |Select-Xml / |Remove-Xml.ps1
-		+                       ~~~~~~~~~~~~~~
-			+ CategoryInfo          : InvalidArgument: (<a />:SelectXmlInfo) [Remove-Xml.ps1], ArgumentException
-			+ FullyQualifiedErrorId : RootRequired,Remove-Xml.ps1
+| C:\Scripts\PS5\Remove-Xml.ps1 : Unable to remove root node
+| Parameter name: SelectXmlInfo
+| At C:\Scripts\Test-Error.ps1:2 char:23
+| + '<a/>' |Select-Xml / |Remove-Xml.ps1
+| +                       ~~~~~~~~~~~~~~
+|     + CategoryInfo          : InvalidArgument: (<a />:SelectXmlInfo) [Remove-Xml.ps1], ArgumentException
+|     + FullyQualifiedErrorId : RootRequired,Remove-Xml.ps1
 
-	Now you can see where the trouble is in the calling script!
+Now you can see where the trouble is in the calling script!
 
-	However, contructing an exception, then using that to construct an error with the right ID & category &
-	target object, then using that to call ThrowTerminatingError() is pretty inconvenient.
+However, contructing an exception, then using that to construct an error with the right ID & category &
+target object, then using that to call ThrowTerminatingError() is pretty inconvenient.
 
-	This script combines that process into a few simple parameters.
+This script combines that process into a few simple parameters.
 
-.Parameter ExceptionType
-	The type of a Exception class to instantiate as part of the error.
+.PARAMETER ExceptionType
+The type of a Exception class to instantiate as part of the error.
 
-.Parameter ExceptionArguments
-	The constructor parameters for the exception class specified by ExceptionTypeName.
+.PARAMETER ExceptionArguments
+The constructor parameters for the exception class specified by ExceptionTypeName.
 
-.Parameter ErrorCategory
-	The error's category, as an enumeration value.
+.PARAMETER ErrorCategory
+The error's category, as an enumeration value.
 
-.Parameter TargetObject
-	The object in context when the error happened.
+.PARAMETER TargetObject
+The object in context when the error happened.
 
-.Parameter ErrorId
-	An string unique to the script that identifies the error.
-	By default this will use the line number it is called from.
+.PARAMETER ErrorId
+An string unique to the script that identifies the error.
+By default this will use the line number it is called from.
 
-.Parameter Format
-	The data format the string failed to parse as.
+.PARAMETER Format
+The data format the string failed to parse as.
 
-.Parameter InputString
-	The string that failed to parse.
+.PARAMETER InputString
+The string that failed to parse.
 
-.Parameter Argument
-	The parameter name that had a bad value.
+.PARAMETER Argument
+The parameter name that had a bad value.
 
-.Parameter OperationContext
-	An object containing the state that failed to process.
+.PARAMETER OperationContext
+An object containing the state that failed to process.
 
-.Parameter SearchContext
-	An object containing the search detail that failed.
+.PARAMETER SearchContext
+An object containing the search detail that failed.
 
-.Parameter NotImplemented
-	Indicates that the exception represents incomplete functionality.
+.PARAMETER NotImplemented
+Indicates that the exception represents incomplete functionality.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.management.automation.cmdlet.throwterminatingerror
+.LINK
+https://docs.microsoft.com/dotnet/api/system.management.automation.cmdlet.throwterminatingerror
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.management.automation.errorrecord.-ctor
+.LINK
+https://docs.microsoft.com/dotnet/api/system.management.automation.errorrecord.-ctor
 
-.Link
-	Get-Variable
+.LINK
+Get-Variable
 
-.Link
-	New-Object
+.LINK
+New-Object
 
-.Example
-	Stop-ThrowError.ps1 'Unable to remove root node' -Argument SelectXmlInfo
+.EXAMPLE
+Stop-ThrowError.ps1 'Unable to remove root node' -Argument SelectXmlInfo
 
-	C:\Scripts\PS5\Remove-Xml.ps1 : Unable to remove root node
-	Parameter name: SelectXmlInfo
-	At C:\Scripts\Test-Error.ps1:2 char:23
-	+ '<a/>' |Select-Xml / |Remove-Xml.ps1
-	+                       ~~~~~~~~~~~~~~
-		+ CategoryInfo          : InvalidArgument: (<a />:SelectXmlInfo) [Remove-Xml.ps1], ArgumentException
-		+ FullyQualifiedErrorId : SelectXmlInfo,Remove-Xml.ps1
+| C:\Scripts\PS5\Remove-Xml.ps1 : Unable to remove root node
+| Parameter name: SelectXmlInfo
+| At C:\Scripts\Test-Error.ps1:2 char:23
+| + '<a/>' |Select-Xml / |Remove-Xml.ps1
+| +                       ~~~~~~~~~~~~~~
+|     + CategoryInfo          : InvalidArgument: (<a />:SelectXmlInfo) [Remove-Xml.ps1], ArgumentException
+|     + FullyQualifiedErrorId : SelectXmlInfo,Remove-Xml.ps1
 
-.Example
-	if(Test-Uri.ps1 $u) {[uri]$u} else {Stop-ThrowError.ps1 'Bad URL' -Format URL -InputString $u}
+.EXAMPLE
+if(Test-Uri.ps1 $u) {[uri]$u} else {Stop-ThrowError.ps1 'Bad URL' -Format URL -InputString $u}
 
-	(Fails for non-uri values of $u.)
+(Fails for non-uri values of $u.)
 #>
 
 #Requires -Version 3

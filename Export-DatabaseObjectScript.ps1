@@ -1,89 +1,89 @@
 ﻿<#
-.Synopsis
-	Exports MS SQL script for an object from the given server.
+.SYNOPSIS
+Exports MS SQL script for an object from the given server.
 
-.Description
-	This allows exporting a single database object to a SQL script, rather than
-	a whole database as Export-DatabaseScripts.ps1 does.
+.DESCRIPTION
+This allows exporting a single database object to a SQL script, rather than
+a whole database as Export-DatabaseScripts.ps1 does.
 
-	It can be particularly useful for creating an object-drop script, with all dependencies.
+It can be particularly useful for creating an object-drop script, with all dependencies.
 
-.Parameter Server
-	The name of the server (and instance) to connect to.
+.PARAMETER Server
+The name of the server (and instance) to connect to.
 
-.Parameter Database
-	The name of the database to connect to on the server.
+.PARAMETER Database
+The name of the database to connect to on the server.
 
-.Parameter Urn
-	The Urn of the database object to script.
-	Example: "Server[@Name='ServerName\Instance']/Database[@Name='DatabaseName']/Table[@Name='TableName' and @Schema='dbo']"
+.PARAMETER Urn
+The Urn of the database object to script.
+Example: "Server[@Name='ServerName\Instance']/Database[@Name='DatabaseName']/Table[@Name='TableName' and @Schema='dbo']"
 
-.Parameter Table
-	The unquoted name of the table to script.
-	Resolved using the Schema parameter.
+.PARAMETER Table
+The unquoted name of the table to script.
+Resolved using the Schema parameter.
 
-.Parameter View
-	The unquoted name of the view to script.
-	Resolved using the Schema parameter.
+.PARAMETER View
+The unquoted name of the view to script.
+Resolved using the Schema parameter.
 
-.Parameter StoredProcedure
-	The unquoted name of the stored procedure to script.
-	Resolved using the Schema parameter.
+.PARAMETER StoredProcedure
+The unquoted name of the stored procedure to script.
+Resolved using the Schema parameter.
 
-.Parameter UserDefinedFunction
-	The unquoted name of the user defined function to script.
-	Resolved using the Schema parameter.
+.PARAMETER UserDefinedFunction
+The unquoted name of the user defined function to script.
+Resolved using the Schema parameter.
 
-.Parameter Schema
-	The unquoted name of the schema to use with the Table, View, StoredProcedure, or UserDefinedFunction parameters.
-	Defaults to dbo.
+.PARAMETER Schema
+The unquoted name of the schema to use with the Table, View, StoredProcedure, or UserDefinedFunction parameters.
+Defaults to dbo.
 
-.Parameter FilePath
-	The file to export the script to.
+.PARAMETER FilePath
+The file to export the script to.
 
-.Parameter Encoding
-	The file encoding to use for the SQL scripts.
+.PARAMETER Encoding
+The file encoding to use for the SQL scripts.
 
-.Parameter Append
-	Indicates the file should be appended to, rather than replaced.
-	Useful when piping a list of objects to be scripted to a file.
+.PARAMETER Append
+Indicates the file should be appended to, rather than replaced.
+Useful when piping a list of objects to be scripted to a file.
 
-.Parameter ScriptingOptions
-	Provides a list of boolean SMO ScriptingOptions properties to set to true.
+.PARAMETER ScriptingOptions
+Provides a list of boolean SMO ScriptingOptions properties to set to true.
 
-.Parameter SqlVersion
-	The SQL version to target when scripting.
-	By default, uses the version from the source server.
-	Versions greater than the source server's version may fail.
+.PARAMETER SqlVersion
+The SQL version to target when scripting.
+By default, uses the version from the source server.
+Versions greater than the source server's version may fail.
 
-.Inputs
-	System.Data.DataRow, INFORMATION_SCHEMA.TABLES or INFORMATION_SCHEMA.ROUTINES records.
+.INPUTS
+System.Data.DataRow, INFORMATION_SCHEMA.TABLES or INFORMATION_SCHEMA.ROUTINES records.
 
-.Component
-	Microsoft.SqlServer.Smo.Server
+.COMPONENT
+Microsoft.SqlServer.Smo.Server
 
-.Component
-	Microsoft.SqlServer.Management.Smo.ScriptingOptions
+.COMPONENT
+Microsoft.SqlServer.Management.Smo.ScriptingOptions
 
-.Link
-	Export-DatabaseScripts.ps1
+.LINK
+Export-DatabaseScripts.ps1
 
-.Link
-	https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
+.LINK
+https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
 
-.Link
-	https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
+.LINK
+https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
 
-.Link
-	https://msdn.microsoft.com/library/cc646021.aspx
+.LINK
+https://msdn.microsoft.com/library/cc646021.aspx
 
-.Example
-	Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath Sales.Customer.sql
-	Exports table creation script to Sales.Customer.sql as UTF8.
+.EXAMPLE
+Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath Sales.Customer.sql
+Exports table creation script to Sales.Customer.sql as UTF8.
 
-.Example
-	Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath DropCustomer.sql ScriptDrops WithDependencies SchemaQualify IncludeDatabaseContext
-	Exports drop script of Sales.Customer and dependencies to DropCustomer.sql.
+.EXAMPLE
+Export-DatabaseObjectScript.ps1 ServerName\instance AdventureWorks2014 -Table Customer -Schema Sales -FilePath DropCustomer.sql ScriptDrops WithDependencies SchemaQualify IncludeDatabaseContext
+Exports drop script of Sales.Customer and dependencies to DropCustomer.sql.
 #>
 
 #Requires -Version 3

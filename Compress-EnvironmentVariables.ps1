@@ -1,14 +1,14 @@
-<#
-.Synopsis
-	Replaces each of the longest matching parts of a string with an embedded environment variable with that value.
+﻿<#
+.SYNOPSIS
+Replaces each of the longest matching parts of a string with an embedded environment variable with that value.
 
-.Parameter Value
-	The string to generalize with environment variable substitution.
+.PARAMETER Value
+The string to generalize with environment variable substitution.
 
-.Example
-	Compress-EnvironmentVariables.ps1 'C:\Program Files\Git\bin\git.exe'
+.EXAMPLE
+Compress-EnvironmentVariables.ps1 'C:\Program Files\Git\bin\git.exe'
 
-	%ProgramFiles%\Git\bin\git.exe
+%ProgramFiles%\Git\bin\git.exe
 #>
 
 #Requires -Version 3

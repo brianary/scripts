@@ -1,30 +1,30 @@
-<#
-.Synopsis
-    Looks up DNS info, given a hostname or address.
+﻿<#
+.SYNOPSIS
+Looks up DNS info, given a hostname or address.
 
-.Parameter HostName
-    A host name or address to look up.
+.PARAMETER HostName
+A host name or address to look up.
 
-.Parameter OnlyAddresses
-    Indicates that only the string versions of addresses belonging to the specified family should be returned.
-	"Unknown" returns all addresses.
+.PARAMETER OnlyAddresses
+Indicates that only the string versions of addresses belonging to the specified family should be returned.
+"Unknown" returns all addresses.
 
-.Inputs
-	System.String of host names to look up.
+.INPUTS
+System.String of host names to look up.
 
-.Outputs
-	System.Net.IPHostEntry of host DNS entries, or
-	System.String of network addresses found.
+.OUTPUTS
+System.Net.IPHostEntry of host DNS entries, or
+System.String of network addresses found.
 
-.Link
-    https://msdn.microsoft.com/library/ms143998.aspx
+.LINK
+https://msdn.microsoft.com/library/ms143998.aspx
 
-.Example
-    Get-Dns.ps1 www.google.com
+.EXAMPLE
+Get-Dns.ps1 www.google.com
 
-    HostName       Aliases AddressList
-    --------       ------- -----------
-    www.google.com {}      {172.217.10.132}
+HostName       Aliases AddressList
+--------       ------- -----------
+www.google.com {}      {172.217.10.132}
 #>
 
 [CmdletBinding()][OutputType([Net.IPHostEntry],[string])] Param(

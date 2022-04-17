@@ -1,36 +1,36 @@
-<#
-.Synopsis
-	Displays a formatted date using powerline font characters.
+﻿<#
+.SYNOPSIS
+Displays a formatted date using powerline font characters.
 
-.Parameter Format
-	The format to serialize the date as.
+.PARAMETER Format
+The format to serialize the date as.
 
-.Parameter Date
-	The date/time value to format.
+.PARAMETER Date
+The date/time value to format.
 
-.Parameter Separator
-	The separator to use between formatted dates.
+.PARAMETER Separator
+The separator to use between formatted dates.
 
-.Parameter ForegroundColor
-	The foreground console color to use.
+.PARAMETER ForegroundColor
+The foreground console color to use.
 
-.Parameter BackgroundColor
-	The background console color to use.
+.PARAMETER BackgroundColor
+The background console color to use.
 
-.Link
-	Get-Unicode.ps1
+.LINK
+Get-Unicode.ps1
 
-.Link
-	Format-Date.ps1
+.LINK
+Format-Date.ps1
 
-.Link
-	Get-Date
+.LINK
+Get-Date
 
-.Example
-	Show-Time.ps1 Iso8601Z Iso8601WeekDate Iso8601OrdinalDate -Separator ' * '
+.EXAMPLE
+Show-Time.ps1 Iso8601Z Iso8601WeekDate Iso8601OrdinalDate -Separator ' * '
 
-	( 2020-12-08T03:59:39Z * 2020-W50-1 * 2020-342 )
-	(but using powerline graphics)
+( 2020-12-08T03:59:39Z * 2020-W50-1 * 2020-342 )
+(but using powerline graphics)
 #>
 
 #Requires -Version 3

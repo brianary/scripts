@@ -1,23 +1,23 @@
-<#
-.Synopsis
-	Rename a git repository branch.
+﻿<#
+.SYNOPSIS
+Rename a git repository branch.
 
-.Parameter NewName
-	The new branch name.
+.PARAMETER NewName
+The new branch name.
 
-.Link
-	https://docs.github.com/en/github/administering-a-repository/managing-branches-in-your-repository/renaming-a-branch#updating-a-local-clone-after-a-branch-name-changes
+.LINK
+https://docs.github.com/en/github/administering-a-repository/managing-branches-in-your-repository/renaming-a-branch#updating-a-local-clone-after-a-branch-name-changes
 
-.Link
-	https://github.com/github/renaming
+.LINK
+https://github.com/github/renaming
 
-.Link
-	Use-Command.ps1
+.LINK
+Use-Command.ps1
 
-.Example
-	Rename-GitHubLocalBranch.ps1 master main
+.EXAMPLE
+Rename-GitHubLocalBranch.ps1 master main
 
-	Rename the master branch to main.
+Rename the master branch to main.
 #>
 
 #Requires -Version 3

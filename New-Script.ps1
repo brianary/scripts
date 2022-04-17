@@ -1,80 +1,80 @@
-<#
-.Synopsis
-    Creates a simple boilerplate script.
+﻿<#
+.SYNOPSIS
+Creates a simple boilerplate script.
 
-.Parameter NameVerb
-    The verb prefix name of the script, e.g. Get or Update or Add.
+.PARAMETER NameVerb
+The verb prefix name of the script, e.g. Get or Update or Add.
 
-.Parameter NameNoun
-    The noun part of the name of the script.
+.PARAMETER NameNoun
+The noun part of the name of the script.
 
-.Parameter Synopsis
-    A one-line description of the purpose of the script.
+.PARAMETER Synopsis
+A one-line description of the purpose of the script.
 
-.Parameter Parameters
-    A runtime parameter dictionary $DynamicParams created via Add-DynamicParam.ps1
+.PARAMETER Parameters
+A runtime parameter dictionary $DynamicParams created via Add-DynamicParam.ps1
 
-.Parameter Inputs
-    Documentation about the datatype accepted as pipeline input by the script.
+.PARAMETER Inputs
+Documentation about the datatype accepted as pipeline input by the script.
 
-.Parameter Outputs
-    Documentation about the datatype produced as output by the script.
+.PARAMETER Outputs
+Documentation about the datatype produced as output by the script.
 
-.Parameter DynamicParam
-    The DynamicParam script block.
+.PARAMETER DynamicParam
+The DynamicParam script block.
 
-.Parameter OutputType
-    The return type of the script.
+.PARAMETER OutputType
+The return type of the script.
 
-.Parameter Links
-    A list of script documentation references to link to (URLs and cmdlet names).
+.PARAMETER Links
+A list of script documentation references to link to (URLs and cmdlet names).
 
-.Parameter Example
-    A list of example commands to add to the script documentation.
+.PARAMETER Example
+A list of example commands to add to the script documentation.
 
-.Parameter Begin
-    The Begin script block.
+.PARAMETER Begin
+The Begin script block.
 
-.Parameter Process
-    The Process (main) script block.
+.PARAMETER Process
+The Process (main) script block.
 
-.Parameter End
-    The End script block.
+.PARAMETER End
+The End script block.
 
-.Parameter RequiresVersion
-    The minimum PowerShell version required for the script.
+.PARAMETER RequiresVersion
+The minimum PowerShell version required for the script.
 
-.Parameter RequiresModule
-    A module required by the script.
+.PARAMETER RequiresModule
+A module required by the script.
 
-.Parameter ConfirmImpact
-    The potential risk of the script: High, Medium, or Low.
+.PARAMETER ConfirmImpact
+The potential risk of the script: High, Medium, or Low.
 
-.Parameter DefaultParameterSetName
-    The name of the default parameter set.
+.PARAMETER DefaultParameterSetName
+The name of the default parameter set.
 
-.Parameter HelpUri
-    A URL for online help.
+.PARAMETER HelpUri
+A URL for online help.
 
-.Parameter Indent
-    The indent string to use.
+.PARAMETER Indent
+The indent string to use.
 
-.Parameter RequiresRunAsAdmin
-    Indicates that the script must be run as an Administrator.
+.PARAMETER RequiresRunAsAdmin
+Indicates that the script must be run as an Administrator.
 
-.Parameter SupportsPaging
-    Indicates that the script supports paged output.
+.PARAMETER SupportsPaging
+Indicates that the script supports paged output.
 
-.Parameter SupportsShouldProcess
-    Indicates that the script supports confirmation prompting and -WhatIf.
+.PARAMETER SupportsShouldProcess
+Indicates that the script supports confirmation prompting and -WhatIf.
 
-.Parameter PositionalBinding
-    Indicates that the script supports positional parameter binding.
+.PARAMETER PositionalBinding
+Indicates that the script supports positional parameter binding.
 
-.Example
-    New-Script.ps1 Add Xml -Synopsis 'Insert XML...' -OutputType xml
+.EXAMPLE
+New-Script.ps1 Add Xml -Synopsis 'Insert XML...' -OutputType xml
 
-    Creates a basic script.
+Creates a basic script.
 #>
 
 #Requires -Version 3

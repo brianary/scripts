@@ -1,42 +1,42 @@
-<#
-.Synopsis
-    Adds config XDT connection strings to VSCode settings.
+﻿<#
+.SYNOPSIS
+Adds config XDT connection strings to VSCode settings.
 
-.Link
-    https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql
+.LINK
+https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql
 
-.Link
-    http://code.visualstudio.com/
+.LINK
+http://code.visualstudio.com/
 
-.Link
-    https://git-scm.com/docs/git-rev-parse
+.LINK
+https://git-scm.com/docs/git-rev-parse
 
-.Link
-    Get-ConfigConnectionStringBuilders.ps1
+.LINK
+Get-ConfigConnectionStringBuilders.ps1
 
-.Link
-    Split-FileName.ps1
+.LINK
+Split-FileName.ps1
 
-.Link
-    Import-Variables.ps1
+.LINK
+Import-Variables.ps1
 
-.Link
-    ConvertFrom-Json
+.LINK
+ConvertFrom-Json
 
-.Link
-    ConvertTo-Json
+.LINK
+ConvertTo-Json
 
-.Link
-    Add-Member
+.LINK
+Add-Member
 
-.Link
-    Test-Path
+.LINK
+Test-Path
 
-.Example
-    Import-VsCodeDatabaseConnections.ps1
+.EXAMPLE
+Import-VsCodeDatabaseConnections.ps1
 
-    Adds any new (by name) connection strings found in XDT .config files into
-    the .vscode/settings.json mssql.connections collection for the mssql extension.
+Adds any new (by name) connection strings found in XDT .config files into
+the .vscode/settings.json mssql.connections collection for the mssql extension.
 #>
 
 #Requires -Version 3

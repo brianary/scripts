@@ -1,51 +1,51 @@
-<#
-.Synopsis
-    Tests for a given common file type by magic number.
+﻿<#
+.SYNOPSIS
+Tests for a given common file type by magic number.
 
-.Parameter FileType
-    The file type to test for.
+.PARAMETER FileType
+The file type to test for.
 
-    This is generally the MIME subtype or Unicode text encoding, with some exceptions.
+This is generally the MIME subtype or Unicode text encoding, with some exceptions.
 
-    Several types require the presence of an optional header or prefix for positive identification of a file type,
-    such as "<?xml" for xml or "%YAML " for yaml.
+Several types require the presence of an optional header or prefix for positive identification of a file type,
+such as "<?xml" for xml or "%YAML " for yaml.
 
-    Text files require either a UTF BOM/SIG, or must end with a newline (U+000A) and not contain any NUL (U+0000)
-    characters (in the first 1KB sampled), or just not contain any characters above 7-bit US-ASCII in the first 1KB.
+Text files require either a UTF BOM/SIG, or must end with a newline (U+000A) and not contain any NUL (U+0000)
+characters (in the first 1KB sampled), or just not contain any characters above 7-bit US-ASCII in the first 1KB.
 
-.Parameter Path
-    The file to test.
+.PARAMETER Path
+The file to test.
 
-.Inputs
-    System.String path of a file to test.
+.INPUTS
+System.String path of a file to test.
 
-.Outputs
-    System.Boolean affirming that the magic number for the specified file type was found.
+.OUTPUTS
+System.Boolean affirming that the magic number for the specified file type was found.
 
-.Link
-    https://en.wikipedia.org/wiki/List_of_file_signatures
+.LINK
+https://en.wikipedia.org/wiki/List_of_file_signatures
 
-.Link
-    https://blogs.msdn.microsoft.com/sergey_babkins_blog/2015/01/02/powershell-script-blocks-are-not-closures/
+.LINK
+https://blogs.msdn.microsoft.com/sergey_babkins_blog/2015/01/02/powershell-script-blocks-are-not-closures/
 
-.Link
-    http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_206
+.LINK
+http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_206
 
-.Link
-    http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403
+.LINK
+http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403
 
-.Link
-    Test-MagicNumber.ps1
+.LINK
+Test-MagicNumber.ps1
 
-.Example
-    Test-FileTypeMagicNumber.ps1 utf8 README.md
+.EXAMPLE
+Test-FileTypeMagicNumber.ps1 utf8 README.md
 
-    True if a utf-8 signature (or "BOM", byte-order-mark) is found.
+True if a utf-8 signature (or "BOM", byte-order-mark) is found.
 
-.Example
-    Test-FileTypeMagicNumber.ps1 png avatar.png
+.EXAMPLE
+Test-FileTypeMagicNumber.ps1 png avatar.png
 
-    True if avatar.png contains the expected png magic number.
+True if avatar.png contains the expected png magic number.
 #>
 
 #Requires -Version 3

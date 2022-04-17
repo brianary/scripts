@@ -1,21 +1,21 @@
-<#
-.Synopsis
-	Returns a cached list of comics from the Shortboxed API.
+﻿<#
+.SYNOPSIS
+Returns a cached list of comics from the Shortboxed API.
 
-.Parameter ReleaseWeek
-	Specifies which week (relative to the current week) to return comics for.
+.PARAMETER ReleaseWeek
+Specifies which week (relative to the current week) to return comics for.
 
-.Link
-	https://api.shortboxed.com/
+.LINK
+https://api.shortboxed.com/
 
-.Link
-	Invoke-WebRequest
+.LINK
+Invoke-WebRequest
 
-.Link
-	ConvertFrom-Json
+.LINK
+ConvertFrom-Json
 
-.Link
-	Get-Date
+.LINK
+Get-Date
 #>
 
 #Requires -Version 3

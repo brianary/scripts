@@ -1,34 +1,34 @@
-<#
-.Synopsis
-    Returns the content security policy at from the given URL.
+﻿<#
+.SYNOPSIS
+Returns the content security policy at from the given URL.
 
-.Parameter Uri
-    The URL to get the policy from.
+.PARAMETER Uri
+The URL to get the policy from.
 
-.Parameter Response
-    The output from Invoke-WebRequest to parse the policy from.
+.PARAMETER Response
+The output from Invoke-WebRequest to parse the policy from.
 
-.Inputs
-    Microsoft.PowerShell.Commands.WebResponseObject from Invoke-WebRequest
-    or
-    any object with a Uri or Url property
+.INPUTS
+Microsoft.PowerShell.Commands.WebResponseObject from Invoke-WebRequest
+or
+any object with a Uri or Url property
 
-.Outputs
-    System.Management.Automation.PSCustomObject containing the parsed policy.
+.OUTPUTS
+System.Management.Automation.PSCustomObject containing the parsed policy.
 
-.Link
-    https://content-security-policy.com/
+.LINK
+https://content-security-policy.com/
 
-.Link
-    Invoke-WebRequest
+.LINK
+Invoke-WebRequest
 
-.Example
-    Invoke-WebRequest http://example.org/ |Get-ContentSecurityPolicy.ps1
+.EXAMPLE
+Invoke-WebRequest http://example.org/ |Get-ContentSecurityPolicy.ps1
 
-    default-src : {http://example.org, http://example.net, 'self'}
-    script-src  : {'self'}
-    img-src     : {'self'}
-    report-uri  : {http://example.com/csp}
+default-src : {http://example.org, http://example.net, 'self'}
+script-src  : {'self'}
+img-src     : {'self'}
+report-uri  : {http://example.com/csp}
 #>
 
 #Requires -Version 3

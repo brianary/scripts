@@ -1,40 +1,40 @@
-<#
-.Synopsis
-	Gets the namespaces and their URIs and URLs from a document.
+﻿<#
+.SYNOPSIS
+Gets the namespaces and their URIs and URLs from a document.
 
-.Parameter Xml
-	The string to check.
+.PARAMETER Xml
+The string to check.
 
-.Parameter Path
-	A file to check.
+.PARAMETER Path
+A file to check.
 
-.Inputs
-	System.Xml.XmlDocument or System.String containing the path to an XML file.
+.INPUTS
+System.Xml.XmlDocument or System.String containing the path to an XML file.
 
-.Outputs
-	System.Management.Automation.PSCustomObject for each namespace, with Path,
-	Node, Alias, Urn, and Url properties.
+.OUTPUTS
+System.Management.Automation.PSCustomObject for each namespace, with Path,
+Node, Alias, Urn, and Url properties.
 
-.Link
-	https://www.w3.org/TR/xmlschema-1/#schema-loc
+.LINK
+https://www.w3.org/TR/xmlschema-1/#schema-loc
 
-.Link
-	https://stackoverflow.com/a/26786080/54323
+.LINK
+https://stackoverflow.com/a/26786080/54323
 
-.Example
-	Resolve-XmlSchemaLocation.ps1 test.xml
+.EXAMPLE
+Resolve-XmlSchemaLocation.ps1 test.xml
 
-	Path  : C:\test.xml
-	Node  : root
-	Alias : xml
-	Urn   : http://www.w3.org/XML/1998/namespace
-	Url   :
+Path  : C:\test.xml
+Node  : root
+Alias : xml
+Urn   : http://www.w3.org/XML/1998/namespace
+Url   :
 
-	Path  : C:\test.xml
-	Node  : root
-	Alias : xsi
-	Urn   : http://www.w3.org/2001/XMLSchema-instance
-	Url   :
+Path  : C:\test.xml
+Node  : root
+Alias : xsi
+Urn   : http://www.w3.org/2001/XMLSchema-instance
+Url   :
 #>
 
 #Requires -Version 3

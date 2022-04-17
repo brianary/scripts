@@ -1,76 +1,76 @@
 ﻿<#
-.Synopsis
-	Returns content from the HTML retrieved from a URL.
+.SYNOPSIS
+Returns content from the HTML retrieved from a URL.
 
-.Parameter Uri
-	The URL to read the HTML from.
+.PARAMETER Uri
+The URL to read the HTML from.
 
-.Parameter Select
-	The name of elements to return all occurrences of,
-	or a dot followed by the class of elements to return all occurrences of,
-	or a hash followed by the ID of elements to return all occurrences of.
+.PARAMETER Select
+The name of elements to return all occurrences of,
+or a dot followed by the class of elements to return all occurrences of,
+or a hash followed by the ID of elements to return all occurrences of.
 
-.Parameter Contains
-	Only elements whose inner text contain this value are included.
+.PARAMETER Contains
+Only elements whose inner text contain this value are included.
 
-.Parameter Index
-	The position of an individual element to select, or all matching elements by default.
+.PARAMETER Index
+The position of an individual element to select, or all matching elements by default.
 
-.Parameter IncludeScript
-	Includes <script> elements that can otherwise cause parsing issues,
-	usually these are removed first.
+.PARAMETER IncludeScript
+Includes <script> elements that can otherwise cause parsing issues,
+usually these are removed first.
 
-.Parameter IgnoreAttributes
-	Don't include an attribute hash in the output.
+.PARAMETER IgnoreAttributes
+Don't include an attribute hash in the output.
 
-.Link
-	Invoke-WebRequest
+.LINK
+Invoke-WebRequest
 
-.Example
-	Select-Html.ps1 https://www.h2g2.com/ title
+.EXAMPLE
+Select-Html.ps1 https://www.h2g2.com/ title
 
-	h2g2 - The Guide to Life, The Universe and Everything
+h2g2 - The Guide to Life, The Universe and Everything
 
-.Example
-	Select-Html.ps1 https://www.githubstatus.com/ .page-status -IgnoreAttributes
+.EXAMPLE
+Select-Html.ps1 https://www.githubstatus.com/ .page-status -IgnoreAttributes
 
-	All Systems Operational
+All Systems Operational
 
-.Example
-	Select-Html.ps1 https://www.irs.gov/e-file-providers/foreign-country-code-listing-for-modernized-e-file
+.EXAMPLE
+Select-Html.ps1 https://www.irs.gov/e-file-providers/foreign-country-code-listing-for-modernized-e-file
 
-	CountryName CountryCode
-	----------- -----------
-	Afghanistan AF
-	Akrotiri    AX
-	Albania     AL
-	...
+CountryName CountryCode
+----------- -----------
+Afghanistan AF
+Akrotiri    AX
+Albania     AL
+...
 
-.Example
-	Select-Html.ps1 https://www.federalreserve.gov/aboutthefed/k8.htm |Format-Table -AutoSize
+.EXAMPLE
+Select-Html.ps1 https://www.federalreserve.gov/aboutthefed/k8.htm |Format-Table -AutoSize
 
-	_0                                   2021         2022          2023         2024        2025
-	--------                             ----         ----          ----         ----        ----
-	New Year's Day                       January 1    January 1*    January 1**  January 1   January 1
-	Birthday of Martin Luther King, Jr.  January 18   January 17    January 16   January 15  January 20
-	Washington's Birthday                February 15  February 21   February 20  February 19 February 17
-	Memorial Day                         May 31       May 30        May 29       May 27      May 26
-	Juneteenth National Independence Day June 19*     June 19**     June 19      June 19     June 19
-	Independence Day                     July 4**     July 4        July 4       July 4      July 4
-	Labor Day                            September 6  September 5   September 4  September 2 September 1
-	Columbus Day                         October 11   October 10    October 9    October 14  October 13
-	Veterans Day                         November 11  November 11   November 11* November 11 November 11
-	Thanksgiving Day                     November 25  November 24   November 23  November 28 November 27
-	Christmas Day                        December 25* December 25** December 25  December 25 December 25
+_0                                   2021         2022          2023         2024        2025
+--------                             ----         ----          ----         ----        ----
+New Year's Day                       January 1    January 1*    January 1**  January 1   January 1
+Birthday of Martin Luther King, Jr.  January 18   January 17    January 16   January 15  January 20
+Washington's Birthday                February 15  February 21   February 20  February 19 February 17
+Memorial Day                         May 31       May 30        May 29       May 27      May 26
+Juneteenth National Independence Day June 19*     June 19**     June 19      June 19     June 19
+Independence Day                     July 4**     July 4        July 4       July 4      July 4
+Labor Day                            September 6  September 5   September 4  September 2 September 1
+Columbus Day                         October 11   October 10    October 9    October 14  October 13
+Veterans Day                         November 11  November 11   November 11* November 11 November 11
+Thanksgiving Day                     November 25  November 24   November 23  November 28 November 27
+Christmas Day                        December 25* December 25** December 25  December 25 December 25
 
-.Example
-	Select-Html.ps1 https://docs.microsoft.com/en-us/dotnet/core/compatibility/6.0 table -Contains AddProvider
+.EXAMPLE
+Select-Html.ps1 https://docs.microsoft.com/en-us/dotnet/core/compatibility/6.0 table -Contains AddProvider
 
-	Title                                                      Binarycompatible Sourcecompatible Introduced
-	-----                                                      ---------------- ---------------- ----------
-	AddProvider checks for non-null provider                   ✔️               ❌                RC 1
-	FileConfigurationProvider.Load throws InvalidDataException ✔️               ❌                RC 1
-	Resolving disposed ServiceProvider throws exception        ✔️               ❌                RC 1
+Title                                                      Binarycompatible Sourcecompatible Introduced
+-----                                                      ---------------- ---------------- ----------
+AddProvider checks for non-null provider                   ✔️               ❌                RC 1
+FileConfigurationProvider.Load throws InvalidDataException ✔️               ❌                RC 1
+Resolving disposed ServiceProvider throws exception        ✔️               ❌                RC 1
 #>
 
 #Requires -Version 7

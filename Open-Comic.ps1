@@ -1,14 +1,14 @@
-<#
-.Synopsis
-	Opens a comic's PreviewsWorld page.
+﻿<#
+.SYNOPSIS
+Opens a comic's PreviewsWorld page.
 
-.Parameter DiamondId
-	The Diamond distribution ID for the comic.
+.PARAMETER DiamondId
+The Diamond distribution ID for the comic.
 
-.Example
-	Find-Comics.ps1 -Creator 'Grant Morrison' |Open-Comic.ps1
+.EXAMPLE
+Find-Comics.ps1 -Creator 'Grant Morrison' |Open-Comic.ps1
 
-	(Opens any upcoming Grant Morrison comics in your browser.)
+(Opens any upcoming Grant Morrison comics in your browser.)
 #>
 
 #Requires -Version 3

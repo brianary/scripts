@@ -1,20 +1,20 @@
 ﻿<#
-.Synopsis
-	Re-encodes Windows-1252 text that has been misinterpreted as UTF-8.
+.SYNOPSIS
+Re-encodes Windows-1252 text that has been misinterpreted as UTF-8.
 
-.Parameter InputObject
-	The string containing encoding failures to fix.
+.PARAMETER InputObject
+The string containing encoding failures to fix.
 
-.Inputs
-	System.String containing encoding failures to fix.
+.INPUTS
+System.String containing encoding failures to fix.
 
-.Outputs
-	System.String containing the corrected string data.
+.OUTPUTS
+System.String containing the corrected string data.
 
-.Example
-	Repair-Encoding.ps1 'SmartQuotes Arenâ€™t'
+.EXAMPLE
+Repair-Encoding.ps1 'SmartQuotes Arenâ€™t'
 
-	SmartQuotes Aren’t
+SmartQuotes Aren’t
 #>
 
 #Requires -Version 3

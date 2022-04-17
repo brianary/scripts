@@ -1,34 +1,34 @@
-<#
-.Synopsis
-	Converts bytes or text to base64-encoded text.
+﻿<#
+.SYNOPSIS
+Converts bytes or text to base64-encoded text.
 
-.Parameter Data
-	Binary data to convert.
+.PARAMETER Data
+Binary data to convert.
 
-.Parameter Text
-	Text data to convert.
+.PARAMETER Text
+Text data to convert.
 
-.Parameter Encoding
-	The text encoding to use when converting text to binary data.
+.PARAMETER Encoding
+The text encoding to use when converting text to binary data.
 
-.Parameter UriStyle
-	Indicates that the URI-friendly variant of the base64 algorithm should be used.
-	This variant, as used by JWTs, uses - instead of +, and _ instead of /, and trims the = padding at the end
-	to avoid extra escaping within URLs or URL-encoded data.
+.PARAMETER UriStyle
+Indicates that the URI-friendly variant of the base64 algorithm should be used.
+This variant, as used by JWTs, uses - instead of +, and _ instead of /, and trims the = padding at the end
+to avoid extra escaping within URLs or URL-encoded data.
 
-.Inputs
-	System.String or System.Byte[] of data to base64-encode.
+.INPUTS
+System.String or System.Byte[] of data to base64-encode.
 
-.Outputs
-	System.String containing the base64-encoded data.
+.OUTPUTS
+System.String containing the base64-encoded data.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.convert.tobase64string
+.LINK
+https://docs.microsoft.com/dotnet/api/system.convert.tobase64string
 
-.Example
-	ConvertTo-Base64.ps1 'username:BadP@ssword' utf8
+.EXAMPLE
+ConvertTo-Base64.ps1 'username:BadP@ssword' utf8
 
-	dXNlcm5hbWU6QmFkUEBzc3dvcmQ=
+dXNlcm5hbWU6QmFkUEBzc3dvcmQ=
 #>
 
 #Requires -Version 3

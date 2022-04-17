@@ -1,59 +1,59 @@
 ﻿<#
-.Synopsis
-    Searches a specific subset of files for lines matching a pattern.
+.SYNOPSIS
+Searches a specific subset of files for lines matching a pattern.
 
-.Parameter Pattern
-    Specifies the text to find. Type a string or regular expression.
-    If you type a string, use the SimpleMatch parameter.
+.PARAMETER Pattern
+Specifies the text to find. Type a string or regular expression.
+If you type a string, use the SimpleMatch parameter.
 
-.Parameter Filters
-    Specifies wildcard filters that file names must match.
+.PARAMETER Filters
+Specifies wildcard filters that file names must match.
 
-.Parameter Path
-    Specifies a path to one or more locations. Wildcards are permitted.
-    The default location is the current directory (.).
+.PARAMETER Path
+Specifies a path to one or more locations. Wildcards are permitted.
+The default location is the current directory (.).
 
-.Parameter Include
-    Wildcard patterns files must match one of (slower than Filter).
+.PARAMETER Include
+Wildcard patterns files must match one of (slower than Filter).
 
-.Parameter Exclude
-    Wildcard patterns files must not match any of.
+.PARAMETER Exclude
+Wildcard patterns files must not match any of.
 
-.Parameter CaseSensitive
-    Makes matches case-sensitive. By default, matches are not case-sensitive.
+.PARAMETER CaseSensitive
+Makes matches case-sensitive. By default, matches are not case-sensitive.
 
-.Parameter List
-    Returns only the first match in each input file.
-    By default, Select-String returns a MatchInfo object for each match it finds.
+.PARAMETER List
+Returns only the first match in each input file.
+By default, Select-String returns a MatchInfo object for each match it finds.
 
-.Parameter NotMatch
-    Finds text that does not match the specified pattern.
+.PARAMETER NotMatch
+Finds text that does not match the specified pattern.
 
-.Parameter SimpleMatch
-    Uses a simple match rather than a regular expression match.
-    In a simple match, Select-String searches the input for the text in the Pattern parameter.
-    It does not interpret the value of the Pattern parameter as a regular expression statement.
+.PARAMETER SimpleMatch
+Uses a simple match rather than a regular expression match.
+In a simple match, Select-String searches the input for the text in the Pattern parameter.
+It does not interpret the value of the Pattern parameter as a regular expression statement.
 
-.Parameter NoRecurse
-    Disables searching subdirectories.
+.PARAMETER NoRecurse
+Disables searching subdirectories.
 
-.Parameter ChooseMatches
-    Displays a grid of matches to select a subset from.
+.PARAMETER ChooseMatches
+Displays a grid of matches to select a subset from.
 
-.Parameter Open
-    Invokes files that contain matches.
+.PARAMETER Open
+Invokes files that contain matches.
 
-.Parameter Blame
-	Returns git blame info for matching lines.
+.PARAMETER Blame
+Returns git blame info for matching lines.
 
-.Outputs
-	Microsoft.PowerShell.Commands.MatchInfo with each match found.
+.OUTPUTS
+Microsoft.PowerShell.Commands.MatchInfo with each match found.
 
-.Example
-    Find-Lines 'using System;' *.cs "$env:USERPROFILE\Documents\Visual Studio*\Projects" -CaseSensitive -List
+.EXAMPLE
+Find-Lines 'using System;' *.cs "$env:USERPROFILE\Documents\Visual Studio*\Projects" -CaseSensitive -List
 
-    This command searches all of the .cs files in the Projects directory (or directories) and subdirectories,
-    returning the matches.
+This command searches all of the .cs files in the Projects directory (or directories) and subdirectories,
+returning the matches.
 #>
 
 #Requires -Version 3

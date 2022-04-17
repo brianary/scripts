@@ -1,6 +1,6 @@
-<#
-.Synopsis
-    Checks whether the current session has administrator privileges.
+﻿<#
+.SYNOPSIS
+Checks whether the current session has administrator privileges.
 #>
 
 #Requires -Version 2

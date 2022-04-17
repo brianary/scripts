@@ -1,33 +1,33 @@
 ﻿<#
-.Synopsis
-    Returns the permissions of a certificate's private key file.
+.SYNOPSIS
+Returns the permissions of a certificate's private key file.
 
-.Parameter Certificate
-    The certificate to display permissions for.
+.PARAMETER Certificate
+The certificate to display permissions for.
 
-.Inputs
-    System.Security.Cryptography.X509Certificates.X509Certificate2 to display permissions for.
+.INPUTS
+System.Security.Cryptography.X509Certificates.X509Certificate2 to display permissions for.
 
-.Outputs
-    System.Security.AccessControl.FileSecurity describing the security on the cert's private key file.
+.OUTPUTS
+System.Security.AccessControl.FileSecurity describing the security on the cert's private key file.
 
-.Link
-    Find-Certificate.ps1
+.LINK
+Find-Certificate.ps1
 
-.Link
-    Get-Acl
+.LINK
+Get-Acl
 
-.Example
-    Get-CertificatePermissions.ps1 -Certificate $cert
-    Returns the permissions for the certificate in $cert.
+.EXAMPLE
+Get-CertificatePermissions.ps1 -Certificate $cert
+Returns the permissions for the certificate in $cert.
 
-.Example
-    Find-Certificate.ps1 -FindValue ExampleCert -FindType FindBySubjectName -StoreName TrustedPeople -StoreLocation LocalMachine |Get-CertificatePermissions
-    Returns the permissions for the certificate.
+.EXAMPLE
+Find-Certificate.ps1 -FindValue ExampleCert -FindType FindBySubjectName -StoreName TrustedPeople -StoreLocation LocalMachine |Get-CertificatePermissions
+Returns the permissions for the certificate.
 
-.Example
-    $c = Find-Certificate.ps1 ExampleCert FindBySubjectName TrustedPeople LocalMachine ; Get-CertificatePermissions.ps1 $c
-    Another approach to get cert permissions.
+.EXAMPLE
+$c = Find-Certificate.ps1 ExampleCert FindBySubjectName TrustedPeople LocalMachine ; Get-CertificatePermissions.ps1 $c
+Another approach to get cert permissions.
 #>
 
 #Requires -Version 3

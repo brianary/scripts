@@ -1,49 +1,49 @@
-<#
-.Synopsis
-	Updates text found with Select-String, using a regular expression replacement template.
+﻿<#
+.SYNOPSIS
+Updates text found with Select-String, using a regular expression replacement template.
 
-.Parameter Replacement
-	A regular expression replacement string.
+.PARAMETER Replacement
+A regular expression replacement string.
 
-	* $$ is a literal $
-	* $_ is the entire input string.
-	* $` is the string before the match.
-	* $& is the entire matching string.
-	* $' is the string after the match.
-	* $1 is the first matching group.
-	* $n (where n is a number) is the nth matching group.
-	* $name is the group named "name".
-	* $+ is the last matching group.
+* $$ is a literal $
+* $_ is the entire input string.
+* $` is the string before the match.
+* $& is the entire matching string.
+* $' is the string after the match.
+* $1 is the first matching group.
+* $n (where n is a number) is the nth matching group.
+* $name is the group named "name".
+* $+ is the last matching group.
 
-.Parameter InputObject
-	The output from Select-String.
+.PARAMETER InputObject
+The output from Select-String.
 
-.Inputs
-	Microsoft.PowerShell.Commands.MatchInfo containing a regex match than will be replaced.
+.INPUTS
+Microsoft.PowerShell.Commands.MatchInfo containing a regex match than will be replaced.
 
-.Outputs
-	System.String of the input string if the Select-String's input was a string instead of a file.
-	(File changes will be saved back to the file.)
+.OUTPUTS
+System.String of the input string if the Select-String's input was a string instead of a file.
+(File changes will be saved back to the file.)
 
-.Link
-	https://docs.microsoft.com/dotnet/standard/base-types/substitutions-in-regular-expressions
+.LINK
+https://docs.microsoft.com/dotnet/standard/base-types/substitutions-in-regular-expressions
 
-.Link
-	https://github.com/brianary/Detextive/
+.LINK
+https://github.com/brianary/Detextive/
 
-.Example
-	Select-String '(<!-- generated) .*? (-->)' README.md |Set-RegexReplace.ps1 "`$1 $(Get-Date) `$2"
+.EXAMPLE
+Select-String '(<!-- generated) .*? (-->)' README.md |Set-RegexReplace.ps1 "`$1 $(Get-Date) `$2"
 
-	Updates the generated date in README.md.
+Updates the generated date in README.md.
 
-.Example
-	Get-Item README.md |select Name,Length |ConvertTo-Html -Fragment |Out-String |Select-String '(<td)(>\d+</td>)' |Set-RegexReplace.ps1 '$1 align="right"$2'
+.EXAMPLE
+Get-Item README.md |select Name,Length |ConvertTo-Html -Fragment |Out-String |Select-String '(<td)(>\d+</td>)' |Set-RegexReplace.ps1 '$1 align="right"$2'
 
-	<table>
-	<colgroup><col/><col/></colgroup>
-	<tr><th>Name</th><th>Length</th></tr>
-	<tr><td>README.md</td><td align="right">21099</td></tr>
-	</table>
+<table>
+<colgroup><col/><col/></colgroup>
+<tr><th>Name</th><th>Length</th></tr>
+<tr><td>README.md</td><td align="right">21099</td></tr>
+</table>
 #>
 
 #Requires -Version 3

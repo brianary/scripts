@@ -1,67 +1,65 @@
 ﻿<#
-.Synopsis
-    Searches a certificate store for certificates.
+.SYNOPSIS
+Searches a certificate store for certificates.
 
-.Parameter FindValue
-    The value to search for, usually a string.
+.PARAMETER FindValue
+The value to search for, usually a string.
 
-    For a FindType of FindByTimeValid, FindByTimeNotYetValid, or FindByTimeExpired, the FindValue must be a datetime.
-    For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a
-    System.Security.Cryptography.Oid.
-    For a FindType of FindByKeyUsage, the FindValue can be a string or an int bitmask.
+For a FindType of FindByTimeValid, FindByTimeNotYetValid, or FindByTimeExpired, the FindValue must be a datetime.
+For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a System.Security.Cryptography.Oid.
+For a FindType of FindByKeyUsage, the FindValue can be a string or an int bitmask.
 
-.Parameter FindType
-    The field of the certificate to compare to FindValue.
-    e.g. FindBySubjectName, FindByKeyUsage, FindByIssuerDistinguishedName
+.PARAMETER FindType
+The field of the certificate to compare to FindValue.
+e.g. FindBySubjectName, FindByKeyUsage, FindByIssuerDistinguishedName
 
-    For a FindType of FindByTimeValid, FindByTimeNotYetValid, or FindByTimeExpired, the FindValue should be a datetime.
-    For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a
-    System.Security.Cryptography.Oid.
-    For a FindType of FindByKeyUsage, the FindValue can be a string or an int bitmask.
+For a FindType of FindByTimeValid, FindByTimeNotYetValid, or FindByTimeExpired, the FindValue should be a datetime.
+For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a System.Security.Cryptography.Oid.
+For a FindType of FindByKeyUsage, the FindValue can be a string or an int bitmask.
 
-    Omitting a FindType or StoreName will search all stores and common fields.
+Omitting a FindType or StoreName will search all stores and common fields.
 
-.Parameter StoreName
-    The name of the certificate store to search.
-    e.g. My, TrustedPeople, Root
+.PARAMETER StoreName
+The name of the certificate store to search.
+e.g. My, TrustedPeople, Root
 
-    Omitting a FindType or StoreName will search all stores and common fields.
+Omitting a FindType or StoreName will search all stores and common fields.
 
-.Parameter StoreLocation
-    Whether to search the certificates of the CurrentUser or the LocalMachine.
+.PARAMETER StoreLocation
+Whether to search the certificates of the CurrentUser or the LocalMachine.
 
-    Uses LocalMachine by default.
+Uses LocalMachine by default.
 
-.Parameter Valid
-    Whether to further filter search results by checking the effective and expiration dates.
+.PARAMETER Valid
+Whether to further filter search results by checking the effective and expiration dates.
 
-.Parameter NotArchived
-    Whether to further filter search results by excluding certificates marked as archived.
+.PARAMETER NotArchived
+Whether to further filter search results by excluding certificates marked as archived.
 
-.Parameter Require
-    Whether to throw an error if a certificate is not found.
+.PARAMETER Require
+Whether to throw an error if a certificate is not found.
 
-.Outputs
-    System.Security.Cryptography.X509Certificates.X509Certificate2[] of found certificates.
+.OUTPUTS
+System.Security.Cryptography.X509Certificates.X509Certificate2[] of found certificates.
 
-.Link
-    https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509findtype.aspx
+.LINK
+https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509findtype.aspx
 
-.Link
-    https://msdn.microsoft.com/library/ms148581.aspx
+.LINK
+https://msdn.microsoft.com/library/ms148581.aspx
 
-.Link
-    https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509certificate2.aspx
+.LINK
+https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509certificate2.aspx
 
-.Example
-    Find-Certificate.ps1 -FindValue ExampleCert -FindType FindBySubjectName -StoreName TrustedPeople -StoreLocation LocalMachine
+.EXAMPLE
+Find-Certificate.ps1 -FindValue ExampleCert -FindType FindBySubjectName -StoreName TrustedPeople -StoreLocation LocalMachine
 
-    Searches Cert:\LocalMachine\TrustedPeople for a certificate with a subject name of "ExampleCert".
+Searches Cert:\LocalMachine\TrustedPeople for a certificate with a subject name of "ExampleCert".
 
-.Example
-    Find-Certificate.ps1 ExampleCert FindBySubjectName TrustedPeople LocalMachine
+.EXAMPLE
+Find-Certificate.ps1 ExampleCert FindBySubjectName TrustedPeople LocalMachine
 
-    Uses positional parameters to search Cert:\LocalMachine\TrustedPeople for a cert with subject of "ExampleCert".
+Uses positional parameters to search Cert:\LocalMachine\TrustedPeople for a cert with subject of "ExampleCert".
 #>
 
 #Requires -Version 3

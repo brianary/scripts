@@ -1,35 +1,35 @@
-<#
-.Synopsis
-	Saves enclosures from a podcast feed.
+﻿<#
+.SYNOPSIS
+Saves enclosures from a podcast feed.
 
-.Parameter Uri
-	The URL of the podcast feed.
+.PARAMETER Uri
+The URL of the podcast feed.
 
-.Parameter After
-	Episodes before this date will be ignored.
+.PARAMETER After
+Episodes before this date will be ignored.
 
-.Parameter Before
-	Episodes after this date will be ignored.
+.PARAMETER Before
+Episodes after this date will be ignored.
 
-.Parameter First
-	Includes only the given number of initial episodes, by publish date.
+.PARAMETER First
+Includes only the given number of initial episodes, by publish date.
 
-.Parameter Last
-	Includes only the given number of most recent episodes, by publish date.
+.PARAMETER Last
+Includes only the given number of most recent episodes, by publish date.
 
-.Parameter UseTitle
-	Use episode titles for filenames.
+.PARAMETER UseTitle
+Use episode titles for filenames.
 
-.Parameter CreateFolder
-	Saves the episodes into a folder with the podcast name.
+.PARAMETER CreateFolder
+Saves the episodes into a folder with the podcast name.
 
-.Link
-	Save-WebRequest.ps1
+.LINK
+Save-WebRequest.ps1
 
-.Example
-	Save-PodcastEpisodes.ps1 https://www.youlooknicetoday.com/rss -UseTitle
+.EXAMPLE
+Save-PodcastEpisodes.ps1 https://www.youlooknicetoday.com/rss -UseTitle
 
-	Saves podcast episodes to the current directory.
+Saves podcast episodes to the current directory.
 #>
 
 #Requires -Version 3

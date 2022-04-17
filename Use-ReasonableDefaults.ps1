@@ -1,29 +1,29 @@
 ﻿<#
-.Synopsis
-	Sets certain cmdlet parameter defaults to rational, useful values.
+.SYNOPSIS
+Sets certain cmdlet parameter defaults to rational, useful values.
 
-.Parameter LatestSecurityProtocol
-	Use the greatest value of the System.Net.SecurityProtocolType enum.
+.PARAMETER LatestSecurityProtocol
+Use the greatest value of the System.Net.SecurityProtocolType enum.
 
-.Link
-	Use-NetMailConfig.ps1
+.LINK
+Use-NetMailConfig.ps1
 
-.Link
-	Set-ParameterDefault.ps1
+.LINK
+Set-ParameterDefault.ps1
 
-.Link
-	Get-EnumValues.ps1
+.LINK
+Get-EnumValues.ps1
 
-.Example
-	Use-ReasonableDefaults.ps1
+.EXAMPLE
+Use-ReasonableDefaults.ps1
 
-	Sets the security protocol to TLS 1.2.
+Sets the security protocol to TLS 1.2.
 
-	Sets default values:
-		Out-File -Encoding UTF8 -Width ([int]::MaxValue)
-		Export-Csv -NoTypeInformation -UseQuotes AsNeeded
-		Invoke-WebRequest -UseBasicParsing
-		Select-Xml -Namespace @{ a bunch of standard namespaces }
+Sets default values:
+* Out-File -Encoding UTF8 -Width ([int]::MaxValue)
+* Export-Csv -NoTypeInformation -UseQuotes AsNeeded
+* Invoke-WebRequest -UseBasicParsing
+* Select-Xml -Namespace @{ a bunch of standard namespaces }
 #>
 
 #Requires -Version 3

@@ -1,31 +1,31 @@
-<#
-.Synopsis
-	Returns the encoding for a given file, suitable for passing to encoding parameters.
+﻿<#
+.SYNOPSIS
+Returns the encoding for a given file, suitable for passing to encoding parameters.
 
-.Parameter Path
-	The path to a file.
+.PARAMETER Path
+The path to a file.
 
-.Link
-	Test-FileTypeMagicNumber.ps1
+.LINK
+Test-FileTypeMagicNumber.ps1
 
-.Example
-	Get-FileEncoding.ps1 README.md
+.EXAMPLE
+Get-FileEncoding.ps1 README.md
 
-	IsSingleByte      : True
-	Preamble          :
-	BodyName          : us-ascii
-	EncodingName      : US-ASCII
-	HeaderName        : us-ascii
-	WebName           : us-ascii
-	WindowsCodePage   : 1252
-	IsBrowserDisplay  : False
-	IsBrowserSave     : False
-	IsMailNewsDisplay : True
-	IsMailNewsSave    : True
-	EncoderFallback   : System.Text.EncoderReplacementFallback
-	DecoderFallback   : System.Text.DecoderReplacementFallback
-	IsReadOnly        : True
-	CodePage          : 20127
+IsSingleByte      : True
+Preamble          :
+BodyName          : us-ascii
+EncodingName      : US-ASCII
+HeaderName        : us-ascii
+WebName           : us-ascii
+WindowsCodePage   : 1252
+IsBrowserDisplay  : False
+IsBrowserSave     : False
+IsMailNewsDisplay : True
+IsMailNewsSave    : True
+EncoderFallback   : System.Text.EncoderReplacementFallback
+DecoderFallback   : System.Text.DecoderReplacementFallback
+IsReadOnly        : True
+CodePage          : 20127
 #>
 
 #Requires -Version 3

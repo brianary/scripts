@@ -1,91 +1,91 @@
-<#
-.Synopsis
-    Reports text, ntext, and image datatypes found in a given database.
+﻿<#
+.SYNOPSIS
+Reports text, ntext, and image datatypes found in a given database.
 
-.Parameter ServerInstance
-    A string specifying the name of an instance of the Database Engine.
-    For default instances, only specify the computer name: "MyComputer".
-    For named instances, use the format "ComputerName\InstanceName".
+.PARAMETER ServerInstance
+A string specifying the name of an instance of the Database Engine.
+For default instances, only specify the computer name: "MyComputer".
+For named instances, use the format "ComputerName\InstanceName".
 
-.Parameter Database
-    A string specifying the name of a database on the server specified
-    by the ServerInstance parameter.
+.PARAMETER Database
+A string specifying the name of a database on the server specified
+by the ServerInstance parameter.
 
-.Parameter ConnectionString
-    Specifies a connection string to connect to the server.
+.PARAMETER ConnectionString
+Specifies a connection string to connect to the server.
 
-.Parameter ConnectionName
-    The connection string name from the ConfigurationManager to use to
-    connect to the server.
+.PARAMETER ConnectionName
+The connection string name from the ConfigurationManager to use to
+connect to the server.
 
-.Outputs
-    Management.Automation.PSCustomObject each with an ObjectType property that
-	indicates what other properties are available:
+.OUTPUTS
+Management.Automation.PSCustomObject each with an ObjectType property that
+indicates what other properties are available:
 
-	Column
+Column
 
-        * ObjectType: "Column"
-        * ColumnName: The fully-qualified name of the column.
-        * DataType: Which deprecated type the column currently is
-          (text, ntext, or image).
-        * ValuesCount: The number of rows in the table, including
-          null values in the column.
-        * RowsUnder8K: The new "(max)" large data types store values
-          under 8K in size in-row, rather than externally, which is
-          faster. This is a count of how many values can be stored
-          in-row after conversion.
-        * MinDataLength: The minimum data length of the field, in
-          bytes, excluding nulls.
-        * AvgDataLength: The median average data length of the field,
-          in bytes, excluding nulls.
-        * MaxDataLength: The maximum data length of the field, in
-          bytes, excluding nulls.
-        * Sigma1: The impact of reducing the maximum data length of
-          the field to within one standard deviation of the mean.
-        * Sigma2: The impact of reducing the maximum data length of
-          the field to within two standard deviations of the mean.
-        * Sigma3: The impact of reducing the maximum data length of
-          the field to within three standard deviations of the mean.
-        * Sigma4: The impact of reducing the maximum data length of
-          the field to within four standard deviations of the mean.
-        * Sigma5: The impact of reducing the maximum data length of
-          the field to within five standard deviations of the mean.
-        * Sigma6: The impact of reducing the maximum data length of
-          the field to within six standard deviations of the mean.
-        * Sigma7: The impact of reducing the maximum data length of
-          the field to within seven standard deviations of the mean.
-        * Sigma8: The impact of reducing the maximum data length of
-          the field to within eight standard deviations of the mean.
-        * IsUserTable: True when the column's table is a user table.
-          False for tables in the "sys" schema, and other system tables.
-        * IsMsShipped: True for tables created by Microsoft, such as
-          dtproperties, false otherwise.
-        * IsMsDbTools: True for tables created by Microsoft Tools,
-          such as sysdiagrams, otherwise false.
-        * ConvertSqlScript: The SQL script that can be used to convert
-          the column from the deprecated large data type to the new
-          "(max)" type.
+* ObjectType: "Column"
+* ColumnName: The fully-qualified name of the column.
+* DataType: Which deprecated type the column currently is
+(text, ntext, or image).
+* ValuesCount: The number of rows in the table, including
+null values in the column.
+* RowsUnder8K: The new "(max)" large data types store values
+under 8K in size in-row, rather than externally, which is
+faster. This is a count of how many values can be stored
+in-row after conversion.
+* MinDataLength: The minimum data length of the field, in
+bytes, excluding nulls.
+* AvgDataLength: The median average data length of the field,
+in bytes, excluding nulls.
+* MaxDataLength: The maximum data length of the field, in
+bytes, excluding nulls.
+* Sigma1: The impact of reducing the maximum data length of
+the field to within one standard deviation of the mean.
+* Sigma2: The impact of reducing the maximum data length of
+the field to within two standard deviations of the mean.
+* Sigma3: The impact of reducing the maximum data length of
+the field to within three standard deviations of the mean.
+* Sigma4: The impact of reducing the maximum data length of
+the field to within four standard deviations of the mean.
+* Sigma5: The impact of reducing the maximum data length of
+the field to within five standard deviations of the mean.
+* Sigma6: The impact of reducing the maximum data length of
+the field to within six standard deviations of the mean.
+* Sigma7: The impact of reducing the maximum data length of
+the field to within seven standard deviations of the mean.
+* Sigma8: The impact of reducing the maximum data length of
+the field to within eight standard deviations of the mean.
+* IsUserTable: True when the column's table is a user table.
+False for tables in the "sys" schema, and other system tables.
+* IsMsShipped: True for tables created by Microsoft, such as
+dtproperties, false otherwise.
+* IsMsDbTools: True for tables created by Microsoft Tools,
+such as sysdiagrams, otherwise false.
+* ConvertSqlScript: The SQL script that can be used to convert
+the column from the deprecated large data type to the new
+"(max)" type.
 
-    Parameter
+Parameter
 
-      * TODO
+* TODO
 
-    Routine
+Routine
 
-      * TODO
+* TODO
 
-.Link
-    Use-SqlcmdParams.ps1
+.LINK
+Use-SqlcmdParams.ps1
 
-.Link
-    Invoke-Sqlcmd
+.LINK
+Invoke-Sqlcmd
 
-.Example
-    Find-SqlDeprecatedLargeValueTypes.ps1 '(localdb)\ProjectsV13' pubs
+.EXAMPLE
+Find-SqlDeprecatedLargeValueTypes.ps1 '(localdb)\ProjectsV13' pubs
 
 
-    Returns text, ntext, and image columns and scripts to convert them to
-    the new (n)var*(max) types.
+Returns text, ntext, and image columns and scripts to convert them to
+the new (n)var*(max) types.
 #>
 
 #Requires -Version 3

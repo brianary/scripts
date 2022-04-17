@@ -1,32 +1,32 @@
-<#
-.Synopsis
-	Builds an object using the named XPath selections as properties.
+﻿<#
+.SYNOPSIS
+Builds an object using the named XPath selections as properties.
 
-.Parameter XPaths
-	Any dictionary or hashtable of property name to XPath to select a value with.
+.PARAMETER XPaths
+Any dictionary or hashtable of property name to XPath to select a value with.
 
-.Parameter Xml
-	The XML to select the property values from.
+.PARAMETER Xml
+The XML to select the property values from.
 
-.Parameter Path
-	XML file(s) to select the property values from.
+.PARAMETER Path
+XML file(s) to select the property values from.
 
-.Inputs
-	System.Xml.XmlNode of XML or System.String of XML file names to select property values from.
+.INPUTS
+System.Xml.XmlNode of XML or System.String of XML file names to select property values from.
 
-.Outputs
-	System.Management.Automation.PSCustomObject object with the selected properties.
+.OUTPUTS
+System.Management.Automation.PSCustomObject object with the selected properties.
 
-.Link
-	https://github.com/brianary/Detextive/
+.LINK
+https://github.com/brianary/Detextive/
 
-.Example
-	Merge-XmlSelections.ps1 @{Version='/*/@version';Format='/xsl:output/@method'} *.xsl* -Namespace @{xsl='http://www.w3.org/1999/XSL/Transform'}
+.EXAMPLE
+Merge-XmlSelections.ps1 @{Version='/*/@version';Format='/xsl:output/@method'} *.xsl* -Namespace @{xsl='http://www.w3.org/1999/XSL/Transform'}
 
-	Path                    Version Format
-	----                    ------- ------
-	Z:\Scripts\dataref.xslt 2.0     html
-	Z:\Scripts\xhtml2fo.xsl 1.0     xml
+Path                    Version Format
+----                    ------- ------
+Z:\Scripts\dataref.xslt 2.0     html
+Z:\Scripts\xhtml2fo.xsl 1.0     xml
 #>
 
 #Requires -Version 3

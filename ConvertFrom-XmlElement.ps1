@@ -1,28 +1,28 @@
 ﻿<#
-.Synopsis
-    Converts named nodes of an element to properties of a PSObject, recursively.
+.SYNOPSIS
+Converts named nodes of an element to properties of a PSObject, recursively.
 
-.Parameter Element
-    The element to convert to a PSObject.
+.PARAMETER Element
+The element to convert to a PSObject.
 
-.Parameter SelectXmlInfo
-    Output from the Select-Xml cmdlet.
+.PARAMETER SelectXmlInfo
+Output from the Select-Xml cmdlet.
 
-.Inputs
-    Microsoft.PowerShell.Commands.SelectXmlInfo output from Select-Xml.
+.INPUTS
+Microsoft.PowerShell.Commands.SelectXmlInfo output from Select-Xml.
 
-.Outputs
-    System.Management.Automation.PSCustomObject object created from selected XML.
+.OUTPUTS
+System.Management.Automation.PSCustomObject object created from selected XML.
 
-.Link
-    Select-Xml
+.LINK
+Select-Xml
 
-.Example
-    Select-Xml /configuration/appSettings/add web.config |ConvertFrom-XmlElement.ps1
+.EXAMPLE
+Select-Xml /configuration/appSettings/add web.config |ConvertFrom-XmlElement.ps1
 
-    key              value
-    ---              -----
-    webPages:Enabled false
+key              value
+---              -----
+webPages:Enabled false
 #>
 
 #Requires -Version 3

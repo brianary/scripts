@@ -1,33 +1,33 @@
 ﻿<#
-.Synopsis
-    Adds an XML attribute to an XML element found by Select-Xml.
+.SYNOPSIS
+Adds an XML attribute to an XML element found by Select-Xml.
 
-.Parameter Name
-    The name of the new attribute.
+.PARAMETER Name
+The name of the new attribute.
 
-.Parameter Value
-    The value of the new attribute.
+.PARAMETER Value
+The value of the new attribute.
 
-.Parameter NamespaceUri
-    The URI of the namespace of the new attribute, if needed.
+.PARAMETER NamespaceUri
+The URI of the namespace of the new attribute, if needed.
 
-.Parameter SelectXmlInfo
-    Output from the Select-Xml cmdlet.
+.PARAMETER SelectXmlInfo
+Output from the Select-Xml cmdlet.
 
-.Inputs
-    Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
+.INPUTS
+Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
 
-.Outputs
-    System.Xml.XmlDocument
-    Returned when Select-Xml queries an in-memory XML document or string, null when querying a file.
+.OUTPUTS
+System.Xml.XmlDocument
+Returned when Select-Xml queries an in-memory XML document or string, null when querying a file.
 
-.Link
-    Select-Xml
+.LINK
+Select-Xml
 
-.Example
-    Select-Xml /configuration/system.web/compilation web.config |Set-XmlAttribute.ps1 debug false
+.EXAMPLE
+Select-Xml /configuration/system.web/compilation web.config |Set-XmlAttribute.ps1 debug false
 
-    (Adds or updates the value of the 'debug' attribute to 'false'.)
+(Adds or updates the value of the 'debug' attribute to 'false'.)
 #>
 
 [CmdletBinding()][OutputType([xml])] Param(

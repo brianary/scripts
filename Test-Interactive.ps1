@@ -1,14 +1,14 @@
 ﻿<#
-.Synopsis
-    Determines whether both the user and process are interactive.
+.SYNOPSIS
+Determines whether both the user and process are interactive.
 
-.Outputs
-    System.Boolean indicating whether the session is interactive.
+.OUTPUTS
+System.Boolean indicating whether the session is interactive.
 
-.Example
-    Test-Interactive.ps1
+.EXAMPLE
+Test-Interactive.ps1
 
-    True
+True
 #>
 
 #Requires -Version 3

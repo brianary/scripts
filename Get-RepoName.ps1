@@ -1,18 +1,18 @@
-<#
-.Synopsis
-    Gets the name of the repo.
+﻿<#
+.SYNOPSIS
+Gets the name of the repo.
 
-.Parameter Path
-	The path to the git repo to get the name for.
+.PARAMETER Path
+The path to the git repo to get the name for.
 
-.Inputs
-	Objects with System.String Path or FullName properties.
+.INPUTS
+Objects with System.String Path or FullName properties.
 
-.Outputs
-	System.String of the repo name (the final segment of the first remote location).
+.OUTPUTS
+System.String of the repo name (the final segment of the first remote location).
 
-.Example
-	Get-RepoName.ps1
+.EXAMPLE
+Get-RepoName.ps1
 #>
 
 [CmdletBinding()][OutputType([string])] Param(

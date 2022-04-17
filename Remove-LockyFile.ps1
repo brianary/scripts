@@ -1,18 +1,18 @@
 ﻿<#
-.Synopsis
-    Removes a file that may be prone to locking.
+.SYNOPSIS
+Removes a file that may be prone to locking.
 
-.Inputs
-    System.String containing the path of a file to delete (or rename if deleting fails).
+.INPUTS
+System.String containing the path of a file to delete (or rename if deleting fails).
 
-.Parameter Path
-    Specifies a path to the items being removed. Wildcards are permitted.
-    The parameter name ("-Path") is optional.
+.PARAMETER Path
+Specifies a path to the items being removed. Wildcards are permitted.
+The parameter name ("-Path") is optional.
 
-.Example
-    Remove-LockyFile.ps1 InUse.dll
+.EXAMPLE
+Remove-LockyFile.ps1 InUse.dll
 
-    (Tries to remove file, renames it if unable to, tries deleting at reboot as a last resort.)
+(Tries to remove file, renames it if unable to, tries deleting at reboot as a last resort.)
 #>
 
 #Requires -Version 3

@@ -1,18 +1,18 @@
 ﻿<#
-.Synopsis
-    Set the default Server and ApiKey for Send-SeqEvent.ps1
+.SYNOPSIS
+Set the default Server and ApiKey for Send-SeqEvent.ps1
 
-.Parameter Server
-    The URL of the Seq server.
+.PARAMETER Server
+The URL of the Seq server.
 
-.Parameter ApiKey
-    The Seq API key to use.
+.PARAMETER ApiKey
+The Seq API key to use.
 
-.Link
-    https://getseq.net/
+.LINK
+https://getseq.net/
 
-.Example
-    Use-SeqServer.ps1 http://my-seq $apikey
+.EXAMPLE
+Use-SeqServer.ps1 http://my-seq $apikey
 #>
 
 #requires -Version 4

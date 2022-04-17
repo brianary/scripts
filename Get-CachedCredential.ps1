@@ -1,46 +1,46 @@
-<#
-.Synopsis
-	Return a credential from secure storage, or prompt the user for it if not found.
+﻿<#
+.SYNOPSIS
+Return a credential from secure storage, or prompt the user for it if not found.
 
-.Parameter UserName
-	Specifies a user or account name for the authentication prompt to request a password for.
+.PARAMETER UserName
+Specifies a user or account name for the authentication prompt to request a password for.
 
-.Parameter Message
-	Provides a login prompt for the user that should be a globally unique description of the purpose of the login.
+.PARAMETER Message
+Provides a login prompt for the user that should be a globally unique description of the purpose of the login.
 
-.Parameter Vault
-	The name of the secret vault to retrieve the Pocket API consumer key from.
-	By default, the default vault is used.
+.PARAMETER Vault
+The name of the secret vault to retrieve the Pocket API consumer key from.
+By default, the default vault is used.
 
-.Parameter UseFile
-	Indicates that the old-style filesystem-based credential store should be used.
+.PARAMETER UseFile
+Indicates that the old-style filesystem-based credential store should be used.
 
-.Parameter Force
-	Indicates the login should be manual and overwrite any cached value.
+.PARAMETER Force
+Indicates the login should be manual and overwrite any cached value.
 
-.Outputs
-	System.Management.Automation.PSCredential entered by the user, potentially loaded from the cache.
+.OUTPUTS
+System.Management.Automation.PSCredential entered by the user, potentially loaded from the cache.
 
-.Notes
-	You'll need to have a registered secret vault.
+.NOTES
+You'll need to have a registered secret vault.
 
-	Register-SecretVault Microsoft.PowerShell.SecretStore -name $VaultName [-DefaultVault]
+Register-SecretVault Microsoft.PowerShell.SecretStore -name $VaultName [-DefaultVault]
 
-	You can control whether the vault prompts for a password using Set-SecretStoreConfiguration
+You can control whether the vault prompts for a password using Set-SecretStoreConfiguration
 
-.Link
-	https://devblogs.microsoft.com/powershell/secretmanagement-and-secretstore-are-generally-available/
+.LINK
+https://devblogs.microsoft.com/powershell/secretmanagement-and-secretstore-are-generally-available/
 
-.Link
-	ConvertTo-Base64.ps1
+.LINK
+ConvertTo-Base64.ps1
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Example
-	$cred = Get-CachedCredential.ps1 exampleuser 'OpenTV API login'
+.EXAMPLE
+$cred = Get-CachedCredential.ps1 exampleuser 'OpenTV API login'
 
-	$cred now contains the login information entered, either this time or from a previous execution.
+$cred now contains the login information entered, either this time or from a previous execution.
 #>
 
 #Requires -Version 3

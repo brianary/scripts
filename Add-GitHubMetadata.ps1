@@ -1,115 +1,115 @@
-<#
-.Synopsis
-    Adds GitHub Linguist overrides to a repo's .gitattributes.
+﻿<#
+.SYNOPSIS
+Adds GitHub Linguist overrides to a repo's .gitattributes.
 
-.Parameter DefaultOwner
-    Sets the code owner(s) by @username or email address to use when no more specific
-    code owners are provided. By default, any authors within a standard deviation of
-    the most commits will be included.
+.PARAMETER DefaultOwner
+Sets the code owner(s) by @username or email address to use when no more specific
+code owners are provided. By default, any authors within a standard deviation of
+the most commits will be included.
 
-.Parameter Owners
-    Maps .gitattribute-style globbing syntax for file matching to @username or email
-    address of owners of any matching files.
+.PARAMETER Owners
+Maps .gitattribute-style globbing syntax for file matching to @username or email
+address of owners of any matching files.
 
-.Parameter VendorCode
-    A list of .gitattribute-style globbing syntax matches for files that should be
-    considered vendor code, for files not covered by the default behavior of
-    the default Linguist vendor code file glob patterns:
-    https://github.com/github/linguist/blob/master/lib/linguist/vendor.yml
+.PARAMETER VendorCode
+A list of .gitattribute-style globbing syntax matches for files that should be
+considered vendor code, for files not covered by the default behavior of
+the default Linguist vendor code file glob patterns:
+https://github.com/github/linguist/blob/master/lib/linguist/vendor.yml
 
-.Parameter DocumentationCode
-    A list of .gitattribute-style globbing syntax matches for files that should be
-    considered documentation, for files not covered by the default behavior of
-    the default Linguist documentation file glob patterns:
-    https://github.com/github/linguist/blob/master/lib/linguist/documentation.yml
+.PARAMETER DocumentationCode
+A list of .gitattribute-style globbing syntax matches for files that should be
+considered documentation, for files not covered by the default behavior of
+the default Linguist documentation file glob patterns:
+https://github.com/github/linguist/blob/master/lib/linguist/documentation.yml
 
-.Parameter GeneratedCode
-    A list of .gitattribute-style globbing syntax matches for files that should be
-    considered generated code, for files not covered by the default behavior of
-    the default Linguist generated code file glob patterns and contents matching:
-    https://github.com/github/linguist/blob/master/lib/linguist/generated.rb
+.PARAMETER GeneratedCode
+A list of .gitattribute-style globbing syntax matches for files that should be
+considered generated code, for files not covered by the default behavior of
+the default Linguist generated code file glob patterns and contents matching:
+https://github.com/github/linguist/blob/master/lib/linguist/generated.rb
 
-.Parameter IssueTemplate
-    A Markdown string containing a template for creating issues.
-    https://github.com/blog/2111-issue-and-pull-request-templates
+.PARAMETER IssueTemplate
+A Markdown string containing a template for creating issues.
+https://github.com/blog/2111-issue-and-pull-request-templates
 
-.Parameter PullRequestTemplate
-    A Markdown string containing a template for creating pull requests.
-    https://github.com/blog/2111-issue-and-pull-request-templates
+.PARAMETER PullRequestTemplate
+A Markdown string containing a template for creating pull requests.
+https://github.com/blog/2111-issue-and-pull-request-templates
 
-.Parameter ContributingFile
-    The file path or URL containing guidelines for contributors in Markdown format.
-    https://help.github.com/articles/setting-guidelines-for-repository-contributors/
+.PARAMETER ContributingFile
+The file path or URL containing guidelines for contributors in Markdown format.
+https://help.github.com/articles/setting-guidelines-for-repository-contributors/
 
-.Parameter LicenseFile
-    The file path or URL containing open source licensing for contributors in
-    Markdown format.
-    https://help.github.com/articles/adding-a-license-to-a-repository/
+.PARAMETER LicenseFile
+The file path or URL containing open source licensing for contributors in
+Markdown format.
+https://help.github.com/articles/adding-a-license-to-a-repository/
 
-.Parameter DefaultCharset
-    If no EditorConfig file exists, a simple default charset for text files in the
-    repo. By default this is set to the system default, which is often terrible.
+.PARAMETER DefaultCharset
+If no EditorConfig file exists, a simple default charset for text files in the
+repo. By default this is set to the system default, which is often terrible.
 
-.Parameter DefaultLineEndings
-    If no EditorConfig file exists, a simple default line endings value for text files
-    in the repo. By default this is set to the system default, which is recommended.
+.PARAMETER DefaultLineEndings
+If no EditorConfig file exists, a simple default line endings value for text files
+in the repo. By default this is set to the system default, which is recommended.
 
-.Parameter DefaultIndentSize
-    If no EditorConfig file exists, a simple default number of characters to indent
-    lines for spaces (soft tabs) and tab display (hard tabs) for text files in the
-    repo.
+.PARAMETER DefaultIndentSize
+If no EditorConfig file exists, a simple default number of characters to indent
+lines for spaces (soft tabs) and tab display (hard tabs) for text files in the
+repo.
 
-.Parameter DefaultUsesTabs
-    If no EditorConfig file exists, this switch indicates a simple default for text
-    files in the repo to use tabs. Otherwise, spaces will be used for indentation.
+.PARAMETER DefaultUsesTabs
+If no EditorConfig file exists, this switch indicates a simple default for text
+files in the repo to use tabs. Otherwise, spaces will be used for indentation.
 
-.Parameter DefaultKeepTrailingSpace
-    If no EditorConfig file exists, this switch indicates a simple default for text
-    files in the repo to preserve trailing spaces. Otherwise, trailing spaces will
-    be trimmed.
+.PARAMETER DefaultKeepTrailingSpace
+If no EditorConfig file exists, this switch indicates a simple default for text
+files in the repo to preserve trailing spaces. Otherwise, trailing spaces will
+be trimmed.
 
-.Parameter DefaultNoFinalNewLine
-    If no EditorConfig file exists, this switch indicates a simple default for text
-    files in the repo not to add a final line ending at the end. Otherwise, a final
-    line ending will be added automatically if it is missing.
+.PARAMETER DefaultNoFinalNewLine
+If no EditorConfig file exists, this switch indicates a simple default for text
+files in the repo not to add a final line ending at the end. Otherwise, a final
+line ending will be added automatically if it is missing.
 
-.Link
-    https://github.com/blog/2392-introducing-code-owners
+.LINK
+https://github.com/blog/2392-introducing-code-owners
 
-.Link
-    https://github.com/github/linguist#overrides
+.LINK
+https://github.com/github/linguist#overrides
 
-.Link
-    https://github.com/blog/2111-issue-and-pull-request-templates
+.LINK
+https://github.com/blog/2111-issue-and-pull-request-templates
 
-.Link
-    https://help.github.com/articles/setting-guidelines-for-repository-contributors/
+.LINK
+https://help.github.com/articles/setting-guidelines-for-repository-contributors/
 
-.Link
-    https://help.github.com/articles/adding-a-license-to-a-repository/
+.LINK
+https://help.github.com/articles/adding-a-license-to-a-repository/
 
-.Link
-    http://editorconfig.org/
+.LINK
+http://editorconfig.org/
 
-.Link
-    https://github.com/brianary/Detextive/
+.LINK
+https://github.com/brianary/Detextive/
 
-.Link
-    Add-CapturesToMatches.ps1
+.LINK
+Add-CapturesToMatches.ps1
 
-.Link
-    Measure-StandardDeviation.ps1
+.LINK
+Measure-StandardDeviation.ps1
 
-.Link
-    Test-FileTypeMagicNumber.ps1
+.LINK
+Test-FileTypeMagicNumber.ps1
 
-.Link
-    Use-Command.ps1
+.LINK
+Use-Command.ps1
 
-.Example
-    Add-GitHubMetadata.ps1 -DefaultOwner arthurd@example.com -DefaultUsesTabs
+.EXAMPLE
+Add-GitHubMetadata.ps1 -DefaultOwner arthurd@example.com -DefaultUsesTabs
 
-    Sets up the CODEOWNERS file and assigns a user, and sets the indent default.
+Sets up the CODEOWNERS file and assigns a user, and sets the indent default.
 #>
 
 #Requires -Version 3

@@ -1,32 +1,32 @@
-<#
-.Synopsis
-	Make a command unavailable.
+﻿<#
+.SYNOPSIS
+Make a command unavailable.
 
-.Parameter Name
-	The name of command to hide.
+.PARAMETER Name
+The name of command to hide.
 
-.Parameter CommandType
-	Specifies the types of commands that this cmdlet hides.
+.PARAMETER CommandType
+Specifies the types of commands that this cmdlet hides.
 
-.Inputs
-	System.String containing a command name, or an object with a Name of a command
-	and maybe a specific CommandType.
+.INPUTS
+System.String containing a command name, or an object with a Name of a command
+and maybe a specific CommandType.
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Link
-	Get-Command
+.LINK
+Get-Command
 
-.Example
-	Hide-Command.ps1 Hide-Command.ps1
+.EXAMPLE
+Hide-Command.ps1 Hide-Command.ps1
 
-	Renames the Hide-Command.ps1 script to Hide-Command.ps1~, making it unavailable.
+Renames the Hide-Command.ps1 script to Hide-Command.ps1~, making it unavailable.
 
-.Example
-	Hide-Command.ps1 mkdir
+.EXAMPLE
+Hide-Command.ps1 mkdir
 
-	Removes the mkdir function.
+Removes the mkdir function.
 #>
 
 #Requires -Version 3

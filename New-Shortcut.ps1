@@ -1,44 +1,44 @@
 ﻿<#
-.Synopsis
-	Create a Windows shortcut.
+.SYNOPSIS
+Create a Windows shortcut.
 
-.Parameter Name
-	The filename of the shortcut, typically including a .lnk extension.
+.PARAMETER Name
+The filename of the shortcut, typically including a .lnk extension.
 
-.Parameter TargetPath
-	The path of the file the shortcut will point to.
+.PARAMETER TargetPath
+The path of the file the shortcut will point to.
 
-.Parameter Arguments
-	Any command-line parameters to pass to the TargetPath, if it is a program.
+.PARAMETER Arguments
+Any command-line parameters to pass to the TargetPath, if it is a program.
 
-.Parameter WorkingDirectory
-	The folder to run TargetPath in.
+.PARAMETER WorkingDirectory
+The folder to run TargetPath in.
 
-.Parameter Description
-	Some descriptive text for the shortcut.
+.PARAMETER Description
+Some descriptive text for the shortcut.
 
-.Parameter Hotkey
-	A Windows Explorer key combination to open the shortcut, usually starting with
-	"Ctrl + Alt +".
+.PARAMETER Hotkey
+A Windows Explorer key combination to open the shortcut, usually starting with
+"Ctrl + Alt +".
 
-.Parameter IconLocation
-	The path to a file with an icon to use, and an index, e.g.
+.PARAMETER IconLocation
+The path to a file with an icon to use, and an index, e.g.
 
-		%SystemRoot%\system32\SHELL32.dll,244
+%SystemRoot%\system32\SHELL32.dll,244
 
-.Parameter WindowStyle
-	The state the window should start in: Normal, Maximized, or Minimized.
+.PARAMETER WindowStyle
+The state the window should start in: Normal, Maximized, or Minimized.
 
-.Parameter RunAsAdministrator
-	Indicates the shortcut should invoke UAC and run as an admin.
+.PARAMETER RunAsAdministrator
+Indicates the shortcut should invoke UAC and run as an admin.
 
-.Link
-	https://ss64.com/vb/shortcut.html
+.LINK
+https://ss64.com/vb/shortcut.html
 
-.Example
-	New-Shortcut -Path "$Home\Desktop\Explorer.lnk" -TargetPath '%SystemRoot%\explorer.exe' -RunAsAdministrator
+.EXAMPLE
+New-Shortcut -Path "$Home\Desktop\Explorer.lnk" -TargetPath '%SystemRoot%\explorer.exe' -RunAsAdministrator
 
-	Creates an Explorer shortcut on the desktop that runs as admin.
+Creates an Explorer shortcut on the desktop that runs as admin.
 #>
 
 [CmdletBinding()][OutputType([void])] Param(

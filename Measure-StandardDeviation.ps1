@@ -1,20 +1,20 @@
-<#
-.Synopsis
-	Calculate the standard deviation of numeric values.
+﻿<#
+.SYNOPSIS
+Calculate the standard deviation of numeric values.
 
-.Inputs
-	A collection of System.Double values
+.INPUTS
+A collection of System.Double values
 
-.Outputs
-	System.Double
+.OUTPUTS
+System.Double
 
-.Link
-	Measure-Object
+.LINK
+Measure-Object
 
-.Example
-	Get-Process |% Handles |Measure-StandardDeviation.ps1
+.EXAMPLE
+Get-Process |% Handles |Measure-StandardDeviation.ps1
 
-	1206.54722086141
+1206.54722086141
 #>
 
 #Requires -Version 3

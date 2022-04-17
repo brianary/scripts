@@ -1,15 +1,15 @@
-<#
-.Synopsis
-    Switch the Java version for the current process by modifying environment variables.
+﻿<#
+.SYNOPSIS
+Switch the Java version for the current process by modifying environment variables.
 
-.Parameter Path
-    The path to the JRE/JDK to use, which must contain bin\java.exe.
+.PARAMETER Path
+The path to the JRE/JDK to use, which must contain bin\java.exe.
 
-.Inputs
-    System.String path to use as the new JAVA_HOME environment variable.
+.INPUTS
+System.String path to use as the new JAVA_HOME environment variable.
 
-.Example
-    Use-Java.ps1 "$env:ProgramFiles\OpenJDK\jdk-11.0.1"
+.EXAMPLE
+Use-Java.ps1 "$env:ProgramFiles\OpenJDK\jdk-11.0.1"
 #>
 
 [CmdletBinding()][OutputType([void])] Param(

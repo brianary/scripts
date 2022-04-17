@@ -1,47 +1,47 @@
-<#
-.Synopsis
-    Parses a Timespan from a ISO8601 duration string.
+﻿<#
+.SYNOPSIS
+Parses a Timespan from a ISO8601 duration string.
 
-.Parameter InputObject
-    An ISO8601 duration string in one of four formats:
+.PARAMETER InputObject
+An ISO8601 duration string in one of four formats:
 
-        * PnYnMnDTnHnMnS
-        * PnW
-        * Pyyyy-MM-ddTHH:mm:ss
-        * PyyyyMMddTHHmmss
+* PnYnMnDTnHnMnS
+* PnW
+* Pyyyy-MM-ddTHH:mm:ss
+* PyyyyMMddTHHmmss
 
-.Parameter NoWarnings
-    Supresses warnings about approximate conversions.
+.PARAMETER NoWarnings
+Supresses warnings about approximate conversions.
 
-.Inputs
-    System.String containing an ISO8601 duration.
+.INPUTS
+System.String containing an ISO8601 duration.
 
-.Outputs
-    System.Timespan containing the duration, as parsed and converted to a Timespan.
+.OUTPUTS
+System.Timespan containing the duration, as parsed and converted to a Timespan.
 
-.Link
-	https://en.wikipedia.org/wiki/ISO_8601#Durations
+.LINK
+https://en.wikipedia.org/wiki/ISO_8601#Durations
 
-.Link
-	Import-Variables.ps1
+.LINK
+Import-Variables.ps1
 
-.Link
-	Test-Variable.ps1
+.LINK
+Test-Variable.ps1
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Example
-    "$(ConvertFrom-Duration.ps1 P1D)"
+.EXAMPLE
+"$(ConvertFrom-Duration.ps1 P1D)"
 
-    1.00:00:00
+1.00:00:00
 
-.Example
-    "$(ConvertFrom-Duration.ps1 P3Y6M4DT12H30M5S)"
+.EXAMPLE
+"$(ConvertFrom-Duration.ps1 P3Y6M4DT12H30M5S)"
 
-    WARNING: Adding year(s) as a mean number of days (365.2425).
-    WARNING: Adding month(s) as a mean number of days (30.436875).
-    1283.12:30:05
+WARNING: Adding year(s) as a mean number of days (365.2425).
+WARNING: Adding month(s) as a mean number of days (30.436875).
+1283.12:30:05
 #>
 
 #Requires -Version 3

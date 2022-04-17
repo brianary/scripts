@@ -1,25 +1,25 @@
-<#
-.Synopsis
-	Indicates that a file contains text.
+﻿<#
+.SYNOPSIS
+Indicates that a file contains text.
 
-.Parameter Path
-	A file to test.
+.PARAMETER Path
+A file to test.
 
-.Outputs
-	System.Boolean indicating that the file contains text.
+.OUTPUTS
+System.Boolean indicating that the file contains text.
 
-.Link
-	Test-FileTypeMagicNumber.ps1
+.LINK
+Test-FileTypeMagicNumber.ps1
 
-.Example
-	Test-TextFile.ps1 README.md
+.EXAMPLE
+Test-TextFile.ps1 README.md
 
-	True
+True
 
-.Example
-	Test-TextFile.ps1 avatar.jpg
+.EXAMPLE
+Test-TextFile.ps1 avatar.jpg
 
-	False
+False
 #>
 
 #Requires -Version 3

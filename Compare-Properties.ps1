@@ -1,55 +1,55 @@
-<#
-.Synopsis
-	Compares the properties of two objects.
+﻿<#
+.SYNOPSIS
+Compares the properties of two objects.
 
-.Parameter ReferenceObject
-	The base object to compare properties to.
+.PARAMETER ReferenceObject
+The base object to compare properties to.
 
-.Parameter DifferenceObject
-	The second object to compare the properties of.
+.PARAMETER DifferenceObject
+The second object to compare the properties of.
 
-.Parameter ExcludeDifferent
-	Indicates different values should be suppressed.
+.PARAMETER ExcludeDifferent
+Indicates different values should be suppressed.
 
-.Parameter IncludeEqual
-	Indicates equal values should be included.
+.PARAMETER IncludeEqual
+Indicates equal values should be included.
 
-.Inputs
-	System.Management.Automation.PSObject with properties to compare.
+.INPUTS
+System.Management.Automation.PSObject with properties to compare.
 
-.Outputs
-	System.Management.Automation.PSCustomObject for each relevant property comparison,
-	with these fields:
+.OUTPUTS
+System.Management.Automation.PSCustomObject for each relevant property comparison,
+with these fields:
 
-		* PropertyName
-		* Reference
-		* Value
-		* Difference
-		* DifferentValue
+* PropertyName
+* Reference
+* Value
+* Difference
+* DifferentValue
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.management.automation.psmemberset
+.LINK
+https://docs.microsoft.com/dotnet/api/system.management.automation.psmemberset
 
-.Example
-	Compare-Properties.ps1 (Get-PSProvider variable) (Get-PSProvider alias)
+.EXAMPLE
+Compare-Properties.ps1 (Get-PSProvider variable) (Get-PSProvider alias)
 
-	PropertyName   : ImplementingType
-	Reference      : True
-	Value          : Microsoft.PowerShell.Commands.VariableProvider
-	Difference     : True
-	DifferentValue : Microsoft.PowerShell.Commands.AliasProvider
+PropertyName   : ImplementingType
+Reference      : True
+Value          : Microsoft.PowerShell.Commands.VariableProvider
+Difference     : True
+DifferentValue : Microsoft.PowerShell.Commands.AliasProvider
 
-	PropertyName   : Name
-	Reference      : True
-	Value          : Variable
-	Difference     : True
-	DifferentValue : Alias
+PropertyName   : Name
+Reference      : True
+Value          : Variable
+Difference     : True
+DifferentValue : Alias
 
-	PropertyName   : Drives
-	Reference      : True
-	Value          : {Variable}
-	Difference     : True
-	DifferentValue : {Alias}
+PropertyName   : Drives
+Reference      : True
+Value          : {Variable}
+Difference     : True
+DifferentValue : {Alias}
 #>
 
 #Requires -Version 3

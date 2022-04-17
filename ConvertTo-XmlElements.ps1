@@ -1,40 +1,40 @@
 ﻿<#
-.Synopsis
-    Serializes complex content into XML elements.
+.SYNOPSIS
+Serializes complex content into XML elements.
 
-.Parameter Value
-    A hash or XML element or other object to be serialized as XML elements.
+.PARAMETER Value
+A hash or XML element or other object to be serialized as XML elements.
 
-    Each hash value or object property value may itself be a hash or object or XML element.
+Each hash value or object property value may itself be a hash or object or XML element.
 
-.Inputs
-    System.Object (any object) to serialize.
+.INPUTS
+System.Object (any object) to serialize.
 
-.Outputs
-    System.String for each XML-serialized value or property.
+.OUTPUTS
+System.String for each XML-serialized value or property.
 
-.Example
-    ConvertTo-XmlElements.ps1 @{html=@{body=@{p='Some text.'}}}
+.EXAMPLE
+ConvertTo-XmlElements.ps1 @{html=@{body=@{p='Some text.'}}}
 
-    <html><body><p>Some text.</p></body></html>
+<html><body><p>Some text.</p></body></html>
 
-.Example
-    [pscustomobject]@{UserName=$env:USERNAME;Computer=$env:COMPUTERNAME} |ConvertTo-XmlElements.ps1
+.EXAMPLE
+[pscustomobject]@{UserName=$env:USERNAME;Computer=$env:COMPUTERNAME} |ConvertTo-XmlElements.ps1
 
-    <Computer>COMPUTERNAME</Computer>
-    <UserName>username</UserName>
+<Computer>COMPUTERNAME</Computer>
+<UserName>username</UserName>
 
-.Example
-    Get-ChildItem *.txt |ConvertTo-XmlElements.ps1
+.EXAMPLE
+Get-ChildItem *.txt |ConvertTo-XmlElements.ps1
 
-    <PSPath>Microsoft.PowerShell.Core\FileSystem::C:\temp\test.txt</PSPath>
-    <PSParentPath>Microsoft.PowerShell.Core\FileSystem::C:\scripts</PSParentPath>
-    <PSChildName>test.txt</PSChildName>
-    <PSDrive></PSDrive>
-    <PSProvider></PSProvider>
-    <VersionInfo><FileVersionRaw></FileVersionRaw>
-    <ProductVersionRaw></ProductVersionRaw>
-    …
+<PSPath>Microsoft.PowerShell.Core\FileSystem::C:\temp\test.txt</PSPath>
+<PSParentPath>Microsoft.PowerShell.Core\FileSystem::C:\scripts</PSParentPath>
+<PSChildName>test.txt</PSChildName>
+<PSDrive></PSDrive>
+<PSProvider></PSProvider>
+<VersionInfo><FileVersionRaw></FileVersionRaw>
+<ProductVersionRaw></ProductVersionRaw>
+…
 #>
 
 #Requires -Version 3

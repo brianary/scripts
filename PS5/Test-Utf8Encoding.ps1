@@ -1,22 +1,23 @@
 ﻿<#
-.Synopsis
-	Determines whether a file can be parsed as UTF-8 successfully.
+.SYNOPSIS
+Determines whether a file can be parsed as UTF-8 successfully.
 
-.Parameter Path
-    The file to test.
+.PARAMETER Path
+The file to test.
 
-.Inputs
-	System.IO.FileInfo file or similar object to test for UTF-8 validity.
+.INPUTS
+System.IO.FileInfo file or similar object to test for UTF-8 validity.
 
-.Outputs
-	System.Boolean indicating whether the file parses sucessfully.
+.OUTPUTS
+System.Boolean indicating whether the file parses sucessfully.
 
-.Link
-	https://docs.microsoft.com/en-us/dotnet/api/system.text.utf8encoding.-ctor?view=netframework-4.8
+.LINK
+https://docs.microsoft.com/en-us/dotnet/api/system.text.utf8encoding.-ctor?view=netframework-4.8
 
-.Example
-	Test-Utf8Encoding.ps1 file.txt
+.EXAMPLE
+Test-Utf8Encoding.ps1 file.txt
 
+True
 #>
 
 #Requires -Version 3

@@ -1,92 +1,92 @@
-<#
-.Synopsis
-	Compares two XML documents and returns the differences.
+﻿<#
+.SYNOPSIS
+Compares two XML documents and returns the differences.
 
-.Parameter ReferenceXml
-	The original XML document to be compared.
+.PARAMETER ReferenceXml
+The original XML document to be compared.
 
-.Parameter DifferenceXml
-	An XML document to compare to.
+.PARAMETER DifferenceXml
+An XML document to compare to.
 
-.Inputs
-	System.Xml.XmlDocument to compare to the reference XML.
+.INPUTS
+System.Xml.XmlDocument to compare to the reference XML.
 
-.Outputs
-	System.Xml.XmlDocument containing XSLT that can be applied to the reference XML to
-	transform it to the difference XML. It contains templates for changed nodes.
+.OUTPUTS
+System.Xml.XmlDocument containing XSLT that can be applied to the reference XML to
+transform it to the difference XML. It contains templates for changed nodes.
 
-.Link
-	Resolve-XPath.ps1
+.LINK
+Resolve-XPath.ps1
 
-.Example
-	Compare-Xml.ps1 '<a b="z"/>' '<a b="y"/>' |Format-Xml.ps1
+.EXAMPLE
+Compare-Xml.ps1 '<a b="z"/>' '<a b="y"/>' |Format-Xml.ps1
 
-	<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-		<xsl:output omit-xml-declaration="yes" method="xml" />
-		<xsl:template match="@*|node()">
-			<xsl:copy>
-				<xsl:apply-templates select="@*|node()" />
-			</xsl:copy>
-		</xsl:template>
-		<xsl:template match="/a/@b">
-			<xsl:attribute name="b"><![CDATA[y]]></xsl:attribute>
-		</xsl:template>
-	</xsl:transform>
+| <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+|   <xsl:output omit-xml-declaration="yes" method="xml" />
+|   <xsl:template match="@*|node()">
+|     <xsl:copy>
+|       <xsl:apply-templates select="@*|node()" />
+|     </xsl:copy>
+|   </xsl:template>
+|   <xsl:template match="/a/@b">
+|     <xsl:attribute name="b"><![CDATA[y]]></xsl:attribute>
+|   </xsl:template>
+| </xsl:transform>
 
-.Example
-	Compare-Xml.ps1 '<a b="z"/>' '<a c="y"/>' |Format-Xml.ps1
+.EXAMPLE
+Compare-Xml.ps1 '<a b="z"/>' '<a c="y"/>' |Format-Xml.ps1
 
-	<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-		<xsl:output omit-xml-declaration="yes" method="xml" />
-		<xsl:template match="@*|node()">
-			<xsl:copy>
-				<xsl:apply-templates select="@*|node()" />
-			</xsl:copy>
-		</xsl:template>
-		<xsl:template match="/a/@b" />
-		<xsl:template match="/a">
-			<xsl:copy>
-				<xsl:apply-templates select="@*" />
-				<xsl:attribute name="c"><![CDATA[y]]></xsl:attribute>
-			</xsl:copy>
-		</xsl:template>
-	</xsl:transform>
+| <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+|   <xsl:output omit-xml-declaration="yes" method="xml" />
+|   <xsl:template match="@*|node()">
+|     <xsl:copy>
+|       <xsl:apply-templates select="@*|node()" />
+|     </xsl:copy>
+|   </xsl:template>
+|   <xsl:template match="/a/@b" />
+|   <xsl:template match="/a">
+|     <xsl:copy>
+|       <xsl:apply-templates select="@*" />
+|       <xsl:attribute name="c"><![CDATA[y]]></xsl:attribute>
+|     </xsl:copy>
+|   </xsl:template>
+| </xsl:transform>
 
-.Example
-	Compare-Xml.ps1 '<a><b/><c/><!-- d --></a>' '<a><c/><b/></a>' |Format-Xml.ps1
+.EXAMPLE
+Compare-Xml.ps1 '<a><b/><c/><!-- d --></a>' '<a><c/><b/></a>' |Format-Xml.ps1
 
-	<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-		<xsl:template match="@*|node()">
-			<xsl:copy>
-			<xsl:apply-templates select="@*|node()" />
-			</xsl:copy>
-		</xsl:template>
-		<xsl:template match="/a">
-			<xsl:copy>
-			<xsl:apply-templates select="@*" />
-			<xsl:apply-templates select="c" />
-			<xsl:apply-templates select="b" />
-			</xsl:copy>
-		</xsl:template>
-	</xsl:transform>
+| <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+|   <xsl:template match="@*|node()">
+|     <xsl:copy>
+|       <xsl:apply-templates select="@*|node()" />
+|     </xsl:copy>
+|   </xsl:template>
+|   <xsl:template match="/a">
+|     <xsl:copy>
+|       <xsl:apply-templates select="@*" />
+|       <xsl:apply-templates select="c" />
+|       <xsl:apply-templates select="b" />
+|     </xsl:copy>
+|   </xsl:template>
+| </xsl:transform>
 
-.Example
-	Compare-Xml.ps1 '<a/>' '<a><!-- annotation --><new/><?node details?></a>' |Format-Xml.ps1
+.EXAMPLE
+Compare-Xml.ps1 '<a/>' '<a><!-- annotation --><new/><?node details?></a>' |Format-Xml.ps1
 
-	<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-		<xsl:template match="@*|node()">
-			<xsl:copy>
-				<xsl:apply-templates select="@*|node()" />
-			</xsl:copy>
-		</xsl:template>
-		<xsl:template match="/a">
-			<xsl:copy>
-				<xsl:comment><![CDATA[ annotation ]]></xsl:comment>
-				<new />
-				<xsl:processing-instruction name="node"><![CDATA[details]]></xsl:processing-instruction>
-			</xsl:copy>
-		</xsl:template>
-	</xsl:transform>
+| <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+|   <xsl:template match="@*|node()">
+|     <xsl:copy>
+|       <xsl:apply-templates select="@*|node()" />
+|     </xsl:copy>
+|   </xsl:template>
+|   <xsl:template match="/a">
+|     <xsl:copy>
+|       <xsl:comment><![CDATA[ annotation ]]></xsl:comment>
+|       <new />
+|       <xsl:processing-instruction name="node"><![CDATA[details]]></xsl:processing-instruction>
+|     </xsl:copy>
+|   </xsl:template>
+| </xsl:transform>
 #>
 
 #Requires -Version 3

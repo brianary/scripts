@@ -1,51 +1,51 @@
 ﻿<#
-.Synopsis
-    Exports table data as a T-SQL MERGE statement.
+.SYNOPSIS
+Exports table data as a T-SQL MERGE statement.
 
-.Parameter ServerInstance
-    The name of a server (and optional instance) to connect and use for the query.
-    May be used with optional Database, Credential, and ConnectionProperties parameters.
+.PARAMETER ServerInstance
+The name of a server (and optional instance) to connect and use for the query.
+May be used with optional Database, Credential, and ConnectionProperties parameters.
 
-.Parameter Database
-    The the database to connect to on the server.
+.PARAMETER Database
+The the database to connect to on the server.
 
-.Parameter ConnectionString
-    Specifies a connection string to connect to the server.
+.PARAMETER ConnectionString
+Specifies a connection string to connect to the server.
 
-.Parameter ConnectionName
-    The connection string name from the ConfigurationManager to use.
+.PARAMETER ConnectionName
+The connection string name from the ConfigurationManager to use.
 
-.Parameter Table
-    The name of the table to export.
+.PARAMETER Table
+The name of the table to export.
 
-.Parameter Schema
-    Optional name of the table's schema.
-    By default, uses the user's default schema defined in the database (typically dbo).
+.PARAMETER Schema
+Optional name of the table's schema.
+By default, uses the user's default schema defined in the database (typically dbo).
 
-.Parameter UseIdentityAsKey
-    Treat a non-key identity column as part of the key, since it can't be updated as a data column.
+.PARAMETER UseIdentityAsKey
+Treat a non-key identity column as part of the key, since it can't be updated as a data column.
 
-    Non-key identity columns are very rare, but if one is detected and this switch is not specified,
-    a warning will be generated and the column will be ignored entirely for updates, and not used as
-    either a key to match on or a data column to update.
+Non-key identity columns are very rare, but if one is detected and this switch is not specified,
+a warning will be generated and the column will be ignored entirely for updates, and not used as
+either a key to match on or a data column to update.
 
-.Outputs
-    System.String of SQL MERGE script to replicate the table's data.
+.OUTPUTS
+System.String of SQL MERGE script to replicate the table's data.
 
-.Link
-    Use-SqlcmdParams.ps1
+.LINK
+Use-SqlcmdParams.ps1
 
-.Link
-    Invoke-Sqlcmd
+.LINK
+Invoke-Sqlcmd
 
-.Link
-    https://msdn.microsoft.com/library/hh245198.aspx
+.LINK
+https://msdn.microsoft.com/library/hh245198.aspx
 
-.Example
-    Export-TableMerge $server pubs employee |Out-File employee.sql
+.EXAMPLE
+Export-TableMerge $server pubs employee |Out-File employee.sql
 
-.Example
-    Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -Schema Production -Table Product |Out-File Data\Production.Product.sql utf8
+.EXAMPLE
+Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -Schema Production -Table Product |Out-File Data\Production.Product.sql utf8
 #>
 
 #Requires -Version 3

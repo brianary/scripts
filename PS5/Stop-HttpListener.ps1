@@ -1,20 +1,20 @@
-<#
-.Synopsis
-    Closes an HTTP listener.
+﻿<#
+.SYNOPSIS
+Closes an HTTP listener.
 
-.Parameter Listener
-    The HTTP listener to close.
+.PARAMETER Listener
+The HTTP listener to close.
 
-.Inputs
-    System.Net.HttpListener to close.
+.INPUTS
+System.Net.HttpListener to close.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.net.httplistener
+.LINK
+https://docs.microsoft.com/dotnet/api/system.net.httplistener
 
-.Example
-    Stop-HttpListener.ps1 $http
+.EXAMPLE
+Stop-HttpListener.ps1 $http
 
-    The $http listener is closed.
+The $http listener is closed.
 #>
 
 #Requires -Version 3

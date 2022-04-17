@@ -1,20 +1,20 @@
-<#
-.Synopsis
-	Returns the DOSKey-style console command history (up arrow or F8).
+﻿<#
+.SYNOPSIS
+Returns the DOSKey-style console command history (up arrow or F8).
 
-.Outputs
-	System.Management.Automation.PSObject with these properties:
+.OUTPUTS
+System.Management.Automation.PSObject with these properties:
 
-	* Id: The position of the command in the console history.
-	* CommandLine: The command entered in the history.
+* Id: The position of the command in the console history.
+* CommandLine: The command entered in the history.
 
-.Example
-	Get-ConsoleHistory.ps1 |where CommandLine -like *readme*
+.EXAMPLE
+Get-ConsoleHistory.ps1 |where CommandLine -like *readme*
 
-	Id CommandLine
-	-- -----------
-	30 gc .\README.md
-	56 gc .\README.md
+Id CommandLine
+-- -----------
+30 gc .\README.md
+56 gc .\README.md
 #>
 
 #Requires -Version 3

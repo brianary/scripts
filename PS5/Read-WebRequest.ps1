@@ -1,20 +1,20 @@
-<#
-.Synopsis
-	Parses an HTTP listener request.
+﻿<#
+.SYNOPSIS
+Parses an HTTP listener request.
 
-.Parameter Request
-	The HTTP listener to receive the request through.
+.PARAMETER Request
+The HTTP listener to receive the request through.
 
-.Parameter Encoding
-	Forces an encoding for the request body; Byte for binary, others for text.
+.PARAMETER Encoding
+Forces an encoding for the request body; Byte for binary, others for text.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.net.httplistener
+.LINK
+https://docs.microsoft.com/dotnet/api/system.net.httplistener
 
-.Example
-    Read-WebRequest.ps1 $httpContext.Request
+.EXAMPLE
+Read-WebRequest.ps1 $httpContext.Request
 
-    Parses the request body as a string or byte array.
+Parses the request body as a string or byte array.
 #>
 
 #Requires -Version 3

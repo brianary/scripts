@@ -1,23 +1,23 @@
 ﻿<#
-.Synopsis
-	Listens for an HTTP request and returns an HTTP request & response.
+.SYNOPSIS
+Listens for an HTTP request and returns an HTTP request & response.
 
-.Parameter Listener
-	The HTTP listener to receive the request through.
+.PARAMETER Listener
+The HTTP listener to receive the request through.
 
-.Inputs
-	System.Net.HttpListener to receive the request through.
+.INPUTS
+System.Net.HttpListener to receive the request through.
 
-.Outputs
-	System.Net.HttpListenerContext containing the Request and the Response that can be used to reply.
+.OUTPUTS
+System.Net.HttpListenerContext containing the Request and the Response that can be used to reply.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.net.httplistener
+.LINK
+https://docs.microsoft.com/dotnet/api/system.net.httplistener
 
-.Example
-    $context = Receive-WebRequest.ps1 $http
+.EXAMPLE
+$context = Receive-WebRequest.ps1 $http
 
-    Accepts an HTTP request returns it in an HTTP context object.
+Accepts an HTTP request returns it in an HTTP context object.
 #>
 
 #Requires -Version 3

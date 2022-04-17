@@ -1,47 +1,47 @@
-<#
-.Synopsis
-    Converts Scheduled Tasks to Scheduled Jobs.
+﻿<#
+.SYNOPSIS
+Converts Scheduled Tasks to Scheduled Jobs.
 
-.Parameter TaskPath
-    Specifies the task path to export from.
+.PARAMETER TaskPath
+Specifies the task path to export from.
 
-.Link
-    ConvertFrom-XmlElement.ps1
+.LINK
+ConvertFrom-XmlElement.ps1
 
-.Link
-    Use-ReasonableDefaults.ps1
+.LINK
+Use-ReasonableDefaults.ps1
 
-.Link
-    Register-ScheduledJob
+.LINK
+Register-ScheduledJob
 
-.Link
-    New-ScheduledJobOption
+.LINK
+New-ScheduledJobOption
 
-.Link
-    New-JobTrigger
+.LINK
+New-JobTrigger
 
-.Link
-    Disable-ScheduledTask
+.LINK
+Disable-ScheduledTask
 
-.Link
-    Get-ScheduledTask
+.LINK
+Get-ScheduledTask
 
-.Link
-    Export-ScheduledTask
+.LINK
+Export-ScheduledTask
 
-.Link
-    Get-Credential
+.LINK
+Get-Credential
 
-.Link
-    Select-Xml
+.LINK
+Select-Xml
 
-.Link
-    ConvertTo-Json
+.LINK
+ConvertTo-Json
 
-.Example
-    Convert-ScheduledTasksToJobs.ps1
+.EXAMPLE
+Convert-ScheduledTasksToJobs.ps1
 
-    Converts PowerShell Scheduled Tasks in the \ path to Scheduled Jobs.
+Converts PowerShell Scheduled Tasks in the \ path to Scheduled Jobs.
 #>
 
 #Requires -Version 5

@@ -1,17 +1,17 @@
 ﻿<#
-.Synopsis
-    Exports the local list of Scheduled Tasks into a single XML file.
+.SYNOPSIS
+Exports the local list of Scheduled Tasks into a single XML file.
 
-.Parameter Path
-    The name of the XML file to export to.
+.PARAMETER Path
+The name of the XML file to export to.
 
-.Link
-    https://msdn.microsoft.com/library/windows/desktop/bb736357.aspx
+.LINK
+https://msdn.microsoft.com/library/windows/desktop/bb736357.aspx
 
-.Example
-    Backup-SchTasks.ps1
+.EXAMPLE
+Backup-SchTasks.ps1
 
-    (Backs up Windows Scheduled Tasks to tasks.xml.)
+(Backs up Windows Scheduled Tasks to tasks.xml.)
 #>
 
 [CmdletBinding()][OutputType([void])] Param( [Parameter(Position=0)][string]$Path = 'tasks.xml' )

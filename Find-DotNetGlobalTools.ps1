@@ -1,9 +1,9 @@
-<#
-.Synopsis
-	Returns a list of global dotnet tools.
+﻿<#
+.SYNOPSIS
+Returns a list of global dotnet tools.
 
-.Parameter Name
-	The name of the tool to search for.
+.PARAMETER Name
+The name of the tool to search for.
 #>
 
 #Requires -Version 3

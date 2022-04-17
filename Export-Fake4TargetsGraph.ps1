@@ -1,28 +1,28 @@
-<#
-.Synopsis
-    Exports a graph of a Fake4 build script's targets.
+﻿<#
+.SYNOPSIS
+Exports a graph of a Fake4 build script's targets.
 
-.Parameter Renderer
-    The name of the Graphviz rendering engine to use.
+.PARAMETER Renderer
+The name of the Graphviz rendering engine to use.
 
-.Parameter Format
-    The output format of the graph.
+.PARAMETER Format
+The output format of the graph.
 
-.Parameter OutFile
-    The filename to output the graph to.
+.PARAMETER OutFile
+The filename to output the graph to.
 
-.Parameter FakeVersion
-    The specific version of Fake4 to install if it is missing.
+.PARAMETER FakeVersion
+The specific version of Fake4 to install if it is missing.
 
-.Notes
-    TODO: Parameterize build script file.
-    TODO: Parameterize build target, and include only it and its dependencies.
-    TODO: Invoke-Item?
+.NOTES
+TODO: Parameterize build script file.
+TODO: Parameterize build target, and include only it and its dependencies.
+TODO: Invoke-Item?
 
-.Example
-    Export-Fake4TargetsGraph.ps1
+.EXAMPLE
+Export-Fake4TargetsGraph.ps1
 
-    Parses build.fsx and shows the target dependency graph in build.svg.
+Parses build.fsx and shows the target dependency graph in build.svg.
 #>
 
 #Requires -Version 3

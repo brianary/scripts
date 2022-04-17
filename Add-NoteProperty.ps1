@@ -1,46 +1,46 @@
-<#
-.Synopsis
-	Adds a NoteProperty to a PSObject, calculating the value with the object in context.
+﻿<#
+.SYNOPSIS
+Adds a NoteProperty to a PSObject, calculating the value with the object in context.
 
-.Parameter Name
-	The name of the NoteProperty to add to the object.
+.PARAMETER Name
+The name of the NoteProperty to add to the object.
 
-.Parameter Value
-	The expression to use to set the value of the NoteProperty.
+.PARAMETER Value
+The expression to use to set the value of the NoteProperty.
 
-.Parameter InputObject
-	The object to add the NoteProperty to.
+.PARAMETER InputObject
+The object to add the NoteProperty to.
 
-.Parameter PassThru
-	Returns the object with the NoteProperty added.
-	Normally there is no output.
+.PARAMETER PassThru
+Returns the object with the NoteProperty added.
+Normally there is no output.
 
-.Link
-	Add-Member
+.LINK
+Add-Member
 
-.Example
-	Get-ChildItem Get-*.ps1 |Add-NoteProperty.ps1 Size {Format-ByteUnits.ps1 $Length -Precision 1} -Properties Length -PassThru |Format-Table Size,Name -AutoSize
+.EXAMPLE
+Get-ChildItem Get-*.ps1 |Add-NoteProperty.ps1 Size {Format-ByteUnits.ps1 $Length -Precision 1} -Properties Length -PassThru |Format-Table Size,Name -AutoSize
 
-	Size   Name
-	----   ----
-	8.1KB  Get-AspNetEvents.ps1
-	840    Get-AssemblyFramework.ps1
-	38.3KB Get-CharacterDetails.ps1
-	1.1KB  Get-ClassicAspEvents.ps1
-	1.3KB  Get-CommandPath.ps1
-	1.2KB  Get-ConfigConnectionStringBuilders.ps1
-	4.9KB  Get-ConsoleColors.ps1
-	1.4KB  Get-ContentSecurityPolicy.ps1
-	617    Get-Dns.ps1
-	2.4KB  Get-EnumValues.ps1
-	6KB    Get-IisLog.ps1
-	1.9KB  Get-LibraryVulnerabilityInfo.ps1
-	2.7KB  Get-DotNetFrameworkVersions.ps1
-	969    Get-RepoName.ps1
-	3.3KB  Get-SslDetails.ps1
-	4.2KB  Get-SystemDetails.ps1
-	6.8KB  Get-TypeAccelerators.ps1
-	1.2KB  Get-XmlNamespaces.ps1
+Size   Name
+----   ----
+8.1KB  Get-AspNetEvents.ps1
+840    Get-AssemblyFramework.ps1
+38.3KB Get-CharacterDetails.ps1
+1.1KB  Get-ClassicAspEvents.ps1
+1.3KB  Get-CommandPath.ps1
+1.2KB  Get-ConfigConnectionStringBuilders.ps1
+4.9KB  Get-ConsoleColors.ps1
+1.4KB  Get-ContentSecurityPolicy.ps1
+617    Get-Dns.ps1
+2.4KB  Get-EnumValues.ps1
+6KB    Get-IisLog.ps1
+1.9KB  Get-LibraryVulnerabilityInfo.ps1
+2.7KB  Get-DotNetFrameworkVersions.ps1
+969    Get-RepoName.ps1
+3.3KB  Get-SslDetails.ps1
+4.2KB  Get-SystemDetails.ps1
+6.8KB  Get-TypeAccelerators.ps1
+1.2KB  Get-XmlNamespaces.ps1
 #>
 
 [CmdletBinding()][OutputType([void],[psobject])] Param(

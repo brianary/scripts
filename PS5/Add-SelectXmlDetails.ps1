@@ -1,6 +1,6 @@
-<#
-.Synopsis
-	Adds OuterXml, Value, XPath, and Namespace properties to Select-Xml output.
+﻿<#
+.SYNOPSIS
+Adds OuterXml, Value, XPath, and Namespace properties to Select-Xml output.
 #>
 
 #Requires -Version 3

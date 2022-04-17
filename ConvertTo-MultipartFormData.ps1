@@ -1,33 +1,33 @@
-<#
-.Synopsis
-    Creates multipart/form-data to send as a request body.
+﻿<#
+.SYNOPSIS
+Creates multipart/form-data to send as a request body.
 
-.Parameter Fields
-    The fields to pass, as a Hashtable or other dictionary.
-	Values of the System.IO.FileInfo type will be read, as for a file upload.
+.PARAMETER Fields
+The fields to pass, as a Hashtable or other dictionary.
+Values of the System.IO.FileInfo type will be read, as for a file upload.
 
-.Inputs
-	Any System.Collections.IDictionary type of key-value pairs to encode.
+.INPUTS
+Any System.Collections.IDictionary type of key-value pairs to encode.
 
-.Outputs
-	System.Byte[] of encoded key-value data.
+.OUTPUTS
+System.Byte[] of encoded key-value data.
 
-.Link
-    https://docs.microsoft.com/dotnet/api/system.net.http.multipartformdatacontent
+.LINK
+https://docs.microsoft.com/dotnet/api/system.net.http.multipartformdatacontent
 
-.Link
-    Invoke-WebRequest
+.LINK
+Invoke-WebRequest
 
-.Link
-    Invoke-RestMethod
+.LINK
+Invoke-RestMethod
 
-.Link
-    New-Guid
+.LINK
+New-Guid
 
-.Example
-    @{ title = 'Name'; file = Get-Item avartar.png } |ConvertTo-MultipartFormData.ps1 |Invoke-WebRequest $url -Method POST
+.EXAMPLE
+@{ title = 'Name'; file = Get-Item avartar.png } |ConvertTo-MultipartFormData.ps1 |Invoke-WebRequest $url -Method POST
 
-    Sends two fields, one of which is a file upload.
+Sends two fields, one of which is a file upload.
 #>
 
 #Requires -Version 3

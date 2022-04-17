@@ -1,20 +1,20 @@
-<#
-.Synopsis
-    Pauses an HTTP listener.
+﻿<#
+.SYNOPSIS
+Pauses an HTTP listener.
 
-.Parameter Listener
-    The HTTP listener to pause.
+.PARAMETER Listener
+The HTTP listener to pause.
 
-.Inputs
-    System.Net.HttpListener to pause.
+.INPUTS
+System.Net.HttpListener to pause.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.net.httplistener
+.LINK
+https://docs.microsoft.com/dotnet/api/system.net.httplistener
 
-.Example
-    Suspend-HttpListener.ps1 $http
+.EXAMPLE
+Suspend-HttpListener.ps1 $http
 
-    The $http listener is paused.
+The $http listener is paused.
 #>
 
 #Requires -Version 3

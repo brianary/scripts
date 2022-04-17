@@ -1,27 +1,27 @@
-<#
-.Synopsis
-	Selects named capture group values as note properties from Select-String MatchInfo objects.
+﻿<#
+.SYNOPSIS
+Selects named capture group values as note properties from Select-String MatchInfo objects.
 
-.Parameter MatchInfo
-	The MatchInfo output from Select-String to select named capture group values from.
+.PARAMETER MatchInfo
+The MatchInfo output from Select-String to select named capture group values from.
 
-.Parameter ValuesOnly
-	Return the capture group values without building objects.
+.PARAMETER ValuesOnly
+Return the capture group values without building objects.
 
-.Inputs
-	Microsoft.PowerShell.Commands.MatchInfo, output from Select-String that used a pattern
-	with named capture groups.
+.INPUTS
+Microsoft.PowerShell.Commands.MatchInfo, output from Select-String that used a pattern
+with named capture groups.
 
-.Outputs
-	System.Management.Automation.PSObject containing selected capture group values.
+.OUTPUTS
+System.Management.Automation.PSObject containing selected capture group values.
 
-.Example
-	Select-String '^(?<Name>.*?\b)\s*(?<Email>\S+@\S+)$' addrbook.txt |Select-CapturesFromMatches.ps1
+.EXAMPLE
+Select-String '^(?<Name>.*?\b)\s*(?<Email>\S+@\S+)$' addrbook.txt |Select-CapturesFromMatches.ps1
 
-	Name            Email
-	----            -----
-	Arthur Dent     adent@example.org
-	Tricia McMillan trillian@example.com
+Name            Email
+----            -----
+Arthur Dent     adent@example.org
+Tricia McMillan trillian@example.com
 #>
 
 #Requires -Version 3

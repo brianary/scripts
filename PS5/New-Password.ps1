@@ -1,61 +1,61 @@
-<#
-.Synopsis
-	Generate a new password.
+﻿<#
+.SYNOPSIS
+Generate a new password.
 
-.Parameter Length
-	The length of the password in characters.
+.PARAMETER Length
+The length of the password in characters.
 
-.Parameter MaxRepeats
-	The maximum number of times a character may be repeated consecutively.
+.PARAMETER MaxRepeats
+The maximum number of times a character may be repeated consecutively.
 
-.Parameter ValidMatch
-	A regular expression the password must match.
+.PARAMETER ValidMatch
+A regular expression the password must match.
 
-.Parameter InvalidMatch
-	A regular expression the password must not match.
+.PARAMETER InvalidMatch
+A regular expression the password must not match.
 
-.Parameter AsSecureString
-	Converts the password to a secure string.
+.PARAMETER AsSecureString
+Converts the password to a secure string.
 
-.Parameter TryMaxTimes
-	The most attempts that should be made to generate an acceptable password before failing.
+.PARAMETER TryMaxTimes
+The most attempts that should be made to generate an acceptable password before failing.
 
-.Parameter HasNumber
-	Indicates the password must contain a numeric character.
+.PARAMETER HasNumber
+Indicates the password must contain a numeric character.
 
-.Parameter HasUpper
-	Indicates the password must contain an uppercase letter.
+.PARAMETER HasUpper
+Indicates the password must contain an uppercase letter.
 
-.Parameter HasLower
-	Indicates the password must contain a lowercase letter.
+.PARAMETER HasLower
+Indicates the password must contain a lowercase letter.
 
-.Parameter HasSpecial
-	Indicates the password must contain a special character (something that isn't a letter or number).
+.PARAMETER HasSpecial
+Indicates the password must contain a special character (something that isn't a letter or number).
 
-.Outputs
-	System.String containing a generated password, or
-	System.Security.SecureString containing a generated password if requested.
+.OUTPUTS
+System.String containing a generated password, or
+System.Security.SecureString containing a generated password if requested.
 
-.Link
-	Invoke-RestMethod
+.LINK
+Invoke-RestMethod
 
-.Link
-	https://duckduckgo.com/api
+.LINK
+https://duckduckgo.com/api
 
-.Example
-	New-Password.ps1 64
+.EXAMPLE
+New-Password.ps1 64
 
-	-pTs[_?B0S6uqqBquWfB%f*FWPO)X6AEt|>}(V&|%%A-n^OSw!Z9#G/3s=LL;(Uq
+-pTs[_?B0S6uqqBquWfB%f*FWPO)X6AEt|>}(V&|%%A-n^OSw!Z9#G/3s=LL;(Uq
 
-.Example
-	New-Password.ps1 32 -InvalidMatch '[ \\@]'
+.EXAMPLE
+New-Password.ps1 32 -InvalidMatch '[ \\@]'
 
-	Y]Mo*>V0KUB$*V*j2J%YHsOvp:Ui^{L;
+Y]Mo*>V0KUB$*V*j2J%YHsOvp:Ui^{L;
 
-.Example
-	New-Password 12 -HasNumber -HasUpper -HasLower -HasSpecial
+.EXAMPLE
+New-Password 12 -HasNumber -HasUpper -HasLower -HasSpecial
 
-	ecRAgbdX^9)=
+ecRAgbdX^9)=
 #>
 
 #Requires -Version 3

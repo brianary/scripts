@@ -1,87 +1,87 @@
 ﻿<#
-.Synopsis
-    Execute a SQL statement and email the results.
+.SYNOPSIS
+Execute a SQL statement and email the results.
 
-.Parameter Subject
-    The email subject.
+.PARAMETER Subject
+The email subject.
 
-.Parameter To
-    The email address(es) to send the results to.
+.PARAMETER To
+The email address(es) to send the results to.
 
-.Parameter Sql
-    The SQL statement to execute.
+.PARAMETER Sql
+The SQL statement to execute.
 
-.Parameter ServerInstance
-    The name of a server (and optional instance) to connect and use for the query.
+.PARAMETER ServerInstance
+The name of a server (and optional instance) to connect and use for the query.
 
-.Parameter Database
-    The the database to connect to on the server.
+.PARAMETER Database
+The the database to connect to on the server.
 
-.Parameter ConnectionString
-    Specifies a connection string to connect to the server.
+.PARAMETER ConnectionString
+Specifies a connection string to connect to the server.
 
-.Parameter ConnectionName
-    The connection string name from the ConfigurationManager to use when executing the query.
+.PARAMETER ConnectionName
+The connection string name from the ConfigurationManager to use when executing the query.
 
-.Parameter EmptySubject
-    The subject line for the email when no data is returned.
+.PARAMETER EmptySubject
+The subject line for the email when no data is returned.
 
-.Parameter From
-    The from address to use for the email.
-    The default is to use $PSEmailServer.
-    If that is missing, it will be populated by the value from the
-    configuration value:
+.PARAMETER From
+The from address to use for the email.
+The default is to use $PSEmailServer.
+If that is missing, it will be populated by the value from the
+configuration value:
 
-    <system.net>
-      <mailSettings>
-        <smtp from="source@example.org" deliveryMethod="network">
-          <network host="mail.example.org" enableSsl="true" />
-        </smtp>
-      </mailSettings>
-    </system.net>
+| <system.net>
+|   <mailSettings>
+|     <smtp from="source@example.org" deliveryMethod="network">
+|       <network host="mail.example.org" enableSsl="true" />
+|     </smtp>
+|   </mailSettings>
+| </system.net>
 
-    (If enableSsl is set to true, SSL will be used to send the report.)
+(If enableSsl is set to true, SSL will be used to send the report.)
 
-.Parameter Caption
-    The optional table caption to add.
+.PARAMETER Caption
+The optional table caption to add.
 
-.Parameter ReportFile
-    A UNC path to a .csv or .tsv file writable by the script and readable by the email recipient to output the data to,
-    which will be linked in the email rather than included in the email body.
+.PARAMETER ReportFile
+A UNC path to a .csv or .tsv file writable by the script and readable by the email recipient to output the data to,
+which will be linked in the email rather than included in the email body.
 
-    Supports a format template for the current date and time (e.g. {0:yyyyMMddHHmmss}).
+Supports a format template for the current date and time (e.g. {0:yyyyMMddHHmmss}).
 
-.Parameter Timeout
-    The timeout to use for the query, in seconds. The default is 90.
+.PARAMETER Timeout
+The timeout to use for the query, in seconds. The default is 90.
 
-.Parameter PreContent
-    HTML content to insert into the email before the query results.
+.PARAMETER PreContent
+HTML content to insert into the email before the query results.
 
-.Parameter PostContent
-    HTML content to insert into the email after the query results.
+.PARAMETER PostContent
+HTML content to insert into the email after the query results.
 
-.Parameter Cc
-    The email address(es) to CC the results to.
+.PARAMETER Cc
+The email address(es) to CC the results to.
 
-.Parameter Bcc
-    The email address(es) to BCC the results to.
+.PARAMETER Bcc
+The email address(es) to BCC the results to.
 
-.Parameter Priority
-    The priority of the email, one of: High, Low, Normal
+.PARAMETER Priority
+The priority of the email, one of: High, Low, Normal
 
-.Parameter UseSsl
-    Indicates that SSL should be used when sending the message.
+.PARAMETER UseSsl
+Indicates that SSL should be used when sending the message.
 
-    (See the From parameter for an alternate SSL flag.)
+(See the From parameter for an alternate SSL flag.)
 
-.Link
-    Use-SqlcmdParams.ps1
+.LINK
+Use-SqlcmdParams.ps1
 
-.Link
-    Send-MailMessage
+.LINK
+Send-MailMessage
 
-.Link
-    Invoke-Sqlcmd
+.LINK
+Invoke-Sqlcmd
 #>
 
 #Requires -Version 3

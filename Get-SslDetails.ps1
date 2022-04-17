@@ -1,44 +1,44 @@
-<#
-.Synopsis
-    Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
+﻿<#
+.SYNOPSIS
+Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
 
-.Parameter ComputerName
-    The name of the remote computer to connect to.
+.PARAMETER ComputerName
+The name of the remote computer to connect to.
 
-.Parameter Port
-    The remote port to connect to.
+.PARAMETER Port
+The remote port to connect to.
 
-.Inputs
-    System.String of hostname(s) to get SSL support and certificate details for.
+.INPUTS
+System.String of hostname(s) to get SSL support and certificate details for.
 
-.Outputs
-    System.Management.Automation.PSCustomObject with certifcated details and
-    properties indicating support for SSL protocols with the cypher algorithm used
-    if supported or false if not supported.
+.OUTPUTS
+System.Management.Automation.PSCustomObject with certifcated details and
+properties indicating support for SSL protocols with the cypher algorithm used
+if supported or false if not supported.
 
-.Link
-    https://msdn.microsoft.com/library/system.security.authentication.sslprotocols.aspx
+.LINK
+https://msdn.microsoft.com/library/system.security.authentication.sslprotocols.aspx
 
-.Link
-    https://msdn.microsoft.com/library/system.net.security.sslstream.authenticateasclient.aspx
+.LINK
+https://msdn.microsoft.com/library/system.net.security.sslstream.authenticateasclient.aspx
 
-.Link
-    Get-EnumValues.ps1
+.LINK
+Get-EnumValues.ps1
 
-.Example
-    Get-SslDetails.ps1 -ComputerName www.google.com
+.EXAMPLE
+Get-SslDetails.ps1 -ComputerName www.google.com
 
-    ComputerName       : www.google.com
-    Port               : 443
-    KeyLength          : 2048
-    SignatureAlgorithm : rsa-sha1
-    CertificateIssuer  : Google Inc
-    CertificateExpires : 06/20/2018 06:22:00
-    Ssl2               : False
-    Ssl3               : False
-    Tls                : Aes128
-    Tls11              : Aes128
-    Tls12              : Aes128
+ComputerName       : www.google.com
+Port               : 443
+KeyLength          : 2048
+SignatureAlgorithm : rsa-sha1
+CertificateIssuer  : Google Inc
+CertificateExpires : 06/20/2018 06:22:00
+Ssl2               : False
+Ssl3               : False
+Tls                : Aes128
+Tls11              : Aes128
+Tls12              : Aes128
 #>
 
 #Requires -Version 3

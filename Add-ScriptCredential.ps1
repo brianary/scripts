@@ -1,26 +1,24 @@
-<#
-.Synopsis
-	Serializes a an encrypted credential to a PowerShell script using 32-byte random key file.
+﻿<#
+.SYNOPSIS
+Serializes a an encrypted credential to a PowerShell script using 32-byte random key file.
 
-.Parameter Path
-	The script path to add the serialized credential to.
+.PARAMETER Path
+The script path to add the serialized credential to.
 
-.Parameter Name
-	The variable name to assign the credential to within the script.
+.PARAMETER Name
+The variable name to assign the credential to within the script.
 
-.Parameter Credential
-	The credential to serialize.
+.PARAMETER Credential
+The credential to serialize.
 
-.Parameter KeyFile
-	The key file to use, which will be generated and encrypted if it doesn't exist.
+.PARAMETER KeyFile
+The key file to use, which will be generated and encrypted if it doesn't exist.
 
-.Inputs
-	System.Management.Automation.PSCredential containing a credential to serialize.
+.INPUTS
+System.Management.Automation.PSCredential containing a credential to serialize.
 
-.Link
-	ConvertTo-PowerShell.ps1
-
-.Example
+.LINK
+ConvertTo-PowerShell.ps1
 #>
 
 #Requires -Version 3

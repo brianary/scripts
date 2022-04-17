@@ -1,30 +1,30 @@
-<#
-.Synopsis
-	Convert a scope level to account for another call stack level.
+﻿<#
+.SYNOPSIS
+Convert a scope level to account for another call stack level.
 
-.Parameter Scope
-	The requested scope from the caller of the caller of this script.
+.PARAMETER Scope
+The requested scope from the caller of the caller of this script.
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.link
-	Get-PSCallStack
+.LINK
+Get-PSCallStack
 
-.Example
-	Add-ScopeLevel.ps1 Local
+.EXAMPLE
+Add-ScopeLevel.ps1 Local
 
-	1
+1
 
-.Example
-	Add-ScopeLevel.ps1 3
+.EXAMPLE
+Add-ScopeLevel.ps1 3
 
-	4
+4
 
-.Example
-	Add-ScopeLevel.ps1 Global
+.EXAMPLE
+Add-ScopeLevel.ps1 Global
 
-	Global
+Global
 #>
 
 #Requires -Version 3

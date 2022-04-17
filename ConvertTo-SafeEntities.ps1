@@ -1,35 +1,35 @@
-<#
-.Synopsis
-	Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
+﻿<#
+.SYNOPSIS
+Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 
-.Parameter InputObject
-	An HTML or XML string that may include emoji or other Unicode characters outside
-	the 7-bit ASCII range.
+.PARAMETER InputObject
+An HTML or XML string that may include emoji or other Unicode characters outside
+the 7-bit ASCII range.
 
-.Inputs
-	System.String of HTML or XML data to encode.
+.INPUTS
+System.String of HTML or XML data to encode.
 
-.Outputs
-	System.String of HTML or XML data, encoded.
+.OUTPUTS
+System.String of HTML or XML data, encoded.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.char.issurrogatepair
+.LINK
+https://docs.microsoft.com/dotnet/api/system.char.issurrogatepair
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.char.converttoutf32
+.LINK
+https://docs.microsoft.com/dotnet/api/system.char.converttoutf32
 
-.Example
-	"$([char]0xD83D)$([char]0xDCA1) File $([char]0x2192) Save" |ConvertTo-SafeEntities.ps1
+.EXAMPLE
+"$([char]0xD83D)$([char]0xDCA1) File $([char]0x2192) Save" |ConvertTo-SafeEntities.ps1
 
-	&#x1F4A1; File &#x2192; Save
+&#x1F4A1; File &#x2192; Save
 
-	This shows a UTF-16 surrogate pair, used internally by .NET strings, which is combined
-	into a single entity reference.
+This shows a UTF-16 surrogate pair, used internally by .NET strings, which is combined
+into a single entity reference.
 
-.Example
-	"ETA: $([char]0xBD) hour" |ConvertTo-SafeEntities.ps1
+.EXAMPLE
+"ETA: $([char]0xBD) hour" |ConvertTo-SafeEntities.ps1
 
-	ETA: &#xBD; hour
+ETA: &#xBD; hour
 #>
 
 #Requires -Version 3

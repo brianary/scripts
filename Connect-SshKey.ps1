@@ -1,15 +1,15 @@
-<#
-.Synopsis
-	Uses OpenSSH to generate a key and connect it to an ssh server.
+﻿<#
+.SYNOPSIS
+Uses OpenSSH to generate a key and connect it to an ssh server.
 
-.Parameter HostName
-	The ssh server to connect to.
+.PARAMETER HostName
+The ssh server to connect to.
 
-.Parameter UserName
-	The remote username to use to connect.
+.PARAMETER UserName
+The remote username to use to connect.
 
-.Example
-	Connect-SshKey.ps1 crowpi -UserName pi
+.EXAMPLE
+Connect-SshKey.ps1 crowpi -UserName pi
 #>
 
 #Requires -Version 3

@@ -1,18 +1,18 @@
-<#
-.Synopsis
-	Fix "Something went wrong. Try restarting GeForce Experience."
+﻿<#
+.SYNOPSIS
+Fix "Something went wrong. Try restarting GeForce Experience."
 
-.Description
-	1. Disable Windows Update to prevent it from downloading the drivers automatically.
-	2. Remove all Nvidia related files with DDU using this guide.
-	3. Reinstall latest drivers with custom settings (clean installation, only drivers & PhysX are ticked).
-	4. Install the latest GFE 3.
+.DESCRIPTION
+1. Disable Windows Update to prevent it from downloading the drivers automatically.
+2. Remove all Nvidia related files with DDU using this guide.
+3. Reinstall latest drivers with custom settings (clean installation, only drivers & PhysX are ticked).
+4. Install the latest GFE 3.
 
-.Link
-	https://forums.geforce.com/default/topic/970307/geforce-experience/-solved-something-went-wrong-try-restarting-gfe-/
+.LINK
+https://forums.geforce.com/default/topic/970307/geforce-experience/-solved-something-went-wrong-try-restarting-gfe-/
 
-.Link
-	Use-Command.ps1
+.LINK
+Use-Command.ps1
 #>
 
 #Requires -Version 3

@@ -1,77 +1,77 @@
-<#
-.Synopsis
-	Updates everything it can on the system.
+﻿<#
+.SYNOPSIS
+Updates everything it can on the system.
 
-.Link
-	https://www.microsoft.com/en-us/store/apps/windows
+.LINK
+https://www.microsoft.com/en-us/store/apps/windows
 
-.Link
-	https://powershellgallery.com/
+.LINK
+https://powershellgallery.com/
 
-.Link
-	https://chocolatey.org/
+.LINK
+https://chocolatey.org/
 
-.Link
-	https://npmjs.com/
+.LINK
+https://npmjs.com/
 
-.Link
-	https://docs.microsoft.com/dotnet/core/tools/global-tools
+.LINK
+https://docs.microsoft.com/dotnet/core/tools/global-tools
 
-.Link
-	https://www.dell.com/support/kbdoc/000177325/dell-command-update
+.LINK
+https://www.dell.com/support/kbdoc/000177325/dell-command-update
 
-.Link
-	Update-Everything.cmd
+.LINK
+Update-Everything.cmd
 
-.Link
-	Uninstall-OldModules.ps1
+.LINK
+Uninstall-OldModules.ps1
 
-.Link
-	Get-DotNetGlobalTools.ps1
+.LINK
+Get-DotNetGlobalTools.ps1
 
-.Link
-	Find-DotNetGlobalTools.ps1
+.LINK
+Find-DotNetGlobalTools.ps1
 
-.Link
-	Get-Process
+.LINK
+Get-Process
 
-.Link
-	Stop-Process
+.LINK
+Stop-Process
 
-.Link
-	Start-Process
+.LINK
+Start-Process
 
-.Link
-	ConvertFrom-Csv
+.LINK
+ConvertFrom-Csv
 
-.Link
-	Get-CimInstance
+.LINK
+Get-CimInstance
 
-.Link
-	Invoke-CimMethod
+.LINK
+Invoke-CimMethod
 
-.Link
-	Get-Module
+.LINK
+Get-Module
 
-.Link
-	Find-Module
+.LINK
+Find-Module
 
-.Link
-	Update-Module
+.LINK
+Update-Module
 
-.Link
-	Update-Help
+.LINK
+Update-Help
 
-.Link
-	Get-WindowsUpdate
+.LINK
+Get-WindowsUpdate
 
-.Link
-	Install-WindowsUpdate
+.LINK
+Install-WindowsUpdate
 
-.Example
-	Update-Everything.ps1
+.EXAMPLE
+Update-Everything.ps1
 
-	Attempts to update packages, features, and system.
+Attempts to update packages, features, and system.
 #>
 
 #Requires -Version 3

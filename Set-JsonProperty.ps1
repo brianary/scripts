@@ -1,62 +1,62 @@
-<#
-.Synopsis
-	Sets a property of arbitrary depth in a JSON string.
+﻿<#
+.SYNOPSIS
+Sets a property of arbitrary depth in a JSON string.
 
-.Parameter PropertyName
-	The full path name of the property to set.
+.PARAMETER PropertyName
+The full path name of the property to set.
 
-	With the default path separator of . for a name of powershell.codeFormatting.preset sets
-	{ "powershell": { "codeFormatting": { "preset": "value" } } }
-	this can be escaped to powershell\.codeFormatting\.preset to set
-	{ "powershell.codeFormatting.preset": "value" }
-	Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
-	{ "powershell.codeFormatting.preset": "value" }
+With the default path separator of . for a name of powershell.codeFormatting.preset sets
+{ "powershell": { "codeFormatting": { "preset": "value" } } }
+this can be escaped to powershell\.codeFormatting\.preset to set
+{ "powershell.codeFormatting.preset": "value" }
+Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
+{ "powershell.codeFormatting.preset": "value" }
 
-.Parameter PropertyValue
-	The value to set the property to.
+.PARAMETER PropertyValue
+The value to set the property to.
 
-.Parameter PathSeparator
-	The character to use as a property name path separator (dot by default).
+.PARAMETER PathSeparator
+The character to use as a property name path separator (dot by default).
 
-	With the default path separator of . for a name of powershell.codeFormatting.preset sets
-	{ "powershell": { "codeFormatting": { "preset": "value" } } }
-	this can be escaped to powershell\.codeFormatting\.preset to set
-	{ "powershell.codeFormatting.preset": "value" }
-	Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
-	{ "powershell.codeFormatting.preset": "value" }
+With the default path separator of . for a name of powershell.codeFormatting.preset sets
+{ "powershell": { "codeFormatting": { "preset": "value" } } }
+this can be escaped to powershell\.codeFormatting\.preset to set
+{ "powershell.codeFormatting.preset": "value" }
+Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
+{ "powershell.codeFormatting.preset": "value" }
 
-.Parameter WarnOverwrite
-	Indicates that overwriting values should generate a warning.
+.PARAMETER WarnOverwrite
+Indicates that overwriting values should generate a warning.
 
-.Parameter InputObject
-	The JSON string to set the property in.
+.PARAMETER InputObject
+The JSON string to set the property in.
 
-.Inputs
-	System.String containing JSON.
+.INPUTS
+System.String containing JSON.
 
-.Outputs
-	System.String containing updated JSON.
+.OUTPUTS
+System.String containing updated JSON.
 
-.Link
-	ConvertFrom-Json
+.LINK
+ConvertFrom-Json
 
-.Link
-	ConvertTo-Json
+.LINK
+ConvertTo-Json
 
-.Link
-	Add-Member
+.LINK
+Add-Member
 
-.Example
-	'{a:1}' |Set-JsonProperty.ps1 b.ZZ\.ZZ.thing 7
+.EXAMPLE
+'{a:1}' |Set-JsonProperty.ps1 b.ZZ\.ZZ.thing 7
 
-	{
-		"a": 1,
-		"b": {
-				"ZZ.ZZ": {
-					"thing": 7
-				}
-		}
-	}
+| {
+|   "a": 1,
+|   "b": {
+|     "ZZ.ZZ": {
+|       "thing": 7
+|     }
+|   }
+| }
 #>
 
 [CmdletBinding()][OutputType([string])] Param(

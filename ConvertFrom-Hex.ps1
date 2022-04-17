@@ -1,38 +1,38 @@
-<#
-.Synopsis
-	Convert a string of hexadecimal digits into a byte array.
+﻿<#
+.SYNOPSIS
+Convert a string of hexadecimal digits into a byte array.
 
-.Parameter InputObject
-	A string of hex digits.
+.PARAMETER InputObject
+A string of hex digits.
 
-.Inputs
-	System.String of hex digits.
+.INPUTS
+System.String of hex digits.
 
-.Outputs
-	System.Byte[] of bytes parsed from hex digits.
+.OUTPUTS
+System.Byte[] of bytes parsed from hex digits.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.numerics.biginteger.parse#System_Numerics_BigInteger_Parse_System_String_System_Globalization_NumberStyles_
+.LINK
+https://docs.microsoft.com/dotnet/api/system.numerics.biginteger.parse#System_Numerics_BigInteger_Parse_System_String_System_Globalization_NumberStyles_
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.array.reverse#System_Array_Reverse_System_Array_
+.LINK
+https://docs.microsoft.com/dotnet/api/system.array.reverse#System_Array_Reverse_System_Array_
 
-.Example
-	ConvertFrom-Hex.ps1 'EF BB BF'
+.EXAMPLE
+ConvertFrom-Hex.ps1 'EF BB BF'
 
-	239
-	187
-	191
+239
+187
+191
 
-.Example
-	[text.encoding]::UTF8.GetString((ConvertFrom-Hex.ps1 0x25504446))
+.EXAMPLE
+[text.encoding]::UTF8.GetString((ConvertFrom-Hex.ps1 0x25504446))
 
-	%PDF
+%PDF
 
-.Example
-	'{0:X2} {1:X2} {2:X2}' -f (ConvertFrom-Hex.ps1 c0ffee)
+.EXAMPLE
+'{0:X2} {1:X2} {2:X2}' -f (ConvertFrom-Hex.ps1 c0ffee)
 
-	C0 FF EE
+C0 FF EE
 #>
 
 #Requires -Version 3

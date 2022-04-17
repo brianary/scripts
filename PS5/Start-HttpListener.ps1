@@ -1,32 +1,32 @@
-<#
-.Synopsis
-	Creates and starts an HTTP listener, for testing HTTP clients.
+﻿<#
+.SYNOPSIS
+Creates and starts an HTTP listener, for testing HTTP clients.
 
-.Parameter Port
-    Ports on the localhost to bind to.
+.PARAMETER Port
+Ports on the localhost to bind to.
 
-.Parameter AuthenticationSchemes
-    Client authentication methods to support.
+.PARAMETER AuthenticationSchemes
+Client authentication methods to support.
 
-.Parameter Realm
-    The RFC2617 authentication realm.
+.PARAMETER Realm
+The RFC2617 authentication realm.
 
-.Parameter IgnoreWriteExceptions
-    Indicates that response writes shouldn't generate exceptions.
+.PARAMETER IgnoreWriteExceptions
+Indicates that response writes shouldn't generate exceptions.
 
-.Outputs
-    System.Web.HttpListener to receive requests.
+.OUTPUTS
+System.Web.HttpListener to receive requests.
 
-.Link
-    https://docs.microsoft.com/dotnet/api/system.net.httplistener
+.LINK
+https://docs.microsoft.com/dotnet/api/system.net.httplistener
 
-.Link
-    https://tools.ietf.org/html/rfc2617#section-1.2
+.LINK
+https://tools.ietf.org/html/rfc2617#section-1.2
 
-.Example
-    $Listener = Start-HttpListener.ps1 8080
+.EXAMPLE
+$Listener = Start-HttpListener.ps1 8080
 
-    Creates and starts an HTTP listener at http://localhost:8080/
+Creates and starts an HTTP listener at http://localhost:8080/
 #>
 
 #Requires -Version 3

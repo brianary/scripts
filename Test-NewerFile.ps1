@@ -1,15 +1,15 @@
 ﻿<#
-.Synopsis
-    Returns true if the difference file is newer than the reference file.
+.SYNOPSIS
+Returns true if the difference file is newer than the reference file.
 
-.Outputs
-    System.Boolean indicating the difference file is newer.
+.OUTPUTS
+System.Boolean indicating the difference file is newer.
 
-.Parameter ReferenceFile
-    One of two files to compare.
+.PARAMETER ReferenceFile
+One of two files to compare.
 
-.Parameter DifferenceFile
-    Another of two files to compare.
+.PARAMETER DifferenceFile
+Another of two files to compare.
 #>
 
 #requires -version 3

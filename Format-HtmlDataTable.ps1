@@ -1,47 +1,47 @@
 ﻿<#
-.Synopsis
-    Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
+.SYNOPSIS
+Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 
-.Parameter OddRowBackground
-    The background CSS value for odd rows.
+.PARAMETER OddRowBackground
+The background CSS value for odd rows.
 
-.Parameter EvenRowBackground
-    The background CSS value for even rows.
+.PARAMETER EvenRowBackground
+The background CSS value for even rows.
 
-.Parameter TableAttributes
-	Any table attributes desired (cellpadding, cellspacing, style, &c.).
+.PARAMETER TableAttributes
+Any table attributes desired (cellpadding, cellspacing, style, &c.).
 
-.Parameter NumericFormat
-	Applies a standard .NET formatting pattern to numbers, such as N or '#,##0.000;(#,##0.000);zero'.
+.PARAMETER NumericFormat
+Applies a standard .NET formatting pattern to numbers, such as N or '#,##0.000;(#,##0.000);zero'.
 
-.Parameter Html
-    The HTML table data to be piped in.
+.PARAMETER Html
+The HTML table data to be piped in.
 
-.Inputs
-    System.String containing an HTML table, as produced by ConvertTo-Html.
+.INPUTS
+System.String containing an HTML table, as produced by ConvertTo-Html.
 
-.Outputs
-    System.String containing the data-formatted HTML table.
+.OUTPUTS
+System.String containing the data-formatted HTML table.
 
-.Notes
-    Assumes only one <tr> element per string piped in, as produced by ConvertTo-Html.
+.NOTES
+Assumes only one <tr> element per string piped in, as produced by ConvertTo-Html.
 
-.Link
-    ConvertTo-Html
+.LINK
+ConvertTo-Html
 
-.Link
-    https://www.w3.org/Bugs/Public/show_bug.cgi?id=18026
+.LINK
+https://www.w3.org/Bugs/Public/show_bug.cgi?id=18026
 
-.Example
-    Invoke-Sqlcmd "..." |ConvertFrom-DataRow.ps1 |ConvertTo-Html |Format-HtmlDataTable.ps1
+.EXAMPLE
+Invoke-Sqlcmd "..." |ConvertFrom-DataRow.ps1 |ConvertTo-Html |Format-HtmlDataTable.ps1
 
-    Runs the query, parses each row into an HTML row, then fixes the alignment of numeric cells.
+Runs the query, parses each row into an HTML row, then fixes the alignment of numeric cells.
 
-.Example
-    $rows |ConvertTo-Html -Fragment |Format-HtmlDataTable.ps1 'Products' '#F99' '#FFF'
+.EXAMPLE
+$rows |ConvertTo-Html -Fragment |Format-HtmlDataTable.ps1 'Products' '#F99' '#FFF'
 
-    Renders DataRows as an HTML table, right-aligns numeric cells, then adds a caption ("Products"),
-    and alternates the rows between pale yellow and white.
+Renders DataRows as an HTML table, right-aligns numeric cells, then adds a caption ("Products"),
+and alternates the rows between pale yellow and white.
 #>
 
 #Requires -Version 3

@@ -1,73 +1,73 @@
-<#
-.Synopsis
-	Searches for database columns.
+﻿<#
+.SYNOPSIS
+Searches for database columns.
 
-.Parameter ServerInstance
-	The server and instance to connect to.
+.PARAMETER ServerInstance
+The server and instance to connect to.
 
-.Parameter Database
-	The database to use.
+.PARAMETER Database
+The database to use.
 
-.Parameter IncludeSchemata
-	A like-pattern of database schemata to include (will only include these).
+.PARAMETER IncludeSchemata
+A like-pattern of database schemata to include (will only include these).
 
-.Parameter ExcludeSchemata
-	A like-pattern of database schemata to exclude.
+.PARAMETER ExcludeSchemata
+A like-pattern of database schemata to exclude.
 
-.Parameter IncludeTables
-	A like-pattern of database tables to include (will only include these).
+.PARAMETER IncludeTables
+A like-pattern of database tables to include (will only include these).
 
-.Parameter ExcludeTables
-	A like-pattern of database tables to exclude.
+.PARAMETER ExcludeTables
+A like-pattern of database tables to exclude.
 
-.Parameter IncludeColumns
-	A like-pattern of database columns to include (will only include these).
+.PARAMETER IncludeColumns
+A like-pattern of database columns to include (will only include these).
 
-.Parameter ExcludeColumns
-	A like-pattern of database columns to exclude.
+.PARAMETER ExcludeColumns
+A like-pattern of database columns to exclude.
 
-.Parameter DataType
-	The basic datatype to search for.
+.PARAMETER DataType
+The basic datatype to search for.
 
-.Parameter MinLength
-	The minimum character column length.
+.PARAMETER MinLength
+The minimum character column length.
 
-.Parameter MaxLength
-	The maximum character column length.
+.PARAMETER MaxLength
+The maximum character column length.
 
-.Outputs
-	System.Management.Automation.PSCustomObject for each found column:
+.OUTPUTS
+System.Management.Automation.PSCustomObject for each found column:
 
-	* TableSchema
-	* TableName
-	* ColumnName
-	* DataType
-	* Nullable
-	* DefaultValue
+* TableSchema
+* TableName
+* ColumnName
+* DataType
+* Nullable
+* DefaultValue
 
-.Component
-	System.Configuration
+.COMPONENT
+System.Configuration
 
-.Link
-	ConvertFrom-DataRow.ps1
+.LINK
+ConvertFrom-DataRow.ps1
 
-.Link
-	Stop-ThrowError.ps1
+.LINK
+Stop-ThrowError.ps1
 
-.Link
-	Invoke-Sqlcmd
+.LINK
+Invoke-Sqlcmd
 
-.Example
-	Find-DbColumn.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016 -IncludeColumns %price% |Format-Table -AutoSize
+.EXAMPLE
+Find-DbColumn.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016 -IncludeColumns %price% |Format-Table -AutoSize
 
-	TableSchema TableName               ColumnName        DataType Nullable DefaultValue
-	----------- ---------               ----------        -------- -------- ------------
-	Production  Product                 ListPrice         money       False
-	Production  ProductListPriceHistory ListPrice         money       False
-	Purchasing  ProductVendor           StandardPrice     money       False
-	Purchasing  PurchaseOrderDetail     UnitPrice         money       False
-	Sales       SalesOrderDetail        UnitPrice         money       False
-	Sales       SalesOrderDetail        UnitPriceDiscount money       False ((0.0))
+TableSchema TableName               ColumnName        DataType Nullable DefaultValue
+----------- ---------               ----------        -------- -------- ------------
+Production  Product                 ListPrice         money       False
+Production  ProductListPriceHistory ListPrice         money       False
+Purchasing  ProductVendor           StandardPrice     money       False
+Purchasing  PurchaseOrderDetail     UnitPrice         money       False
+Sales       SalesOrderDetail        UnitPrice         money       False
+Sales       SalesOrderDetail        UnitPriceDiscount money       False ((0.0))
 #>
 
 #Requires -Version 3

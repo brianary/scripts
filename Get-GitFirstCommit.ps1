@@ -1,17 +1,17 @@
-<#
-.Synopsis
-    Gets the SHA-1 hash of the first commit of the current repo.
+﻿<#
+.SYNOPSIS
+Gets the SHA-1 hash of the first commit of the current repo.
 
-.Outputs
-	System.String containing the SHA-1 hash of this repo's first commit.
+.OUTPUTS
+System.String containing the SHA-1 hash of this repo's first commit.
 
-.Link
-	Use-Command.ps1
+.LINK
+Use-Command.ps1
 
-.Example
-	Get-GitFirstCommit.ps1
+.EXAMPLE
+Get-GitFirstCommit.ps1
 
-	1fde7af20e8560c720d42227495e8d15459aafa4
+1fde7af20e8560c720d42227495e8d15459aafa4
 #>
 
 #Requires -Version 3

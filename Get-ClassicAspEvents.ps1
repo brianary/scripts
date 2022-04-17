@@ -1,24 +1,24 @@
 ﻿<#
-.Synopsis
-    Gets Classic ASP errors from the event log on the given server.
+.SYNOPSIS
+Gets Classic ASP errors from the event log on the given server.
 
-.Parameter ComputerName
-    The name of the server on which the error occurred.
+.PARAMETER ComputerName
+The name of the server on which the error occurred.
 
-.Parameter EntryType
-    Gets only events with the specified entry type. Valid values are Error, Information, and Warning. The default is all events.
+.PARAMETER EntryType
+Gets only events with the specified entry type. Valid values are Error, Information, and Warning. The default is all events.
 
-.Parameter After
-    Skip events older than this datetime.
+.PARAMETER After
+Skip events older than this datetime.
 
-.Parameter Before
-    Skip events newer than this datetime.
+.PARAMETER Before
+Skip events newer than this datetime.
 
-.Parameter Newest
-	The maximum number of the most recent events to return.
+.PARAMETER Newest
+The maximum number of the most recent events to return.
 
-.Outputs
-	System.Diagnostics.EventLogEntry of Classic ASP events.
+.OUTPUTS
+System.Diagnostics.EventLogEntry of Classic ASP events.
 #>
 
 #requires -version 3

@@ -1,30 +1,30 @@
 ﻿<#
-.Synopsis
-    Returns the value of an XML node found by Select-Xml.
+.SYNOPSIS
+Returns the value of an XML node found by Select-Xml.
 
-.Parameter SelectXmlInfo
-    Output from the Select-Xml cmdlet.
+.PARAMETER SelectXmlInfo
+Output from the Select-Xml cmdlet.
 
-.Inputs
-    Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
+.INPUTS
+Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
 
-.Outputs
-    System.String of the text content of the selected node.
+.OUTPUTS
+System.String of the text content of the selected node.
 
-.Link
-    Select-Xml
+.LINK
+Select-Xml
 
-.Example
-    Select-Xml /error/@message \\server\apps\appname\App_Data\Elmah.Errors\guid.xml |Select-XmlNodeValue.ps1
+.EXAMPLE
+Select-Xml /error/@message \\server\apps\appname\App_Data\Elmah.Errors\guid.xml |Select-XmlNodeValue.ps1
 
-    Object reference not set to an instance of an object.
+Object reference not set to an instance of an object.
 
-.Example
-    Select-Xml //xs:element/@name schema.xsd -Namespace @{ xs = 'http://www.w3.org/2001/XMLSchema' } |Select-XmlNodeValue.ps1
+.EXAMPLE
+Select-Xml //xs:element/@name schema.xsd -Namespace @{ xs = 'http://www.w3.org/2001/XMLSchema' } |Select-XmlNodeValue.ps1
 
-    elementName1
-    elementName2
-    …
+elementName1
+elementName2
+…
 #>
 
 #Requires -Version 3

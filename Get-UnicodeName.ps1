@@ -1,24 +1,24 @@
-<#
-.Synopsis
-	Returns the name of a Unicode code point.
+﻿<#
+.SYNOPSIS
+Returns the name of a Unicode code point.
 
-.Parameter CodePoint
-	The numeric value of the Unicode character.
+.PARAMETER CodePoint
+The numeric value of the Unicode character.
 
-.Inputs
-	System.Int32 of a Unicode code point value to name, or
-	System.String of Unicode characters to name.
+.INPUTS
+System.Int32 of a Unicode code point value to name, or
+System.String of Unicode characters to name.
 
-.Output
-	System.String of the Unicode code point name.
+.OUTPUT
+System.String of the Unicode code point name.
 
-.Link
-	https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
+.LINK
+https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
 
-.Example
-	Get-UnicodeName.ps1 32
+.EXAMPLE
+Get-UnicodeName.ps1 32
 
-	SPACE
+SPACE
 #>
 
 #Requires -Version 3

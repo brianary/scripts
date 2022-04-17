@@ -1,37 +1,37 @@
 ﻿<#
-.Synopsis
-    Locates a command.
+.SYNOPSIS
+Locates a command.
 
-.Description
-    Returns the full path to an application found in a directory in $env:Path,
-    optionally with an extension from $env:PathExt.
+.DESCRIPTION
+Returns the full path to an application found in a directory in $env:Path,
+optionally with an extension from $env:PathExt.
 
-.Parameter ApplicationName
-    The name of the executable program to look for in the $env:Path directories,
-    if the extension is omitted, $env:PathExt will be used to find one.
+.PARAMETER ApplicationName
+The name of the executable program to look for in the $env:Path directories,
+if the extension is omitted, $env:PathExt will be used to find one.
 
-.Parameter FindAllInPath
-    Indicates that every directory in the Path should be searched for the command.
+.PARAMETER FindAllInPath
+Indicates that every directory in the Path should be searched for the command.
 
-.Inputs
-    System.String of commands to get the location details of.
+.INPUTS
+System.String of commands to get the location details of.
 
-.Outputs
-    System.String of location details for the specified commands that were found.
+.OUTPUTS
+System.String of location details for the specified commands that were found.
 
-.Link
-    Get-Command
+.LINK
+Get-Command
 
-.Example
-    Get-CommandPath.ps1 powershell
+.EXAMPLE
+Get-CommandPath.ps1 powershell
 
-    C:\windows\System32\WindowsPowerShell\v1.0\powershell.exe
+C:\windows\System32\WindowsPowerShell\v1.0\powershell.exe
 
-.Example
-    Get-CommandPath.ps1 dotnet -FindAllInPath
+.EXAMPLE
+Get-CommandPath.ps1 dotnet -FindAllInPath
 
-    C:\Program Files\dotnet\dotnet.exe
-    C:\Program Files (x86)\dotnet\dotnet.exe
+C:\Program Files\dotnet\dotnet.exe
+C:\Program Files (x86)\dotnet\dotnet.exe
 #>
 
 #Requires -Version 3

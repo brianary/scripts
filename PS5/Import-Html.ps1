@@ -1,41 +1,41 @@
-<#
-.Synopsis
-    Imports from an HTML table's rows, given a URL.
+﻿<#
+.SYNOPSIS
+Imports from an HTML table's rows, given a URL.
 
-.Parameter Uri
-    The URL to read the HTML from.
+.PARAMETER Uri
+The URL to read the HTML from.
 
-.Parameter TableIndex
-    Which table to import, by the element's document position (zero-based).
+.PARAMETER TableIndex
+Which table to import, by the element's document position (zero-based).
 
-.Inputs
-	Objects with one or more of these properties:
+.INPUTS
+Objects with one or more of these properties:
 
-		* System.Uri named Uri
-		* System.UInt32 named TableIndex
+* System.Uri named Uri
+* System.UInt32 named TableIndex
 
-.Outputs
-	System.__ComObject containing the parsed element COM object.
+.OUTPUTS
+System.__ComObject containing the parsed element COM object.
 
-.Link
-    ConvertFrom-Html.ps1
+.LINK
+ConvertFrom-Html.ps1
 
-.Link
-    Get-Html.ps1
+.LINK
+Get-Html.ps1
 
-.Link
-    Invoke-WebRequest
+.LINK
+Invoke-WebRequest
 
-.Example
-    Import-Html.ps1 https://www.irs.gov/e-file-providers/foreign-country-code-listing-for-modernized-e-file
+.EXAMPLE
+Import-Html.ps1 https://www.irs.gov/e-file-providers/foreign-country-code-listing-for-modernized-e-file
 
-    Country Name                        Country Code
-    ------------                        ------------
-    Afghanistan                         AF
-    Akrotiri                            AX
-    Albania                             AL
-    Algeria                             AG
-    …
+Country Name                        Country Code
+------------                        ------------
+Afghanistan                         AF
+Akrotiri                            AX
+Albania                             AL
+Algeria                             AG
+…
 #>
 
 [CmdletBinding()][OutputType([__ComObject])] Param(

@@ -1,20 +1,20 @@
-<#
-.Synopsis
-    Removes duplicates from a list of files.
+﻿<#
+.SYNOPSIS
+Removes duplicates from a list of files.
 
-.Parameter Files
-    A list of files to search for duplicates.
+.PARAMETER Files
+A list of files to search for duplicates.
 
-.Inputs
-	System.IO.FileInfo list, typically piped from Get-ChildItem.
+.INPUTS
+System.IO.FileInfo list, typically piped from Get-ChildItem.
 
-.Outputs
-	System.String containing the full paths of the both matching files.
+.OUTPUTS
+System.String containing the full paths of the both matching files.
 
-.Example
-    Get-ChildItem -Recurse -File |Find-DuplicateFiles.ps1 |Remove-Item
+.EXAMPLE
+Get-ChildItem -Recurse -File |Find-DuplicateFiles.ps1 |Remove-Item
 
-    Removes all but the oldest file with the same size and hash value.
+Removes all but the oldest file with the same size and hash value.
 #>
 
 #Requires -Version 5

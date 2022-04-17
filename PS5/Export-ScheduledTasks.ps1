@@ -1,20 +1,20 @@
-<#
-.Synopsis
-    Exports scheduled tasks as a PowerShell script that can be run to restore them.
+﻿<#
+.SYNOPSIS
+Exports scheduled tasks as a PowerShell script that can be run to restore them.
 
-.Parameter TaskPath
-	Specifies the task path to export from.
+.PARAMETER TaskPath
+Specifies the task path to export from.
 
-.Outputs
-	System.String containing a PowerShell script to create each task.
+.OUTPUTS
+System.String containing a PowerShell script to create each task.
 
-.Link
-    Export-ScheduledTask
+.LINK
+Export-ScheduledTask
 
-.Example
-    Export-ScheduledTasks.ps1 |Out-File Import-ScheduledTasks.ps1 utf8
+.EXAMPLE
+Export-ScheduledTasks.ps1 |Out-File Import-ScheduledTasks.ps1 utf8
 
-    Exports all scheduled tasks as PowerShell Register-ScheduledJob cmdlet strings.
+Exports all scheduled tasks as PowerShell Register-ScheduledJob cmdlet strings.
 #>
 
 [CmdletBinding()][OutputType([string])] Param(

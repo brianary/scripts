@@ -1,39 +1,39 @@
-<#
-.Synopsis
-    Constructs an OrderedDictionary by selecting keys from a given IDictionary.
+﻿<#
+.SYNOPSIS
+Constructs an OrderedDictionary by selecting keys from a given IDictionary.
 
-.Parameter Keys
-    List of keys to include in the new dictionary.
+.PARAMETER Keys
+List of keys to include in the new dictionary.
 
-.Parameter Dictionary
-    The source dictionary to copy key-value pairs from.
+.PARAMETER Dictionary
+The source dictionary to copy key-value pairs from.
 
-.Parameter SkipNullValues
-    When present, indicates that key-value pairs with a null value should not be included.
+.PARAMETER SkipNullValues
+When present, indicates that key-value pairs with a null value should not be included.
 
-.Notes
-    Only string keys are supported.
+.NOTES
+Only string keys are supported.
 
-.Inputs
-    System.Collections.IDictionary, the source dictionary to select key-value pairs from by key. 
+.INPUTS
+System.Collections.IDictionary, the source dictionary to select key-value pairs from by key. 
 
-.Outputs
-    System.Collections.Specialized.OrderedDictionary, the dictionary matching key-value pairs are copied to.
+.OUTPUTS
+System.Collections.Specialized.OrderedDictionary, the dictionary matching key-value pairs are copied to.
 
-.Link
-    https://msdn.microsoft.com/library/System.Collections.IDictionary.aspx
+.LINK
+https://msdn.microsoft.com/library/System.Collections.IDictionary.aspx
 
-.Example
-    @{ A = 1; B = 2; C = 3 } |Select-DictionaryKeys.ps1 B D
+.EXAMPLE
+@{ A = 1; B = 2; C = 3 } |Select-DictionaryKeys.ps1 B D
 
-    Name Value
-    ---- -----
-    B    2
+Name Value
+---- -----
+B    2
 
-.Example
-    $PSBoundParameters |Select-DictionaryKeys.ps1 From To Cc Bcc Subject -SkipNullValues |Send-MailMessage
+.EXAMPLE
+$PSBoundParameters |Select-DictionaryKeys.ps1 From To Cc Bcc Subject -SkipNullValues |Send-MailMessage
 
-    Sends an email using selected params declared by the calling script with values.
+Sends an email using selected params declared by the calling script with values.
 #>
 
 #Requires -Version 3

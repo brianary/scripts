@@ -1,27 +1,27 @@
 ﻿<#
-.Synopsis
-    Measures the indentation characters used in a text file.
+.SYNOPSIS
+Measures the indentation characters used in a text file.
 
-.Parameter Path
-    A file to measure.
+.PARAMETER Path
+A file to measure.
 
-.Inputs
-    System.String file path to examine.
+.INPUTS
+System.String file path to examine.
 
-.Outputs
-    System.Management.Automation.PSCustomObject with properties indictating indentation counts.
+.OUTPUTS
+System.Management.Automation.PSCustomObject with properties indictating indentation counts.
 
-		* Tab: Lines starting with tabs.
-		* Space: Lines starting with spaces.
-		* Mix: Lines starting with both tabs and spaces.
-		* Other: Lines starting with any other whitespace characters than tab or space.
+* Tab: Lines starting with tabs.
+* Space: Lines starting with spaces.
+* Mix: Lines starting with both tabs and spaces.
+* Other: Lines starting with any other whitespace characters than tab or space.
 
-.Example
-    Measure-Indents.ps1 Program.cs
+.EXAMPLE
+Measure-Indents.ps1 Program.cs
 
-    Tab Space Mix Other
-    --- ----- --- -----
-      1    17   0     0
+| Tab Space Mix Other
+| --- ----- --- -----
+|   1    17   0     0
 #>
 
 #Requires -Version 3

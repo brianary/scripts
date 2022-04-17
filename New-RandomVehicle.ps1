@@ -1,9 +1,9 @@
-<#
-.Synopsis
-	Generates random vehicle details with a valid VIN.
+﻿<#
+.SYNOPSIS
+Generates random vehicle details with a valid VIN.
 
-.Link
-	https://vingenerator.org
+.LINK
+https://vingenerator.org
 #>
 
 #Requires -Version 3

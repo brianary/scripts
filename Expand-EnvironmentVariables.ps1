@@ -1,17 +1,17 @@
-<#
-.Synopsis
-	Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string.
+﻿<#
+.SYNOPSIS
+Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string.
 
-.Parameter Variable
-	The string to be expanded.
+.PARAMETER Variable
+The string to be expanded.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.environment.expandenvironmentvariables
+.LINK
+https://docs.microsoft.com/dotnet/api/system.environment.expandenvironmentvariables
 
-.Example
-	Expand-EnvironmentVariables.ps1 %SystemRoot%\System32\cmd.exe
+.EXAMPLE
+Expand-EnvironmentVariables.ps1 %SystemRoot%\System32\cmd.exe
 
-	C:\WINDOWS\System32\cmd.exe
+C:\WINDOWS\System32\cmd.exe
 #>
 
 #Requires -Version 3

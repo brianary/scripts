@@ -1,17 +1,17 @@
-<#
-.Synopsis
-	Sets the progress bar display view.
+﻿<#
+.SYNOPSIS
+Sets the progress bar display view.
 
-.Parameter View
-	The progress view to use.
+.PARAMETER View
+The progress view to use.
 
-.Link
-	about_ANSI_Terminals
+.LINK
+about_ANSI_Terminals
 
-.Example
-	Use-ProgressView.ps1 Classic
+.EXAMPLE
+Use-ProgressView.ps1 Classic
 
-	Restores the Windows PowerShell 5.x-style top progress banner for Write-Progress.
+Restores the Windows PowerShell 5.x-style top progress banner for Write-Progress.
 #>
 
 #Requires -Version 7.2

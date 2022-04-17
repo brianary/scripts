@@ -1,23 +1,23 @@
 ﻿<#
-.Synopsis
-    Copies specified source files that exist in the destination directory.
+.SYNOPSIS
+Copies specified source files that exist in the destination directory.
 
-.Parameter Path
-    Path(s) to copy files from, wildcards allowed.
+.PARAMETER Path
+Path(s) to copy files from, wildcards allowed.
 
-.Parameter Destination
-    Folder to copy files to, if they already exist there.
+.PARAMETER Destination
+Folder to copy files to, if they already exist there.
 
-.Parameter NewerOnly
-    Indicates files should only be copied if they are newer.
+.PARAMETER NewerOnly
+Indicates files should only be copied if they are newer.
 
-.Inputs
-    System.String of paths to copy from, if matches exist in the destination.
+.INPUTS
+System.String of paths to copy from, if matches exist in the destination.
 
-.Example
-    Update-Files.ps1 C:\Source\*.txt D:\Dest
+.EXAMPLE
+Update-Files.ps1 C:\Source\*.txt D:\Dest
 
-    Copies *.txt files from C:\Source to D:\Dest that exist in both.
+Copies *.txt files from C:\Source to D:\Dest that exist in both.
 #>
 
 #Requires -Version 3

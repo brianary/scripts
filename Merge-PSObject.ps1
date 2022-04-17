@@ -1,53 +1,53 @@
-<#
-.Synopsis
-	Create a new PSObject by recursively combining the properties of PSObjects.
+﻿<#
+.SYNOPSIS
+Create a new PSObject by recursively combining the properties of PSObjects.
 
-.Parameter ReferenceObject
-	Initial PSObject to combine.
+.PARAMETER ReferenceObject
+Initial PSObject to combine.
 
-.Parameter InputObject
-	PSObjects to combine. PSObject descendant properties are recursively merged.
-	Primitive values are overwritten by any matching ones in the new PSObject.
+.PARAMETER InputObject
+PSObjects to combine. PSObject descendant properties are recursively merged.
+Primitive values are overwritten by any matching ones in the new PSObject.
 
-.Inputs
-	System.Management.Automation.PSObject to combine.
+.INPUTS
+System.Management.Automation.PSObject to combine.
 
-.Outputs
-	System.Management.Automation.PSObject combining the inputs.
+.OUTPUTS
+System.Management.Automation.PSObject combining the inputs.
 
-.Link
-	Get-Member
+.LINK
+Get-Member
 
-.Link
-	Add-Member
+.LINK
+Add-Member
 
-.Example
-	Merge-PSObject.ps1 ([pscustomobject]@{a=1;b=2}) ([pscustomobject]@{b=0;c=3})
+.EXAMPLE
+Merge-PSObject.ps1 ([pscustomobject]@{a=1;b=2}) ([pscustomobject]@{b=0;c=3})
 
-	a b c
-	- - -
-	1 2 3
+a b c
+- - -
+1 2 3
 
-.Example
-	Merge-PSObject.ps1 ([pscustomobject]@{a=1;b=2}) ([pscustomobject]@{b=0;c=3}) -Force
+.EXAMPLE
+Merge-PSObject.ps1 ([pscustomobject]@{a=1;b=2}) ([pscustomobject]@{b=0;c=3}) -Force
 
-	a b c
-	- - -
-	1 0 3
+a b c
+- - -
+1 0 3
 
-.Example
-	'{"a":1,"b":{"u":3},"c":{"v":5}}','{"a":{"w":8},"b":2,"c":{"x":6}}' |ConvertFrom-Json |Merge-PSObject.ps1 -Accumulate -Force |select -Last 1 |ConvertTo-Json
+.EXAMPLE
+'{"a":1,"b":{"u":3},"c":{"v":5}}','{"a":{"w":8},"b":2,"c":{"x":6}}' |ConvertFrom-Json |Merge-PSObject.ps1 -Accumulate -Force |select -Last 1 |ConvertTo-Json
 
-	{
-		"a":  {
-				"w":  8
-			},
-		"b":  2,
-		"c":  {
-				"v":  5,
-				"x":  6
-			}
-	}
+| {
+|   "a": {
+|     "w": 8
+|   },
+|   "b": 2,
+|   "c": {
+|     "v": 5,
+|     "x": 6
+|   }
+| }
 #>
 
 #Requires -Version 3

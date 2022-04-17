@@ -1,43 +1,43 @@
 ﻿<#
-.Synopsis
-    Insert XML into an XML document relative to a node found by Select-Xml.
+.SYNOPSIS
+Insert XML into an XML document relative to a node found by Select-Xml.
 
-.Parameter Xml
-    The XML node(s) to insert.
+.PARAMETER Xml
+The XML node(s) to insert.
 
-.Parameter Position
-    Where to insert the new node(s), relative to the node found by Select-Xml.
+.PARAMETER Position
+Where to insert the new node(s), relative to the node found by Select-Xml.
 
-		* AppendChild: At the end of the node's children. This is the default.
-		* InsertAfter: Following the node.
-		* InsertBefore: Preceding the node.
-		* PrependChild: At the beginning of the node's children.
+* AppendChild: At the end of the node's children. This is the default.
+* InsertAfter: Following the node.
+* InsertBefore: Preceding the node.
+* PrependChild: At the beginning of the node's children.
 
-.Parameter UnlessXPath
-    An XPath, rooted from the node found by Select-Xml, that will cancel the insert if it exists.
-    Used to prevent inserting XML already in the document.
+.PARAMETER UnlessXPath
+An XPath, rooted from the node found by Select-Xml, that will cancel the insert if it exists.
+Used to prevent inserting XML already in the document.
 
-.Parameter Namespace
-    Specifies a hash table of the namespaces used in UnlessXPath.
-    Use the format @{prefix = 'uri'}.
+.PARAMETER Namespace
+Specifies a hash table of the namespaces used in UnlessXPath.
+Use the format @{prefix = 'uri'}.
 
-.Parameter SelectXmlInfo
-    Output from the Select-Xml cmdlet.
+.PARAMETER SelectXmlInfo
+Output from the Select-Xml cmdlet.
 
-.Inputs
-    Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
+.INPUTS
+Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
 
-.Outputs
-    System.Xml.XmlDocument
-    Returned when Select-Xml queries an in-memory XML document or string, null when querying a file.
+.OUTPUTS
+System.Xml.XmlDocument
+Returned when Select-Xml queries an in-memory XML document or string, null when querying a file.
 
-.Link
-    Select-Xml
+.LINK
+Select-Xml
 
-.Example
-    Select-Xml /configuration/appSettings app.config |Add-Xml.ps1 '<add key="Version" value="2.0"/>' -UnlessXPath 'add[@key="Version"]'
+.EXAMPLE
+Select-Xml /configuration/appSettings app.config |Add-Xml.ps1 '<add key="Version" value="2.0"/>' -UnlessXPath 'add[@key="Version"]'
 
-    (Adds element to document file if it is not already there.)
+(Adds element to document file if it is not already there.)
 #>
 
 [CmdletBinding()][OutputType([xml])] Param(

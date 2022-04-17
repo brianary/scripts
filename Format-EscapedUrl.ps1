@@ -1,34 +1,34 @@
-<#
-.Synopsis
-    Escape URLs more aggressively.
+﻿<#
+.SYNOPSIS
+Escape URLs more aggressively.
 
-.Description
-    Some characters such as apostrophes and parentheses are legal for URLs,
-    but are a hassle within certain formats (Markdown, JSON, SQL, &c).
+.DESCRIPTION
+Some characters such as apostrophes and parentheses are legal for URLs,
+but are a hassle within certain formats (Markdown, JSON, SQL, &c).
 
-	This script URL-escapes these characters to %xx format.
+This script URL-escapes these characters to %xx format.
 
-.Parameter Uri
-	The URL to format for maximum compatibility.
+.PARAMETER Uri
+The URL to format for maximum compatibility.
 
-.Parameter Clipboard
-	Indicates that the URL comes from the clipboard, and is updated on the clipboard.
+.PARAMETER Clipboard
+Indicates that the URL comes from the clipboard, and is updated on the clipboard.
 
-.Inputs
-	System.Uri to escape.
+.INPUTS
+System.Uri to escape.
 
-.Outputs
-	System.String containing the URL escaped for maximum compatibility.
+.OUTPUTS
+System.String containing the URL escaped for maximum compatibility.
 
-.Example
-    Format-EscapedUrl.ps1 -Clipboard
+.EXAMPLE
+Format-EscapedUrl.ps1 -Clipboard
 
-    Updates the URL on the clipboard with a more aggressively escaped version.
+Updates the URL on the clipboard with a more aggressively escaped version.
 
-.Example
-    Format-EscapedUrl.ps1 "https://example.com/search(en-US)?q=Name%20%3D%20'System'&sort=y"
+.EXAMPLE
+Format-EscapedUrl.ps1 "https://example.com/search(en-US)?q=Name%20%3D%20'System'&sort=y"
 
-    https://example.com/search%28en-US%29?q=Name%20%3D%20%27System%27&sort=y
+https://example.com/search%28en-US%29?q=Name%20%3D%20%27System%27&sort=y
 #>
 
 #Requires -Version 3

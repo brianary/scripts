@@ -1,42 +1,42 @@
 ﻿<#
-.Synopsis
-	Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
+.SYNOPSIS
+Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
 
-.Notes
-	An alias of U+ allows you to interpolate a codepoint like this "$(U+ 0x1F5A7) Network"
+.NOTES
+An alias of U+ allows you to interpolate a codepoint like this "$(U+ 0x1F5A7) Network"
 
-	This script is mostly useful to Windows PowerShell (before version 6), since PowerShell Core
-	supports the new `u{1F5A5} syntax.
+This script is mostly useful to Windows PowerShell (before version 6), since PowerShell Core
+supports the new `u{1F5A5} syntax.
 
-.Parameter Codepoint
-	The integer value of a Unicode codepoint to convert into a .NET string.
+.PARAMETER Codepoint
+The integer value of a Unicode codepoint to convert into a .NET string.
 
-.Parameter AsEmoji
-	Appends a U+FE0F VARIATION SELECTOR-16 suffix to the character, which suggests an emoji presentation
-	for characters that support both a simple text presentation as well as a color emoji-style one.
+.PARAMETER AsEmoji
+Appends a U+FE0F VARIATION SELECTOR-16 suffix to the character, which suggests an emoji presentation
+for characters that support both a simple text presentation as well as a color emoji-style one.
 
-.Parameter AsStringLiteral
-	Outputs the codepoint as a usable PowerShell string literal.
+.PARAMETER AsStringLiteral
+Outputs the codepoint as a usable PowerShell string literal.
 
-.Inputs
-	System.Int32 value of a Unicode codepoint.
+.INPUTS
+System.Int32 value of a Unicode codepoint.
 
-.Outputs
-	System.String of Unicode character(s) identified by codepoints.
+.OUTPUTS
+System.String of Unicode character(s) identified by codepoints.
 
-.Link
-	https://docs.microsoft.com/dotnet/api/system.char.convertfromutf32
+.LINK
+https://docs.microsoft.com/dotnet/api/system.char.convertfromutf32
 
-.Link
-	https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_special_characters#unicode-character-ux
+.LINK
+https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_special_characters#unicode-character-ux
 
-.Link
-	https://emojipedia.org/variation-selector-16/
+.LINK
+https://emojipedia.org/variation-selector-16/
 
-.Example
-	"$(Get-Unicode 0x1F5A7) Network"
+.EXAMPLE
+"$(Get-Unicode 0x1F5A7) Network"
 
-	<three networked computers> Network
+<three networked computers> Network
 #>
 
 #Requires -Version 3

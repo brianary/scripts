@@ -1,48 +1,48 @@
 ﻿<#
-.Synopsis
-    Send an event to a Seq server.
+.SYNOPSIS
+Send an event to a Seq server.
 
-.Parameter Message
-    The text to use as the log message, a Seq template unless -LiteralMessage is present.
-    By default, the value of the Message property will be used.
+.PARAMETER Message
+The text to use as the log message, a Seq template unless -LiteralMessage is present.
+By default, the value of the Message property will be used.
 
-.Parameter Properties
-    Logging properties to record in Seq, as an OrderedDictionary, Hashtable, DataRow,
-    or any object with properties to use.
+.PARAMETER Properties
+Logging properties to record in Seq, as an OrderedDictionary, Hashtable, DataRow,
+or any object with properties to use.
 
-.Parameter Level
-    The type of event to record.
-    Information by default.
+.PARAMETER Level
+The type of event to record.
+Information by default.
 
-.Parameter Server
-    The URL of the Seq server.
+.PARAMETER Server
+The URL of the Seq server.
 
-.Parameter ApiKey
-    The Seq API key to use.
+.PARAMETER ApiKey
+The Seq API key to use.
 
-.Parameter LiteralMessage
-    When present, indicates the Message parameter is to be used verbatim, not as a Seq template.
+.PARAMETER LiteralMessage
+When present, indicates the Message parameter is to be used verbatim, not as a Seq template.
 
-.Inputs
-    System.Collections.Hashtable
-    or System.Collections.Specialized.OrderedDictionary
-    or System.Data.DataRow
-    or an object
+.INPUTS
+System.Collections.Hashtable
+or System.Collections.Specialized.OrderedDictionary
+or System.Data.DataRow
+or an object
 
-.Link
-    Invoke-RestMethod
+.LINK
+Invoke-RestMethod
 
-.Link
-    https://getseq.net/
+.LINK
+https://getseq.net/
 
-.Example
-    Send-SeqEvent.ps1 'Hello from PowerShell' -Server http://my-seq -LiteralMessage
+.EXAMPLE
+Send-SeqEvent.ps1 'Hello from PowerShell' -Server http://my-seq -LiteralMessage
 
-.Example
-    Send-SeqEvent.ps1 'Event: {User} on {Machine}' @{ User = $env:UserName; Machine = $env:ComputerName } -Server http://my-seq
+.EXAMPLE
+Send-SeqEvent.ps1 'Event: {User} on {Machine}' @{ User = $env:UserName; Machine = $env:ComputerName } -Server http://my-seq
 
-.Example
-    Send-SeqEvent.ps1 -Properties @{ Message = $Error[0].Exception.Message } -Level Error -Server http://my-seq
+.EXAMPLE
+Send-SeqEvent.ps1 -Properties @{ Message = $Error[0].Exception.Message } -Level Error -Server http://my-seq
 #>
 
 #requires -Version 4

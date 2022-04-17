@@ -1,42 +1,42 @@
-<#
-.Synopsis
-    Overrides ConsoleClass window color palette entries with a preset color theme.
+﻿<#
+.SYNOPSIS
+Overrides ConsoleClass window color palette entries with a preset color theme.
 
-.Parameter ThemeName
-    The name of the theme to set the color table for.
+.PARAMETER ThemeName
+The name of the theme to set the color table for.
 
-.Parameter ProcessName
-    The name of the process to override the color palette for.
-    Used to locate the color table under HKCU:\Console\$ProcessName in the registry.
+.PARAMETER ProcessName
+The name of the process to override the color palette for.
+Used to locate the color table under HKCU:\Console\$ProcessName in the registry.
 
-.Link
-    Set-ConsoleColors.ps1
+.LINK
+Set-ConsoleColors.ps1
 
-.Link
-    https://draculatheme.com/
+.LINK
+https://draculatheme.com/
 
-.Link
-    https://github.com/dracula/visual-studio-code/blob/master/src/dracula.yml
+.LINK
+https://github.com/dracula/visual-studio-code/blob/master/src/dracula.yml
 
-.Link
-    https://ethanschoonover.com/solarized/
+.LINK
+https://ethanschoonover.com/solarized/
 
-.Link
-    https://en.wikipedia.org/wiki/Solarized_(color_scheme)
+.LINK
+https://en.wikipedia.org/wiki/Solarized_(color_scheme)
 
-.Link
-    http://www.kippura.org/zenburnpage/
+.LINK
+http://www.kippura.org/zenburnpage/
 
-.Link
-    https://github.com/coding-horror/ide-hot-or-not/
+.LINK
+https://github.com/coding-horror/ide-hot-or-not/
 
-.Link
-    https://studiostyl.es/
+.LINK
+https://studiostyl.es/
 
-.Example
-    Set-ConsoleColorTheme.ps1 Dracula
+.EXAMPLE
+Set-ConsoleColorTheme.ps1 Dracula
 
-    (sets the Dracula theme)
+(sets the Dracula theme)
 #>
 
 #Requires -Version 3
