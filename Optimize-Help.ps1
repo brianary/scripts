@@ -51,17 +51,26 @@ Process
 					}
 					else
 					{
-						Write-Warning "Parameter $name documentation not found in $Path"
+						"$(Get-Date -f s) Parameter $name documentation not found in $Path" |
+							Tee-Object optimize-help.log utf8BOM -Append |
+							Write-Warning
 						$docparams += $p
 					}
 				}
 				else
 				{
-					Write-Warning "Could not find parameter name in:$EOL$p"
+					"$(Get-Date -f s) Could not find parameter name in ${Path}:$EOL$p" |
+						Tee-Object optimize-help.log utf8BOM -Append |
+						Write-Warning
 					$docparams += $p
 				}
 			}
-			foreach($k in $params.Keys) {Write-Warning "Could not find parameter definition for $k in $Path$EOL$($params[$k])"}
+			foreach($k in $params.Keys)
+			{
+				"$(Get-Date -f s) Could not find parameter definition for $k in $Path$EOL$($params[$k])" |
+					Tee-Object optimize-help.log utf8BOM -Append |
+					Write-Warning
+			}
 			$docparams -join ",$EOL"
 		})
 	$script |Out-File $Path utf8BOM
