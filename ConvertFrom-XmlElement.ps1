@@ -2,12 +2,6 @@
 .SYNOPSIS
 Converts named nodes of an element to properties of a PSObject, recursively.
 
-.PARAMETER Element
-The element to convert to a PSObject.
-
-.PARAMETER SelectXmlInfo
-Output from the Select-Xml cmdlet.
-
 .INPUTS
 Microsoft.PowerShell.Commands.SelectXmlInfo output from Select-Xml.
 
@@ -27,7 +21,9 @@ webPages:Enabled false
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([psobject])] Param(
+# The element to convert to a PSObject.
 [Parameter(ParameterSetName='Element',Position=0,Mandatory=$true,ValueFromPipeline=$true)][Xml.XmlElement] $Element,
+# Output from the Select-Xml cmdlet.
 [Parameter(ParameterSetName='SelectXmlInfo',Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
 )

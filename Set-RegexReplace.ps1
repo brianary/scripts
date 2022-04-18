@@ -2,22 +2,6 @@
 .SYNOPSIS
 Updates text found with Select-String, using a regular expression replacement template.
 
-.PARAMETER Replacement
-A regular expression replacement string.
-
-* $$ is a literal $
-* $_ is the entire input string.
-* $` is the string before the match.
-* $& is the entire matching string.
-* $' is the string after the match.
-* $1 is the first matching group.
-* $n (where n is a number) is the nth matching group.
-* $name is the group named "name".
-* $+ is the last matching group.
-
-.PARAMETER InputObject
-The output from Select-String.
-
 .INPUTS
 Microsoft.PowerShell.Commands.MatchInfo containing a regex match than will be replaced.
 
@@ -49,7 +33,21 @@ Get-Item README.md |select Name,Length |ConvertTo-Html -Fragment |Out-String |Se
 #Requires -Version 3
 #Requires -Modules Detextive
 [CmdletBinding()] Param(
+<#
+A regular expression replacement string.
+
+* $$ is a literal $
+* $_ is the entire input string.
+* $` is the string before the match.
+* $& is the entire matching string.
+* $' is the string after the match.
+* $1 is the first matching group.
+* $n (where n is a number) is the nth matching group.
+* $name is the group named "name".
+* $+ is the last matching group.
+#>
 [Parameter(Position=0,Mandatory=$true)][string] $Replacement,
+# The output from Select-String.
 [Parameter(ValueFromPipeline=$true)][Microsoft.PowerShell.Commands.MatchInfo] $InputObject
 )
 Begin

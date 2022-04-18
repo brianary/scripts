@@ -2,9 +2,6 @@
 .SYNOPSIS
 Measures the indentation characters used in a text file.
 
-.PARAMETER Path
-A file to measure.
-
 .INPUTS
 System.String file path to examine.
 
@@ -26,6 +23,7 @@ Measure-Indents.ps1 Program.cs
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# A file to measure.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$Path
 )
 Begin { $Count = [pscustomobject]@{Tab=0;Space=0;Mix=0;Other=0} }

@@ -2,13 +2,6 @@
 .SYNOPSIS
 Overrides ConsoleClass window color palette entries with a preset color theme.
 
-.PARAMETER ThemeName
-The name of the theme to set the color table for.
-
-.PARAMETER ProcessName
-The name of the process to override the color palette for.
-Used to locate the color table under HKCU:\Console\$ProcessName in the registry.
-
 .LINK
 Set-ConsoleColors.ps1
 
@@ -41,9 +34,14 @@ Set-ConsoleColorTheme.ps1 Dracula
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+# The name of the theme to set the color table for.
 [Parameter(Position=0,Mandatory=$true)]
 [ValidateSet('Dracula','SolarizedDark','SolarizedLight','Zenburn')]
 [string]$ThemeName,
+<#
+The name of the process to override the color palette for.
+Used to locate the color table under HKCU:\Console\$ProcessName in the registry.
+#>
 [Parameter(Position=1)][Alias('ForProcessName')]
 [string]$ProcessName = '%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe'
 )

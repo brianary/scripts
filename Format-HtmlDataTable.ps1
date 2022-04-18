@@ -2,21 +2,6 @@
 .SYNOPSIS
 Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 
-.PARAMETER OddRowBackground
-The background CSS value for odd rows.
-
-.PARAMETER EvenRowBackground
-The background CSS value for even rows.
-
-.PARAMETER TableAttributes
-Any table attributes desired (cellpadding, cellspacing, style, &c.).
-
-.PARAMETER NumericFormat
-Applies a standard .NET formatting pattern to numbers, such as N or '#,##0.000;(#,##0.000);zero'.
-
-.PARAMETER Html
-The HTML table data to be piped in.
-
 .INPUTS
 System.String containing an HTML table, as produced by ConvertTo-Html.
 
@@ -46,12 +31,19 @@ and alternates the rows between pale yellow and white.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# The HTML table caption, a label for the table.
 [Parameter(Position=0)][string]$Caption,
+# The background CSS value for odd rows.
 [Parameter(Position=1)][string]$OddRowBackground,
+# The background CSS value for even rows.
 [Parameter(Position=2)][string]$EvenRowBackground,
+# Any table attributes desired (cellpadding, cellspacing, style, &c.).
 [Alias('TableAtts')][string]$TableAttributes = 'cellpadding="2" cellspacing="0" style="font:x-small ''Lucida Console'',monospace"',
+# HTML attributes for the table caption.
 [Alias('CaptionAtts','CapAtts')][string]$CaptionAttributes = 'style="font:bold small serif;border:1px inset #DDD;padding:1ex 0;background:#FFF"',
+# Applies a standard .NET formatting pattern to numbers, such as N or '#,##0.000;(#,##0.000);zero'.
 [string]$NumericFormat,
+# The HTML table data to be piped in.
 [Parameter(ValueFromPipeline=$true)][string]$Html
 )
 Begin

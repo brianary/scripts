@@ -2,50 +2,6 @@
 .SYNOPSIS
 Searches a specific subset of files for lines matching a pattern.
 
-.PARAMETER Pattern
-Specifies the text to find. Type a string or regular expression.
-If you type a string, use the SimpleMatch parameter.
-
-.PARAMETER Filters
-Specifies wildcard filters that file names must match.
-
-.PARAMETER Path
-Specifies a path to one or more locations. Wildcards are permitted.
-The default location is the current directory (.).
-
-.PARAMETER Include
-Wildcard patterns files must match one of (slower than Filter).
-
-.PARAMETER Exclude
-Wildcard patterns files must not match any of.
-
-.PARAMETER CaseSensitive
-Makes matches case-sensitive. By default, matches are not case-sensitive.
-
-.PARAMETER List
-Returns only the first match in each input file.
-By default, Select-String returns a MatchInfo object for each match it finds.
-
-.PARAMETER NotMatch
-Finds text that does not match the specified pattern.
-
-.PARAMETER SimpleMatch
-Uses a simple match rather than a regular expression match.
-In a simple match, Select-String searches the input for the text in the Pattern parameter.
-It does not interpret the value of the Pattern parameter as a regular expression statement.
-
-.PARAMETER NoRecurse
-Disables searching subdirectories.
-
-.PARAMETER ChooseMatches
-Displays a grid of matches to select a subset from.
-
-.PARAMETER Open
-Invokes files that contain matches.
-
-.PARAMETER Blame
-Returns git blame info for matching lines.
-
 .OUTPUTS
 Microsoft.PowerShell.Commands.MatchInfo with each match found.
 
@@ -58,21 +14,47 @@ returning the matches.
 
 #Requires -Version 3
 [CmdletBinding(DefaultParameterSetName='Default')][OutputType([Microsoft.PowerShell.Commands.MatchInfo])] Param(
+<#
+Specifies the text to find. Type a string or regular expression.
+If you type a string, use the SimpleMatch parameter.
+#>
 [Parameter(Position=0,Mandatory=$true)][string[]] $Pattern,
+# Specifies wildcard filters that file names must match.
 [Parameter(Position=1)][string[]] $Filters,
+<#
+Specifies a path to one or more locations. Wildcards are permitted.
+The default location is the current directory (.).
+#>
 [Parameter(Position=2)][string[]] $Path,
+# Wildcard patterns files must match one of (slower than Filter).
 [string[]] $Include,
+# Wildcard patterns files must not match any of.
 [string[]] $Exclude = @('*.dll','*.exe','*.pdb','*.bin','*.cache','*.png','*.gif','*.jpg','*.ico','*.psd','*.obj','*.iso',
+# Makes matches case-sensitive. By default, matches are not case-sensitive.
 	'*.docx','*.xls','*.xlsx','*.pdf','*.rtf','*.swf','*.chm','*.ttf','*.woff','*.eot','*.otf','*.mdf','*.ldf','*.pack',
 	'*.zip','*.gz','*.tgz','*.jar','*.nupkg','*.vspscc','*.vsmdi','*.vssscc','*.vsd','*.vscontent','*.vssettings','*.suo',
 	'*.dbmdl','*.tdf','*.optdata','*.sigdata','*.lib'),
 [switch] $CaseSensitive,
+<#
+Returns only the first match in each input file.
+By default, Select-String returns a MatchInfo object for each match it finds.
+#>
 [switch] $List,
+# Finds text that does not match the specified pattern.
 [switch] $NotMatch,
+<#
+Uses a simple match rather than a regular expression match.
+In a simple match, Select-String searches the input for the text in the Pattern parameter.
+It does not interpret the value of the Pattern parameter as a regular expression statement.
+#>
 [switch] $SimpleMatch,
+# Disables searching subdirectories.
 [switch] $NoRecurse,
+# Displays a grid of matches to select a subset from.
 [Alias('Pick')][switch] $ChooseMatches,
+# Invokes files that contain matches.
 [Parameter(ParameterSetName='Open')][Alias('View')][switch] $Open,
+# Returns git blame info for matching lines.
 [Parameter(ParameterSetName='Blame')][Alias('Who')][switch] $Blame
 )
 

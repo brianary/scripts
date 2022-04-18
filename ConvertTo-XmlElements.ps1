@@ -2,11 +2,6 @@
 .SYNOPSIS
 Serializes complex content into XML elements.
 
-.PARAMETER Value
-A hash or XML element or other object to be serialized as XML elements.
-
-Each hash value or object property value may itself be a hash or object or XML element.
-
 .INPUTS
 System.Object (any object) to serialize.
 
@@ -39,6 +34,11 @@ Get-ChildItem *.txt |ConvertTo-XmlElements.ps1
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+<#
+A hash or XML element or other object to be serialized as XML elements.
+
+Each hash value or object property value may itself be a hash or object or XML element.
+#>
 [Parameter(Position=0,ValueFromPipeline=$true)] $Value
 )
 Begin {$Script:OFS = "`n"}

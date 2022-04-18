@@ -2,9 +2,6 @@
 .SYNOPSIS
 Indicates whether a variable has been defined.
 
-.PARAMETER Name
-A variable name to test the existence of.
-
 .INPUTS
 System.String name of a variable.
 
@@ -56,7 +53,9 @@ True
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
+# A variable name to test the existence of.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][AllowEmptyString()][AllowNull()][string] $Name,
+# The scope of the variable to test, Global, Local, Script, or the number of a calling parent context.
 [Parameter(Position=1)][string] $Scope
 )
 Process

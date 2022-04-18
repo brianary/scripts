@@ -2,22 +2,6 @@
 .SYNOPSIS
 Provides sorted counts of SQL Server column values.
 
-.PARAMETER Column
-An SMO column object associated to the database column to examine.
-
-.PARAMETER ColumnName
-The name of the column to examine in the table associated with the SMO Table object.
-
-.PARAMETER Table
-An SMO table object associated to the database to examine.
-
-.PARAMETER Condition
-Conditions to be provided as a SQL WHERE clause to filter the column values to examine.
-Useful for databases that implement "soft deletes" as specific field values.
-
-.PARAMETER MinimumCount
-Excludes values with fewer than this number of occurrences.
-
 .INPUTS
 Microsoft.SqlServer.Management.Smo.Column to calculate statistics for,
 or Microsoft.SqlServer.Management.Smo.Table to select a column from by name.
@@ -35,12 +19,20 @@ https://dbatools.io/
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding(ConfirmImpact='Medium')][OutputType([Management.Automation.PSCustomObject])] Param(
+# An SMO column object associated to the database column to examine.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ParameterSetName='Column')]
 [Microsoft.SqlServer.Management.Smo.Column] $Column,
+# The name of the column to examine in the table associated with the SMO Table object.
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='ColumnName')][string] $ColumnName,
+# An SMO table object associated to the database to examine.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true,ParameterSetName='ColumnName')]
 [Microsoft.SqlServer.Management.Smo.Table] $Table,
+<#
+Conditions to be provided as a SQL WHERE clause to filter the column values to examine.
+Useful for databases that implement "soft deletes" as specific field values.
+#>
 [string] $Condition,
+# Excludes values with fewer than this number of occurrences.
 [int] $MinimumCount
 )
 Begin

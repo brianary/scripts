@@ -2,12 +2,6 @@
 .SYNOPSIS
 Collects some useful system hardware and operating system details via CIM.
 
-.PARAMETER ComputerName
-The computer from which to get CIM details.
-
-.PARAMETER All
-Get all of the available details, rather than just the most pertinent ones.
-
 .OUTPUTS
 System.Management.Automation.PSCustomObject with properties about the computer:
 

@@ -2,21 +2,6 @@
 .SYNOPSIS
 Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 
-.PARAMETER Char
-A string containing one or more characters to get details for.
-
-.PARAMETER Value
-A codepoint to get details for.
-
-.PARAMETER StartValue
-The minimum character in the range to return.
-
-.PARAMETER StopValue
-The maximum character in the range to return.
-
-.PARAMETER Block
-A specific Unicode block (or named range) of characters to return.
-
 .INPUTS
 System.String to get details on each character of.
 
@@ -273,7 +258,9 @@ IsWord              : True
 #>
 
 #Requires -Version 2
+#TODO: finish documenting params
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# A specific Unicode block (or named range) of characters to return.
 [Parameter(ParameterSetName='Block',Position=0)]
 [ValidateSet('BasicMultilingualPlane','BMP','ASCII','0x2xxx','BasicLatin','Latin1Supplement',
 'LatinExtendedA','LatinExtendedB','IPAExtensions','SpacingModifierLetters','CombiningDiacriticalMarks',
@@ -303,9 +290,13 @@ IsWord              : True
 'CJKCompatibilityIdeographs','AlphabeticPresentationForms','ArabicPresentationFormsA','VariationSelectors',
 'VerticalForms','CombiningHalfMarks','CJKCompatibilityForms','SmallFormVariants','ArabicPresentationFormsB',
 'HalfwidthandFullwidthForms','Specials')][string]$Block = 'BasicMultilingualPlane',
+# A string containing one or more characters to get details for.
 [Parameter(ParameterSetName='Char',Mandatory=$true,ValueFromPipeline=$true)][string]$Char,
+# A codepoint to get details for.
 [Parameter(ParameterSetName='Value',Position=0,Mandatory=$true)][int][Alias('CodePoint')]$Value,
+# The minimum character in the range to return.
 [Parameter(ParameterSetName='Range',Position=0,Mandatory=$true)][int]$StartValue,
+# The maximum character in the range to return.
 [Parameter(ParameterSetName='Range',Position=1,Mandatory=$true)][int]$StopValue,
 [switch]$IsControl,
 [switch]$NotControl,

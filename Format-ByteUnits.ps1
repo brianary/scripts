@@ -2,19 +2,6 @@
 .SYNOPSIS
 Converts bytes to largest possible units, to improve readability.
 
-.PARAMETER Bytes
-The number of bytes to express in larger units.
-
-.PARAMETER Precision
-The maximum number of digits after the decimal to keep.
-The default is 16 (the maximum).
-
-.PARAMETER UseSI
-Displays unambiguous SI units (with a space).
-By default, native PowerShell units are used
-(without a space, to allow round-tripping the value,
-though there may be significant rounding loss depending on precision).
-
 .INPUTS
 System.Numerics.BigInteger representing a number of bytes.
 
@@ -42,8 +29,19 @@ ls *.log |measure -sum Length |select -exp Sum |Format-ByteUnits -dot 2 -si
 
 #Requires -Version 2
 [CmdletBinding()][OutputType([string])] Param(
+# The number of bytes to express in larger units.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][bigint]$Bytes,
+<#
+The maximum number of digits after the decimal to keep.
+The default is 16 (the maximum).
+#>
 [Alias('Digits','dot')][ValidateRange(0,16)][byte]$Precision = 16,
+<#
+Displays unambiguous SI units (with a space).
+By default, native PowerShell units are used
+(without a space, to allow round-tripping the value,
+though there may be significant rounding loss depending on precision).
+#>
 [Alias('si')][switch]$UseSI
 )
 Process

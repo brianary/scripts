@@ -2,15 +2,6 @@
 .SYNOPSIS
 Adds a incrementing integer property to each pipeline object.
 
-.PARAMETER PropertyName
-The name of the property to add.
-
-.PARAMETER InitialValue
-The starting number to count from.
-
-.PARAMETER InputObject
-The object to add the property to.
-
 .LINK
 Add-Member
 
@@ -30,8 +21,11 @@ Certificate        7
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([psobject])] Param(
+# The name of the property to add.
 [Parameter(Position=0)][string] $PropertyName = 'Counter',
+# The starting number to count from.
 [Parameter(Position=1)][int] $InitialValue = 1,
+# The object to add the property to.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][psobject] $InputObject
 )
 Begin { $i = $InitialValue }

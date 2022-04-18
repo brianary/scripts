@@ -2,12 +2,6 @@
 .SYNOPSIS
 Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
 
-.PARAMETER DateTime
-The DateTime value to convert to number of seconds since Jan 1, 1970.
-
-.PARAMETER UniversalTime
-Indicates the DateTime provided is local, and should be converted to UTC.
-
 .INPUTS
 System.DateTime values to convert to integers.
 
@@ -30,7 +24,9 @@ Get-Date |ConvertTo-EpochTime.ps1
 #>
 
 [CmdletBinding()][OutputType([int])] Param(
+# The DateTime value to convert to number of seconds since Jan 1, 1970.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][DateTime] $DateTime,
+# Indicates the DateTime provided is local, and should be converted to UTC.
 [Alias('UTC')][switch] $UniversalTime
 )
 Process{[int][double]::Parse((Get-Date $(if($UniversalTime){$DateTime.ToUniversalTime()}else{$DateTime}) -UFormat %s))}

@@ -2,24 +2,6 @@
 .SYNOPSIS
 Returns choice selected from a list of options.
 
-.PARAMETER Choices
-A list of choice strings. Use & in front of a letter to make it a hotkey.
-
-.PARAMETER ChoiceHash
-An ordered hash of choices mapped to help text descriptions.
-Use & in front of a letter to make it a hotkey.
-
-.PARAMETER Caption
-A title to use for the prompt.
-
-.PARAMETER Message
-Instructional text to provide in the prompt.
-
-.PARAMETER DefaultIndex
-The index of the default choice.
-Use -1 to for no default.
-Otherwise, the first item (index 0) is the default.
-
 .INPUTS
 System.String containing a choice to offer.
 
@@ -50,12 +32,24 @@ H - third thing
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# A list of choice strings. Use & in front of a letter to make it a hotkey.
 [Parameter(ParameterSetName='ChoicesArray',Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [Alias('Options')][string[]] $Choices,
+<#
+An ordered hash of choices mapped to help text descriptions.
+Use & in front of a letter to make it a hotkey.
+#>
 [Parameter(ParameterSetName='ChoicesHash',Position=0,Mandatory=$true)]
 [Alias('Menu')][Collections.IDictionary] $ChoiceHash,
+# A title to use for the prompt.
 [string] $Caption,
+# Instructional text to provide in the prompt.
 [string] $Message = 'Please select:',
+<#
+The index of the default choice.
+Use -1 to for no default.
+Otherwise, the first item (index 0) is the default.
+#>
 [int] $DefaultIndex
 )
 End

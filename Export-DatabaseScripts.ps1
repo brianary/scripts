@@ -12,23 +12,6 @@ There are a default set of SMO scripting options set to do a typical export, tho
 
 This does require SMO to be installed on the machine (it comes with SQL Management Studio).
 
-.PARAMETER Server
-The name of the server (and instance) to connect to.
-
-.PARAMETER Database
-The name of the database to connect to on the server.
-
-.PARAMETER Encoding
-The file encoding to use for the SQL scripts.
-
-.PARAMETER ScriptingOptions
-Provides a list of boolean SMO ScriptingOptions properties to set to true.
-
-.PARAMETER SqlVersion
-The SQL version to target when scripting.
-By default, uses the version from the source server.
-Versions greater than the source server's version may fail.
-
 .COMPONENT
 Microsoft.SqlServer.Smo.Server
 
@@ -50,12 +33,21 @@ Outputs SQL scripts to files.
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding()][OutputType([void])] Param(
+# The name of the server (and instance) to connect to.
 [Parameter(Position=0,Mandatory=$true)][string] $Server,
+# The name of the database to connect to on the server.
 [Parameter(Position=1,Mandatory=$true)][string] $Database,
+# The file encoding to use for the SQL scripts.
 [Parameter(Position=2)][ValidateSet('Unicode','UTF7','UTF8','UTF32','ASCII','BigEndianUnicode','Default','OEM')][string]$Encoding = 'UTF8',
+# Provides a list of boolean SMO ScriptingOptions properties to set to true.
 [Parameter(Position=3,ValueFromRemainingArguments=$true)][string[]] $ScriptingOptions = (@'
 EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers ScriptBatchTerminator
 '@.Trim() -split '\W+'),
+<#
+The SQL version to target when scripting.
+By default, uses the version from the source server.
+Versions greater than the source server's version may fail.
+#>
 [Microsoft.SqlServer.Management.Smo.SqlServerVersion]$SqlVersion
 )
 

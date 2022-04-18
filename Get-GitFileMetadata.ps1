@@ -2,12 +2,6 @@
 .SYNOPSIS
 Returns the creation and last modification metadata for a file in a git repo.
 
-.PARAMETER Path
-The path (or paths) to get metadata for.
-
-.PARAMETER Recurse
-Recurse into subdirectories.
-
 .LINK
 Use-Command.ps1
 
@@ -33,8 +27,10 @@ LastDate     : 12/07/2020 20:17:15
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([psobject])] Param(
+# The path (or paths) to get metadata for.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
 [string[]] $Path,
+# Recurse into subdirectories.
 [switch] $Recurse
 )
 Begin { Use-Command.ps1 git "$env:ProgramFiles\Git\cmd\git.exe" -choco git }

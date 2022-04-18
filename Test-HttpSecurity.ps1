@@ -2,25 +2,6 @@
 .SYNOPSIS
 Scan sites using Mozilla's Observatory.
 
-.PARAMETER Hosts
-Hostnames to scan, e.g. www.example.org
-
-.PARAMETER Force
-Indicates a new scan should be performed, rather than returning a cached one.
-
-.PARAMETER Public
-Indicates the scan results may be posted publically.
-By default, scans are unlisted.
-
-.PARAMETER IncludeResults
-Indicates the detailed scan results should be fetched rather than simply providing a URL for them.
-
-.PARAMETER PollingInterval
-The number of milliseconds to wait between polling the hostnames for scan completion.
-
-.PARAMETER Endpoint
-The address of the Observatory web service.
-
 .INPUTS
 System.String containing a URL host to check.
 
@@ -82,11 +63,20 @@ Test-HttpSecurity.ps1 www.example.com -IncludeResults
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([psobject])] Param(
+# Hostnames to scan, e.g. www.example.org
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string[]]$Hosts,
+# Indicates a new scan should be performed, rather than returning a cached one.
 [Alias('Rescan')][switch]$Force,
+<#
+Indicates the scan results may be posted publically.
+By default, scans are unlisted.
+#>
 [switch]$Public,
+# Indicates the detailed scan results should be fetched rather than simply providing a URL for them.
 [Alias('Details','Results','FetchResults')][switch]$IncludeResults,
+# The number of milliseconds to wait between polling the hostnames for scan completion.
 [int]$PollingInterval = 1753,
+# The address of the Observatory web service.
 [Uri]$Endpoint = 'https://http-observatory.security.mozilla.org/api/v1'
 )
 Process

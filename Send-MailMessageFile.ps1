@@ -2,12 +2,6 @@
 .SYNOPSIS
 Sends emails from a drop folder using .NET config defaults.
 
-.PARAMETER MailFile
-The .eml file to parse and send.
-
-.PARAMETER Delete
-Indicates sent files should be deleted.
-
 .INPUTS
 System.IO.FileInfo of .eml files to send.
 
@@ -36,9 +30,10 @@ Sends emails from drop directory.
 
 #Requires -Version 3
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
+# The .eml file to parse and send.
 [Parameter(Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
 [Alias('Eml')][IO.FileInfo[]]$MailFile = (Get-ChildItem *.eml),
-[string]$From,
+# Indicates sent files should be deleted.
 [switch]$Delete
 )
 Begin { Use-NetMailConfig.ps1 }

@@ -2,9 +2,6 @@
 .SYNOPSIS
 Converts an object to an ordered dictionary of properties and values.
 
-.PARAMETER InputObject
-An object to convert to a dictionary.
-
 .INPUTS
 Any .NET object to convert into a properties hash.
 
@@ -20,6 +17,7 @@ ls *.txt |ConvertTo-OrderedDictionary.ps1
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Collections.Specialized.OrderedDictionary])] Param(
+# An object to convert to a dictionary.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]$InputObject
 )
 Process

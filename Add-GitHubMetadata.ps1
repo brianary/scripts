@@ -2,77 +2,6 @@
 .SYNOPSIS
 Adds GitHub Linguist overrides to a repo's .gitattributes.
 
-.PARAMETER DefaultOwner
-Sets the code owner(s) by @username or email address to use when no more specific
-code owners are provided. By default, any authors within a standard deviation of
-the most commits will be included.
-
-.PARAMETER Owners
-Maps .gitattribute-style globbing syntax for file matching to @username or email
-address of owners of any matching files.
-
-.PARAMETER VendorCode
-A list of .gitattribute-style globbing syntax matches for files that should be
-considered vendor code, for files not covered by the default behavior of
-the default Linguist vendor code file glob patterns:
-https://github.com/github/linguist/blob/master/lib/linguist/vendor.yml
-
-.PARAMETER DocumentationCode
-A list of .gitattribute-style globbing syntax matches for files that should be
-considered documentation, for files not covered by the default behavior of
-the default Linguist documentation file glob patterns:
-https://github.com/github/linguist/blob/master/lib/linguist/documentation.yml
-
-.PARAMETER GeneratedCode
-A list of .gitattribute-style globbing syntax matches for files that should be
-considered generated code, for files not covered by the default behavior of
-the default Linguist generated code file glob patterns and contents matching:
-https://github.com/github/linguist/blob/master/lib/linguist/generated.rb
-
-.PARAMETER IssueTemplate
-A Markdown string containing a template for creating issues.
-https://github.com/blog/2111-issue-and-pull-request-templates
-
-.PARAMETER PullRequestTemplate
-A Markdown string containing a template for creating pull requests.
-https://github.com/blog/2111-issue-and-pull-request-templates
-
-.PARAMETER ContributingFile
-The file path or URL containing guidelines for contributors in Markdown format.
-https://help.github.com/articles/setting-guidelines-for-repository-contributors/
-
-.PARAMETER LicenseFile
-The file path or URL containing open source licensing for contributors in
-Markdown format.
-https://help.github.com/articles/adding-a-license-to-a-repository/
-
-.PARAMETER DefaultCharset
-If no EditorConfig file exists, a simple default charset for text files in the
-repo. By default this is set to the system default, which is often terrible.
-
-.PARAMETER DefaultLineEndings
-If no EditorConfig file exists, a simple default line endings value for text files
-in the repo. By default this is set to the system default, which is recommended.
-
-.PARAMETER DefaultIndentSize
-If no EditorConfig file exists, a simple default number of characters to indent
-lines for spaces (soft tabs) and tab display (hard tabs) for text files in the
-repo.
-
-.PARAMETER DefaultUsesTabs
-If no EditorConfig file exists, this switch indicates a simple default for text
-files in the repo to use tabs. Otherwise, spaces will be used for indentation.
-
-.PARAMETER DefaultKeepTrailingSpace
-If no EditorConfig file exists, this switch indicates a simple default for text
-files in the repo to preserve trailing spaces. Otherwise, trailing spaces will
-be trimmed.
-
-.PARAMETER DefaultNoFinalNewLine
-If no EditorConfig file exists, this switch indicates a simple default for text
-files in the repo not to add a final line ending at the end. Otherwise, a final
-line ending will be added automatically if it is missing.
-
 .LINK
 https://github.com/blog/2392-introducing-code-owners
 
@@ -115,20 +44,91 @@ Sets up the CODEOWNERS file and assigns a user, and sets the indent default.
 #Requires -Version 3
 #Requires -Modules Detextive
 [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='Medium')][OutputType([void])] Param(
+<#
+Sets the code owner(s) by @username or email address to use when no more specific
+code owners are provided. By default, any authors within a standard deviation of
+the most commits will be included.
+#>
 [string[]] $DefaultOwner,
+<#
+Maps .gitattribute-style globbing syntax for file matching to @username or email
+address of owners of any matching files.
+#>
 [hashtable] $Owners = @{},
+<#
+A list of .gitattribute-style globbing syntax matches for files that should be
+considered vendor code, for files not covered by the default behavior of
+the default Linguist vendor code file glob patterns:
+https://github.com/github/linguist/blob/master/lib/linguist/vendor.yml
+#>
 [string[]] $VendorCode = @('**/packages/**','**/lib/**'),
+<#
+A list of .gitattribute-style globbing syntax matches for files that should be
+considered documentation, for files not covered by the default behavior of
+the default Linguist documentation file glob patterns:
+https://github.com/github/linguist/blob/master/lib/linguist/documentation.yml
+#>
 [string[]] $DocumentationCode,
+<#
+A list of .gitattribute-style globbing syntax matches for files that should be
+considered generated code, for files not covered by the default behavior of
+the default Linguist generated code file glob patterns and contents matching:
+https://github.com/github/linguist/blob/master/lib/linguist/generated.rb
+#>
 [string[]] $GeneratedCode = @('"**/Service References/**"','"**/Web References/**"'),
+<#
+A Markdown string containing a template for creating issues.
+https://github.com/blog/2111-issue-and-pull-request-templates
+#>
 [string] $IssueTemplate,
+<#
+A Markdown string containing a template for creating pull requests.
+https://github.com/blog/2111-issue-and-pull-request-templates
+#>
 [string] $PullRequestTemplate,
+<#
+The file path or URL containing guidelines for contributors in Markdown format.
+https://help.github.com/articles/setting-guidelines-for-repository-contributors/
+#>
 [string] $ContributingFile,
+<#
+The file path or URL containing open source licensing for contributors in
+Markdown format.
+https://help.github.com/articles/adding-a-license-to-a-repository/
+#>
 [string] $LicenseFile,
+<#
+If no EditorConfig file exists, a simple default charset for text files in the
+repo. By default this is set to the system default, which is often terrible.
+#>
 [string] $DefaultCharset = $OutputEncoding.WebName,
+<#
+If no EditorConfig file exists, a simple default line endings value for text files
+in the repo. By default this is set to the system default, which is recommended.
+#>
 [string] $DefaultLineEndings = $(switch([Environment]::NewLine){"`n"{'lf'}"`r"{'cr'}default{'crlf'}}),
+<#
+If no EditorConfig file exists, a simple default number of characters to indent
+lines for spaces (soft tabs) and tab display (hard tabs) for text files in the
+repo.
+#>
 [int] $DefaultIndentSize = 4,
+<#
+If no EditorConfig file exists, this switch indicates a simple default for text
+files in the repo to use tabs. Otherwise, spaces will be used for indentation.
+#>
 [switch] $DefaultUsesTabs,
+<#
+If no EditorConfig file exists, this switch indicates a simple default for text
+files in the repo to preserve trailing spaces. Otherwise, trailing spaces will
+be trimmed.
+#>
 [switch] $DefaultKeepTrailingSpace,
+<#
+If no EditorConfig file exists, this switch indicates a simple default for text
+files in the repo not to add a final line ending at the end. Otherwise, a final
+line ending will be added automatically if it is missing.
+#>
 [switch] $DefaultNoFinalNewLine
 )
 

@@ -2,9 +2,6 @@
 .SYNOPSIS
 Determine which .NET Frameworks are installed on the requested system.
 
-.PARAMETER ComputerName
-The computer to list the installed .NET Frameworks for.
-
 .OUTPUTS
 System.Collections.Hashtable of semantic version names to version numbers
 of .NET frameworks installed.
@@ -25,6 +22,7 @@ v3.0                           3.0.30729.4926
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([hashtable])] Param(
+# The computer to list the installed .NET Frameworks for.
 [Alias('CN','Server')][string]$ComputerName = $env:COMPUTERNAME
 )
 

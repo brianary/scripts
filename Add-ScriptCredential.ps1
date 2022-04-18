@@ -2,18 +2,6 @@
 .SYNOPSIS
 Serializes a an encrypted credential to a PowerShell script using 32-byte random key file.
 
-.PARAMETER Path
-The script path to add the serialized credential to.
-
-.PARAMETER Name
-The variable name to assign the credential to within the script.
-
-.PARAMETER Credential
-The credential to serialize.
-
-.PARAMETER KeyFile
-The key file to use, which will be generated and encrypted if it doesn't exist.
-
 .INPUTS
 System.Management.Automation.PSCredential containing a credential to serialize.
 
@@ -23,9 +11,13 @@ ConvertTo-PowerShell.ps1
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The script path to add the serialized credential to.
 [Parameter(Position=0,Mandatory=$true)][string] $Path,
+# The variable name to assign the credential to within the script.
 [Parameter(Position=1,Mandatory=$true)][ValidatePattern('\w+')][string] $Name,
+# The credential to serialize.
 [Parameter(Position=2,Mandatory=$true,ValueFromPipeline=$true)][PSCredential] $Credential,
+# The key file to use, which will be generated and encrypted if it doesn't exist.
 [string] $KeyFile = '~/.pskey'
 )
 Begin

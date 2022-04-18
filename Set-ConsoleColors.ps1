@@ -2,83 +2,6 @@
 .SYNOPSIS
 Overrides ConsoleClass window color palette entries with RGB values.
 
-.PARAMETER ForegroundColor
-The integer (A)RGB value to use for foreground text.
-Typically this is set to the "DarkYellow" (6) palette entry via $Host.UI.RawUI.ForegroundColor.
-
-.PARAMETER BackgroundColor
-The integer (A)RGB value to use for background text.
-Typically this is set to the "DarkMagenta" (5) palette entry via $Host.UI.RawUI.ForegroundColor.
-
-.PARAMETER ErrorForegroundColor
-The integer (A)RGB value to use for error foreground text.
-Typically this is set to the "Red" (12) palette entry via $Host.PrivateData.ErrorForegroundColor.
-
-.PARAMETER ErrorBackgroundColor
-The integer (A)RGB value to use for error background text.
-Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.ErrorBackgroundColor.
-
-.PARAMETER WarningForegroundColor
-The integer (A)RGB value to use for warning foreground text.
-Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.WarningForegroundColor.
-
-.PARAMETER WarningBackgroundColor
-The integer (A)RGB value to use for warning background text.
-Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.WarningnBackgroundColor.
-
-.PARAMETER DebugForegroundColor
-The integer (A)RGB value to use for debug foreground text.
-Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.DebugForegroundColor.
-
-.PARAMETER DebugBackgroundColor
-The integer (A)RGB value to use for debug background text.
-Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.DebugBackgroundColor.
-
-.PARAMETER VerboseForegroundColor
-The integer (A)RGB value to use for verbose foreground text.
-Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.VerboseForegroundColor.
-
-.PARAMETER VerboseBackgroundColor
-The integer (A)RGB value to use for verbose background text.
-Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.VerboseBackgroundColor.
-
-.PARAMETER ProgressForegroundColor
-The integer (A)RGB value to use for progress foreground text.
-Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.ProgressForegroundColor.
-
-.PARAMETER ProgressBackgroundColor
-The integer (A)RGB value to use for progress background text.
-Typically this is set to the "DarkCyan" (3) palette entry via $Host.PrivateData.ProgressBackgroundColor.
-
-.PARAMETER StringForegroundColor
-The integer (A)RGB value to use for string literal foreground text.
-This is set to the "DarkCyan" (3) palette entry.
-
-.PARAMETER CommandForegroundColor
-The integer (A)RGB value to use for command foreground text.
-This is set to the "Yellow" (14) palette entry.
-
-.PARAMETER VariableForegroundColor
-The integer (A)RGB value to use for variable foreground text.
-This is set to the "Green" (10) palette entry.
-
-.PARAMETER NumberForegroundColor
-The integer (A)RGB value to use for numeric literal foreground text.
-This is set to the "White" (15) palette entry.
-
-.PARAMETER OperatorForegroundColor
-The integer (A)RGB value to use for operator foreground text.
-This is set to the "DarkGray" (8) palette entry.
-
-.PARAMETER ColorTable
-A hashtable of ConsoleColor enum values to RGB ints to set the palette entry to.
-Any values from the ConsoleColor enumeration that are not included will be removed
-from the registry color table.
-
-.PARAMETER ProcessName
-The name of the process to override the color palette for.
-Used to locate the color table under HKCU:\Console\$ProcessName in the registry.
-
 .NOTES
 ConsoleClass window palette
 
@@ -139,24 +62,101 @@ DarkMagenta to #012456 and DarkYellow to #EEEDF0.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+<#
+The integer (A)RGB value to use for foreground text.
+Typically this is set to the "DarkYellow" (6) palette entry via $Host.UI.RawUI.ForegroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('FG')][int]$ForegroundColor,
+<#
+The integer (A)RGB value to use for background text.
+Typically this is set to the "DarkMagenta" (5) palette entry via $Host.UI.RawUI.ForegroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('BG')][int]$BackgroundColor,
+<#
+The integer (A)RGB value to use for error foreground text.
+Typically this is set to the "Red" (12) palette entry via $Host.PrivateData.ErrorForegroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('EFG')][int]$ErrorForegroundColor,
+<#
+The integer (A)RGB value to use for error background text.
+Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.ErrorBackgroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('EBG')][int]$ErrorBackgroundColor,
+<#
+The integer (A)RGB value to use for warning foreground text.
+Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.WarningForegroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('WFG')][int]$WarningForegroundColor,
+<#
+The integer (A)RGB value to use for warning background text.
+Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.WarningnBackgroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('WBG')][int]$WarningBackgroundColor,
+<#
+The integer (A)RGB value to use for debug foreground text.
+Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.DebugForegroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('DFG')][int]$DebugForegroundColor,
+<#
+The integer (A)RGB value to use for debug background text.
+Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.DebugBackgroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('DBG')][int]$DebugBackgroundColor,
+<#
+The integer (A)RGB value to use for verbose foreground text.
+Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.VerboseForegroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('VFG')][int]$VerboseForegroundColor,
+<#
+The integer (A)RGB value to use for verbose background text.
+Typically this is set to the "Black" (0) palette entry via $Host.PrivateData.VerboseBackgroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('VBG')][int]$VerboseBackgroundColor,
+<#
+The integer (A)RGB value to use for progress foreground text.
+Typically this is set to the "Yellow" (14) palette entry via $Host.PrivateData.ProgressForegroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('PFG')][int]$ProgressForegroundColor,
+<#
+The integer (A)RGB value to use for progress background text.
+Typically this is set to the "DarkCyan" (3) palette entry via $Host.PrivateData.ProgressBackgroundColor.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('PBG')][int]$ProgressBackgroundColor,
+<#
+The integer (A)RGB value to use for string literal foreground text.
+This is set to the "DarkCyan" (3) palette entry.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('STR')][int]$StringForegroundColor,
+<#
+The integer (A)RGB value to use for command foreground text.
+This is set to the "Yellow" (14) palette entry.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('CMD')][int]$CommandForegroundColor,
+<#
+The integer (A)RGB value to use for variable foreground text.
+This is set to the "Green" (10) palette entry.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('VAR')][int]$VariableForegroundColor,
+<#
+The integer (A)RGB value to use for numeric literal foreground text.
+This is set to the "White" (15) palette entry.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('NUM')][int]$NumberForegroundColor,
+<#
+The integer (A)RGB value to use for operator foreground text.
+This is set to the "DarkGray" (8) palette entry.
+#>
 [Parameter(ParameterSetName='ByContext')][Alias('OP')][int]$OperatorForegroundColor,
+<#
+A hashtable of ConsoleColor enum values to RGB ints to set the palette entry to.
+Any values from the ConsoleColor enumeration that are not included will be removed
+from the registry color table.
+#>
 [Parameter(ParameterSetName='ByColorTable',Position=0,Mandatory=$true)][hashtable]$ColorTable,
+<#
+The name of the process to override the color palette for.
+Used to locate the color table under HKCU:\Console\$ProcessName in the registry.
+#>
 [Alias('ForProcessName')][string]$ProcessName = '%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe'
 )
 

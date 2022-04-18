@@ -2,34 +2,6 @@
 .SYNOPSIS
 Finds comics.
 
-.PARAMETER Title
-Text to search titles. Comics with titles containing this text will be returned.
-
-.PARAMETER Creator
-Text to search creators. Comics with creators containing this text will be returned.
-
-.PARAMETER TitleMatch
-A regular exression to match titles. Comics with matching titles will be returned.
-
-.PARAMETER CreatorMatch
-A regular expression to search the list of creators for.
-Comics with a matching list of creators will be returned.
-The regex will match against a complete list of creators, so anchor with word breaks (\b)
-rather than the beginning or end of the string (^ or $ or \A or \z).
-
-e.g. (W) Jason Aaron (A/CA) Russell Dauterman
-
-W = writer
-A = artist
-CA = color artist
-
-.PARAMETER Condition
-A filtering script block with the comic as the PSItem ($_) that evaluates to true to
-return the comic.
-
-.PARAMETER ReleaseWeek
-Specifies which week (relative to the current week) to return comics for.
-
 .LINK
 https://api.shortboxed.com/
 
@@ -48,11 +20,31 @@ MARVEL COMICS     MARVEL-VERSE GN-TP WANDA & VISION    (W) Kyle Higgins, More (A
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# Text to search titles. Comics with titles containing this text will be returned.
 [Parameter(ParameterSetName='Title',Mandatory=$true)][string[]] $Title,
+# Text to search creators. Comics with creators containing this text will be returned.
 [Parameter(ParameterSetName='Creator',Mandatory=$true)][string[]] $Creator,
+# A regular exression to match titles. Comics with matching titles will be returned.
 [Parameter(ParameterSetName='TitleMatch',Mandatory=$true)][regex] $TitleMatch,
+<#
+A regular expression to search the list of creators for.
+Comics with a matching list of creators will be returned.
+The regex will match against a complete list of creators, so anchor with word breaks (\b)
+rather than the beginning or end of the string (^ or $ or \A or \z).
+
+e.g. (W) Jason Aaron (A/CA) Russell Dauterman
+
+W = writer
+A = artist
+CA = color artist
+#>
 [Parameter(ParameterSetName='CreatorMatch',Mandatory=$true)][regex] $CreatorMatch,
+<#
+A filtering script block with the comic as the PSItem ($_) that evaluates to true to
+return the comic.
+#>
 [Parameter(ParameterSetName='Condition',Position=0,Mandatory=$true)][scriptblock] $Condition,
+# Specifies which week (relative to the current week) to return comics for.
 [Parameter()][ValidateSet('Upcoming','Current','Previous')][string] $ReleaseWeek = 'Upcoming'
 )
 switch($PSCmdlet.ParameterSetName)

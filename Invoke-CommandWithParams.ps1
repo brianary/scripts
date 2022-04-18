@@ -2,20 +2,6 @@
 .SYNOPSIS
 Execute a command by using matching dictionary entries as parameters.
 
-.PARAMETER Name
-The name of a command to run using the parameter dictionary.
-
-.PARAMETER Dictionary
-A dictionary of parameters to supply to the command.
-
-.PARAMETER ExcludeKeys
-A list of dictionary keys to omit when sending dictionary parameters to the command.
-
-.PARAMETER OnlyMatches
-Compares the keys in the parameter dictionary with the parameters supported by the command,
-omitting any dictionary entries that do not map to known command parameters.
-No checking for valid parameter sets is performed.
-
 .INPUTS
 System.Collections.IDictionary, the parameters to supply to the command.
 
@@ -40,9 +26,17 @@ Uses any of the calling script's parameters matching those found in the Send-Mai
 #>
 
 [CmdletBinding()] Param(
+# The name of a command to run using the parameter dictionary.
 [Parameter(Position=0,Mandatory=$true)][Alias('CommandName')][string]$Name,
+# A dictionary of parameters to supply to the command.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][Alias('Hashset')][Collections.IDictionary]$Dictionary,
+# A list of dictionary keys to omit when sending dictionary parameters to the command.
 [Alias('Except')][string[]]$ExcludeKeys,
+<#
+Compares the keys in the parameter dictionary with the parameters supported by the command,
+omitting any dictionary entries that do not map to known command parameters.
+No checking for valid parameter sets is performed.
+#>
 [Alias('Matching','')][switch]$OnlyMatches
 )
 Begin

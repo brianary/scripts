@@ -2,9 +2,6 @@
 .SYNOPSIS
 Returns the possible values of the specified enumeration.
 
-.PARAMETER Type
-The enumeration type name.
-
 .INPUTS
 System.Type of an Enum to get the values for.
 
@@ -87,6 +84,7 @@ Get-EnumValues.ps1 System.Web.Security.AntiXss.MidCodeCharts
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# The enumeration type name.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Type]$Type
 )
 Process

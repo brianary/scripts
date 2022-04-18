@@ -2,20 +2,6 @@
 .SYNOPSIS
 Find modules used in projects.
 
-.PARAMETER PackageName
-The name of a package to search for.
-Wildcards (as supported by -like) are allowed.
-
-.PARAMETER Path
-The path of a folder to search within.
-Uses the current working directory ($PWD) by default.
-
-.PARAMETER MinVersion
-The minimum (inclusive) version of the package to return.
-
-.PARAMETER MaxVersion
-The maximum (inclusive) version of the package to return.
-
 .INPUTS
 System.String containing a package name (wildcards supported).
 
@@ -41,9 +27,19 @@ jQuery             1.8.3   C:\OtherRepo\packages.config
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+<#
+The name of a package to search for.
+Wildcards (as supported by -like) are allowed.
+#>
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $PackageName,
+<#
+The path of a folder to search within.
+Uses the current working directory ($PWD) by default.
+#>
 [string] $Path = $PWD,
+# The minimum (inclusive) version of the package to return.
 [version] $MinVersion,
+# The maximum (inclusive) version of the package to return.
 [version] $MaxVersion
 )
 Begin

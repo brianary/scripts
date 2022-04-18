@@ -2,13 +2,6 @@
 .SYNOPSIS
 Builds format strings using every combination of elements from multiple arrays.
 
-.PARAMETER Format
-A standard .NET format string as used with the PowerShell -f operator.
-
-.PARAMETER InputObject
-A list of lists to put together in all combinations (a Cartesian cross-product) and
-format with the supplied format string.
-
 .OUTPUTS
 System.String list of all combinations
 
@@ -58,7 +51,12 @@ Format-Permutations.ps1 '{0}{1}{2}{3}' (0,1) (0,1) (0,1) (0,1)
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string[]])] Param(
+# A standard .NET format string as used with the PowerShell -f operator.
 [Parameter(Position=0,Mandatory=$true)][string] $Format,
+<#
+A list of lists to put together in all combinations (a Cartesian cross-product) and
+format with the supplied format string.
+#>
 [Parameter(Position=1,Mandatory=$true,ValueFromRemainingArguments=$true)][ValidateNotNull()][object[][]] $InputObject
 )
 

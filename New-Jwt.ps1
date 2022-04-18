@@ -2,48 +2,6 @@
 .SYNOPSIS
 Generates a JSON Web Token (JWT)
 
-.PARAMETER Body
-A hash of JWT body elements.
-
-.PARAMETER Headers
-Custom headers (beyond typ and alg) to add to the JWT.
-
-.PARAMETER Secret
-A secret used to sign the JWT.
-
-.PARAMETER Algorithm
-The hashing algorithm class to use when signing the JWT.
-
-.PARAMETER NotBefore
-When the JWT becomes valid.
-
-.PARAMETER IssuedAt
-Specifies when the JWT was issued.
-
-.PARAMETER IncludeIssuedAt
-Indicates the issued time should be included, based on the current datetime (ignored if IssuedAt is provided).
-
-.PARAMETER ExpirationTime
-When the JWT expires.
-
-.PARAMETER ExpiresAfter
-How long from now until the JWT expires (ignored if ExpirationTime is provided).
-
-.PARAMETER JwtId
-A unique (at least within a given issuer) identifier for the JWT.
-
-.PARAMETER Issuer
-A string or URI (if it contains a colon) indicating the entity that issued the JWT.
-
-.PARAMETER Subject
-The principal (user) of the JWT as a string or URI (if it contains a colon).
-
-.PARAMETER Audience
-A string or URI (if it contains a colon), or a list of string or URIs that indicates who the JWT is intended for.
-
-.PARAMETER Claims
-Additional claims to add to the body of the JWT.
-
 .OUTPUTS
 System.String of an encoded, signed JWT
 
@@ -70,20 +28,34 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# A hash of JWT body elements.
 [ValidateNotNull()][System.Collections.IDictionary] $Body = @{},
+# Custom headers (beyond typ and alg) to add to the JWT.
 [ValidateNotNull()][System.Collections.IDictionary] $Headers = @{},
+# A secret used to sign the JWT.
 [Parameter(Mandatory=$true)][ValidateNotNull()][securestring] $Secret,
+# The hashing algorithm class to use when signing the JWT.
 [ValidateSet('HS256','HS384','HS512')][ValidateNotNull()][string] $Algorithm = 'HS256',
+# When the JWT becomes valid.
 [datetime] $NotBefore,
+# Specifies when the JWT was issued.
 [datetime] $IssuedAt,
+# Indicates the issued time should be included, based on the current datetime (ignored if IssuedAt is provided).
 [switch] $IncludeIssuedAt,
+# When the JWT expires.
 [datetime] $ExpirationTime,
+# How long from now until the JWT expires (ignored if ExpirationTime is provided).
 [timespan] $ExpiresAfter,
+# A unique (at least within a given issuer) identifier for the JWT.
 [ValidateNotNullOrEmpty()][string] $JwtId,
+# A string or URI (if it contains a colon) indicating the entity that issued the JWT.
 [ValidateNotNullOrEmpty()][ValidateScript({if($_.Contains(':')){return Test-Uri.ps1 $_}else{$true}})][string] $Issuer,
+# The principal (user) of the JWT as a string or URI (if it contains a colon).
 [ValidateNotNullOrEmpty()][ValidateScript({if($_.Contains(':')){return Test-Uri.ps1 $_}else{$true}})][string] $Subject,
+# A string or URI (if it contains a colon), or a list of string or URIs that indicates who the JWT is intended for.
 [ValidateScript({foreach($s in $_){if($s.Contains(':') -and !(Test-Uri.ps1 $s)){return $false}};return $true})]
 [ValidateCount(1,2147483647)][System.String[]] $Audience,
+# Additional claims to add to the body of the JWT.
 [hashtable] $Claims
 )
 

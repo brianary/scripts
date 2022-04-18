@@ -2,9 +2,6 @@
 .SYNOPSIS
 Replaces each of the longest matching parts of a string with an embedded environment variable with that value.
 
-.PARAMETER Value
-The string to generalize with environment variable substitution.
-
 .EXAMPLE
 Compress-EnvironmentVariables.ps1 'C:\Program Files\Git\bin\git.exe'
 
@@ -13,6 +10,7 @@ Compress-EnvironmentVariables.ps1 'C:\Program Files\Git\bin\git.exe'
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The string to generalize with environment variable substitution.
 [Parameter(Position=0, Mandatory=$true,ValueFromPipeline=$true)][string] $Value
 )
 Begin

@@ -2,25 +2,6 @@
 .SYNOPSIS
 Transform XML using an XSLT template.
 
-.PARAMETER TransformXslt
-An XML document containing an XSLT transform.
-
-.PARAMETER Xml
-An XML document to transform.
-
-.PARAMETER TransformFile
-The XSLT file to use to transform the XML.
-
-.PARAMETER Path
-The XML file to transform.
-
-.PARAMETER OutFile
-The file to write the transformed XML to.
-
-.PARAMETER TrustedXslt
-When specified, indicates the XSLT is trusted, enabling the document()
-function and embedded script blocks.
-
 .EXAMPLE
 Convert-Xml.ps1 '<a xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>' '<z/>' |Format-Xml.ps1
 
@@ -36,11 +17,20 @@ Convert-Xml.ps1 xsd2html.xslt schema.xsd schema.html
 #Requires -Modules SelectXmlExtensions
 [CmdletBinding(SupportsShouldProcess=$true)]
 [OutputType(ParameterSetName='Xml',[void])][OutputType(ParameterSetName='File',[void])] Param(
+# An XML document containing an XSLT transform.
 [Parameter(ParameterSetName='Xml',Position=0,Mandatory=$true)][xml] $TransformXslt,
+# An XML document to transform.
 [Parameter(ParameterSetName='Xml',Position=1,ValueFromPipeline=$true)][xml] $Xml,
+# The XSLT file to use to transform the XML.
 [Parameter(ParameterSetName='File',Mandatory=$true)][Alias('TemplateFile','XsltTemplateFile')][string] $TransformFile,
+# The XML file to transform.
 [Parameter(ParameterSetName='File',ValueFromPipelineByPropertyName=$true)][Alias('XmlFile','FullName')][string] $Path,
+# The file to write the transformed XML to.
 [Parameter()][string] $OutFile,
+<#
+When specified, indicates the XSLT is trusted, enabling the document()
+function and embedded script blocks.
+#>
 [switch] $TrustedXslt
 )
 Begin

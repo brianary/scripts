@@ -2,17 +2,6 @@
 .SYNOPSIS
 Parses a Timespan from a ISO8601 duration string.
 
-.PARAMETER InputObject
-An ISO8601 duration string in one of four formats:
-
-* PnYnMnDTnHnMnS
-* PnW
-* Pyyyy-MM-ddTHH:mm:ss
-* PyyyyMMddTHHmmss
-
-.PARAMETER NoWarnings
-Supresses warnings about approximate conversions.
-
 .INPUTS
 System.String containing an ISO8601 duration.
 
@@ -46,9 +35,18 @@ WARNING: Adding month(s) as a mean number of days (30.436875).
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([timespan])] Param(
+<#
+An ISO8601 duration string in one of four formats:
+
+* PnYnMnDTnHnMnS
+* PnW
+* Pyyyy-MM-ddTHH:mm:ss
+* PyyyyMMddTHHmmss
+#>
 [Parameter(Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments)]
 [ValidatePattern('\AP\d(?:\w+|\d\d\d(?:-\d\d){2}T\d\d(?::\d\d){2})\z')]
 [string[]] $InputObject,
+# Supresses warnings about approximate conversions.
 [Alias('Quiet')][switch]$NoWarnings
 )
 Begin

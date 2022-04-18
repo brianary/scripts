@@ -2,13 +2,6 @@
 .SYNOPSIS
 Provides frequency details about SQL Server table data.
 
-.PARAMETER Table
-An SMO table object associated to the database to examine.
-
-.PARAMETER Condition
-Conditions to be provided as a SQL WHERE clause to filter the record values to examine.
-Useful for databases that implement "soft deletes" as specific field values.
-
 .INPUTS
 Microsoft.SqlServer.Management.Smo.Table to analyze.
 
@@ -56,8 +49,13 @@ ModifiedDate          : 0 nulls, 2 values: Feb  8 2014 10:01AM .. Feb  8 2014 10
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding(ConfirmImpact='Medium')][OutputType([Management.Automation.PSCustomObject])] Param(
+# An SMO table object associated to the database to examine.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.SqlServer.Management.Smo.Table] $Table,
+<#
+Conditions to be provided as a SQL WHERE clause to filter the record values to examine.
+Useful for databases that implement "soft deletes" as specific field values.
+#>
 [string] $Condition
 )
 Begin

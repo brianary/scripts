@@ -8,12 +8,6 @@ but are a hassle within certain formats (Markdown, JSON, SQL, &c).
 
 This script URL-escapes these characters to %xx format.
 
-.PARAMETER Uri
-The URL to format for maximum compatibility.
-
-.PARAMETER Clipboard
-Indicates that the URL comes from the clipboard, and is updated on the clipboard.
-
 .INPUTS
 System.Uri to escape.
 
@@ -33,8 +27,10 @@ https://example.com/search%28en-US%29?q=Name%20%3D%20%27System%27&sort=y
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# The URL to format for maximum compatibility.
 [Parameter(ParameterSetName='Uri',Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments=$true,Mandatory=$true)]
 [Alias('Url')][uri[]]$Uri,
+# Indicates that the URL comes from the clipboard, and is updated on the clipboard.
 [Parameter(ParameterSetName='Clipboard')][switch]$Clipboard
 )
 Begin

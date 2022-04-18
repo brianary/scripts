@@ -2,20 +2,6 @@
 .SYNOPSIS
 Creates local variables from a data row or dictionary (hashtable).
 
-.PARAMETER InputObject
-A hash of string names to any values to set as variables,
-or a DataRow or object with properties to set as variables.
-Works with DataRows.
-
-.PARAMETER MemberType
-The type of object members to convert to variables.
-
-.PARAMETER Scope
-The scope of the variables to create.
-
-.PARAMETER Private
-Indicates that created variables should be hidden from child scopes.
-
 .INPUTS
 System.Collections.IDictionary with keys and values to import as variables,
 or System.Management.Automation.PSCustomObject with properties to import as variables.
@@ -47,9 +33,17 @@ Then fetches the list of GitHub emojis.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+<#
+A hash of string names to any values to set as variables,
+or a DataRow or object with properties to set as variables.
+Works with DataRows.
+#>
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][PSObject] $InputObject,
+# The type of object members to convert to variables.
 [Alias('Type')][Management.Automation.PSMemberTypes] $MemberType = 'Properties',
+# The scope of the variables to create.
 [string] $Scope = 'Local',
+# Indicates that created variables should be hidden from child scopes.
 [switch] $Private
 )
 Begin

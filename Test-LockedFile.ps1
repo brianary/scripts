@@ -2,9 +2,6 @@
 .SYNOPSIS
 Returns true if the specified file is locked.
 
-.PARAMETER Path
-A path to a file to test.
-
 .INPUTS
 Object with System.String property named Path containing the path to a file to test.
 
@@ -14,6 +11,7 @@ System.Boolean indicating whether the file is locked.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
+# A path to a file to test.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
 [Alias('FullName')][string] $Path
 )

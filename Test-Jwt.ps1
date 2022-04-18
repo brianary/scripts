@@ -2,12 +2,6 @@
 .SYNOPSIS
 Determines whether a string is a valid JWT.
 
-.PARAMETER InputObject
-The string to test.
-
-.PARAMETER Secret
-The secret used to sign the JWT.
-
 .INPUTS
 System.String value to test for a valid URI format.
 
@@ -22,7 +16,9 @@ True
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
+# The string to test.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][AllowEmptyString()][AllowNull()][string] $InputObject,
+# The secret used to sign the JWT.
 [Parameter(Position=1,Mandatory=$true)][SecureString] $Secret
 )
 Process

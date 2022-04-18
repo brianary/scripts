@@ -2,25 +2,6 @@
 .SYNOPSIS
 Try parsing text as XML, and validating it if a schema is provided.
 
-.PARAMETER Path
-A file to check.
-
-.PARAMETER Xml
-The string to check.
-
-.PARAMETER Schemata
-A hashtable of schema namespaces to schema locations (in addition to the xsi:schemaLocation attribute).
-
-.PARAMETER SkipValidation
-Indicates that XML Schema validation should not be performed, only XML well-formedness will be checked.
-
-.PARAMETER Warning
-Indicates that well-formedness or validation errors will result in warnings being written.
-
-.PARAMETER ErrorMessage
-When present, returns the well-formedness or validation error messages instead of a boolean value,
-or nothing if successful. This effectively reverses the truthiness of the return value.
-
 .INPUTS
 System.String containing a file path or potential XML data.
 
@@ -47,13 +28,22 @@ False
 #>
 
 [CmdletBinding()][OutputType([bool])] Param(
+# A file to check.
 [Parameter(ParameterSetName='Path',Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
 [ValidateScript({Test-Path $_ -PathType Leaf})][Alias('FullName')][string] $Path,
+# The string to check.
 [Parameter(ParameterSetName='Xml',Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
 [ValidateScript({!(Test-Path $_ -PathType Leaf)})][string] $Xml,
+# A hashtable of schema namespaces to schema locations (in addition to the xsi:schemaLocation attribute).
 [Alias('Schemas')][hashtable] $Schemata,
+# Indicates that XML Schema validation should not be performed, only XML well-formedness will be checked.
 [Alias('NoValidation')][switch] $SkipValidation,
+# Indicates that well-formedness or validation errors will result in warnings being written.
 [Alias('ShowWarnings')][switch] $Warnings,
+<#
+When present, returns the well-formedness or validation error messages instead of a boolean value,
+or nothing if successful. This effectively reverses the truthiness of the return value.
+#>
 [Alias('NotSuccessful')][switch] $ErrorMessage
 )
 Begin

@@ -2,31 +2,21 @@
 .SYNOPSIS
 Gets Classic ASP errors from the event log on the given server.
 
-.PARAMETER ComputerName
-The name of the server on which the error occurred.
-
-.PARAMETER EntryType
-Gets only events with the specified entry type. Valid values are Error, Information, and Warning. The default is all events.
-
-.PARAMETER After
-Skip events older than this datetime.
-
-.PARAMETER Before
-Skip events newer than this datetime.
-
-.PARAMETER Newest
-The maximum number of the most recent events to return.
-
 .OUTPUTS
 System.Diagnostics.EventLogEntry of Classic ASP events.
 #>
 
 #requires -version 3
 [CmdletBinding()][OutputType([System.Diagnostics.EventLogEntry])] Param(
+# The name of the server on which the error occurred.
 [Parameter(Position=0)][Alias('CN','Server')][string[]]$ComputerName = $env:COMPUTERNAME,
+# Gets only events with the specified entry type. Valid values are Error, Information, and Warning. The default is all events.
 [ValidateSet('Information','Warning','Error')][string[]]$EntryType,
+# Skip events older than this datetime.
 [DateTime]$After,
+# Skip events newer than this datetime.
 [DateTime]$Before,
+# The maximum number of the most recent events to return.
 [int]$Newest
 )
 $EventQuery = @{

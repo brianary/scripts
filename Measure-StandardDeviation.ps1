@@ -19,6 +19,7 @@ Get-Process |% Handles |Measure-StandardDeviation.ps1
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([double])] Param(
+# The numeric values to analyze.
 [Parameter(Position=0,ValueFromRemainingArguments=$true,ValueFromPipeline=$true)]
 [double[]] $Values
 )

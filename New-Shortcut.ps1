@@ -2,36 +2,6 @@
 .SYNOPSIS
 Create a Windows shortcut.
 
-.PARAMETER Name
-The filename of the shortcut, typically including a .lnk extension.
-
-.PARAMETER TargetPath
-The path of the file the shortcut will point to.
-
-.PARAMETER Arguments
-Any command-line parameters to pass to the TargetPath, if it is a program.
-
-.PARAMETER WorkingDirectory
-The folder to run TargetPath in.
-
-.PARAMETER Description
-Some descriptive text for the shortcut.
-
-.PARAMETER Hotkey
-A Windows Explorer key combination to open the shortcut, usually starting with
-"Ctrl + Alt +".
-
-.PARAMETER IconLocation
-The path to a file with an icon to use, and an index, e.g.
-
-%SystemRoot%\system32\SHELL32.dll,244
-
-.PARAMETER WindowStyle
-The state the window should start in: Normal, Maximized, or Minimized.
-
-.PARAMETER RunAsAdministrator
-Indicates the shortcut should invoke UAC and run as an admin.
-
 .LINK
 https://ss64.com/vb/shortcut.html
 
@@ -42,14 +12,30 @@ Creates an Explorer shortcut on the desktop that runs as admin.
 #>
 
 [CmdletBinding()][OutputType([void])] Param(
+# The filename of the shortcut, typically including a .lnk extension.
 [Parameter(Position=0,Mandatory=$true)][Alias('Name')][string] $Path,
+# The path of the file the shortcut will point to.
 [Parameter(Position=1,Mandatory=$true)][string] $TargetPath,
+# Any command-line parameters to pass to the TargetPath, if it is a program.
 [Parameter(Position=2)][string] $Arguments,
+# The folder to run TargetPath in.
 [Parameter(Position=3)][Alias('StartIn')][string] $WorkingDirectory,
+# Some descriptive text for the shortcut.
 [Alias('Comment')][string] $Description,
+<#
+A Windows Explorer key combination to open the shortcut, usually starting with
+"Ctrl + Alt +".
+#>
 [Alias('ShortcutKey')][string] $Hotkey,
+<#
+The path to a file with an icon to use, and an index, e.g.
+
+%SystemRoot%\system32\SHELL32.dll,244
+#>
 [string] $IconLocation,
+# The state the window should start in: Normal, Maximized, or Minimized.
 [Alias('Run')][ValidateSet('Normal','Maximized','Minimized')][string] $WindowStyle,
+# Indicates the shortcut should invoke UAC and run as an admin.
 [Alias('Admin')][switch] $RunAsAdministrator
 )
 

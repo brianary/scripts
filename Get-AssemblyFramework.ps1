@@ -2,9 +2,6 @@
 .SYNOPSIS
 Gets the framework version an assembly was compiled for.
 
-.PARAMETER Path
-The assembly to get the framework version of.
-
 .INPUTS
 Objects with System.String properties named Path or FullName.
 
@@ -23,6 +20,7 @@ v4.0.30319     .NETFramework,Version=v4.7.2
 #>
 
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# The assembly to get the framework version of.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path
 )
 

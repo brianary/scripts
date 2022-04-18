@@ -5,10 +5,6 @@ Removes a file that may be prone to locking.
 .INPUTS
 System.String containing the path of a file to delete (or rename if deleting fails).
 
-.PARAMETER Path
-Specifies a path to the items being removed. Wildcards are permitted.
-The parameter name ("-Path") is optional.
-
 .EXAMPLE
 Remove-LockyFile.ps1 InUse.dll
 
@@ -17,6 +13,10 @@ Remove-LockyFile.ps1 InUse.dll
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+<#
+Specifies a path to the items being removed. Wildcards are permitted.
+The parameter name ("-Path") is optional.
+#>
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
 [string]$Path
 )

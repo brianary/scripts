@@ -2,13 +2,6 @@
 .SYNOPSIS
 Create a new JSON string by recursively combining the properties of JSON strings.
 
-.PARAMETER InputObject
-JSON string to combine. Descendant properties are recursively merged.
-Primitive values are overwritten by any matching ones in the new JSON string.
-
-.PARAMETER Compress
-Omits white space and indented formatting in the output string.
-
 .INPUTS
 System.String of JSON to combine.
 
@@ -41,7 +34,12 @@ ConvertTo-Json
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+<#
+JSON string to combine. Descendant properties are recursively merged.
+Primitive values are overwritten by any matching ones in the new JSON string.
+#>
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)][string[]] $InputObject,
+# Omits white space and indented formatting in the output string.
 [switch]$Compress
 )
 Begin {$value = [pscustomobject]@{}}

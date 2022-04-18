@@ -2,16 +2,6 @@
 .SYNOPSIS
 Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
 
-.PARAMETER Offset
-The number bytes into the file to begin reading the bytes to compare.
-Use a negative number to count from the end of the file.
-
-.PARAMETER Bytes
-A list of byte values to compare against those read from the file.
-
-.PARAMETER Path
-A file to look for the bytes in.
-
 .INPUTS
 System.String path of a file to read.
 
@@ -42,9 +32,15 @@ True if download123543 starts with a PK ZIP magic number ("PK"), and is therefor
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
+# A list of byte values to compare against those read from the file.
 [Parameter(Position=0,Mandatory=$true)][byte[]]$Bytes,
+# A file to look for the bytes in.
 [Parameter(Position=2,ValueFromPipelineByPropertyName=$true)]
 [ValidateScript({Test-Path $_ -Type Leaf})][Alias('FullName')][string]$Path,
+<#
+The number bytes into the file to begin reading the bytes to compare.
+Use a negative number to count from the end of the file.
+#>
 [int] $Offset = 0
 )
 Begin

@@ -2,21 +2,6 @@
 .SYNOPSIS
 Finds database constraints with system-generated names and gives them deterministic names.
 
-.PARAMETER ServerInstance
-The name of a server (and optional instance) to connect to.
-
-.PARAMETER Database
-The the database to connect to on the server.
-
-.PARAMETER ConnectionString
-Specifies a connection string to connect to the server.
-
-.PARAMETER ConnectionName
-The connection string name from the ConfigurationManager to use.
-
-.PARAMETER Update
-Update the database when present, otherwise simply outputs the changes as script.
-
 .LINK
 Use-SqlcmdParams.ps1
 
@@ -35,10 +20,15 @@ WARNING: Renamed 10 defaults
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
+# The name of a server (and optional instance) to connect to.
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
+# The the database to connect to on the server.
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
+# Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
+# The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,
+# Update the database when present, otherwise simply outputs the changes as script.
 [switch] $Update
 )
 

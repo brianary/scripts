@@ -5,16 +5,13 @@ Returns true if the difference file is newer than the reference file.
 .OUTPUTS
 System.Boolean indicating the difference file is newer.
 
-.PARAMETER ReferenceFile
-One of two files to compare.
-
-.PARAMETER DifferenceFile
-Another of two files to compare.
 #>
 
 #requires -version 3
 [CmdletBinding()][OutputType([bool])] Param(
+# One of two files to compare.
 [Parameter(Position=0)][IO.FileInfo]$ReferenceFile,
+# Another of two files to compare.
 [Parameter(Position=1)][IO.FileInfo]$DifferenceFile
 )
 

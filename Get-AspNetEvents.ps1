@@ -2,17 +2,6 @@
 .SYNOPSIS
 Parses ASP.NET errors from the event log on the given server.
 
-.PARAMETER ComputerName
-The name of the server on which the error occurred.
-
-.PARAMETER After
-Skip events older than this datetime.
-Defaults to 00:00 today.
-
-.PARAMETER Before
-Skip events newer than this datetime.
-Defaults to now.
-
 .OUTPUTS
 System.Management.Automation.PSObject containing the fields stored in the event.
 
@@ -27,9 +16,19 @@ Returns any ASP.NET-related events from the WebServer Application event log that
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([psobject])] Param(
+# The name of the server on which the error occurred.
 [Parameter(Position=0)][Alias('CN','Server')][string[]]$ComputerName = $env:COMPUTERNAME,
+<#
+Skip events older than this datetime.
+Defaults to 00:00 today.
+#>
 [Parameter(Position=1)][DateTime]$After = ([DateTime]::Today),
+<#
+Skip events newer than this datetime.
+Defaults to now.
+#>
 [Parameter(Position=2)][DateTime]$Before = ([DateTime]::Now),
+# Include all event fields as properties.
 [switch]$AllProperties
 )
 $IdFields = @{

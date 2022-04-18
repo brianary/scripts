@@ -2,12 +2,6 @@
 .SYNOPSIS
 Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
 
-.PARAMETER ComputerName
-The name of the computer to copy jobs from.
-
-.PARAMETER DestinationComputerName
-The name of the computer to copy jobs to (local computer by default).
-
 .EXAMPLE
 Copy-SchTasks.ps1 SourceComputer DestComputer
 
@@ -16,7 +10,9 @@ Attempts to copy tasks from SourceComputer to DestComputer.
 
 #Requires -Version 2
 [CmdletBinding()][OutputType([void])] Param(
+# The name of the computer to copy jobs from.
 [Parameter(Mandatory=$true,Position=0)][Alias('CN','Source')][string]$ComputerName,
+# The name of the computer to copy jobs to (local computer by default).
 [Parameter(Position=1)][Alias('To','Destination')][string]$DestinationComputerName = $env:COMPUTERNAME
 )
 $TempXml= [io.path]::GetTempFileName()

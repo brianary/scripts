@@ -5,9 +5,6 @@ Returns random bytes.
 .OUTPUTS
 System.Byte[] of random bytes.
 
-.PARAMETER Count
-The number of random bytes to return.
-
 .LINK
 https://docs.microsoft.com/dotnet/api/system.security.cryptography.rngcryptoserviceprovider
 
@@ -26,6 +23,7 @@ Get-RandomBytes.ps1 8
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The number of random bytes to return.
 [Parameter(Position=0,Mandatory=$true)][int] $Count
 )
 [byte[]] $value = New-Object byte[] $Count

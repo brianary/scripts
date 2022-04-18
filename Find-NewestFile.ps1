@@ -2,9 +2,6 @@
 .SYNOPSIS
 Finds the most recent file.
 
-.PARAMETER Files
-The list of files to search.
-
 .INPUTS
 System.IO.FileInfo[] a list of files to compare.
 
@@ -17,7 +14,7 @@ Test-NewerFile.ps1
 .EXAMPLE
 ls C:\java.exe -Recurse -ErrorAction SilentlyContinue |Find-NewestFile.ps1
 
-    Directory: C:\Program Files (x86)\Minecraft\runtime\jre-x64\1.8.0_25\bin
+Directory: C:\Program Files (x86)\Minecraft\runtime\jre-x64\1.8.0_25\bin
 
 Mode                LastWriteTime         Length Name
 ----                -------------         ------ ----
@@ -26,6 +23,7 @@ Mode                LastWriteTime         Length Name
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([IO.FileInfo])] Param(
+# The list of files to search.
 [Parameter(ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
 [IO.FileInfo[]]$Files
 )

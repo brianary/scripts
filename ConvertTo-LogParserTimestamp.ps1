@@ -2,9 +2,6 @@
 .SYNOPSIS
 Formats a datetime as a LogParser literal.
 
-.PARAMETER Value
-The DateTime value to convert to a LogParser literal.
-
 .INPUTS
 System.DateTime to encode for use as a literal in a LogParser query.
 
@@ -20,6 +17,7 @@ logparser "select * from ex17*.log where to_localtime(timestamp(date,time)) < $(
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# The DateTime value to convert to a LogParser literal.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][datetime]$Value
 )
 "timestamp('$(Get-Date $Value -Format 'yyyy-MM-dd HH:mm:ss')','yyyy-MM-dd HH:mm:ss')"

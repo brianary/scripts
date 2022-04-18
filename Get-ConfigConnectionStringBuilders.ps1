@@ -2,9 +2,6 @@
 .SYNOPSIS
 Return named connection string builders for connection strings in a config file.
 
-.PARAMETER Path
-The .NET config file containing connection strings.
-
 .INPUTS
 System.String of the path to a .NET config file with connection strings.
 
@@ -23,6 +20,7 @@ Returns the connection strings found in the debug web.config XDT.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# The .NET config file containing connection strings.
 [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
 )
 Process

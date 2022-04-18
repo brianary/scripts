@@ -2,12 +2,6 @@
 .SYNOPSIS
 Returns a date/time as a named format.
 
-.PARAMETER Format
-The format to serialize the date as.
-
-.PARAMETER Date
-The date/time value to format.
-
 .LINK
 Get-Date
 
@@ -24,10 +18,12 @@ Format-Date Iso8601WeekDate 2021-01-20
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# The format to serialize the date as.
 [Parameter(Position=0,Mandatory=$true)]
 [ValidateSet('FrenchRepublicanDateTime','Iso8601','Iso8601Date','Iso8601OrdinalDate',
 'Iso8601Week','Iso8601WeekDate','Iso8601Z','LocalLongDate','LocalLongDateTime','Rfc1123','Rfc1123Gmt')]
 [string] $Format,
+# The date/time value to format.
 [Parameter(Position=1,ValueFromPipeline=$true)][datetime] $Date = (Get-Date)
 )
 Process

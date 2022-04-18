@@ -2,22 +2,6 @@
 .SYNOPSIS
 Reports text, ntext, and image datatypes found in a given database.
 
-.PARAMETER ServerInstance
-A string specifying the name of an instance of the Database Engine.
-For default instances, only specify the computer name: "MyComputer".
-For named instances, use the format "ComputerName\InstanceName".
-
-.PARAMETER Database
-A string specifying the name of a database on the server specified
-by the ServerInstance parameter.
-
-.PARAMETER ConnectionString
-Specifies a connection string to connect to the server.
-
-.PARAMETER ConnectionName
-The connection string name from the ConfigurationManager to use to
-connect to the server.
-
 .OUTPUTS
 Management.Automation.PSCustomObject each with an ObjectType property that
 indicates what other properties are available:
@@ -91,9 +75,23 @@ the new (n)var*(max) types.
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+<#
+A string specifying the name of an instance of the Database Engine.
+For default instances, only specify the computer name: "MyComputer".
+For named instances, use the format "ComputerName\InstanceName".
+#>
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
+<#
+A string specifying the name of a database on the server specified
+by the ServerInstance parameter.
+#>
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
+# Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
+<#
+The connection string name from the ConfigurationManager to use to
+connect to the server.
+#>
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
 )
 Begin { Use-SqlcmdParams.ps1 }

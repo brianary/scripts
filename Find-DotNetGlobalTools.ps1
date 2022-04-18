@@ -2,12 +2,11 @@
 .SYNOPSIS
 Returns a list of global dotnet tools.
 
-.PARAMETER Name
-The name of the tool to search for.
 #>
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The name of the tool to search for.
 [Parameter(Position=0,Mandatory=$true)][string] $Name
 )
 

@@ -2,9 +2,6 @@
 .SYNOPSIS
 Switch the Java version for the current process by modifying environment variables.
 
-.PARAMETER Path
-The path to the JRE/JDK to use, which must contain bin\java.exe.
-
 .INPUTS
 System.String path to use as the new JAVA_HOME environment variable.
 
@@ -13,6 +10,7 @@ Use-Java.ps1 "$env:ProgramFiles\OpenJDK\jdk-11.0.1"
 #>
 
 [CmdletBinding()][OutputType([void])] Param(
+# The path to the JRE/JDK to use, which must contain bin\java.exe.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
 [ValidateScript({(Test-Path $_ -PathType Container) -and (Test-Path "$_\bin\java.exe" -PathType Leaf)})]
 [Alias('FullName')][string] $Path

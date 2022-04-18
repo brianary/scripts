@@ -2,20 +2,6 @@
 .SYNOPSIS
 Tests for a given common file type by magic number.
 
-.PARAMETER FileType
-The file type to test for.
-
-This is generally the MIME subtype or Unicode text encoding, with some exceptions.
-
-Several types require the presence of an optional header or prefix for positive identification of a file type,
-such as "<?xml" for xml or "%YAML " for yaml.
-
-Text files require either a UTF BOM/SIG, or must end with a newline (U+000A) and not contain any NUL (U+0000)
-characters (in the first 1KB sampled), or just not contain any characters above 7-bit US-ASCII in the first 1KB.
-
-.PARAMETER Path
-The file to test.
-
 .INPUTS
 System.String path of a file to test.
 
@@ -50,11 +36,23 @@ True if avatar.png contains the expected png magic number.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
+<#
+The file type to test for.
+
+This is generally the MIME subtype or Unicode text encoding, with some exceptions.
+
+Several types require the presence of an optional header or prefix for positive identification of a file type,
+such as "<?xml" for xml or "%YAML " for yaml.
+
+Text files require either a UTF BOM/SIG, or must end with a newline (U+000A) and not contain any NUL (U+0000)
+characters (in the first 1KB sampled), or just not contain any characters above 7-bit US-ASCII in the first 1KB.
+#>
 [Parameter(Position=0,Mandatory=$true)]
 [ValidateSet('7z','aiff','avi','bmp','cab','dataweave','exe','flac','flif','gif','gzip','ico','iso','javaclass',
 'jpeg','midi','mkv','mp3','mpeg','msoffice','ogg','pdf','png','postscript','psd','raml','rar','rtf','tar','text',
 'tiff','utf16','utf16be','utf32','utf32be','utf8','wasm','wav','webm','webp','wmv','xml','yaml','zip')]
 [string] $FileType,
+# The file to test.
 [Parameter(Position=1,ValueFromPipelineByPropertyName=$true)]
 [ValidateScript({Test-Path $_ -Type Leaf})][Alias('FullName')][string] $Path
 )

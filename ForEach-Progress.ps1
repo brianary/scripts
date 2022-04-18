@@ -2,18 +2,6 @@
 .SYNOPSIS
 Performs an operation against each item in a collection of input objects, with a progress bar.
 
-.PARAMETER Activity
-The progress title text to display.
-
-.PARAMETER Status
-A script block to generate status text from each $PSItem ($_).
-
-.PARAMETER Process
-A script block to execute for each $PSItem ($_).
-
-.PARAMETER InputObject
-An item to process.
-
 .INPUTS
 System.Management.Automation.PSObject to process.
 
@@ -30,9 +18,13 @@ Same as previous example, but adds a progress indicator within an existing pipel
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The progress title text to display.
 [Parameter(Position=0)][string] $Activity = 'Processing',
+# A script block to generate status text from each $PSItem ($_).
 [Parameter(Position=1)][scriptblock] $Status = {$_ |ConvertTo-Json -Compress},
+# A script block to execute for each $PSItem ($_).
 [Parameter(Position=2)][scriptblock] $Process = {$_},
+# An item to process.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][psobject] $InputObject
 )
 End

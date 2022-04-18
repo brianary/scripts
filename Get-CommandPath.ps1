@@ -6,13 +6,6 @@ Locates a command.
 Returns the full path to an application found in a directory in $env:Path,
 optionally with an extension from $env:PathExt.
 
-.PARAMETER ApplicationName
-The name of the executable program to look for in the $env:Path directories,
-if the extension is omitted, $env:PathExt will be used to find one.
-
-.PARAMETER FindAllInPath
-Indicates that every directory in the Path should be searched for the command.
-
 .INPUTS
 System.String of commands to get the location details of.
 
@@ -36,8 +29,13 @@ C:\Program Files (x86)\dotnet\dotnet.exe
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+<#
+The name of the executable program to look for in the $env:Path directories,
+if the extension is omitted, $env:PathExt will be used to find one.
+#>
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
 [Alias('Name','AN')][string[]] $ApplicationName,
+# Indicates that every directory in the Path should be searched for the command.
 [switch] $FindAllInPath
 )
 Process

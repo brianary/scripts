@@ -2,19 +2,6 @@
 .SYNOPSIS
 Adds a VS Code MSSQL database connection to the repo.
 
-.PARAMETER ProfileName
-The name of the connection.
-
-.PARAMETER ServerInstance
-The name of a server (and optional instance) to connect and use for the query.
-
-.PARAMETER Database
-The the database to connect to on the server.
-
-.PARAMETER UserName
-The username to connect with. No password will be stored.
-If no username is given, a trusted connection will be created.
-
 .LINK
 https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql
 
@@ -33,9 +20,16 @@ connects to the server ServerName\instance and database DatabaseName.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+# The name of the connection.
 [Parameter(Position=0,Mandatory=$true)][Alias('Name')][string]$ProfileName,
+# The name of a server (and optional instance) to connect and use for the query.
 [Parameter(Position=1,Mandatory=$true)][Alias('Server','DataSource')][string]$ServerInstance,
+# The the database to connect to on the server.
 [Parameter(Position=2,Mandatory=$true)][Alias('InitialCatalog')][string]$Database,
+<#
+The username to connect with. No password will be stored.
+If no username is given, a trusted connection will be created.
+#>
 [Parameter(Position=3)][Alias('UID')][string]$UserName
 )
 Begin

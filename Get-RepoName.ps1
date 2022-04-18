@@ -2,9 +2,6 @@
 .SYNOPSIS
 Gets the name of the repo.
 
-.PARAMETER Path
-The path to the git repo to get the name for.
-
 .INPUTS
 Objects with System.String Path or FullName properties.
 
@@ -16,6 +13,7 @@ Get-RepoName.ps1
 #>
 
 [CmdletBinding()][OutputType([string])] Param(
+# The path to the git repo to get the name for.
 [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)]
 [Alias('FullName')][string] $Path = $PWD.Path
 )

@@ -2,9 +2,6 @@
 .SYNOPSIS
 Opens a comic's PreviewsWorld page.
 
-.PARAMETER DiamondId
-The Diamond distribution ID for the comic.
-
 .EXAMPLE
 Find-Comics.ps1 -Creator 'Grant Morrison' |Open-Comic.ps1
 
@@ -13,6 +10,7 @@ Find-Comics.ps1 -Creator 'Grant Morrison' |Open-Comic.ps1
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The Diamond distribution ID for the comic.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
 [Alias('Id','diamond_id')][string] $DiamondId
 )

@@ -2,12 +2,6 @@
 .SYNOPSIS
 Tests whether the given string can be parsed as a date.
 
-.PARAMETER Date
-The string to test for datetime parseability.
-
-.PARAMETER Format
-Precise, known format(s) to use to try parsing the datetime.
-
 .INPUTS
 System.String containing a possible date to test parse.
 
@@ -39,7 +33,9 @@ False
 #>
 
 [CmdletBinding()][OutputType([bool])] Param(
+# The string to test for datetime parseability.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string]$Date,
+# Precise, known format(s) to use to try parsing the datetime.
 [string[]]$Format
 )
 

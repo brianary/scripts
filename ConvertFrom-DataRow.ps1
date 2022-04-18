@@ -2,16 +2,6 @@
 .SYNOPSIS
 Converts a DataRow object to a PSObject, Hashtable, or single value.
 
-.PARAMETER DataRow
-A record containing fields/columns to convert to an object with properties.
-
-.PARAMETER AsValues
-Indicates a the record's values should be returned as an array.
-
-.PARAMETER AsDictionary
-Indicates an ordered dictionary of fieldnames/columnnames to values should be returned
-rather than an object with properties.
-
 .INPUTS
 System.Data.DataRow with fields to convert into an object with properties or
 into a hash with key/value pairs.
@@ -30,8 +20,14 @@ Invoke-Sqlcmd "select top 3 ProductID, Name from Production.Product" -ServerInst
 [OutputType([Management.Automation.PSCustomObject],ParameterSetName='AsObject')]
 [OutputType([object[]],ParameterSetName='AsValues')]
 [OutputType([Collections.Specialized.OrderedDictionary],ParameterSetName='AsDictionary')] Param(
+# A record containing fields/columns to convert to an object with properties.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Data.DataRow]$DataRow,
+# Indicates a the record's values should be returned as an array.
 [Parameter(ParameterSetName='AsValues')][Alias('AsArray')][switch]$AsValues,
+<#
+Indicates an ordered dictionary of fieldnames/columnnames to values should be returned
+rather than an object with properties.
+#>
 [Parameter(ParameterSetName='AsDictionary')][Alias('AsOrderedDictionary','AsHashtable')][switch]$AsDictionary
 )
 Process

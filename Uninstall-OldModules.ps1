@@ -2,12 +2,11 @@
 .SYNOPSIS
 Uninstalls old module versions.
 
-.PARAMETER Force
-Indicates the modules should be forced to uninstall.
 #>
 
 #Requires -Version 3
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)][OutputType([void])] Param(
+# Indicates the modules should be forced to uninstall.
 [switch] $Force
 )
 

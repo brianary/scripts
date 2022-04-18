@@ -2,19 +2,15 @@
 .SYNOPSIS
 Uses OpenSSH to generate a key and connect it to an ssh server.
 
-.PARAMETER HostName
-The ssh server to connect to.
-
-.PARAMETER UserName
-The remote username to use to connect.
-
 .EXAMPLE
 Connect-SshKey.ps1 crowpi -UserName pi
 #>
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The ssh server to connect to.
 [Parameter(Position=0,Mandatory=$true)][string] $HostName,
+# The remote username to use to connect.
 [Alias('AsUserName')][string] $UserName = $env:UserName
 )
 

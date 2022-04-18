@@ -2,12 +2,6 @@
 .SYNOPSIS
 Sets a VSCode setting.
 
-.PARAMETER Name
-The name of the setting to set, use / as a path separator for deeper structures.
-
-.PARAMETER Workspace
-Indicates that the current workspace settings should be
-
 .OUTPUTS
 System.String, System.Double, System.Int32, System.Boolean depending on VS Code JSON value type.
 
@@ -40,7 +34,9 @@ PowerShell ISE
 #>
 
 [CmdletBinding()][OutputType([string],[double],[int],[bool])] Param(
+# The name of the setting to set, use / as a path separator for deeper structures.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
+# Indicates that the current workspace settings should be
 [switch] $Workspace
 )
 

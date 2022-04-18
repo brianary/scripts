@@ -52,7 +52,7 @@ Process
 					else
 					{
 						"$(Get-Date -f s) Parameter $name documentation not found in $Path" |
-							Tee-Object optimize-help.log utf8BOM -Append |
+							Tee-Object optimize-help.log -Encoding utf8BOM -Append |
 							Write-Warning
 						$docparams += $p
 					}
@@ -60,7 +60,7 @@ Process
 				else
 				{
 					"$(Get-Date -f s) Could not find parameter name in ${Path}:$EOL$p" |
-						Tee-Object optimize-help.log utf8BOM -Append |
+						Tee-Object optimize-help.log -Encoding utf8BOM -Append |
 						Write-Warning
 					$docparams += $p
 				}
@@ -68,7 +68,7 @@ Process
 			foreach($k in $params.Keys)
 			{
 				"$(Get-Date -f s) Could not find parameter definition for $k in $Path$EOL$($params[$k])" |
-					Tee-Object optimize-help.log utf8BOM -Append |
+					Tee-Object optimize-help.log -Encoding utf8BOM -Append |
 					Write-Warning
 			}
 			$docparams -join ",$EOL"

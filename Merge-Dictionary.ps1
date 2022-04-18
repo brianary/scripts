@@ -2,20 +2,6 @@
 .SYNOPSIS
 Combines dictionaries together into a single dictionary.
 
-.PARAMETER ReferenceObject
-Initial dictionary value to combine.
-
-.PARAMETER InputObject
-Hashtables or other dictionaries to combine.
-
-.PARAMETER Accumulate
-Indicates that the ReferenceObject should be updated with each input dictionary,
-rather than the default behavior of combining the original ReferenceObject with each.
-
-.PARAMETER Force
-For matching keys, overwrites old values with new ones.
-By default, only new keys are added.
-
 .INPUTS
 System.Collections.IDictionary to combine.
 
@@ -55,9 +41,19 @@ d                              5
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Collections.IDictionary])] Param(
+# Initial dictionary value to combine.
 [Parameter(Position=0)][Collections.IDictionary] $ReferenceObject = @{},
+# Hashtables or other dictionaries to combine.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)][Collections.IDictionary] $InputObject,
+<#
+Indicates that the ReferenceObject should be updated with each input dictionary,
+rather than the default behavior of combining the original ReferenceObject with each.
+#>
 [switch] $Accumulate,
+<#
+For matching keys, overwrites old values with new ones.
+By default, only new keys are added.
+#>
 [switch] $Force
 )
 Begin {if($Accumulate) {$value = $ReferenceObject.Clone()}}

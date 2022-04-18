@@ -2,15 +2,6 @@
 .SYNOPSIS
 Removes a value that would have been used for a parameter if none was specified, if one existed.
 
-.PARAMETER CommandName
-The name of a cmdlet, function, script, or alias to remove a default parameter value from.
-
-.PARAMETER ParameterName
-The name or alias of the parameter to remove a default value from.
-
-.PARAMETER Scope
-The scope of this default.
-
 .INPUTS
 An object with a ParameterName property that identifies a property to remove a default for.
 
@@ -40,8 +31,11 @@ Removes any namespaces used by Select-Xml when none are given explicitly.
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The name of a cmdlet, function, script, or alias to remove a default parameter value from.
 [Parameter(Position=0,Mandatory=$true)][ValidateNotNullOrEmpty()][Alias('CmdletName')][string] $CommandName,
+# The name or alias of the parameter to remove a default value from.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ValidateNotNullOrEmpty()][string] $ParameterName,
+# The scope of this default.
 [string] $Scope = 'Local'
 )
 Begin

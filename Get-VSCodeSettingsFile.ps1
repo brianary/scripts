@@ -2,9 +2,6 @@
 .SYNOPSIS
 Gets the path of the VSCode settings.config file.
 
-.PARAMETER Workspace
-Indicates that the current workspace settings should be parsed instead of the user settings.
-
 .OUTPUTS
 System.String containing the path of the settings.config file.
 
@@ -38,6 +35,7 @@ C:\Users\zaphodb\GitHub\scripts\.vscode\settings.json
 #>
 
 [CmdletBinding()][OutputType([string])] Param(
+# Indicates that the current workspace settings should be parsed instead of the user settings.
 [switch] $Workspace
 )
 

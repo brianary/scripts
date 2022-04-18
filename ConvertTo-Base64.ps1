@@ -2,20 +2,6 @@
 .SYNOPSIS
 Converts bytes or text to base64-encoded text.
 
-.PARAMETER Data
-Binary data to convert.
-
-.PARAMETER Text
-Text data to convert.
-
-.PARAMETER Encoding
-The text encoding to use when converting text to binary data.
-
-.PARAMETER UriStyle
-Indicates that the URI-friendly variant of the base64 algorithm should be used.
-This variant, as used by JWTs, uses - instead of +, and _ instead of /, and trims the = padding at the end
-to avoid extra escaping within URLs or URL-encoded data.
-
 .INPUTS
 System.String or System.Byte[] of data to base64-encode.
 
@@ -33,11 +19,19 @@ dXNlcm5hbWU6QmFkUEBzc3dvcmQ=
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# Binary data to convert.
 [Parameter(ParameterSetName='BinaryData',Position=0,Mandatory=$true)][byte[]] $Data,
+# Text data to convert.
 [Parameter(ParameterSetName='TextData',Position=0,Mandatory=$true)][string] $Text,
+# The text encoding to use when converting text to binary data.
 [Parameter(ParameterSetName='TextData',Position=1)]
 [ValidateSet('ascii','utf16','utf16BE','utf32','utf32BE','utf7','utf8')]
 [string] $Encoding = 'utf8',
+<#
+Indicates that the URI-friendly variant of the base64 algorithm should be used.
+This variant, as used by JWTs, uses - instead of +, and _ instead of /, and trims the = padding at the end
+to avoid extra escaping within URLs or URL-encoded data.
+#>
 [switch] $UriStyle
 )
 

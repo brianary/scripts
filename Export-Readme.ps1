@@ -9,7 +9,9 @@ https://www.microsoft.com/download/details.aspx?id=40760
 #Requires -Version 3
 #Requires -Modules SqlServer
 [CmdletBinding()][OutputType([void])] Param(
+# The dependency image filename.
 [string]$DependenciesImage = 'dependencies.svg',
+# The oldest change to mark as updated.
 [string]$StatusAge = '2 weeks ago'
 )
 

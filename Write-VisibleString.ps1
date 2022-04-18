@@ -2,15 +2,6 @@
 .SYNOPSIS
 Displays a string, showing nonprintable characters.
 
-.PARAMETER InputObject
-The string to show.
-
-.PARAMETER AltColor
-The color to use for nonprintable chars.
-
-.PARAMETER AsSymbols
-Print control characters as control picture symbols rather than hex values.
-
 .INPUTS
 System.Object to serialize with nonprintable characters made visible as a hex pair.
 
@@ -22,8 +13,11 @@ a 09 b 0a c
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+# The string to show.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][object] $InputObject,
+# The color to use for nonprintable chars.
 [ConsoleColor] $AltColor = 'DarkYellow',
+# Print control characters as control picture symbols rather than hex values.
 [switch] $AsSymbols
 )
 $formatHex = {if([int]$_ -gt 0x100){'{0:X4}' -f [int]$_}else{'{0:X2}' -f [int]$_}}

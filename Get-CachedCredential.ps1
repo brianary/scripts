@@ -2,22 +2,6 @@
 .SYNOPSIS
 Return a credential from secure storage, or prompt the user for it if not found.
 
-.PARAMETER UserName
-Specifies a user or account name for the authentication prompt to request a password for.
-
-.PARAMETER Message
-Provides a login prompt for the user that should be a globally unique description of the purpose of the login.
-
-.PARAMETER Vault
-The name of the secret vault to retrieve the Pocket API consumer key from.
-By default, the default vault is used.
-
-.PARAMETER UseFile
-Indicates that the old-style filesystem-based credential store should be used.
-
-.PARAMETER Force
-Indicates the login should be manual and overwrite any cached value.
-
 .OUTPUTS
 System.Management.Automation.PSCredential entered by the user, potentially loaded from the cache.
 
@@ -45,10 +29,18 @@ $cred now contains the login information entered, either this time or from a pre
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([pscredential])] Param(
+# Specifies a user or account name for the authentication prompt to request a password for.
 [Parameter(Position=0,Mandatory=$true)][string] $UserName,
+# Provides a login prompt for the user that should be a globally unique description of the purpose of the login.
 [Parameter(Position=1,Mandatory=$true)][string] $Message,
+<#
+The name of the secret vault to retrieve the Pocket API consumer key from.
+By default, the default vault is used.
+#>
 [string] $Vault,
+# Indicates that the old-style filesystem-based credential store should be used.
 [switch] $UseFile,
+# Indicates the login should be manual and overwrite any cached value.
 [switch] $Force
 )
 if($UseFile)

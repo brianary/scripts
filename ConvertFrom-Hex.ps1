@@ -2,9 +2,6 @@
 .SYNOPSIS
 Convert a string of hexadecimal digits into a byte array.
 
-.PARAMETER InputObject
-A string of hex digits.
-
 .INPUTS
 System.String of hex digits.
 
@@ -37,6 +34,7 @@ C0 FF EE
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([byte[]])] Param(
+# A string of hex digits.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject
 )
 Process

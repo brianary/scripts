@@ -2,12 +2,6 @@
 .SYNOPSIS
 Returns a date and time converted to the French Republican Calendar.
 
-.PARAMETER Date
-The Gregorian calendar date and time to convert.
-
-.PARAMETER Method
-Which method to use to calculate leap years, of the competing choices.
-
 .INPUTS
 System.DateTime containing the Gregorian date and time to convert.
 
@@ -77,7 +71,9 @@ GregorianDate : 2020-07-08 00:00:00
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The Gregorian calendar date and time to convert.
 [Parameter(Position=0,ValueFromPipeline=$true)][datetime] $Date = (Get-Date),
+# Which method to use to calculate leap years, of the competing choices.
 [ValidateSet('Equinox','Romme','Continuous','128Year')][string] $Method = 'Romme'
 )
 Begin

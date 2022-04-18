@@ -2,12 +2,6 @@
 .SYNOPSIS
 Returns the content security policy at from the given URL.
 
-.PARAMETER Uri
-The URL to get the policy from.
-
-.PARAMETER Response
-The output from Invoke-WebRequest to parse the policy from.
-
 .INPUTS
 Microsoft.PowerShell.Commands.WebResponseObject from Invoke-WebRequest
 or
@@ -33,8 +27,10 @@ report-uri  : {http://example.com/csp}
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# The URL to get the policy from.
 [Parameter(ParameterSetName='Uri',Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
 [Alias('Url')][Uri] $Uri,
+# The output from Invoke-WebRequest to parse the policy from.
 [Parameter(ParameterSetName='Response',Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.WebResponseObject] $Response
 )

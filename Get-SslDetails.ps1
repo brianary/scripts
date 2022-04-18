@@ -2,12 +2,6 @@
 .SYNOPSIS
 Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
 
-.PARAMETER ComputerName
-The name of the remote computer to connect to.
-
-.PARAMETER Port
-The remote port to connect to.
-
 .INPUTS
 System.String of hostname(s) to get SSL support and certificate details for.
 
@@ -43,8 +37,10 @@ Tls12              : Aes128
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# The name of the remote computer to connect to.
 [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromPipeline=$true)]
 [Alias('CN','Hostname')][string]$ComputerName,
+# The remote port to connect to.
 [Parameter(ValueFromPipelineByPropertyName=$true)][int]$Port = 443
 )
 Begin {$protocols = Get-EnumValues.ps1 Security.Authentication.SslProtocols |? Name -notin 'None','Default' |% Name}

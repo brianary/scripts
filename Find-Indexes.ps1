@@ -2,22 +2,6 @@
 .SYNOPSIS
 Returns indexes using a column with the given name.
 
-.PARAMETER ServerInstance
-The name of a server (and optional instance) to connect and use for the query.
-May be used with optional Database, Credential, and ConnectionProperties parameters.
-
-.PARAMETER Database
-The the database to connect to on the server.
-
-.PARAMETER ConnectionString
-Specifies a connection string to connect to the server.
-
-.PARAMETER ConnectionName
-The connection string name from the ConfigurationManager to use.
-
-.PARAMETER ColumnName
-The column name to search for.
-
 .OUTPUTS
 System.Management.Automation.PSCustomObject with these properties:
 
@@ -55,10 +39,18 @@ ColumnsInIndex : 1
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+<#
+The name of a server (and optional instance) to connect and use for the query.
+May be used with optional Database, Credential, and ConnectionProperties parameters.
+#>
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
+# The the database to connect to on the server.
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
+# Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
+# The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,
+# The column name to search for.
 [Parameter(Position=2,Mandatory=$true)][Alias('ColName')][string]$ColumnName
 )
 

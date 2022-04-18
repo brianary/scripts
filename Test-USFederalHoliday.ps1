@@ -17,15 +17,6 @@ The following holidays are checked:
 * Thanksgiving Day, Fourth Thursday in November
 * Christmas Day, December 25 (±1 day, if observed)
 
-.PARAMETER Date
-The date to check.
-
-.PARAMETER SatToFri
-Indicates Saturday holidays are observed on Fridays.
-
-.PARAMETER SunToMon
-Indicates Sunday holidays are observed on Mondays.
-
 .NOTES
 Thanks to the Uniform Monday Holiday Act, Washington's "Birthday" always falls
 *between* Washington's birthdays. He had two, and we still decided to celebrate
@@ -61,9 +52,13 @@ Returns from a function or script if today is a holiday.
 #>
 
 [CmdletBinding()][OutputType([bool])] Param(
+# The date to check.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][datetime] $Date,
+# Return the holiday name as a truthy value, rather than true.
 [Parameter(HelpMessage='Return the holiday name?')][Alias('ReturnName','ReturnHolidayName')][switch] $AsHolidayName,
+# Indicates Saturday holidays are observed on Fridays.
 [Parameter(HelpMessage='Are Saturday holidays observed on Friday?')][switch] $SatToFri,
+# Indicates Sunday holidays are observed on Mondays.
 [Parameter(HelpMessage='Are Sunday holidays observed on Monday?')][switch] $SunToMon
 )
 Process

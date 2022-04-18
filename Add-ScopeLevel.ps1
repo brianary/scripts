@@ -2,9 +2,6 @@
 .SYNOPSIS
 Convert a scope level to account for another call stack level.
 
-.PARAMETER Scope
-The requested scope from the caller of the caller of this script.
-
 .LINK
 Stop-ThrowError.ps1
 
@@ -29,6 +26,7 @@ Global
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The requested scope from the caller of the caller of this script.
 [Parameter(Position=0,Mandatory=$true)][string] $Scope
 )
 if($Scope -match '\A\d+\z') {return 1+[int]$Scope}

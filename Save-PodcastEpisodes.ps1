@@ -2,27 +2,6 @@
 .SYNOPSIS
 Saves enclosures from a podcast feed.
 
-.PARAMETER Uri
-The URL of the podcast feed.
-
-.PARAMETER After
-Episodes before this date will be ignored.
-
-.PARAMETER Before
-Episodes after this date will be ignored.
-
-.PARAMETER First
-Includes only the given number of initial episodes, by publish date.
-
-.PARAMETER Last
-Includes only the given number of most recent episodes, by publish date.
-
-.PARAMETER UseTitle
-Use episode titles for filenames.
-
-.PARAMETER CreateFolder
-Saves the episodes into a folder with the podcast name.
-
 .LINK
 Save-WebRequest.ps1
 
@@ -34,12 +13,19 @@ Saves podcast episodes to the current directory.
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The URL of the podcast feed.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Alias('Url')][uri] $Uri,
+# Episodes before this date will be ignored.
 [datetime] $After,
+# Episodes after this date will be ignored.
 [datetime] $Before,
+# Includes only the given number of initial episodes, by publish date.
 [int] $First,
+# Includes only the given number of most recent episodes, by publish date.
 [int] $Last,
+# Use episode titles for filenames.
 [switch] $UseTitle,
+# Saves the episodes into a folder with the podcast name.
 [switch] $CreateFolder
 )
 Begin

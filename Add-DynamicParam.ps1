@@ -2,65 +2,6 @@
 .SYNOPSIS
 Adds a dynamic parameter to a script, within a DynamicParam block.
 
-.PARAMETER Name
-The name of the parameter.
-
-.PARAMETER Type
-The data type of the parameter.
-
-.PARAMETER Position
-The position of the parameter when not specifying the parameter names.
-
-.PARAMETER ParameterSetName
-The name of the set of parameters this parameter belongs to.
-
-.PARAMETER ValidateCount
-The valid number of values for a parameter that accepts a collection.
-A range can be specified with a list of two integers.
-
-.PARAMETER ValidateDrive
-Valid root drive(s) for parameters that accept paths.
-
-.PARAMETER ValidateLength
-The valid length for a string parameter.
-A range can be specified with a list of two integers.
-
-.PARAMETER ValidatePattern
-The valid regular expression pattern to match for a string parameter.
-
-.PARAMETER ValidateRange
-The valid range of values for a numeric parameter.
-
-.PARAMETER ValidateScript
-A script block to validate a parameter's value.
-Any true result will validate the value, any false result will reject it.
-
-.PARAMETER ValidateSet
-A set of valid values for the parameter.
-This will enable tab-completion.
-
-.PARAMETER NotNull
-Requires parameter to be non-null.
-
-.PARAMETER NotNullOrEmpty
-Requires parameter to be non-null and non-empty.
-
-.PARAMETER TrustedData
-Requires the parameter value to be Trusted data.
-
-.PARAMETER UserDrive
-Requires a path parameter to be on a User drive.
-
-.PARAMETER Mandatory
-Indicates a required parameter.
-
-.PARAMETER ValueFromPipeline
-Indicates a parameter that can accept values from the pipeline.
-
-.PARAMETER ValueFromPipelineByPropertyName
-Indicates a parameter that can accept values from the pipeline by matching the property name of pipeline objects to the
-parameter name or alias.
-
 .INPUTS
 System.Object[] a list of possible values for this parameter to validate against.
 
@@ -70,25 +11,60 @@ DynamicParam { Add-DynamicParam.ps1 Path string -Mandatory; $DynamicParams } Pro
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+# The name of the parameter.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
+# The data type of the parameter.
 [Parameter(Position=1)][type] $Type,
+# The position of the parameter when not specifying the parameter names.
 [int] $Position = -2147483648,
+# The name of the set of parameters this parameter belongs to.
 [string[]] $ParameterSetName = '__AllParameterSets',
+# Alternate names for the parameter.
 [string[]] $Alias,
+<#
+The valid number of values for a parameter that accepts a collection.
+A range can be specified with a list of two integers.
+#>
 [Alias('Count')][ValidateCount(1,2)][int[]] $ValidateCount,
+# Valid root drive(s) for parameters that accept paths.
 [string[]] $ValidateDrive,
+<#
+The valid length for a string parameter.
+A range can be specified with a list of two integers.
+#>
 [Alias('Length')][ValidateCount(1,2)][int[]] $ValidateLength,
+# The valid regular expression pattern to match for a string parameter.
 [Alias('Match','Pattern')][string] $ValidatePattern,
+# The valid range of values for a numeric parameter.
 [Alias('Range')][ValidateCount(2,2)][int[]] $ValidateRange,
+<#
+A script block to validate a parameter's value.
+Any true result will validate the value, any false result will reject it.
+#>
 [ScriptBlock] $ValidateScript,
+<#
+A set of valid values for the parameter.
+This will enable tab-completion.
+#>
 [Parameter(ValueFromPipeline=$true)][Alias('Values')][object[]] $ValidateSet,
+# Requires parameter to be non-null.
 [switch] $NotNull,
+# Requires parameter to be non-null and non-empty.
 [switch] $NotNullOrEmpty,
+# Requires the parameter value to be Trusted data.
 [switch] $TrustedData,
+# Requires a path parameter to be on a User drive.
 [switch] $UserDrive,
+# Indicates a required parameter.
 [Alias('Required')][switch] $Mandatory,
+# Indicates a parameter that can accept values from the pipeline.
 [Alias('Pipeline')][switch] $ValueFromPipeline,
+<#
+Indicates a parameter that can accept values from the pipeline by matching the property name of pipeline objects to the
+parameter name or alias.
+#>
 [Alias('PipelineProperties','PipeName')][switch] $ValueFromPipelineByPropertyName,
+# Indicates that the parameter will include any following positional parameters.
 [Alias('RemainingArgs')][switch] $ValueFromRemainingArguments
 )
 End

@@ -2,18 +2,6 @@
 .SYNOPSIS
 Downloads a given URL to a file, automatically determining the filename.
 
-.PARAMETER Uri
-The URL to download.
-
-.PARAMETER CreationTime
-Sets the creation time on the file to the given value.
-
-.PARAMETER LastWriteTime
-Sets the creation time on the file to the given value.
-
-.PARAMETER Open
-When present, invokes the file after it is downloaded.
-
 .INPUTS
 Object with System.Uri property named Uri.
 
@@ -45,9 +33,13 @@ Saves f1040.pdf (or else a filename specified in the Content-Disposition header)
 #>
 
 [CmdletBinding()][OutputType([void])] Param(
+# The URL to download.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('Url')][uri] $Uri,
+# Sets the creation time on the file to the given value.
 [datetime] $CreationTime,
+# Sets the creation time on the file to the given value.
 [datetime] $LastWriteTime,
+# When present, invokes the file after it is downloaded.
 [switch] $Open
 )
 Begin

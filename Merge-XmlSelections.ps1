@@ -2,15 +2,6 @@
 .SYNOPSIS
 Builds an object using the named XPath selections as properties.
 
-.PARAMETER XPaths
-Any dictionary or hashtable of property name to XPath to select a value with.
-
-.PARAMETER Xml
-The XML to select the property values from.
-
-.PARAMETER Path
-XML file(s) to select the property values from.
-
 .INPUTS
 System.Xml.XmlNode of XML or System.String of XML file names to select property values from.
 
@@ -32,11 +23,15 @@ Z:\Scripts\xhtml2fo.xsl 1.0     xml
 #Requires -Version 3
 #Requires -Modules SelectXmlExtensions
 [CmdletBinding()][OutputType([psobject])] Param(
+# Any dictionary or hashtable of property name to XPath to select a value with.
 [Parameter(Position=0,Mandatory=$true)][Collections.IDictionary] $XPaths,
+# The XML to select the property values from.
 [Parameter(ParameterSetName='Xml',Position=1,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
 [Xml.XmlNode[]] $Xml,
+# XML file(s) to select the property values from.
 [Parameter(ParameterSetName='Path',Position=1,Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
 [Alias('FullName')][string[]] $Path,
+# XML namespaces to use in the XPath expressions.
 [hashtable] $Namespace = $PSDefaultParameterValues['Select-Xml:Namespace']
 )
 Process

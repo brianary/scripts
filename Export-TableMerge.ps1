@@ -2,33 +2,6 @@
 .SYNOPSIS
 Exports table data as a T-SQL MERGE statement.
 
-.PARAMETER ServerInstance
-The name of a server (and optional instance) to connect and use for the query.
-May be used with optional Database, Credential, and ConnectionProperties parameters.
-
-.PARAMETER Database
-The the database to connect to on the server.
-
-.PARAMETER ConnectionString
-Specifies a connection string to connect to the server.
-
-.PARAMETER ConnectionName
-The connection string name from the ConfigurationManager to use.
-
-.PARAMETER Table
-The name of the table to export.
-
-.PARAMETER Schema
-Optional name of the table's schema.
-By default, uses the user's default schema defined in the database (typically dbo).
-
-.PARAMETER UseIdentityAsKey
-Treat a non-key identity column as part of the key, since it can't be updated as a data column.
-
-Non-key identity columns are very rare, but if one is detected and this switch is not specified,
-a warning will be generated and the column will be ignored entirely for updates, and not used as
-either a key to match on or a data column to update.
-
 .OUTPUTS
 System.String of SQL MERGE script to replicate the table's data.
 
@@ -51,12 +24,31 @@ Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -S
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding()][OutputType([string])] Param(
+<#
+The name of a server (and optional instance) to connect and use for the query.
+May be used with optional Database, Credential, and ConnectionProperties parameters.
+#>
 [Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
+# The the database to connect to on the server.
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
+# Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string] $ConnectionString,
+# The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string] $ConnectionName,
+# The name of the table to export.
 [Parameter(Position=2,Mandatory=$true)][string] $Table,
+<#
+Optional name of the table's schema.
+By default, uses the user's default schema defined in the database (typically dbo).
+#>
 [Parameter(Position=3)][string] $Schema,
+<#
+Treat a non-key identity column as part of the key, since it can't be updated as a data column.
+
+Non-key identity columns are very rare, but if one is detected and this switch is not specified,
+a warning will be generated and the column will be ignored entirely for updates, and not used as
+either a key to match on or a data column to update.
+#>
 [switch] $UseIdentityInKey
 )
 

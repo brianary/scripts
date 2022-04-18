@@ -2,12 +2,6 @@
 .SYNOPSIS
 Gets the namespaces and their URIs and URLs from a document.
 
-.PARAMETER Xml
-The string to check.
-
-.PARAMETER Path
-A file to check.
-
 .INPUTS
 System.Xml.XmlDocument or System.String containing the path to an XML file.
 
@@ -39,7 +33,9 @@ Url   :
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# The string to check.
 [Parameter(ParameterSetName='Xml',Position=0,Mandatory=$true,ValueFromPipeline=$true)][xml] $Xml,
+# A file to check.
 [Parameter(ParameterSetName='Path',Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
 [Alias('FullName')][ValidateScript({Test-Path $_ -PathType Leaf})][string] $Path
 )

@@ -2,12 +2,6 @@
 .SYNOPSIS
 Determines whether a string is a valid URI.
 
-.PARAMETER InputObject
-The string to test.
-
-.PARAMETER UriKind
-What kind of URI to test for: Absolute, Relative, or RelativeOrAbsolute.
-
 .INPUTS
 System.String value to test for a valid URI format.
 
@@ -27,7 +21,9 @@ False
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
+# The string to test.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][AllowEmptyString()][AllowNull()][string] $InputObject,
+# What kind of URI to test for: Absolute, Relative, or RelativeOrAbsolute.
 [Parameter(Position=1)][UriKind] $UriKind = 'Absolute'
 )
 Process

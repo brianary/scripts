@@ -2,9 +2,6 @@
 .SYNOPSIS
 Removes duplicates from a list of files.
 
-.PARAMETER Files
-A list of files to search for duplicates.
-
 .INPUTS
 System.IO.FileInfo list, typically piped from Get-ChildItem.
 
@@ -19,6 +16,7 @@ Removes all but the oldest file with the same size and hash value.
 
 #Requires -Version 5
 [CmdletBinding()][OutputType([string])] Param(
+# A list of files to search for duplicates.
 [Parameter(ValueFromPipeline=$true,ValueFromRemainingArguments=$true)][IO.FileInfo[]]$Files
 )
 Begin

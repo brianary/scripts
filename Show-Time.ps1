@@ -2,21 +2,6 @@
 .SYNOPSIS
 Displays a formatted date using powerline font characters.
 
-.PARAMETER Format
-The format to serialize the date as.
-
-.PARAMETER Date
-The date/time value to format.
-
-.PARAMETER Separator
-The separator to use between formatted dates.
-
-.PARAMETER ForegroundColor
-The foreground console color to use.
-
-.PARAMETER BackgroundColor
-The background console color to use.
-
 .LINK
 Get-Unicode.ps1
 
@@ -35,13 +20,18 @@ Show-Time.ps1 Iso8601Z Iso8601WeekDate Iso8601OrdinalDate -Separator ' * '
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+# The format to serialize the date as.
 [Parameter(Position=0,Mandatory=$true,ValueFromRemainingArguments=$true)]
 [ValidateSet('FrenchRepublicanDateTime','Iso8601','Iso8601Date','Iso8601OrdinalDate',
 'Iso8601Week','Iso8601WeekDate','Iso8601Z','LocalLongDate','LocalLongDateTime','Rfc1123','Rfc1123Gmt')]
 [string[]] $Format,
+# The date/time value to format.
 [Parameter(ValueFromPipeline=$true)][datetime] $Date = (Get-Date),
+# The separator to use between formatted dates.
 [string] $Separator = " $(Get-Unicode.ps1 0x2022) ",
+# The foreground console color to use.
 [consolecolor] $ForegroundColor = $host.UI.RawUI.BackgroundColor,
+# The background console color to use.
 [consolecolor] $BackgroundColor = $host.UI.RawUI.ForegroundColor
 )
 

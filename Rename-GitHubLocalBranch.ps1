@@ -2,9 +2,6 @@
 .SYNOPSIS
 Rename a git repository branch.
 
-.PARAMETER NewName
-The new branch name.
-
 .LINK
 https://docs.github.com/en/github/administering-a-repository/managing-branches-in-your-repository/renaming-a-branch#updating-a-local-clone-after-a-branch-name-changes
 
@@ -22,6 +19,7 @@ Rename the master branch to main.
 
 #Requires -Version 3
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)] Param(
+# The new branch name.
 [Parameter(Position=0,Mandatory=$true)][string] $NewName
 )
 

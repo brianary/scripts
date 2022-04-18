@@ -5,71 +5,6 @@ Creates a simple boilerplate script.
 .PARAMETER NameVerb
 The verb prefix name of the script, e.g. Get or Update or Add.
 
-.PARAMETER NameNoun
-The noun part of the name of the script.
-
-.PARAMETER Synopsis
-A one-line description of the purpose of the script.
-
-.PARAMETER Parameters
-A runtime parameter dictionary $DynamicParams created via Add-DynamicParam.ps1
-
-.PARAMETER Inputs
-Documentation about the datatype accepted as pipeline input by the script.
-
-.PARAMETER Outputs
-Documentation about the datatype produced as output by the script.
-
-.PARAMETER DynamicParam
-The DynamicParam script block.
-
-.PARAMETER OutputType
-The return type of the script.
-
-.PARAMETER Links
-A list of script documentation references to link to (URLs and cmdlet names).
-
-.PARAMETER Example
-A list of example commands to add to the script documentation.
-
-.PARAMETER Begin
-The Begin script block.
-
-.PARAMETER Process
-The Process (main) script block.
-
-.PARAMETER End
-The End script block.
-
-.PARAMETER RequiresVersion
-The minimum PowerShell version required for the script.
-
-.PARAMETER RequiresModule
-A module required by the script.
-
-.PARAMETER ConfirmImpact
-The potential risk of the script: High, Medium, or Low.
-
-.PARAMETER DefaultParameterSetName
-The name of the default parameter set.
-
-.PARAMETER HelpUri
-A URL for online help.
-
-.PARAMETER Indent
-The indent string to use.
-
-.PARAMETER RequiresRunAsAdmin
-Indicates that the script must be run as an Administrator.
-
-.PARAMETER SupportsPaging
-Indicates that the script supports paged output.
-
-.PARAMETER SupportsShouldProcess
-Indicates that the script supports confirmation prompting and -WhatIf.
-
-.PARAMETER PositionalBinding
-Indicates that the script supports positional parameter binding.
 
 .EXAMPLE
 New-Script.ps1 Add Xml -Synopsis 'Insert XML...' -OutputType xml
@@ -79,27 +14,49 @@ Creates a basic script.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+# The noun part of the name of the script.
 [Parameter(Position=1,Mandatory=$true)][string] $NameNoun,
+# A one-line description of the purpose of the script.
 [string] $Synopsis,
+# A runtime parameter dictionary $DynamicParams created via Add-DynamicParam.ps1
 [Management.Automation.RuntimeDefinedParameterDictionary] $Parameters,
+# Documentation about the datatype accepted as pipeline input by the script.
 [string] $Inputs,
+# Documentation about the datatype produced as output by the script.
 [string] $Outputs,
+# The DynamicParam script block.
 [ScriptBlock] $DynamicParam,
+# The return type of the script.
 [type] $OutputType,
+# A list of script documentation references to link to (URLs and cmdlet names).
 [string[]] $Links,
+# A list of example commands to add to the script documentation.
 [string[]] $Example,
+# The Begin script block.
 [ScriptBlock] $Begin,
+# The Process (main) script block.
 [ScriptBlock] $Process,
+# The End script block.
 [ScriptBlock] $End,
+# The minimum PowerShell version required for the script.
 [decimal] $RequiresVersion = 3,
+# A module required by the script.
 [string[]] $RequiresModule,
+# The potential risk of the script: High, Medium, or Low.
 [ValidateSet('High','Medium','Low')][string] $ConfirmImpact,
+# The name of the default parameter set.
 [string] $DefaultParameterSetName,
+# A URL for online help.
 [uri] $HelpUri,
+# The indent string to use.
 [string] $Indent = "`t",
+# Indicates that the script must be run as an Administrator.
 [Alias('RequiresAdmin','Admin')][switch] $RequiresRunAsAdmin,
+# Indicates that the script supports paged output.
 [switch] $SupportsPaging,
+# Indicates that the script supports confirmation prompting and -WhatIf.
 [switch] $SupportsShouldProcess,
+# Indicates that the script supports positional parameter binding.
 [switch] $PositionalBinding
 )
 DynamicParam

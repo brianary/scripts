@@ -2,9 +2,6 @@
 .SYNOPSIS
 Determines whether a file contains Windows-1252 bytes that are invalid UTF-8 bytes.
 
-.PARAMETER Path
-The path to a file to test.
-
 .INPUTS
 System.String containing the path to a file to test.
 
@@ -19,6 +16,7 @@ False
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The path to a file to test.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path
 )
 Process

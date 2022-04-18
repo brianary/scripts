@@ -8,54 +8,6 @@ a whole database as Export-DatabaseScripts.ps1 does.
 
 It can be particularly useful for creating an object-drop script, with all dependencies.
 
-.PARAMETER Server
-The name of the server (and instance) to connect to.
-
-.PARAMETER Database
-The name of the database to connect to on the server.
-
-.PARAMETER Urn
-The Urn of the database object to script.
-Example: "Server[@Name='ServerName\Instance']/Database[@Name='DatabaseName']/Table[@Name='TableName' and @Schema='dbo']"
-
-.PARAMETER Table
-The unquoted name of the table to script.
-Resolved using the Schema parameter.
-
-.PARAMETER View
-The unquoted name of the view to script.
-Resolved using the Schema parameter.
-
-.PARAMETER StoredProcedure
-The unquoted name of the stored procedure to script.
-Resolved using the Schema parameter.
-
-.PARAMETER UserDefinedFunction
-The unquoted name of the user defined function to script.
-Resolved using the Schema parameter.
-
-.PARAMETER Schema
-The unquoted name of the schema to use with the Table, View, StoredProcedure, or UserDefinedFunction parameters.
-Defaults to dbo.
-
-.PARAMETER FilePath
-The file to export the script to.
-
-.PARAMETER Encoding
-The file encoding to use for the SQL scripts.
-
-.PARAMETER Append
-Indicates the file should be appended to, rather than replaced.
-Useful when piping a list of objects to be scripted to a file.
-
-.PARAMETER ScriptingOptions
-Provides a list of boolean SMO ScriptingOptions properties to set to true.
-
-.PARAMETER SqlVersion
-The SQL version to target when scripting.
-By default, uses the version from the source server.
-Versions greater than the source server's version may fail.
-
 .INPUTS
 System.Data.DataRow, INFORMATION_SCHEMA.TABLES or INFORMATION_SCHEMA.ROUTINES records.
 
@@ -89,19 +41,57 @@ Exports drop script of Sales.Customer and dependencies to DropCustomer.sql.
 #Requires -Version 3
 #Requires -Module SqlServer
 [CmdletBinding()][OutputType([void])] Param(
+# The name of the server (and instance) to connect to.
 [Parameter(Position=0,Mandatory=$true)][Alias('ServerInstance')][string] $Server,
+# The name of the database to connect to on the server.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('TABLE_CATALOG','ROUTINE_CATALOG')][string] $Database,
+<#
+The Urn of the database object to script.
+Example: "Server[@Name='ServerName\Instance']/Database[@Name='DatabaseName']/Table[@Name='TableName' and @Schema='dbo']"
+#>
 [Parameter(ParameterSetName='Urn',Mandatory=$true)][string] $Urn,
+<#
+The unquoted name of the table to script.
+Resolved using the Schema parameter.
+#>
 [Parameter(ParameterSetName='Table',Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('TABLE_NAME')][string] $Table,
+<#
+The unquoted name of the view to script.
+Resolved using the Schema parameter.
+#>
 [Parameter(ParameterSetName='View',Mandatory=$true)][string] $View,
+<#
+The unquoted name of the stored procedure to script.
+Resolved using the Schema parameter.
+#>
 [Parameter(ParameterSetName='StoredProcedure',Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('ROUTINE_NAME','Procedure','SProcedure')][string] $StoredProcedure,
+<#
+The unquoted name of the user defined function to script.
+Resolved using the Schema parameter.
+#>
 [Parameter(ParameterSetName='UserDefinedFunction',Mandatory=$true)][Alias('UDF','Function')][string] $UserDefinedFunction,
+<#
+The unquoted name of the schema to use with the Table, View, StoredProcedure, or UserDefinedFunction parameters.
+Defaults to dbo.
+#>
 [Parameter(ValueFromPipelineByPropertyName=$true)][Alias('TABLE_SCHEMA','ROUTINE_SCHEMA')][string] $Schema = 'dbo',
+# The file to export the script to.
 [Parameter(Mandatory=$true)][string] $FilePath,
+# The file encoding to use for the SQL scripts.
 [ValidateSet('Unicode','UTF7','UTF8','UTF32','ASCII','BigEndianUnicode','Default','OEM')][string]$Encoding = 'UTF8',
+<#
+Indicates the file should be appended to, rather than replaced.
+Useful when piping a list of objects to be scripted to a file.
+#>
 [switch]$Append,
+# Provides a list of boolean SMO ScriptingOptions properties to set to true.
 [Parameter(ValueFromRemainingArguments=$true)][string[]] $ScriptingOptions =
 	'EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers ScriptBatchTerminator' -split '\s+',
+<#
+The SQL version to target when scripting.
+By default, uses the version from the source server.
+Versions greater than the source server's version may fail.
+#>
 [Microsoft.SqlServer.Management.Smo.SqlServerVersion]$SqlVersion
 )
 Begin

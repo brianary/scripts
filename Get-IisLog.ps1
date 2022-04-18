@@ -2,39 +2,6 @@
 .SYNOPSIS
 Easily query IIS logs.
 
-.PARAMETER ComputerName
-Attempts to use the LogFiles$ share of the computers listed as the log directory.
-
-.PARAMETER LogDirectory
-The directory(ies) containing the log files to query.
-
-.PARAMETER After
-The minimum datetime to query.
-
-.PARAMETER Before
-The maximum datetime to query.
-
-.PARAMETER IpAddr
-The client IP address(es) to restrict the query to.
-
-.PARAMETER Username
-The username to restrict the search to.
-
-.PARAMETER Status
-The HTTP (major) status to restrict the search to.
-
-.PARAMETER Method
-The HTTP method (GET or POST, &c) to restrict the search to.
-
-.PARAMETER UriPathLike
-A "like" pattern to match against the requested URI stem/path.
-
-.PARAMETER QueryLike
-A "like" pattern to match against the query string.
-
-.PARAMETER ReferrerLike
-A "like" pattern to match against the HTTP referrer.
-
 .OUTPUTS
 System.Management.Automation.PSObject[] with properties from the log file
 for each request found:
@@ -102,17 +69,34 @@ WinStatus     : Access is denied
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# Attempts to use the LogFiles$ share of the computers listed as the log directory.
 [Parameter(ParameterSetName='Server')][Alias('Server','CN')][string[]] $ComputerName,
+# The directory(ies) containing the log files to query.
 [Parameter(ParameterSetName='Directory')][Alias('Dir')][IO.DirectoryInfo[]] $LogDirectory = $PWD.ProviderPath,
+# The minimum datetime to query.
 [Parameter(Position=1)][datetime] $After = [datetime]::MinValue,
-[Parameter(Position=2)][datetime] $Before = '8191-12-31', # max logparser timestamp date
+# The maximum datetime to query.
+[Parameter(Position=2)][datetime] $Before = <# the max logparser date value #> '8191-12-31',
+# The client IP address(es) to restrict the query to.
 [Alias("ClientIP")][string[]] $IpAddr,
+# The username to restrict the search to.
 [string[]] $Username,
+# The HTTP (major) status to restrict the search to.
 [int[]] $Status,
+# The HTTP method (GET or POST, &c) to restrict the search to.
 [Microsoft.PowerShell.Commands.WebRequestMethod[]] $Method,
+# A "like" pattern to match against the requested URI stem/path.
 [string] $UriPathLike,
+# A "like" pattern to match against the query string.
 [string] $QueryLike,
+# A "like" pattern to match against the HTTP referrer.
 [Alias("RefererLike")][string] $ReferrerLike,
+<#
+The format the logs are written in:
+* IIS: The old proprietary IIS log format.
+* IISW3C: The (transitional?) W3C extended log file format.
+* W3C: The newer W3C extended log file format.
+#>
 [ValidateSet('IIS','IISW3C','W3C')][string] $LogFormat = 'W3C'
 )
 

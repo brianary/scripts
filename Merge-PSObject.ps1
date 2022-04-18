@@ -2,13 +2,6 @@
 .SYNOPSIS
 Create a new PSObject by recursively combining the properties of PSObjects.
 
-.PARAMETER ReferenceObject
-Initial PSObject to combine.
-
-.PARAMETER InputObject
-PSObjects to combine. PSObject descendant properties are recursively merged.
-Primitive values are overwritten by any matching ones in the new PSObject.
-
 .INPUTS
 System.Management.Automation.PSObject to combine.
 
@@ -52,9 +45,16 @@ a b c
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([PSObject])] Param(
+# Initial PSObject to combine.
 [Parameter(Position=0)][PSObject] $ReferenceObject = [pscustomobject]@{},
+<#
+PSObjects to combine. PSObject descendant properties are recursively merged.
+Primitive values are overwritten by any matching ones in the new PSObject.
+#>
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)][PSObject] $InputObject,
+# Continue merging each pipeline object's properties into the same accumulator object.
 [switch] $Accumulate,
+# Overwrite existing properties.
 [switch] $Force
 )
 Begin {if($Accumulate) {$value = $ReferenceObject.PSObject.Copy()}}

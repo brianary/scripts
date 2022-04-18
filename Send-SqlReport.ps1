@@ -2,31 +2,36 @@
 .SYNOPSIS
 Execute a SQL statement and email the results.
 
-.PARAMETER Subject
-The email subject.
+.LINK
+Use-SqlcmdParams.ps1
 
-.PARAMETER To
-The email address(es) to send the results to.
+.LINK
+Send-MailMessage
 
-.PARAMETER Sql
-The SQL statement to execute.
+.LINK
+Invoke-Sqlcmd
+#>
 
-.PARAMETER ServerInstance
-The name of a server (and optional instance) to connect and use for the query.
-
-.PARAMETER Database
-The the database to connect to on the server.
-
-.PARAMETER ConnectionString
-Specifies a connection string to connect to the server.
-
-.PARAMETER ConnectionName
-The connection string name from the ConfigurationManager to use when executing the query.
-
-.PARAMETER EmptySubject
-The subject line for the email when no data is returned.
-
-.PARAMETER From
+#Requires -Version 3
+#Requires -Module SqlServer
+[CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='None')][OutputType([void])] Param(
+# The email subject.
+[Parameter(Position=0,Mandatory=$true)][string]$Subject,
+# The email address(es) to send the results to.
+[Parameter(Position=1,Mandatory=$true)][string[]]$To,
+# The SQL statement to execute.
+[Parameter(Position=2,Mandatory=$true)][string]$Sql,
+# The name of a server (and optional instance) to connect and use for the query.
+[Parameter(ParameterSetName='ByConnectionParameters',Position=3)][string]$ServerInstance,
+# The the database to connect to on the server.
+[Parameter(ParameterSetName='ByConnectionParameters',Position=4)][string]$Database,
+# Specifies a connection string to connect to the server.
+[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
+# The connection string name from the ConfigurationManager to use when executing the query.
+[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,
+# The subject line for the email when no data is returned.
+[string]$EmptySubject,
+<#
 The from address to use for the email.
 The default is to use $PSEmailServer.
 If that is missing, it will be populated by the value from the
@@ -41,73 +46,36 @@ configuration value:
 | </system.net>
 
 (If enableSsl is set to true, SSL will be used to send the report.)
-
-.PARAMETER Caption
-The optional table caption to add.
-
-.PARAMETER ReportFile
+#>
+[string]$From,
+# The optional table caption to add.
+[string]$Caption,
+<#
 A UNC path to a .csv or .tsv file writable by the script and readable by the email recipient to output the data to,
 which will be linked in the email rather than included in the email body.
 
 Supports a format template for the current date and time (e.g. {0:yyyyMMddHHmmss}).
-
-.PARAMETER QueryTimeout
-The timeout to use for the query, in seconds. The default is 90.
-
-.PARAMETER PreContent
-HTML content to insert into the email before the query results.
-
-.PARAMETER PostContent
-HTML content to insert into the email after the query results.
-
-.PARAMETER Cc
-The email address(es) to CC the results to.
-
-.PARAMETER Bcc
-The email address(es) to BCC the results to.
-
-.PARAMETER Priority
-The priority of the email, one of: High, Low, Normal
-
-.PARAMETER UseSsl
+#>
+[string]$ReportFile,
+# The timeout to use for the query, in seconds. The default is 90.
+[Alias('Timeout')][int]$QueryTimeout= 90,
+# HTML content to insert into the email before the query results.
+[string]$PreContent= ' ',
+# HTML content to insert into the email after the query results.
+[string]$PostContent= ' ',
+# The email address(es) to CC the results to.
+[string[]]$Cc,
+# The email address(es) to BCC the results to.
+[string[]]$Bcc,
+# The priority of the email, one of: High, Low, Normal
+[Net.Mail.MailPriority]$Priority,
+<#
 Indicates that SSL should be used when sending the message.
 
 (See the From parameter for an alternate SSL flag.)
-
-.PARAMETER SeqUrl
-The URL of the Seq server to log to.
-
-.LINK
-Use-SqlcmdParams.ps1
-
-.LINK
-Send-MailMessage
-
-.LINK
-Invoke-Sqlcmd
 #>
-
-#Requires -Version 3
-#Requires -Module SqlServer
-[CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='None')][OutputType([void])] Param(
-[Parameter(Position=0,Mandatory=$true)][string]$Subject,
-[Parameter(Position=1,Mandatory=$true)][string[]]$To,
-[Parameter(Position=2,Mandatory=$true)][string]$Sql,
-[Parameter(ParameterSetName='ByConnectionParameters',Position=3)][string]$ServerInstance,
-[Parameter(ParameterSetName='ByConnectionParameters',Position=4)][string]$Database,
-[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
-[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,
-[string]$EmptySubject,
-[string]$From,
-[string]$Caption,
-[string]$ReportFile,
-[Alias('Timeout')][int]$QueryTimeout= 90,
-[string]$PreContent= ' ',
-[string]$PostContent= ' ',
-[string[]]$Cc,
-[string[]]$Bcc,
-[Net.Mail.MailPriority]$Priority,
 [switch]$UseSsl,
+# The URL of the Seq server to log to.
 [uri]$SeqUrl = $PSDefaultParameterValues['Send-SeqEvent.ps1:Server']
 )
 

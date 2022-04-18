@@ -2,9 +2,6 @@
 .SYNOPSIS
 Sets certain cmdlet parameter defaults to rational, useful values.
 
-.PARAMETER LatestSecurityProtocol
-Use the greatest value of the System.Net.SecurityProtocolType enum.
-
 .LINK
 Use-NetMailConfig.ps1
 
@@ -28,6 +25,7 @@ Sets default values:
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+# Use the greatest value of the System.Net.SecurityProtocolType enum.
 [switch] $LatestSecurityProtocol
 )
 if(!$LatestSecurityProtocol)

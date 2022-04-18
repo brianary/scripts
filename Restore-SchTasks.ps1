@@ -2,16 +2,6 @@
 .SYNOPSIS
 Imports from a single XML file into the local Scheduled Tasks.
 
-.PARAMETER Path
-The file to import tasks from, as exported from Backup-SchTasks.ps1.
-
-.PARAMETER Exclude
-A wildcard pattern to match task "paths" (including folders) to skip.
-
-User tasks are usually just in the root, and generally machine-specific
-tasks Microsoft automatically sets up are in folders so this is *\* by
-default to exclude the weird magic tasks.
-
 .LINK
 https://msdn.microsoft.com/library/windows/desktop/bb736357.aspx
 
@@ -29,7 +19,15 @@ Restore-SchTasks.ps1
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+# The file to import tasks from, as exported from Backup-SchTasks.ps1.
 [Parameter(Position=0)][string] $Path = 'tasks.xml',
+<#
+A wildcard pattern to match task "paths" (including folders) to skip.
+
+User tasks are usually just in the root, and generally machine-specific
+tasks Microsoft automatically sets up are in folders so this is *\* by
+default to exclude the weird magic tasks.
+#>
 [string] $Exclude = '*\*'
 )
 $credentials = @{}

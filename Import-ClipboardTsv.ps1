@@ -2,9 +2,6 @@
 .SYNOPSIS
 Parses TSV clipboard data into objects.
 
-.PARAMETER Delimiter
-The field separator character.
-
 .LINK
 Get-Clipboard
 
@@ -27,8 +24,9 @@ Eric Morden       Mr. Nobody   Alan Tudyk
 
 #Requires -Version 3
 [CmdletBinding()] Param(
-[char] $Delimeter = "`t"
+# The field separator character.
+[char] $Delimiter = "`t"
 )
 $data = Get-Clipboard
 $data[1..($data.Length-1)] |
-	ConvertFrom-Csv -Delimiter $Delimeter -Header ($data[0] -split $Delimeter)
+	ConvertFrom-Csv -Delimiter $Delimiter -Header ($data[0] -split $Delimiter)

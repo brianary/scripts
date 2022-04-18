@@ -2,9 +2,6 @@
 .SYNOPSIS
 Determines whether a string is valid JSON.
 
-.PARAMETER InputObject
-The string to test.
-
 .INPUTS
 System.String value to test for a valid JSON format.
 
@@ -29,6 +26,7 @@ False
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
+# The string to test.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][AllowEmptyString()][AllowNull()][string] $InputObject
 )
 Process

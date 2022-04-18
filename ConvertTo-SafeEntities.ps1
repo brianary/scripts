@@ -2,10 +2,6 @@
 .SYNOPSIS
 Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 
-.PARAMETER InputObject
-An HTML or XML string that may include emoji or other Unicode characters outside
-the 7-bit ASCII range.
-
 .INPUTS
 System.String of HTML or XML data to encode.
 
@@ -34,6 +30,10 @@ ETA: &#xBD; hour
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+<#
+An HTML or XML string that may include emoji or other Unicode characters outside
+the 7-bit ASCII range.
+#>
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject
 )
 Process

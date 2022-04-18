@@ -2,18 +2,6 @@
 .SYNOPSIS
 Exports a graph of a Fake4 build script's targets.
 
-.PARAMETER Renderer
-The name of the Graphviz rendering engine to use.
-
-.PARAMETER Format
-The output format of the graph.
-
-.PARAMETER OutFile
-The filename to output the graph to.
-
-.PARAMETER FakeVersion
-The specific version of Fake4 to install if it is missing.
-
 .NOTES
 TODO: Parameterize build script file.
 TODO: Parameterize build target, and include only it and its dependencies.
@@ -27,10 +15,14 @@ Parses build.fsx and shows the target dependency graph in build.svg.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+# The name of the Graphviz rendering engine to use.
 [ValidateSet('dot','circo','sfdp','twopi')][string] $Renderer = 'dot',
+# The output format of the graph.
 [ValidateSet('bmp','gif','gv','jpg','pdf','png','ps','svg','svgz','tiff','vml','vmlz')]
 [string] $Format = 'svg',
+# The filename to output the graph to.
 [string] $OutFile = "build.$Format",
+# The specific version of Fake4 to install if it is missing.
 [ValidatePattern('\A4\.\S+\z')][string] $FakeVersion = '4.64.17'
 )
 Begin

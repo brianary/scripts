@@ -2,15 +2,6 @@
 .SYNOPSIS
 Renames all instances of a script, and updates any usage of it.
 
-.PARAMETER OldName
-The current name of the script to change.
-
-.PARAMETER NewName
-The desired name of the script to change to.
-
-.PARAMETER ScriptDirectory
-Any directories within which to rename the script (and any usage).
-
 .LINK
 Set-RegexReplace.ps1
 
@@ -23,8 +14,11 @@ and updates them.
 
 #Requires -Version 3
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)] Param(
+# The current name of the script to change.
 [Parameter(Position=0,Mandatory=$true)][ValidateNotNullOrEmpty()][Alias('From')][string] $OldName,
+# The desired name of the script to change to.
 [Parameter(Position=1,Mandatory=$true)][ValidateNotNullOrEmpty()][Alias('To')][string] $NewName,
+# Any directories within which to rename the script (and any usage).
 [Parameter(Position=2,ValueFromRemainingArguments=$true)][ValidateNotNullOrEmpty()][Alias('Directory')]
 [string[]] $ScriptDirectory = '.'
 )

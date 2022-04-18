@@ -2,9 +2,6 @@
 .SYNOPSIS
 Exports the local list of Scheduled Tasks into a single XML file.
 
-.PARAMETER Path
-The name of the XML file to export to.
-
 .LINK
 https://msdn.microsoft.com/library/windows/desktop/bb736357.aspx
 

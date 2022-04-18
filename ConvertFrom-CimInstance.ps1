@@ -2,9 +2,6 @@
 .SYNOPSIS
 Convert a CimInstance object to a PSObject.
 
-.PARAMETER InputObject
-The CimInstance object to convert to a PSObject.
-
 .INPUTS
 Microsoft.Management.Infrastructure.CimInstance to convert to a PSObject.
 
@@ -19,6 +16,7 @@ Gets the scheduled tasks as PSObjects that support tab completion and can be ser
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# The CimInstance object to convert to a PSObject.
 [Parameter(Position=0,ValueFromPipeline=$true)]
 [Microsoft.Management.Infrastructure.CimInstance] $InputObject
 )

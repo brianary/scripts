@@ -2,12 +2,6 @@
 .SYNOPSIS
 Make a command unavailable.
 
-.PARAMETER Name
-The name of command to hide.
-
-.PARAMETER CommandType
-Specifies the types of commands that this cmdlet hides.
-
 .INPUTS
 System.String containing a command name, or an object with a Name of a command
 and maybe a specific CommandType.
@@ -31,7 +25,9 @@ Removes the mkdir function.
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The name of command to hide.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
+# Specifies the types of commands that this cmdlet hides.
 [Parameter(ValueFromPipelineByPropertyName=$true)][Management.Automation.CommandTypes] $CommandType
 )
 Process

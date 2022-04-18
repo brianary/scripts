@@ -2,18 +2,6 @@
 .SYNOPSIS
 Compares the properties of two objects.
 
-.PARAMETER ReferenceObject
-The base object to compare properties to.
-
-.PARAMETER DifferenceObject
-The second object to compare the properties of.
-
-.PARAMETER ExcludeDifferent
-Indicates different values should be suppressed.
-
-.PARAMETER IncludeEqual
-Indicates equal values should be included.
-
 .INPUTS
 System.Management.Automation.PSObject with properties to compare.
 
@@ -54,9 +42,13 @@ DifferentValue : {Alias}
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# The base object to compare properties to.
 [Parameter(Position=0)][PSObject] $ReferenceObject,
+# The second object to compare the properties of.
 [Parameter(Position=1,ValueFromPipeline=$true)][PSObject] $DifferenceObject,
+# Indicates different values should be suppressed.
 [switch] $ExcludeDifferent,
+# Indicates equal values should be included.
 [switch] $IncludeEqual
 )
 

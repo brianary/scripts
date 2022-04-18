@@ -2,40 +2,6 @@
 .SYNOPSIS
 Retrieves a list of saved articles from a Pocket account.
 
-.PARAMETER After
-Return articles newer than this time.
-
-.PARAMETER Before
-Return articles older than this time.
-
-.PARAMETER Search
-Return articles containing this search term.
-
-.PARAMETER Domain
-Return articles from this domain.
-
-.PARAMETER State
-Return articles with this read/archived/either status.
-
-.PARAMETER Tag
-Return articles with this tag.
-
-.PARAMETER Sort
-Specifies a method for sorting returned articles.
-
-.PARAMETER ContentType
-Return only video, image, or text articles as specified.
-
-.PARAMETER Vault
-The name of the secret vault to retrieve the Pocket API consumer key from.
-By default, the default vault is used.
-
-.PARAMETER Favorite
-Return only favorite articles.
-
-.PARAMETER Detailed
-Return full article details.
-
 .OUTPUTS
 System.Management.Automation.PSObject containing article details.
 See https://getpocket.com/developer/docs/v3/retrieve for fields.
@@ -83,16 +49,30 @@ item_id    resolved_id given_url                                                
 #Requires -Version 3
 #Requires -Modules Microsoft.PowerShell.SecretManagement,Microsoft.PowerShell.SecretStore
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([psobject])] Param(
+# Return articles newer than this time.
 [Parameter(Position=1,Mandatory=$true)][datetime] $After,
+# Return articles older than this time.
 [Parameter(Position=2,Mandatory=$true)][datetime] $Before,
+# Return articles containing this search term.
 [Parameter(Position=3)][string] $Search,
+# Return articles from this domain.
 [string] $Domain,
+# Return articles with this read/archived/either status.
 [ValidateSet('Unread','Archive','All')][string] $State = 'Unread',
+# Return articles with this tag.
 [string] $Tag,
+# Specifies a method for sorting returned articles.
 [ValidateSet('Newest','Oldest','Title','Site')][string] $Sort,
+# Return only video, image, or text articles as specified.
 [ValidateSet('Article','Video','Image')][string] $ContentType,
+<#
+The name of the secret vault to retrieve the Pocket API consumer key from.
+By default, the default vault is used.
+#>
 [string] $Vault,
+# Return only favorite articles.
 [switch] $Favorite,
+# Return full article details.
 [switch] $Detailed
 )
 Set-ParameterDefault.ps1 Invoke-RestMethod Method Post

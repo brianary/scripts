@@ -2,9 +2,6 @@
 .SYNOPSIS
 Counts each type of indent and line ending.
 
-.PARAMETER Path
-A file to examine.
-
 .INPUTS
 System.String containing a filename to examine.
 
@@ -33,6 +30,7 @@ FinalNewline : True
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# A file to examine.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromPipeline=$true)]
 [Alias('FullName')][string] $Path
 )

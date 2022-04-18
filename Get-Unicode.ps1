@@ -8,16 +8,6 @@ An alias of U+ allows you to interpolate a codepoint like this "$(U+ 0x1F5A7) Ne
 This script is mostly useful to Windows PowerShell (before version 6), since PowerShell Core
 supports the new `u{1F5A5} syntax.
 
-.PARAMETER Codepoint
-The integer value of a Unicode codepoint to convert into a .NET string.
-
-.PARAMETER AsEmoji
-Appends a U+FE0F VARIATION SELECTOR-16 suffix to the character, which suggests an emoji presentation
-for characters that support both a simple text presentation as well as a color emoji-style one.
-
-.PARAMETER AsStringLiteral
-Outputs the codepoint as a usable PowerShell string literal.
-
 .INPUTS
 System.Int32 value of a Unicode codepoint.
 
@@ -41,8 +31,14 @@ https://emojipedia.org/variation-selector-16/
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# The integer value of a Unicode codepoint to convert into a .NET string.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][int] $Codepoint,
+<#
+Appends a U+FE0F VARIATION SELECTOR-16 suffix to the character, which suggests an emoji presentation
+for characters that support both a simple text presentation as well as a color emoji-style one.
+#>
 [switch] $AsEmoji,
+# Outputs the codepoint as a usable PowerShell string literal.
 [switch] $AsStringLiteral
 )
 Begin { [char[]] $c = @() }

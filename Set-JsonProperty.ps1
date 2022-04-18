@@ -2,35 +2,6 @@
 .SYNOPSIS
 Sets a property of arbitrary depth in a JSON string.
 
-.PARAMETER PropertyName
-The full path name of the property to set.
-
-With the default path separator of . for a name of powershell.codeFormatting.preset sets
-{ "powershell": { "codeFormatting": { "preset": "value" } } }
-this can be escaped to powershell\.codeFormatting\.preset to set
-{ "powershell.codeFormatting.preset": "value" }
-Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
-{ "powershell.codeFormatting.preset": "value" }
-
-.PARAMETER PropertyValue
-The value to set the property to.
-
-.PARAMETER PathSeparator
-The character to use as a property name path separator (dot by default).
-
-With the default path separator of . for a name of powershell.codeFormatting.preset sets
-{ "powershell": { "codeFormatting": { "preset": "value" } } }
-this can be escaped to powershell\.codeFormatting\.preset to set
-{ "powershell.codeFormatting.preset": "value" }
-Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
-{ "powershell.codeFormatting.preset": "value" }
-
-.PARAMETER WarnOverwrite
-Indicates that overwriting values should generate a warning.
-
-.PARAMETER InputObject
-The JSON string to set the property in.
-
 .INPUTS
 System.String containing JSON.
 
@@ -60,11 +31,34 @@ Add-Member
 #>
 
 [CmdletBinding()][OutputType([string])] Param(
+<#
+The full path name of the property to set.
+
+With the default path separator of . for a name of powershell.codeFormatting.preset sets
+{ "powershell": { "codeFormatting": { "preset": "value" } } }
+this can be escaped to powershell\.codeFormatting\.preset to set
+{ "powershell.codeFormatting.preset": "value" }
+Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
+{ "powershell.codeFormatting.preset": "value" }
+#>
 [Alias('Name')][Parameter(Position=0,Mandatory=$true)][string] $PropertyName,
+# The value to set the property to.
 [Parameter(Position=1,Mandatory=$true)][AllowEmptyString()][AllowEmptyCollection()][AllowNull()]
 [Alias('Value')][psobject] $PropertyValue,
+<#
+The character to use as a property name path separator (dot by default).
+
+With the default path separator of . for a name of powershell.codeFormatting.preset sets
+{ "powershell": { "codeFormatting": { "preset": "value" } } }
+this can be escaped to powershell\.codeFormatting\.preset to set
+{ "powershell.codeFormatting.preset": "value" }
+Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
+{ "powershell.codeFormatting.preset": "value" }
+#>
 [Alias('Separator','Delimiter')][char] $PathSeparator = '.',
+# Indicates that overwriting values should generate a warning.
 [switch] $WarnOverwrite,
+# The JSON string to set the property in.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject
 )
 Begin

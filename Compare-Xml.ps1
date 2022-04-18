@@ -2,12 +2,6 @@
 .SYNOPSIS
 Compares two XML documents and returns the differences.
 
-.PARAMETER ReferenceXml
-The original XML document to be compared.
-
-.PARAMETER DifferenceXml
-An XML document to compare to.
-
 .INPUTS
 System.Xml.XmlDocument to compare to the reference XML.
 
@@ -92,7 +86,9 @@ Compare-Xml.ps1 '<a/>' '<a><!-- annotation --><new/><?node details?></a>' |Forma
 #Requires -Version 3
 using namespace System.Xml
 [CmdletBinding()][OutputType([xml])] Param(
+# The original XML document to be compared.
 [Parameter(Position=0,Mandatory=$true)][xml] $ReferenceXml,
+# An XML document to compare to.
 [Parameter(Position=1,Mandatory=$true)][xml] $DifferenceXml
 )
 

@@ -2,15 +2,6 @@
 .SYNOPSIS
 Constructs an OrderedDictionary by selecting keys from a given IDictionary.
 
-.PARAMETER Keys
-List of keys to include in the new dictionary.
-
-.PARAMETER Dictionary
-The source dictionary to copy key-value pairs from.
-
-.PARAMETER SkipNullValues
-When present, indicates that key-value pairs with a null value should not be included.
-
 .NOTES
 Only string keys are supported.
 
@@ -38,8 +29,11 @@ Sends an email using selected params declared by the calling script with values.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Collections.Specialized.OrderedDictionary])] Param(
+# List of keys to include in the new dictionary.
 [Parameter(Position=0,ValueFromRemainingArguments=$true)][string[]]$Keys,
+# The source dictionary to copy key-value pairs from.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][Alias('Hashtable')][Collections.IDictionary]$Dictionary,
+# When present, indicates that key-value pairs with a null value should not be included.
 [Alias('NoNulls')][switch]$SkipNullValues
 )
 Begin {$containsKey = [Collections.IDictionary].GetMethod('Contains')}

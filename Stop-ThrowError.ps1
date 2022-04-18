@@ -32,40 +32,6 @@ target object, then using that to call ThrowTerminatingError() is pretty inconve
 
 This script combines that process into a few simple parameters.
 
-.PARAMETER ExceptionType
-The type of a Exception class to instantiate as part of the error.
-
-.PARAMETER ExceptionArguments
-The constructor parameters for the exception class specified by ExceptionTypeName.
-
-.PARAMETER ErrorCategory
-The error's category, as an enumeration value.
-
-.PARAMETER TargetObject
-The object in context when the error happened.
-
-.PARAMETER ErrorId
-An string unique to the script that identifies the error.
-By default this will use the line number it is called from.
-
-.PARAMETER Format
-The data format the string failed to parse as.
-
-.PARAMETER InputString
-The string that failed to parse.
-
-.PARAMETER Argument
-The parameter name that had a bad value.
-
-.PARAMETER OperationContext
-An object containing the state that failed to process.
-
-.PARAMETER SearchContext
-An object containing the search detail that failed.
-
-.PARAMETER NotImplemented
-Indicates that the exception represents incomplete functionality.
-
 .LINK
 https://docs.microsoft.com/dotnet/api/system.management.automation.cmdlet.throwterminatingerror
 
@@ -97,12 +63,20 @@ if(Test-Uri.ps1 $u) {[uri]$u} else {Stop-ThrowError.ps1 'Bad URL' -Format URL -I
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([void])] Param(
+# The type of a Exception class to instantiate as part of the error.
 [Parameter(ParameterSetName='CatchBlock',Position=0)]
 [Parameter(ParameterSetName='Detailed',Mandatory=$true,Position=0)][Type] $ExceptionType,
+# The constructor parameters for the exception class specified by ExceptionTypeName.
 [Parameter(ParameterSetName='CatchBlock',Position=1)]
 [Parameter(ParameterSetName='Detailed',Mandatory=$true,Position=1)][object[]] $ExceptionArguments,
+# The error's category, as an enumeration value.
 [Parameter(ParameterSetName='Detailed',Mandatory=$true,Position=2)][Management.Automation.ErrorCategory] $ErrorCategory,
+# The object in context when the error happened.
 [Parameter(ParameterSetName='Detailed',Mandatory=$true,Position=3)][object] $TargetObject,
+<#
+An string unique to the script that identifies the error.
+By default this will use the line number it is called from.
+#>
 [Parameter(ParameterSetName='Detailed',Position=4)][string] $ErrorId =
 	"L$(Get-PSCallStack |select -First 1 |% ScriptLineNumber)",
 [Parameter(Position=0,ParameterSetName='Format',Mandatory=$true)]
@@ -112,11 +86,17 @@ if(Test-Uri.ps1 $u) {[uri]$u} else {Stop-ThrowError.ps1 'Bad URL' -Format URL -I
 [Parameter(Position=0,ParameterSetName='ItemNotFound',Mandatory=$true)]
 [Parameter(Position=0,ParameterSetName='NotImplemented',Mandatory=$true)]
 [string] $Message,
+# The data format the string failed to parse as.
 [Parameter(ParameterSetName='Format',Mandatory=$true)][string] $Format,
+# The string that failed to parse.
 [Parameter(ParameterSetName='Format',Mandatory=$true)][string] $InputString,
+# The parameter name that had a bad value.
 [Parameter(ParameterSetName='InvalidArgument',Mandatory=$true)][Alias('InvalidArgument')][string] $Argument,
+# An object containing the state that failed to process.
 [Parameter(ParameterSetName='InvalidOperation',Mandatory=$true)][Alias('InvalidOperation')] $OperationContext,
+# An object containing the search detail that failed.
 [Parameter(ParameterSetName='ItemNotFound',Mandatory=$true)][Alias('ObjectNotFound')] $SearchContext,
+# Indicates that the exception represents incomplete functionality.
 [Parameter(ParameterSetName='NotImplemented',Mandatory=$true)][switch] $NotImplemented
 )
 [object[]] $params = switch($PSCmdlet.ParameterSetName)

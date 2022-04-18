@@ -2,10 +2,6 @@
 .SYNOPSIS
 Creates an object to lookup XML namespace prefixes.
 
-.PARAMETER Namespaces
-A dictionary of prefixes and their namespace URLs.
-If a default Namespace value for Select-Xml exists, this will use it.
-
 .OUTPUTS
 System.Xml.XmlNamespaceManager containing the given namespaces.
 
@@ -21,6 +17,10 @@ Use-ReasonableDefaults.ps1; $n = New-NamespaceManager.ps1; (Select-Xml //xhtml:t
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Xml.XmlNamespaceManager])] Param(
+<#
+A dictionary of prefixes and their namespace URLs.
+If a default Namespace value for Select-Xml exists, this will use it.
+#>
 [ValidateNotNullOrEmpty()][Collections.IDictionary] $Namespaces = $PSDefaultParameterValues['Select-Xml:Namespace']
 )
 $value = New-Object Xml.XmlNamespaceManager (New-Object Xml.NameTable)

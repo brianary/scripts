@@ -2,9 +2,6 @@
 .SYNOPSIS
 Removes dictionary entries with null vaules.
 
-.PARAMETER InputObject
-A dictionary to remove the nulls from.
-
 .INPUTS
 System.Collections.IDictionary to remove nulls from.
 
@@ -22,6 +19,7 @@ a                              1
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Collections.IDictionary])] Param(
+# A dictionary to remove the nulls from.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Collections.IDictionary] $InputObject
 )
 Process

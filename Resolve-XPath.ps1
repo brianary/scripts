@@ -2,9 +2,6 @@
 .SYNOPSIS
 Returns the XPath of the location of an XML node.
 
-.PARAMETER XmlNode
-An XML node to retrieve the XPath for.
-
 .INPUTS
 System.Xml.XmlNode or property of that type named XmlNode or Node.
 
@@ -32,6 +29,7 @@ https://docs.microsoft.com/dotnet/api/system.xml.xmlnode
 #Requires -Version 3
 using namespace System.Xml
 [CmdletBinding()][OutputType([string])] Param(
+# An XML node to retrieve the XPath for.
 [Alias('Node')][Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
 [XmlNode] $XmlNode
 )

@@ -2,39 +2,6 @@
 .SYNOPSIS
 Searches for database columns.
 
-.PARAMETER ServerInstance
-The server and instance to connect to.
-
-.PARAMETER Database
-The database to use.
-
-.PARAMETER IncludeSchemata
-A like-pattern of database schemata to include (will only include these).
-
-.PARAMETER ExcludeSchemata
-A like-pattern of database schemata to exclude.
-
-.PARAMETER IncludeTables
-A like-pattern of database tables to include (will only include these).
-
-.PARAMETER ExcludeTables
-A like-pattern of database tables to exclude.
-
-.PARAMETER IncludeColumns
-A like-pattern of database columns to include (will only include these).
-
-.PARAMETER ExcludeColumns
-A like-pattern of database columns to exclude.
-
-.PARAMETER DataType
-The basic datatype to search for.
-
-.PARAMETER MinLength
-The minimum character column length.
-
-.PARAMETER MaxLength
-The maximum character column length.
-
 .OUTPUTS
 System.Management.Automation.PSCustomObject for each found column:
 
@@ -72,19 +39,32 @@ Sales       SalesOrderDetail        UnitPriceDiscount money       False ((0.0))
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# The server and instance to connect to.
 [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string] $ServerInstance,
+# The database to use.
 [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string] $Database,
+# Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string] $ConnectionString,
+# The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string] $ConnectionName,
+# A like-pattern of database schemata to include (will only include these).
 [string[]] $IncludeSchemata,
+# A like-pattern of database schemata to exclude.
 [string[]] $ExcludeSchemata,
+# A like-pattern of database tables to include (will only include these).
 [string[]] $IncludeTables,
+# A like-pattern of database tables to exclude.
 [string[]] $ExcludeTables,
+# A like-pattern of database columns to include (will only include these).
 [string[]] $IncludeColumns,
+# A like-pattern of database columns to exclude.
 [string[]] $ExcludeColumns,
+# The basic datatype to search for.
 [ValidateSet('char','byte','int','long','decimal','double','date','datetime','time')]
 [string] $DataType,
+# The minimum character column length.
 [int] $MinLength,
+# The maximum character column length.
 [int] $MaxLength
 )
 try{[void][Configuration.ConfigurationManager]}catch{Add-Type -AssemblyName System.Configuration}

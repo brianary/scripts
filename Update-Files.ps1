@@ -2,15 +2,6 @@
 .SYNOPSIS
 Copies specified source files that exist in the destination directory.
 
-.PARAMETER Path
-Path(s) to copy files from, wildcards allowed.
-
-.PARAMETER Destination
-Folder to copy files to, if they already exist there.
-
-.PARAMETER NewerOnly
-Indicates files should only be copied if they are newer.
-
 .INPUTS
 System.String of paths to copy from, if matches exist in the destination.
 
@@ -22,8 +13,11 @@ Copies *.txt files from C:\Source to D:\Dest that exist in both.
 
 #Requires -Version 3
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
+# Path(s) to copy files from, wildcards allowed.
 [Parameter(Position=0,ValueFromPipelineByPropertyName=$true,ValueFromPipeline=$true,Mandatory=$true)][string[]] $Path,
+# Folder to copy files to, if they already exist there.
 [ValidateScript({Test-Path $_ -PathType Container})][Parameter(Position=1)][string] $Destination,
+# Indicates files should only be copied if they are newer.
 [switch] $NewerOnly
 )
 

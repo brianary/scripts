@@ -2,15 +2,6 @@
 .SYNOPSIS
 Runs commands in Windows PowerShell (typically from PowerShell Core).
 
-.PARAMETER CommandBlock
-A script block to run.
-
-.PARAMETER BlockArgs
-Parameters to the script block.
-
-.PARAMETER CommandText
-The text of the command to run.
-
 .LINK
 Use-Command.ps1
 
@@ -36,8 +27,11 @@ powershell.exe
 
 #Requires -Version 5
 [CmdletBinding()] Param(
+# A script block to run.
 [Parameter(ParameterSetName='CommandBlock',Position=0,Mandatory=$true)][scriptblock] $CommandBlock,
+# Parameters to the script block.
 [Parameter(ParameterSetName='CommandBlock',Position=1,ValueFromRemainingArguments=$true)][psobject[]] $BlockArgs = @(),
+# The text of the command to run.
 [Parameter(ParameterSetName='CommandText',Position=0,Mandatory=$true)][string] $CommandText
 )
 

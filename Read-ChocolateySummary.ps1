@@ -2,19 +2,6 @@
 .SYNOPSIS
 Retrieves the a summary from the Chocolatey log.
 
-.PARAMETER Position
-Indicates which Chocolatey run in the log to check.
-Use negative numbers to count from the end of the log.
-
-.PARAMETER Level
-The lowest level of importance to include.
-
-* All, ActivityTracing, and Verbose include everything.
-* Information includes that level, plus Warning and Error.
-* Warning includes that level, plus Error.
-* Error only includes that level.
-* Critical and Off will exclude everything, since those levels aren't used.
-
 .OUTPUTS
 System.Management.Automation.PSCustomObject with LogTime, Level, and Text of the last
 Chocolatey log entries.
@@ -65,7 +52,20 @@ Read-ChocolateySummary.ps1 |Format-Table -AutoSize -Wrap
 #Requires -Version 5.1
 using namespace System.Diagnostics
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+<#
+Indicates which Chocolatey run in the log to check.
+Use negative numbers to count from the end of the log.
+#>
 [Parameter(Position=0)][int] $Position = -1,
+<#
+The lowest level of importance to include.
+
+* All, ActivityTracing, and Verbose include everything.
+* Information includes that level, plus Warning and Error.
+* Warning includes that level, plus Error.
+* Error only includes that level.
+* Critical and Off will exclude everything, since those levels aren't used.
+#>
 [Parameter(Position=1)][Alias('Verbosity')][SourceLevels] $Level = 'Warning'
 )
 if($Level -eq 'All') {[SourceLevels] $Level = 'ActivityTracing'}

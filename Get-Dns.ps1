@@ -2,13 +2,6 @@
 .SYNOPSIS
 Looks up DNS info, given a hostname or address.
 
-.PARAMETER HostName
-A host name or address to look up.
-
-.PARAMETER OnlyAddresses
-Indicates that only the string versions of addresses belonging to the specified family should be returned.
-"Unknown" returns all addresses.
-
 .INPUTS
 System.String of host names to look up.
 
@@ -28,8 +21,13 @@ www.google.com {}      {172.217.10.132}
 #>
 
 [CmdletBinding()][OutputType([Net.IPHostEntry],[string])] Param(
+# A host name or address to look up.
 [Parameter(Position=0,Mandatory=$true,ValueFromRemainingArguments=$true,ValueFromPipeline=$true)]
 [Alias('Address','HostAddress','Name')][string[]] $HostName,
+<#
+Indicates that only the string versions of addresses belonging to the specified family should be returned.
+"Unknown" returns all addresses.
+#>
 [Net.Sockets.AddressFamily] $OnlyAddresses
 )
 

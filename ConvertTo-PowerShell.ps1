@@ -2,37 +2,6 @@
 .SYNOPSIS
 Serializes complex content into PowerShell literals.
 
-.PARAMETER Value
-An array, hash, object, or value type that can be represented as a PowerShell literal.
-
-.PARAMETER Indent
-The starting indent value. You can probably ignore this.
-
-.PARAMETER IndentBy
-The string to use for incremental indentation.
-
-.PARAMETER Newline
-The line ending sequence to use.
-
-.PARAMETER SkipInitialIndent
-Indicates the first line has already been indented. You can probably ignore this.
-
-.PARAMETER GenerateKey
-Generates a key to use for encrypting credential and secure string literals.
-If this is omitted, credentials will be encrypted using DPAPI, which will only be
-decryptable on the same Windows machine where they were encrypted.
-
-.PARAMETER SecureKey
-The key to use for encrypting credentials and secure strings, as a secure string to be
-encoded into UTF-8 bytes.
-
-.PARAMETER Credential
-A credential containing a password (the username is ignored) to be used for encrypting
-credentials and secure strings, after encoding to UTF-8 bytes.
-
-.PARAMETER KeyBytes
-The key to use for encrypting credentials and secure strings, as a byte array.
-
 .INPUTS
 System.Object (any object) to serialize.
 
@@ -59,14 +28,33 @@ ConvertFrom-Json '[{"a":1,"b":2,"c":{"d":"\/Date(1490216371478)\/","e":null}}]' 
 
 #Requires -Version 3
 [CmdletBinding(DefaultParameterSetName='GenerateKey')][OutputType([string])] Param(
+# An array, hash, object, or value type that can be represented as a PowerShell literal.
 [Parameter(Position=0,ValueFromPipeline=$true)] $Value,
+# The starting indent value. You can probably ignore this.
 [string] $Indent = '',
+# The string to use for incremental indentation.
 [string] $IndentBy = "`t",
+# The line ending sequence to use.
 [string] $Newline = [environment]::NewLine,
+# Indicates the first line has already been indented. You can probably ignore this.
 [switch] $SkipInitialIndent,
+<#
+Generates a key to use for encrypting credential and secure string literals.
+If this is omitted, credentials will be encrypted using DPAPI, which will only be
+decryptable on the same Windows machine where they were encrypted.
+#>
 [Parameter(ParameterSetName='GenerateKey')][Alias('PortableKey')][switch] $GenerateKey,
+<#
+The key to use for encrypting credentials and secure strings, as a secure string to be
+encoded into UTF-8 bytes.
+#>
 [Parameter(ParameterSetName='SecureKey',Mandatory=$true)][securestring] $SecureKey,
+<#
+A credential containing a password (the username is ignored) to be used for encrypting
+credentials and secure strings, after encoding to UTF-8 bytes.
+#>
 [Parameter(ParameterSetName='Credential',Mandatory=$true)][pscredential] $Credential,
+# The key to use for encrypting credentials and secure strings, as a byte array.
 [Parameter(ParameterSetName='KeyBytes',Mandatory=$true)][byte[]] $KeyBytes
 )
 Begin

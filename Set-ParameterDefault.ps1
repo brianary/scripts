@@ -2,18 +2,6 @@
 .SYNOPSIS
 Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
 
-.PARAMETER CommandName
-The name of a cmdlet, function, script, or alias to assign a default parameter value to.
-
-.PARAMETER ParameterName
-The name or alias of the parameter to assign a default value to.
-
-.PARAMETER Value
-The value to assign as a default.
-
-.PARAMETER Scope
-The scope of this default.
-
 .INPUTS
 System.Object containing the default value to assign.
 
@@ -43,9 +31,13 @@ Uses only the SVG namespace for Select-Xml when none are given explicitly.
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The name of a cmdlet, function, script, or alias to assign a default parameter value to.
 [Parameter(Position=0,Mandatory=$true)][ValidateNotNullOrEmpty()][Alias('CmdletName')][string] $CommandName,
+# The name or alias of the parameter to assign a default value to.
 [Parameter(Position=1,Mandatory=$true)][ValidateNotNullOrEmpty()][string] $ParameterName,
+# The value to assign as a default.
 [Parameter(Position=2,Mandatory=$true,ValueFromPipeline=$true)] $Value,
+# The scope of this default.
 [string] $Scope = 'Local'
 )
 Begin

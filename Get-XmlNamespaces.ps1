@@ -31,6 +31,7 @@ Get-XmlNamespaces.ps1 .\dataref.xslt
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Collections.Generic.Dictionary[string,string]])] Param(
+# The XML file.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
 )
 Process

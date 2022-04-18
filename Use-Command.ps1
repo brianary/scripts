@@ -9,61 +9,6 @@ If the command does not exist, but the path is valid, an alias is created.
 
 Otherwise, if one of several installation methods is provided, an installation attempt is made before aliasing.
 
-.PARAMETER Name
-The name of the command to test.
-
-.PARAMETER Path
-The full path of the command, if installed.
-Accepts wildcards, as supported by Resolve-Path.
-
-.PARAMETER ChocolateyPackage
-The name of the Chocolatey package to install if the command is missing.
-
-.PARAMETER DotNetTool
-The name of the .NET global tool to install if the command is missing.
-
-.PARAMETER NugetPackage
-The name of the NuGet package to install if the command is missing.
-
-.PARAMETER NodePackage
-The name of the Node NPM package to install if the command is missing.
-
-.PARAMETER Version
-The specific package version to install.
-
-.PARAMETER InstallDir
-The directory to install NuGet or Node packages to.
-Node will create and use a "node_modules" folder under this one.
-Default is C:\Tools
-
-.PARAMETER WindowsInstaller
-The location (file or URL) of an MSI package to install if the command is missing.
-
-.PARAMETER InstallLevel
-The INSTALLLEVEL to pass to Windows Installer.
-Default is 32767
-
-.PARAMETER ExecutableInstaller
-The location (file or URL) of an .exe installer to use if the command is missing.
-
-.PARAMETER InstallerParameters
-Parameters to pass to the .exe installer.
-
-.PARAMETER ExecutePowerShell
-The URL or file path of a PowerShell script to download and execute to install the command if it is missing.
-
-.PARAMETER DownloadZip
-The URL to download a .zip file containing the command if it is missing.
-
-.PARAMETER DownloadUrl
-The URL to download the command from if it is missing.
-
-.PARAMETER Message
-A message to display, rather than attempting to install a missing command.
-
-.PARAMETER Fail
-Throw an exception rather than attempt to install a missing command.
-
 .COMPONENT
 System.IO.Compression.FileSystem
 
@@ -110,33 +55,61 @@ This example downloads and installs the RSAT-AD-PowerShell module if missing.
 #requires -Version 2
 #requires -Modules Microsoft.PowerShell.Utility
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
+# The name of the command to test.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
+<#
+The full path of the command, if installed.
+Accepts wildcards, as supported by Resolve-Path.
+#>
 [Parameter(Position=1,Mandatory=$true)][string] $Path,
+# The name of Windows OS feature to install if command is missing.
 [Parameter(ParameterSetName='WindowsFeature')][Alias('WinFeature')][string] $WindowsFeature,
+# The name of the Chocolatey package to install if the command is missing.
 [Parameter(ParameterSetName='ChocolateyPackage')][Alias('ChocoPackage','chocopkg','cinst')][string] $ChocolateyPackage,
+# The name of the .NET global tool to install if the command is missing.
 [Parameter(ParameterSetName='DotNetTool')][Alias('DotNetGlobalTool','dotnet')][string] $DotNetTool,
+# The name of the NuGet package to install if the command is missing.
 [Parameter(ParameterSetName='NugetPackage')][Alias('nupkg')][string] $NugetPackage,
+# The name of the Node NPM package to install if the command is missing.
 [Parameter(ParameterSetName='NodePackage')][Alias('npm')][string] $NodePackage,
+# The specific package version to install.
 [Parameter(ParameterSetName='ChocolateyPackage')]
 [Parameter(ParameterSetName='NugetPackage')]
 [Parameter(ParameterSetName='NodePackage')]
 [ValidatePattern('\A\S+\z')][string] $Version,
+<#
+The directory to install NuGet or Node packages to.
+Node will create and use a "node_modules" folder under this one.
+Default is C:\Tools
+#>
 [Parameter(ParameterSetName='NugetPackage')]
 [Parameter(ParameterSetName='NodePackage')]
 [Alias('dir')][string] $InstallDir = 'C:\Tools',
+# The location (file or URL) of an MSI package to install if the command is missing.
 [Parameter(ParameterSetName='WindowsInstaller')]
 [Alias('msi')][uri] $WindowsInstaller,
+<#
+The INSTALLLEVEL to pass to Windows Installer.
+Default is 32767
+#>
 [Parameter(ParameterSetName='WindowsInstaller')]
 [int] $InstallLevel = 32767,
+# The location (file or URL) of an .exe installer to use if the command is missing.
 [Parameter(ParameterSetName='ExecutableInstaller')]
 [Alias('exe')][uri] $ExecutableInstaller,
+# Parameters to pass to the .exe installer.
 [Parameter(ParameterSetName='ExecutableInstaller')]
 [Alias('params')][string[]] $InstallerParameters = @(),
+# The URL or file path of a PowerShell script to download and execute to install the command if it is missing.
 [Parameter(ParameterSetName='ExecutePS')][Alias('iex')][uri] $ExecutePowerShell,
+# The URL to download a .zip file containing the command if it is missing.
 [Parameter(ParameterSetName='DownloadZip')][Alias('zip')][uri] $DownloadZip,
+# The URL to download the command from if it is missing.
 [Parameter(ParameterSetName='DownloadUrl')][Alias('url')][uri] $DownloadUrl,
+# A message to display, rather than attempting to install a missing command.
 [Parameter(ParameterSetName='WarnOnly')]
 [Alias('msg')][string] $Message,
+# Throw an exception rather than attempt to install a missing command.
 [Parameter(ParameterSetName='Fail')]
 [switch] $Fail
 )

@@ -2,12 +2,6 @@
 .SYNOPSIS
 Parse escaped XML into XML and serialize it.
 
-.PARAMETER EscapedXml
-The escaped XML text.
-
-.PARAMETER NoIndent
-Outputs the XML without indentation.
-
 .INPUTS
 System.String, some escaped XML.
 
@@ -22,7 +16,9 @@ ConvertFrom-EscapedXml.ps1 '&lt;a href=&quot;http://example.org&quot;&gt;link&lt
 
 #Requires -Version 2
 [CmdletBinding()][OutputType([string])] Param(
+# The escaped XML text.
 [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][string]$EscapedXml,
+# Outputs the XML without indentation.
 [Alias('NoIndent')][switch]$Compress
 )
 [xml] $xml = [Net.WebUtility]::HtmlDecode($EscapedXml)

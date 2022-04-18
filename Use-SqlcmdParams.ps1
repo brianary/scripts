@@ -13,9 +13,13 @@ pull a connection string from the .NET configuration.
 To use this script, add any or all of these parameter sets:
 
 [CmdletBinding()] Param(
+# The name of the server (and instance) to connect to.
 [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string]$ServerInstance,
+# The name of the database to connect to on the server.
 [Parameter(ParameterSetName='ByConnectionParameters')][string]$Database,
+# Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
+# The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
 # ...
 )
@@ -23,9 +27,13 @@ To use this script, add any or all of these parameter sets:
 Or, if you wish to support Use-SqlcmdParams.ps1 in scripts that call your script:
 
 [CmdletBinding()] Param(
+# The name of the server (and instance) to connect to.
 [Parameter(ParameterSetName='ByConnectionParameters')][string]$ServerInstance = $PSDefaultParameterValues['Invoke-Sqlcmd:ServerInstance'],
+# The name of the database to connect to on the server.
 [Parameter(ParameterSetName='ByConnectionParameters')][string]$Database = $PSDefaultParameterValues['Invoke-Sqlcmd:Database'],
+# Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
+# The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
 # ...
 )
@@ -38,6 +46,7 @@ Import-Variables.ps1
 #>
 
 #Requires -Version 3
+#TODO: document params
 [CmdletBinding()][OutputType([void])] Param(
 [string]$HostName,
 [int]$QueryTimeout,

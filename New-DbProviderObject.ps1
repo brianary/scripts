@@ -2,27 +2,6 @@
 .SYNOPSIS
 Create a common database object.
 
-.PARAMETER ProviderName
-The invariant name of the DbProviderFactory to use to create the requested object.
-
-.PARAMETER TypeName
-The type of object to create.
-
-.PARAMETER InitialValue
-A value to initialize the object with, such as CommandText for a Command object, or
-a ConnectionString for a Connection or ConnectionStringBuilder.
-
-.PARAMETER ConnectionString
-A connection string to use (when creating a Command object).
-No connection will be made if not specified.
-
-.PARAMETER StoredProcedure
-Sets the CommandType property of a Command object to StoredProcedure.
-Ignored for other objects.
-
-.PARAMETER OpenConnection
-Opens the Connection object (or Command connection) if an InitialValue was provided, ignored otherwise.
-
 .INPUTS
 System.String to initialize the database object.
 
@@ -58,12 +37,27 @@ $cmd = New-DbProviderObject.ps1 odbc Command -ConnectionString $connstr -StoredP
 #Requires -Version 4
 [CmdletBinding()][OutputType([Data.Common.DbCommand],[Data.Common.DbConnection],
 [Data.Common.DbConnectionStringBuilder])] Param(
+# The invariant name of the DbProviderFactory to use to create the requested object.
 [Parameter(Mandatory=$true,Position=0)][AllowEmptyString()][string]$ProviderName,
+# The type of object to create.
 [ValidateSet('Command','Connection','ConnectionStringBuilder')]
 [Parameter(Mandatory=$true,Position=1)][string]$TypeName,
+<#
+A value to initialize the object with, such as CommandText for a Command object, or
+a ConnectionString for a Connection or ConnectionStringBuilder.
+#>
 [Parameter(Position=2,ValueFromPipeline=$true)][Alias('Value')][string]$InitialValue,
+<#
+A connection string to use (when creating a Command object).
+No connection will be made if not specified.
+#>
 [Parameter(Position=3)][Alias('CS')][string]$ConnectionString,
+<#
+Sets the CommandType property of a Command object to StoredProcedure.
+Ignored for other objects.
+#>
 [switch]$StoredProcedure,
+# Opens the Connection object (or Command connection) if an InitialValue was provided, ignored otherwise.
 [switch]$OpenConnection
 )
 

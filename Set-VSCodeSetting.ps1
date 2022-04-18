@@ -2,15 +2,6 @@
 .SYNOPSIS
 Sets a VSCode setting.
 
-.PARAMETER Name
-The name of the setting to set, use / as a path separator for deeper structures.
-
-.PARAMETER Value
-The value of the setting to set.
-
-.PARAMETER Workspace
-Indicates that the current workspace settings should be set, rather than the user settings.
-
 .LINK
 https://code.visualstudio.com/docs/getstarted/settings
 
@@ -37,9 +28,12 @@ Sets {"workbench.colorTheme": "PowerShell ISE"} in the VSCode workspace settings
 #>
 
 [CmdletBinding()][OutputType([void])] Param(
+# The name of the setting to set, use / as a path separator for deeper structures.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
+# The value of the setting to set.
 [Parameter(Position=1,Mandatory=$true)][AllowEmptyString()][AllowEmptyCollection()][AllowNull()]
 [psobject] $Value,
+# Indicates that the current workspace settings should be set, rather than the user settings.
 [switch] $Workspace
 )
 

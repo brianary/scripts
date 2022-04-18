@@ -2,12 +2,6 @@
 .SYNOPSIS
 Convert a number to a Roman numeral.
 
-.PARAMETER Value
-The numeric value to convert into a Roman numeral string.
-
-.PARAMETER Unicode
-Indicates that Unicode Roman numeral characters should be used (U+2160-U+216F).
-
 .INPUTS
 System.Int32 value to convert to a Roman numeral string.
 
@@ -33,7 +27,9 @@ VIII
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# The numeric value to convert into a Roman numeral string.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][ValidateRange(1,3999)][int] $Value,
+# Indicates that Unicode Roman numeral characters should be used (U+2160-U+216F).
 [switch] $Unicode
 )
 Begin

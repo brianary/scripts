@@ -2,19 +2,6 @@
 .SYNOPSIS
 Adds a NoteProperty to a PSObject, calculating the value with the object in context.
 
-.PARAMETER Name
-The name of the NoteProperty to add to the object.
-
-.PARAMETER Value
-The expression to use to set the value of the NoteProperty.
-
-.PARAMETER InputObject
-The object to add the NoteProperty to.
-
-.PARAMETER PassThru
-Returns the object with the NoteProperty added.
-Normally there is no output.
-
 .LINK
 Add-Member
 
@@ -44,11 +31,20 @@ Size   Name
 #>
 
 [CmdletBinding()][OutputType([void],[psobject])] Param(
+# The name of the NoteProperty to add to the object.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
+# The expression to use to set the value of the NoteProperty.
 [Parameter(Position=1,Mandatory=$true)][ScriptBlock] $Value,
+# Properties of the input object to include as variables in the script block scope.
 [Alias('Import')][string[]] $Properties = @(),
+# The object to add the NoteProperty to.
 [Parameter(ValueFromPipeline=$true,Mandatory=$true)][PSObject] $InputObject,
+<#
+Returns the object with the NoteProperty added.
+Normally there is no output.
+#>
 [switch] $PassThru,
+# Overwrite an existing property.
 [switch] $Force
 )
 Process

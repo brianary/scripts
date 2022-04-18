@@ -2,9 +2,6 @@
 .SYNOPSIS
 Returns the name of a Unicode code point.
 
-.PARAMETER CodePoint
-The numeric value of the Unicode character.
-
 .INPUTS
 System.Int32 of a Unicode code point value to name, or
 System.String of Unicode characters to name.
@@ -23,7 +20,9 @@ SPACE
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# The numeric value of the Unicode character.
 [Parameter(ParameterSetName='CodePoint',Position=0,Mandatory=$true,ValueFromPipeline=$true)][int] $CodePoint,
+# The Unicode character.
 [Parameter(ParameterSetName='Character',Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $Character
 )
 Process

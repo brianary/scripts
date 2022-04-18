@@ -17,12 +17,6 @@ The configuration system provides a place to set email defaults:
 The values for Send-MailMessage's From, SmtpServer, and UseSsl will be
 taken from whatever is set in the machine.config (or more localized config).
 
-.PARAMETER Scope
-The scope to create the defaults in.
-
-.PARAMETER Private
-Indicates the defaults should not be visible to child scopes.
-
 .COMPONENT
 System.Configuration
 
@@ -45,7 +39,9 @@ values from the ConfigurationManager.
 #Requires -Version 3
 #Requires -Modules @{ ModuleName='Microsoft.PowerShell.Utility'; MaximumVersion='3.1.0.0' }
 [CmdletBinding()][OutputType([void])] Param(
+# The scope to create the defaults in.
 [string] $Scope = 'Local',
+# Indicates the defaults should not be visible to child scopes.
 [switch] $Private
 )
 try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration}

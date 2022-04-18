@@ -6,12 +6,6 @@ Combines a filename with a string.
 Join-FileName appends a string to a filename, including a new extension 
 overwrites the filename's extension.
 
-.PARAMETER Path
-The path to a file.
-
-.PARAMETER AppendText
-Text to append to the filename, either before the extension or including one.
-
 .INPUTS
 System.String file path.
 
@@ -35,7 +29,9 @@ C:\temp\activity.27.old
 #>
 
 [CmdletBinding()][OutputType([string])] Param(
+# The path to a file.
 [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][string] $Path,
+# Text to append to the filename, either before the extension or including one.
 [Parameter(Mandatory=$true,Position=1)][Alias('Extension')][string] $AppendText
 )
 Process

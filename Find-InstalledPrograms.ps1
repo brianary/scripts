@@ -2,9 +2,6 @@
 .SYNOPSIS
 Searches installed programs.
 
-.PARAMETER Name
-The product name to search for. SQL-style "like" wildcards are supported.
-
 .OUTPUTS
 System.Management.ManagementObject for each program found.
 
@@ -26,6 +23,7 @@ Caption           : PowerShell 6-x64
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.ManagementObject])] Param(
+# The product name to search for. SQL-style "like" wildcards are supported.
 [string] $Name
 )
 Get-CimInstance CIM_Product -Filter "Name like '$($Name -replace "'","''")'"

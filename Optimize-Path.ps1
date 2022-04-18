@@ -2,13 +2,14 @@
 .SYNOPSIS
 Sorts, prunes, and normalizes both user and system Path entries.
 
-.PARAMETER ResolveConflicts
-Look for commands with the same name within multiple Path entries, and move the entry
-with the newest version ahead of the others.
 #>
 
 #Requires -Version 3
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)][OutputType([void])] Param(
+<#
+Look for commands with the same name within multiple Path entries, and move the entry
+with the newest version ahead of the others.
+#>
 [switch]$ResolveConflicts
 )
 

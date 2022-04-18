@@ -2,9 +2,6 @@
 .SYNOPSIS
 Adds named capture group values as note properties to Select-String MatchInfo objects.
 
-.PARAMETER MatchInfo
-The MatchInfo output from Select-String to augment with named capture group values.
-
 .INPUTS
 Microsoft.PowerShell.Commands.MatchInfo, output from Select-String that used a pattern
 with named capture groups.
@@ -27,6 +24,7 @@ Tricia McMillan trillian@example.com addrbook.txt
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Microsoft.PowerShell.Commands.MatchInfo])] Param(
+# The MatchInfo output from Select-String to augment with named capture group values.
 [Parameter(Position=0,ValueFromRemainingArguments=$true,ValueFromPipeline=$true)]
 [Alias('InputObject')][Microsoft.PowerShell.Commands.MatchInfo]$MatchInfo
 )

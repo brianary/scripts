@@ -2,10 +2,6 @@
 .SYNOPSIS
 Creates multipart/form-data to send as a request body.
 
-.PARAMETER Fields
-The fields to pass, as a Hashtable or other dictionary.
-Values of the System.IO.FileInfo type will be read, as for a file upload.
-
 .INPUTS
 Any System.Collections.IDictionary type of key-value pairs to encode.
 
@@ -32,6 +28,10 @@ Sends two fields, one of which is a file upload.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([byte[]])] Param(
+<#
+The fields to pass, as a Hashtable or other dictionary.
+Values of the System.IO.FileInfo type will be read, as for a file upload.
+#>
 [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][Collections.IDictionary] $Fields
 )
 DynamicParam

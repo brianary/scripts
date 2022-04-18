@@ -2,57 +2,6 @@
 .SYNOPSIS
 Searches an entire database for a field value.
 
-.PARAMETER ServerInstance
-The server and instance to connect to.
-
-.PARAMETER Database
-The database to use.
-
-.PARAMETER Value
-The value to search for. The datatype is significant, e.g. searching for money/smallmoney columns, cast the type to decimal: [decimal]13.55
-Searches, by type:
-
-* string: varchar, char, nvarchar, nchar (char length must be at least as long as value)
-* byte: tinyint
-* int: bigint, int
-* long: bigint, numeric or decimal (where scale is zero)
-* decimal: money, smallmoney
-* double or float: float, real, numeric, decimal
-* datetime: date (if no time specified), datetime, datetime2, datetimeoffset, smalldatetime
-* timespan: time
-
-If the -LikeValue switch is specified, the type of value is assumed to be string.
-
-.PARAMETER IncludeSchemata
-A like-pattern of database schemata to include (will only include these).
-
-.PARAMETER ExcludeSchemata
-A like-pattern of database schemata to exclude.
-
-.PARAMETER IncludeTables
-A like-pattern of database tables to include (will only include these).
-
-.PARAMETER ExcludeTables
-A like-pattern of database tables to exclude.
-
-.PARAMETER IncludeColumns
-A like-pattern of database columns to include (will only include these).
-
-.PARAMETER ExcludeColumns
-A like-pattern of database columns to exclude.
-
-.PARAMETER MinRows
-Tables with more rows than this value will be skipped.
-
-.PARAMETER MaxRows
-Tables with more rows than this value will be skipped.
-
-.PARAMETER FindFirst
-Quit as soon as the first value is found.
-
-.PARAMETER LikeValue
-Interpret the value as a like-pattern (% for zero-or-more characters, _ for a single character, \ is escape).
-
 .OUTPUTS
 System.Management.Automation.PSCustomObject for each found row, including the #TableName,
 #ColumnName, and all fields.
@@ -127,20 +76,49 @@ ModifiedDate       : 08/11/2013 00:00:00
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+<#
+The value to search for. The datatype is significant, e.g. searching for money/smallmoney columns, cast the type to decimal: [decimal]13.55
+Searches, by type:
+
+* string: varchar, char, nvarchar, nchar (char length must be at least as long as value)
+* byte: tinyint
+* int: bigint, int
+* long: bigint, numeric or decimal (where scale is zero)
+* decimal: money, smallmoney
+* double or float: float, real, numeric, decimal
+* datetime: date (if no time specified), datetime, datetime2, datetimeoffset, smalldatetime
+* timespan: time
+
+If the -LikeValue switch is specified, the type of value is assumed to be string.
+#>
 [Parameter(Position=0,Mandatory=$true)] $Value,
+# The server and instance to connect to.
 [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string] $ServerInstance,
+# The database to use.
 [Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string] $Database,
+# Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string] $ConnectionString,
+# The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string] $ConnectionName,
+# A like-pattern of database schemata to include (will only include these).
 [string[]] $IncludeSchemata,
+# A like-pattern of database schemata to exclude.
 [string[]] $ExcludeSchemata,
+# A like-pattern of database tables to include (will only include these).
 [string[]] $IncludeTables,
+# A like-pattern of database tables to exclude.
 [string[]] $ExcludeTables,
+# A like-pattern of database columns to include (will only include these).
 [string[]] $IncludeColumns,
+# A like-pattern of database columns to exclude.
 [string[]] $ExcludeColumns,
+# Tables with more rows than this value will be skipped.
 [int] $MinRows = 1,
+# Tables with more rows than this value will be skipped.
 [int] $MaxRows,
+# Quit as soon as the first value is found.
 [switch] $FindFirst,
+# Interpret the value as a like-pattern (% for zero-or-more characters, _ for a single character, \ is escape).
 [switch] $LikeValue
 )
 try{[void][Configuration.ConfigurationManager]}catch{Add-Type -AssemblyName System.Configuration}
