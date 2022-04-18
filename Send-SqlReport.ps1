@@ -51,7 +51,7 @@ which will be linked in the email rather than included in the email body.
 
 Supports a format template for the current date and time (e.g. {0:yyyyMMddHHmmss}).
 
-.PARAMETER Timeout
+.PARAMETER QueryTimeout
 The timeout to use for the query, in seconds. The default is 90.
 
 .PARAMETER PreContent
@@ -73,6 +73,9 @@ The priority of the email, one of: High, Low, Normal
 Indicates that SSL should be used when sending the message.
 
 (See the From parameter for an alternate SSL flag.)
+
+.PARAMETER SeqUrl
+The URL of the Seq server to log to.
 
 .LINK
 Use-SqlcmdParams.ps1
