@@ -39,7 +39,7 @@ By default, the default vault is used.
 #>
 [string] $Vault,
 # Indicates that the old-style filesystem-based credential store should be used.
-[switch] $UseFile,
+[Alias('OldStyle')][switch] $UseFile,
 # Indicates the login should be manual and overwrite any cached value.
 [switch] $Force
 )
@@ -56,22 +56,26 @@ if($UseFile)
 		$cred = Get-Credential $UserName -Message $Message
 		if($cred.UserName -ne $UserName) {Stop-ThrowError.ps1 "Credential is only valid for username $UserName" -OperationContext $cred}
 		ConvertFrom-SecureString $cred.Password |Out-File $file
-		$cred
+		return $cred
 	}
 	else
 	{
-		New-Object pscredential $UserName,(Get-Content $file |ConvertTo-SecureString)
+		return New-Object pscredential $UserName,(Get-Content $file |ConvertTo-SecureString)
 	}
 }
 else
 {
 	Import-Module Microsoft.PowerShell.SecretManagement,Microsoft.PowerShell.SecretStore -Force
-	$consumerKey = (New-Object PSCredential $UserName,
-		(Get-Secret $UserName -Vault $Vault -ErrorAction SilentlyContinue)).GetNetworkCredential().Password
-	if(!$consumerKey)
+	$UseVault = if($Vault) {@{Vault=$Vault}} else {@{}}
+	$secret = Get-Secret $UserName -Vault $Vault -ErrorAction SilentlyContinue
+	if($Force -or !$secret)
 	{
-		$consumerKey = Get-Credential $UserName -Message $Message
-		Set-Secret $UserName $consumerKey.Password -Vault $Vault
-		$consumerKey = $consumerKey.GetNetworkCredential().Password
+		$cred = Get-Credential $UserName -Message $Message
+		Set-Secret $UserName $cred.Password @UseVault
+		return $cred
+	}
+	else
+	{
+		return New-Object pscredential $UserName,$secret
 	}
 }
