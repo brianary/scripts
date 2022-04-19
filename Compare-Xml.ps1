@@ -154,7 +154,7 @@ function Format-XPathMatch
 {
 	Param([Parameter(Position=0,Mandatory=$true)][XmlNode] $XmlNode)
 	$xpath = Resolve-XPath.ps1 $XmlNode
-	"match='$($xpath.XPath)' $($xpath.Namespace.GetEnumerator() |foreach {"xmlns:$($_.Name)='$($_.Value)'"})"
+	"match='$($xpath.XPath)' $($xpath.Namespace.GetEnumerator() |ForEach-Object {"xmlns:$($_.Name)='$($_.Value)'"})"
 }
 
 function ConvertTo-XmlAttributeTemplate
@@ -318,13 +318,13 @@ function Merge-XmlNodes
 		$diff = $DifferenceNodes[$d]
 		[int[]] $matches =
 			if($ReferenceNodes.Length -le 0) {@()}
-			else {0..($ReferenceNodes.Length-1) |where {Test-XmlNodesMatch $ReferenceNodes[$_] $diff}}
+			else {0..($ReferenceNodes.Length-1) |Where-Object {Test-XmlNodesMatch $ReferenceNodes[$_] $diff}}
 		[int] $r =
 			if(!$matches -or $matches.Length -eq 0) {-1}
 			elseif($matches.Length -eq 1) {$matches[0]}
 			else
 			{
-				$equals = $matches |where {Test-XmlNodesEqual $ReferenceNodes[$_] $diff} |select -First 1
+				$equals = $matches |Where-Object {Test-XmlNodesEqual $ReferenceNodes[$_] $diff} |Select-Object -First 1
 				if($equals.Length -eq 0) {$matches[0]}
 				else {$equals[0]}
 			}
@@ -338,14 +338,14 @@ function Merge-XmlNodes
 		if($r -ne -1) {$ReferenceNodes[$r] = [xml]'<null/>'}
 	}
 	return ([pscustomobject]@{
-		HasDifferentOrder = !!($list |where {$_.ReferenceIndex -ne $_.DifferenceIndex})
+		HasDifferentOrder = !!($list |Where-Object {$_.ReferenceIndex -ne $_.DifferenceIndex})
 		ApplyTemplates    = ($list |
-			foreach {
+			ForEach-Object {
 				if($_.ReferenceNode) {$_.ReferenceNode |Format-ApplyTemplates}
 				else {ConvertTo-XmlNodeLiteral $_.DifferenceNode}
 			}
 		) -join [environment]::NewLine
-		Templates         = $list |where Template -ne $null |foreach Template
+		Templates         = $list |Where-Object Template -ne $null |ForEach-Object Template
 	})
 }
 
@@ -421,7 +421,7 @@ function ConvertTo-XmlDocumentTemplates
 			$standalone = $DifferenceDocument.FirstChild.Standalone
 			if($standalone) {"standalone='$standalone'"}
 		}
-	$doctype = $DifferenceDocument.ChildNodes |where NodeType -ceq 'DocumentType'
+	$doctype = $DifferenceDocument.ChildNodes |Where-Object NodeType -ceq 'DocumentType'
 	if($doctype)
 	{
 		if($doctype.PublicId -like '-//W3C//DTD XHTML *')

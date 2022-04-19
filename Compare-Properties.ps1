@@ -55,12 +55,12 @@ DifferentValue : {Alias}
 Begin
 {
 	[string[]] $referenceProperties = @()
-	$referenceProperties += $ReferenceObject.PSObject.Properties.Match('*','Properties') |foreach Name
+	$referenceProperties += $ReferenceObject.PSObject.Properties.Match('*','Properties') |ForEach-Object Name
 }
 Process
 {
 	[string[]] $differenceProperties = @()
-	$differenceProperties += $DifferenceObject.PSObject.Properties.Match('*','Properties') |foreach Name
+	$differenceProperties += $DifferenceObject.PSObject.Properties.Match('*','Properties') |ForEach-Object Name
 	foreach($property in $referenceProperties)
 	{
 		$referenceValue = $ReferenceObject.$property
@@ -94,7 +94,7 @@ Process
 	if(!$ExcludeDifferent)
 	{
 		foreach($property in $differenceProperties |
-			where {!$ReferenceObject.PSObject.Properties.Match($_,'Properties').Count})
+			Where-Object {!$ReferenceObject.PSObject.Properties.Match($_,'Properties').Count})
 		{
 			[pscustomobject]@{
 				PropertyName   = $property

@@ -12,4 +12,4 @@ Backup-SchTasks.ps1
 #>
 
 [CmdletBinding()][OutputType([void])] Param( [Parameter(Position=0)][string]$Path = 'tasks.xml' )
-schtasks /query /xml |? {$_ -notlike '<?xml *?>'} |Out-File $Path -Encoding utf8 -Width ([int]::MaxValue)
+schtasks /query /xml |Where-Object {$_ -notlike '<?xml *?>'} |Out-File $Path -Encoding utf8 -Width ([int]::MaxValue)

@@ -214,10 +214,10 @@ function Add-CodeOwners
             Select-String '^\s*(?<Commits>\d+)\s+(?<Name>\b[^>]+\b)\s+<(?<Email>[^>]+)>$' |
             Add-CapturesToMatches.ps1
         $authors |Out-String |Write-Verbose
-        [int] $max = ($authors |measure Commits -Maximum).Maximum
+        [int] $max = ($authors |Measure-Object Commits -Maximum).Maximum
         [int] $oneSigmaFromTop = $max - (Measure-StandardDeviation.ps1 $authors.Commits)
         Write-Verbose "Authors with $oneSigmaFromTop or more commits will be included as default code owners."
-        $DefaultOwner = $authors |? {[int] $_.Commits -ge $oneSigmaFromTop} |% Email
+        $DefaultOwner = $authors |Where-Object {[int] $_.Commits -ge $oneSigmaFromTop} |ForEach-Object Email
         Write-Verbose "Default code owners determined to be $DefaultOwner."
     }
     Add-File .github/CODEOWNERS @"
@@ -228,7 +228,7 @@ function Add-CodeOwners
 # default owner(s)
 * $DefaultOwner
 $(if($Owners){'','# targeted owners' -join [environment]::NewLine})
-$($Owners.Keys |% {"$_ $($Owners[$_] -join ' ')"})
+$($Owners.Keys |ForEach-Object {"$_ $($Owners[$_] -join ' ')"})
 "@ ASCII -Warn -Force
 }
 
@@ -257,9 +257,9 @@ function Add-LinguistOverrides
             '','# Linguist overrides https://github.com/github/linguist#overrides' |Add-Content .gitattributes -Encoding UTF8
         }
     }
-    if($VendorCode) {$VendorCode |% {"$_ linguist-vendored"} |Add-Content .gitattributes -Encoding UTF8}
-    if($DocumentationCode) {$DocumentationCode |% {"$_ linguist-documentation"} |Add-Content .gitattributes -Encoding UTF8}
-    if($GeneratedCode) {$GeneratedCode |% {"$_ linguist-generated=true"} |Add-Content .gitattributes -Encoding UTF8}
+    if($VendorCode) {$VendorCode |ForEach-Object {"$_ linguist-vendored"} |Add-Content .gitattributes -Encoding UTF8}
+    if($DocumentationCode) {$DocumentationCode |ForEach-Object {"$_ linguist-documentation"} |Add-Content .gitattributes -Encoding UTF8}
+    if($GeneratedCode) {$GeneratedCode |ForEach-Object {"$_ linguist-generated=true"} |Add-Content .gitattributes -Encoding UTF8}
     #TODO: linguist-language entries?
     git add -N .gitattributes |Out-Null
     Write-Verbose 'Added Linguist overrides section to .gitattributes.'

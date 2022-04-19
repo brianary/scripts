@@ -55,13 +55,13 @@ Process
 		if($Properties[0] -eq '*')
 		{
 			$context += $InputObject.PSObject.Properties |
-				foreach {New-Object psvariable $_.Name,$_.Value}
+				ForEach-Object {New-Object psvariable $_.Name,$_.Value}
 		}
 		else
 		{
 			$context += $InputObject.PSObject.Properties |
-				where Name -in $Properties |
-				foreach {New-Object psvariable $_.Name,$_.Value}
+				Where-Object Name -in $Properties |
+				ForEach-Object {New-Object psvariable $_.Name,$_.Value}
 		}
 	}
 	[psobject[]] $v = $Value.InvokeWithContext($null,$context,$null)

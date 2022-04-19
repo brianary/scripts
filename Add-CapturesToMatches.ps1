@@ -34,14 +34,14 @@ Process
 	{ # old CLR is really tedious to get group names
 		[regex]$regex = $MatchInfo.Pattern
 		$regex.GetGroupNames() |
-			where {$_ -Match '\D'} |
-			foreach {Add-Member -InputObject $MatchInfo $_ $MatchInfo.Matches.Groups[$regex.GroupNumberFromName($_)].Value}
+			Where-Object {$_ -Match '\D'} |
+			ForEach-Object {Add-Member -InputObject $MatchInfo $_ $MatchInfo.Matches.Groups[$regex.GroupNumberFromName($_)].Value}
 	}
 	else
 	{
 		$MatchInfo.Matches.Groups |
-			where Name -Match '\D' |
-			foreach {Add-Member -InputObject $MatchInfo $_.Name $_.Value}
+			Where-Object Name -Match '\D' |
+			ForEach-Object {Add-Member -InputObject $MatchInfo $_.Name $_.Value}
 	}
 	$MatchInfo
 }

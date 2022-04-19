@@ -61,6 +61,6 @@ Process
 }
 End
 {
-	$connections |ogv -Title Connections
+	$connections |Out-GridView -Title Connections
 	Set-VSCodeSetting.ps1 mssql.connections $connections -Workspace
 }
