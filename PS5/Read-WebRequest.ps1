@@ -2,12 +2,6 @@
 .SYNOPSIS
 Parses an HTTP listener request.
 
-.PARAMETER Request
-The HTTP listener to receive the request through.
-
-.PARAMETER Encoding
-Forces an encoding for the request body; Byte for binary, others for text.
-
 .LINK
 https://docs.microsoft.com/dotnet/api/system.net.httplistener
 
@@ -19,7 +13,9 @@ Parses the request body as a string or byte array.
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The HTTP listener to receive the request through.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Net.HttpListenerRequest] $Request,
+# Forces an encoding for the request body; Byte for binary, others for text.
 [ValidateSet('ascii','byte','utf16','utf16BE','utf32','utf32BE','utf7','utf8')][string] $Encoding
 )
 

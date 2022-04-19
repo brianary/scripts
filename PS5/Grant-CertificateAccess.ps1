@@ -2,15 +2,6 @@
 .SYNOPSIS
 Grants certificate file read access to an app pool or user.
 
-.PARAMETER AppPool
-The name of the application pool to grant access.
-
-.PARAMETER UserName
-The username to grant access to.
-
-.PARAMETER Certificate
-The certificate to grant access to.
-
 .INPUTS
 System.Security.Cryptography.X509Certificates.X509Certificate2 to grant permissions to
 the private key file of.
@@ -65,10 +56,13 @@ https://msdn.microsoft.com/library/system.security.cryptography.x509certificates
 # WebAdministration is conditionally imported below, since it's only needed for AppPools.
 #-Requires -Module WebAdministration
 [CmdletBinding(ConfirmImpact='Medium',SupportsShouldProcess=$true)][OutputType([void])] Param(
+# The name of the application pool to grant access.
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='AppPool')]
 [string]$AppPool,
+# The username to grant access to.
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='UserName')]
 [string]$UserName,
+# The certificate to grant access to.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
 )

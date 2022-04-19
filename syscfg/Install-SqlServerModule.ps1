@@ -2,15 +2,6 @@
 .SYNOPSIS
 Installs SqlServer module and dependencies.
 
-.PARAMETER Version
-The version number to install.
-Used to determine which installed versions are too old.
-Defaults to the latest.
-
-.PARAMETER Source
-A file directory or base URI to download the required MSI files from.
-Defaults to the latest.
-
 .NOTES
 SQL Server Feature Pack Versions
 SQL Name      Version        Source
@@ -54,6 +45,11 @@ Removes old SQLPS modules and installs the latest, as needed.
 #Requires -RunAsAdministrator
 #Requires -Module PowerShellGet
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)][OutputType([void])] Param(
+<#
+The version number to install.
+Used to determine which installed versions are too old.
+Defaults to the latest.
+#>
 [version]$Version = '21.0.17099'
 )
 

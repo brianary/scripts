@@ -2,27 +2,6 @@
 .SYNOPSIS
 Returns content from the HTML retrieved from a URL.
 
-.PARAMETER Uri
-The URL to read the HTML from.
-
-.PARAMETER Select
-The name of elements to return all occurrences of,
-or a dot followed by the class of elements to return all occurrences of,
-or a hash followed by the ID of elements to return all occurrences of.
-
-.PARAMETER Contains
-Only elements whose inner text contain this value are included.
-
-.PARAMETER Index
-The position of an individual element to select, or all matching elements by default.
-
-.PARAMETER IncludeScript
-Includes <script> elements that can otherwise cause parsing issues,
-usually these are removed first.
-
-.PARAMETER IgnoreAttributes
-Don't include an attribute hash in the output.
-
 .LINK
 Invoke-WebRequest
 
@@ -75,13 +54,26 @@ Resolving disposed ServiceProvider throws exception        ✔️               
 
 #Requires -Version 7
 [CmdletBinding(DefaultParameterSetName='__AllParameterSets')] Param(
+# The URL to read the HTML from.
 [Parameter(Position=0,Mandatory=$true)][uri] $Uri,
+<#
+The name of elements to return all occurrences of,
+or a dot followed by the class of elements to return all occurrences of,
+or a hash followed by the ID of elements to return all occurrences of.
+#>
 [Parameter(Position=1)][ValidatePattern('\A(?:\w+|[.#]\w+(?:-\w+)*)\z')]
 [Alias('Element','TagName','ClassName','ElementId')][string] $Select = 'table',
+# Only elements whose inner text contain this value are included.
 [Parameter(ParameterSetName='Contains')][string] $Contains,
+# The position of an individual element to select, or all matching elements by default.
 [Parameter(ParameterSetName='Index')]
 [Alias('Position','Number')][int] $Index = -1,
+<#
+Includes <script> elements that can otherwise cause parsing issues,
+usually these are removed first.
+#>
 [switch] $IncludeScript,
+# Don't include an attribute hash in the output.
 [switch] $IgnoreAttributes
 )
 

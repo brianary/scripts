@@ -2,9 +2,6 @@
 .SYNOPSIS
 Exports scheduled tasks as a PowerShell script that can be run to restore them.
 
-.PARAMETER TaskPath
-Specifies the task path to export from.
-
 .OUTPUTS
 System.String containing a PowerShell script to create each task.
 
@@ -18,6 +15,7 @@ Exports all scheduled tasks as PowerShell Register-ScheduledJob cmdlet strings.
 #>
 
 [CmdletBinding()][OutputType([string])] Param(
+# Specifies the task path to export from.
 [Parameter(Position=0)][string]$TaskPath = '\'
 )
 

@@ -2,9 +2,6 @@
 .SYNOPSIS
 Determines the indent characters used in a text file.
 
-.PARAMETER Path
-The location of a file.
-
 .INPUTS
 Any object with a Path or FullName property to use for a file location.
 
@@ -34,6 +31,7 @@ OtherIndents : 0
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([psobject])] Param(
+# The location of a file.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
 [Alias('FullName')][string] $Path
 )

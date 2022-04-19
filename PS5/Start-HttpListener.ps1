@@ -2,18 +2,6 @@
 .SYNOPSIS
 Creates and starts an HTTP listener, for testing HTTP clients.
 
-.PARAMETER Port
-Ports on the localhost to bind to.
-
-.PARAMETER AuthenticationSchemes
-Client authentication methods to support.
-
-.PARAMETER Realm
-The RFC2617 authentication realm.
-
-.PARAMETER IgnoreWriteExceptions
-Indicates that response writes shouldn't generate exceptions.
-
 .OUTPUTS
 System.Web.HttpListener to receive requests.
 
@@ -31,10 +19,14 @@ Creates and starts an HTTP listener at http://localhost:8080/
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Net.HttpListener])] Param(
+# Ports on the localhost to bind to.
 [Parameter(Position=0,Mandatory=$true,ValueFromRemainingArguments=$true)]
 [ValidateCount(1,2147483647)][int[]] $Port,
+# Client authentication methods to support.
 [Net.AuthenticationSchemes[]] $AuthenticationSchemes = 'Anonymous',
+# The RFC2617 authentication realm.
 [string] $Realm,
+# Indicates that response writes shouldn't generate exceptions.
 [switch] $IgnoreWriteExceptions
 )
 try{[void][Net.HttpListener]}

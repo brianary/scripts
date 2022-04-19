@@ -2,18 +2,6 @@
 .SYNOPSIS
 Adds an XML attribute to an XML element found by Select-Xml.
 
-.PARAMETER Name
-The name of the new attribute.
-
-.PARAMETER Value
-The value of the new attribute.
-
-.PARAMETER NamespaceUri
-The URI of the namespace of the new attribute, if needed.
-
-.PARAMETER SelectXmlInfo
-Output from the Select-Xml cmdlet.
-
 .INPUTS
 Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
 
@@ -31,9 +19,13 @@ Select-Xml /configuration/system.web/compilation web.config |Set-XmlAttribute.ps
 #>
 
 [CmdletBinding()][OutputType([xml])] Param(
+# The name of the new attribute.
 [Parameter(Position=0,Mandatory=$true)][string]$Name,
+# The value of the new attribute.
 [Parameter(Position=1,Mandatory=$true)][string]$Value,
+# The URI of the namespace of the new attribute, if needed.
 [Parameter(Position=2)][string]$NamespaceUri,
+# Output from the Select-Xml cmdlet.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
 )

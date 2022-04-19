@@ -2,9 +2,6 @@
 .SYNOPSIS
 Adds the utf-8 signature (BOM) to a file.
 
-.PARAMETER Path
-The file to add the utf-8 signature to.
-
 .INPUTS
 System.String containing the path to the file to be updated.
 
@@ -25,6 +22,7 @@ Adds the EF BB BF at the beginning of the file, warns if it isn't found.
 
 #Requires -Version 4
 [CmdletBinding()][OutputType([void])] Param(
+# The file to add the utf-8 signature to.
 [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
 )
 Process

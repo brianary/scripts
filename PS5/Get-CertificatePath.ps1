@@ -2,9 +2,6 @@
 .SYNOPSIS
 Gets the physical path on disk of a certificate's private key.
 
-.PARAMETER Certificate
-The X509Certificate2 to look up the path for.
-
 .INPUTS
 System.Security.Cryptography.X509Certificates.X509Certificate2 to find the private key file for.
 
@@ -29,6 +26,7 @@ C:\ProgramData\Microsoft\crypto\rsa\machinekeys\abd662b361941f26a1173357adb3c12d
 #Requires -Version 3
 #TODO: Require version 4 to get access to Get-ChildItem -Directory switch param
 [CmdletBinding()][OutputType([string])] Param(
+# The X509Certificate2 to look up the path for.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2] $Certificate
 )

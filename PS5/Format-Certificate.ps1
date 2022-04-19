@@ -2,10 +2,30 @@
 .SYNOPSIS
 Generates a formatted name/description from a certificate.
 
-.PARAMETER Certificate
-The certificate to generate a formatted string from.
+.INPUTS
+System.Security.Cryptography.X509Certificates.X509Certificate2 to format.
 
-.PARAMETER Format
+.OUTPUTS
+System.String of the formatted certificate.
+
+.LINK
+https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509certificate2.aspx
+
+.EXAMPLE
+Format-Certificate.ps1 $cert
+
+0CAD75*  example-cert-name, expires Sat, 13 Mar 2021 11:31:30 GMT
+
+.EXAMPLE
+Format-Certificate.ps1 $cert -Format 'n P T A r'
+
+example-cert-name [HasPrivateKey] 0CAD7530A40BD2F7160B19DA77A3FCF7CAEB08D0 2021-03-13T11:31:30
+#>
+
+[CmdletBinding()][OutputType([string])] Param(
+# The certificate to generate a formatted string from.
+[Parameter(Position=0,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2] $Certificate,
+<#
 The case-sensitive format string to use. The following letters emit the following values,
 all other letters are emitted unchanged, backslash escapes letters:
 
@@ -50,29 +70,7 @@ x  expiration date string (MS short date with long time)
 y  expiration date year
 Y  effective date year
 \  escape character
-
-.INPUTS
-System.Security.Cryptography.X509Certificates.X509Certificate2 to format.
-
-.OUTPUTS
-System.String of the formatted certificate.
-
-.LINK
-https://msdn.microsoft.com/library/system.security.cryptography.x509certificates.x509certificate2.aspx
-
-.EXAMPLE
-Format-Certificate.ps1 $cert
-
-0CAD75*  example-cert-name, expires Sat, 13 Mar 2021 11:31:30 GMT
-
-.EXAMPLE
-Format-Certificate.ps1 $cert -Format 'n P T A r'
-
-example-cert-name [HasPrivateKey] 0CAD7530A40BD2F7160B19DA77A3FCF7CAEB08D0 2021-03-13T11:31:30
 #>
-
-[CmdletBinding()][OutputType([string])] Param(
-[Parameter(Position=0,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2] $Certificate,
 [Alias('Template')][string] $Format = 'tpr n, \e\x\p\i\r\e\s a'
 )
 Begin

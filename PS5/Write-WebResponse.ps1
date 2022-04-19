@@ -2,9 +2,6 @@
 .SYNOPSIS
 Sends a text or binary response body to the HTTP listener client.
 
-.PARAMETER Listener
-The HTTP listener response object to send content to the client through.
-
 .INPUTS
 System.String containing the text to return to the HTTP client.
 
@@ -24,11 +21,17 @@ Sends the JSON data to the HTTP listener client.
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# An HTTP response object to write the response to.
 [Parameter(Position=0,Mandatory=$true)][Net.HttpListenerResponse] $Response,
-[Parameter(ParameterSetName='Text',Position=2,ValueFromPipeline=$true)][string] $Text,
+# Text to send in the response.
+[Parameter(ParameterSetName='Text',Position=1,ValueFromPipeline=$true)][string] $Text,
+# The media type of the response.
 [string] $ContentType = 'text/plain',
+# The text encoding to use in the response.
 [Parameter(ParameterSetName='Text')][Text.Encoding] $Encoding = [Text.Encoding]::UTF8,
+# Binary data to send in the response.
 [Parameter(ParameterSetName='Binary')][Alias('BinaryData','Data')][byte[]] $Bytes,
+# Name of a file containing binary data to send in the response.
 [Parameter(ParameterSetName='File')][string] $Path
 )
 $readbytes =

@@ -10,9 +10,6 @@ hard-coding problem around.
 
 Instead, these registry settings tell .NET to do the right thing.
 
-.PARAMETER Undo
-Disables the settings, instead of enabling them.
-
 .LINK
 Set-ItemProperty
 
@@ -22,7 +19,10 @@ Use-SystemCrypto.ps1
 Writes registry settings to inherit crypto settings.
 #>
 
-[CmdletBinding()][OutputType([void])] Param([switch]$Undo)
+[CmdletBinding()][OutputType([void])] Param(
+# Disables the settings, instead of enabling them.
+[switch]$Undo
+)
 $value = if($Undo){0}else{1}
 Set-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v2.0.50727' SystemDefaultTlsVersions $value -Type Dword
 Set-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\.NETFramework\v2.0.50727' SchUseStrongCrypto $value -Type Dword

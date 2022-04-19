@@ -2,9 +2,6 @@
 .SYNOPSIS
 Converts Scheduled Tasks to Scheduled Jobs.
 
-.PARAMETER TaskPath
-Specifies the task path to export from.
-
 .LINK
 ConvertFrom-XmlElement.ps1
 
@@ -49,6 +46,7 @@ Converts PowerShell Scheduled Tasks in the \ path to Scheduled Jobs.
 using module PSScheduledJob
 using namespace System.Xml
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
+# Specifies the task path to export from.
 [Parameter(Position=0)][string]$TaskPath = '\'
 )
 

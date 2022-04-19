@@ -5,9 +5,6 @@ Returns whether the file is binary or text, and what encoding, line endings, and
 .NOTES
 TODO: indent size, trailing whitespace, max line length, 2σ (95% max line length)
 
-.PARAMETER Path
-The location of a file.
-
 .INPUTS
 Any object with a Path or FullName property to use for a file location.
 
@@ -34,6 +31,7 @@ FinalNewline  : True
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([pscustomobject])] Param(
+# The location of a file.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
 [Alias('FullName')][string] $Path
 )

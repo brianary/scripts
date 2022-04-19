@@ -2,9 +2,6 @@
 .SYNOPSIS
 Re-encodes Windows-1252 text that has been misinterpreted as UTF-8.
 
-.PARAMETER InputObject
-The string containing encoding failures to fix.
-
 .INPUTS
 System.String containing encoding failures to fix.
 
@@ -19,6 +16,7 @@ SmartQuotes Aren’t
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# The string containing encoding failures to fix.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject
 )
 Process

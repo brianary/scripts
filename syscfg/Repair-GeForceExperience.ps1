@@ -18,6 +18,7 @@ Use-Command.ps1
 #Requires -Version 3
 #Requires -RunAsAdministrator
 [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='High')][OutputType([void])] Param(
+# Runs part two: the post-reboot steps.
 [switch] $Finish
 )
 

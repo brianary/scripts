@@ -2,9 +2,6 @@
 .SYNOPSIS
 Parse an HTTP User-Agent string.
 
-.PARAMETER UserAgent
-An HTTP User-Agent string header value to parse.
-
 .INPUTS
 An object with a UserAgent property.
 
@@ -140,6 +137,7 @@ MaximumHrefLength                         : 10000
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Web.HttpBrowserCapabilities])] Param(
+# An HTTP User-Agent string header value to parse.
 [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)][string]$UserAgent
 )
 Begin

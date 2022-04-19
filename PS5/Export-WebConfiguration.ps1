@@ -13,9 +13,6 @@ no remediation steps or clarity.
 Special emphasis is made on supporting running the export on older versions of PowerShell & Windows
 (IIS7+), with an expectation to run the import on a slightly newer version (IIS8+).
 
-.PARAMETER Path
-File to write import script text to.
-
 .COMPONENT
 System.Web
 
@@ -117,9 +114,12 @@ Export-WebConfiguration.ps1
 ##Requires -RunAsAdministrator
 #Requires -Module WebAdministration
 [CmdletBinding()][OutputType([void])] Param(
+# File to write import script text to.
 [string]$Path = "Import-${env:ComputerName}WebConfiguration.ps1",
+# The certificate stores to export certificates from.
 [Security.Cryptography.X509Certificates.X509Store[]] $Stores =
     ((Get-Item 'Cert:\LocalMachine\My'), (Get-Item 'Cert:\LocalMachine\TrustedPeople')),
+# Certificate import flags to include in the exported script.
 [Security.Cryptography.X509Certificates.X509KeyStorageFlags] $X509KeyStorageFlags = 'Exportable,MachineKeySet,PersistKeySet'
 )
 

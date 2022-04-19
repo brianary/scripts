@@ -2,12 +2,6 @@
 .SYNOPSIS
 Gets elements from a web response by tag name.
 
-.PARAMETER TagName
-The name of elements to return all occurrences of.
-
-.PARAMETER Response
-The Invoke-WebRequest output to parse.
-
 .INPUTS
 Microsoft.PowerShell.Commands.HtmlWebResponseObject to parse elements from.
 
@@ -33,7 +27,9 @@ Count
 #>
 
 [CmdletBinding()][OutputType([__ComObject])] Param(
+# The name of elements to return all occurrences of.
 [Parameter(Position=0,Mandatory=$true)][Alias('ElementName')][string]$TagName,
+# The Invoke-WebRequest output to parse.
 [Parameter(Position=1,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.HtmlWebResponseObject]$Response
 )

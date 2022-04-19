@@ -2,9 +2,6 @@
 .SYNOPSIS
 Closes an HTTP listener.
 
-.PARAMETER Listener
-The HTTP listener to close.
-
 .INPUTS
 System.Net.HttpListener to close.
 
@@ -19,6 +16,7 @@ The $http listener is closed.
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The HTTP listener to close.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Net.HttpListener] $Listener
 )
 $Listener.Close()

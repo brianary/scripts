@@ -16,6 +16,7 @@ New-SmbShare -Name 'Data' -Path 'C:\Data' -ChangeAccess 'Everyone'
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string[]])] Param(
+# The name of a script file to export to.
 [string]$Path = "Import-${env:ComputerName}SmbShares.ps1"
 )
 

@@ -2,36 +2,6 @@
 .SYNOPSIS
 Generate a new password.
 
-.PARAMETER Length
-The length of the password in characters.
-
-.PARAMETER MaxRepeats
-The maximum number of times a character may be repeated consecutively.
-
-.PARAMETER ValidMatch
-A regular expression the password must match.
-
-.PARAMETER InvalidMatch
-A regular expression the password must not match.
-
-.PARAMETER AsSecureString
-Converts the password to a secure string.
-
-.PARAMETER TryMaxTimes
-The most attempts that should be made to generate an acceptable password before failing.
-
-.PARAMETER HasNumber
-Indicates the password must contain a numeric character.
-
-.PARAMETER HasUpper
-Indicates the password must contain an uppercase letter.
-
-.PARAMETER HasLower
-Indicates the password must contain a lowercase letter.
-
-.PARAMETER HasSpecial
-Indicates the password must contain a special character (something that isn't a letter or number).
-
 .OUTPUTS
 System.String containing a generated password, or
 System.Security.SecureString containing a generated password if requested.
@@ -62,16 +32,27 @@ ecRAgbdX^9)=
 #Requires -Assembly System.Web
 using assembly System.Web
 [CmdletBinding()][OutputType([string],[SecureString])] Param(
+# The length of the password in characters.
 [Parameter(Position=0,Mandatory=$true)][int] $Length,
+# Characters to avoid in the new password.
 [string] $ExcludeCharacters,
+# The maximum number of times a character may be repeated consecutively.
 [int] $MaxRepeats,
+# A regular expression the password must match.
 [regex] $ValidMatch,
+# A regular expression the password must not match.
 [regex] $InvalidMatch,
+# Converts the password to a secure string.
 [Alias('SecureString')][switch] $AsSecureString,
+# The most attempts that should be made to generate an acceptable password before failing.
 [int] $TryMaxTimes = 100,
+# Indicates the password must contain a numeric character.
 [switch] $HasNumber,
+# Indicates the password must contain an uppercase letter.
 [switch] $HasUpper,
+# Indicates the password must contain a lowercase letter.
 [switch] $HasLower,
+# Indicates the password must contain a special character (something that isn't a letter or number).
 [switch] $HasSpecial
 )
 $i = 0

@@ -31,47 +31,52 @@ Begin
 }
 Process
 {
-	$script = [regex]::Replace((Get-Content $Path -Raw).TrimEnd(), '(?s)<#\s*(\.\w+.*?)#>',
-		{[regex]::Replace(($args[0] -replace '(?m)^[\x09\x20]+',''), '(?m)^(\.\w+)\b', {"$($args[0])".ToUpper()} )})
-	$params = $script |Get-ParameterDocs
-	$script = $script -replace '(?ms)^\.PARAMETER +\w+\r?\n.*?\s*(?=^\.\w+|^#>)'
-	$script = [regex]::Replace($script, '(?ms)(?<=^\[CmdletBinding.*?\]\s*Param\(\r?\n)(?<ParameterDefs>.*?\r?\n)(?=^\))',
-		{
-			[string[]] $docparams = @()
-			foreach($p in $args[0] -split '(?<=\] *\$\w+\b(?: *= *.*?)?),\r?\n')
+	foreach($filename in Resolve-Path $Path)
+	{
+		Write-Verbose "Optimizing help in $filename"
+		$script = [regex]::Replace((Get-Content $filename -Raw).TrimEnd(), '(?s)<#\s*(\.\w+.*?)#>',
+			{[regex]::Replace(($args[0] -replace '(?m)^[\x09\x20]+',''), '(?m)^(\.\w+)\b', {"$($args[0])".ToUpper()} )})
+		$params = $script |Get-ParameterDocs
+		$script = $script -replace '(?ms)^\.PARAMETER +\w+\r?\n.*?\s*(?=^\.\w+|^#>)'
+		$script = [regex]::Replace($script, '(?ms)(?<=^\[CmdletBinding.*?\]\s*Param\(\r?\n)(?<ParameterDefs>.*?\r?\n)(?=^\))',
 			{
-				if($p -match '\] *\$(?<ParameterName>\w+)\b')
+				[string[]] $docparams = @()
+				foreach($p in $args[0] -split '(?<=\] *\$\w+\b(?: *= *.*?)?),\r?\n')
 				{
-					$name = $Matches.ParameterName
-					if($params.Contains($name))
+					if($p -match '\] *\$(?<ParameterName>\w+)\b')
 					{
-						$doc = $params[$name]
-						$params.Remove($name)
-						$docparams += $doc -match '\n' ? "<#$EOL$doc$EOL#>$EOL$p" : "# $doc$EOL$p";
+						$name = $Matches.ParameterName
+						if($params.Contains($name))
+						{
+							$doc = $params[$name]
+							$params.Remove($name)
+							$docparams += $doc -match '\n' ? "<#$EOL$doc$EOL#>$EOL$p" : "# $doc$EOL$p";
+						}
+						else
+						{
+							"$(Get-Date -f s) Parameter $name documentation not found in $filename" |
+								Tee-Object optimize-help.log -Encoding utf8BOM -Append |
+								Write-Warning
+							$docparams += $p
+						}
 					}
 					else
 					{
-						"$(Get-Date -f s) Parameter $name documentation not found in $Path" |
+						"$(Get-Date -f s) Could not find parameter name in ${filename}:$EOL$p" |
 							Tee-Object optimize-help.log -Encoding utf8BOM -Append |
 							Write-Warning
 						$docparams += $p
 					}
 				}
-				else
+				foreach($k in $params.Keys)
 				{
-					"$(Get-Date -f s) Could not find parameter name in ${Path}:$EOL$p" |
+					"$(Get-Date -f s) Could not find parameter definition for $k in $filename$EOL$($params[$k])" |
 						Tee-Object optimize-help.log -Encoding utf8BOM -Append |
 						Write-Warning
-					$docparams += $p
 				}
-			}
-			foreach($k in $params.Keys)
-			{
-				"$(Get-Date -f s) Could not find parameter definition for $k in $Path$EOL$($params[$k])" |
-					Tee-Object optimize-help.log -Encoding utf8BOM -Append |
-					Write-Warning
-			}
-			$docparams -join ",$EOL"
-		})
-	$script |Out-File $Path utf8BOM
+				$docparams -join ",$EOL"
+			})
+		$script |Out-File $filename utf8BOM
+		Write-Verbose "Optimized help in $filename"
+	}
 }

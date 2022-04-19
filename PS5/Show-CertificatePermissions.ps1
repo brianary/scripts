@@ -2,9 +2,6 @@
 .SYNOPSIS
 Shows the permissions of a certificate's private key file.
 
-.PARAMETER Certificate
-The certificate to display permissions for.
-
 .INPUTS
 System.Security.Cryptography.X509Certificates.X509Certificate2 to show the permissions
 of the private key file of.
@@ -37,6 +34,7 @@ Save valid certificate permissions from a given issuer to a file.
 #>
 
 [CmdletBinding()][OutputType([void])] Param(
+# The certificate to display permissions for.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
 )

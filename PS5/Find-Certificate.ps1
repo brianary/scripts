@@ -2,43 +2,6 @@
 .SYNOPSIS
 Searches a certificate store for certificates.
 
-.PARAMETER FindValue
-The value to search for, usually a string.
-
-For a FindType of FindByTimeValid, FindByTimeNotYetValid, or FindByTimeExpired, the FindValue must be a datetime.
-For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a System.Security.Cryptography.Oid.
-For a FindType of FindByKeyUsage, the FindValue can be a string or an int bitmask.
-
-.PARAMETER FindType
-The field of the certificate to compare to FindValue.
-e.g. FindBySubjectName, FindByKeyUsage, FindByIssuerDistinguishedName
-
-For a FindType of FindByTimeValid, FindByTimeNotYetValid, or FindByTimeExpired, the FindValue should be a datetime.
-For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a System.Security.Cryptography.Oid.
-For a FindType of FindByKeyUsage, the FindValue can be a string or an int bitmask.
-
-Omitting a FindType or StoreName will search all stores and common fields.
-
-.PARAMETER StoreName
-The name of the certificate store to search.
-e.g. My, TrustedPeople, Root
-
-Omitting a FindType or StoreName will search all stores and common fields.
-
-.PARAMETER StoreLocation
-Whether to search the certificates of the CurrentUser or the LocalMachine.
-
-Uses LocalMachine by default.
-
-.PARAMETER Valid
-Whether to further filter search results by checking the effective and expiration dates.
-
-.PARAMETER NotArchived
-Whether to further filter search results by excluding certificates marked as archived.
-
-.PARAMETER Require
-Whether to throw an error if a certificate is not found.
-
 .OUTPUTS
 System.Security.Cryptography.X509Certificates.X509Certificate2[] of found certificates.
 
@@ -64,12 +27,43 @@ Uses positional parameters to search Cert:\LocalMachine\TrustedPeople for a cert
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Security.Cryptography.X509Certificates.X509Certificate2[]])] Param(
+<#
+The value to search for, usually a string.
+
+For a FindType of FindByTimeValid, FindByTimeNotYetValid, or FindByTimeExpired, the FindValue must be a datetime.
+For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a System.Security.Cryptography.Oid.
+For a FindType of FindByKeyUsage, the FindValue can be a string or an int bitmask.
+#>
 [Parameter(Position=0,Mandatory=$true)][Alias('Certificate','Value')] $FindValue,
+<#
+The field of the certificate to compare to FindValue.
+e.g. FindBySubjectName, FindByKeyUsage, FindByIssuerDistinguishedName
+
+For a FindType of FindByTimeValid, FindByTimeNotYetValid, or FindByTimeExpired, the FindValue should be a datetime.
+For a FindType of FindByApplicationPolicy or FindByCertificatePolicy, the FindValue can be a string or a System.Security.Cryptography.Oid.
+For a FindType of FindByKeyUsage, the FindValue can be a string or an int bitmask.
+
+Omitting a FindType or StoreName will search all stores and common fields.
+#>
 [Parameter(Position=1)][Alias('Type','Field')][Security.Cryptography.X509Certificates.X509FindType] $FindType,
+<#
+The name of the certificate store to search.
+e.g. My, TrustedPeople, Root
+
+Omitting a FindType or StoreName will search all stores and common fields.
+#>
 [Parameter(Position=2)][Security.Cryptography.X509Certificates.StoreName] $StoreName,
+<#
+Whether to search the certificates of the CurrentUser or the LocalMachine.
+
+Uses LocalMachine by default.
+#>
 [Parameter(Position=3)][Security.Cryptography.X509Certificates.StoreLocation] $StoreLocation = 'LocalMachine',
+# Whether to further filter search results by checking the effective and expiration dates.
 [Alias('Current')][switch] $Valid,
+# Whether to further filter search results by excluding certificates marked as archived.
 [switch] $NotArchived,
+# Whether to throw an error if a certificate is not found.
 [switch] $Require
 )
 $cert =

@@ -2,9 +2,6 @@
 .SYNOPSIS
 Sets the Archived property on a certificate.
 
-.PARAMETER Certificate
-The certificate to archive.
-
 .INPUTS
 System.Security.Cryptography.X509Certificates.X509Certificate2 to set as Archived.
 
@@ -36,6 +33,7 @@ Sets the certificate as archived.
 #Requires -Version 3
 #Requires -RunAsAdministrator
 [CmdletBinding(ConfirmImpact='Medium',SupportsShouldProcess=$true)][OutputType([void])] Param(
+# The certificate to archive.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
 )

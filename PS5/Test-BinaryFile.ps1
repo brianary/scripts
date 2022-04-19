@@ -2,9 +2,6 @@
 .SYNOPSIS
 Indicates that a file contains binary data.
 
-.PARAMETER Path
-A file to test.
-
 .OUTPUTS
 System.Boolean indicating that the file contains binary data.
 
@@ -24,6 +21,7 @@ False
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
+# A file to test.
 [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
 [ValidateScript({Test-Path $_ -Type Leaf})][Alias('FullName')][string] $Path
 )

@@ -2,9 +2,6 @@
 .SYNOPSIS
 Removes a node found by Select-Xml from its XML document.
 
-.PARAMETER SelectXmlInfo
-Output from the Select-Xml cmdlet.
-
 .INPUTS
 Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
 
@@ -22,6 +19,7 @@ Select-Xml '/configuration/appSettings/add[@key="Version"]' app.config |Remove-X
 #>
 
 [CmdletBinding()][OutputType([xml])] Param(
+# Output from the Select-Xml cmdlet.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
 )

@@ -2,28 +2,6 @@
 .SYNOPSIS
 Insert XML into an XML document relative to a node found by Select-Xml.
 
-.PARAMETER Xml
-The XML node(s) to insert.
-
-.PARAMETER Position
-Where to insert the new node(s), relative to the node found by Select-Xml.
-
-* AppendChild: At the end of the node's children. This is the default.
-* InsertAfter: Following the node.
-* InsertBefore: Preceding the node.
-* PrependChild: At the beginning of the node's children.
-
-.PARAMETER UnlessXPath
-An XPath, rooted from the node found by Select-Xml, that will cancel the insert if it exists.
-Used to prevent inserting XML already in the document.
-
-.PARAMETER Namespace
-Specifies a hash table of the namespaces used in UnlessXPath.
-Use the format @{prefix = 'uri'}.
-
-.PARAMETER SelectXmlInfo
-Output from the Select-Xml cmdlet.
-
 .INPUTS
 Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
 
@@ -41,10 +19,28 @@ Select-Xml /configuration/appSettings app.config |Add-Xml.ps1 '<add key="Version
 #>
 
 [CmdletBinding()][OutputType([xml])] Param(
+# The XML node(s) to insert.
 [Parameter(Position=0,Mandatory=$true)][Alias('Node','Element')][xml[]]$Xml,
+<#
+Where to insert the new node(s), relative to the node found by Select-Xml.
+
+* AppendChild: At the end of the node's children. This is the default.
+* InsertAfter: Following the node.
+* InsertBefore: Preceding the node.
+* PrependChild: At the beginning of the node's children.
+#>
 [ValidateSet('AppendChild','InsertAfter','InsertBefore','PrependChild')][string]$Position = 'AppendChild',
+<#
+An XPath, rooted from the node found by Select-Xml, that will cancel the insert if it exists.
+Used to prevent inserting XML already in the document.
+#>
 [Parameter(Position=1)][Alias('IfMissing')][string]$UnlessXPath,
+<#
+Specifies a hash table of the namespaces used in UnlessXPath.
+Use the format @{prefix = 'uri'}.
+#>
 [Parameter(Position=2)][Hashtable]$Namespace,
+# Output from the Select-Xml cmdlet.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
 )

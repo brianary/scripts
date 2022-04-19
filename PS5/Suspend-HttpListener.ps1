@@ -2,9 +2,6 @@
 .SYNOPSIS
 Pauses an HTTP listener.
 
-.PARAMETER Listener
-The HTTP listener to pause.
-
 .INPUTS
 System.Net.HttpListener to pause.
 
@@ -19,6 +16,7 @@ The $http listener is paused.
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The HTTP listener to pause.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Net.HttpListener] $Listener
 )
 $Listener.Stop()

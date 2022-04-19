@@ -2,12 +2,6 @@
 .SYNOPSIS
 Sets the value of a node found by Select-Xml.
 
-.PARAMETER Value
-The value to set.
-
-.PARAMETER SelectXmlInfo
-Output from the Select-Xml cmdlet.
-
 .INPUTS
 Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
 
@@ -25,7 +19,9 @@ Select-Xml '/configuration/appSettings/add[@key="Version"]/@value' app.config |S
 #>
 
 [CmdletBinding()][OutputType([xml])] Param(
+# The value to set.
 [Parameter(Position=0,Mandatory=$true)]$Value,
+# Output from the Select-Xml cmdlet.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
 )

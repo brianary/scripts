@@ -2,9 +2,6 @@
 .SYNOPSIS
 Enable TLS versions in Outlook on Windows 7.
 
-.PARAMETER Protocols
-The Protocols to use. SSL versions are ignored, only TLS versions are used.
-
 .LINK
 https://support.microsoft.com/help/3140245/update-to-enable-tls-1-1-and-tls-1-2-as-a-default-secure-protocols-in
 
@@ -32,6 +29,7 @@ Enables TLS 1.2 only by default.
 #Requires -Version 4
 #Requires -RunAsAdministrator
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
+# The Protocols to use. SSL versions are ignored, only TLS versions are used.
 [Net.SecurityProtocolType] $Protocols = 'Tls12'
 )
 

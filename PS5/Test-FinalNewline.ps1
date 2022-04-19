@@ -2,9 +2,6 @@
 .SYNOPSIS
 Returns true if a file ends with a newline as required by the POSIX standard.
 
-.PARAMETER Path
-The file to test.
-
 .INPUTS
 System.IO.FileInfo file or similar object to test for UTF-8 validity.
 
@@ -22,6 +19,7 @@ True
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
+# The file to test.
 [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)]
 [Alias('FullName')][string] $Path
 )

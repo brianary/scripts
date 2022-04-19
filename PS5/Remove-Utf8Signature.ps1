@@ -2,9 +2,6 @@
 .SYNOPSIS
 Removes the utf-8 signature (BOM) from a file.
 
-.PARAMETER Path
-The file to remove the utf-8 signature from.
-
 .INPUTS
 System.String containing the path to the file to be updated.
 
@@ -25,6 +22,7 @@ Removes the EF BB BF at the beginning of the file, warns if it isn't found.
 
 #Requires -Version 4
 [CmdletBinding()][OutputType([void])] Param(
+# The file to remove the utf-8 signature from.
 [Parameter(Position=0,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string]$Path
 )
 Process

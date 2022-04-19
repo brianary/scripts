@@ -2,10 +2,6 @@
 .SYNOPSIS
 Parses an HTML table into objects.
 
-.PARAMETER TableElement
-The HTML table, as parsed by Invoke-WebRequest without -UseBasicParsing enabled,
-within the ParsedHtml property.
-
 .INPUTS
 A __ComObject contained within an Invoke-WebRequest response's ParsedHtml document.
 
@@ -39,6 +35,10 @@ Christmas Day                       December 25 December 25* December 25** Decem
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+<#
+The HTML table, as parsed by Invoke-WebRequest without -UseBasicParsing enabled,
+within the ParsedHtml property.
+#>
 [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][__ComObject] $TableElement
 )
 Process

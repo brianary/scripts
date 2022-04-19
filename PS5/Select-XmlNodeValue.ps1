@@ -2,9 +2,6 @@
 .SYNOPSIS
 Returns the value of an XML node found by Select-Xml.
 
-.PARAMETER SelectXmlInfo
-Output from the Select-Xml cmdlet.
-
 .INPUTS
 Microsoft.PowerShell.Commands.SelectXmlInfo, the output from Select-Xml.
 
@@ -29,6 +26,7 @@ elementName2
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
+# Output from the Select-Xml cmdlet.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
 )

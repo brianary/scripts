@@ -2,12 +2,6 @@
 .SYNOPSIS
 Imports from an HTML table's rows, given a URL.
 
-.PARAMETER Uri
-The URL to read the HTML from.
-
-.PARAMETER TableIndex
-Which table to import, by the element's document position (zero-based).
-
 .INPUTS
 Objects with one or more of these properties:
 
@@ -39,7 +33,9 @@ Algeria                             AG
 #>
 
 [CmdletBinding()][OutputType([__ComObject])] Param(
+# The URL to read the HTML from.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][uri]$Uri,
+# Which table to import, by the element's document position (zero-based).
 [Parameter(Position=1,ValueFromPipelineByPropertyName=$true)]
 [Alias('Index','Position','Number')][uint32]$TableIndex = 0
 )

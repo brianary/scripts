@@ -2,9 +2,6 @@
 .SYNOPSIS
 Provides a human-readable view of a scheduled task returned by Get-ScheduledTasks.
 
-.PARAMETER Task
-A scheduled task, piped from Get-ScheduledTask.
-
 .INPUTS
 Microsoft.Management.Infrastructure.CimInstance returned from Get-ScheduledTask.
 
@@ -32,6 +29,7 @@ Get-ScheduledTask |Show-ScheduledTask.ps1
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
+# A scheduled task, piped from Get-ScheduledTask.
 [Parameter(ValueFromPipeline=$true)]
 [ValidateScript({$_.CimClass -and $_.CimClass.CimClassName -eq 'MSFT_ScheduledTask'})]
 [Microsoft.Management.Infrastructure.CimInstance]$Task

@@ -2,9 +2,6 @@
 .SYNOPSIS
 Updates permissions on certs when there is an older cert with the same friendly name.
 
-.PARAMETER Certificate
-X509Certificate2 to copy permissions between.
-
 .LINK
 https://docs.microsoft.com/dotnet/api/system.security.accesscontrol.filesystemaccessrule
 
@@ -32,6 +29,7 @@ Updates permissions on the newest certificate using the second newest as a templ
 #Requires -RunAsAdministrator
 #Requires -Version 3
 [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='Medium')] Param(
+# X509Certificate2 to copy permissions between.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2[]] $Certificate
 )

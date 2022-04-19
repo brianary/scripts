@@ -2,9 +2,6 @@
 .SYNOPSIS
 Exports web server settings, shares, ODBC DSNs, and installed MSAs as PowerShell scripts and data.
 
-.PARAMETER Path
-The path of the script to create.
-
 .LINK
 https://chocolatey.org/
 
@@ -26,11 +23,12 @@ Exports server settings as PowerShell scripts and data, including any of:
 * ODBC.reg containing ODBC system DSNs
 * *.dsn, each an ODBC file DSN found in the default file DSN path ${env:CommonProgramFiles}\ODBC\Data Sources
 * InstalledApplications.txt containing a list of non-Microsoft applications in "Programs and Features"
-  (Add/Remove Programs in older Windows versions)
+(Add/Remove Programs in older Windows versions)
 #>
 
 ##Requires -RunAsAdministrator # not supported in legacy PowerShell
 [CmdletBinding()][OutputType([void])] Param(
+# The path of the script to create.
 [string] $Path = "Import-${env:ComputerName}.ps1"
 )
 

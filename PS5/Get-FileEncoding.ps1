@@ -2,9 +2,6 @@
 .SYNOPSIS
 Returns the encoding for a given file, suitable for passing to encoding parameters.
 
-.PARAMETER Path
-The path to a file.
-
 .LINK
 Test-FileTypeMagicNumber.ps1
 
@@ -30,6 +27,7 @@ CodePage          : 20127
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Text.Encoding])] Param(
+# The path to a file.
 [Parameter(Position=0,Mandatory=$true)][Alias('FullName')][string] $Path
 )
 Process

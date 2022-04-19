@@ -6,6 +6,7 @@ Adds OuterXml, Value, XPath, and Namespace properties to Select-Xml output.
 #Requires -Version 3
 #Requires -Modules @{ ModuleName = 'Microsoft.PowerShell.Utility'; RequiredVersion = '3.1.0.0' }
 [CmdletBinding()][OutputType([Microsoft.PowerShell.Commands.SelectXmlInfo])] Param(
+# The output from Select-Xml
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
 )

@@ -2,9 +2,6 @@
 .SYNOPSIS
 Stops and restarts an HTTP listener.
 
-.PARAMETER Listener
-The HTTP listener to stop and restart.
-
 .INPUTS
 System.Net.HttpListener to stop and restart.
 
@@ -25,6 +22,7 @@ The $http listener is stopped and restarted.
 
 #Requires -Version 3
 [CmdletBinding()] Param(
+# The HTTP listener to stop and restart.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Net.HttpListener] $Listener
 )
 Stop-HttpListener.ps1 $Listener

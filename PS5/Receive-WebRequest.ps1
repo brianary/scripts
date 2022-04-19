@@ -2,9 +2,6 @@
 .SYNOPSIS
 Listens for an HTTP request and returns an HTTP request & response.
 
-.PARAMETER Listener
-The HTTP listener to receive the request through.
-
 .INPUTS
 System.Net.HttpListener to receive the request through.
 
@@ -22,6 +19,7 @@ Accepts an HTTP request returns it in an HTTP context object.
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([Net.HttpListenerContext])] Param(
+# The HTTP listener to receive the request through.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Net.HttpListener] $Listener
 )
 if(!$Listener.IsListening) {Write-Warning 'The HTTP listener is not listening.'}
