@@ -83,7 +83,7 @@ Indicates that the old-style filesystem-based credential store should be used.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: OldStyle
 
 Required: False
 Position: Named

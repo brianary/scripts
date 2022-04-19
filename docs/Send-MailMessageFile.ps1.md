@@ -13,8 +13,7 @@ Sends emails from a drop folder using .NET config defaults.
 ## SYNTAX
 
 ```
-Send-MailMessageFile.ps1 [[-MailFile] <FileInfo[]>] [-From <String>] [-Delete] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Send-MailMessageFile.ps1 [[-MailFile] <FileInfo[]>] [-Delete] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -50,21 +49,6 @@ Required: False
 Position: 1
 Default value: (Get-ChildItem *.eml)
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -From
-{{ Fill From Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

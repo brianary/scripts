@@ -13,7 +13,7 @@ Parses TSV clipboard data into objects.
 ## SYNTAX
 
 ```
-Import-ClipboardTsv.ps1 [[-Delimeter] <Char>] [<CommonParameters>]
+Import-ClipboardTsv.ps1 [[-Delimiter] <Char>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,8 +40,8 @@ Nobody   Alan Tudyk
 
 ## PARAMETERS
 
-### -Delimeter
-{{ Fill Delimeter Description }}
+### -Delimiter
+The field separator character.
 
 ```yaml
 Type: Char
