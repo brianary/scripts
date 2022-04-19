@@ -6,13 +6,13 @@ Use .NET configuration to set defaults for Send-MailMessage.
 
 The configuration system provides a place to set email defaults:
 
-| <system.net>
-|   <mailSettings>
-|     <smtp from="source@example.org" deliveryMethod="network">
-|       <network host="mail.example.org" enableSsl="true" />
-|     </smtp>
-|   </mailSettings>
-| </system.net>
+<system.net>
+  <mailSettings>
+    <smtp from="source@example.org" deliveryMethod="network">
+      <network host="mail.example.org" enableSsl="true" />
+    </smtp>
+  </mailSettings>
+</system.net>
 
 The values for Send-MailMessage's From, SmtpServer, and UseSsl will be
 taken from whatever is set in the machine.config (or more localized config).

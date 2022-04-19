@@ -6,24 +6,24 @@ Throws a better error than "throw".
 The PowerShell "throw" keyword doesn't do a good job of providing actionable
 detail or context:
 
-| Unable to remove root node.
-| At C:\Scripts\PS5\Remove-Xml.ps1:34 char:37
-| + ...  if($node.ParentNode -eq $null) {throw 'Unable to remove root node.'}
-| +                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-|     + CategoryInfo          : OperationStopped: (Unable to remove root node.:String) [], RuntimeException
-|     + FullyQualifiedErrorId : Unable to remove root node.
+Unable to remove root node.
+At C:\Scripts\PS5\Remove-Xml.ps1:34 char:37
++ ...  if($node.ParentNode -eq $null) {throw 'Unable to remove root node.'}
++                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Unable to remove root node.:String) [], RuntimeException
+    + FullyQualifiedErrorId : Unable to remove root node.
 
 It only shows where the "throw" was used in the called script!
 
 Using $PSCmdlet.ThrowTerminatingError() does a much better job:
 
-| C:\Scripts\PS5\Remove-Xml.ps1 : Unable to remove root node
-| Parameter name: SelectXmlInfo
-| At C:\Scripts\Test-Error.ps1:2 char:23
-| + '<a/>' |Select-Xml / |Remove-Xml.ps1
-| +                       ~~~~~~~~~~~~~~
-|     + CategoryInfo          : InvalidArgument: (<a />:SelectXmlInfo) [Remove-Xml.ps1], ArgumentException
-|     + FullyQualifiedErrorId : RootRequired,Remove-Xml.ps1
+C:\Scripts\PS5\Remove-Xml.ps1 : Unable to remove root node
+Parameter name: SelectXmlInfo
+At C:\Scripts\Test-Error.ps1:2 char:23
++ '<a/>' |Select-Xml / |Remove-Xml.ps1
++                       ~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (<a />:SelectXmlInfo) [Remove-Xml.ps1], ArgumentException
+    + FullyQualifiedErrorId : RootRequired,Remove-Xml.ps1
 
 Now you can see where the trouble is in the calling script!
 
@@ -47,13 +47,13 @@ New-Object
 .EXAMPLE
 Stop-ThrowError.ps1 'Unable to remove root node' -Argument SelectXmlInfo
 
-| C:\Scripts\PS5\Remove-Xml.ps1 : Unable to remove root node
-| Parameter name: SelectXmlInfo
-| At C:\Scripts\Test-Error.ps1:2 char:23
-| + '<a/>' |Select-Xml / |Remove-Xml.ps1
-| +                       ~~~~~~~~~~~~~~
-|     + CategoryInfo          : InvalidArgument: (<a />:SelectXmlInfo) [Remove-Xml.ps1], ArgumentException
-|     + FullyQualifiedErrorId : SelectXmlInfo,Remove-Xml.ps1
+C:\Scripts\PS5\Remove-Xml.ps1 : Unable to remove root node
+Parameter name: SelectXmlInfo
+At C:\Scripts\Test-Error.ps1:2 char:23
++ '<a/>' |Select-Xml / |Remove-Xml.ps1
++                       ~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (<a />:SelectXmlInfo) [Remove-Xml.ps1], ArgumentException
+    + FullyQualifiedErrorId : SelectXmlInfo,Remove-Xml.ps1
 
 .EXAMPLE
 if(Test-Uri.ps1 $u) {[uri]$u} else {Stop-ThrowError.ps1 'Bad URL' -Format URL -InputString $u}

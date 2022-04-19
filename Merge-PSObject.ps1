@@ -31,16 +31,16 @@ a b c
 .EXAMPLE
 '{"a":1,"b":{"u":3},"c":{"v":5}}','{"a":{"w":8},"b":2,"c":{"x":6}}' |ConvertFrom-Json |Merge-PSObject.ps1 -Accumulate -Force |select -Last 1 |ConvertTo-Json
 
-| {
-|   "a": {
-|     "w": 8
-|   },
-|   "b": 2,
-|   "c": {
-|     "v": 5,
-|     "x": 6
-|   }
-| }
+{
+  "a": {
+    "w": 8
+  },
+  "b": 2,
+  "c": {
+    "v": 5,
+    "x": 6
+  }
+}
 #>
 
 #Requires -Version 3

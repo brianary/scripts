@@ -16,9 +16,9 @@ System.Management.Automation.PSCustomObject with properties indictating indentat
 .EXAMPLE
 Measure-Indents.ps1 Program.cs
 
-| Tab Space Mix Other
-| --- ----- --- -----
-|   1    17   0     0
+Tab Space Mix Other
+--- ----- --- -----
+  1    17   0     0
 #>
 
 #Requires -Version 3

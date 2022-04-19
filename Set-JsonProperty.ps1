@@ -20,14 +20,14 @@ Add-Member
 .EXAMPLE
 '{a:1}' |Set-JsonProperty.ps1 b.ZZ\.ZZ.thing 7
 
-| {
-|   "a": 1,
-|   "b": {
-|     "ZZ.ZZ": {
-|       "thing": 7
-|     }
-|   }
-| }
+{
+  "a": 1,
+  "b": {
+    "ZZ.ZZ": {
+      "thing": 7
+    }
+  }
+}
 #>
 
 [CmdletBinding()][OutputType([string])] Param(

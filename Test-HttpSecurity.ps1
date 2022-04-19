@@ -17,48 +17,48 @@ https://observatory.mozilla.org/
 .EXAMPLE
 Test-HttpSecurity.ps1 www.example.net -Public
 
-| end_time             : Thu, 22 Dec 2016 00:09:31 GMT
-| grade                : F
-| hidden               : False
-| likelihood_indicator : MEDIUM
-| response_headers     : @{Accept-Ranges=bytes; Cache-Control=max-age=604800; Content-Encoding=gzip;
-|                        Content-Length=606; Content-Type=text/html; Date=Thu, 22 Dec 2016 00:09:31 GMT;
-|                        Etag="359670651+gzip"; Expires=Thu, 29 Dec 2016 00:09:31 GMT; Last-Modified=Fri, 09 Aug
-|                        2013 23:54:35 GMT; Server=ECS (sjc/4E3B); Vary=Accept-Encoding; X-Cache=HIT;
-|                        x-ec-custom-error=1}
-| scan_id              : 2899791
-| score                : 0
-| start_time           : Thu, 22 Dec 2016 00:09:29 GMT
-| state                : FINISHED
-| tests_failed         : 6
-| tests_passed         : 6
-| tests_quantity       : 12
-| results              : https://http-observatory.security.mozilla.org/api/v1/getScanResults?scan=2899791
-| host                 : www.example.net
+end_time             : Thu, 22 Dec 2016 00:09:31 GMT
+grade                : F
+hidden               : False
+likelihood_indicator : MEDIUM
+response_headers     : @{Accept-Ranges=bytes; Cache-Control=max-age=604800; Content-Encoding=gzip;
+                       Content-Length=606; Content-Type=text/html; Date=Thu, 22 Dec 2016 00:09:31 GMT;
+                       Etag="359670651+gzip"; Expires=Thu, 29 Dec 2016 00:09:31 GMT; Last-Modified=Fri, 09 Aug
+                       2013 23:54:35 GMT; Server=ECS (sjc/4E3B); Vary=Accept-Encoding; X-Cache=HIT;
+                       x-ec-custom-error=1}
+scan_id              : 2899791
+score                : 0
+start_time           : Thu, 22 Dec 2016 00:09:29 GMT
+state                : FINISHED
+tests_failed         : 6
+tests_passed         : 6
+tests_quantity       : 12
+results              : https://http-observatory.security.mozilla.org/api/v1/getScanResults?scan=2899791
+host                 : www.example.net
 
 .EXAMPLE
 Test-HttpSecurity.ps1 www.example.com -IncludeResults
 
-| end_time             : Thu, 22 Dec 2016 16:17:17 GMT
-| grade                : F
-| hidden               : True
-| likelihood_indicator : MEDIUM
-| response_headers     : @{Accept-Ranges=bytes; Cache-Control=max-age=604800; Content-Encoding=gzip;
-|                        Content-Length=606; Content-Type=text/html; Date=Thu, 22 Dec 2016 16:17:17 GMT;
-|                        Etag="359670651+gzip"; Expires=Thu, 29 Dec 2016 16:17:17 GMT; Last-Modified=Fri, 09 Aug
-|                        2013 23:54:35 GMT; Server=ECS (sjc/4E5C); Vary=Accept-Encoding; X-Cache=HIT;
-|                        x-ec-custom-error=1}
-| scan_id              : 2903851
-| score                : 0
-| start_time           : Thu, 22 Dec 2016 16:17:16 GMT
-| state                : FINISHED
-| tests_failed         : 6
-| tests_passed         : 6
-| tests_quantity       : 12
-| results              : @{content-security-policy=; contribute=; cookies=; cross-origin-resource-sharing=;
-|                        public-key-pinning=; redirection=; referrer-policy=; strict-transport-security=;
-|                        subresource-integrity=; x-content-type-options=; x-frame-options=; x-xss-protection=}
-| host                 : www.example.com
+end_time             : Thu, 22 Dec 2016 16:17:17 GMT
+grade                : F
+hidden               : True
+likelihood_indicator : MEDIUM
+response_headers     : @{Accept-Ranges=bytes; Cache-Control=max-age=604800; Content-Encoding=gzip;
+                       Content-Length=606; Content-Type=text/html; Date=Thu, 22 Dec 2016 16:17:17 GMT;
+                       Etag="359670651+gzip"; Expires=Thu, 29 Dec 2016 16:17:17 GMT; Last-Modified=Fri, 09 Aug
+                       2013 23:54:35 GMT; Server=ECS (sjc/4E5C); Vary=Accept-Encoding; X-Cache=HIT;
+                       x-ec-custom-error=1}
+scan_id              : 2903851
+score                : 0
+start_time           : Thu, 22 Dec 2016 16:17:16 GMT
+state                : FINISHED
+tests_failed         : 6
+tests_passed         : 6
+tests_quantity       : 12
+results              : @{content-security-policy=; contribute=; cookies=; cross-origin-resource-sharing=;
+                       public-key-pinning=; redirection=; referrer-policy=; strict-transport-security=;
+                       subresource-integrity=; x-content-type-options=; x-frame-options=; x-xss-protection=}
+host                 : www.example.com
 #>
 
 #Requires -Version 3

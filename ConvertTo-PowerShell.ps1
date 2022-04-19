@@ -16,14 +16,14 @@ System.String containing the object serialized to PowerShell literal statements.
 .EXAMPLE
 ConvertFrom-Json '[{"a":1,"b":2,"c":{"d":"\/Date(1490216371478)\/","e":null}}]' |ConvertTo-PowerShell.ps1
 
-| [pscustomobject]@{
-|         a = 1L
-|         b = 2L
-|         c = [pscustomobject]@{
-|                 d = [datetime]'2017-03-22T20:59:31'
-|                 e = $null
-|         }
-| }
+[pscustomobject]@{
+        a = 1L
+        b = 2L
+        c = [pscustomobject]@{
+                d = [datetime]'2017-03-22T20:59:31'
+                e = $null
+        }
+}
 #>
 
 #Requires -Version 3

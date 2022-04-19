@@ -37,13 +37,13 @@ The default is to use $PSEmailServer.
 If that is missing, it will be populated by the value from the
 configuration value:
 
-| <system.net>
-|   <mailSettings>
-|     <smtp from="source@example.org" deliveryMethod="network">
-|       <network host="mail.example.org" enableSsl="true" />
-|     </smtp>
-|   </mailSettings>
-| </system.net>
+<system.net>
+  <mailSettings>
+    <smtp from="source@example.org" deliveryMethod="network">
+      <network host="mail.example.org" enableSsl="true" />
+    </smtp>
+  </mailSettings>
+</system.net>
 
 (If enableSsl is set to true, SSL will be used to send the report.)
 #>
