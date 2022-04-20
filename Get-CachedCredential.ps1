@@ -67,7 +67,7 @@ else
 {
 	Import-Module Microsoft.PowerShell.SecretManagement,Microsoft.PowerShell.SecretStore -Force
 	$UseVault = if($Vault) {@{Vault=$Vault}} else {@{}}
-	$secret = Get-Secret $UserName -Vault $Vault -ErrorAction SilentlyContinue
+	$secret = Get-SecretInfo $UserName @UseVault
 	if($Force -or !$secret)
 	{
 		$cred = Get-Credential $UserName -Message $Message
@@ -76,6 +76,7 @@ else
 	}
 	else
 	{
+		$secret = Get-Secret $UserName @UseVault
 		return New-Object pscredential $UserName,$secret
 	}
 }
