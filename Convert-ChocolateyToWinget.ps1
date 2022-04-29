@@ -4,6 +4,7 @@ Change from managing various packages with Chocolatey to WinGet.
 #>
 
 #Requires -Version 3
+#Requires -RunAsAdministrator
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)] Param(
 # Fully uninstalls the Chocolatey package before installing the corresponding winget package,
 # instead of simply removing the package from the Chocolatey package list.
