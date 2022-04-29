@@ -72,7 +72,7 @@ zoom=Zoom.Zoom
 }
 Process
 {
-	foreach($p in $packages.Keys)
+	foreach($p in $packages.Keys |Sort-Object)
 	{
 		if(!(choco list $p -erl --idonly |Select-Object -skip 1))
 		{Write-Verbose "Chocolatey package '$p' not found, skipping."; continue}
