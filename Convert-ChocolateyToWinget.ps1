@@ -43,14 +43,16 @@ hdhomerun-view=Silicondust.HDHomeRunTECH
 inkscape=Inkscape.Inkscape
 libreoffice=TheDocumentFoundation.LibreOffice
 microsoft-edge=Microsoft.Edge
-microsoft-windows-terminal=Microsoft.WindowsTerminal
+# winget is unable to pin packages, so versions that use incompatible OpenSSL versions would be installed
+#microsoft-windows-terminal=Microsoft.WindowsTerminal
 mp3tag=Mp3tag.Mp3tag
 mremoteng=mRemoteNG.mRemoteNG
 # winget is unable to pin packages, so versions that use incompatible OpenSSL versions would be installed
 #nodejs=OpenJS.NodeJS
 oh-my-posh=JanDeDobbeleer.OhMyPosh
 onedrive=Microsoft.OneDrive
-powershell-core=Microsoft.PowerShell
+# winget isn't as scriptable as choco for updating the shell basics
+#powershell-core=Microsoft.PowerShell
 powertoys=Microsoft.PowerToys
 rpi-imager=RaspberryPiFoundation.RaspberryPiImager
 slack=SlackTechnologies.Slack
