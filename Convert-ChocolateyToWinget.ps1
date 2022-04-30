@@ -1,6 +1,13 @@
 <#
 .SYNOPSIS
 Change from managing various packages with Chocolatey to WinGet.
+
+.EXAMPLE
+Convert-ChocolateyToWinget.ps1 -SkipPackages autohotkey,git
+
+Moves package management from Chocolatey to WinGet for everything except
+autohotkey (maybey you are managing Adobe Digital Editions with Chocolatey),
+or git (maybe you are managing PoshGit with Chocolatey).
 #>
 
 #Requires -Version 3
@@ -9,6 +16,8 @@ Change from managing various packages with Chocolatey to WinGet.
 # A specific package to convert
 [Parameter(Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
 [string[]] $PackageName,
+# Chocolatey packages to skip.
+[string[]] $SkipPackages,
 # Fully uninstalls the Chocolatey package before installing the corresponding winget package,
 # instead of simply removing the package from the Chocolatey package list.
 [switch] $Force
@@ -80,6 +89,7 @@ Process
 	if(!$PackageName) {$PackageName = $packages.Keys |Sort-Object}
 	foreach($p in $PackageName)
 	{
+		if($p -in $SkipPackages) {Write-Verbose "Skipping Chocolatey package '$p'"; continue}
 		if(!$packages.ContainsKey($p)) {Write-Error "Chocolatey package '$p' has not been mapped to a WinGet package"; continue}
 		if(!(choco list $p -erl --idonly |Select-Object -skip 1))
 		{Write-Verbose "Chocolatey package '$p' not found, skipping."; continue}
