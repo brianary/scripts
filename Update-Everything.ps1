@@ -3,7 +3,13 @@
 Updates everything it can on the system.
 
 .LINK
-https://www.microsoft.com/en-us/store/apps/windows
+https://docs.microsoft.com/windows/package-manager/winget/
+
+.LINK
+https://github.com/microsoft/winget-cli
+
+.LINK
+https://www.microsoft.com/store/apps/windows
 
 .LINK
 https://powershellgallery.com/
@@ -76,58 +82,68 @@ Attempts to update packages, features, and system.
 
 #Requires -Version 3
 #Requires -RunAsAdministrator
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost','',
+Justification='This script is not intended for pipelining.')]
 [CmdletBinding()] Param()
 
 ${UP!} = "$([char]0xD83C)$([char]0xDD99)"
 $hoststatus = @{ForegroundColor='White';BackgroundColor='DarkGray'}
 Write-Host "$([char]0xD83D)$([char]0xDD1C) Checking for shell updates" @hoststatus
-if((choco outdated -r |
-	ConvertFrom-Csv -Delimiter '|' -Header PackageName,LocalVersion,AvailableVersion |
-	where PackageName -in powershell,powershell-core,microsoft-windows-terminal))
+if(Get-Command choco -ErrorAction SilentlyContinue)
 {
-	Write-Host "${UP!} Updating PowerShell & Windows Terminal" @hoststatus
-	Get-Process powershell -ErrorAction SilentlyContinue |where Id -ne $PID |Stop-Process -Force
-	Get-Process pwsh -ErrorAction SilentlyContinue |where Id -ne $PID |Stop-Process -Force
-	Start-Process ([io.path]::ChangeExtension($PSCommandPath,'cmd')) -Verb RunAs -WindowStyle Maximized
-	$host.SetShouldExit(0)
-	exit
+	if(choco outdated -r |
+		ConvertFrom-Csv -Delimiter '|' -Header PackageName,LocalVersion,AvailableVersion |
+		Where-Object PackageName -in powershell,powershell-core,microsoft-windows-terminal)
+	{
+		Write-Host "${UP!} Updating PowerShell & Windows Terminal" @hoststatus
+		Get-Process powershell -ErrorAction SilentlyContinue |Where-Object Id -ne $PID |Stop-Process -Force
+		Get-Process pwsh -ErrorAction SilentlyContinue |Where-Object Id -ne $PID |Stop-Process -Force
+		Start-Process ([io.path]::ChangeExtension($PSCommandPath,'cmd')) -Verb RunAs -WindowStyle Maximized
+		$host.SetShouldExit(0)
+		exit
+	}
 }
-if((Get-Command Get-CimInstance -ErrorAction SilentlyContinue))
+if(Get-Command Get-CimInstance -ErrorAction SilentlyContinue)
 {
-	Write-Host "${UP!} Updating Windows Store apps" @hoststatus
+	Write-Host "${UP!} Updating Windows Store apps (asynchronously)" @hoststatus
 	Get-CimInstance MDM_EnterpriseModernAppManagement_AppManagement01 -Namespace root\cimv2\mdm\dmmap |
 		Invoke-CimMethod -MethodName UpdateScanMethod
 }
-if((Get-Command cup -ErrorAction SilentlyContinue))
+if(Get-Command choco -ErrorAction SilentlyContinue)
 {
 	Write-Host "${UP!} Updating Chocolatey packages" @hoststatus
-	cup all -y
+	choco upgrade all -y
 }
-if((Get-Command npm -ErrorAction SilentlyContinue))
+if(Get-Command winget -ErrorAction SilentlyContinue)
+{
+	Write-Host "${UP!} Updating WinGet packages" @hoststatus
+	winget upgrade --all
+}
+if(Get-Command npm -ErrorAction SilentlyContinue)
 {
 	Write-Host "${UP!} Updating npm packages" @hoststatus
 	npm update -g
 }
-if((Get-Command dotnet -ErrorAction SilentlyContinue))
+if(Get-Command dotnet -ErrorAction SilentlyContinue)
 {
 	Write-Host "${UP!} Updating dotnet global tools" @hoststatus
 	& "$PSScriptRoot\Get-DotNetGlobalTools.ps1" |
-		where {
+		Where-Object {
 			$_.Version -lt (& "$PSScriptRoot\Find-DotNetGlobalTools.ps1" $_.PackageName |
-				where PackageName -eq $_.PackageName).Version
+				Where-Object PackageName -eq $_.PackageName).Version
 		} |
-		foreach {dotnet tool update -g $_.PackageName}
+		ForEach-Object {dotnet tool update -g $_.PackageName}
 }
 Write-Host "${UP!} Updating PowerShell modules" @hoststatus
 Get-Module -ListAvailable |
-	group Name |
-	where {
+	Group-Object Name |
+	Where-Object {
 		$found = Find-Module $_.Name -ErrorAction SilentlyContinue
 		if(!$found) {return $false}
-		($_.Group |measure Version -Maximum).Maximum -lt [version]$found.Version
+		($_.Group |Measure-Object Version -Maximum).Maximum -lt [version]$found.Version
 	} |
 	Update-Module -Force
-if((Get-Command Uninstall-OldModules.ps1 -ErrorAction SilentlyContinue))
+if(Get-Command Uninstall-OldModules.ps1 -ErrorAction SilentlyContinue)
 {
 	Write-Host "${UP!} Uninstalling old PowerShell modules" @hoststatus
 	Uninstall-OldModules.ps1 -Force
@@ -142,7 +158,7 @@ if(Test-Path "$env:ProgramFiles\Dell\CommandUpdate\dcu-cli.exe" -Type Leaf)
 	if($LASTEXITCODE -ne 500) {dcu-cli /applyUpdates -reboot=enable}
 	Write-Host ''
 }
-if((Get-Module PSWindowsUpdate -ListAvailable))
+if(Get-Module PSWindowsUpdate -ListAvailable)
 {
 	Write-Host "${UP!} Updating Windows" @hoststatus
 	Get-WindowsUpdate
