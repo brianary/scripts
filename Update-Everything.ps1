@@ -88,20 +88,34 @@ Justification='This script is not intended for pipelining.')]
 
 ${UP!} = "$([char]0xD83C)$([char]0xDD99)"
 $hoststatus = @{ForegroundColor='White';BackgroundColor='DarkGray'}
+
+function Update-Shell
+{
+	Write-Host "${UP!} Updating PowerShell & Windows Terminal" @hoststatus
+	Get-Process powershell -ErrorAction SilentlyContinue |Where-Object Id -ne $PID |Stop-Process -Force
+	Get-Process pwsh -ErrorAction SilentlyContinue |Where-Object Id -ne $PID |Stop-Process -Force
+	Start-Process ([io.path]::ChangeExtension($PSCommandPath,'cmd')) -Verb RunAs -WindowStyle Maximized
+	$host.SetShouldExit(0)
+	exit
+}
+
 Write-Host "$([char]0xD83D)$([char]0xDD1C) Checking for shell updates" @hoststatus
 if(Get-Command choco -ErrorAction SilentlyContinue)
 {
 	if(choco outdated -r |
 		ConvertFrom-Csv -Delimiter '|' -Header PackageName,LocalVersion,AvailableVersion |
 		Where-Object PackageName -in powershell,powershell-core,microsoft-windows-terminal)
-	{
-		Write-Host "${UP!} Updating PowerShell & Windows Terminal" @hoststatus
-		Get-Process powershell -ErrorAction SilentlyContinue |Where-Object Id -ne $PID |Stop-Process -Force
-		Get-Process pwsh -ErrorAction SilentlyContinue |Where-Object Id -ne $PID |Stop-Process -Force
-		Start-Process ([io.path]::ChangeExtension($PSCommandPath,'cmd')) -Verb RunAs -WindowStyle Maximized
-		$host.SetShouldExit(0)
-		exit
-	}
+	{Update-Shell}
+}
+elseif(Get-Command winget -ErrorAction SilentlyContinue)
+{
+	if(@(winget list Microsoft.WindowsTerminal |
+		Select-Object -Skip 2 -First 1 |
+		Select-String Available &&
+		winget list Microsoft.PowerShell |
+		Select-Object -Skip 2 -First 1 |
+		Select-String Available).Count -gt 0)
+	{Update-Shell}
 }
 if(Get-Command Get-CimInstance -ErrorAction SilentlyContinue)
 {
