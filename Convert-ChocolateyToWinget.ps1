@@ -24,16 +24,22 @@ or git (maybe you are managing PoshGit with Chocolatey).
 )
 Begin
 {
-$cunistparams = if($Force) {@()} else {@('-n','--skipautoinstaller')}
+$cunistparams = if($Force) {@()} else {@('-n','--skipautouninstaller')}
 $packages = Data {ConvertFrom-StringData @'
 7zip=7zip.7zip
+ag=JFLarvoire.Ag
 audacity=Audacity.Audacity
 authy-desktop=Twilio.Authy
 autohotkey=Lexikos.AutoHotkey
+azure-cli=Microsoft.AzureCLI
+azure-data-studio=Microsoft.AzureDataStudio
+azure-functions-core-tools=Microsoft.AzureFunctionsCoreTools
 cdburnerxp=Canneverbe.CDBurnerXP
+dellcommandupdate-uwp=Dell.CommandUpdate
 dotnet-sdk=Microsoft.dotnet
 dotnetfx=Microsoft.dotNetFramework
 dropbox=Dropbox.Dropbox
+emeditor=Emurasoft.EmEditor
 etcher=Balena.Etcher
 firefox=Mozilla.Firefox
 # winget is unable to pin packages, so specific hardware is not supported
@@ -41,28 +47,36 @@ firefox=Mozilla.Firefox
 gh=GitHub.cli
 git=Git.Git
 github=GitHub.GitHubDesktop
+github-desktop=GitHub.GitHubDesktop
 gitkraken=Axosoft.GitKraken
 google-chrome-x64=Google.Chrome
 googlechrome=Google.Chrome
 googledrive=Google.Drive
 googleearth=Google.EarthPro
+gotomeeting=LogMeIn.GoToMeeting
+gource=acaudwell.Gource
 graphviz=Graphviz.Graphviz
 handbrake=HandBrake.HandBrake
 hdhomerun-view=Silicondust.HDHomeRunTECH
 inkscape=Inkscape.Inkscape
+irfanview=IrfanSkiljan.IrfanView
 libreoffice=TheDocumentFoundation.LibreOffice
 microsoft-edge=Microsoft.Edge
+microsoft-teams=Microsoft.Teams
 # winget is unable to pin packages, so versions that use incompatible OpenSSL versions would be installed
 #microsoft-windows-terminal=Microsoft.WindowsTerminal
 mp3tag=Mp3tag.Mp3tag
 mremoteng=mRemoteNG.mRemoteNG
 # winget is unable to pin packages, so versions that use incompatible OpenSSL versions would be installed
 #nodejs=OpenJS.NodeJS
+NSwagStudio=RicoSuter.NSwagStudio
 oh-my-posh=JanDeDobbeleer.OhMyPosh
 onedrive=Microsoft.OneDrive
 # winget isn't as scriptable as choco for updating the shell basics
 #powershell-core=Microsoft.PowerShell
 powertoys=Microsoft.PowerToys
+python=Python.Python.3
+python3=Python.Python.3
 rpi-imager=RaspberryPiFoundation.RaspberryPiImager
 slack=SlackTechnologies.Slack
 steam=Valve.Steam
