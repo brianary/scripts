@@ -155,7 +155,7 @@ if(Get-Command Uninstall-OldModules.ps1 -ErrorAction SilentlyContinue)
 }
 Write-Host "${UP!} Updating PowerShell help" @hoststatus
 Update-Help
-if(Resolve-Path "C:\Program Files*\Dell\CommandUpdate\dcu-cli.exe" -Type Leaf)
+if(Resolve-Path "C:\Program Files*\Dell\CommandUpdate\dcu-cli.exe")
 {
 	Write-Host "${UP!} Updating Dell firmware & system software" @hoststatus
 	Set-Alias dcu-cli "$(Resolve-Path "C:\Program Files*\Dell\CommandUpdate\dcu-cli.exe")"
