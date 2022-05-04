@@ -109,6 +109,11 @@ if(Get-Command Get-CimInstance -ErrorAction SilentlyContinue)
 	Get-CimInstance MDM_EnterpriseModernAppManagement_AppManagement01 -Namespace root\cimv2\mdm\dmmap |
 		Invoke-CimMethod -MethodName UpdateScanMethod
 }
+if(Get-Command scoop -ErrorAction SilentlyContinue)
+{
+	Write-Host "${UP!} Updating Scoop packages" @hoststatus
+	scoop update *
+}
 if(Get-Command choco -ErrorAction SilentlyContinue)
 {
 	Write-Host "${UP!} Updating Chocolatey packages" @hoststatus
