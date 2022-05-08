@@ -10,6 +10,8 @@ DynamicParam { Add-DynamicParam.ps1 Path string -Mandatory; $DynamicParams } Pro
 #>
 
 #Requires -Version 3
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseProcessBlockForPipelineCommand','',
+Justification='This script uses $input within an End block.')]
 [CmdletBinding()][OutputType([void])] Param(
 # The name of the parameter.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
