@@ -43,6 +43,8 @@ Sets up the CODEOWNERS file and assigns a user, and sets the indent default.
 
 #Requires -Version 3
 #Requires -Modules Detextive
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns','',
+Justification='These plural nouns work with groups.')]
 [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='Medium')][OutputType([void])] Param(
 <#
 Sets the code owner(s) by @username or email address to use when no more specific

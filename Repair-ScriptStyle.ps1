@@ -59,6 +59,10 @@ Justification='$((Read-Host 'Justification') -replace "'","''")')]
 
 "@
 	}
-	(Get-Content $Path -Raw) -replace '(?m)^(\[CmdletBinding\b)',"$suppress`$1" |Out-File $Path utf8BOM
+	if($suppress)
+	{
+		(Get-Content $Path -Raw) -replace '(?m)^(\[CmdletBinding\b)',"$suppress`$1" |
+			ForEach-Object {$_.Trim()} |
+			Out-File $Path utf8BOM
+	}
 }
-
