@@ -36,20 +36,21 @@ Get-ScheduledTask |Show-ScheduledTask.ps1
 )
 Begin
 {
-    function Format-Action([Parameter(ValueFromPipeline=$true,Mandatory=$true)]
+    filter Format-Action([Parameter(ValueFromPipeline=$true,Mandatory=$true)]
         [ValidateScript({$_.CimClass -and $_.CimClass.CimSuperClassName -eq 'MSFT_TaskAction'})]
         [Microsoft.Management.Infrastructure.CimInstance]$Action)
-    {Process{
+    {
         Import-Variables.ps1 $Action
         switch($Action.CimClass.CimClassName)
         {
             MSFT_TaskExecAction {"$WorkingDirectory> $Execute $Arguments"}
             default {"$($Action.CimClass.CimClassName): $(ConvertTo-Json $Action.CimInstanceProperties -Compress)"}
         }
-    }}
-    function Format-Trigger([Parameter(ValueFromPipeline=$true,Mandatory=$true)]
+    }
+
+    filter Format-Trigger([Parameter(ValueFromPipeline=$true,Mandatory=$true)]
         [ValidateScript({$_.CimClass})][Microsoft.Management.Infrastructure.CimInstance]$Trigger)
-    {Process{
+    {
         Import-Variables.ps1 $Trigger
         $disabled = if(!$Enabled){' [disabled]'}
         switch($Trigger.CimClass.CimClassName)
@@ -59,7 +60,7 @@ Begin
             MSFT_TaskWeeklyTrigger {"Weekly on $(Get-Date $StartBoundary -f 'ddd \a\t HH:mm:ss')$disabled"}
             default {"$($Trigger.CimClass.CimClassName): $(ConvertTo-Json $Trigger -Compress)"}
         }
-    }}
+    }
 }
 Process
 {

@@ -34,9 +34,9 @@ function Backup-Path([Parameter(Position=0,Mandatory=$true)][EnvironmentVariable
         Add-Content -Path $env:LOCALAPPDATA\OptimizePath\Backup.tsv
 }
 
-function Get-PathDetail([Parameter(Position=0,Mandatory=$true)][EnvironmentVariableTarget]$Target,
+filter Get-PathDetail([Parameter(Position=0,Mandatory=$true)][EnvironmentVariableTarget]$Target,
                         [Parameter(Position=1,ValueFromPipeline=$true)][string]$Entry)
-{Process{
+{
     if([string]::IsNullOrWhiteSpace($Entry)) {return}
     $fullpath = [Environment]::ExpandEnvironmentVariables($Entry)
     Write-Verbose "$Target Path: $Entry$(if($Entry -ne $fullpath){' ('+$fullpath+')'})"
@@ -64,7 +64,7 @@ function Get-PathDetail([Parameter(Position=0,Mandatory=$true)][EnvironmentVaria
         Commands   = $cmd
         Precede    = [string[]]@()
     }
-}}
+}
 
 function Get-PathDetails([Parameter(Position=0,Mandatory=$true)][EnvironmentVariableTarget]$Target)
 {

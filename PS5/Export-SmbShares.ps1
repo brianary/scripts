@@ -20,8 +20,7 @@ New-SmbShare -Name 'Data' -Path 'C:\Data' -ChangeAccess 'Everyone'
 [string]$Path = "Import-${env:ComputerName}SmbShares.ps1"
 )
 
-function ConvertTo-StringLiteral([Parameter(ValueFromPipeline=$true)][string]$value)
-{Process{"'$($value -replace '''','''''')'"}}
+filter ConvertTo-StringLiteral {"'$($_ -replace '''','''''')'"}
 
 function Export-SmbShares
 {

@@ -38,6 +38,8 @@ ConvertFrom-Json '[{"a":1,"b":2,"c":{"d":"\/Date(1490216371478)\/","e":null}}]' 
 [string] $Newline = [environment]::NewLine,
 # Indicates the first line has already been indented. You can probably ignore this.
 [switch] $SkipInitialIndent,
+# The maximum width of string literals.
+[int] $Width,
 <#
 Generates a key to use for encrypting credential and secure string literals.
 If this is omitted, credentials will be encrypted using DPAPI, which will only be
@@ -63,6 +65,7 @@ Begin
 	$Local:PSDefaultParameterValues = @{
 		'ConvertTo-PowerShell.ps1:Indent'   = "$Indent$IndentBy"
 		'ConvertTo-PowerShell.ps1:IndentBy' = $IndentBy
+		'ConvertTo-PowerShell.ps1:Width'    = $Width
 	}
 	$itab = if($SkipInitialIndent){''}else{$Indent}
 	$tab = $Indent
@@ -124,25 +127,28 @@ Begin
 		else {"$itab$q$string$q"}
 	}
 
-	function Format-WrapString([Parameter(ValueFromPipeline=$true)][string]$string,[int]$width = 80)
-	{Process{
-		for($i = 0; ($i+$width) -lt $string.Length; $i += $width) {$string.Substring($i,$width)}
-		if($string.Length % $width) {$string.Substring($string.Length - ($string.Length % $width))}
-	}}
+	filter Format-WrapString
+	{
+		for($i = 0; ($i+$Width) -lt $_.Length; $i += $Width) {$_.Substring($i,$Width)}
+		if($_.Length % $Width) {$_.Substring($_.Length - ($_.Length % $Width))}
+	}
 
 	$typealias = @{}
 	(Get-TypeAccelerators.ps1).GetEnumerator() |% {$typealias[$_.Value.FullName] = $_.Key}
-	function Format-ParameterType([Parameter(ValueFromPipelineByPropertyName=$true)][type]$ParameterType)
-	{Process{
-		$value = $ParameterType.FullName
-		if($typealias.ContainsKey($value)) {$value = $typealias[$value]}
-		"[$value]"
-	}}
+	$typealias['System.Int16'] = 'short'
+	$typealias['System.Int32'] = 'int'
+	$typealias['System.Int64'] = 'long'
+	filter Format-ParameterType
+	{
+		$type = $_.ParameterType.FullName
+		if($typealias.ContainsKey($type)) {$type = $typealias[$type]}
+		"[$type]"
+	}
 
-	function Format-ParameterAttribute([Parameter(ValueFromPipeline=$true)][attribute]$Attribute)
-	{Process{
-		Import-Variables.ps1 $Attribute
-		$name = $Attribute.GetType().Name -replace 'Attribute\z',''
+	filter Format-ParameterAttribute
+	{
+		Import-Variables.ps1 $_
+		$name = $_.GetType().Name -replace 'Attribute\z',''
 		switch($name)
 		{
 			Parameter
@@ -166,7 +172,7 @@ Begin
 			ValidateSet {"[$name($(($ValidValues |ConvertTo-PowerShell.ps1 -SkipInitialIndent) -join ','))]"}
 			default {"[$name()]"}
 		}
-	}}
+	}
 
 	function Format-Children($InputObject,[switch]$UseKeys)
 	{

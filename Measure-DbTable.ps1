@@ -72,11 +72,10 @@ case count([$colname])
 			cast(min([$colname]) as varchar(max)) + ' .. ' + cast(max([$colname]) as varchar(max))
 		end
 "@}
-	function Format-ColumnCount([Parameter(ValueFromPipeline=$true)]
-		[Microsoft.SqlServer.Management.Smo.Column]$column)
-	{Process{
-		$colname = $column.Name
-		switch($column.DataType.Name)
+	filter Format-ColumnCount
+	{
+		$colname = $_.Name
+		switch($_.DataType.Name)
 		{
 			{$_ -in 'bit','Flag'}
 			{@"
@@ -112,7 +111,7 @@ case count([$colname])
 			[$colname]
 "@}
 		}
-	}}
+	}
 	$SOQ = "select '[{0}].[{1}]' #TableName, count(*) #RowCount"
 	$EOQ = if(!$Condition) {' from [{0}].[{1}];'} else {" from [{0}].[{1}] where $Condition ;"}
 }

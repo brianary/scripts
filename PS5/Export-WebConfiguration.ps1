@@ -201,9 +201,9 @@ function Ping-GlobalModules
 "@
 }
 
-function Get-CertificateImportName([Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]$store,
+filter Get-CertificateImportName([Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]$store,
     [Parameter(Position=1,ValueFromPipeline=$true)][Security.Cryptography.X509Certificates.X509Certificate2]$cert)
-{Process{"Import-CertificateTo_$($store.Location)_$($store.Name)_$(Format-Certificate.ps1 $cert -f q)"}}
+{"Import-CertificateTo_$($store.Location)_$($store.Name)_$(Format-Certificate.ps1 $cert -f q)"}
 
 function Export-CertificateFrom([Parameter(Position=0)][Security.Cryptography.X509Certificates.X509Store]$store,
     [Parameter(Position=1)][string]$storepath,
@@ -247,35 +247,30 @@ $action
 "@
 }}
 
-function Get-StoreImportName([Parameter(ValueFromPipeline=$true)]
-    [Security.Cryptography.X509Certificates.X509Store]$store)
-{Process{
-    return "Import-CertificateTo_$($store.Location)_$($store.Name)"
-}}
+filter Get-StoreImportName {return "Import-CertificateTo_$($_.Location)_$($_.Name)"}
 
-function Export-CertificatesFrom([Parameter(ValueFromPipeline=$true)]
-    [Security.Cryptography.X509Certificates.X509Store]$store)
-{Process{ # Export-PfxCertificate is easier, but not available in PS3
-    $location,$name,$Local:OFS = $store.Location,$store.Name,"$([environment]::NewLine)    "
+filter Export-CertificatesFrom
+{ # Export-PfxCertificate is easier, but not available in PS3
+    $location,$name,$Local:OFS = $_.Location,$_.Name,"$([environment]::NewLine)    "
     $storepath = "Cert:\$location\$name"
     $certs = Get-ChildItem $storepath
-    $certs |Export-CertificateFrom $store $storepath ($certs.Length/100)
+    $certs |Export-CertificateFrom $_ $storepath ($certs.Length/100)
     @"
 
-function $(Get-StoreImportName $store)
+function $($_ |Get-StoreImportName)
 {
     [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
     `$store = Get-Item $storepath
     if(!(`$PSCmdlet.ShouldProcess('$storepath server certificates','import'))){return}
     `$store.Open('OpenExistingOnly, ReadWrite')
-    $($certs |Get-CertificateImportName $store |% {"$_ `$store"})
+    $($certs |Get-CertificateImportName $_ |% {"$_ `$store"})
     `$store.Close()
     `$store.Dispose()
     Write-Progress 'Importing certificates into $storepath' -Completed
 }
 "@
     Write-Progress "Exporting certificates from $storepath" -Completed
-}}
+}
 
 function Export-Certificates
 {
@@ -359,29 +354,28 @@ function $functionname
 "@
 }}
 
-function Export-CertificatePermissionsFrom([Parameter(ValueFromPipeline=$true)]
-    [Security.Cryptography.X509Certificates.X509Store]$store)
-{Process{
-    $location,$name,$Local:OFS = $store.Location,$store.Name,"$([environment]::NewLine)    "
+filter Export-CertificatePermissionsFrom
+{
+    $location,$name,$Local:OFS = $_.Location,$_.Name,"$([environment]::NewLine)    "
     $storepath = "Cert:\$location\$name"
     $certs = Get-ChildItem $storepath
     $certs |Export-CertificatePermissions $storepath ($certs.Length/100)
     @"
 
-function $(Get-StoreImportName $store)_Permissions
+function $($_ |Get-StoreImportName)_Permissions
 {
     [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
     `$store = Get-Item $storepath
     if(!(`$PSCmdlet.ShouldProcess('$storepath server certificates','import'))){return}
     `$store.Open('OpenExistingOnly, ReadWrite')
-    $($certs |Get-CertificateImportName $store |% {"${_}_Permissions"})
+    $($certs |Get-CertificateImportName $_ |% {"${_}_Permissions"})
     `$store.Close()
     `$store.Dispose()
     Write-Progress 'Importing certificate permissions into $storepath' -Completed
 }
 "@
     Write-Progress "Exporting certificate permissions from $storepath" -Completed
-}}
+}
 
 function Export-CertificatesPermissions
 {
