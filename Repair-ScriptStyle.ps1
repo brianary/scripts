@@ -41,7 +41,7 @@ Process
 		{
 			switch($severity.Name)
 			{
-				Information {Write-Host ' ℹ️ Information ' -ForegroundColor Blue -BackgroundColor White}
+				Information {Write-Host ' 🆗 Information ' -ForegroundColor Blue -BackgroundColor White}
 				Warning {Write-Host ' ⚠️ Warning ' -ForegroundColor Yellow -BackgroundColor DarkGray}
 				Error {Write-Host ' ❌ Error ' -ForegroundColor Red -BackgroundColor White}
 				default {Write-Host " $($severity.Name) " -ForegroundColor Cyan -BackgroundColor White}
@@ -65,4 +65,5 @@ Justification='$((Read-Host 'Justification') -replace "'","''")')]
 			ForEach-Object {$_.Trim()} |
 			Out-File $Path utf8BOM
 	}
+	Invoke-ScriptAnalyzer $Path -Fix
 }
