@@ -134,6 +134,11 @@ function Format-LikeCondition([string]$column,[string[]]$patterns,[switch]$not)
 
 Use-SqlcmdParams.ps1 -QueryTimeout 300
 
+if($Value -is [int])
+{
+    if($Value -le [byte]::MaxValue) {$Value = [byte] $Value}
+    elseif($Value -le [short]::MaxValue) {$Value = [short] $Value}
+}
 $selectFrom = "select '{0}.{1}' [#TableName], '{2}' [#ColumnName], * from"
 $colssql = @"
 select quotename(TABLE_SCHEMA) TABLE_SCHEMA,
@@ -165,7 +170,15 @@ elseif($Value -is [byte])
 {
     Write-Verbose "Searching for byte (tinyint) data."
     $colssql += @"
- where DATA_TYPE in ('tinyint')
+ where DATA_TYPE in ('tinyint','smallint','int')
+"@
+    $valsql = "$selectFrom {0}.{1} where {2} = $Value;"
+}
+elseif($Value -is [short])
+{
+    Write-Verbose "Searching for short (smallint) data."
+    $colssql += @"
+ where DATA_TYPE in ('smallint','int')
 "@
     $valsql = "$selectFrom {0}.{1} where {2} = $Value;"
 }
