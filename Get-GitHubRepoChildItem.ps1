@@ -3,7 +3,7 @@
 Gets the items and child items in one or more specified locations.
 
 .EXAMPLE
-.\Get-GitHubRepositoryChildItem.ps1 -Filter *.csproj -Recurse -File -OwnerName PowerShell -RepositoryName PSScriptAnalyzer |Format-Table name,size,path -AutoSize
+.\Get-GitHubRepoChildItem.ps1 -Filter *.csproj -Recurse -File -OwnerName PowerShell -RepositoryName PSScriptAnalyzer |Format-Table name,size,path -AutoSize
 
 name           size path
 ----           ---- ----
