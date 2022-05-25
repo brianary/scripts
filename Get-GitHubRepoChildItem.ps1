@@ -11,7 +11,7 @@ Engine.csproj  3679 Engine/Engine.csproj
 Rules.csproj   2586 Rules/Rules.csproj
 
 .EXAMPLE
-.\Get-GitHubRepoChildItem.ps1 -Path src -AlternatePath / -Filter LICENSE -File -OwnerName PowerShell -RepositoryName PSScriptAnalyzer
+Get-GitHubRepoChildItem.ps1 -Path src -AlternatePath / -Filter LICENSE -File -OwnerName PowerShell -RepositoryName PSScriptAnalyzer
 
 Tries to look within the src/ folder in the repo for LICENSE, or the root if src/ doesn't exist.
 #>
