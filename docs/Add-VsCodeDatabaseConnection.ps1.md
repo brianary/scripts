@@ -14,7 +14,7 @@ Adds a VS Code MSSQL database connection to the repo.
 
 ```
 Add-VsCodeDatabaseConnection.ps1 [-ProfileName] <String> [-ServerInstance] <String> [-Database] <String>
- [[-UserName] <String>] [<CommonParameters>]
+ [[-UserName] <String>] [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,7 +43,7 @@ Aliases: Name
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -58,7 +58,7 @@ Aliases: Server, DataSource
 Required: True
 Position: 2
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -73,7 +73,7 @@ Aliases: InitialCatalog
 Required: True
 Position: 3
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -90,6 +90,21 @@ Aliases: UID
 Required: False
 Position: 4
 Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Force
+Overwrite an existing profile with the same name.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

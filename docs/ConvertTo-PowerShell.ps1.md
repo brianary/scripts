@@ -15,25 +15,25 @@ Serializes complex content into PowerShell literals.
 ### GenerateKey (Default)
 ```
 ConvertTo-PowerShell.ps1 [[-Value] <Object>] [-Indent <String>] [-IndentBy <String>] [-Newline <String>]
- [-SkipInitialIndent] [-GenerateKey] [<CommonParameters>]
+ [-SkipInitialIndent] [-Width <Int32>] [-GenerateKey] [<CommonParameters>]
 ```
 
 ### SecureKey
 ```
 ConvertTo-PowerShell.ps1 [[-Value] <Object>] [-Indent <String>] [-IndentBy <String>] [-Newline <String>]
- [-SkipInitialIndent] -SecureKey <SecureString> [<CommonParameters>]
+ [-SkipInitialIndent] [-Width <Int32>] -SecureKey <SecureString> [<CommonParameters>]
 ```
 
 ### Credential
 ```
 ConvertTo-PowerShell.ps1 [[-Value] <Object>] [-Indent <String>] [-IndentBy <String>] [-Newline <String>]
- [-SkipInitialIndent] -Credential <PSCredential> [<CommonParameters>]
+ [-SkipInitialIndent] [-Width <Int32>] -Credential <PSCredential> [<CommonParameters>]
 ```
 
 ### KeyBytes
 ```
 ConvertTo-PowerShell.ps1 [[-Value] <Object>] [-Indent <String>] [-IndentBy <String>] [-Newline <String>]
- [-SkipInitialIndent] -KeyBytes <Byte[]> [<CommonParameters>]
+ [-SkipInitialIndent] [-Width <Int32>] -KeyBytes <Byte[]> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -139,6 +139,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Width
+The maximum width of string literals.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

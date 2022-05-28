@@ -5,15 +5,15 @@ online version: https://msdn.microsoft.com/library/System.Collections.IDictionar
 schema: 2.0.0
 ---
 
-# Select-DictionaryKeys.ps1
+# Split-Keys.ps1
 
 ## SYNOPSIS
-Constructs an OrderedDictionary by selecting keys from a given IDictionary.
+Clones a dictionary keeping only the specified keys.
 
 ## SYNTAX
 
 ```
-Select-DictionaryKeys.ps1 [[-Keys] <String[]>] -Dictionary <IDictionary> [-SkipNullValues] [<CommonParameters>]
+Split-Keys.ps1 [[-Keys] <String[]>] -Dictionary <IDictionary> [-SkipNullValues] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,16 +23,17 @@ Select-DictionaryKeys.ps1 [[-Keys] <String[]>] -Dictionary <IDictionary> [-SkipN
 
 ### EXAMPLE 1
 ```
-@{ A = 1; B = 2; C = 3 } |Select-DictionaryKeys.ps1 B D
+@{ A = 1; B = 2; C = 3 } |Split-Keys.ps1 B C D
 ```
 
 Name Value
 ---- -----
 B    2
+C    3
 
 ### EXAMPLE 2
 ```
-$PSBoundParameters |Select-DictionaryKeys.ps1 From To Cc Bcc Subject -SkipNullValues |Send-MailMessage
+$PSBoundParameters |Split-Keys.ps1 From To Cc Bcc Subject -SkipNullValues |Send-MailMessage
 ```
 
 Sends an email using selected params declared by the calling script with values.

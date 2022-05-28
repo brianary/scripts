@@ -13,8 +13,8 @@ Execute a command by using matching dictionary entries as parameters.
 ## SYNTAX
 
 ```
-Invoke-CommandWithParams.ps1 [-Name] <String> -Dictionary <IDictionary> [-ExcludeKeys <String[]>]
- [-OnlyMatches] [<CommonParameters>]
+Invoke-CommandWithParams.ps1 [-Name] <String> [-ParameterSet <String>] -Dictionary <IDictionary>
+ [-ExcludeKeys <String[]>] [-OnlyMatches] [-IncludeCommon] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,6 +48,21 @@ Aliases: CommandName
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ParameterSet
+The name of a parameter set defined by the cmdlet, to constrain to those parameters.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -92,6 +107,21 @@ No checking for valid parameter sets is performed.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: Matching, 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeCommon
+Includes common parameters such as -Verbose and -WhatIf.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
