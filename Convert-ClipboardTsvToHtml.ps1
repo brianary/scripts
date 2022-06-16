@@ -12,4 +12,5 @@ TSV clipboard data may now be pasted into an email or document as a table.
 [CmdletBinding()] Param()
 Import-ClipboardTsv.ps1 |
 	ConvertTo-Html -Fragment |
+	ConvertTo-SafeEntities.ps1 |
 	Set-Clipboard -AsHtml
