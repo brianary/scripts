@@ -257,7 +257,7 @@ select to_localtime(to_timestamp(date,time)) as Time,
 $where
 "@
 Write-Verbose $sql
-logparser $sql -i:$LogFormat -o:TSV -headers:off -stats:off |
+logparser $sql -i:$LogFormat -o:TSV -headers:off -stats:off -q |
     ConvertFrom-Csv -Delimiter "`t" -Header 'Time','Server','Filename','Line','IpAddress',
         'Username','UserAgent','Method','UriPath','Query','Referrer',
         'StatusCode','Status','SubStatusCode','SubStatus','WinStatusCode','WinStatus' |
