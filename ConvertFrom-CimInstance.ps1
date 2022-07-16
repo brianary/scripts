@@ -22,16 +22,16 @@ Gets the scheduled tasks as PSObjects that support tab completion and can be ser
 )
 Process
 {
-	$value = @{}
+	$value = [ordered]@{'#CimClassName' = $InputObject.CimClass.CimClassName}
 	foreach($name in $InputObject.CimClass.CimClassProperties)
 	{
-		$value[$name] =
-			switch($InputObject.$name)
-			{
-				Instance      {$InputObject.$name |ConvertFrom-CimInstance.ps1}
-				InstanceArray {@($InputObject.$name |ConvertFrom-CimInstance.ps1)}
-				default       {$InputObject.$name}
-			}
+		if($null -eq $InputObject.$name) {continue}
+		switch($InputObject.CimInstanceProperties[$name].CimType)
+		{
+			Instance      {$value[$name] = $InputObject.$name |ConvertFrom-CimInstance.ps1}
+			InstanceArray {$value[$name] = [psobject[]]@($InputObject.$name |ConvertFrom-CimInstance.ps1)}
+			default       {$value[$name] = $InputObject.$name}
+		}
 	}
 	[pscustomobject]$value
 }
