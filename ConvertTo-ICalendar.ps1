@@ -3,7 +3,7 @@
 Converts supported objects to the RFC 5545 iCalendar format.
 
 .NOTES
-This is a work in progress.
+This is still a work in progress.
 
 .INPUTS
 Microsoft.Management.Infrastructure.CimInstance of CIM class MSFT_ScheduledTask, as
@@ -34,6 +34,10 @@ Get-ScheduledTask -TaskPath \ |ConvertTo-ICalendar.ps1 |Out-File tasks.ical utf8
 )
 Begin
 {
+	Write-Warning "This is still a work in progress."
+
+	Use-Command.ps1 schtasks C:\windows\system32\schtasks.exe -Message 'Unable to locate schtasks.exe'
+
 	function ConvertTo-DateTimeStamp([Parameter(ValueFromPipelineByPropertyName=$true)][psobject]$Date)
 	{
 		if($null -eq $Date) {Get-Date (Get-Date).ToUniversalTime() -f yyyyMMdd\THHmmssZ}
@@ -101,6 +105,10 @@ DTEND;$(ConvertTo-DateTimeWithZone $end)
 			MSFT_TaskMonthlyTrigger {$schedule += ConvertFrom-TaskMonthlyTrigger $TaskTrigger}
 			MSFT_TaskTimeTrigger {}
 			MSFT_TaskWeeklyTrigger {$schedule += ConvertFrom-TaskWeeklyTrigger $TaskTrigger}
+			MSFT_TaskTrigger
+			{
+				$task = [xml](schtasks /query /xml /tn $TaskTrigger.TaskName) |ConvertFrom-XmlElement.ps1
+			}
 			default {Write-Warning "$_ will be ignored"}
 		}
 		return $schedule

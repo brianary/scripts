@@ -29,49 +29,50 @@ webPages:Enabled false
 )
 Process
 {
-    switch($PSCmdlet.ParameterSetName)
-    {
-        SelectXmlInfo { @($SelectXmlInfo |% {[Xml.XmlElement]$_.Node} |ConvertFrom-XmlElement.ps1) }
-        Element
-        {
-            if(($Element.SelectNodes('*') |group Name |measure).Count -eq 1)
-            {
-                @($Element.SelectNodes('*') |ConvertFrom-XmlElement.ps1)
-            }
-            else
-            {
-                $properties = @{}
-                $Element.Attributes |% {[void]$properties.Add($_.Name,$_.Value)}
-                foreach($node in $Element.ChildNodes |? {$_.Name -and $_.Name -ne '#whitespace'})
-                {
-                    $subelements = $node.SelectNodes('*') |group Name
-                    $value =
-                        if($node.InnerText -and !$subelements)
-                        {
-                            $node.InnerText
-                        }
-                        elseif(($subelements |measure).Count -eq 1)
-                        {
-                            @($node.SelectNodes('*') |ConvertFrom-XmlElement.ps1)
-                        }
-                        else
-                        {
-                            ConvertFrom-XmlElement.ps1 $node
-                        }
-                    if(!$properties.Contains($node.Name))
-                    { # new property
-                        [void]$properties.Add($node.Name,$value)
-                    }
-                    else
-                    { # property name collision!
-                        if($properties[$node.Name] -isnot [Collections.Generic.List[object]])
-                        { $properties[$node.Name] = ([Collections.Generic.List[object]]@($properties[$node.Name],$value)) }
-                        else
-                        { $properties[$node.Name].Add($value) }
-                    }
-                }
-                New-Object PSObject -Property $properties
-            }
-        }
-    }
+	switch($PSCmdlet.ParameterSetName)
+	{
+		SelectXmlInfo { @($SelectXmlInfo |% {[Xml.XmlElement]$_.Node} |ConvertFrom-XmlElement.ps1) }
+		Element
+		{
+			if(($Element.SelectNodes('*') |group Name |measure).Count -eq 1)
+			{
+				@($Element.SelectNodes('*') |ConvertFrom-XmlElement.ps1)
+			}
+			else
+			{
+				$properties = @{}
+				$Element.Attributes |% {[void]$properties.Add($_.Name,$_.Value)}
+				foreach($node in $Element.ChildNodes |? {$_.Name -and $_.Name -ne '#whitespace'})
+				{
+					$subelements = $node.SelectNodes('*') |group Name
+					$value =
+						if($node.InnerText -and !$subelements)
+						{
+							$node.InnerText
+						}
+						elseif(($subelements |measure).Count -eq 1)
+						{
+							$subelement = $node.SelectSingleNode('*')
+							[pscustomobject]@{$subelement.Name=@($subelement |ConvertFrom-XmlElement.ps1)}
+						}
+						else
+						{
+							ConvertFrom-XmlElement.ps1 $node
+						}
+					if(!$properties.Contains($node.Name))
+					{ # new property
+						[void]$properties.Add($node.Name,$value)
+					}
+					else
+					{ # property name collision!
+						if($properties[$node.Name] -isnot [Collections.Generic.List[object]])
+						{ $properties[$node.Name] = ([Collections.Generic.List[object]]@($properties[$node.Name],$value)) }
+						else
+						{ $properties[$node.Name].Add($value) }
+					}
+				}
+				New-Object PSObject -Property $properties
+			}
+		}
+	}
 }
