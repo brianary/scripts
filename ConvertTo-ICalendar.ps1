@@ -107,7 +107,9 @@ DTEND;$(ConvertTo-DateTimeWithZone $end)
 			MSFT_TaskWeeklyTrigger {$schedule += ConvertFrom-TaskWeeklyTrigger $TaskTrigger}
 			MSFT_TaskTrigger
 			{
+				Write-Warning "CIM object contains no useful scheduling data; reading via schtasks XML"
 				$task = [xml](schtasks /query /xml /tn $TaskTrigger.TaskName) |ConvertFrom-XmlElement.ps1
+				$task |ConvertTo-Json -Depth 4 |Write-Host
 			}
 			default {Write-Warning "$_ will be ignored"}
 		}
