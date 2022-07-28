@@ -49,6 +49,26 @@ Begin
 		return "TZID=$($TimeZone.Id):$(Get-Date $value -f yyyyMMdd\THHmmss)"
 	}
 
+	function ConvertFrom-SimpleInterval
+	{
+		[CmdletBinding()] Param(
+		[Parameter(Position=0,Mandatory=$true)][ValidatePattern('\AP\d+[YMD]|T\d+[HMS]\z')]
+		[string] $Interval
+		)
+		$Interval -match '\d+' |Out-Null
+		[int] $value = $Matches[0]
+		$frequency = switch -Regex ($Interval)
+		{
+			'P\d+Y' {'YEARLY'}
+			'P\d+M' {'MONTHLY'}
+			'P\d+D' {'DAILY'}
+			'PT\d+H' {'HOURLY'}
+			'PT\d+M' {'MINUTELY'}
+			'PT\d+S' {'SECONDLY'}
+		}
+		return "`r`nRRULE:FREQ=$frequency;INTERVAL=$value"
+	}
+
 	function ConvertFrom-TaskDailyTrigger
 	{
 		[CmdletBinding()] Param(
@@ -98,12 +118,15 @@ Begin
 DTSTART;$(ConvertTo-DateTimeWithZone $Start)
 DTEND;$(ConvertTo-DateTimeWithZone $end)
 "@
+		Write-Debug $TaskTrigger.CimClass.CimClassName
+		$TaskTrigger |ConvertFrom-CimInstance.ps1 |ConvertTo-Json -Depth 4 |Write-Debug
 		switch($TaskTrigger.CimClass.CimClassName)
 		{
 			MSFT_TaskDailyTrigger {$schedule += ConvertFrom-TaskDailyTrigger $TaskTrigger}
 			MSFT_TaskMonthlyDOWTrigger {$schedule += ConvertFrom-TaskMonthlyDOWTrigger $TaskTrigger}
 			MSFT_TaskMonthlyTrigger {$schedule += ConvertFrom-TaskMonthlyTrigger $TaskTrigger}
-			MSFT_TaskTimeTrigger {}
+			{$_ -eq 'MSFT_TaskTimeTrigger' -and $null -ne $TaskTrigger.Repetition.Interval}
+			{$schedule += ConvertFrom-SimpleInterval $TaskTrigger.Repetition.Interval}
 			MSFT_TaskWeeklyTrigger {$schedule += ConvertFrom-TaskWeeklyTrigger $TaskTrigger}
 			MSFT_TaskTrigger
 			{
