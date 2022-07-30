@@ -105,6 +105,7 @@ Begin
 	function ConvertFrom-TaskTrigger
 	{
 		[CmdletBinding()] Param(
+		[Parameter(Position=0,Mandatory=$true)][string] $TaskName,
 		[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
 		[ValidateScript({$_.CimClass.CimClassName -like 'MSFT_Task*Trigger'})]
 		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger,
@@ -131,8 +132,8 @@ DTEND;$(ConvertTo-DateTimeWithZone $end)
 			MSFT_TaskTrigger
 			{
 				Write-Warning "CIM object contains no useful scheduling data; reading via schtasks XML"
-				$task = [xml](schtasks /query /xml /tn $TaskTrigger.TaskName) |ConvertFrom-XmlElement.ps1
-				$task |ConvertTo-Json -Depth 4 |Write-Host
+				$task = [xml](schtasks /query /xml /tn $TaskName) |ConvertFrom-XmlElement.ps1
+				$task.Triggers |ConvertTo-Json -Depth 6 |Write-Host
 			}
 			default {Write-Warning "$_ will be ignored"}
 		}
@@ -152,7 +153,7 @@ Process
 BEGIN:VEVENT
 UID:$(New-Guid)
 DTSTAMP:$($ScheduledTask |ConvertTo-DateTimeStamp)
-$($ScheduledTask.Triggers |ConvertFrom-TaskTrigger)
+$($ScheduledTask.Triggers |ConvertFrom-TaskTrigger $ScheduledTask.TaskName)
 SUMMARY:$($ScheduledTask.TaskName)
 DESCRIPTION:$($ScheduledTask.Description)
 END:VEVENT

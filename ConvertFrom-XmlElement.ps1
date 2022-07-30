@@ -21,7 +21,9 @@ webPages:Enabled false
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([psobject])] Param(
-# The element to convert to a PSObject.
+# The XML document to convert to a PSObject.
+[Parameter(ParameterSetName='Document',Position=0,Mandatory=$true,ValueFromPipeline=$true)][Xml.XmlDocument] $Document,
+# The XML element to convert to a PSObject.
 [Parameter(ParameterSetName='Element',Position=0,Mandatory=$true,ValueFromPipeline=$true)][Xml.XmlElement] $Element,
 # Output from the Select-Xml cmdlet.
 [Parameter(ParameterSetName='SelectXmlInfo',Position=0,Mandatory=$true,ValueFromPipeline=$true)]
@@ -31,6 +33,7 @@ Process
 {
 	switch($PSCmdlet.ParameterSetName)
 	{
+		Document {$Document.DocumentElement |ConvertFrom-XmlElement.ps1}
 		SelectXmlInfo { @($SelectXmlInfo |% {[Xml.XmlElement]$_.Node} |ConvertFrom-XmlElement.ps1) }
 		Element
 		{

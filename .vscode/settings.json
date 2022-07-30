@@ -12,5 +12,6 @@
         }
     ],
     "workbench.colorTheme": "PowerShell ISE",
-    "powershell.codeFormatting.addWhitespaceAroundPipe": true
+    "powershell.codeFormatting.addWhitespaceAroundPipe": true,
+    "pester.autoRunOnSave": false
 }
