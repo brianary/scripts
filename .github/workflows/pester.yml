@@ -1,3 +1,5 @@
+name: Pester tests
+on: push
 jobs:
   test:
     runs-on: windows-latest
