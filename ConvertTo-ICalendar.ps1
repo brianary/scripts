@@ -13,23 +13,50 @@ returned by Get-ScheduledTask.
 System.String containing iCalendar data.
 
 .LINK
+http://webcoder.info/recurrence.html
+
+.LINK
 https://datatracker.ietf.org/doc/html/rfc5545
 
 .LINK
 https://wutils.com/wmi/root/microsoft/windows/taskscheduler/msft_scheduledtask/
+
+.LINK
+https://docs.microsoft.com/windows-server/administration/windows-commands/schtasks-query
+
+.LINK
+https://docs.microsoft.com/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/cc725744%28v=ws.11%29
+
+.LINK
+Use-Command.ps1
+
+.LINK
+ConvertFrom-CimInstance.ps1
+
+.LINK
+ConvertFrom-XmlElement.ps1
+
+.LINK
+New-ScheduledTaskTrigger
+
+.LINK
+Get-Date
 
 .EXAMPLE
 Get-ScheduledTask -TaskPath \ |ConvertTo-ICalendar.ps1 |Out-File tasks.ical utf8
 #>
 
 #Requires -Version 7
+#Requires -Modules ScheduledTasks
 [CmdletBinding()][OutputType([string])] Param(
 # A CimInstance of MSFT_ScheduledTask, as output by Get-ScheduledTask.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
 [ValidateScript({$_.CimClass.CimClassName -eq 'MSFT_ScheduledTask'})]
 [Microsoft.Management.Infrastructure.CimInstance] $ScheduledTask,
+# The time zone to use in the iCalendar data.
 [ValidateScript({$_.HasIanaId})][TimeZoneInfo] $TimeZone = (Get-TimeZone |ForEach-Object {[string]$tzid = 'UTC'
 	[void][TimeZoneInfo]::TryConvertWindowsIdToIanaId($_.Id, [ref]$tzid); Get-TimeZone -Id $tzid}),
+# For tasks without an explicit duration, use this as the duration in the iCalendar events.
 [TimeSpan] $DefaultTaskDuration = '00:01:00'
 )
 Begin
@@ -38,20 +65,22 @@ Begin
 
 	Use-Command.ps1 schtasks C:\windows\system32\schtasks.exe -Message 'Unable to locate schtasks.exe'
 
-	function ConvertTo-DateTimeStamp([Parameter(ValueFromPipelineByPropertyName=$true)][psobject]$Date)
+	filter ConvertTo-DateTimeStamp
 	{
+		[CmdletBinding()][OutputType([string])] Param([Parameter(ValueFromPipelineByPropertyName=$true)][psobject]$Date)
 		if($null -eq $Date) {Get-Date (Get-Date).ToUniversalTime() -f yyyyMMdd\THHmmssZ}
 		else {Get-Date (Get-Date $Date).ToUniversalTime() -f yyyyMMdd\THHmmssZ}
 	}
 
-	function ConvertTo-DateTimeWithZone([datetime]$value)
+	function ConvertTo-DateTimeWithZone
 	{
+		[CmdletBinding()][OutputType([string])] Param([datetime]$value)
 		return "TZID=$($TimeZone.Id):$(Get-Date $value -f yyyyMMdd\THHmmss)"
 	}
 
 	function ConvertFrom-SimpleInterval
 	{
-		[CmdletBinding()] Param(
+		[CmdletBinding()][OutputType([string])] Param(
 		[Parameter(Position=0,Mandatory=$true)][ValidatePattern('\AP\d+[YMD]|T\d+[HMS]\z')]
 		[string] $Interval
 		)
@@ -72,7 +101,7 @@ Begin
 
 	function ConvertFrom-TaskDailyTrigger
 	{
-		[CmdletBinding()] Param(
+		[CmdletBinding()][OutputType([string])] Param(
 		[Parameter(Mandatory=$true)][ValidateScript({$_.CimClass.CimClassName -eq 'MSFT_TaskDailyTrigger'})]
 		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger
 		)
@@ -82,8 +111,8 @@ Begin
 
 	function ConvertFrom-TaskWeeklyTrigger
 	{
-		[CmdletBinding()] Param(
-		[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
+		[CmdletBinding()][OutputType([string])] Param(
+		[Parameter(Mandatory=$true)]
 		[ValidateScript({$_.CimClass.CimClassName -eq 'MSFT_TaskWeeklyTrigger'})]
 		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger
 		)
@@ -110,7 +139,7 @@ Begin
 
 	function ConvertFrom-TaskMonthlyDOWTrigger
 	{
-		[CmdletBinding()] Param(
+		[CmdletBinding()][OutputType([string])] Param(
 		[Parameter(Mandatory=$true)][ValidateScript({$_.CimClass.CimClassName -eq 'MSFT_TaskMonthlyDOWTrigger'})]
 		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger
 		)
@@ -119,7 +148,7 @@ Begin
 
 	function ConvertFrom-TaskMonthlyTrigger
 	{
-		[CmdletBinding()] Param(
+		[CmdletBinding()][OutputType([string])] Param(
 		[Parameter(Mandatory=$true)][ValidateScript({$_.CimClass.CimClassName -eq 'MSFT_TaskMonthlyTrigger'})]
 		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger
 		)
@@ -128,7 +157,7 @@ Begin
 
 	filter ConvertFrom-ScheduleByMonth
 	{
-		[CmdletBinding()] Param(
+		[CmdletBinding()][OutputType([string])] Param(
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Months,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfMonth
 		)
@@ -137,7 +166,7 @@ Begin
 
 	filter ConvertFrom-ScheduleByMonthDayOfWeek
 	{
-		[CmdletBinding()] Param(
+		[CmdletBinding()][OutputType([string])] Param(
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Months,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Weeks,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfWeek
@@ -145,7 +174,7 @@ Begin
 		Write-Debug "ScheduleByMonthDayOfWeek: Months=$Months  Weeks=$Weeks  DaysOfWeek=$DaysOfWeek"
 	}
 
-	function ConvertFrom-TaskTrigger
+	filter ConvertFrom-TaskTrigger
 	{
 		[CmdletBinding()] Param(
 		[Parameter(Position=0,Mandatory=$true)][string] $TaskName,

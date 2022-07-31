@@ -8,4 +8,5 @@ jobs:
       shell: pwsh
       run: |
         Install-Module Pester -Force
+        Get-ChildItem -Dir -Rec
         Invoke-Pester -Output Diagnostic -Path test

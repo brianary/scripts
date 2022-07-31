@@ -34,26 +34,26 @@ Process
 	switch($PSCmdlet.ParameterSetName)
 	{
 		Document {$Document.DocumentElement |ConvertFrom-XmlElement.ps1}
-		SelectXmlInfo { @($SelectXmlInfo |% {[Xml.XmlElement]$_.Node} |ConvertFrom-XmlElement.ps1) }
+		SelectXmlInfo { @($SelectXmlInfo |ForEach-Object {[Xml.XmlElement]$_.Node} |ConvertFrom-XmlElement.ps1) }
 		Element
 		{
-			if(($Element.SelectNodes('*') |group Name |measure).Count -eq 1)
+			if(($Element.SelectNodes('*') |Group-Object Name |Measure-Object).Count -eq 1)
 			{
 				@($Element.SelectNodes('*') |ConvertFrom-XmlElement.ps1)
 			}
 			else
 			{
 				$properties = @{}
-				$Element.Attributes |% {[void]$properties.Add($_.Name,$_.Value)}
-				foreach($node in $Element.ChildNodes |? {$_.Name -and $_.Name -ne '#whitespace'})
+				$Element.Attributes |ForEach-Object {[void]$properties.Add($_.Name,$_.Value)}
+				foreach($node in $Element.ChildNodes |Where-Object {$_.Name -and $_.Name -ne '#whitespace'})
 				{
-					$subelements = $node.SelectNodes('*') |group Name
+					$subelements = $node.SelectNodes('*') |Group-Object Name
 					$value =
 						if($node.InnerText -and !$subelements)
 						{
 							$node.InnerText
 						}
-						elseif(($subelements |measure).Count -eq 1)
+						elseif(($subelements |Measure-Object).Count -eq 1)
 						{
 							$subelement = $node.SelectSingleNode('*')
 							[pscustomobject]@{$subelement.Name=@($subelement |ConvertFrom-XmlElement.ps1)}
