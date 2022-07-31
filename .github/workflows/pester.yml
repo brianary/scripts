@@ -7,5 +7,5 @@ jobs:
     - name: Pester test
       shell: pwsh
       run: |
-        Install-Module Pester
+        Install-Module Pester -Force
         Invoke-Pester -Output Diagnostic -Path test
