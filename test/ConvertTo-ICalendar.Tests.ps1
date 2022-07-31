@@ -73,5 +73,54 @@ Describe 'Scheduled task conversion' {
 				Should -BeExactly $Rule
 		}
 	}
+	Context 'By week' -Tag Weekly {
+		It "A weekly trigger that runs every '<Interval>' on days '<Days>' should include recurrence '<Rule>'." -TestCases @(
+			@{ Interval = 1; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=1' }
+			@{ Interval = 1; Days = 'Tuesday','Thursday'; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TU,TH' }
+			@{ Interval = 2; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=2' }
+			@{ Interval = 2; Days = 'Saturday','Sunday'; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=SU,SA' }
+			@{ Interval = 3; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=3' }
+			@{ Interval = 3; Days = 'Monday','Tuesday','Wednesday','Thursday','Friday';
+				Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=3;BYDAY=MO,TU,WE,TH,FR' }
+			@{ Interval = 5; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=5' }
+			@{ Interval = 5; Days = 'Thursday'; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=5;BYDAY=TH' }
+		) {
+			Param([int]$Interval,[DayOfWeek[]]$Days = @(),[string]$Rule)
+			$start = (Get-Date).AddDays(100)
+			if($Days.Count -eq 0)
+			{
+				[DayOfWeek[]]$Days = 'Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'
+			}
+			$daysParam = if($Days.Count -gt 0){@{DaysOfWeek=$Days}}else{@{}}
+			$result = Register-ScheduledTask -TaskName x -Description 'This is a test.' `
+				-Action (New-ScheduledTaskAction -Execute pwsh -Argument 1) `
+				-Trigger (New-ScheduledTaskTrigger -At $start -Weekly -WeeksInterval $Interval @daysParam) |
+				ConvertTo-ICalendar.ps1 -Debug
+			$result -split '[\r\n]+' |
+				Where-Object {$_ -like 'RRULE:*'} |
+				Should -BeExactly $Rule
+		}
+	}
+	Context 'By month' -Tag Monthly {
+		It "A monthly trigger that runs '<Modifier>' '<Days>' '<Months>' should include recurrence '<Rule>'." -TestCases @(
+			@{ Rule = 'RRULE:FREQ=MONTHLY' }
+			@{ Modifier = 'second'; Days = 'mon'; Rule = 'RRULE:FREQ=MONTHLY' }
+			@{ Modifier = 'last'; Days = 'thu'; Rule = 'RRULE:FREQ=MONTHLY' }
+			@{ Modifier = 'lastday'; Months = 'feb'; Rule = 'RRULE:FREQ=MONTHLY' }
+		) {
+			Param([string]$Modifier,[string]$Days,[string]$Months,[string]$Rule)
+			$start = (Get-Date).AddDays(100)
+			$param = @()
+			if($Modifier) {$param += @('/mo',$Modifier)}
+			if($Days) {$param += @('/d',$Days)}
+			if($Months) {$param += @('/m',$Months)}
+			schtasks /create /tn x /tr pwsh /sd (Get-Date $start -f d) /st (Get-Date $start -f HH:mm) `
+				/sc monthly @param |Out-Null
+			$result = Get-ScheduledTask -TaskName x |ConvertTo-ICalendar.ps1 -Debug
+			$result -split '[\r\n]+' |
+				Where-Object {$_ -like 'RRULE:*'} |
+				Should -BeExactly $Rule
+		}
+	}
 	AfterEach {Unregister-ScheduledTask -TaskName x -Confirm:$false}
 }

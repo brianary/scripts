@@ -55,6 +55,7 @@ Begin
 		[Parameter(Position=0,Mandatory=$true)][ValidatePattern('\AP\d+[YMD]|T\d+[HMS]\z')]
 		[string] $Interval
 		)
+		Write-Debug "SimpleInterval"
 		$Interval -match '\d+' |Out-Null
 		[int] $value = $Matches[0]
 		$frequency = switch -Regex ($Interval)
@@ -75,8 +76,38 @@ Begin
 		[Parameter(Mandatory=$true)][ValidateScript({$_.CimClass.CimClassName -eq 'MSFT_TaskDailyTrigger'})]
 		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger
 		)
+		Write-Debug "TaskDailyTrigger"
 		return "`r`nRRULE:FREQ=DAILY;INTERVAL=$($TaskTrigger.DaysInterval)"
 	}
+
+	function ConvertFrom-TaskWeeklyTrigger
+	{
+		[CmdletBinding()] Param(
+		[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
+		[ValidateScript({$_.CimClass.CimClassName -eq 'MSFT_TaskWeeklyTrigger'})]
+		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger
+		)
+		Write-Debug "TaskWeeklyTrigger"
+		if($TaskTrigger.DaysOfWeek -in 0,0x7F)
+		{
+			return "`r`nRRULE:FREQ=WEEKLY;INTERVAL=$($TaskTrigger.WeeksInterval)"
+		}
+		else
+		{
+			$byday = @(switch($TaskTrigger.DaysOfWeek)
+			{
+				{$_ -band 0x01}{'SU'}
+				{$_ -band 0x02}{'MO'}
+				{$_ -band 0x04}{'TU'}
+				{$_ -band 0x08}{'WE'}
+				{$_ -band 0x10}{'TH'}
+				{$_ -band 0x20}{'FR'}
+				{$_ -band 0x40}{'SA'}
+			}) -join ','
+			return "`r`nRRULE:FREQ=WEEKLY;INTERVAL=$($TaskTrigger.WeeksInterval);BYDAY=$byday"
+		}
+	}
+
 	function ConvertFrom-TaskMonthlyDOWTrigger
 	{
 		[CmdletBinding()] Param(
@@ -85,6 +116,7 @@ Begin
 		)
 		return "`r`nRRULE:FREQ=MONTHLY;BYDAY=$($TaskTrigger.DaysOfWeek)"
 	}
+
 	function ConvertFrom-TaskMonthlyTrigger
 	{
 		[CmdletBinding()] Param(
@@ -93,15 +125,26 @@ Begin
 		)
 		return "`r`nRRULE:FREQ=MONTHLY;BYMONTHDAY=$($TaskTrigger.DaysOfMonth)"
 	}
-	function ConvertFrom-TaskWeeklyTrigger
+
+	filter ConvertFrom-ScheduleByMonth
 	{
 		[CmdletBinding()] Param(
-		[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
-		[ValidateScript({$_.CimClass.CimClassName -eq 'MSFT_TaskWeeklyTrigger'})]
-		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger
+		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Months,
+		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfMonth
 		)
-		return "`r`nRRULE:FREQ=WEEKLY;BYDAY=$($TaskTrigger.DaysOfWeek)"
+		Write-Debug "ScheduleByMonth: Months=$Months  DaysOfMonth=$DaysOfMonth"
 	}
+
+	filter ConvertFrom-ScheduleByMonthDayOfWeek
+	{
+		[CmdletBinding()] Param(
+		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Months,
+		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Weeks,
+		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfWeek
+		)
+		Write-Debug "ScheduleByMonthDayOfWeek: Months=$Months  Weeks=$Weeks  DaysOfWeek=$DaysOfWeek"
+	}
+
 	function ConvertFrom-TaskTrigger
 	{
 		[CmdletBinding()] Param(
@@ -121,19 +164,40 @@ DTEND;$(ConvertTo-DateTimeWithZone $end)
 "@
 		Write-Debug $TaskTrigger.CimClass.CimClassName
 		$TaskTrigger |ConvertFrom-CimInstance.ps1 |ConvertTo-Json -Depth 4 |Write-Debug
+		# [xml](schtasks /query /xml /tn $TaskName) |Format-Xml.ps1 |Write-Debug
 		switch($TaskTrigger.CimClass.CimClassName)
 		{
 			MSFT_TaskDailyTrigger {$schedule += ConvertFrom-TaskDailyTrigger $TaskTrigger}
-			MSFT_TaskMonthlyDOWTrigger {$schedule += ConvertFrom-TaskMonthlyDOWTrigger $TaskTrigger}
-			MSFT_TaskMonthlyTrigger {$schedule += ConvertFrom-TaskMonthlyTrigger $TaskTrigger}
+			MSFT_TaskWeeklyTrigger {$schedule += ConvertFrom-TaskWeeklyTrigger $TaskTrigger}
+			# MSFT_TaskMonthlyDOWTrigger {$schedule += ConvertFrom-TaskMonthlyDOWTrigger $TaskTrigger}
+			# MSFT_TaskMonthlyTrigger {$schedule += ConvertFrom-TaskMonthlyTrigger $TaskTrigger}
 			{$_ -eq 'MSFT_TaskTimeTrigger' -and $null -ne $TaskTrigger.Repetition.Interval}
 			{$schedule += ConvertFrom-SimpleInterval $TaskTrigger.Repetition.Interval}
-			MSFT_TaskWeeklyTrigger {$schedule += ConvertFrom-TaskWeeklyTrigger $TaskTrigger}
 			MSFT_TaskTrigger
 			{
 				Write-Warning "CIM object contains no useful scheduling data; reading via schtasks XML"
 				$task = [xml](schtasks /query /xml /tn $TaskName) |ConvertFrom-XmlElement.ps1
 				$task.Triggers |ConvertTo-Json -Depth 6 |Write-Host
+				$task.Triggers |
+					Where-Object {$_.PSObject.Properties.Match('CalendarTrigger').Count -eq 0} |
+					ConvertTo-Json -Compress -Depth 5 |
+					ForEach-Object {Write-Warning "Ignoring non-calendar trigger: $_"}
+				$calendarTrigger = $task.Triggers |
+					Group-Object {$_.PSObject.Properties.Match('CalendarTrigger').Count -gt 0} |
+					ForEach-Object CalendarTrigger
+				Write-Debug "Found $($calendarTrigger.Count) calendar triggers"
+				$calendarTrigger |
+					Where-Object {$_.PSObject.Properties.Match('ScheduleByMonth*').Count -eq 0} |
+					ConvertTo-Json -Compress -Depth 5 |
+					ForEach-Object {Write-Warning "Ignoring non-month calendar trigger: $_"}
+				$schedule += $calendarTrigger |
+					Where-Object {$_.PSObject.Properties.Match('ScheduleByMonth').Count -gt 0} |
+					ForEach-Object ScheduleByMonth |
+					ConvertFrom-ScheduleByMonth
+				$schedule += $calendarTrigger |
+					Where-Object {$_.PSObject.Properties.Match('ScheduleByMonthDayOfWeek').Count -gt 0} |
+					ForEach-Object ScheduleByMonthDayOfWeek |
+					ConvertFrom-ScheduleByMonthDayOfWeek
 			}
 			default {Write-Warning "$_ will be ignored"}
 		}

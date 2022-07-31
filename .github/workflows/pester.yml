@@ -1,0 +1,9 @@
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+    - name: Pester test
+      shell: pwsh
+      run: |
+        Install-Module Pester
+        Invoke-Pester -Output Diagnostic -Path test
