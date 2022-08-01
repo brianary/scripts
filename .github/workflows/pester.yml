@@ -4,9 +4,10 @@ jobs:
   test:
     runs-on: windows-latest
     steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
     - name: Pester test
       shell: pwsh
       run: |
         Install-Module Pester -Force
-        Get-ChildItem -Dir -Rec
         Invoke-Pester -Output Diagnostic -Path test
