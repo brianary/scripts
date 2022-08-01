@@ -4,8 +4,7 @@ Tests the script that transforms objects into iCalendar data.
 #>
 
 Describe 'Scheduled task conversion' {
-	BeforeAll
-	{
+	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
