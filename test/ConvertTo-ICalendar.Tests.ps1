@@ -4,6 +4,11 @@ Tests the script that transforms objects into iCalendar data.
 #>
 
 Describe 'Scheduled task conversion' {
+	BeforeAll
+	{
+		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
+		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
+	}
 	Context 'One-time' -Tag Once {
 		It "A one-time trigger at '<DtStart>' should produce a matching DTSTART." -TestCases @(
 			@{ DtStart = '2000-01-01T07:00' }
