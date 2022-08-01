@@ -107,8 +107,10 @@ Describe 'Scheduled task conversion' {
 	}
 	Context 'By month' -Tag Monthly {
 		It "A monthly trigger that runs '<Modifier>' '<Days>' '<Months>' should include recurrence '<Rule>'." -TestCases @(
-			@{ Rule = 'RRULE:FREQ=MONTHLY' }
-			# @{ Modifier = 'second'; Days = 'mon'; Rule = 'RRULE:FREQ=MONTHLY' }
+			@{ Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=1' }
+			@{ Days = 13; Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=13' }
+			@{ Days = 28; Months = 'FEB'; Rule = 'RRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=2;BYDAY=28' }
+			@{ Modifier = 'second'; Days = 'mon'; Rule = 'RRULE:FREQ=MONTHLY' }
 			# @{ Modifier = 'last'; Days = 'thu'; Rule = 'RRULE:FREQ=MONTHLY' }
 			# @{ Modifier = 'lastday'; Months = 'feb'; Rule = 'RRULE:FREQ=MONTHLY' }
 		) {

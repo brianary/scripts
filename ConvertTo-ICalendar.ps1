@@ -64,6 +64,8 @@ Begin
 	Write-Warning "This is still a work in progress."
 
 	Use-Command.ps1 schtasks C:\windows\system32\schtasks.exe -Message 'Unable to locate schtasks.exe'
+	Set-Variable MonthNames ((Get-Culture -Name '').DateTimeFormat.MonthGenitiveNames) `
+		-Scope Script -Option Constant -Description 'Month names, invariant culture'
 
 	filter ConvertTo-DateTimeStamp
 	{
@@ -161,7 +163,15 @@ Begin
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Months,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfMonth
 		)
-		Write-Debug "ScheduleByMonth: Months=$($Months.PSObject.Properties.Name)  DaysOfMonth=$($DaysOfMonth.Day)"
+		$monthNums = 1..12 |Where-Object {$Months.PSObject.Properties.Match($MonthNames[$_-1])}
+		if($monthNums.Count -eq 12)
+		{
+			return "`r`nRRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=$($DaysOfMonth.Day -join ',')"
+		}
+		else
+		{
+			return "`r`nRRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=$($monthNums -join ',');BYDAY=$($DaysOfMonth.Day -join ',')"
+		}
 	}
 
 	filter ConvertFrom-ScheduleByMonthDayOfWeek
@@ -171,7 +181,8 @@ Begin
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Weeks,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfWeek
 		)
-		Write-Debug "ScheduleByMonthDayOfWeek: Months=$Months  Weeks=$Weeks  DaysOfWeek=$DaysOfWeek"
+		$monthNums = 1..12 |Where-Object {$Months.PSObject.Properties.Match($MonthNames[$_-1])}
+		Write-Debug "ScheduleByMonthDayOfWeek: Months=$Months  Weeks=$($Weeks.Week)  DaysOfWeek=$($DaysOfWeek |ConvertTo-Json -Compress)"
 	}
 
 	filter ConvertFrom-TaskTrigger
