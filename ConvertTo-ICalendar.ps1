@@ -161,7 +161,7 @@ Begin
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Months,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfMonth
 		)
-		Write-Debug "ScheduleByMonth: Months=$Months  DaysOfMonth=$DaysOfMonth"
+		Write-Debug "ScheduleByMonth: Months=$($Months.PSObject.Properties.Name)  DaysOfMonth=$($DaysOfMonth.Day)"
 	}
 
 	filter ConvertFrom-ScheduleByMonthDayOfWeek
@@ -193,7 +193,7 @@ DTEND;$(ConvertTo-DateTimeWithZone $end)
 "@
 		Write-Debug $TaskTrigger.CimClass.CimClassName
 		$TaskTrigger |ConvertFrom-CimInstance.ps1 |ConvertTo-Json -Depth 4 |Write-Debug
-		# [xml](schtasks /query /xml /tn $TaskName) |Format-Xml.ps1 |Write-Debug
+		[xml](schtasks /query /xml /tn $TaskName) |Format-Xml.ps1 |Write-Debug
 		switch($TaskTrigger.CimClass.CimClassName)
 		{
 			MSFT_TaskDailyTrigger {$schedule += ConvertFrom-TaskDailyTrigger $TaskTrigger}
@@ -211,9 +211,9 @@ DTEND;$(ConvertTo-DateTimeWithZone $end)
 					Where-Object {$_.PSObject.Properties.Match('CalendarTrigger').Count -eq 0} |
 					ConvertTo-Json -Compress -Depth 5 |
 					ForEach-Object {Write-Warning "Ignoring non-calendar trigger: $_"}
-				$calendarTrigger = $task.Triggers |
-					Group-Object {$_.PSObject.Properties.Match('CalendarTrigger').Count -gt 0} |
-					ForEach-Object CalendarTrigger
+				$calendarTrigger = @($task.Triggers |
+					Where-Object {$_.PSObject.Properties.Match('CalendarTrigger').Count -gt 0} |
+					ForEach-Object CalendarTrigger)
 				Write-Debug "Found $($calendarTrigger.Count) calendar triggers"
 				$calendarTrigger |
 					Where-Object {$_.PSObject.Properties.Match('ScheduleByMonth*').Count -eq 0} |

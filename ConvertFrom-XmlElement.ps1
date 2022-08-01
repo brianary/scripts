@@ -37,9 +37,15 @@ Process
 		SelectXmlInfo { @($SelectXmlInfo |ForEach-Object {[Xml.XmlElement]$_.Node} |ConvertFrom-XmlElement.ps1) }
 		Element
 		{
-			if(($Element.SelectNodes('*') |Group-Object Name |Measure-Object).Count -eq 1)
+			if(!($Element.ChildNodes.NodeType |
+				Select-Object -Unique |
+				Where-Object {$_ -notin [Xml.XmlNodeType]::Text,[Xml.XmlNodeType]::CDATA}))
 			{
-				@($Element.SelectNodes('*') |ConvertFrom-XmlElement.ps1)
+				return $Element.InnerText
+			}
+			elseif(($Element.SelectNodes('*') |Group-Object Name |Measure-Object).Count -eq 1)
+			{
+				return @($Element.SelectNodes('*') |ConvertFrom-XmlElement.ps1)
 			}
 			else
 			{
@@ -74,7 +80,7 @@ Process
 						{ $properties[$node.Name].Add($value) }
 					}
 				}
-				New-Object PSObject -Property $properties
+				return [pscustomobject]$properties
 			}
 		}
 	}
