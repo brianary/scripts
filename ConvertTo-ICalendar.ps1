@@ -61,8 +61,6 @@ Get-ScheduledTask -TaskPath \ |ConvertTo-ICalendar.ps1 |Out-File tasks.ical utf8
 )
 Begin
 {
-	Write-Warning "This is still a work in progress."
-
 	Use-Command.ps1 schtasks C:\windows\system32\schtasks.exe -Message 'Unable to locate schtasks.exe'
 	Set-Variable MonthNames ((Get-Culture -Name '').DateTimeFormat.MonthGenitiveNames) `
 		-Scope Script -Option Constant -Description 'Month names, invariant culture'
@@ -86,7 +84,6 @@ Begin
 		[Parameter(Position=0,Mandatory=$true)][ValidatePattern('\AP\d+[YMD]|T\d+[HMS]\z')]
 		[string] $Interval
 		)
-		Write-Debug "SimpleInterval"
 		$Interval -match '\d+' |Out-Null
 		[int] $value = $Matches[0]
 		$frequency = switch -Regex ($Interval)
@@ -107,7 +104,6 @@ Begin
 		[Parameter(Mandatory=$true)][ValidateScript({$_.CimClass.CimClassName -eq 'MSFT_TaskDailyTrigger'})]
 		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger
 		)
-		Write-Debug "TaskDailyTrigger"
 		return "`r`nRRULE:FREQ=DAILY;INTERVAL=$($TaskTrigger.DaysInterval)"
 	}
 
@@ -118,7 +114,6 @@ Begin
 		[ValidateScript({$_.CimClass.CimClassName -eq 'MSFT_TaskWeeklyTrigger'})]
 		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger
 		)
-		Write-Debug "TaskWeeklyTrigger"
 		if($TaskTrigger.DaysOfWeek -in 0,0x7F)
 		{
 			return "`r`nRRULE:FREQ=WEEKLY;INTERVAL=$($TaskTrigger.WeeksInterval)"
@@ -164,13 +159,14 @@ Begin
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfMonth
 		)
 		$monthNums = 1..12 |Where-Object {$Months.PSObject.Properties.Match($MonthNames[$_-1])}
+		$days = switch("$($DaysOfMonth.Day)"){Last{'BYSETPOS=-1'}default{"BYDAY=$($DaysOfMonth.Day -join ',')"}}
 		if($monthNums.Count -eq 12)
 		{
-			return "`r`nRRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=$($DaysOfMonth.Day -join ',')"
+			return "`r`nRRULE:FREQ=MONTHLY;INTERVAL=1;$days"
 		}
 		else
 		{
-			return "`r`nRRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=$($monthNums -join ',');BYDAY=$($DaysOfMonth.Day -join ',')"
+			return "`r`nRRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=$($monthNums -join ',');$days"
 		}
 	}
 
@@ -182,7 +178,19 @@ Begin
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfWeek
 		)
 		$monthNums = 1..12 |Where-Object {$Months.PSObject.Properties.Match($MonthNames[$_-1])}
-		Write-Debug "ScheduleByMonthDayOfWeek: Months=$Months  Weeks=$($Weeks.Week)  DaysOfWeek=$($DaysOfWeek |ConvertTo-Json -Compress)"
+		$pos = @(switch($Weeks.Week){Last{-1}default{$_}})
+		$days = $DaysOfWeek.PSObject.Properties.Match('*').Name |
+			ForEach-Object {$_.Substring(0,3).ToUpperInvariant()}
+		$posdays = "BYDAY=$((Format-Permutations.ps1 '{0}{1}' $pos $days) -join ',')"
+		if($posdays -eq 'BYDAY=Last') {$posdays = 'BYSETPOS=-1'}
+		if($monthNums.Count -eq 12)
+		{
+			return "`r`nRRULE:FREQ=MONTHLY;INTERVAL=1;$posdays"
+		}
+		else
+		{
+			return "`r`nRRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=$($monthNums -join ',');$posdays"
+		}
 	}
 
 	filter ConvertFrom-TaskTrigger
@@ -202,9 +210,6 @@ Begin
 DTSTART;$(ConvertTo-DateTimeWithZone $Start)
 DTEND;$(ConvertTo-DateTimeWithZone $end)
 "@
-		Write-Debug $TaskTrigger.CimClass.CimClassName
-		$TaskTrigger |ConvertFrom-CimInstance.ps1 |ConvertTo-Json -Depth 4 |Write-Debug
-		[xml](schtasks /query /xml /tn $TaskName) |Format-Xml.ps1 |Write-Debug
 		switch($TaskTrigger.CimClass.CimClassName)
 		{
 			MSFT_TaskDailyTrigger {$schedule += ConvertFrom-TaskDailyTrigger $TaskTrigger}
@@ -217,7 +222,6 @@ DTEND;$(ConvertTo-DateTimeWithZone $end)
 			{
 				Write-Warning "CIM object contains no useful scheduling data; reading via schtasks XML"
 				$task = [xml](schtasks /query /xml /tn $TaskName) |ConvertFrom-XmlElement.ps1
-				$task.Triggers |ConvertTo-Json -Depth 6 |Write-Host
 				$task.Triggers |
 					Where-Object {$_.PSObject.Properties.Match('CalendarTrigger').Count -eq 0} |
 					ConvertTo-Json -Compress -Depth 5 |
@@ -225,7 +229,6 @@ DTEND;$(ConvertTo-DateTimeWithZone $end)
 				$calendarTrigger = @($task.Triggers |
 					Where-Object {$_.PSObject.Properties.Match('CalendarTrigger').Count -gt 0} |
 					ForEach-Object CalendarTrigger)
-				Write-Debug "Found $($calendarTrigger.Count) calendar triggers"
 				$calendarTrigger |
 					Where-Object {$_.PSObject.Properties.Match('ScheduleByMonth*').Count -eq 0} |
 					ConvertTo-Json -Compress -Depth 5 |
