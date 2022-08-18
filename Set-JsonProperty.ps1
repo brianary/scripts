@@ -76,7 +76,7 @@ Begin
 }
 Process
 {
-	$object = ($Path ? Get-Content $Path -Raw : $InputObject) |ConvertFrom-Json
+	$object = ($Path ? (Get-Content $Path -Raw) : $InputObject) |ConvertFrom-Json
 	$property = $object
 	for($i = 0; $i -lt ($jsonpath.Length-1); $i++)
 	{
