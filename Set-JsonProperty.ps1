@@ -28,8 +28,14 @@ Add-Member
     }
   }
 }
+
+.EXAMPLE
+Set-JsonProperty.ps1 powershell.codeFormatting.preset Allman -PathSeparator ~ -Path ./.vscode/settings.json
+
+Sets "powershell.codeFormatting.preset": "Allman" within the ./.vscode/settings.json file.
 #>
 
+#Requires -Version 7
 [CmdletBinding()][OutputType([string])] Param(
 <#
 The full path name of the property to set.
@@ -59,32 +65,36 @@ Changing the path separator to / for a name of powershell.codeFormatting.preset 
 # Indicates that overwriting values should generate a warning.
 [switch] $WarnOverwrite,
 # The JSON string to set the property in.
-[Parameter(Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject
+[Parameter(ParameterSetName='InputObject',Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject,
+# A JSON file to update.
+[Parameter(ParameterSetName='Path',Mandatory=$true)][string] $Path
 )
 Begin
 {
 	$UnescapedPathSeparator = "(?<=(?:\A|[^\\])(?:\\\\)*)$([regex]::Escape($PathSeparator))"
-	[string[]] $path = ($PropertyName -split $UnescapedPathSeparator) -replace '(?s)\\(.)','$1'
+	[string[]] $jsonpath = ($PropertyName -split $UnescapedPathSeparator) -replace '(?s)\\(.)','$1'
 }
 Process
 {
-	$object = $InputObject |ConvertFrom-Json
+	$object = ($Path ? Get-Content $Path -Raw : $InputObject) |ConvertFrom-Json
 	$property = $object
-	for($i = 0; $i -lt ($path.Length-1); $i++)
+	for($i = 0; $i -lt ($jsonpath.Length-1); $i++)
 	{
-		$nameSegment = $path[$i]
+		$nameSegment = $jsonpath[$i]
 		if(!$property.PSObject.Properties.Match($nameSegment,'NoteProperty').Count)
 		{
 			$property |Add-Member $nameSegment ([pscustomobject]@{})
 		}
 		$property = $property.$nameSegment
 	}
-	$nameSegment = $path[-1]
+	$nameSegment = $jsonpath[-1]
 	if($property.PSObject.Properties.Match($nameSegment,'NoteProperty').Count)
 	{
 		if($WarnOverwrite) {Write-Warning "Property $PropertyName overwriting '$($property.$nameSegment)'."}
 		$property.$nameSegment = $PropertyValue
 	}
-	else {$property |Add-Member ($path[-1]) $PropertyValue}
-	$object |ConvertTo-Json -Depth 100
+	else {$property |Add-Member ($jsonpath[-1]) $PropertyValue}
+	$value = $object |ConvertTo-Json -Depth 100
+	if($Path) {$value |Out-File $Path utf8NoBOM}
+	else {return $value}
 }
