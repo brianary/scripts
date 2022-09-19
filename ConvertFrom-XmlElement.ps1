@@ -37,7 +37,7 @@ Process
 		SelectXmlInfo { @($SelectXmlInfo |ForEach-Object {[Xml.XmlElement]$_.Node} |ConvertFrom-XmlElement.ps1) }
 		Element
 		{
-			if(!($Element.ChildNodes.NodeType |
+			if($Element.HasChildNodes -and !($Element.ChildNodes.NodeType |
 				Select-Object -Unique |
 				Where-Object {$_ -notin [Xml.XmlNodeType]::Text,[Xml.XmlNodeType]::CDATA}))
 			{
