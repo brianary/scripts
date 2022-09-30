@@ -22,10 +22,11 @@ Export-MermaidER.ps1 [-Table] <Table> [<CommonParameters>]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+```powershell
 Get-DbaDbTable -SqlInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016 -Table Production.Product |Export-MermaidER.ps1
 ```
 
+```mermaid
 erDiagram
 Product {
 	int ProductID PK "identity(1,1); Primary key for Product records."
@@ -61,12 +62,14 @@ Foreign key to ProductModel.ProductModelID."
 Used to support a merge replication sample."
 	datetime ModifiedDate "Date and time the record was last updated."
 }
+```
 
 ### EXAMPLE 2
-```
+```powershell
 Get-DbaDbTable -SqlInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016 -Schema Purchasing |Export-MermaidER.ps1
 ```
 
+```mermaid
 erDiagram
 ProductVendor {
 	int ProductID PK "Primary key.
@@ -132,7 +135,7 @@ Used to support a merge replication sample."
 	datetime ModifiedDate "Date and time the record was last updated."
 }
 Vendor {
-	int BusinessEntityID PK "Primary key for Vendor records. 
+	int BusinessEntityID PK "Primary key for Vendor records.
 Foreign key to BusinessEntity.BusinessEntityID"
 	AccountNumber AccountNumber "Vendor account (identification) number."
 	Name Name "Company name."
@@ -148,6 +151,7 @@ ProductVendor }|--|| Vendor : "BusinessEntityID: Foreign key constraint referenc
 PurchaseOrderDetail }|--|| PurchaseOrderHeader : "PurchaseOrderID: Foreign key constraint referencing PurchaseOrderHeader.PurchaseOrderID."
 PurchaseOrderHeader }|--|| ShipMethod : "ShipMethodID: Foreign key constraint referencing ShipMethod.ShipMethodID."
 PurchaseOrderHeader }|--|| Vendor : "VendorID: Foreign key constraint referencing Vendor.VendorID."
+```
 
 ## PARAMETERS
 
