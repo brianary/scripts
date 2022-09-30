@@ -114,7 +114,7 @@ PurchaseOrderHeader }|--|| Vendor : "VendorID: Foreign key constraint referencin
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([string])] Param(
-# An SMO table object associated to the database to examine.
+# An SMO table object to include in the diagram.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)]
 [Microsoft.SqlServer.Management.Smo.Table] $Table
 )
