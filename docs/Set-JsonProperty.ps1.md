@@ -12,9 +12,16 @@ Sets a property of arbitrary depth in a JSON string.
 
 ## SYNTAX
 
+### InputObject
 ```
 Set-JsonProperty.ps1 [-PropertyName] <String> [-PropertyValue] <PSObject> [-PathSeparator <Char>]
  [-WarnOverwrite] -InputObject <String> [<CommonParameters>]
+```
+
+### Path
+```
+Set-JsonProperty.ps1 [-PropertyName] <String> [-PropertyValue] <PSObject> [-PathSeparator <Char>]
+ [-WarnOverwrite] -Path <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -119,13 +126,28 @@ The JSON string to set the property in.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: InputObject
 Aliases:
 
 Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Path
+A JSON file to update.
+
+```yaml
+Type: String
+Parameter Sets: Path
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

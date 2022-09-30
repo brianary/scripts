@@ -12,6 +12,11 @@ Converts named nodes of an element to properties of a PSObject, recursively.
 
 ## SYNTAX
 
+### Document
+```
+ConvertFrom-XmlElement.ps1 [-Document] <XmlDocument> [<CommonParameters>]
+```
+
 ### Element
 ```
 ConvertFrom-XmlElement.ps1 [-Element] <XmlElement> [<CommonParameters>]
@@ -37,6 +42,21 @@ key              value
 webPages:Enabled false
 
 ## PARAMETERS
+
+### -Document
+The XML document to convert to a PSObject.
+
+```yaml
+Type: XmlDocument
+Parameter Sets: Document
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
 
 ### -Element
 The element to convert to a PSObject.
