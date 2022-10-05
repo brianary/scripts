@@ -188,5 +188,7 @@ $Name {
 End
 {
 	$input |Format-TableAsMermaid
-	$input.ForeignKeys |Format-ForeignKeyAsMermaid -AllDatabaseTables $input[0].Parent.Tables -SelectedTableUrns $input.Urn.Value
+	$input |
+		ForEach-Object ForeignKeys |
+		Format-ForeignKeyAsMermaid -AllDatabaseTables $input[0].Parent.Tables -SelectedTableUrns $input.Urn.Value
 }
