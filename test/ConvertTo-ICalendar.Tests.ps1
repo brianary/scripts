@@ -7,6 +7,7 @@ Describe 'Scheduled task conversion' {
 	BeforeAll {
 		$scriptsdir,$sep,$datefmt = (Split-Path $PSScriptRoot),[io.path]::PathSeparator,
 			[cultureinfo]::CurrentCulture.DateTimeFormat.ShortDatePattern
+		Write-Host "using date format '$datefmt' => '$(Get-Date -f $datefmt)'"
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'One-time' -Tag Once {
