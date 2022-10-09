@@ -158,7 +158,7 @@ Begin
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Months,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfMonth
 		)
-		$monthNums = 1..12 |Where-Object {$Months.PSObject.Properties.Match($MonthNames[$_-1])}
+		[int[]] $monthNums = 1..12 |Where-Object {$Months.PSObject.Properties.Match($MonthNames[$_-1])}
 		$days = switch("$($DaysOfMonth.Day)"){Last{'BYSETPOS=-1'}default{"BYDAY=$($DaysOfMonth.Day -join ',')"}}
 		if($monthNums.Count -eq 12)
 		{
@@ -177,7 +177,7 @@ Begin
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Weeks,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfWeek
 		)
-		$monthNums = 1..12 |Where-Object {$Months.PSObject.Properties.Match($MonthNames[$_-1])}
+		[int[]] $monthNums = 1..12 |Where-Object {$Months.PSObject.Properties.Match($MonthNames[$_-1])}
 		$pos = @(switch($Weeks.Week){Last{-1}default{$_}})
 		$days = $DaysOfWeek.PSObject.Properties.Match('*').Name |
 			ForEach-Object {$_.Substring(0,3).ToUpperInvariant()}
@@ -192,7 +192,6 @@ Begin
 			return "`r`nRRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=$($monthNums -join ',');$posdays"
 		}
 	}
-
 	filter ConvertFrom-TaskTrigger
 	{
 		[CmdletBinding()] Param(

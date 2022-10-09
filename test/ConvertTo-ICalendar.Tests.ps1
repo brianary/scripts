@@ -19,7 +19,6 @@ Describe 'Scheduled task conversion' {
 				-Action (New-ScheduledTaskAction -Execute pwsh -Argument 1) `
 				-Trigger (New-ScheduledTaskTrigger -At $DtStart -Once) |
 				ConvertTo-ICalendar.ps1
-			Write-Host $result -fore Cyan
 			$result -split '[\r\n]+' |
 				Where-Object {$_ -like 'DTSTART[;:]*'} |
 				Should -MatchExactly "\ADTSTART\b[^:]*:$([regex]::Escape((Get-Date $DtStart -Format yyyyMMdd\THHmmss)))\z"
@@ -79,14 +78,14 @@ Describe 'Scheduled task conversion' {
 	}
 	Context 'By week' -Tag Weekly {
 		It "A weekly trigger that runs every '<Interval>' on days '<Days>' should include recurrence '<Rule>'." -TestCases @(
-			@{ Interval = 1; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=1' }
+			@{ Interval = 1; Days = @(); Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=1' }
 			@{ Interval = 1; Days = 'Tuesday','Thursday'; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TU,TH' }
-			@{ Interval = 2; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=2' }
+			@{ Interval = 2; Days = @(); Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=2' }
 			@{ Interval = 2; Days = 'Saturday','Sunday'; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=SU,SA' }
-			@{ Interval = 3; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=3' }
+			@{ Interval = 3; Days = @(); Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=3' }
 			@{ Interval = 3; Days = 'Monday','Tuesday','Wednesday','Thursday','Friday';
 				Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=3;BYDAY=MO,TU,WE,TH,FR' }
-			@{ Interval = 5; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=5' }
+			@{ Interval = 5; Days = @(); Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=5' }
 			@{ Interval = 5; Days = 'Thursday'; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=5;BYDAY=TH' }
 		) {
 			Param([int]$Interval,[DayOfWeek[]]$Days = @(),[string]$Rule)
@@ -107,12 +106,12 @@ Describe 'Scheduled task conversion' {
 	}
 	Context 'By month' -Tag Monthly {
 		It "A monthly trigger that runs '<Modifier>' '<Days>' '<Months>' should include recurrence '<Rule>'." -TestCases @(
-			@{ Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=1' }
-			@{ Days = 13; Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=13' }
-			@{ Days = 28; Months = 'FEB'; Rule = 'RRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=2;BYDAY=28' }
-			@{ Modifier = 'second'; Days = 'mon'; Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=2MON' }
-			@{ Modifier = 'last'; Days = 'thu'; Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=-1THU' }
-			@{ Modifier = 'lastday'; Months = 'feb'; Rule = 'RRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=2;BYSETPOS=-1' }
+			@{ Modifier = $null; Days = $null; Months = $null; Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=1' }
+			@{ Modifier = $null; Days = 13; Months = $null; Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=13' }
+			@{ Modifier = $null; Days = 28; Months = 'FEB'; Rule = 'RRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=2;BYDAY=28' }
+			@{ Modifier = 'second'; Days = 'mon'; Months = $null; Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=2MON' }
+			@{ Modifier = 'last'; Days = 'thu'; Months = $null; Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=-1THU' }
+			@{ Modifier = 'lastday'; Days = $null; Months = 'feb'; Rule = 'RRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=2;BYSETPOS=-1' }
 		) {
 			Param([string]$Modifier,[string]$Days,[string]$Months,[string]$Rule)
 			$start = (Get-Date).AddDays(100)
@@ -128,5 +127,5 @@ Describe 'Scheduled task conversion' {
 				Should -BeExactly $Rule
 		}
 	}
-	AfterEach {Unregister-ScheduledTask -TaskName x -Confirm:$false}
+	AfterEach {try{Unregister-ScheduledTask -TaskName x -Confirm:$false -EA Stop}catch{Write-Warning "$_"}}
 }
