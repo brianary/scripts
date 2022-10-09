@@ -121,6 +121,7 @@ Describe 'Scheduled task conversion' {
 			if($Modifier) {$param += @('/mo',$Modifier)}
 			if($Days) {$param += @('/d',$Days)}
 			if($Months) {$param += @('/m',$Months)}
+			Write-Host "creating a monthly task starting (fmt: $datefmt) '$(Get-Date $start -f $datefmt)' at '$(Get-Date $start -f HH:mm)', $param"
 			schtasks /create /tn x /tr pwsh /sd (Get-Date $start -f $datefmt) /st (Get-Date $start -f HH:mm) `
 				/sc monthly @param |Out-Null
 			$result = Get-ScheduledTask -TaskName x |ConvertTo-ICalendar.ps1 -Debug
