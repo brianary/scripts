@@ -67,6 +67,10 @@ Tests $Synopsis
 #>
 
 Describe '$Synopsis'{
+	BeforeAll {
+		`$scriptsdir,`$sep = (Split-Path `$PSScriptRoot),[io.path]::PathSeparator
+		if(`$scriptsdir -notin (`$env:Path -split `$sep)) {`$env:Path += "`$sep`$scriptsdir"}
+	}
 	Context 'Examples' -Tag example {
 $($Examples.example |Format-ExampleTest)
 	}

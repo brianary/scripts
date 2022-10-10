@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-Adds a incrementing integer property to each pipeline object.
+Adds an incrementing integer property to each pipeline object.
 
 .LINK
 Add-Member
@@ -26,7 +26,9 @@ Certificate        7
 # The starting number to count from.
 [Parameter(Position=1)][int] $InitialValue = 1,
 # The object to add the property to.
-[Parameter(Mandatory=$true,ValueFromPipeline=$true)][psobject] $InputObject
+[Parameter(Mandatory=$true,ValueFromPipeline=$true)][psobject] $InputObject,
+# Overwrites a property if one with the same name already exists.
+[switch] $Force
 )
 Begin { $i = $InitialValue }
-Process { Add-Member $PropertyName ($i++) -InputObject $InputObject -PassThru }
+Process { Add-Member $PropertyName ($i++) -InputObject $InputObject -PassThru -Force:$Force }
