@@ -4,6 +4,10 @@ Tests adding named capture group values as note properties to Select-String Matc
 #>
 
 Describe 'Adding named capture group values'{
+	BeforeAll {
+		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
+		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
+	}
 	Context 'Add to pipeline' -Tag example {
 		It "Value '<Text>' should add '<Name>' and '<Email>'" -TestCases @(
 			@{ Text = 'Arthur Dent adent@example.org'; Name = 'Arthur Dent'; Email = 'adent@example.org' }
