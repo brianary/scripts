@@ -6,7 +6,7 @@ Tests the script that transforms objects into iCalendar data.
 Describe 'Scheduled task conversion' {
 	BeforeAll {
 		$scriptsdir,$sep,$datefmt = (Split-Path $PSScriptRoot),[io.path]::PathSeparator,
-			[cultureinfo]::CurrentCulture.DateTimeFormat.ShortDatePattern
+			([cultureinfo]::CurrentCulture.DateTimeFormat.ShortDatePattern -replace '(?-i)\b([Md])\b','$1$1')
 		Write-Host "using date format '$datefmt' => '$(Get-Date -f $datefmt)'"
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
