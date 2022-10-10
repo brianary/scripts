@@ -219,7 +219,7 @@ DTEND;$(ConvertTo-DateTimeWithZone $end)
 			{$schedule += ConvertFrom-SimpleInterval $TaskTrigger.Repetition.Interval}
 			MSFT_TaskTrigger
 			{
-				Write-Warning "CIM object contains no useful scheduling data; reading via schtasks XML"
+				Write-Verbose "CIM object contains no useful scheduling data; reading via schtasks XML"
 				$task = [xml](schtasks /query /xml /tn $TaskName) |ConvertFrom-XmlElement.ps1
 				$task.Triggers |
 					Where-Object {$_.PSObject.Properties.Match('CalendarTrigger').Count -eq 0} |

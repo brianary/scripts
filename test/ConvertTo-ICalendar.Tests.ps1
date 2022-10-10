@@ -7,7 +7,7 @@ Describe 'Scheduled task conversion' {
 	BeforeAll {
 		$scriptsdir,$sep,$datefmt = (Split-Path $PSScriptRoot),[io.path]::PathSeparator,
 			([cultureinfo]::CurrentCulture.DateTimeFormat.ShortDatePattern -replace '(?-i)\b([Md])\b','$1$1')
-		Write-Host "using date format '$datefmt' => '$(Get-Date -f $datefmt)'"
+		Write-Verbose "using date format '$datefmt' => '$(Get-Date -f $datefmt)'"
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'One-time' -Tag Once {
@@ -121,7 +121,7 @@ Describe 'Scheduled task conversion' {
 			if($Modifier) {$param += @('/mo',$Modifier)}
 			if($Days) {$param += @('/d',$Days)}
 			if($Months) {$param += @('/m',$Months)}
-			Write-Host "creating a monthly task starting (fmt: $datefmt) '$(Get-Date $start -f $datefmt)' at '$(Get-Date $start -f HH:mm)', $param"
+			Write-Verbose "creating a monthly task starting (fmt: $datefmt) '$(Get-Date $start -f $datefmt)' at '$(Get-Date $start -f HH:mm)', $param"
 			schtasks /create /tn x /tr pwsh /sd (Get-Date $start -f $datefmt) /st (Get-Date $start -f HH:mm) `
 				/sc monthly @param |Out-Null
 			$result = Get-ScheduledTask -TaskName x |ConvertTo-ICalendar.ps1 -Debug
