@@ -3,7 +3,7 @@
 Tests adding a dynamic parameter to a DynamicParam object.
 #>
 
-Describe 'Adds a dynamic parameter to a script, within a DynamicParam block.' -Tag Add-DynamicParam {
+Describe 'Add-DynamicParam' -Tag Add-DynamicParam {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}

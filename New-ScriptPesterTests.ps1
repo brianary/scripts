@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Creates a new Pester testing script for a given script.
+Creates a new Pester testing script from a script's examples and parameter sets.
 #>
 
 #Requires -Version 3
@@ -59,6 +59,7 @@ $('"@')
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Synopsis,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][psobject[]] $Examples
 		)
+		$shortname = [io.path]::GetFileNameWithoutExtension($Name)
 		$Local:OFS = $NL
 		return @"
 <#
@@ -66,12 +67,12 @@ $('"@')
 Tests $Synopsis
 #>
 
-Describe '$($Synopsis -replace "'","''")' -Tag $([io.path]::GetFileNameWithoutExtension($Name)) {
+Describe '$shortname' -Tag $shortname {
 	BeforeAll {
 		`$scriptsdir,`$sep = (Split-Path `$PSScriptRoot),[io.path]::PathSeparator
 		if(`$scriptsdir -notin (`$env:Path -split `$sep)) {`$env:Path += "`$sep`$scriptsdir"}
 	}
-	Context 'Examples' -Tag example {
+	Context '$($Synopsis -replace "'","''")' -Tag Example {
 $($Examples.example |Format-ExampleTest)
 	}
 $($CmdInfo.ParameterSets |Where-Object Name -ne __AllParameterSets |Format-ParameterSetContext)

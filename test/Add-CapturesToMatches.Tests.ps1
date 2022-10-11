@@ -3,12 +3,12 @@
 Tests adding named capture group values as note properties to Select-String MatchInfo objects.
 #>
 
-Describe 'Adding named capture group values'{
+Describe 'Add-CapturesToMatches' -Tag Add-CapturesToMatches,Select-Xml {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Add to pipeline' -Tag Add-CapturesToMatches {
+	Context 'Add to regex selection' {
 		It "Value '<Text>' should add '<Name>' and '<Email>'" -TestCases @(
 			@{ Text = 'Arthur Dent adent@example.org'; Name = 'Arthur Dent'; Email = 'adent@example.org' }
 			@{ Text = 'Tricia McMillan trillian@example.com'; Name = 'Tricia McMillan'; Email = 'trillian@example.com' }
@@ -19,5 +19,4 @@ Describe 'Adding named capture group values'{
 			$result.Email |Should -BeExactly $Email
 		}
 	}
-
 }

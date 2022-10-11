@@ -3,12 +3,12 @@
 Tests adding an incrementing integer property to each pipeline object.
 #>
 
-Describe 'Adds an incrementing integer property to each pipeline object' -Tag Add-Counter {
+Describe 'Add-Counter' -Tag Add-Counter {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Adds a position counter property' -Tag From-Zero {
+	Context 'Adds a counter property' -Tag From-Zero {
 		It "Providers get numbered" {
 			[psobject[]] $providers = Get-PSProvider |Add-Counter.ps1 -PropertyName Position -InitialValue 0 -Force
 			foreach($i in 0..($providers.Count -1))
