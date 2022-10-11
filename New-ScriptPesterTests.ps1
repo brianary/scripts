@@ -66,7 +66,7 @@ $('"@')
 Tests $Synopsis
 #>
 
-Describe '$Synopsis'{
+Describe '$($Synopsis -replace "'","''")' -Tag $([io.path]::GetFileNameWithoutExtension($Name)) {
 	BeforeAll {
 		`$scriptsdir,`$sep = (Split-Path `$PSScriptRoot),[io.path]::PathSeparator
 		if(`$scriptsdir -notin (`$env:Path -split `$sep)) {`$env:Path += "`$sep`$scriptsdir"}
