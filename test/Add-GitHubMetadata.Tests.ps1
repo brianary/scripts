@@ -5,6 +5,7 @@ Tests Adds GitHub Linguist overrides to a repo's .gitattributes.
 
 Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 	BeforeAll {
+		Install-Module Detextive -Force
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
