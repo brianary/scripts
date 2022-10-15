@@ -131,7 +131,9 @@ If no EditorConfig file exists, this switch indicates a simple default for text
 files in the repo not to add a final line ending at the end. Otherwise, a final
 line ending will be added automatically if it is missing.
 #>
-[switch] $DefaultNoFinalNewLine
+[switch] $DefaultNoFinalNewLine,
+# Indicates warnings about new content should be skipped.
+[switch] $NoWarnings
 )
 
 function Resolve-RepoPath
@@ -157,10 +159,8 @@ function Copy-GitHubFile
     [Parameter(Position=0,Mandatory=$true)][string] $Filename,
     [Parameter(Position=1,Mandatory=$true)][Alias('Path','Url')][uri] $Source
     )
-    if(!"$Source"){ Write-Verbose "No file to copy."; return }
-    else{Write-Host "$Source $($MyInvocation.CommandOrigin)" -ForegroundColor Cyan}
     if(Test-SkipFile $Filename){return}
-    if($Source.IsFile){Copy-Item $Path $Filename}
+    if($Source.IsFile){Copy-Item $Source.LocalPath $Filename}
     else{Invoke-WebRequest $Source -OutFile $Filename} #TODO: authentication for private repos?
 }
 
@@ -199,7 +199,7 @@ Sections
 --------
 
 TODO: Add sections for additional details, special instructions, prerequisites, &c.
-"@ -Warn
+"@ -Warn:$(!$NoWarnings)
 }
 
 function Add-CodeOwners
@@ -217,11 +217,12 @@ function Add-CodeOwners
             Add-CapturesToMatches.ps1
         $authors |Out-String |Write-Verbose
         [int] $max = ($authors |Measure-Object Commits -Maximum).Maximum
-        [int] $oneSigmaFromTop = $max - (Measure-StandardDeviation.ps1 $authors.Commits)
+        [int] $oneSigmaFromTop = $max - ($authors.Commits |Measure-StandardDeviation.ps1)
         Write-Verbose "Authors with $oneSigmaFromTop or more commits will be included as default code owners."
         $DefaultOwner = $authors |Where-Object {[int] $_.Commits -ge $oneSigmaFromTop} |ForEach-Object Email
         Write-Verbose "Default code owners determined to be $DefaultOwner."
     }
+	$Local:OFS = [Environment]::NewLine
     Add-File .github/CODEOWNERS @"
 
 # Code Owners file https://github.com/blog/2392-introducing-code-owners
@@ -229,9 +230,9 @@ function Add-CodeOwners
 
 # default owner(s)
 * $DefaultOwner
-$(if($Owners){'','# targeted owners' -join [environment]::NewLine})
+$(if($Owners){"$OFS# targeted owners"})
 $($Owners.Keys |ForEach-Object {"$_ $($Owners[$_] -join ' ')"})
-"@ ASCII -Warn -Force
+"@ ASCII -Warn:$(!$NoWarnings) -Force
 }
 
 function Add-LinguistOverrides
@@ -319,7 +320,7 @@ charset = utf-8
 [*.css]
 charset = utf-8
 
-"@ -Warn
+"@ -Warn:$(!$NoWarnings)
 }
 
 function Update-GitHubMetadata
