@@ -64,7 +64,7 @@ Process
 				ForEach-Object {New-Object psvariable $_.Name,$_.Value}
 		}
 	}
-	[psobject[]] $v = $Value.InvokeWithContext($null,$context,$null)
+	$v = $Value.InvokeWithContext($null,$context,$null) |Select-Object -First 1
 	Add-Member -InputObject $InputObject -MemberType NoteProperty -Name $Name `
-		-Value $(if($v.Length -eq 1){$v[0]}else{$v}) -PassThru:$PassThru -Force:$Force
+		-Value $v -PassThru:$PassThru -Force:$Force
 }

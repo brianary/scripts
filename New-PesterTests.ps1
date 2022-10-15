@@ -1,20 +1,50 @@
 <#
 .SYNOPSIS
 Creates a new Pester testing script from a script's examples and parameter sets.
+
+.LINK
+Stop-ThrowError.ps1
+
+.EXAMPLE
+New-PesterTests.ps1 New-PesterTests.ps1
+
+Creates .\test\New-PesterTests.Tests.ps1 with some boilerplate Pester code.
 #>
 
 #Requires -Version 3
 [CmdletBinding()] Param(
 # The script to generate tests for.
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
+[Parameter(ParameterSetName='Script',Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [ValidateScript({Test-Path $_ -Type Leaf})][string] $Script,
 # The directory to generate tests in.
 [ValidateScript({Test-Path $_ -Type Container})][string] $Directory = 'test',
 # Overwrite an existing tests file.
-[switch] $Force
+[Parameter(ParameterSetName='Script')][switch] $Force,
+# Indicates that the next script that's missing a test script file should have one created.
+[Parameter(ParameterSetName='Next',Mandatory=$true)][switch] $Next
 )
 Begin
 {
+	if($PSCmdlet.ParameterSetName -eq 'Next')
+	{
+		if(!$Next) {return}
+		else
+		{
+			$nextScript = Get-Item *.ps1 |
+				Where-Object {!(Join-Path $Directory ([io.path]::ChangeExtension($_.Name,'Tests.ps1')) |Test-Path -Type Leaf)} |
+				Select-Object -First 1
+			if(!$nextScript)
+			{
+				Write-Host 'Congratulations, all of the scripts in this directory have test files.' -ForegroundColor Green
+				return
+			}
+			else
+			{
+				Write-Host "Creating new tests script for $nextScript" -ForegroundColor Green
+				return &$PSCommandPath -Script $nextScript -Directory $Directory
+			}
+		}
+	}
 	Set-Variable NL ([Environment]::NewLine) -Scope Script -Option Constant
 
 	filter Format-ExampleTest
@@ -82,6 +112,7 @@ $($CmdInfo.ParameterSets |Where-Object Name -ne __AllParameterSets |Format-Param
 }
 Process
 {
+	if($PSCmdlet.ParameterSetName -eq 'Next') {return}
 	$name = Split-Path $Script -Leaf
 	$cmd = Resolve-Path $Script |Get-Command
 	$testfile = Join-Path $Directory ([io.path]::ChangeExtension($name,'Tests.ps1'))
