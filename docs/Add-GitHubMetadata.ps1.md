@@ -17,7 +17,7 @@ Add-GitHubMetadata.ps1 [[-DefaultOwner] <String[]>] [[-Owners] <Hashtable>] [[-V
  [[-DocumentationCode] <String[]>] [[-GeneratedCode] <String[]>] [[-IssueTemplate] <String>]
  [[-PullRequestTemplate] <String>] [[-ContributingFile] <String>] [[-LicenseFile] <String>]
  [[-DefaultCharset] <String>] [[-DefaultLineEndings] <String>] [[-DefaultIndentSize] <Int32>]
- [-DefaultUsesTabs] [-DefaultKeepTrailingSpace] [-DefaultNoFinalNewLine] [-WhatIf] [-Confirm]
+ [-DefaultUsesTabs] [-DefaultKeepTrailingSpace] [-DefaultNoFinalNewLine] [-NoWarnings] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
@@ -277,6 +277,21 @@ If no EditorConfig file exists, this switch indicates a simple default for text
 files in the repo not to add a final line ending at the end.
 Otherwise, a final
 line ending will be added automatically if it is missing.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoWarnings
+Indicates warnings about new content should be skipped.
 
 ```yaml
 Type: SwitchParameter

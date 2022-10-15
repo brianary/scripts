@@ -237,6 +237,8 @@ function Format-Readme
 Useful General-Purpose Scripts
 ==============================
 
+![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)
+
 This repo contains a collection of generally useful scripts (mostly Windows PowerShell).
 
 See [PS5](PS5) for legacy scripts, [syscfg](syscfg) for single-use system config scripts.

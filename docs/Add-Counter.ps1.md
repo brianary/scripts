@@ -13,7 +13,7 @@ Adds a incrementing integer property to each pipeline object.
 ## SYNTAX
 
 ```
-Add-Counter.ps1 [[-PropertyName] <String>] [[-InitialValue] <Int32>] -InputObject <PSObject>
+Add-Counter.ps1 [[-PropertyName] <String>] [[-InitialValue] <Int32>] -InputObject <PSObject> [-Force]
  [<CommonParameters>]
 ```
 
@@ -81,6 +81,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Force
+Overwrites a property if one with the same name already exists.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

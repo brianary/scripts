@@ -1,19 +1,19 @@
 ---
 external help file: -help.xml
 Module Name:
-online version: http://webcoder.info/recurrence.html
+online version: True
 schema: 2.0.0
 ---
 
-# ConvertTo-EpochTime.ps1
+# New-ScriptPesterTests.ps1
 
 ## SYNOPSIS
-Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
+Creates a new Pester testing script from a script's examples and parameter sets.
 
 ## SYNTAX
 
 ```
-ConvertTo-EpochTime.ps1 [-DateTime] <DateTime> [-UniversalTime] [<CommonParameters>]
+New-ScriptPesterTests.ps1 [-Script] <String> [-Directory <String>] [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,20 +21,20 @@ ConvertTo-EpochTime.ps1 [-DateTime] <DateTime> [-UniversalTime] [<CommonParamete
 
 ## EXAMPLES
 
-### EXAMPLE 1
-```
-Get-Date |ConvertTo-EpochTime.ps1
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-1556884381
+{{ Add example description here }}
 
 ## PARAMETERS
 
-### -DateTime
-The DateTime value to convert to number of seconds since Jan 1, 1970.
+### -Script
+The script to generate tests for.
 
 ```yaml
-Type: DateTime
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -45,13 +45,28 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -UniversalTime
-Indicates the DateTime provided is local, and should be converted to UTC.
+### -Directory
+The directory to generate tests in.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Test
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+Overwrite an existing tests file.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: UTC
+Aliases:
 
 Required: False
 Position: Named
@@ -65,17 +80,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.DateTime values to convert to integers.
 ## OUTPUTS
 
-### System.Int32 values converted from date and time values.
 ## NOTES
 
 ## RELATED LINKS
-
-[https://en.wikipedia.org/wiki/Unix_time](https://en.wikipedia.org/wiki/Unix_time)
-
-[https://stackoverflow.com/a/1860511/54323](https://stackoverflow.com/a/1860511/54323)
-
-[Get-Date]()
-
