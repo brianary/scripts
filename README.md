@@ -1,11 +1,13 @@
 Useful General-Purpose Scripts
 ==============================
 
-![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)
+[![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 
 This repo contains a collection of generally useful scripts (mostly Windows PowerShell).
 
 See [PS5](PS5) for legacy scripts, [syscfg](syscfg) for single-use system config scripts.
+
+[pester.yml]: https://github.com/brianary/scripts/actions/workflows/pester.yml "Pester test run history"
 
 PowerShell Scripts
 ------------------
@@ -214,8 +216,8 @@ F# Scripts
 
 Office VBA Scripts
 ------------------
-- **[C:/Users/brian/GitHub/scripts/OutlookExpireTag.vba](C:/Users/brian/GitHub/scripts/OutlookExpireTag.vba)**: Too many emails remain beyond their period of relevance: daily personnel schedule changes, found item notices, office food notices, server reboot notices, weather/traffic warnings, &c. This Outlook script will allow specifying an expiration date as a hashtag in the subject of outgoing emails, since Outlook does such a good job of hiding the UI for that field. -BL 
-- **[C:/Users/brian/GitHub/scripts/OutlookPasteFormattedIndented.vba](C:/Users/brian/GitHub/scripts/OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
-- **[C:/Users/brian/GitHub/scripts/OutlookPasteTsvTable.vba](C:/Users/brian/GitHub/scripts/OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
+- **[OutlookExpireTag.vba](OutlookExpireTag.vba)**: Too many emails remain beyond their period of relevance: daily personnel schedule changes, found item notices, office food notices, server reboot notices, weather/traffic warnings, &c. This Outlook script will allow specifying an expiration date as a hashtag in the subject of outgoing emails, since Outlook does such a good job of hiding the UI for that field. -BL 
+- **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
+- **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 10/14/2022 19:21:55 -->
+<!-- generated 10/14/2022 20:05:54 -->

@@ -147,7 +147,7 @@ function Format-VBAScripts
 {
 	Write-Progress 'Enumerating VisualBasic for Applications scripts'
 	$VBAHeadPattern = '(?mx) \A (?<Description>(?:^'' .* $ \s*)+) ^(?!'')'
-	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\*.vba
+	[IO.FileInfo[]] $scripts = Get-Item .\*.vba
 	$i,$max = 0,($scripts.Count/100)
 	$scripts |
 		foreach {(Resolve-Path $_.FullName -Relative) -replace '\\','/' -replace '\A\./',''} |
@@ -237,11 +237,13 @@ function Format-Readme
 Useful General-Purpose Scripts
 ==============================
 
-![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)
+[![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 
 This repo contains a collection of generally useful scripts (mostly Windows PowerShell).
 
 See [PS5](PS5) for legacy scripts, [syscfg](syscfg) for single-use system config scripts.
+
+[pester.yml]: https://github.com/brianary/scripts/actions/workflows/pester.yml "Pester test run history"
 
 PowerShell Scripts
 ------------------
