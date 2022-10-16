@@ -3,6 +3,13 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
+[![GitHub license badge](https://badgen.net/github/license/brianary/Scripts)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts)](https://github.com/brianary/scripts/stargazers)
+[![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts)](https://github.com/brianary/scripts/watchers)
+[![GitHub forks badge](https://badgen.net/github/forks/brianary/Scripts)](https://github.com/brianary/scripts/network/members)
+[![GitHub issues badge](https://badgen.net/github/open-issues/brianary/Scripts)](https://github.com/brianary/scripts/issues)
+[![GitHub commits badge](https://badgen.net/github/commits/brianary/Scripts/main)](https://github.com/brianary/scripts/commits/main)
+[![GitHub last commit badge](https://badgen.net/github/last-commit/brianary/Scripts/main)](https://github.com/brianary/scripts/commits/main)
 
 This repo contains a collection of generally useful scripts (mostly Windows PowerShell).
 
