@@ -10,4 +10,9 @@ jobs:
       shell: pwsh
       run: |
         Install-Module Pester -Force
-        Invoke-Pester -Output Diagnostic -Path test
+        Invoke-Pester -Output Diagnostic -Path test -PassThru |Export-NUnitReport -Path TestResults.xml
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        nunit_files: "TestResults.xml"
