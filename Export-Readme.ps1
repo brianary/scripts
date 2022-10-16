@@ -238,6 +238,7 @@ Useful General-Purpose Scripts
 ==============================
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
+[![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
 
 This repo contains a collection of generally useful scripts (mostly Windows PowerShell).
 
