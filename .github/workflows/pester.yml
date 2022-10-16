@@ -13,13 +13,14 @@ jobs:
         Invoke-Pester -Output Diagnostic -Path test -PassThru |Export-NUnitReport -Path TestResults.xml
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      id: test-results
       if: always()
       with:
         nunit_files: "TestResults.xml"
     - name: Set badge color
       shell: pwsh
       run: |
-        switch(${{ fromJSON( steps.test-results.outputs.json ).conclusion }})
+        switch('${{ fromJSON( steps.test-results.outputs.json ).conclusion }}')
         {
             success {'BADGE_COLOR=31C653' |Add-Content $env:GITHUB_ENV}
             failure {'BADGE_COLOR=800000' |Add-Content $env:GITHUB_ENV}
