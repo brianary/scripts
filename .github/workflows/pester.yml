@@ -12,7 +12,7 @@ jobs:
         Install-Module Pester -Force
         Invoke-Pester -Output Diagnostic -Path test -PassThru |Export-NUnitReport -Path TestResults.xml
     - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v2
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
       if: always()
       with:
         nunit_files: "TestResults.xml"
