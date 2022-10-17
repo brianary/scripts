@@ -2,6 +2,9 @@
 .SYNOPSIS
 Adds a dynamic parameter to a script, within a DynamicParam block.
 
+.DESCRIPTION
+Adding dynamic parameters is a complex process, this attempts to simplify that.
+
 .INPUTS
 System.Object[] a list of possible values for this parameter to validate against.
 

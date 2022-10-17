@@ -5,8 +5,17 @@ Tests adding a NoteProperty to a PSObject, calculating the value with the object
 
 Describe 'Add-NoteProperty' -Tag Add-NoteProperty {
 	BeforeAll {
+		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
+	}
+	Context 'Script style' -Tag Style {
+		It "Should follow best practices for style" {
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-NoteProperty.ps1" -Severity Warning |
+				Should -HaveCount 0 -Because 'there should be no style warnings'
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-NoteProperty.ps1" -Severity Error |
+				Should -HaveCount 0 -Because 'there should be no style errors'
+		}
 	}
 	Context 'Add a calculated property value' -Tag NoteProperty {
 		It "Should add a property with a static value calculated when added" {

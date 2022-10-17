@@ -2,6 +2,12 @@
 .SYNOPSIS
 Adds named capture group values as note properties to Select-String MatchInfo objects.
 
+.DESCRIPTION
+Navigating the .NET Regex Group and Capture collections to find a capture group can be
+a hassle in some versions of PowerShell.
+
+To simplifies this process, this script just adds simple properties to the MatchInfo objects.
+
 .INPUTS
 Microsoft.PowerShell.Commands.MatchInfo, output from Select-String that used a pattern
 with named capture groups.

@@ -5,8 +5,17 @@ Tests adding a dynamic parameter to a DynamicParam object.
 
 Describe 'Add-DynamicParam' -Tag Add-DynamicParam {
 	BeforeAll {
+		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
+	}
+	Context 'Script style' -Tag Style {
+		It "Should follow best practices for style" {
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-DynamicParam.ps1" -Severity Warning |
+				Should -HaveCount 0 -Because 'there should be no style warnings'
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-DynamicParam.ps1" -Severity Error |
+				Should -HaveCount 0 -Because 'there should be no style errors'
+		}
 	}
 	Context 'Adding parameters' {
 		It "Adds a required string parameter" {

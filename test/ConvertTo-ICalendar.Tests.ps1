@@ -3,12 +3,21 @@
 Tests the script that transforms objects into iCalendar data.
 #>
 
-Describe 'Scheduled task conversion' {
+Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 	BeforeAll {
+		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep,$datefmt = (Split-Path $PSScriptRoot),[io.path]::PathSeparator,
 			([cultureinfo]::CurrentCulture.DateTimeFormat.ShortDatePattern -replace '(?-i)\b([Md])\b','$1$1')
 		Write-Verbose "using date format '$datefmt' => '$(Get-Date -f $datefmt)'"
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
+	}
+	Context 'Script style' -Tag Style {
+		It "Should follow best practices for style" {
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\ConvertTo-ICalendar.ps1" -Severity Warning |
+				Should -HaveCount 0 -Because 'there should be no style warnings'
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\ConvertTo-ICalendar.ps1" -Severity Error |
+				Should -HaveCount 0 -Because 'there should be no style errors'
+		}
 	}
 	Context 'One-time' -Tag Once {
 		It "A one-time trigger at '<DtStart>' should produce a matching DTSTART." -TestCases @(

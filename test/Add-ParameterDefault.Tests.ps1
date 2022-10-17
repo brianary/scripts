@@ -5,8 +5,17 @@ Tests appending or creating a value to use for the specified cmdlet parameter to
 
 Describe 'Add-ParameterDefault' -Tag Add-ParameterDefault {
 	BeforeAll {
+		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
+	}
+	Context 'Script style' -Tag Style {
+		It "Should follow best practices for style" {
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-ParameterDefault.ps1" -Severity Warning |
+				Should -HaveCount 0 -Because 'there should be no style warnings'
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-ParameterDefault.ps1" -Severity Error |
+				Should -HaveCount 0 -Because 'there should be no style errors'
+		}
 	}
 	Context 'Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.' -Tag Example {
 		It "Setting a simple default" {

@@ -2,6 +2,9 @@
 .SYNOPSIS
 Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
 
+.DESCRIPTION
+This conveniently sets cmdlet defaults.
+
 .INPUTS
 System.Object containing a default value to include.
 

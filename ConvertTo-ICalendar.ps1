@@ -74,7 +74,10 @@ Begin
 
 	function ConvertTo-DateTimeWithZone
 	{
-		[CmdletBinding()][OutputType([string])] Param([datetime]$value)
+		[CmdletBinding()][OutputType([string])] Param(
+		[datetime] $Value,
+		[TimeZoneInfo] $TimeZone
+		)
 		return "TZID=$($TimeZone.Id):$(Get-Date $value -f yyyyMMdd\THHmmss)"
 	}
 
@@ -154,6 +157,8 @@ Begin
 
 	filter ConvertFrom-ScheduleByMonth
 	{
+		[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','',
+		Justification='Script analysis is missing the usage of Months.')]
 		[CmdletBinding()][OutputType([string])] Param(
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Months,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $DaysOfMonth
@@ -172,6 +177,8 @@ Begin
 
 	filter ConvertFrom-ScheduleByMonthDayOfWeek
 	{
+		[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','',
+		Justification='Script analysis is missing the usage of Months.')]
 		[CmdletBinding()][OutputType([string])] Param(
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Months,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Weeks,
@@ -181,7 +188,7 @@ Begin
 		$pos = @(switch($Weeks.Week){Last{-1}default{$_}})
 		$days = $DaysOfWeek.PSObject.Properties.Match('*').Name |
 			ForEach-Object {$_.Substring(0,3).ToUpperInvariant()}
-		$posdays = "BYDAY=$((Format-Permutations.ps1 '{0}{1}' $pos $days) -join ',')"
+		$posdays = "BYDAY=$((Format-Permutations.ps1 -Format '{0}{1}' -InputObject $pos,$days) -join ',')"
 		if($posdays -eq 'BYDAY=Last') {$posdays = 'BYSETPOS=-1'}
 		if($monthNums.Count -eq 12)
 		{
@@ -200,14 +207,16 @@ Begin
 		[ValidateScript({$_.CimClass.CimClassName -like 'MSFT_Task*Trigger'})]
 		[Microsoft.Management.Infrastructure.CimInstance] $TaskTrigger,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-		[Alias('StartBoundary')][datetime] $Start
+		[Alias('StartBoundary')][datetime] $Start,
+		[TimeSpan] $DefaultTaskDuration,
+		[TimeZoneInfo] $TimeZone
 		)
 		if(!$TaskTrigger.Enabled) {Write-Warning "Disabled $($TaskTrigger.CimClass.CimClassName) will be ignored"; return}
 		$end = $null -eq $TaskTrigger.Repetition.Duration ? $Start.Add($DefaultTaskDuration) :
 			$Start.Add([Xml.XmlConvert]::ToTimeSpan($TaskTrigger.Repetition.Duration))
 		$schedule = @"
-DTSTART;$(ConvertTo-DateTimeWithZone $Start)
-DTEND;$(ConvertTo-DateTimeWithZone $end)
+DTSTART;$(ConvertTo-DateTimeWithZone -Value $Start -TimeZone $TimeZone)
+DTEND;$(ConvertTo-DateTimeWithZone -Value $end -TimeZone $TimeZone)
 "@
 		switch($TaskTrigger.CimClass.CimClassName)
 		{
@@ -259,7 +268,8 @@ Process
 BEGIN:VEVENT
 UID:$(New-Guid)
 DTSTAMP:$($ScheduledTask |ConvertTo-DateTimeStamp)
-$($ScheduledTask.Triggers |ConvertFrom-TaskTrigger $ScheduledTask.TaskName)
+$($ScheduledTask.Triggers |ConvertFrom-TaskTrigger -TaskName $ScheduledTask.TaskName `
+	-DefaultTaskDuration $DefaultTaskDuration -TimeZone $TimeZone)
 SUMMARY:$($ScheduledTask.TaskName)
 DESCRIPTION:$($ScheduledTask.Description)
 END:VEVENT

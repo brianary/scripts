@@ -2,6 +2,12 @@
 .SYNOPSIS
 Adds a NoteProperty to a PSObject, calculating the value with the object in context.
 
+.DESCRIPTION
+The Add-Member cmdlet can either add a property with a single static value to objects
+in the pipeline, or add a script property to objects which executes each time it's used.
+
+This adds a static value to each object, but calculated from each object.
+
 .LINK
 Add-Member
 

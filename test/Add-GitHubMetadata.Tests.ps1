@@ -6,6 +6,7 @@ Tests Adds GitHub Linguist overrides to a repo's .gitattributes.
 Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 	BeforeAll {
 		if(!(Get-Module -List Detextive)) {Install-Module Detextive -Force}
+		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
@@ -19,12 +20,20 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 	AfterEach {
 		if("$PWD" -match "\A$([regex]::Escape($TestDrive))") {Pop-Location}
 	}
-	Context 'Add GitHub metadata' -Tag Metadata,Readme,EditorConfig,CodeOwners,Linguist {
+	Context 'Script style' -Tag Style {
+		It "Should follow best practices for style" {
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-GitHubMetadata.ps1" -Severity Warning |
+				Should -HaveCount 0 -Because 'there should be no style warnings'
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-GitHubMetadata.ps1" -Severity Error |
+				Should -HaveCount 0 -Because 'there should be no style errors'
+		}
+	}
+	Context 'Add basic GitHub metadata' -Tag Metadata,Readme,EditorConfig,CodeOwners,Linguist {
 		It "Creates README.md, .editorconfig, CODEOWNERS, and .gitattributes (Linguist)" {
-			'.gitattributes' |Should -Not -Exist -Because 'A new repo should not have a .gitattributes'
-			'.editorconfig' |Should -Not -Exist -Because 'A new repo should not have an .editorconfig'
-			'.github\CODEOWNERS' |Should -Not -Exist -Because 'A new repo should not have a CODEOWNERS'
-			'README.md' |Should -Not -Exist -Because 'A new repo should not have a readme'
+			'.gitattributes' |Should -Not -Exist -Because 'a new repo should not have a .gitattributes'
+			'.editorconfig' |Should -Not -Exist -Because 'a new repo should not have an .editorconfig'
+			'.github\CODEOWNERS' |Should -Not -Exist -Because 'a new repo should not have a CODEOWNERS'
+			'README.md' |Should -Not -Exist -Because 'a new repo should not have a readme'
 			Add-GitHubMetadata.ps1 -DefaultOwner arthurd@example.com -NoWarnings
 			'.gitattributes' |Should -Exist
 			'.gitattributes' |Should -FileContentMatchExactly '\*\*/packages/\*\* linguist-vendored'
@@ -71,19 +80,19 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 	}
 	Context 'Set templates' -Tag Metadata,Template {
 		It "Set issue template" {
-			'.github\ISSUE_TEMPLATE.md' |Should -Not -Exist -Because 'A new repo should not have a ISSUE_TEMPLATE.md'
+			'.github\ISSUE_TEMPLATE.md' |Should -Not -Exist -Because 'a new repo should not have a ISSUE_TEMPLATE.md'
 			$content = 'Thanks for submitting an issue'
 			Add-GitHubMetadata.ps1 -IssueTemplate $content -NoWarnings
 			'.github\ISSUE_TEMPLATE.md' |Should -FileContentMatchMultilineExactly "\A$([regex]::Escape($content))\r?\Z"
 		}
 		It "Set pull request template" {
-			'.github\PULL_REQUEST_TEMPLATE.md' |Should -Not -Exist -Because 'A new repo should not have a PULL_REQUEST_TEMPLATE.md'
+			'.github\PULL_REQUEST_TEMPLATE.md' |Should -Not -Exist -Because 'a new repo should not have a PULL_REQUEST_TEMPLATE.md'
 			$content = 'Thanks for submitting a pull request'
 			Add-GitHubMetadata.ps1 -PullRequestTemplate $content -NoWarnings
 			'.github\PULL_REQUEST_TEMPLATE.md' |Should -FileContentMatchMultilineExactly "\A$([regex]::Escape($content))\r?\Z"
 		}
 		It "Set contributing guidelines" {`
-			'.github\CONTRIBUTING.md' |Should -Not -Exist -Because 'A new repo should not have a CONTRIBUTING.md'
+			'.github\CONTRIBUTING.md' |Should -Not -Exist -Because 'a new repo should not have a CONTRIBUTING.md'
 			$content,$file = 'Thanks for your interest in contributing, here are the guidelines for the project',
 				[io.path]::GetTempFileName()
 			$content |Out-File $file utf8BOM
@@ -91,7 +100,7 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			'.github\CONTRIBUTING.md' |Should -FileContentMatchMultilineExactly "\A$([regex]::Escape($content))\r?\Z"
 		}
 		It "Set license" {
-			'LICENSE.md' |Should -Not -Exist -Because 'A new repo should not have a LICENSE.md'
+			'LICENSE.md' |Should -Not -Exist -Because 'a new repo should not have a LICENSE.md'
 			$content,$file = 'Thanks for using this project, here are the terms of use',[io.path]::GetTempFileName()
 			$content |Out-File $file utf8BOM
 			Add-GitHubMetadata.ps1 -LicenseFile $file -NoWarnings

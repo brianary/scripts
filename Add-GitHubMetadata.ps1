@@ -2,6 +2,10 @@
 .SYNOPSIS
 Adds GitHub Linguist overrides to a repo's .gitattributes.
 
+.DESCRIPTION
+There is a lot of metadata that should be added to a good repo.
+This script simplifies adding much of that metadata.
+
 .LINK
 https://github.com/blog/2392-introducing-code-owners
 
@@ -133,63 +137,65 @@ line ending will be added automatically if it is missing.
 #>
 [switch] $DefaultNoFinalNewLine,
 # Indicates warnings about new content should be skipped.
-[switch] $NoWarnings
+[switch] $NoWarnings,
+# Do not prompt to append Linguist settings.
+[switch] $Force
 )
 
 function Resolve-RepoPath
 {
-    [CmdletBinding()] Param([Parameter(ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path)
-    Process { (Resolve-Path $Path -Relative) -replace '^.\\','' -replace '\\','/' }
+	[CmdletBinding()] Param([Parameter(ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path)
+	Process { (Resolve-Path $Path -Relative) -replace '^.\\','' -replace '\\','/' }
 }
 
 function Test-SkipFile
 {
-    [CmdletBinding(SupportsShouldProcess=$true)] Param(
-    [Parameter(Position=0)][string] $Filename
-    )
-    if((Test-Path $Filename) -and !$PSCmdlet.ShouldProcess($Filename,'overwrite'))
-    { Write-Verbose "File $Filename exists!"; return $true }
-    else
-    { return $false }
+	[CmdletBinding(SupportsShouldProcess=$true)][OutputType([bool])] Param(
+	[Parameter(Position=0)][string] $Filename
+	)
+	if((Test-Path $Filename) -and !$PSCmdlet.ShouldProcess($Filename,'overwrite'))
+	{ Write-Verbose "File $Filename exists!"; return $true }
+	else
+	{ return $false }
 }
 
 function Copy-GitHubFile
 {
-    [CmdletBinding()] Param(
-    [Parameter(Position=0,Mandatory=$true)][string] $Filename,
-    [Parameter(Position=1,Mandatory=$true)][Alias('Path','Url')][uri] $Source
-    )
-    if(Test-SkipFile $Filename){return}
-    if($Source.IsFile){Copy-Item $Source.LocalPath $Filename}
-    else{Invoke-WebRequest $Source -OutFile $Filename} #TODO: authentication for private repos?
+	[CmdletBinding()] Param(
+	[Parameter(Position=0,Mandatory=$true)][string] $Filename,
+	[Parameter(Position=1,Mandatory=$true)][Alias('Path','Url')][uri] $Source
+	)
+	if(Test-SkipFile $Filename){return}
+	if($Source.IsFile){Copy-Item $Source.LocalPath $Filename}
+	else{Invoke-WebRequest $Source -OutFile $Filename} #TODO: authentication for private repos?
 }
 
 function Add-GitHubDirectory
 {
-    if(!(Test-Path .github -PathType Container)) {mkdir .github |Out-Null}
+	if(!(Test-Path .github -PathType Container)) {mkdir .github |Out-Null}
 }
 
 function Add-File
 {
-    [CmdletBinding()] Param(
-    [Parameter(Position=0,Mandatory=$true)][string] $Filename,
-    [Parameter(Position=1,Mandatory=$true)][string] $Contents,
-    [Parameter(Position=2)][ValidateSet('utf8','ASCII')][string] $Encoding = 'utf8',
-    [switch] $Warn,
-    [switch] $Force
-    )
-    if(!$Contents){Write-Verbose "No contents to add to $Filename."; return }
-    if(!$Force -and (Test-SkipFile $Filename)){ Write-Verbose "File $Filename exists!"; return }
-    $Contents |Out-File $Filename -Encoding $Encoding
-    git add -N $Filename |Out-Null
-    if($Warn){ Write-Warning "The file $Filename has been added, be sure to review it and customize as needed." }
-    Write-Verbose "Added $Filename"
+	[CmdletBinding()] Param(
+	[Parameter(Position=0,Mandatory=$true)][string] $Filename,
+	[Parameter(Position=1,Mandatory=$true)][string] $Contents,
+	[Parameter(Position=2)][ValidateSet('utf8','ASCII')][string] $Encoding = 'utf8',
+	[switch] $Warn,
+	[switch] $Force
+	)
+	if(!$Contents){Write-Verbose "No contents to add to $Filename."; return }
+	if(!$Force -and (Test-SkipFile $Filename)){ Write-Verbose "File $Filename exists!"; return }
+	$Contents |Out-File $Filename -Encoding $Encoding
+	git add -N $Filename |Out-Null
+	if($Warn){ Write-Warning "The file $Filename has been added, be sure to review it and customize as needed." }
+	Write-Verbose "Added $Filename"
 }
 
-function Add-Readme([string] $name = (git rev-parse --show-toplevel |Split-Path -Leaf))
+function Add-Readme([string] $name = (git rev-parse --show-toplevel |Split-Path -Leaf), [switch] $NoWarnings)
 {
-    if(Test-Path README.md -PathType Leaf){return}
-    Add-File README.md @"
+	if(Test-Path README.md -PathType Leaf){return}
+	Add-File README.md @"
 $name
 $(New-Object string '=',($name.Length))
 
@@ -204,26 +210,31 @@ TODO: Add sections for additional details, special instructions, prerequisites, 
 
 function Add-CodeOwners
 {
-    if(Test-SkipFile .github/CODEOWNERS)
-    {
-        if(Test-FileTypeMagicNumber.ps1 utf8 .github/CODEOWNERS){Remove-Utf8Signature .github/CODEOWNERS}
-        return
-    }
-    if(!$DefaultOwner)
-    {
-        Write-Verbose 'Determining default code owner(s).'
-        $authors = git shortlog -nes |
-            Select-String '^\s*(?<Commits>\d+)\s+(?<Name>\b[^>]+\b)\s+<(?<Email>[^>]+)>$' |
-            Add-CapturesToMatches.ps1
-        $authors |Out-String |Write-Verbose
-        [int] $max = ($authors |Measure-Object Commits -Maximum).Maximum
-        [int] $oneSigmaFromTop = $max - ($authors.Commits |Measure-StandardDeviation.ps1)
-        Write-Verbose "Authors with $oneSigmaFromTop or more commits will be included as default code owners."
-        $DefaultOwner = $authors |Where-Object {[int] $_.Commits -ge $oneSigmaFromTop} |ForEach-Object Email
-        Write-Verbose "Default code owners determined to be $DefaultOwner."
-    }
+	Param(
+	[string[]] $DefaultOwner,
+	[hashtable] $Owners,
+	[switch] $NoWarnings
+	)
+	if(Test-SkipFile .github/CODEOWNERS)
+	{
+		if(Test-FileTypeMagicNumber.ps1 utf8 .github/CODEOWNERS){Remove-Utf8Signature .github/CODEOWNERS}
+		return
+	}
+	if(!$DefaultOwner)
+	{
+		Write-Verbose 'Determining default code owner(s).'
+		$authors = git shortlog -nes |
+			Select-String '^\s*(?<Commits>\d+)\s+(?<Name>\b[^>]+\b)\s+<(?<Email>[^>]+)>$' |
+			Add-CapturesToMatches.ps1
+		$authors |Out-String |Write-Verbose
+		[int] $max = ($authors |Measure-Object Commits -Maximum).Maximum
+		[int] $oneSigmaFromTop = $max - ($authors.Commits |Measure-StandardDeviation.ps1)
+		Write-Verbose "Authors with $oneSigmaFromTop or more commits will be included as default code owners."
+		$DefaultOwner = $authors |Where-Object {[int] $_.Commits -ge $oneSigmaFromTop} |ForEach-Object Email
+		Write-Verbose "Default code owners determined to be $DefaultOwner."
+	}
 	$Local:OFS = [Environment]::NewLine
-    Add-File .github/CODEOWNERS @"
+	Add-File -Filename .github/CODEOWNERS -Contents @"
 
 # Code Owners file https://github.com/blog/2392-introducing-code-owners
 # .gitattributes selection syntax mapping to GitHub @usernames or email addresses.
@@ -232,70 +243,84 @@ function Add-CodeOwners
 * $DefaultOwner
 $(if($Owners){"$OFS# targeted owners"})
 $($Owners.Keys |ForEach-Object {"$_ $($Owners[$_] -join ' ')"})
-"@ ASCII -Warn:$(!$NoWarnings) -Force
+"@ -Encoding ASCII -Warn:$(!$NoWarnings) -Force
 }
 
 function Add-LinguistOverrides
 {
-    [CmdletBinding(SupportsShouldProcess=$true)] Param()
-    if(!(Test-Path .gitattributes -PathType Leaf))
-    {
-        Write-Verbose 'Creating .gitattributes file.'
-        '','# Linguist overrides https://github.com/github/linguist#overrides' |Out-File .gitattributes ascii
-    }
-    else
-    {
-        if(Test-FileTypeMagicNumber.ps1 utf8 .gitattributes){Remove-Utf8Signature .gitattributes}
-        if(Select-String '^# Linguist overrides' .gitattributes)
-        {
-            Select-String '^# Linguist overrides|\blinguist-\w+' .gitattributes |Out-String |Write-Verbose
-            if(!$PSCmdlet.ShouldContinue('.gitattributes','append Linguist overrides'))
-            {
-                Write-Verbose 'The .gitattributes file already contains a "Linguist overrides" section.'
-                return
-            }
-        }
-        else
-        {
-            '','# Linguist overrides https://github.com/github/linguist#overrides' |Add-Content .gitattributes -Encoding UTF8
-        }
-    }
-    if($VendorCode) {$VendorCode |ForEach-Object {"$_ linguist-vendored"} |Add-Content .gitattributes -Encoding UTF8}
-    if($DocumentationCode) {$DocumentationCode |ForEach-Object {"$_ linguist-documentation"} |Add-Content .gitattributes -Encoding UTF8}
-    if($GeneratedCode) {$GeneratedCode |ForEach-Object {"$_ linguist-generated=true"} |Add-Content .gitattributes -Encoding UTF8}
-    #TODO: linguist-language entries?
-    git add -N .gitattributes |Out-Null
-    Write-Verbose 'Added Linguist overrides section to .gitattributes.'
-    Select-String '^# Linguist overrides|\blinguist-\w+' .gitattributes |Out-String |Write-Verbose
+	[CmdletBinding(SupportsShouldProcess=$true)] Param(
+	[string[]] $VendorCode,
+	[string[]] $DocumentationCode,
+	[string[]] $GeneratedCode,
+	[switch] $Force
+	)
+	if(!(Test-Path .gitattributes -PathType Leaf))
+	{
+		Write-Verbose 'Creating .gitattributes file.'
+		'','# Linguist overrides https://github.com/github/linguist#overrides' |Out-File .gitattributes ascii
+	}
+	else
+	{
+		if(Test-FileTypeMagicNumber.ps1 utf8 .gitattributes){Remove-Utf8Signature .gitattributes}
+		if(Select-String '^# Linguist overrides' .gitattributes)
+		{
+			Select-String '^# Linguist overrides|\blinguist-\w+' .gitattributes |Out-String |Write-Verbose
+			if(!$Force -and !$PSCmdlet.ShouldContinue('.gitattributes','append Linguist overrides'))
+			{
+				Write-Verbose 'The .gitattributes file already contains a "Linguist overrides" section.'
+				return
+			}
+		}
+		else
+		{
+			'','# Linguist overrides https://github.com/github/linguist#overrides' |Add-Content .gitattributes -Encoding UTF8
+		}
+	}
+	if($VendorCode) {$VendorCode |ForEach-Object {"$_ linguist-vendored"} |Add-Content .gitattributes -Encoding UTF8}
+	if($DocumentationCode) {$DocumentationCode |ForEach-Object {"$_ linguist-documentation"} |Add-Content .gitattributes -Encoding UTF8}
+	if($GeneratedCode) {$GeneratedCode |ForEach-Object {"$_ linguist-generated=true"} |Add-Content .gitattributes -Encoding UTF8}
+	#TODO: linguist-language entries?
+	git add -N .gitattributes |Out-Null
+	Write-Verbose 'Added Linguist overrides section to .gitattributes.'
+	Select-String '^# Linguist overrides|\blinguist-\w+' .gitattributes |Out-String |Write-Verbose
 }
 
-function Add-IssueTemplate
+function Add-IssueTemplate([string] $IssueTemplate)
 {
-    if(!$IssueTemplate){Write-Verbose 'No issue template.'; return}
-    Add-File .github/ISSUE_TEMPLATE.md $IssueTemplate
+	if(!$IssueTemplate){Write-Verbose 'No issue template.'; return}
+	Add-File .github/ISSUE_TEMPLATE.md $IssueTemplate
 }
 
-function Add-PullRequestTemplate
+function Add-PullRequestTemplate([string] $PullRequestTemplate)
 {
-    if(!$PullRequestTemplate){Write-Verbose 'No pull request template.'; return}
-    Add-File .github/PULL_REQUEST_TEMPLATE.md $PullRequestTemplate
+	if(!$PullRequestTemplate){Write-Verbose 'No pull request template.'; return}
+	Add-File .github/PULL_REQUEST_TEMPLATE.md $PullRequestTemplate
 }
 
-function Add-ContributingGuidelines
+function Add-ContributingGuidelines([string] $ContributingFile)
 {
-    if(!$ContributingFile){Write-Verbose 'No contributing file.'; return}
-    Copy-GitHubFile .github/CONTRIBUTING.md $ContributingFile
+	if(!$ContributingFile){Write-Verbose 'No contributing file.'; return}
+	Copy-GitHubFile .github/CONTRIBUTING.md $ContributingFile
 }
 
-function Add-License
+function Add-License([string] $LicenseFile)
 {
-    if(!$LicenseFile){Write-Verbose 'No license.'; return}
-    Copy-GitHubFile LICENSE.md $LicenseFile
+	if(!$LicenseFile){Write-Verbose 'No license.'; return}
+	Copy-GitHubFile LICENSE.md $LicenseFile
 }
 
 function Add-EditorConfig
 {
-    Add-File .editorconfig @"
+	Param(
+	[string] $DefaultCharset,
+	[string] $DefaultLineEndings,
+	[int] $DefaultIndentSize,
+	[switch] $DefaultUsesTabs,
+	[switch] $DefaultKeepTrailingSpace,
+	[switch] $DefaultNoFinalNewLine,
+	[switch] $NoWarnings
+	)
+	Add-File .editorconfig @"
 # EditorConfig is awesome: http://EditorConfig.org
 
 # last word for the project
@@ -323,20 +348,48 @@ charset = utf-8
 "@ -Warn:$(!$NoWarnings)
 }
 
-function Update-GitHubMetadata
+function Add-Metadata
 {
-    Use-Command.ps1 git "$env:ProgramFiles\Git\cmd\git.exe" -choco git
-    Push-Location $(git rev-parse --show-toplevel)
-    Add-GitHubDirectory
-    Add-Readme
-    Add-CodeOwners
-    Add-LinguistOverrides
-    Add-IssueTemplate
-    Add-PullRequestTemplate
-    Add-ContributingGuidelines
-    Add-License
-    Add-EditorConfig
-    Pop-Location
+	Param(
+	[string[]] $DefaultOwner,
+	[hashtable] $Owners,
+	[string[]] $VendorCode,
+	[string[]] $DocumentationCode,
+	[string[]] $GeneratedCode,
+	[string] $IssueTemplate,
+	[string] $PullRequestTemplate,
+	[string] $ContributingFile,
+	[string] $LicenseFile,
+	[string] $DefaultCharset,
+	[string] $DefaultLineEndings,
+	[int] $DefaultIndentSize,
+	[switch] $DefaultUsesTabs,
+	[switch] $DefaultKeepTrailingSpace,
+	[switch] $DefaultNoFinalNewLine,
+	[switch] $NoWarnings,
+	[switch] $Force
+	)
+	Use-Command.ps1 git "$env:ProgramFiles\Git\cmd\git.exe" -choco git
+	Push-Location $(git rev-parse --show-toplevel)
+	Add-GitHubDirectory
+	Add-Readme -NoWarnings:$NoWarnings
+	Add-CodeOwners -DefaultOwner $DefaultOwner -Owners $Owners -NoWarnings:$NoWarnings
+	Add-LinguistOverrides -VendorCode $VendorCode -DocumentationCode $DocumentationCode `
+		-GeneratedCode $GeneratedCode -Force:$Force
+	Add-IssueTemplate -IssueTemplate $IssueTemplate
+	Add-PullRequestTemplate -PullRequestTemplate $PullRequestTemplate
+	Add-ContributingGuidelines -ContributingFile $ContributingFile
+	Add-License -LicenseFile $LicenseFile
+	Add-EditorConfig -DefaultCharset $DefaultCharset -DefaultLineEndings $DefaultLineEndings `
+		-DefaultIndentSize $DefaultIndentSize -DefaultUsesTabs:$DefaultUsesTabs `
+		-DefaultKeepTrailingSpace:$DefaultKeepTrailingSpace -DefaultNoFinalNewLine:$DefaultNoFinalNewLine `
+		-NoWarnings:$NoWarnings
+	Pop-Location
 }
 
-Update-GitHubMetadata
+Add-Metadata -DefaultOwner $DefaultOwner -Owners $Owners -VendorCode $VendorCode `
+	-DocumentationCode $DocumentationCode -GeneratedCode $GeneratedCode -IssueTemplate $IssueTemplate `
+	-PullRequestTemplate $PullRequestTemplate -ContributingFile $ContributingFile -LicenseFile $LicenseFile `
+	-DefaultCharset $DefaultCharset -DefaultLineEndings $DefaultLineEndings -DefaultIndentSize $DefaultIndentSize `
+	-DefaultUsesTabs:$DefaultUsesTabs -DefaultKeepTrailingSpace:$DefaultKeepTrailingSpace `
+	-DefaultNoFinalNewLine:$DefaultNoFinalNewLine -NoWarnings:$NoWarnings -Force:$Force

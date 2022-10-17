@@ -99,8 +99,17 @@ Tests $Synopsis
 
 Describe '$shortname' -Tag $shortname {
 	BeforeAll {
+		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		`$scriptsdir,`$sep = (Split-Path `$PSScriptRoot),[io.path]::PathSeparator
 		if(`$scriptsdir -notin (`$env:Path -split `$sep)) {`$env:Path += "`$sep`$scriptsdir"}
+	}
+	Context 'Script style' -Tag Style {
+		It "Should follow best practices for style" {
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\$shortname.ps1" -Severity Warning |
+				Should -HaveCount 0 -Because 'there should be no style warnings'
+			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\$shortname.ps1" -Severity Error |
+				Should -HaveCount 0 -Because 'there should be no style errors'
+		}
 	}
 	Context '$($Synopsis -replace "'","''")' -Tag Example {
 $($Examples.example |Format-ExampleTest)
