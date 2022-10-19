@@ -265,7 +265,8 @@ logparser $sql -i:$LogFormat -o:TSV -headers:off -stats:off -q |
         [datetime]$_.Time = $_.Time
         [long]$_.Line = $_.Line
         [Net.IpAddress]$_.IpAddress = $_.IpAddress
-        [Microsoft.PowerShell.Commands.WebRequestMethod]$_.Method = $_.Method
+        try{$_.Method = [Microsoft.PowerShell.Commands.WebRequestMethod]$_.Method}
+        catch{Write-Verbose "Nonstandard verb $($_.Method) at $($_.Filename):$($_.Line)"}
         [uri]$_.Referrer = $_.Referrer
         $code = $_.StatusCode
         $_.Status = try{[Net.HttpStatusCode]$code}catch{"$code"}
