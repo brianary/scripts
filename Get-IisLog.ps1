@@ -17,7 +17,12 @@ for each request found:
 * UriPath: The location on the web server requested.
 * Query: The GET query parameters requested.
 * Referrer: The location that linked to this request, if provided.
+* StatusCode: The numeric HTTP status code.
 * Status: The HTTP success/error code of the response.
+* SubStatusCode: The numeric IIS status code that subdivides HTTP status values.
+* SubStatus: The HTTP status and IIS sub-status as a .-separated string.
+* WinStatusCode: The Windows status code, as a number.
+* WinStatus: The Windows status code, as a Win32Exception value.
 
 .COMPONENT
 LogParser
@@ -68,6 +73,8 @@ WinStatus     : Access is denied
 #>
 
 #Requires -Version 3
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingCmdletAliases','',
+Justification='This script sets up and uses logparser.')]
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 # Attempts to use the LogFiles$ share of the computers listed as the log directory.
 [Parameter(ParameterSetName='Server')][Alias('Server','CN')][string[]] $ComputerName,
@@ -101,133 +108,201 @@ The format the logs are written in:
 )
 
 Use-Command.ps1 logparser "${env:ProgramFiles(x86)}\Log Parser 2.2\LogParser.exe" `
-    -msi http://download.microsoft.com/download/f/f/1/ff1819f9-f702-48a5-bbc7-c9656bc74de8/LogParser.msi
+	-msi http://download.microsoft.com/download/f/f/1/ff1819f9-f702-48a5-bbc7-c9656bc74de8/LogParser.msi
 
-function Format-DateTimeLiteral([Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][datetime]$DateTime)
+filter Format-DateTimeLiteral([Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][datetime]$DateTime)
 {
-    return "to_timestamp('$(Get-Date $DateTime -Format 'yyyy-MM-dd HH:mm:ss')','yyyy-MM-dd HH:mm:ss')"
+	return "to_timestamp('$(Get-Date $DateTime -Format 'yyyy-MM-dd HH:mm:ss')','yyyy-MM-dd HH:mm:ss')"
 }
 
 $logRowName = @{
-    IIS    = 'LogRow'
-    IISW3C = 'LogRow'
-    W3C    = 'RowNumber'
+	IIS    = 'LogRow'
+	IISW3C = 'LogRow'
+	W3C    = 'RowNumber'
 }
 
 $iisSubStatus = @{
-    '400.1' = 'Invalid Destination Header.'
-    '400.2' = 'Invalid Depth Header.'
-    '400.3' = 'Invalid If Header.'
-    '400.4' = 'Invalid Overwrite Header.'
-    '400.5' = 'Invalid Translate Header.'
-    '400.6' = 'Invalid Request Body.'
-    '400.7' = 'Invalid Content Length.'
-    '400.8' = 'Invalid Timeout.'
-    '400.9' = 'Invalid Lock Token.'
-    '401.1' = 'Logon failed.'
-    '401.2' = 'Logon failed due to server configuration.'
-    '401.3' = 'Unauthorized due to ACL on resource.'
-    '401.4' = 'Authorization failed by filter.'
-    '401.5' = 'Authorization failed by ISAPI/CGI application.'
-    '401.501' = 'Access Denied: Too many requests from the same client IP; Dynamic IP Restriction Concurrent request rate limit reached.'
-    '401.502' = 'Forbidden: Too many requests from the same client IP; Dynamic IP Restriction Maximum request rate limit reached.'
-    '401.503' = 'Access Denied: the IP address is included in the Deny list of IP Restriction'
-    '401.504' = 'Access Denied: the host name is included in the Deny list of IP Restriction'
-    '403.1' = 'Execute access forbidden.'
-    '403.2' = 'Read access forbidden.'
-    '403.3' = 'Write access forbidden.'
-    '403.4' = 'SSL required.'
-    '403.5' = 'SSL 128 required.'
-    '403.6' = 'IP address rejected.'
-    '403.7' = 'Client certificate required.'
-    '403.8' = 'Site access denied.'
-    '403.9' = 'Forbidden: Too many clients are trying to connect to the web server.'
-    '403.10' = 'Forbidden: web server is configured to deny Execute access.'
-    '403.11' = 'Forbidden: Password has been changed.'
-    '403.12' = 'Mapper denied access.'
-    '403.13' = 'Client certificate revoked.'
-    '403.14' = 'Directory listing denied.'
-    '403.15' = 'Forbidden: Client access licenses have exceeded limits on the web server.'
-    '403.16' = 'Client certificate is untrusted or invalid.'
-    '403.17' = 'Client certificate has expired or is not yet valid.'
-    '403.18' = 'Cannot execute requested URL in the current application pool.'
-    '403.19' = 'Cannot execute CGI applications for the client in this application pool.'
-    '403.20' = 'Forbidden: Passport logon failed.'
-    '403.21' = 'Forbidden: Source access denied.'
-    '403.22' = 'Forbidden: Infinite depth is denied.'
-    '403.501' = 'Forbidden: Too many requests from the same client IP; Dynamic IP Restriction Concurrent request rate limit reached.'
-    '403.502' = 'Forbidden: Too many requests from the same client IP; Dynamic IP Restriction Maximum request rate limit reached.'
-    '403.503' = 'Forbidden: the IP address is included in the Deny list of IP Restriction'
-    '403.504' = 'Forbidden: the host name is included in the Deny list of IP Restriction'
-    '404.0' = 'Not found.'
-    '404.1' = 'Site Not Found.'
-    '404.2' = 'ISAPI or CGI restriction.'
-    '404.3' = 'MIME type restriction.'
-    '404.4' = 'No handler configured.'
-    '404.5' = 'Denied by request filtering configuration.'
-    '404.6' = 'Verb denied.'
-    '404.7' = 'File extension denied.'
-    '404.8' = 'Hidden namespace.'
-    '404.9' = 'File attribute hidden.'
-    '404.10' = 'Request header too long.'
-    '404.11' = 'Request contains double escape sequence.'
-    '404.12' = 'Request contains high-bit characters.'
-    '404.13' = 'Content length too large.'
-    '404.14' = 'Request URL too long.'
-    '404.15' = 'Query string too long.'
-    '404.16' = 'DAV request sent to the static file handler.'
-    '404.17' = 'Dynamic content mapped to the static file handler via a wildcard MIME mapping.'
-    '404.18' = 'Querystring sequence denied.'
-    '404.19' = 'Denied by filtering rule.'
-    '404.20' = 'Too Many URL Segments'
-    '404.501' = 'Not Found: Too many requests from the same client IP; Dynamic IP Restriction Concurrent request rate limit reached.'
-    '404.502' = 'Not Found: Too many requests from the same client IP; Dynamic IP Restriction Maximum request rate limit reached.'
-    '404.503' = 'Not Found: the IP address is included in the Deny list of IP Restriction'
-    '404.504' = 'Not Found: the host name is included in the Deny list of IP Restriction'
-    '500.0' = 'Module or ISAPI error occurred.'
-    '500.11' = 'Application is shutting down on the web server.'
-    '500.12' = 'Application is busy restarting on the web server.'
-    '500.13' = 'Web server is too busy.'
-    '500.15' = 'Direct requests for Global.asax are not allowed.'
-    '500.19' = 'Configuration data is invalid.'
-    '500.21' = 'Module not recognized.'
-    '500.22' = 'An ASP.NET httpModules configuration does not apply in Managed Pipeline mode.'
-    '500.23' = 'An ASP.NET httpHandlers configuration does not apply in Managed Pipeline mode.'
-    '500.24' = 'An ASP.NET impersonation configuration does not apply in Managed Pipeline mode.'
-    '500.50' = 'A rewrite error occurred during RQ_BEGIN_REQUEST notification handling. A configuration or inbound rule execution error occurred.'
-    '500.51' = 'A rewrite error occurred during GL_PRE_BEGIN_REQUEST notification handling. A global configuration or global rule execution error occurred.'
-    '500.52' = 'A rewrite error occurred during RQ_SEND_RESPONSE notification handling. An outbound rule execution occurred.'
-    '500.53' = 'A rewrite error occurred during RQ_RELEASE_REQUEST_STATE notification handling. An outbound rule execution error occurred. The rule is configured to be executed before the output user cache gets updated.'
-    '500.100' = 'Internal ASP error.'
-    '502.1' = 'CGI application timeout.'
-    '502.2' = 'Bad gateway: Premature Exit.'
-    '502.3' = 'Bad Gateway: Forwarder Connection Error (ARR).'
-    '502.4' = 'Bad Gateway: No Server (ARR).'
-    '503.0' = 'Application pool unavailable.'
-    '503.2' = 'Concurrent request limit exceeded.'
-    '503.3' = 'ASP.NET queue full'
-    '503.4' = 'FastCGI queue full'
+	'400.1' = 'Invalid Destination Header.'
+	'400.2' = 'Invalid Depth Header.'
+	'400.3' = 'Invalid If Header.'
+	'400.4' = 'Invalid Overwrite Header.'
+	'400.5' = 'Invalid Translate Header.'
+	'400.6' = 'Invalid Request Body.'
+	'400.7' = 'Invalid Content Length.'
+	'400.8' = 'Invalid Timeout.'
+	'400.9' = 'Invalid Lock Token.'
+	'401.1' = 'Logon failed.'
+	'401.2' = 'Logon failed due to server configuration.'
+	'401.3' = 'Unauthorized due to ACL on resource.'
+	'401.4' = 'Authorization failed by filter.'
+	'401.5' = 'Authorization failed by ISAPI/CGI application.'
+	'401.501' = 'Access Denied: Too many requests from the same client IP; Dynamic IP Restriction Concurrent request rate limit reached.'
+	'401.502' = 'Forbidden: Too many requests from the same client IP; Dynamic IP Restriction Maximum request rate limit reached.'
+	'401.503' = 'Access Denied: the IP address is included in the Deny list of IP Restriction'
+	'401.504' = 'Access Denied: the host name is included in the Deny list of IP Restriction'
+	'403.1' = 'Execute access forbidden.'
+	'403.2' = 'Read access forbidden.'
+	'403.3' = 'Write access forbidden.'
+	'403.4' = 'SSL required.'
+	'403.5' = 'SSL 128 required.'
+	'403.6' = 'IP address rejected.'
+	'403.7' = 'Client certificate required.'
+	'403.8' = 'Site access denied.'
+	'403.9' = 'Forbidden: Too many clients are trying to connect to the web server.'
+	'403.10' = 'Forbidden: web server is configured to deny Execute access.'
+	'403.11' = 'Forbidden: Password has been changed.'
+	'403.12' = 'Mapper denied access.'
+	'403.13' = 'Client certificate revoked.'
+	'403.14' = 'Directory listing denied.'
+	'403.15' = 'Forbidden: Client access licenses have exceeded limits on the web server.'
+	'403.16' = 'Client certificate is untrusted or invalid.'
+	'403.17' = 'Client certificate has expired or is not yet valid.'
+	'403.18' = 'Cannot execute requested URL in the current application pool.'
+	'403.19' = 'Cannot execute CGI applications for the client in this application pool.'
+	'403.20' = 'Forbidden: Passport logon failed.'
+	'403.21' = 'Forbidden: Source access denied.'
+	'403.22' = 'Forbidden: Infinite depth is denied.'
+	'403.501' = 'Forbidden: Too many requests from the same client IP; Dynamic IP Restriction Concurrent request rate limit reached.'
+	'403.502' = 'Forbidden: Too many requests from the same client IP; Dynamic IP Restriction Maximum request rate limit reached.'
+	'403.503' = 'Forbidden: the IP address is included in the Deny list of IP Restriction'
+	'403.504' = 'Forbidden: the host name is included in the Deny list of IP Restriction'
+	'404.0' = 'Not found.'
+	'404.1' = 'Site Not Found.'
+	'404.2' = 'ISAPI or CGI restriction.'
+	'404.3' = 'MIME type restriction.'
+	'404.4' = 'No handler configured.'
+	'404.5' = 'Denied by request filtering configuration.'
+	'404.6' = 'Verb denied.'
+	'404.7' = 'File extension denied.'
+	'404.8' = 'Hidden namespace.'
+	'404.9' = 'File attribute hidden.'
+	'404.10' = 'Request header too long.'
+	'404.11' = 'Request contains double escape sequence.'
+	'404.12' = 'Request contains high-bit characters.'
+	'404.13' = 'Content length too large.'
+	'404.14' = 'Request URL too long.'
+	'404.15' = 'Query string too long.'
+	'404.16' = 'DAV request sent to the static file handler.'
+	'404.17' = 'Dynamic content mapped to the static file handler via a wildcard MIME mapping.'
+	'404.18' = 'Querystring sequence denied.'
+	'404.19' = 'Denied by filtering rule.'
+	'404.20' = 'Too Many URL Segments'
+	'404.501' = 'Not Found: Too many requests from the same client IP; Dynamic IP Restriction Concurrent request rate limit reached.'
+	'404.502' = 'Not Found: Too many requests from the same client IP; Dynamic IP Restriction Maximum request rate limit reached.'
+	'404.503' = 'Not Found: the IP address is included in the Deny list of IP Restriction'
+	'404.504' = 'Not Found: the host name is included in the Deny list of IP Restriction'
+	'500.0' = 'Module or ISAPI error occurred.'
+	'500.11' = 'Application is shutting down on the web server.'
+	'500.12' = 'Application is busy restarting on the web server.'
+	'500.13' = 'Web server is too busy.'
+	'500.15' = 'Direct requests for Global.asax are not allowed.'
+	'500.19' = 'Configuration data is invalid.'
+	'500.21' = 'Module not recognized.'
+	'500.22' = 'An ASP.NET httpModules configuration does not apply in Managed Pipeline mode.'
+	'500.23' = 'An ASP.NET httpHandlers configuration does not apply in Managed Pipeline mode.'
+	'500.24' = 'An ASP.NET impersonation configuration does not apply in Managed Pipeline mode.'
+	'500.50' = 'A rewrite error occurred during RQ_BEGIN_REQUEST notification handling. A configuration or inbound rule execution error occurred.'
+	'500.51' = 'A rewrite error occurred during GL_PRE_BEGIN_REQUEST notification handling. A global configuration or global rule execution error occurred.'
+	'500.52' = 'A rewrite error occurred during RQ_SEND_RESPONSE notification handling. An outbound rule execution occurred.'
+	'500.53' = 'A rewrite error occurred during RQ_RELEASE_REQUEST_STATE notification handling. An outbound rule execution error occurred. The rule is configured to be executed before the output user cache gets updated.'
+	'500.100' = 'Internal ASP error.'
+	'502.1' = 'CGI application timeout.'
+	'502.2' = 'Bad gateway: Premature Exit.'
+	'502.3' = 'Bad Gateway: Forwarder Connection Error (ARR).'
+	'502.4' = 'Bad Gateway: No Server (ARR).'
+	'503.0' = 'Application pool unavailable.'
+	'503.2' = 'Concurrent request limit exceeded.'
+	'503.3' = 'ASP.NET queue full'
+	'503.4' = 'FastCGI queue full'
+}
+
+filter ConvertTo-SqlString
+{
+	Param(
+	[Parameter(Position=0,ValueFromPipeline=$true)][string] $Value
+	)
+	return "'$($Value -replace "'","''")'"
+}
+
+function ConvertTo-SqlStringList
+{
+	Param(
+	[Parameter(Position=0)][string[]] $Values
+	)
+	$Local:OFS = ';'
+	return "($($Values |ConvertTo-SqlString))"
+}
+
+filter ConvertTo-Enum
+{
+	Param(
+	[Parameter(Position=0)][type] $EnumType,
+	[Parameter(Position=1,ValueFromPipeline=$true)][string] $Name
+	)
+	$value = 0
+	if([enum]::TryParse($EnumType,$Name,$true,[ref]$value)) {return $value}
+	else {return $Name}
+}
+
+filter Convert-Result
+{
+	Param(
+	[Parameter(ValueFromPipelineByPropertyName=$true)][datetime] $Time,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Server,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Filename,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][long] $Line,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][Net.IpAddress] $IpAddress,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Username,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $UserAgent,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Method,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $UriPath,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Query,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][uri] $Referrer,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][short] $StatusCode,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][short] $SubStatusCode,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][uint32] $WinStatusCode
+	)
+	$iisFullStatus,$subStatus = "$StatusCode.$SubStatusCode",''
+	if($iisSubStatus.ContainsKey($iisFullStatus)) {$subStatus = $iisSubStatus[$iisFullStatus]}
+	return [pscustomobject]@{
+		Time          = $Time
+		Server        = $Server
+		Filename      = $Filename
+		Line          = $Line
+		IpAddress     = $IpAddress
+		Username      = $Username
+		UserAgent     = $UserAgent
+		Method        = $Method |ConvertTo-Enum Microsoft.PowerShell.Commands.WebRequestMethod
+		UriPath       = $UriPath
+		Query         = $Query
+		Referrer      = $Referrer
+		StatusCode    = $StatusCode
+		Status        = $StatusCode |ConvertTo-Enum Net.HttpStatusCode
+		SubStatusCode = $SubStatusCode
+		SubStatus     = $subStatus
+		WinStatusCode = $WinStatusCode
+		WinStatus     = [ComponentModel.Win32Exception]$WinStatusCode
+	}
 }
 
 # get the log files
 $LogDirectory =
-    if ($ComputerName) { $ComputerName |% {"\\$_\LogFiles$"} }
-    else { $LogDirectory |% FullName }
+	if ($ComputerName) { $ComputerName |ForEach-Object {"\\$_\LogFiles$"} }
+	else { $LogDirectory |ForEach-Object FullName }
 $from = ' from ' +
-    ((ls $LogDirectory -Filter *.log |
-        ? LastWriteTime -GE $After.AddDays(-1) |
-        ? CreationTime -LE $Before.AddDays(1) |
-        % FullName) -join ',')
-if($from -eq ' from ') { $from += $($LogDirectory|% {"$_\*.log"}) -join ',' }
+	((Get-ChildItem $LogDirectory -Filter *.log |
+		Where-Object LastWriteTime -GE $After.AddDays(-1) |
+		Where-Object CreationTime -LE $Before.AddDays(1) |
+		ForEach-Object FullName) -join ',')
+if($from -eq ' from ') { $from += $($LogDirectory|ForEach-Object {"$_\*.log"}) -join ',' }
 
 # build the where clause
-$where = @()
-$where += " where to_localtime(to_timestamp(date,time)) between $(Format-DateTimeLiteral $After)"
+[string[]] $where = @(" where to_localtime(to_timestamp(date,time)) between $(Format-DateTimeLiteral $After)")
 $where += Format-DateTimeLiteral $Before
-if($IpAddr) { $where += "c-ip in ('$(($IpAddr |% {$_ -replace "'","''"}) -join '')')" }
-if($Username) { $where += "cs-username in ('$(($Username |% {$_ -replace "'","''"}) -join '')')" }
+if($IpAddr) { $where += "c-ip in $(ConvertTo-SqlStringList $IpAddr)" }
+if($Username) { $where += "cs-username in $(ConvertTo-SqlStringList $Username)" }
 if($Status) { $where += "sc-status in ($($Status -join ';'))" }
-if($Method -and $Method.Length) { $where += "cs-method in ('$(($Method |% {"$_".ToUpperInvariant()}) -join "';'")')" }
+if($Method -and $Method.Length) { $where += "cs-method in $(ConvertTo-SqlStringList ($Method.ToUpperInvariant()))" }
 if($UriPathLike) { $where += "cs-uri-stem like '$($UriPathLike -replace "'","''")'" }
 if($QueryLike) { $where += "cs-uri-query like '$($QueryLike -replace "'","''")'" }
 if($ReferrerLike) { $where += "cs(Referer) like '$($ReferrerLike -replace "'","''")'" }
@@ -247,31 +322,16 @@ select to_localtime(to_timestamp(date,time)) as Time,
        coalesce(cs-uri-query,'') as Query,
        coalesce(cs(Referer),'') as Referrer,
        sc-status as StatusCode,
-       '' as Status,
        sc-substatus as SubStatusCode,
-       '' as SubStatus,
-       sc-win32-status as WinStatusCode,
-       '' as WinStatus
+       sc-win32-status as WinStatusCode
   into STDOUT
  $from
 $where
 "@
+
 Write-Verbose $sql
 logparser $sql -i:$LogFormat -o:TSV -headers:off -stats:off -q |
-    ConvertFrom-Csv -Delimiter "`t" -Header 'Time','Server','Filename','Line','IpAddress',
-        'Username','UserAgent','Method','UriPath','Query','Referrer',
-        'StatusCode','Status','SubStatusCode','SubStatus','WinStatusCode','WinStatus' |
-    % {
-        [datetime]$_.Time = $_.Time
-        [long]$_.Line = $_.Line
-        [Net.IpAddress]$_.IpAddress = $_.IpAddress
-        try{$_.Method = [Microsoft.PowerShell.Commands.WebRequestMethod]$_.Method}
-        catch{Write-Verbose "Nonstandard verb $($_.Method) at $($_.Filename):$($_.Line)"}
-        [uri]$_.Referrer = $_.Referrer
-        $code = $_.StatusCode
-        $_.Status = try{[Net.HttpStatusCode]$code}catch{"$code"}
-        $iisFullStatus = $_.StatusCode + '.' + $_.SubStatusCode
-        if($iisSubStatus.ContainsKey($iisFullStatus)) {$_.SubStatus = $iisSubStatus[$iisFullStatus]}
-        $_.WinStatus = [ComponentModel.Win32Exception][uint32]$_.WinStatusCode
-        $_
-    }
+	ConvertFrom-Csv -Delimiter "`t" -Header 'Time','Server','Filename','Line','IpAddress',
+		'Username','UserAgent','Method','UriPath','Query','Referrer',
+		'StatusCode','Status','SubStatusCode','SubStatus','WinStatusCode','WinStatus' |
+	Convert-Result

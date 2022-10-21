@@ -105,9 +105,9 @@ Describe '$shortname' -Tag $shortname {
 	}
 	Context 'Script style' -Tag Style {
 		It "Should follow best practices for style" {
-			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\$shortname.ps1" -Severity Warning |
+			Invoke-ScriptAnalyzer -Path "`$PSScriptRoot\..\$shortname.ps1" -Severity Warning |
 				Should -HaveCount 0 -Because 'there should be no style warnings'
-			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\$shortname.ps1" -Severity Error |
+			Invoke-ScriptAnalyzer -Path "`$PSScriptRoot\..\$shortname.ps1" -Severity Error |
 				Should -HaveCount 0 -Because 'there should be no style errors'
 		}
 	}
