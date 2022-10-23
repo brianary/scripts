@@ -281,7 +281,7 @@ filter Convert-Result
 		SubStatusCode = $SubStatusCode
 		SubStatus     = $subStatus
 		WinStatusCode = $WinStatusCode
-		WinStatus     = [ComponentModel.Win32Exception]$WinStatusCode
+		WinStatus     = [ComponentModel.Win32Exception][int]$WinStatusCode
 	}
 }
 
@@ -311,7 +311,7 @@ $where = $where -join "`n   and "
 # assemble the SQL
 $sql = @"
 select to_localtime(to_timestamp(date,time)) as Time,
-       strcat(s-ip,strcat(':',to_string(s-port))) as Server,
+       case s-port when null then to_string(s-ip) else strcat(s-ip,strcat(':',to_string(s-port))) end as Server,
        extract_filename(LogFilename) as Filename,
        $($logRowName[$LogFormat]) as Line,
        coalesce(c-ip,'') as IpAddress,
