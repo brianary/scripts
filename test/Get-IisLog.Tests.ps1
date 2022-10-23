@@ -19,7 +19,8 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 	}
 	Context 'Query log directory' -Tag IisLogDirectory {
 		It "Query IISW3C logs" -Skip {
-			$entry = Get-IisLog.ps1 -LogDirectory "$PSScriptRoot\..\test\data" -After 1996-01-01 -UriPathLike '/default.htm'
+			$entry = Get-IisLog.ps1 -LogDirectory "$PSScriptRoot\..\test\data" -After 1996-01-01 -Before 1997-01-01 `
+				-UriPathLike '/default.htm' -LogFormat IISW3C
 			$entry.Time |Should -Be (Get-Date 1996-01-01T10:48:02Z)
 			$entry.Server |Should -Be '192.166.0.24'
 			$entry.Line |Should -Be 2

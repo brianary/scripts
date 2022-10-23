@@ -1,0 +1,9 @@
+#Verson: 1.0
+#Software: Microsoft Internet Connection Firewall
+#Time Format: Local
+#Fields: date time action protocol src-ip dst-ip src-port dst-port size tcpflags tcpsyn tcpack tcpwin icmptype icmpcode info
+
+2004-09-03 07:11:54 OPEN UDP 192.168.1.103 192.168.1.108 1026 53 - - - - - - - -
+2004-09-03 07:11:54 OPEN TCP 192.168.1.101 192.168.1.108 3005 80 - - - - - - - -
+2004-09-03 07:11:55 OPEN TCP 192.168.1.103 192.168.1.108 1104 139 - - - - - - - -
+2004-09-03 07:11:55 OPEN TCP 192.168.1.104 192.168.1.108 1103 445 - - - - - - - -

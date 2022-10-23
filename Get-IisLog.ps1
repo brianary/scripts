@@ -288,7 +288,7 @@ filter Convert-Result
 # get the log files
 $LogDirectory =
 	if ($ComputerName) { $ComputerName |ForEach-Object {"\\$_\LogFiles$"} }
-	else { $LogDirectory |ForEach-Object FullName }
+	else { $LogDirectory |Resolve-Path |ForEach-Object Path }
 $from = ' from ' +
 	((Get-ChildItem $LogDirectory -Filter *.log |
 		Where-Object LastWriteTime -GE $After.AddDays(-1) |

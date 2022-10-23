@@ -1,0 +1,8 @@
+#Software: Microsoft Internet Information Services 5.0
+#Version: 1.0
+#Date: 2003-11-18 00:28:33
+#Fields: date c-ip cs-uri-stem cs-bytes
+2003-11-18 192.168.1.101 /Default.htm 100
+2003-11-18 192.168.1.104 /hitcount.asp 200
+2003-11-18 192.168.1.102 /images/address.gif
+2003-11-18 192.168.1.102 /cgi-bin/counts.exe 400
