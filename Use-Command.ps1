@@ -54,6 +54,12 @@ This example downloads and installs the RSAT-AD-PowerShell module if missing.
 
 #requires -Version 2
 #requires -Modules Microsoft.PowerShell.Utility
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingInvokeExpression','',
+Justification='Some functionality currently requires executing script code.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','',
+Justification='The Fail parameter is used to select a parameter set only.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions','',
+Justification='Set-ResolvedAlias is implied by the cmdlet.')]
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
 # The name of the command to test.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
@@ -114,7 +120,10 @@ Default is 32767
 [switch] $Fail
 )
 function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Position=1)][string]$Path)
-{ Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |% Path |Find-NewestFile.ps1 |% FullName) -Scope Global }
+{
+	Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |ForEach-Object Path |Find-NewestFile.ps1 |
+		ForEach-Object FullName) -Scope Global
+}
 Get-Command $Name -EA SilentlyContinue -EV cmerr |Out-Null
 if(!$cmerr) { Write-Verbose "$Name command found." ; return }
 if($Path -and (Test-Path $Path)) { Set-ResolvedAlias $Name $Path ; return }
@@ -178,10 +187,10 @@ switch($PSCmdlet.ParameterSetName)
 		{ mkdir "$env:USERPROFILE\AppData\Roaming\npm" |Out-Null }
 		if($PSCmdlet.ShouldProcess("$NodePackage in $InstallDir",'npm install'))
 		{
-			pushd $InstallDir
+			Push-Location $InstallDir
 			if($Version) {npm install $NodePackage@$Version}
 			else {npm install $NodePackage}
-			popd
+			Pop-Location
 			Set-ResolvedAlias $Name $Path
 		}
 		else { Write-Warning "Installation of $NodePackage was cancelled." }
@@ -235,8 +244,8 @@ switch($PSCmdlet.ParameterSetName)
 		{
 			switch($ExecutePowerShell.Scheme)
 			{
-				file    { Invoke-Expression (gc $ExecutePowerShell.OriginalString -raw) }
-				default { Invoke-Expression ((new-object net.webclient).DownloadString($ExecutePowerShell)) }
+				file    { Invoke-Expression (Get-Content $ExecutePowerShell.OriginalString -Raw) }
+				default { Invoke-Expression ((New-Object net.webclient).DownloadString($ExecutePowerShell)) }
 			}
 		}
 		else { Write-Warning "Execution of $ExecutePowerShell was cancelled." }

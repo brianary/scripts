@@ -7,7 +7,7 @@ jobs:
     - name: Check out repo
       uses: actions/checkout@v2
     - name: Pester test
-      shell: pwsh
+      shell: pwsh -noninteractive -command ". '{0}'"
       run: |
         Install-Module Pester -Force
         Invoke-Pester -Output Diagnostic -Path test -PassThru |Export-NUnitReport -Path TestResults.xml
