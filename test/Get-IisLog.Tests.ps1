@@ -3,14 +3,14 @@
 Tests querying IIS logs.
 #>
 
-Use-Command.ps1 logparser "${env:ProgramFiles(x86)}\Log Parser 2.2\LogParser.exe" `
-	-msi http://download.microsoft.com/download/f/f/1/ff1819f9-f702-48a5-bbc7-c9656bc74de8/LogParser.msi
-$Global:noLogParser = !(Get-Command logparser -EA 0)
 Describe 'Get-IisLog' -Tag Get-IisLog {
 	BeforeAll {
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
+		Use-Command.ps1 logparser "${env:ProgramFiles(x86)}\Log Parser 2.2\LogParser.exe" `
+			-msi http://download.microsoft.com/download/f/f/1/ff1819f9-f702-48a5-bbc7-c9656bc74de8/LogParser.msi
+		$Global:noLogParser = !(Get-Command logparser -EA 0)
 	}
 	Context 'Script style' -Tag Style {
 		It "Should follow best practices for style" {
