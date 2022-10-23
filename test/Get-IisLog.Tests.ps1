@@ -3,6 +3,9 @@
 Tests querying IIS logs.
 #>
 
+Use-Command.ps1 logparser "${env:ProgramFiles(x86)}\Log Parser 2.2\LogParser.exe" `
+	-msi http://download.microsoft.com/download/f/f/1/ff1819f9-f702-48a5-bbc7-c9656bc74de8/LogParser.msi
+$Global:noLogParser = !(Get-Command logparser -EA 0)
 Describe 'Get-IisLog' -Tag Get-IisLog {
 	BeforeAll {
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
@@ -18,7 +21,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 		}
 	}
 	Context 'Query log directory' -Tag IisLogDirectory {
-		It "Query very old IISW3C logs" {
+		It "Query very old IISW3C logs" -Skip:$noLogParser {
 			$entry = Get-IisLog.ps1 -LogDirectory "$PSScriptRoot\..\test\data" -After 1996-01-01 -Before 1997-01-01 `
 				-UriPathLike '/default.htm' -LogFormat IISW3C
 			$entry.Time |Should -Be (Get-Date 1996-01-01T10:48:02Z)
@@ -39,7 +42,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 			$entry.WinStatus.NativeErrorCode |Should -Be 0
 			$entry.WinStatus.Message |Should -Be 'The operation completed successfully.'
 		}
-		It "Query old IISW3C logs from IIS 7.0" {
+		It "Query old IISW3C logs from IIS 7.0" -Skip:$noLogParser {
 			$entry = Get-IisLog.ps1 -LogDirectory "$PSScriptRoot\..\test\data" -After 2010-08-15 -Before 2010-08-16 `
 				-UriPathLike /robots.txt -LogFormat IISW3C |
 				Where-Object UserAgent -like '*Firefox*'
@@ -62,7 +65,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 			$entry.WinStatus.NativeErrorCode |Should -Be 0
 			$entry.WinStatus.Message |Should -Be 'The operation completed successfully.'
 		}
-		It "Query old IISW3C logs from IIS 8.5" {
+		It "Query old IISW3C logs from IIS 8.5" -Skip:$noLogParser {
 			$entry = Get-IisLog.ps1 -LogDirectory test\data -After 2016-01-10 -Before 2016-01-11 `
 				-UriPathLike '/images/logo.png' -LogFormat IISW3C
 			$entry.Time |Should -Be (Get-Date 2016-01-10T15:48:55Z)
