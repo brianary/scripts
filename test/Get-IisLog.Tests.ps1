@@ -8,10 +8,13 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
-		try {Use-Command.ps1 logparser "${env:ProgramFiles(x86)}\Log Parser 2.2\LogParser.exe" -EA 0 `
-			-msi http://download.microsoft.com/download/f/f/1/ff1819f9-f702-48a5-bbc7-c9656bc74de8/LogParser.msi}
-		catch {Write-Warning 'Could not install LogParser'}
-		$Global:noLogParser = !(Get-Command logparser -EA 0)
+		try
+		{
+			Use-Command.ps1 logparser "${env:ProgramFiles(x86)}\Log Parser 2.2\LogParser.exe" -EA Stop `
+				-msi http://download.microsoft.com/download/f/f/1/ff1819f9-f702-48a5-bbc7-c9656bc74de8/LogParser.msi
+			$Global:noLogParser = !(Get-Command logparser -EA 0)
+		}
+		catch {Write-Warning 'Could not install LogParser'; $Global:noLogParser = $true}
 	}
 	Context 'Script style' -Tag Style {
 		It "Should follow best practices for style" {
