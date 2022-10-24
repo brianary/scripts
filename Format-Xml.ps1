@@ -12,62 +12,62 @@ System.String containing the serialized XML document with desired indents.
 Get-PSProvider alias |ConvertTo-Xml |Format-Xml.ps1
 
 <Objects>
-<Object Type="System.Management.Automation.ProviderInfo">
-<Property Name="ImplementingType" Type="System.RuntimeType">Microsoft.PowerShell.Commands.AliasProvider</Property>
-<Property Name="HelpFile" Type="System.String">System.Management.Automation.dll-Help.xml</Property>
-<Property Name="Name" Type="System.String">Alias</Property>
-<Property Name="PSSnapIn" Type="System.Management.Automation.PSSnapInInfo">Microsoft.PowerShell.Core</Property>
-<Property Name="ModuleName" Type="System.String">Microsoft.PowerShell.Core</Property>
-<Property Name="Module" Type="System.Management.Automation.PSModuleInfo" />
-<Property Name="Description" Type="System.String"></Property>
-<Property Name="Capabilities" Type="System.Management.Automation.Provider.ProviderCapabilities">ShouldProcess</Property>
-<Property Name="Home" Type="System.String"></Property>
-<Property Name="Drives" Type="System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSDriveInfo]">
-<Property Type="System.Management.Automation.PSDriveInfo">Alias</Property>
-</Property>
-</Object>
+  <Object Type="System.Management.Automation.ProviderInfo">
+    <Property Name="ImplementingType" Type="System.RuntimeType">Microsoft.PowerShell.Commands.AliasProvider</Property>
+    <Property Name="HelpFile" Type="System.String">System.Management.Automation.dll-Help.xml</Property>
+    <Property Name="Name" Type="System.String">Alias</Property>
+    <Property Name="PSSnapIn" Type="System.Management.Automation.PSSnapInInfo">Microsoft.PowerShell.Core</Property>
+    <Property Name="ModuleName" Type="System.String">Microsoft.PowerShell.Core</Property>
+    <Property Name="Module" Type="System.Management.Automation.PSModuleInfo" />
+    <Property Name="Description" Type="System.String"></Property>
+    <Property Name="Capabilities" Type="System.Management.Automation.Provider.ProviderCapabilities">ShouldProcess</Property>
+    <Property Name="Home" Type="System.String"></Property>
+    <Property Name="Drives" Type="System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSDriveInfo]">
+      <Property Type="System.Management.Automation.PSDriveInfo">Alias</Property>
+    </Property>
+  </Object>
 </Objects>
 
 .EXAMPLE
 Get-PSProvider alias |ConvertTo-Xml |Format-Xml.ps1 -NewLineOnAttributes
 
 <Objects>
-<Object
-Type="System.Management.Automation.ProviderInfo">
-<Property
-Name="ImplementingType"
-Type="System.RuntimeType">Microsoft.PowerShell.Commands.AliasProvider</Property>
-<Property
-Name="HelpFile"
-Type="System.String">System.Management.Automation.dll-Help.xml</Property>
-<Property
-Name="Name"
-Type="System.String">Alias</Property>
-<Property
-Name="PSSnapIn"
-Type="System.Management.Automation.PSSnapInInfo">Microsoft.PowerShell.Core</Property>
-<Property
-Name="ModuleName"
-Type="System.String">Microsoft.PowerShell.Core</Property>
-<Property
-Name="Module"
-Type="System.Management.Automation.PSModuleInfo" />
-<Property
-Name="Description"
-Type="System.String"></Property>
-<Property
-Name="Capabilities"
-Type="System.Management.Automation.Provider.ProviderCapabilities">ShouldProcess</Property>
-<Property
-Name="Home"
-Type="System.String"></Property>
-<Property
-Name="Drives"
-Type="System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSDriveInfo]">
-<Property
-Type="System.Management.Automation.PSDriveInfo">Alias</Property>
-</Property>
-</Object>
+  <Object
+    Type="System.Management.Automation.ProviderInfo">
+    <Property
+      Name="ImplementingType"
+      Type="System.RuntimeType">Microsoft.PowerShell.Commands.AliasProvider</Property>
+    <Property
+      Name="HelpFile"
+      Type="System.String">System.Management.Automation.dll-Help.xml</Property>
+    <Property
+      Name="Name"
+      Type="System.String">Alias</Property>
+    <Property
+      Name="PSSnapIn"
+      Type="System.Management.Automation.PSSnapInInfo">Microsoft.PowerShell.Core</Property>
+    <Property
+      Name="ModuleName"
+      Type="System.String">Microsoft.PowerShell.Core</Property>
+    <Property
+      Name="Module"
+      Type="System.Management.Automation.PSModuleInfo" />
+    <Property
+      Name="Description"
+      Type="System.String"></Property>
+    <Property
+      Name="Capabilities"
+      Type="System.Management.Automation.Provider.ProviderCapabilities">ShouldProcess</Property>
+    <Property
+      Name="Home"
+      Type="System.String"></Property>
+    <Property
+      Name="Drives"
+      Type="System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSDriveInfo]">
+      <Property
+        Type="System.Management.Automation.PSDriveInfo">Alias</Property>
+    </Property>
+  </Object>
 </Objects>
 #>
 
