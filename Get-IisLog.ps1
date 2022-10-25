@@ -259,7 +259,7 @@ filter Convert-Result
 	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Query,
 	[Parameter(ValueFromPipelineByPropertyName=$true)][uri] $Referrer,
 	[Parameter(ValueFromPipelineByPropertyName=$true)][short] $StatusCode,
-	[Parameter(ValueFromPipelineByPropertyName=$true)][short] $SubStatusCode,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][uint32] $SubStatusCode,
 	[Parameter(ValueFromPipelineByPropertyName=$true)][uint32] $WinStatusCode
 	)
 	$iisFullStatus,$subStatus = "$StatusCode.$SubStatusCode",''
