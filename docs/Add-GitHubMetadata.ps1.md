@@ -17,8 +17,8 @@ Add-GitHubMetadata.ps1 [[-DefaultOwner] <String[]>] [[-Owners] <Hashtable>] [[-V
  [[-DocumentationCode] <String[]>] [[-GeneratedCode] <String[]>] [[-IssueTemplate] <String>]
  [[-PullRequestTemplate] <String>] [[-ContributingFile] <String>] [[-LicenseFile] <String>]
  [[-DefaultCharset] <String>] [[-DefaultLineEndings] <String>] [[-DefaultIndentSize] <Int32>]
- [-DefaultUsesTabs] [-DefaultKeepTrailingSpace] [-DefaultNoFinalNewLine] [-NoWarnings] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-DefaultUsesTabs] [-DefaultKeepTrailingSpace] [-DefaultNoFinalNewLine] [-NoWarnings] [-Force] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -292,6 +292,21 @@ Accept wildcard characters: False
 
 ### -NoWarnings
 Indicates warnings about new content should be skipped.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+Do not prompt to append Linguist settings.
 
 ```yaml
 Type: SwitchParameter

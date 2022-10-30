@@ -21,12 +21,12 @@ PowerShell Scripts
 ------------------
 ![script dependencies](dependencies.svg)
 
-- **[Add-CapturesToMatches.ps1](Add-CapturesToMatches.ps1)**: Adds named capture group values as note properties to Select-String MatchInfo objects.
+- :up: **[Add-CapturesToMatches.ps1](Add-CapturesToMatches.ps1)**: Adds named capture group values as note properties to Select-String MatchInfo objects.
 - :up: **[Add-Counter.ps1](Add-Counter.ps1)**: Adds an incrementing integer property to each pipeline object.
-- **[Add-DynamicParam.ps1](Add-DynamicParam.ps1)**: Adds a dynamic parameter to a script, within a DynamicParam block.
+- :up: **[Add-DynamicParam.ps1](Add-DynamicParam.ps1)**: Adds a dynamic parameter to a script, within a DynamicParam block.
 - :up: **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
-- **[Add-NoteProperty.ps1](Add-NoteProperty.ps1)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
-- **[Add-ParameterDefault.ps1](Add-ParameterDefault.ps1)**: Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
+- :up: **[Add-NoteProperty.ps1](Add-NoteProperty.ps1)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
+- :up: **[Add-ParameterDefault.ps1](Add-ParameterDefault.ps1)**: Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1)**: Convert a scope level to account for another call stack level.
 - **[Add-ScriptCredential.ps1](Add-ScriptCredential.ps1)**: Serializes a an encrypted credential to a PowerShell script using 32-byte random key file.
 - **[Add-TimeSpan.ps1](Add-TimeSpan.ps1)**: Adds a timespan to DateTime values.
@@ -65,7 +65,7 @@ PowerShell Scripts
 - **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1)**: Exports MS SQL script for an object from the given server.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-Fake4TargetsGraph.ps1](Export-Fake4TargetsGraph.ps1)**: Exports a graph of a Fake4 build script's targets.
-- :up: **[Export-MermaidER.ps1](Export-MermaidER.ps1)**: Generates a Mermaid entity relation diagram for database tables.
+- **[Export-MermaidER.ps1](Export-MermaidER.ps1)**: Generates a Mermaid entity relation diagram for database tables.
 - :up: **[Export-Readme.ps1](Export-Readme.ps1)**: Generate README.md file for the scripts repo.
 - **[Export-TableMerge.ps1](Export-TableMerge.ps1)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-Comics.ps1](Find-Comics.ps1)**: Finds comics.
@@ -85,7 +85,7 @@ PowerShell Scripts
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1)**: Escape URLs more aggressively.
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Format-Permutations.ps1](Format-Permutations.ps1)**: Builds format strings using every combination of elements from multiple arrays.
-- **[Format-Xml.ps1](Format-Xml.ps1)**: Pretty-print XML.
+- :up: **[Format-Xml.ps1](Format-Xml.ps1)**: Pretty-print XML.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-AssemblyFramework.ps1](Get-AssemblyFramework.ps1)**: Gets the framework version an assembly was compiled for.
 - **[Get-CachedCredential.ps1](Get-CachedCredential.ps1)**: Return a credential from secure storage, or prompt the user for it if not found.
@@ -95,7 +95,6 @@ PowerShell Scripts
 - **[Get-CommandParameters.ps1](Get-CommandParameters.ps1)**: Returns the parameters of the specified cmdlet.
 - **[Get-CommandPath.ps1](Get-CommandPath.ps1)**: Locates a command.
 - **[Get-ConfigConnectionStringBuilders.ps1](Get-ConfigConnectionStringBuilders.ps1)**: Return named connection string builders for connection strings in a config file.
-- **[Get-ConsoleColors.ps1](Get-ConsoleColors.ps1)**: Gets current console color details.
 - **[Get-ConsoleHistory.ps1](Get-ConsoleHistory.ps1)**: Returns the DOSKey-style console command history (up arrow or F8).
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1)**: Returns the content security policy at from the given URL.
 - **[Get-Dns.ps1](Get-Dns.ps1)**: Looks up DNS info, given a hostname or address.
@@ -108,7 +107,7 @@ PowerShell Scripts
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1)**: Gets the SHA-1 hash of the first commit of the current repo.
 - **[Get-GitHubRepoChildItem.ps1](Get-GitHubRepoChildItem.ps1)**: Adds any missing topics based on repo content.
-- **[Get-IisLog.ps1](Get-IisLog.ps1)**: Easily query IIS logs.
+- :up: **[Get-IisLog.ps1](Get-IisLog.ps1)**: Easily query IIS logs.
 - **[Get-LibraryVulnerabilityInfo.ps1](Get-LibraryVulnerabilityInfo.ps1)**: Get the list of module/package/library vulnerabilities from the RetireJS or SafeNuGet projects.
 - **[Get-PocketArticles.ps1](Get-PocketArticles.ps1)**: Retrieves a list of saved articles from a Pocket account.
 - **[Get-RandomBytes.ps1](Get-RandomBytes.ps1)**: Returns random bytes.
@@ -136,7 +135,7 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1)**: Provides sorted counts of SQL Server column values.
 - **[Measure-DbTable.ps1](Measure-DbTable.ps1)**: Provides frequency details about SQL Server table data.
 - **[Measure-Indents.ps1](Measure-Indents.ps1)**: Measures the indentation characters used in a text file.
-- :up: **[Measure-StandardDeviation.ps1](Measure-StandardDeviation.ps1)**: Calculate the standard deviation of numeric values.
+- **[Measure-StandardDeviation.ps1](Measure-StandardDeviation.ps1)**: Calculate the standard deviation of numeric values.
 - **[Measure-TextFile.ps1](Measure-TextFile.ps1)**: Counts each type of indent and line ending.
 - **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1)**: Create a new PSObject by recursively combining the properties of PSObjects.
@@ -144,9 +143,9 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[New-DbProviderObject.ps1](New-DbProviderObject.ps1)**: Create a common database object.
 - **[New-Jwt.ps1](New-Jwt.ps1)**: Generates a JSON Web Token (JWT)
 - **[New-NamespaceManager.ps1](New-NamespaceManager.ps1)**: Creates an object to lookup XML namespace prefixes.
+- :up: **[New-PesterTests.ps1](New-PesterTests.ps1)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-RandomVehicle.ps1](New-RandomVehicle.ps1)**: Generates random vehicle details with a valid VIN.
 - **[New-Script.ps1](New-Script.ps1)**: Creates a simple boilerplate script.
-- :new: **[New-ScriptPesterTests.ps1](New-ScriptPesterTests.ps1)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-Shortcut.ps1](New-Shortcut.ps1)**: Create a Windows shortcut.
 - **[Open-Comic.ps1](Open-Comic.ps1)**: Opens a comic's PreviewsWorld page.
 - **[Optimize-Help.ps1](Optimize-Help.ps1)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
@@ -163,7 +162,6 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1)**: Finds database constraints with system-generated names and gives them deterministic names.
 - **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1)**: Finds database constraints that have been incompletely re-enabled.
 - **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
-- **[Reset-ConsoleColors.ps1](Reset-ConsoleColors.ps1)**: Resets console color palette.
 - **[Resolve-XmlSchemaLocation.ps1](Resolve-XmlSchemaLocation.ps1)**: Gets the namespaces and their URIs and URLs from a document.
 - **[Resolve-XPath.ps1](Resolve-XPath.ps1)**: Returns the XPath of the location of an XML node.
 - **[Restore-SchTasks.ps1](Restore-SchTasks.ps1)**: Imports from a single XML file into the local Scheduled Tasks.
@@ -174,7 +172,6 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Send-SeqEvent.ps1](Send-SeqEvent.ps1)**: Send an event to a Seq server.
 - **[Send-SeqScriptEvent.ps1](Send-SeqScriptEvent.ps1)**: Sends an event (often an error) from a script to a Seq server, including script info.
 - **[Send-SqlReport.ps1](Send-SqlReport.ps1)**: Execute a SQL statement and email the results.
-- **[Set-ConsoleColors.ps1](Set-ConsoleColors.ps1)**: Overrides ConsoleClass window color palette entries with RGB values.
 - **[Set-ConsoleColorTheme.ps1](Set-ConsoleColorTheme.ps1)**: Overrides ConsoleClass window color palette entries with a preset color theme.
 - **[Set-JsonProperty.ps1](Set-JsonProperty.ps1)**: Sets a property of arbitrary depth in a JSON string.
 - **[Set-ParameterDefault.ps1](Set-ParameterDefault.ps1)**: Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
@@ -208,9 +205,9 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Update-Everything.ps1](Update-Everything.ps1)**: Updates everything it can on the system.
 - **[Update-Files.ps1](Update-Files.ps1)**: Copies specified source files that exist in the destination directory.
 - **[Update-Modules.ps1](Update-Modules.ps1)**: Cleans up old modules.
-- **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
+- :up: **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 - **[Use-Java.ps1](Use-Java.ps1)**: Switch the Java version for the current process by modifying environment variables.
-- **[Use-NetMailConfig.ps1](Use-NetMailConfig.ps1)**: Use .NET configuration to set defaults for Send-MailMessage.
+- :up: **[Use-NetMailConfig.ps1](Use-NetMailConfig.ps1)**: Use .NET configuration to set defaults for Send-MailMessage.
 - **[Use-ProgressView.ps1](Use-ProgressView.ps1)**: Sets the progress bar display view.
 - **[Use-ReasonableDefaults.ps1](Use-ReasonableDefaults.ps1)**: Sets certain cmdlet parameter defaults to rational, useful values.
 - **[Use-SeqServer.ps1](Use-SeqServer.ps1)**: Set the default Server and ApiKey for Send-SeqEvent.ps1
@@ -219,13 +216,13 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 
 F# Scripts
 ----------
-- **[NCrontab Schedule Test](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/Test-NCrontab.html)**: Returns a sampling of the next several date & times scheduled by an NCrontab string.
-- **[US Federal Holiday Detection](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/USFederalHolidays.html)**: Here's how to determine whether a date is a US federal holiday using F#.
+- **[NCrontab Schedule Test](https://webcoder.info/scripts/Test-NCrontab.html)**: Returns a sampling of the next several date & times scheduled by an NCrontab string.
+- **[US Federal Holiday Detection](https://webcoder.info/scripts/USFederalHolidays.html)**: Here's how to determine whether a date is a US federal holiday using F#.
 
 Office VBA Scripts
 ------------------
-- **[OutlookExpireTag.vba](OutlookExpireTag.vba)**: Too many emails remain beyond their period of relevance: daily personnel schedule changes, found item notices, office food notices, server reboot notices, weather/traffic warnings, &c. This Outlook script will allow specifying an expiration date as a hashtag in the subject of outgoing emails, since Outlook does such a good job of hiding the UI for that field. -BL
-- **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work)
-- **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work)
+- **[OutlookExpireTag.vba](OutlookExpireTag.vba)**: Too many emails remain beyond their period of relevance: daily personnel schedule changes, found item notices, office food notices, server reboot notices, weather/traffic warnings, &c. This Outlook script will allow specifying an expiration date as a hashtag in the subject of outgoing emails, since Outlook does such a good job of hiding the UI for that field. -BL 
+- **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
+- **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 10/14/2022 20:05:54 -->
+<!-- generated 10/29/2022 18:56:56 -->

@@ -5,15 +5,21 @@ online version:
 schema: 2.0.0
 ---
 
-# Write-VisibleString.ps1
+# New-PesterTests.ps1
 
 ## SYNOPSIS
-Displays a string, showing nonprintable characters.
+Creates a new Pester testing script from a script's examples and parameter sets.
 
 ## SYNTAX
 
+### Script
 ```
-Write-VisibleString.ps1 [-InputObject] <Object> [-AltColor <ConsoleColor>] [-AsSymbols] [<CommonParameters>]
+New-PesterTests.ps1 [-Script] <String> [-Directory <String>] [-Force] [<CommonParameters>]
+```
+
+### Next
+```
+New-PesterTests.ps1 [-Directory <String>] [-Next] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,19 +29,19 @@ Write-VisibleString.ps1 [-InputObject] <Object> [-AltColor <ConsoleColor>] [-AsS
 
 ### EXAMPLE 1
 ```
-Write-VisibleString.ps1 "a`tb`nc"
+New-PesterTests.ps1 New-PesterTests.ps1
 ```
 
-a 09 b 0a c
+Creates .\test\New-PesterTests.Tests.ps1 with some boilerplate Pester code.
 
 ## PARAMETERS
 
-### -InputObject
-The string to show.
+### -Script
+The script to generate tests for.
 
 ```yaml
-Type: Object
-Parameter Sets: (All)
+Type: String
+Parameter Sets: Script
 Aliases:
 
 Required: True
@@ -45,31 +51,45 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -AltColor
-The color to use for nonprintable chars.
+### -Directory
+The directory to generate tests in.
 
 ```yaml
-Type: ConsoleColor
+Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: Black, DarkBlue, DarkGreen, DarkCyan, DarkRed, DarkMagenta, DarkYellow, Gray, DarkGray, Blue, Green, Cyan, Red, Magenta, Yellow, White
 
 Required: False
 Position: Named
-Default value: DarkYellow
+Default value: Test
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AsSymbols
-Print control characters as control picture symbols rather than hex values.
+### -Force
+Overwrite an existing tests file.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Script
 Aliases:
 
 Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Next
+Indicates that the next script that's missing a test script file should have one created.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Next
+Aliases:
+
+Required: True
 Position: Named
 Default value: False
 Accept pipeline input: False
@@ -81,10 +101,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.Object to serialize with nonprintable characters made visible as a hex pair.
 ## OUTPUTS
 
-### System.Void
 ## NOTES
 
 ## RELATED LINKS
+
+[Stop-ThrowError.ps1]()
+
