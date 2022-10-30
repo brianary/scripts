@@ -1,0 +1,37 @@
+Tasks::before {display:block; font-size: x-large; content: "Tasks Backup"; margin: 1em 0; border-bottom: thin double #DDD;}
+Tasks {padding: 1ex}
+Task {list-style-type: disc;}
+URI {font-weight: bold; font-size: large;}
+Author::before {content: " by ";}
+Date,Author,SecurityDescriptor {font-size: small;}
+SecurityDescriptor {font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;}
+URI,Description {display: block;}
+UserId {font-weight:lighter;}
+Task,Principal,Settings,CalendarTrigger,TimeTrigger,BootTrigger,LogonTrigger,SessionStateChangeTrigger,IdleTrigger,
+EventTrigger,WnfStateChangeTrigger,Exec,WorkingDirectory,ComHandler {display: list-item; margin-left: 2em; padding-left: 1ex;}
+Principal {list-style-type: "\01F464";}
+Settings {list-style-type: "\01F39B\FE0F";}
+CalendarTrigger {list-style-type: "\01F4C5";}
+TimeTrigger {list-style-type: "\23F2\FE0F";}
+BootTrigger {list-style-type: "\01F5A5\FE0F";}
+LogonTrigger {list-style-type: "\01F6AA";}
+SessionStateChangeTrigger {list-style-type: "\23CF\FE0F";}
+IdleTrigger {list-style-type: "\23F3";}
+EventTrigger {list-style-type: "\01F4DF";}
+WnfStateChangeTrigger {list-style-type: "\01F6CE\FE0F";}
+Exec {list-style-type: "\01F680";}
+WorkingDirectory {list-style-type: "\01F4C2";}
+ComHandler {list-style-type: "\01F916"}
+Repetition::before {content: "\01F501 "}
+Description::before {content: "\01F5D2\FE0F "}
+DisallowStartIfOnBatteries::before {content: "\01F50B\01F7E2"}
+StopIfGoingOnBatteries::before {content: "\01F50B\01F6D1"}
+MultipleInstancesPolicy::before {content: "\2795"}
+StartWhenAvailable::before {content: "\23F0"}
+IdleSettings::before {content: "\231A"}
+Duration::before {content: "from "}
+WaitTimeout::before {content: " to "}
+StopOnIdleEnd::before {content: " stop? "}
+RestartOnIdle::before {content: " restart? "}
+Command,ClassId {font-weight: bold;}
+Command,Arguments,ClassId,Data {font-family:'Courier New', Courier, monospace;}

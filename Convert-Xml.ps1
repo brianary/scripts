@@ -8,9 +8,9 @@ Convert-Xml.ps1 '<a xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Tran
 <a />
 
 .EXAMPLE
-Convert-Xml.ps1 xsd2html.xslt schema.xsd schema.html
+Convert-Xml.ps1 -TransformFile xsd2html.xslt -Path schema.xsd -OutFile schema.html
 
-(Writes schema.html)
+Writes schema.html by applying the xsd2html.xslt transformation to schema.xsd.
 #>
 
 #Requires -Version 3
@@ -35,7 +35,11 @@ function and embedded script blocks.
 )
 Begin
 {
-	if($PSCmdlet.ParameterSetName -eq 'File') {[xml] $TransformXslt = Resolve-Path $TransformFile |Get-Content -Raw}
+	if($PSCmdlet.ParameterSetName -eq 'File')
+	{
+		[xml] $TransformXslt = Resolve-Path $TransformFile |Get-Content -Raw
+		[xml] $Xml = Resolve-Path $Path |Get-Content -Raw
+	}
 	[version] $xsltversion = Select-Xml '/*/@version' $TransformXslt -Namespace @{
 			xsl='http://www.w3.org/1999/XSL/Transform'} |Get-XmlValue
 	if($xsltversion -gt '1.0')
@@ -75,7 +79,7 @@ Process
 			!$PSCmdlet.ShouldContinue("$(Get-Item $absOutFile |select FullName,LastWriteTime,Length)","Overwrite File?"))
 		{Write-Warning "Skipping transform from $absPath to $OutFile"; return}
 		$sw = New-Object IO.StreamWriter $absOutFile
-		$xslt.Transform($Xml,$sw)
+		$xslt.Transform([Xml.XPath.IXPathNavigable]$Xml,(New-Object Xml.XmlTextWriter $sw))
 		$sw.Close() ; $sw.Dispose() ; $sw = $null
 	}
 }
