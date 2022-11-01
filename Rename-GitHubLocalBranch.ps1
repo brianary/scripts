@@ -12,9 +12,9 @@ https://github.com/github/renaming
 Use-Command.ps1
 
 .EXAMPLE
-Rename-GitHubLocalBranch.ps1 master main
+Rename-GitHubLocalBranch.ps1 main
 
-Rename the master branch to main.
+Rename the current branch to "main".
 #>
 
 #Requires -Version 3
