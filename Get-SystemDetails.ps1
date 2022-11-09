@@ -19,6 +19,9 @@ System.Management.Automation.PSCustomObject with properties about the computer:
 * NetVersions: The versions of .NET on the system.
 
 .LINK
+https://en.wikipedia.org/wiki/List_of_Microsoft_Windows_versions
+
+.LINK
 Get-CimInstance
 
 .EXAMPLE
@@ -50,17 +53,123 @@ $os = Get-CimInstance CIM_OperatingSystem
 	PrimaryOwnerName = $cs.PrimaryOwnerName
 	Memory = (Format-ByteUnits $cs.TotalPhysicalMemory -si -dot 2) +
 		" ($('{0:p}' -f (1KB*$os.FreePhysicalMemory/$cs.TotalPhysicalMemory)) free)"
-	OperatingSystem = $os.Caption + $(try{ $os.OSArchitecture }catch{''}) + ' ' + $os.CSDVersion + ' (' + $os.Version + ')'
+	OperatingSystem = $os.Caption + ' ' + $os.CSDVersion
+	OSVersion = $os.Version
+	OSUpdate =
+		if($os.OSType -eq 18 -and $os.Version -like '10.*')
+		{
+			switch($os.BuildNumber)
+			{
+				22621 {'22H2'}
+				22000 {'22H1'}
+				19044 {'21H2'}
+				19043 {'21H1'}
+				19042 {'20H2'}
+				19041 {'2004'}
+				18363 {'1909'}
+				18362 {'1903'}
+				17763 {'1809'}
+				17134 {'1803'}
+				16299 {'1709'}
+				15063 {'1703'}
+				14393 {'1607'}
+				10586 {'1511'}
+				10240 {'1507'}
+			}
+		}
+	OSType =
+		switch($os.OSType)
+		{
+			0  {'Unknown'}
+			1  {$os.OtherTypeDescription}
+			2  {'MACOS'}
+			3  {'ATTUNIX'}
+			4  {'DGUX'}
+			5  {'DECNT'}
+			6  {'Tru64 UNIX'}
+			7  {'OpenVMS'}
+			8  {'HPUX'}
+			9  {'AIX'}
+			10 {'MVS'}
+			11 {'OS400'}
+			12 {'OS/2'}
+			13 {'JavaVM'}
+			14 {'MSDOS'}
+			15 {'WIN3x'}
+			16 {'WIN95'}
+			17 {'WIN98'}
+			18 {'WINNT'}
+			19 {'WINCE'}
+			20 {'NCR3000'}
+			21 {'NetWare'}
+			22 {'OSF'}
+			23 {'DC/OS'}
+			24 {'Reliant UNIX'}
+			25 {'SCO UnixWare'}
+			26 {'SCO OpenServer'}
+			27 {'Sequent'}
+			28 {'IRIX'}
+			29 {'Solaris'}
+			30 {'SunOS'}
+			31 {'U6000'}
+			32 {'ASERIES'}
+			33 {'HP NonStop OS'}
+			34 {'HP NonStop OSS'}
+			35 {'BS2000'}
+			36 {'LINUX'}
+			37 {'Lynx'}
+			38 {'XENIX'}
+			39 {'VM'}
+			40 {'Interactive UNIX'}
+			41 {'BSDUNIX'}
+			42 {'FreeBSD'}
+			43 {'NetBSD'}
+			44 {'GNU Hurd'}
+			45 {'OS9'}
+			46 {'MACH Kernel'}
+			47 {'Inferno'}
+			48 {'QNX'}
+			49 {'EPOC'}
+			50 {'IxWorks'}
+			51 {'VxWorks'}
+			52 {'MiNT'}
+			53 {'BeOS'}
+			54 {'HP MPE'}
+			55 {'NextStep'}
+			56 {'PalmPilot'}
+			57 {'Rhapsody'}
+			58 {'Windows 2000'}
+			59 {'Dedicated'}
+			60 {'OS/390'}
+			61 {'VSE'}
+			62 {'TPF'}
+			63 {'Windows (R) Me'}
+			64 {'Caldera Open UNIX'}
+			65 {'OpenBSD'}
+			66 {'Not Applicable'}
+			67 {'Windows XP'}
+			68 {'z/OS'}
+			69 {'Microsoft Windows Server 2003'}
+			70 {'Microsoft Windows Server 2003 64-Bit'}
+			71 {'Windows XP 64-Bit'}
+			72 {'Windows XP Embedded'}
+			73 {'Windows Vista'}
+			74 {'Windows Vista 64-Bit'}
+			75 {'Windows Embedded for Point of Service'}
+			76 {'Microsoft Windows Server 2008'}
+			77 {'Microsoft Windows Server 2008 64-Bit'}
+		}
+	OSArchitecture = $os.OSArchitecture
 	Processors = (Get-CimInstance CIM_Processor |
-		% Name |
-		% {$_ -replace '\s{2,}',' '})
-	Video = Get-CimInstance CIM_VideoController |% Name
+		ForEach-Object Name |
+		ForEach-Object {$_ -replace '\s{2,}',' '})
+	Video = Get-CimInstance CIM_VideoController |ForEach-Object Name
 	Drives = (Get-CimInstance CIM_StorageVolume |
-		? {$_.DriveType -eq 3 -and $_.DriveLetter -and $_.Capacity} |
-		sort DriveLetter |
-		% {"$($_.DriveLetter) $(Format-ByteUnits $_.Capacity -si -dot 2) ($('{0:p}' -f ($_.FreeSpace/$_.Capacity)) free)"})
+		Where-Object {$_.DriveType -eq 3 -and $_.DriveLetter -and $_.Capacity} |
+		Sort-Object DriveLetter |
+		ForEach-Object {"$($_.DriveLetter) $(Format-ByteUnits $_.Capacity -si -dot 2) ($('{0:p}' -f ($_.FreeSpace/$_.Capacity)) free)"})
 	Shares= (Get-CimInstance Win32_Share |
-		? {$_.Type -eq 0} |
-		% {"$($_.Name)=$($_.Path)"})
+		Where-Object {$_.Type -eq 0} |
+		ForEach-Object {"$($_.Name)=$($_.Path)"})
 	NetVersions = Get-DotNetFrameworkVersions.ps1
 }
