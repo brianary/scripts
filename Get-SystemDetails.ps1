@@ -36,7 +36,11 @@ Manufacturer     : Microsoft Corporation
 Model            : Surface Pro 4
 PrimaryOwnerName :
 Memory           : 3.93 GiB (25.68 % free)
-OperatingSystem  : Microsoft Windows 10 Pro64-bit  (10.0.14393)
+OperatingSystem  : Microsoft Windows 10 Pro
+OSVersion        : 10.0.14393
+OSUpdate         : 1607
+OSType           : WINNT
+OSArchitecture   : 64-bit
 Processors       : Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz
 Video            : NVIDIA GeForce GTX 670
 Drives           : C: 118 GiB (31.47 % free)
