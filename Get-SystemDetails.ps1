@@ -22,6 +22,9 @@ System.Management.Automation.PSCustomObject with properties about the computer:
 https://en.wikipedia.org/wiki/List_of_Microsoft_Windows_versions
 
 .LINK
+https://vdc-repo.vmware.com/vmwb-repository/dcr-public/3d076a12-29a2-4d17-9269-cb8150b5a37f/8b5969e2-1a66-4425-af17-feff6d6f705d/doc/class_CIM_OperatingSystem.html
+
+.LINK
 Get-CimInstance
 
 .EXAMPLE
