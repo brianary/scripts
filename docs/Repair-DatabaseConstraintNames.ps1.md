@@ -5,28 +5,16 @@ online version:
 schema: 2.0.0
 ---
 
-# Repair-DatabaseConstraintNames.ps1
+# Rename-Script.ps1
 
 ## SYNOPSIS
-Finds database constraints with system-generated names and gives them deterministic names.
+Renames all instances of a script, and updates any usage of it.
 
 ## SYNTAX
 
-### ByConnectionParameters
 ```
-Repair-DatabaseConstraintNames.ps1 [-ServerInstance] <String> [-Database] <String> [-Update] [-WhatIf]
- [-Confirm] [<CommonParameters>]
-```
-
-### ByConnectionString
-```
-Repair-DatabaseConstraintNames.ps1 -ConnectionString <String> [-Update] [-WhatIf] [-Confirm]
+Rename-Script.ps1 [-OldName] <String> [-NewName] <String> [[-ScriptDirectory] <String[]>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
-```
-
-### ByConnectionName
-```
-Repair-DatabaseConstraintNames.ps1 -ConnectionName <String> [-Update] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,20 +24,21 @@ Repair-DatabaseConstraintNames.ps1 -ConnectionName <String> [-Update] [-WhatIf] 
 
 ### EXAMPLE 1
 ```
-Repair-DatabaseConstraintNames.ps1 SqlServerName DatabaseName -Update
+Rename-Script.ps1 Get-RomanNumeral.ps1 ConvertTo-RomanNumeral.ps1
 ```
 
-WARNING: Renamed 10 defaults
+Renames the script file, and searches other script files for references to it,
+and updates them.
 
 ## PARAMETERS
 
-### -ServerInstance
-The name of a server (and optional instance) to connect to.
+### -OldName
+The current name of the script to change.
 
 ```yaml
 Type: String
-Parameter Sets: ByConnectionParameters
-Aliases:
+Parameter Sets: (All)
+Aliases: From
 
 Required: True
 Position: 1
@@ -58,13 +47,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Database
-The the database to connect to on the server.
+### -NewName
+The desired name of the script to change to.
 
 ```yaml
 Type: String
-Parameter Sets: ByConnectionParameters
-Aliases:
+Parameter Sets: (All)
+Aliases: To
 
 Required: True
 Position: 2
@@ -73,47 +62,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ConnectionString
-Specifies a connection string to connect to the server.
+### -ScriptDirectory
+Any directories within which to rename the script (and any usage).
 
 ```yaml
-Type: String
-Parameter Sets: ByConnectionString
-Aliases: ConnStr, CS
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ConnectionName
-The connection string name from the ConfigurationManager to use.
-
-```yaml
-Type: String
-Parameter Sets: ByConnectionName
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Update
-Update the database when present, otherwise simply outputs the changes as script.
-
-```yaml
-Type: SwitchParameter
+Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: Directory
 
 Required: False
-Position: Named
-Default value: False
+Position: 3
+Default value: .
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -156,14 +115,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Void
 ## NOTES
 
 ## RELATED LINKS
 
-[Use-SqlcmdParams.ps1]()
-
-[Invoke-Sqlcmd]()
-
-[https://www.databasejournal.com/features/mssql/article.php/1570801/Beware-of-the-System-Generated-Constraint-Name.htm](https://www.databasejournal.com/features/mssql/article.php/1570801/Beware-of-the-System-Generated-Constraint-Name.htm)
+[Set-RegexReplace.ps1]()
 

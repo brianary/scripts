@@ -5,35 +5,36 @@ online version:
 schema: 2.0.0
 ---
 
-# Find-DbColumn.ps1
+# Find-Comics.ps1
 
 ## SYNOPSIS
-Searches for database columns.
+Finds comics.
 
 ## SYNTAX
 
-### ByConnectionParameters
+### Title
 ```
-Find-DbColumn.ps1 -ServerInstance <String> -Database <String> [-IncludeSchemata <String[]>]
- [-ExcludeSchemata <String[]>] [-IncludeTables <String[]>] [-ExcludeTables <String[]>]
- [-IncludeColumns <String[]>] [-ExcludeColumns <String[]>] [-DataType <String>] [-MinLength <Int32>]
- [-MaxLength <Int32>] [<CommonParameters>]
+Find-Comics.ps1 -Title <String[]> [-ReleaseWeek <String>] [<CommonParameters>]
 ```
 
-### ByConnectionString
+### Creator
 ```
-Find-DbColumn.ps1 -ConnectionString <String> [-IncludeSchemata <String[]>] [-ExcludeSchemata <String[]>]
- [-IncludeTables <String[]>] [-ExcludeTables <String[]>] [-IncludeColumns <String[]>]
- [-ExcludeColumns <String[]>] [-DataType <String>] [-MinLength <Int32>] [-MaxLength <Int32>]
- [<CommonParameters>]
+Find-Comics.ps1 -Creator <String[]> [-ReleaseWeek <String>] [<CommonParameters>]
 ```
 
-### ByConnectionName
+### TitleMatch
 ```
-Find-DbColumn.ps1 -ConnectionName <String> [-IncludeSchemata <String[]>] [-ExcludeSchemata <String[]>]
- [-IncludeTables <String[]>] [-ExcludeTables <String[]>] [-IncludeColumns <String[]>]
- [-ExcludeColumns <String[]>] [-DataType <String>] [-MinLength <Int32>] [-MaxLength <Int32>]
- [<CommonParameters>]
+Find-Comics.ps1 -TitleMatch <Regex> [-ReleaseWeek <String>] [<CommonParameters>]
+```
+
+### CreatorMatch
+```
+Find-Comics.ps1 -CreatorMatch <Regex> [-ReleaseWeek <String>] [<CommonParameters>]
+```
+
+### Condition
+```
+Find-Comics.ps1 [-Condition] <ScriptBlock> [-ReleaseWeek <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,26 +44,25 @@ Find-DbColumn.ps1 -ConnectionName <String> [-IncludeSchemata <String[]>] [-Exclu
 
 ### EXAMPLE 1
 ```
-Find-DbColumn.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016 -IncludeColumns %price% |Format-Table -AutoSize
+Find-Comics.ps1 -Creator 'Grant Morrison','Matt Fraction','David Aja','Kyle Higgins' |Format-Table publisher,title,creators
 ```
 
-TableSchema TableName               ColumnName        DataType Nullable DefaultValue
------------ ---------               ----------        -------- -------- ------------
-Production  Product                 ListPrice         money       False
-Production  ProductListPriceHistory ListPrice         money       False
-Purchasing  ProductVendor           StandardPrice     money       False
-Purchasing  PurchaseOrderDetail     UnitPrice         money       False
-Sales       SalesOrderDetail        UnitPrice         money       False
-Sales       SalesOrderDetail        UnitPriceDiscount money       False ((0.0))
+publisher         title                                creators
+---------         -----                                --------
+BOOM!
+STUDIOS     KLAUS HC LIFE & TIMES OF SANTA CLAUS (W) Grant Morrison (A/CA) Dan Mora
+DARK HORSE COMICS SEEDS TP                             (W) Ann Nocenti (A/CA) David Aja
+MARVEL COMICS     MARVEL-VERSE GN-TP WANDA & VISION    (W) Kyle Higgins, More (A) Stephane Perger, More (CA) Daniel Acuna, Jim Cheung
 
 ## PARAMETERS
 
-### -ServerInstance
-The server and instance to connect to.
+### -Title
+Text to search titles.
+Comics with titles containing this text will be returned.
 
 ```yaml
-Type: String
-Parameter Sets: ByConnectionParameters
+Type: String[]
+Parameter Sets: Title
 Aliases:
 
 Required: True
@@ -72,12 +72,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Database
-The database to use.
+### -Creator
+Text to search creators.
+Comics with creators containing this text will be returned.
 
 ```yaml
-Type: String
-Parameter Sets: ByConnectionParameters
+Type: String[]
+Parameter Sets: Creator
 Aliases:
 
 Required: True
@@ -87,27 +88,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ConnectionString
-{{ Fill ConnectionString Description }}
+### -TitleMatch
+A regular exression to match titles.
+Comics with matching titles will be returned.
 
 ```yaml
-Type: String
-Parameter Sets: ByConnectionString
-Aliases: ConnStr, CS
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ConnectionName
-{{ Fill ConnectionName Description }}
-
-```yaml
-Type: String
-Parameter Sets: ByConnectionName
+Type: Regex
+Parameter Sets: TitleMatch
 Aliases:
 
 Required: True
@@ -117,98 +104,49 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IncludeSchemata
-A like-pattern of database schemata to include (will only include these).
+### -CreatorMatch
+A regular expression to search the list of creators for.
+Comics with a matching list of creators will be returned.
+The regex will match against a complete list of creators, so anchor with word breaks (\b)
+rather than the beginning or end of the string (^ or $ or \A or \z).
+
+e.g.
+(W) Jason Aaron (A/CA) Russell Dauterman
+
+W = writer
+A = artist
+CA = color artist
 
 ```yaml
-Type: String[]
-Parameter Sets: (All)
+Type: Regex
+Parameter Sets: CreatorMatch
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ExcludeSchemata
-A like-pattern of database schemata to exclude.
+### -Condition
+A filtering script block with the comic as the PSItem ($_) that evaluates to true to
+return the comic.
 
 ```yaml
-Type: String[]
-Parameter Sets: (All)
+Type: ScriptBlock
+Parameter Sets: Condition
 Aliases:
 
-Required: False
-Position: Named
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IncludeTables
-A like-pattern of database tables to include (will only include these).
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ExcludeTables
-A like-pattern of database tables to exclude.
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -IncludeColumns
-A like-pattern of database columns to include (will only include these).
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ExcludeColumns
-A like-pattern of database columns to exclude.
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DataType
-The basic datatype to search for.
+### -ReleaseWeek
+Specifies which week (relative to the current week) to return comics for.
 
 ```yaml
 Type: String
@@ -217,37 +155,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -MinLength
-The minimum character column length.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -MaxLength
-The maximum character column length.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
+Default value: Upcoming
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -259,20 +167,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject for each found column:
-### * TableSchema
-### * TableName
-### * ColumnName
-### * DataType
-### * Nullable
-### * DefaultValue
 ## NOTES
 
 ## RELATED LINKS
 
-[ConvertFrom-DataRow.ps1]()
+[https://api.shortboxed.com/](https://api.shortboxed.com/)
 
-[Stop-ThrowError.ps1]()
-
-[Invoke-Sqlcmd]()
+[Get-Comics.ps1]()
 

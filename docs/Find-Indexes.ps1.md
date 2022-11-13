@@ -5,26 +5,15 @@ online version:
 schema: 2.0.0
 ---
 
-# Find-Indexes.ps1
+# Find-DuplicateFiles.ps1
 
 ## SYNOPSIS
-Returns indexes using a column with the given name.
+Removes duplicates from a list of files.
 
 ## SYNTAX
 
-### ByConnectionParameters
 ```
-Find-Indexes.ps1 [-ServerInstance] <String> [-Database] <String> [-ColumnName] <String> [<CommonParameters>]
-```
-
-### ByConnectionString
-```
-Find-Indexes.ps1 -ConnectionString <String> [-ColumnName] <String> [<CommonParameters>]
-```
-
-### ByConnectionName
-```
-Find-Indexes.ps1 -ConnectionName <String> [-ColumnName] <String> [<CommonParameters>]
+Find-DuplicateFiles.ps1 [[-Files] <FileInfo[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,93 +23,25 @@ Find-Indexes.ps1 -ConnectionName <String> [-ColumnName] <String> [<CommonParamet
 
 ### EXAMPLE 1
 ```
-Find-Indexes.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2014 -ColumnName ErrorLogID
+Get-ChildItem -Recurse -File |Find-DuplicateFiles.ps1 |Remove-Item
 ```
 
-SchemaName     : dbo
-TableName      : ErrorLog
-IndexName      : PK_ErrorLog_ErrorLogID
-IndexOrdinal   : 1
-IsUnique       : 1
-IsClustered    : 1
-IsDisabled     : 0
-ColumnsInIndex : 1
+Removes all but the oldest file with the same size and hash value.
 
 ## PARAMETERS
 
-### -ServerInstance
-The name of a server (and optional instance) to connect and use for the query.
-May be used with optional Database, Credential, and ConnectionProperties parameters.
+### -Files
+A list of files to search for duplicates.
 
 ```yaml
-Type: String
-Parameter Sets: ByConnectionParameters
+Type: FileInfo[]
+Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Database
-The the database to connect to on the server.
-
-```yaml
-Type: String
-Parameter Sets: ByConnectionParameters
-Aliases:
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ConnectionString
-Specifies a connection string to connect to the server.
-
-```yaml
-Type: String
-Parameter Sets: ByConnectionString
-Aliases: ConnStr, CS
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ConnectionName
-The connection string name from the ConfigurationManager to use.
-
-```yaml
-Type: String
-Parameter Sets: ByConnectionName
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ColumnName
-The column name to search for.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: ColName
-
-Required: True
-Position: 3
-Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -129,24 +50,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### System.IO.FileInfo list, typically piped from Get-ChildItem.
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject with these properties:
-### 	* SchemaName
-### 	* TableName
-### 	* IndexName
-### 	* IndexOrdinal
-### 	* IsUnique
-### 	* IsClustered
-### 	* IsDisabled
-### 	* ColumnsInIndex
+### System.String containing the full paths of the both matching files.
 ## NOTES
 
 ## RELATED LINKS
-
-[Invoke-Sqlcmd]()
-
-[ConvertFrom-DataRow.ps1]()
-
-[https://docs.microsoft.com/sql/relational-databases/system-catalog-views/sys-index-columns-transact-sql](https://docs.microsoft.com/sql/relational-databases/system-catalog-views/sys-index-columns-transact-sql)
-
