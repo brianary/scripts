@@ -33,6 +33,9 @@ May be used with optional Database, Credential, and ConnectionProperties paramet
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
 # Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string] $ConnectionString,
+# Specifies an SMO Database object to query.
+[Parameter(ParameterSetName='ByDatabase',Mandadory=$true)]
+[Microsoft.SqlServer.Management.Smo.Database] $SmoDatabase,
 # The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string] $ConnectionName,
 # The name of the table to export.

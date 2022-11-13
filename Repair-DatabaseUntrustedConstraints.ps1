@@ -26,6 +26,9 @@ WARNING: Checked 2 constraints
 [Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
 # Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
+# Specifies an SMO Database object to query.
+[Parameter(ParameterSetName='ByDatabase',Mandadory=$true)]
+[Microsoft.SqlServer.Management.Smo.Database] $SmoDatabase,
 # The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,
 # Update the database when present, otherwise simply outputs the changes as script.
