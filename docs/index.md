@@ -1,25 +1,25 @@
-[Scripts][https://github.com/brianary/Scripts/]
+[Scripts](https://github.com/brianary/Scripts/)
 =========
 
 - **[Add-CapturesToMatches.ps1](Add-CapturesToMatches.ps1.md)**: Adds named capture group values as note properties to Select-String MatchInfo objects.
 - **[Add-Counter.ps1](Add-Counter.ps1.md)**: Adds an incrementing integer property to each pipeline object.
-- :up: **[Add-DynamicParam.ps1](Add-DynamicParam.ps1.md)**: Adds a dynamic parameter to a script, within a DynamicParam block.
+- &#x1F199; **[Add-DynamicParam.ps1](Add-DynamicParam.ps1.md)**: Adds a dynamic parameter to a script, within a DynamicParam block.
 - **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1.md)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
 - **[Add-NoteProperty.ps1](Add-NoteProperty.ps1.md)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
-- :up: **[Add-ParameterDefault.ps1](Add-ParameterDefault.ps1.md)**: Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
+- &#x1F199; **[Add-ParameterDefault.ps1](Add-ParameterDefault.ps1.md)**: Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1.md)**: Convert a scope level to account for another call stack level.
 - **[Add-ScriptCredential.ps1](Add-ScriptCredential.ps1.md)**: Serializes a an encrypted credential to a PowerShell script using 32-byte random key file.
 - **[Add-TimeSpan.ps1](Add-TimeSpan.ps1.md)**: Adds a timespan to DateTime values.
 - **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1.md)**: Adds a VS Code MSSQL database connection to the repo.
 - **[Backup-File.ps1](Backup-File.ps1.md)**: Create a backup as a sibling to a file, with date and time values in the name.
-- :up: **[Backup-SchTasks.ps1](Backup-SchTasks.ps1.md)**: Exports the local list of Scheduled Tasks into a single XML file.
+- &#x1F199; **[Backup-SchTasks.ps1](Backup-SchTasks.ps1.md)**: Exports the local list of Scheduled Tasks into a single XML file.
 - **[Compare-Properties.ps1](Compare-Properties.ps1.md)**: Compares the properties of two objects.
 - **[Compare-Xml.ps1](Compare-Xml.ps1.md)**: Compares two XML documents and returns the differences.
 - **[Compress-EnvironmentVariables.ps1](Compress-EnvironmentVariables.ps1.md)**: Replaces each of the longest matching parts of a string with an embedded environment variable with that value.
 - **[Connect-SshKey.ps1](Connect-SshKey.ps1.md)**: Uses OpenSSH to generate a key and connect it to an ssh server.
 - **[Convert-ChocolateyToWinget.ps1](Convert-ChocolateyToWinget.ps1.md)**: Change from managing various packages with Chocolatey to WinGet.
 - **[Convert-ClipboardTsvToHtml.ps1](Convert-ClipboardTsvToHtml.ps1.md)**: Parses TSV clipboard data into HTML table data which is copied back to the clipboard.
-- :up: **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
+- &#x1F199; **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
 - **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
 - **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1.md)**: Convert a CimInstance object to a PSObject.
 - **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
@@ -46,19 +46,19 @@
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-Fake4TargetsGraph.ps1](Export-Fake4TargetsGraph.ps1.md)**: Exports a graph of a Fake4 build script's targets.
 - **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
-- :up: **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
-- :up: **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
+- &#x1F199; **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
+- &#x1F199; **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-Comics.ps1](Find-Comics.ps1.md)**: Finds comics.
-- :up: **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
-- :up: **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
+- &#x1F199; **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
+- &#x1F199; **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
 - **[Find-DotNetGlobalTools.ps1](Find-DotNetGlobalTools.ps1.md)**: Returns a list of global dotnet tools.
 - **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1.md)**: Removes duplicates from a list of files.
-- :up: **[Find-Indexes.ps1](Find-Indexes.ps1.md)**: Returns indexes using a column with the given name.
+- &#x1F199; **[Find-Indexes.ps1](Find-Indexes.ps1.md)**: Returns indexes using a column with the given name.
 - **[Find-InstalledPrograms.ps1](Find-InstalledPrograms.ps1.md)**: Searches installed programs.
 - **[Find-Lines.ps1](Find-Lines.ps1.md)**: Searches a specific subset of files for lines matching a pattern.
-- :up: **[Find-NewestFile.ps1](Find-NewestFile.ps1.md)**: Finds the most recent file.
+- &#x1F199; **[Find-NewestFile.ps1](Find-NewestFile.ps1.md)**: Finds the most recent file.
 - **[Find-ProjectPackages.ps1](Find-ProjectPackages.ps1.md)**: Find modules used in projects.
-- :up: **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1.md)**: Reports text, ntext, and image datatypes found in a given database.
+- &#x1F199; **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1.md)**: Reports text, ntext, and image datatypes found in a given database.
 - **[ForEach-Progress.ps1](ForEach-Progress.ps1.md)**: Performs an operation against each item in a collection of input objects, with a progress bar.
 - **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
 - **[Format-Date.ps1](Format-Date.ps1.md)**: Returns a date/time as a named format.
@@ -72,7 +72,7 @@
 - **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-ClassicAspEvents.ps1](Get-ClassicAspEvents.ps1.md)**: Gets Classic ASP errors from the event log on the given server.
 - **[Get-Comics.ps1](Get-Comics.ps1.md)**: Returns a cached list of comics from the Shortboxed API.
-- :up: **[Get-CommandParameters.ps1](Get-CommandParameters.ps1.md)**: Returns the parameters of the specified cmdlet.
+- &#x1F199; **[Get-CommandParameters.ps1](Get-CommandParameters.ps1.md)**: Returns the parameters of the specified cmdlet.
 - **[Get-CommandPath.ps1](Get-CommandPath.ps1.md)**: Locates a command.
 - **[Get-ConfigConnectionStringBuilders.ps1](Get-ConfigConnectionStringBuilders.ps1.md)**: Return named connection string builders for connection strings in a config file.
 - **[Get-ConsoleHistory.ps1](Get-ConsoleHistory.ps1.md)**: Returns the DOSKey-style console command history (up arrow or F8).
@@ -86,14 +86,14 @@
 - **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1.md)**: Returns a date and time converted to the French Republican Calendar.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1.md)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1.md)**: Gets the SHA-1 hash of the first commit of the current repo.
-- :up: **[Get-GitHubRepoChildItem.ps1](Get-GitHubRepoChildItem.ps1.md)**: Adds any missing topics based on repo content.
+- &#x1F199; **[Get-GitHubRepoChildItem.ps1](Get-GitHubRepoChildItem.ps1.md)**: Adds any missing topics based on repo content.
 - **[Get-IisLog.ps1](Get-IisLog.ps1.md)**: Easily query IIS logs.
 - **[Get-LibraryVulnerabilityInfo.ps1](Get-LibraryVulnerabilityInfo.ps1.md)**: Get the list of module/package/library vulnerabilities from the RetireJS or SafeNuGet projects.
-- :up: **[Get-PocketArticles.ps1](Get-PocketArticles.ps1.md)**: Retrieves a list of saved articles from a Pocket account.
+- &#x1F199; **[Get-PocketArticles.ps1](Get-PocketArticles.ps1.md)**: Retrieves a list of saved articles from a Pocket account.
 - **[Get-RandomBytes.ps1](Get-RandomBytes.ps1.md)**: Returns random bytes.
 - **[Get-RepoName.ps1](Get-RepoName.ps1.md)**: Gets the name of the repo.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1.md)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
-- :up: **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
+- &#x1F199; **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
 - **[Get-Todos.ps1](Get-Todos.ps1.md)**: Returns the TODOs for the current git repo, which can help document technical debt.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.
 - **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
@@ -101,14 +101,14 @@
 Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 
 - **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
-- :up: **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1.md)**: Gets the path of the VSCode settings.config file.
+- &#x1F199; **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1.md)**: Gets the path of the VSCode settings.config file.
 - **[Get-XmlNamespaces.ps1](Get-XmlNamespaces.ps1.md)**: Gets the namespaces from a document as a dictionary.
-- :up: **[Hide-Command.ps1](Hide-Command.ps1.md)**: Make a command unavailable.
+- &#x1F199; **[Hide-Command.ps1](Hide-Command.ps1.md)**: Make a command unavailable.
 - **[Import-ClipboardTsv.ps1](Import-ClipboardTsv.ps1.md)**: Parses TSV clipboard data into objects.
 - **[Import-Variables.ps1](Import-Variables.ps1.md)**: Creates local variables from a data row or dictionary (hashtable).
 - **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1.md)**: Adds config XDT connection strings to VSCode settings.
 - **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1.md)**: Execute a command by using matching dictionary entries as parameters.
-- :up: **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1.md)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
+- &#x1F199; **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1.md)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
 - **[Join-FileName.ps1](Join-FileName.ps1.md)**: Combines a filename with a string.
 - **[Join-Keys.ps1](Join-Keys.ps1.md)**: Combines dictionaries together into a single dictionary.
 - **[Measure-DbColumn.ps1](Measure-DbColumn.ps1.md)**: Provides statistics about SQL Server column data.
@@ -136,11 +136,11 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1.md)**: Removes a credential from secure storage.
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1.md)**: Removes a file that may be prone to locking.
 - **[Remove-NullValues.ps1](Remove-NullValues.ps1.md)**: Removes dictionary entries with null vaules.
-- :up: **[Remove-ParameterDefault.ps1](Remove-ParameterDefault.ps1.md)**: Removes a value that would have been used for a parameter if none was specified, if one existed.
-- :up: **[Rename-GitHubLocalBranch.ps1](Rename-GitHubLocalBranch.ps1.md)**: Rename a git repository branch.
+- &#x1F199; **[Remove-ParameterDefault.ps1](Remove-ParameterDefault.ps1.md)**: Removes a value that would have been used for a parameter if none was specified, if one existed.
+- &#x1F199; **[Rename-GitHubLocalBranch.ps1](Rename-GitHubLocalBranch.ps1.md)**: Rename a git repository branch.
 - **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
-- :up: **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1.md)**: Finds database constraints with system-generated names and gives them deterministic names.
-- :up: **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1.md)**: Finds database constraints that have been incompletely re-enabled.
+- &#x1F199; **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1.md)**: Finds database constraints with system-generated names and gives them deterministic names.
+- &#x1F199; **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1.md)**: Finds database constraints that have been incompletely re-enabled.
 - **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1.md)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
 - **[Resolve-XmlSchemaLocation.ps1](Resolve-XmlSchemaLocation.ps1.md)**: Gets the namespaces and their URIs and URLs from a document.
 - **[Resolve-XPath.ps1](Resolve-XPath.ps1.md)**: Returns the XPath of the location of an XML node.
@@ -151,18 +151,18 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1.md)**: Sends emails from a drop folder using .NET config defaults.
 - **[Send-SeqEvent.ps1](Send-SeqEvent.ps1.md)**: Send an event to a Seq server.
 - **[Send-SeqScriptEvent.ps1](Send-SeqScriptEvent.ps1.md)**: Sends an event (often an error) from a script to a Seq server, including script info.
-- :up: **[Send-SqlReport.ps1](Send-SqlReport.ps1.md)**: Execute a SQL statement and email the results.
+- &#x1F199; **[Send-SqlReport.ps1](Send-SqlReport.ps1.md)**: Execute a SQL statement and email the results.
 - **[Set-ConsoleColorTheme.ps1](Set-ConsoleColorTheme.ps1.md)**: Overrides ConsoleClass window color palette entries with a preset color theme.
 - **[Set-JsonProperty.ps1](Set-JsonProperty.ps1.md)**: Sets a property of arbitrary depth in a JSON string.
-- :up: **[Set-ParameterDefault.ps1](Set-ParameterDefault.ps1.md)**: Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
+- &#x1F199; **[Set-ParameterDefault.ps1](Set-ParameterDefault.ps1.md)**: Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
 - **[Set-RegexReplace.ps1](Set-RegexReplace.ps1.md)**: Updates text found with Select-String, using a regular expression replacement template.
 - **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 - **[Show-DataRef.ps1](Show-DataRef.ps1.md)**: Display an HTML view of an XML schema or WSDL using Saxon.
-- :up: **[Show-HttpStatus.ps1](Show-HttpStatus.ps1.md)**: Displays the HTTP status code info.
+- &#x1F199; **[Show-HttpStatus.ps1](Show-HttpStatus.ps1.md)**: Displays the HTTP status code info.
 - **[Show-Time.ps1](Show-Time.ps1.md)**: Displays a formatted date using powerline font characters.
 - **[Split-FileName.ps1](Split-FileName.ps1.md)**: Returns the specified part of the filename.
 - **[Split-Keys.ps1](Split-Keys.ps1.md)**: Clones a dictionary keeping only the specified keys.
-- :up: **[Stop-ThrowError.ps1](Stop-ThrowError.ps1.md)**: Throws a better error than "throw".
+- &#x1F199; **[Stop-ThrowError.ps1](Stop-ThrowError.ps1.md)**: Throws a better error than "throw".
 - **[Test-Administrator.ps1](Test-Administrator.ps1.md)**: Checks whether the current session has administrator privileges.
 - **[Test-DateTime.ps1](Test-DateTime.ps1.md)**: Tests whether the given string can be parsed as a date.
 - **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1.md)**: Tests for a given common file type by magic number.
@@ -173,23 +173,23 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Test-LockedFile.ps1](Test-LockedFile.ps1.md)**: Returns true if the specified file is locked.
 - **[Test-MagicNumber.ps1](Test-MagicNumber.ps1.md)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
 - **[Test-NewerFile.ps1](Test-NewerFile.ps1.md)**: Returns true if the difference file is newer than the reference file.
-- :up: **[Test-NoteProperty.ps1](Test-NoteProperty.ps1.md)**: Looks for any matching NoteProperties on an object.
+- &#x1F199; **[Test-NoteProperty.ps1](Test-NoteProperty.ps1.md)**: Looks for any matching NoteProperties on an object.
 - **[Test-Range.ps1](Test-Range.ps1.md)**: Returns true from an initial condition until a terminating condition; a latching test.
 - **[Test-Uri.ps1](Test-Uri.ps1.md)**: Determines whether a string is a valid URI.
 - **[Test-USFederalHoliday.ps1](Test-USFederalHoliday.ps1.md)**: Returns true if the given date is a U.S. federal holiday.
-- :up: **[Test-Variable.ps1](Test-Variable.ps1.md)**: Indicates whether a variable has been defined.
+- &#x1F199; **[Test-Variable.ps1](Test-Variable.ps1.md)**: Indicates whether a variable has been defined.
 - **[Test-Windows1252.ps1](Test-Windows1252.ps1.md)**: Determines whether a file contains Windows-1252 bytes that are invalid UTF-8 bytes.
 - **[Test-Xml.ps1](Test-Xml.ps1.md)**: Try parsing text as XML, and validating it if a schema is provided.
 - **[Trace-GitRepoTest.ps1](Trace-GitRepoTest.ps1.md)**: Uses git bisect to search for the point in the repo history that the test script starts returning true.
 - **[Uninstall-OldModules.ps1](Uninstall-OldModules.ps1.md)**: Uninstalls old module versions.
-- :up: **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
+- &#x1F199; **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
 - **[Update-Files.ps1](Update-Files.ps1.md)**: Copies specified source files that exist in the destination directory.
 - **[Update-Modules.ps1](Update-Modules.ps1.md)**: Cleans up old modules.
-- :up: **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
+- &#x1F199; **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 - **[Use-Java.ps1](Use-Java.ps1.md)**: Switch the Java version for the current process by modifying environment variables.
 - **[Use-NetMailConfig.ps1](Use-NetMailConfig.ps1.md)**: Use .NET configuration to set defaults for Send-MailMessage.
 - **[Use-ProgressView.ps1](Use-ProgressView.ps1.md)**: Sets the progress bar display view.
-- :up: **[Use-ReasonableDefaults.ps1](Use-ReasonableDefaults.ps1.md)**: Sets certain cmdlet parameter defaults to rational, useful values.
+- &#x1F199; **[Use-ReasonableDefaults.ps1](Use-ReasonableDefaults.ps1.md)**: Sets certain cmdlet parameter defaults to rational, useful values.
 - **[Use-SeqServer.ps1](Use-SeqServer.ps1.md)**: Set the default Server and ApiKey for Send-SeqEvent.ps1
-- :up: **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1.md)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
+- &#x1F199; **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1.md)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 - **[Write-VisibleString.ps1](Write-VisibleString.ps1.md)**: Displays a string, showing nonprintable characters.

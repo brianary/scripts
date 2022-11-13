@@ -64,29 +64,53 @@ function Export-Dependencies($image)
 	Write-Progress 'Creating dependency image' -Completed
 }
 
-function Get-StatusSymbol([string]$status)
+function Get-StatusSymbol([string]$status,[switch]$entity)
 {
-	switch($status)
+	if($entity)
 	{
-		A {':new: '}
-		B {':heavy_exclamation_mark: '}
-		C {':heavy_plus_sign: '}
-		D {':heavy_minus_sign: '}
-		M {':up: '}
-		R {':name_badge: '}
-		T {':wavy_dash: '}
-		U {':red_circle: '}
-		X {':large_orange_diamond: '}
-		default {':large_blue_diamond: '}
+		switch($status)
+		{
+			A {'&#x1F195; '}
+			B {'&#x2757; '}
+			C {'&#x2795; '}
+			D {'&#x2796; '}
+			M {'&#x1F199; '}
+			R {'&#x1F4DB; '}
+			T {'&#x3030;&#xFE0F; '}
+			U {'&#x1F534; '}
+			X {'&#x1F538; '}
+			default {'&#x1F537; '}
+		}
+	}
+	else
+	{
+		switch($status)
+		{
+			A {':new: '}
+			B {':heavy_exclamation_mark: '}
+			C {':heavy_plus_sign: '}
+			D {':heavy_minus_sign: '}
+			M {':up: '}
+			R {':name_badge: '}
+			T {':wavy_dash: '}
+			U {':red_circle: '}
+			X {':large_orange_diamond: '}
+			default {':large_blue_diamond: '}
+		}
 	}
 }
 
-function Format-PSScripts([string] $Extension = '')
+function Format-PSScripts([string] $Extension = '', [switch] $entities)
 {
 	Write-Progress 'Enumerating PowerShell scripts' 'Getting list of recent changes'
 	$status = @{}
 	git diff --name-status $(git rev-list -1 --before="$StatusAge" main) |
-		ForEach-Object {if($_ -match '^(?<Status>\w)\t(?<Script>\S.*)') {$status[$Matches.Script] = Get-StatusSymbol $Matches.Status}}
+		ForEach-Object {
+			if($_ -match '^(?<Status>\w)\t(?<Script>\S.*)')
+			{
+				$status[$Matches.Script] = Get-StatusSymbol $Matches.Status -entity:$entities
+			}
+		}
 	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\*.ps1
 	$i,$max = 0,($scripts.Count/100)
 	$scripts |
@@ -294,10 +318,10 @@ function Export-PSScriptPages
 		Write-Verbose
 	$Local:OFS = [Environment]::NewLine
 	@"
-[Scripts][https://github.com/brianary/Scripts/]
+[Scripts](https://github.com/brianary/Scripts/)
 =========
 
-$(Format-PSScripts -Extension '.md')
+$(Format-PSScripts -Extension '.md' -entities)
 "@ |Out-File docs\index.md
 	Write-Progress 'Export PowerShell script help pages' -Completed
 }
