@@ -74,7 +74,7 @@ parameter name or alias.
 )
 End
 {
-	$DynamicParams = Get-Variable DynamicParams -Scope 1 -ErrorAction SilentlyContinue
+	$DynamicParams = Get-Variable DynamicParams -Scope 1 -ErrorAction Ignore
 	if($null -eq $DynamicParams)
 	{
 		$DynamicParams = New-Object Management.Automation.RuntimeDefinedParameterDictionary

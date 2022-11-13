@@ -264,7 +264,7 @@ foreach($row in $corpus)
         $lasttable = "$TABLE_SCHEMA.$TABLE_NAME"
     }
     Write-Progress 'Searching columns' "$TABLE_SCHEMA.$TABLE_NAME.$COLUMN_NAME" 1 -CurrentOperation "$rows rows" `
-        -PercentComplete ((++$p)*100/$corpus.Length) -ErrorAction SilentlyContinue
+        -PercentComplete ((++$p)*100/$corpus.Length) -ErrorAction Ignore
     if($rows -lt $MinRows) {Write-Verbose "Skipping $TABLE_SCHEMA.$TABLE_NAME ($rows rows < $MinRows)"; continue}
     if($MaxRows -and $rows -gt $MaxRows) {Write-Verbose "Skipping $TABLE_SCHEMA.$TABLE_NAME ($rows rows > $MaxRows)"; continue}
     $query = $valsql -f $TABLE_SCHEMA,$TABLE_NAME,$COLUMN_NAME

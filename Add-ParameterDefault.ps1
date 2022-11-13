@@ -46,7 +46,7 @@ Adds the SVG namespace to any existing namespaces used by Select-Xml when none a
 Begin
 {
 	$Scope = Add-ScopeLevel.ps1 $Scope
-	$cmd = Get-Command $CommandName -ErrorAction SilentlyContinue
+	$cmd = Get-Command $CommandName -ErrorAction Ignore
 	if(!$cmd) {Stop-ThrowError.ps1 "Could not find command '$CommandName'" -Argument CommandName}
 	if($cmd.CommandType -eq 'Alias') {$cmd = Get-Command $cmd.ResolvedCommandName}
 	if($cmd.CommandType -notin 'Cmdlet','ExternalScript','Function','Script')
@@ -54,11 +54,11 @@ Begin
 	$name =
 		try {"$($cmd.Name):$($cmd.ResolveParameter($ParameterName).Name)"}
 		catch {Stop-ThrowError.ps1 "Could not find parameter '$ParameterName' for cmdlet '$CommandName'" -Argument ParameterName}
-	$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction SilentlyContinue
+	$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction Ignore
 	if(!$defaults)
 	{
 		Set-Variable PSDefaultParameterValues @{} -Scope $Scope
-		$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction SilentlyContinue
+		$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction Ignore
 	}
 }
 Process

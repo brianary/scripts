@@ -124,15 +124,14 @@ function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Posit
 	Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |ForEach-Object Path |Find-NewestFile.ps1 |
 		ForEach-Object FullName) -Scope Global
 }
-Get-Command $Name -EA SilentlyContinue -EV cmerr |Out-Null
-if(!$cmerr) { Write-Verbose "$Name command found." ; return }
+if((Get-Command $Name -ErrorAction Ignore)) { Write-Verbose "$Name command found." ; return }
 if($Path -and (Test-Path $Path)) { Set-ResolvedAlias $Name $Path ; return }
 
 switch($PSCmdlet.ParameterSetName)
 {
 	WindowsFeature
 	{
-		if(!(Get-Command Install-WindowsFeature -ErrorAction SilentlyContinue))
+		if(!(Get-Command Install-WindowsFeature -ErrorAction Ignore))
 		{ throw "Install-WindowsFeature not found, unable to install $WindowsFeature." }
 		if($PSCmdlet.ShouldProcess($WindowsFeature,'install Windows feature'))
 		{
@@ -143,7 +142,7 @@ switch($PSCmdlet.ParameterSetName)
 
 	ChocolateyPackage
 	{
-		if(!(Get-Command choco -ErrorAction SilentlyContinue))
+		if(!(Get-Command choco -ErrorAction Ignore))
 		{ throw "Chocolatey installer ""choco"" not found, unable to install $ChocolateyPackage." }
 		if($PSCmdlet.ShouldProcess($ChocolateyPackage,'Chocolatey install'))
 		{
@@ -158,7 +157,7 @@ switch($PSCmdlet.ParameterSetName)
 	DotNetTool
 	{
 		Use-Command.ps1 dotnet $env:ProgramFiles\dotnet\dotnet.exe -cinst dotnet
-		if(!(Get-Command dotnet -ErrorAction SilentlyContinue))
+		if(!(Get-Command dotnet -ErrorAction Ignore))
 		{ throw "dotnet not found, unable to install $DotNetTool." }
 		if($PSCmdlet.ShouldProcess($DotNetTool,'install .NET global tool')) {dotnet tool install -g $DotNetTool}
 		else { Write-Warning "Installation of $DotNetTool was cancelled." }
@@ -167,7 +166,7 @@ switch($PSCmdlet.ParameterSetName)
 	NugetPackage
 	{
 		Use-Command.ps1 nuget $env:ChocolateyInstall\bin\nuget.exe -cinst NuGet.CommandLine
-		if(!(Get-Command nuget -ErrorAction SilentlyContinue))
+		if(!(Get-Command nuget -ErrorAction Ignore))
 		{ throw "NuGet not found, unable to install $NugetPackage." }
 		if($PSCmdlet.ShouldProcess("$NugetPackage in $InstallDir",'NuGet install'))
 		{
@@ -181,7 +180,7 @@ switch($PSCmdlet.ParameterSetName)
 	NodePackage
 	{
 		Use-Command.ps1 npm $env:ProgramFiles\nodejs\npm.cmd -cinst nodejs
-		if(!(Get-Command npm -ErrorAction SilentlyContinue))
+		if(!(Get-Command npm -ErrorAction Ignore))
 		{ throw "Npm not found, unable to install $NodePackage." }
 		if(!(Test-Path "$env:USERPROFILE\AppData\Roaming\npm" -PathType Container))
 		{ mkdir "$env:USERPROFILE\AppData\Roaming\npm" |Out-Null }
@@ -198,7 +197,7 @@ switch($PSCmdlet.ParameterSetName)
 
 	WindowsInstaller
 	{
-		if(!(Get-Command msiexec -ErrorAction SilentlyContinue))
+		if(!(Get-Command msiexec -ErrorAction Ignore))
 		{ throw "Windows installer (msiexec) not found, unable to install $WindowsInstaller." }
 		$file = $WindowsInstaller.Segments[$WindowsInstaller.Segments.Length-1]
 		if($PSCmdlet.ShouldProcess("$file (INSTALLLEVEL=$InstallLevel)",'Windows install'))

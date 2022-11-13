@@ -26,7 +26,7 @@ Rename the current branch to "main".
 if(!$PSCmdlet.ShouldContinue('Have you renamed the branch in the GitHub UI?','GitHub Status'))
 {
 	Write-Host 'Rename the branch via the GitHub UI before running this script.'
-	if((Get-Command gh -CommandType Application -ErrorAction SilentlyContinue)) {gh browse}
+	if((Get-Command gh -CommandType Application -ErrorAction Ignore)) {gh browse}
 	Start-Process 'https://docs.github.com/en/github/administering-a-repository/managing-branches-in-your-repository/renaming-a-branch#renaming-a-branch'
 	return
 }

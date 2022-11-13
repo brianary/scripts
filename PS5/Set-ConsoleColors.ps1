@@ -208,7 +208,7 @@ function Set-ColorTable([hashtable]$ColorTable)
         }
         else
         {
-            Remove-ItemProperty "HKCU:\Console\$ProcessName" ('ColorTable{0:00}' -f ([int]$color)) -EA 0
+            Remove-ItemProperty "HKCU:\Console\$ProcessName" ('ColorTable{0:00}' -f ([int]$color)) -ErrorAction Ignore
         }
     }
 }

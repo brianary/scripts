@@ -12,7 +12,7 @@ System.IO.FileInfo representing the newest of the files compared.
 Test-NewerFile.ps1
 
 .EXAMPLE
-ls C:\java.exe -Recurse -ErrorAction SilentlyContinue |Find-NewestFile.ps1
+ls C:\java.exe -Recurse -ErrorAction Ignore |Find-NewestFile.ps1
 
 Directory: C:\Program Files (x86)\Minecraft\runtime\jre-x64\1.8.0_25\bin
 

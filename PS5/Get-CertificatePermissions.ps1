@@ -33,7 +33,7 @@ Another approach to get cert permissions.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [System.Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
 )
-Begin{try{Get-Command Get-Acl -CommandType Cmdlet -ErrorAction SilentlyContinue |Out-Null}catch{throw 'The Get-Acl command is missing.'}}
+Begin{try{Get-Command Get-Acl -CommandType Cmdlet -ErrorAction Ignore |Out-Null}catch{throw 'The Get-Acl command is missing.'}}
 Process
 {
     $path = Get-CertificatePath.ps1 $Certificate

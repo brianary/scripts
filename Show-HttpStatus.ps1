@@ -18,7 +18,7 @@ Show-HttpStatus.ps1 200 -AsCat
 )
 Begin
 {
-	if($AsCat -and !(Get-Command Out-ConsolePicture -ErrorAction SilentlyContinue))
+	if($AsCat -and !(Get-Command Out-ConsolePicture -ErrorAction Ignore))
 	{
 		Install-Module OutConsolePicture
 	}

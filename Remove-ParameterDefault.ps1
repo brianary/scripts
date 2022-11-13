@@ -41,12 +41,12 @@ Removes any namespaces used by Select-Xml when none are given explicitly.
 Begin
 {
 	$Scope = Add-ScopeLevel.ps1 $Scope
-	$cmd = Get-Command $CommandName -ErrorAction SilentlyContinue
+	$cmd = Get-Command $CommandName -ErrorAction Ignore
 	if(!$cmd) {Stop-ThrowError.ps1 "Could not find command '$CommandName'" -Argument CommandName}
 	if($cmd.CommandType -eq 'Alias') {$cmd = Get-Command $cmd.ResolvedCommandName}
 	if($cmd.CommandType -notin 'Cmdlet','ExternalScript','Function','Script')
 	{Stop-ThrowError.ps1 "Command '$CommandName' ($($cmd.CommandType)) not supported" -Argument CommandName}
-	$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction SilentlyContinue
+	$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction Ignore
 }
 Process
 {

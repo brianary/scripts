@@ -25,4 +25,4 @@ Passes objects through the pipeline that have a property containing "Addr" in th
 # The object to examine.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][psobject]$InputObject
 )
-Process {[bool](Get-Member -InputObject $InputObject -Name $Name -MemberType NoteProperty -ErrorAction SilentlyContinue)}
+Process {[bool](Get-Member -InputObject $InputObject -Name $Name -MemberType NoteProperty -ErrorAction Ignore)}

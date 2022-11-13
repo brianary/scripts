@@ -51,7 +51,7 @@ Begin
 }
 Process
 {
-	$cmd = Get-Command -Name $CommandName -ErrorAction SilentlyContinue
+	$cmd = Get-Command -Name $CommandName -ErrorAction Ignore
 	if(!$cmd) {Stop-ThrowError.ps1 "Cmdlet not found: $CommandName" -ParameterName CommandName}
 	if($ParameterSet)
 	{

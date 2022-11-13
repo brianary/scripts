@@ -104,8 +104,8 @@ Begin
 	function Invoke-EssentialUpdates
 	{
 		Write-Step "${UP!} Updating PowerShell & Windows Terminal"
-		Get-Process powershell -ErrorAction SilentlyContinue |Where-Object Id -ne $PID |Stop-Process -Force
-		Get-Process pwsh -ErrorAction SilentlyContinue |Where-Object Id -ne $PID |Stop-Process -Force
+		Get-Process powershell -ErrorAction Ignore |Where-Object Id -ne $PID |Stop-Process -Force
+		Get-Process pwsh -ErrorAction Ignore |Where-Object Id -ne $PID |Stop-Process -Force
 		Start-Process ([io.path]::ChangeExtension($PSCommandPath,'cmd')) -Verb RunAs -WindowStyle Maximized
 		$host.SetShouldExit(0)
 		exit
@@ -114,14 +114,14 @@ Begin
 	function Update-Essentials
 	{
 		Write-Step "$([char]0xD83D)$([char]0xDD1C) Checking for essential updates"
-		if(Get-Command choco -ErrorAction SilentlyContinue)
+		if(Get-Command choco -ErrorAction Ignore)
 		{
 			if(choco outdated -r |
 				ConvertFrom-Csv -Delimiter '|' -Header PackageName,LocalVersion,AvailableVersion |
 				Where-Object PackageName -in powershell,powershell-core,microsoft-windows-terminal)
 			{Invoke-EssentialUpdates}
 		}
-		elseif(Get-Command winget -ErrorAction SilentlyContinue)
+		elseif(Get-Command winget -ErrorAction Ignore)
 		{
 			if(@(winget list Microsoft.WindowsTerminal |
 				Select-Object -Skip 2 -First 1 |
@@ -139,7 +139,7 @@ Begin
 
 	function Update-WindowsStore
 	{
-		if(!(Get-Command Get-CimInstance -ErrorAction SilentlyContinue))
+		if(!(Get-Command Get-CimInstance -ErrorAction Ignore))
 		{Write-Verbose 'Get-CimInstance not found, skipping WindowsStore updates'; return}
 		Write-Step "${UP!} Updating Windows Store apps (asynchronously)"
 		Get-CimInstance MDM_EnterpriseModernAppManagement_AppManagement01 -Namespace root\cimv2\mdm\dmmap |
@@ -148,7 +148,7 @@ Begin
 
 	function Update-Scoop
 	{
-		if(!(Get-Command scoop -ErrorAction SilentlyContinue))
+		if(!(Get-Command scoop -ErrorAction Ignore))
 		{Write-Verbose 'Scoop not found, skipping'; return}
 		Write-Step "${UP!} Updating Scoop packages"
 		scoop update *
@@ -156,7 +156,7 @@ Begin
 
 	function Update-Chocolatey
 	{
-		if(!(Get-Command choco -ErrorAction SilentlyContinue))
+		if(!(Get-Command choco -ErrorAction Ignore))
 		{Write-Verbose 'Chocolatey not found, skipping'; return}
 		Write-Step "${UP!} Updating Chocolatey packages"
 		choco upgrade all -y
@@ -164,7 +164,7 @@ Begin
 
 	function Update-WinGet
 	{
-		if(!(Get-Command winget -ErrorAction SilentlyContinue))
+		if(!(Get-Command winget -ErrorAction Ignore))
 		{Write-Verbose 'WinGet not found, skipping'; return}
 		Write-Step "${UP!} Updating WinGet packages"
 		winget upgrade --all
@@ -172,7 +172,7 @@ Begin
 
 	function Update-Npm
 	{
-		if(!(Get-Command npm -ErrorAction SilentlyContinue))
+		if(!(Get-Command npm -ErrorAction Ignore))
 		{Write-Verbose 'Npm not found, skipping'; return}
 		Write-Step "${UP!} Updating npm packages"
 		npm update -g
@@ -180,7 +180,7 @@ Begin
 
 	function Update-Dotnet
 	{
-		if(!(Get-Command dotnet -ErrorAction SilentlyContinue))
+		if(!(Get-Command dotnet -ErrorAction Ignore))
 		{Write-Verbose 'Dotnet not found, skipping'; return}
 		Write-Step "${UP!} Updating dotnet global tools"
 		& "$PSScriptRoot\Get-DotNetGlobalTools.ps1" |
@@ -197,12 +197,12 @@ Begin
 		Get-Module -ListAvailable |
 			Group-Object Name |
 			Where-Object {
-				$found = Find-Module $_.Name -ErrorAction SilentlyContinue
+				$found = Find-Module $_.Name -ErrorAction Ignore
 				if(!$found) {return $false}
 				($_.Group |Measure-Object Version -Maximum).Maximum -lt [version]$found.Version
 			} |
 			Update-Module -Force
-		if(Get-Command Uninstall-OldModules.ps1 -ErrorAction SilentlyContinue)
+		if(Get-Command Uninstall-OldModules.ps1 -ErrorAction Ignore)
 		{
 			Write-Step "${UP!} Uninstalling old PowerShell modules"
 			Uninstall-OldModules.ps1 -Force

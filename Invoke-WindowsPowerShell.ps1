@@ -44,7 +44,7 @@ if($PSVersionTable.PSEdition -eq 'Desktop')
 
 Use-Command.ps1 powershell "$env:SystemRoot\system32\windowspowershell\v1.0\powershell.exe" -Fail
 
-if(!(Get-Variable WPSModulePath -Scope Global -ValueOnly -ErrorAction SilentlyContinue))
+if(!(Get-Variable WPSModulePath -Scope Global -ValueOnly -ErrorAction Ignore))
 {
 	$addmodules = @()
 	if('C:\Windows\System32\WindowsPowerShell\v1.0\Modules\' -notin ($env:PSModulePath -split ';'))

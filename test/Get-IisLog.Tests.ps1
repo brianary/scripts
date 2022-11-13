@@ -7,7 +7,7 @@ try
 {
 	Use-Command.ps1 logparser "${env:ProgramFiles(x86)}\Log Parser 2.2\LogParser.exe" -EA Stop `
 		-msi http://download.microsoft.com/download/f/f/1/ff1819f9-f702-48a5-bbc7-c9656bc74de8/LogParser.msi
-	$Global:noLogParser = !(Get-Command logparser -EA 0)
+	$Global:noLogParser = !(Get-Command logparser -ErrorAction Ignore)
 }
 catch {Write-Warning 'Could not install LogParser'; $Global:noLogParser = $true}
 Describe 'Get-IisLog' -Tag Get-IisLog {

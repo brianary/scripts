@@ -32,7 +32,7 @@ Removes the mkdir function.
 )
 Process
 {
-	$cmd = Get-Command @PSBoundParameters -ErrorAction SilentlyContinue
+	$cmd = Get-Command @PSBoundParameters -ErrorAction Ignore
 	if(!$cmd) {return}
 	switch($cmd.CommandType)
 	{

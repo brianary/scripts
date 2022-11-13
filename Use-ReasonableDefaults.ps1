@@ -53,7 +53,7 @@ Set-ParameterDefault.ps1 Out-File Encoding UTF8 -Scope Global
 Set-ParameterDefault.ps1 Get-ChildItem Force $true -Scope Global
 Set-ParameterDefault.ps1 Export-Csv NoTypeInformation $true -Scope Global
 Set-ParameterDefault.ps1 Invoke-WebRequest UseBasicParsing $true -Scope Global
-if((Get-Command Export-Csv -ParameterName UseQuotes -EA 0))
+if((Get-Command Export-Csv -ParameterName UseQuotes -ErrorAction Ignore))
 {
 	Set-ParameterDefault.ps1 Export-Csv UseQuotes AsNeeded -Scope Global
 }

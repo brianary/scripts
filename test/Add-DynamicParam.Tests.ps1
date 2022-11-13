@@ -68,6 +68,6 @@ Describe 'Add-DynamicParam' -Tag Add-DynamicParam {
 		}
 	}
 	AfterEach {
-		Remove-Variable -Name DynamicParam -Force -EA 0
+		Remove-Variable -Name DynamicParam -Force -ErrorAction Ignore
 	}
 }

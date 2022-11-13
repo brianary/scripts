@@ -79,8 +79,8 @@ Set-ParameterDefault.ps1 Invoke-RestMethod Method Post
 Set-ParameterDefault.ps1 Invoke-RestMethod ContentType application/json
 Set-ParameterDefault.ps1 Invoke-RestMethod Headers @{'X-Accept'='application/json'}
 $consumerKey = try{(New-Object PSCredential PocketApiConsumerKey,( $Vault ?
-	(Get-Secret PocketApiConsumerKey -Vault $Vault -ErrorAction SilentlyContinue) :
-	(Get-Secret PocketApiConsumerKey -ErrorAction SilentlyContinue) )).GetNetworkCredential().Password}
+	(Get-Secret PocketApiConsumerKey -Vault $Vault -ErrorAction Ignore) :
+	(Get-Secret PocketApiConsumerKey -ErrorAction Ignore) )).GetNetworkCredential().Password}
 	catch{}
 if(!$consumerKey)
 {

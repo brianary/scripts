@@ -23,7 +23,7 @@ Find-NewestFile.ps1 [[-Files] <FileInfo[]>] [<CommonParameters>]
 
 ### EXAMPLE 1
 ```
-ls C:\java.exe -Recurse -ErrorAction SilentlyContinue |Find-NewestFile.ps1
+ls C:\java.exe -Recurse -ErrorAction Ignore |Find-NewestFile.ps1
 ```
 
 Directory: C:\Program Files (x86)\Minecraft\runtime\jre-x64\1.8.0_25\bin

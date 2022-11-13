@@ -59,7 +59,7 @@ function Set-RegistryValue
 	if($UpdateCurrentUser -and $Path -like 'HKLM:*')
 	{
 		$PathUser = $Path -replace '\AHKLM:','HKCU:'
-		if(Get-ItemProperty $PathUser $Name -ErrorAction SilentlyContinue)
+		if(Get-ItemProperty $PathUser $Name -ErrorAction Ignore)
 		{
 			Set-RegistryValue $PathUser $Name $Value $Type
 		}

@@ -11,7 +11,7 @@ https://docs.microsoft.com/en-us/security-updates/SecurityAdvisories/2015/296035
 
 function Disable-SchUseStrongCrypto($path)
 {
-    if(Get-ItemProperty $path SchUseStrongCrypto -ErrorAction SilentlyContinue)
+    if(Get-ItemProperty $path SchUseStrongCrypto -ErrorAction Ignore)
     {
         Write-Verbose "$path\SchUseStrongCrypto was $(Get-ItemPropertyValue $path SchUseStrongCrypto)"
         Set-ItemProperty $path SchUseStrongCrypto 0

@@ -106,7 +106,7 @@ By default this will use the line number it is called from.
 	Format {(New-Object FormatException $Message),$Format,'ParserError',$InputString}
 	InvalidArgument
 	{
-		$ScriptParams = Get-Variable PSBoundParameters -ValueOnly -Scope 1 -ErrorAction SilentlyContinue
+		$ScriptParams = Get-Variable PSBoundParameters -ValueOnly -Scope 1 -ErrorAction Ignore
 		$paramValue = if($ScriptParams -and $ScriptParams.ContainsKey($Argument)) {$ScriptParams[$Argument]}
 		(New-Object ArgumentException $Message,$Argument),$Argument,'InvalidArgument',$paramValue
 	}
@@ -125,6 +125,6 @@ By default this will use the line number it is called from.
 		(New-Object NotImplementedException $Message),'NotImplementedException','NotImplemented',$null
 	}
 }
-[Management.Automation.PSCmdlet] $caller = Get-Variable PSCmdlet -ValueOnly -Scope 1 -ErrorAction SilentlyContinue
+[Management.Automation.PSCmdlet] $caller = Get-Variable PSCmdlet -ValueOnly -Scope 1 -ErrorAction Ignore
 if(!$caller) {$caller = $PSCmdlet}
 $caller.ThrowTerminatingError((New-Object Management.Automation.ErrorRecord $params))

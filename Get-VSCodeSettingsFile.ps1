@@ -47,7 +47,7 @@ ${settings.json} =
 		{
 			Join-Path $psEditor.Workspace.Path .vscode/settings.json
 		}
-		elseif ((Get-Command git -ErrorAction SilentlyContinue) -and "$(git rev-parse --git-dir)")
+		elseif ((Get-Command git -ErrorAction Ignore) -and "$(git rev-parse --git-dir)")
 		{
 			Join-Path "$(git rev-parse --show-toplevel)" .vscode/settings.json
 		}

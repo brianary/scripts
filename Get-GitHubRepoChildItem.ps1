@@ -19,7 +19,7 @@ Begin
         if(!$PSCmdlet.ShouldProcess("repository $Owner/$Name","add topic '$($NewTopic -join "','")'")) {return}
         $value = ($Topics + $NewTopic).Where({$_ -ne 'missing-topics'})
         Set-GitHubRepositoryTopic -Topic $value -OwnerName $Owner -RepositoryName $Name
-        if(Get-Variable GitHubRepos -Scope Global -ErrorAction SilentlyContinue) {$InputObject.topics = $value}
+        if(Get-Variable GitHubRepos -Scope Global -ErrorAction Ignore) {$InputObject.topics = $value}
     }
 
     $Global:TopicsChangeList = @()

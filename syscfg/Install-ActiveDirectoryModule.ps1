@@ -30,12 +30,12 @@ if([Environment]::OSVersion.Version -lt [version]'6.2')
         /featurename=RemoteServerAdministrationTools-Roles-AD-Powershell
     return
 }
-if((Get-Command Install-WindowsFeature -CommandType Cmdlet -ErrorAction SilentlyContinue))
+if((Get-Command Install-WindowsFeature -CommandType Cmdlet -ErrorAction Ignore))
 {
     Install-WindowsFeature RSAT,RSAT-Role-Tools,RSAT-AD-Tools,RSAT-AD-PowerShell
 }
 Use-Command.ps1 choco "$env:ChocolateyInstall\bin\choco.exe" -ExecutePowerShell https://chocolatey.org/install.ps1
-if((Get-Command choco -CommandType Application -ErrorAction SilentlyContinue))
+if((Get-Command choco -CommandType Application -ErrorAction Ignore))
 {
     Write-Verbose "Installing RSAT via Chocolatey"
     choco install rsat -params '"/Server:2016"' -y

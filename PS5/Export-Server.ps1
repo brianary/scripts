@@ -182,7 +182,7 @@ function Export-ChocolateyPackages
 	Write-Verbose "Exporting list of installed Chocolatey packages to $Path"
 	Write-Progress "Exporting $env:ComputerName" "Exporting Chocolatey packages to $Path" -Id 1 -percent 60
 	$cinst =
-		if(!(Get-Command choco -CommandType Application -ErrorAction SilentlyContinue)) {@()}
+		if(!(Get-Command choco -CommandType Application -ErrorAction Ignore)) {@()}
 		else
 		{
 			choco list -lr |
@@ -208,7 +208,7 @@ function Export-WebPlatformInstallerPackages
 	Write-Verbose "Exporting list of installed WebPI packages to $Path"
 	Write-Progress "Exporting $env:ComputerName" "Exporting WebPI packages to $Path" -Id 1 -percent 70
 	$webpicmd =
-		if(!(Get-Command webpicmd -CommandType Application -ErrorAction SilentlyContinue)) {@()}
+		if(!(Get-Command webpicmd -CommandType Application -ErrorAction Ignore)) {@()}
 		else
 		{
 			$webpiout = webpicmd /list /listoption:installed |

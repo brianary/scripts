@@ -91,7 +91,7 @@ function Remove-AnyOldModule
 	{
 		Write-Verbose 'Found old SQLPS modules.'
 		Get-Command msiexec.exe -CommandType Application -ErrorAction Stop |Out-Null
-		Remove-Module SQLPS -ErrorAction SilentlyContinue
+		Remove-Module SQLPS -ErrorAction Ignore
 		Uninstall-OldModules
 		Update-PSModulePath User
 		Update-PSModulePath Machine

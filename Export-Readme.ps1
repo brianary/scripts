@@ -280,11 +280,11 @@ function Export-PSScriptPages
 		where {!(Test-Path "$PSScriptRoot\$([IO.Path]::GetFileNameWithoutExtension($_.Name))" -Type Leaf)} |
 		Remove-Item
 	Write-Progress 'Export PowerShell script help pages' 'Updating script docs'
-	Update-MarkdownHelp $PSScriptRoot\docs\*.ps1.md -EA 0 |Write-Verbose
+	Update-MarkdownHelp $PSScriptRoot\docs\*.ps1.md -ErrorAction Ignore |Write-Verbose
 	Write-Progress 'Export PowerShell script help pages' 'Adding docs for new scripts'
 	Get-Item $PSScriptRoot\*.ps1 |
 		where {!(Test-Path "$PSScriptRoot\$($_.Name).md" -Type Leaf)} |
-		foreach {New-MarkdownHelp -Command $_.Name -OutputFolder docs -EA 0} |
+		foreach {New-MarkdownHelp -Command $_.Name -OutputFolder docs -ErrorAction Ignore} |
 		Write-Verbose
 	Write-Progress 'Export PowerShell script help pages' -Completed
 }

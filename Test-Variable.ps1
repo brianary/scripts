@@ -66,7 +66,7 @@ Process
     }
     elseif(!$Scope)
     {
-		if(Get-Variable -Name $Name -ErrorAction SilentlyContinue) {return $true}
+		if(Get-Variable -Name $Name -ErrorAction Ignore) {return $true}
 		$Error.RemoveAt(0)
 		Write-Debug "$($MyInvocation.MyCommand.Name): $Name not found in default scope"
         return $false
@@ -74,7 +74,7 @@ Process
     else
     {
 		$Scope = Add-ScopeLevel.ps1 $Scope
-		if(Get-Variable -Name $Name -Scope $Scope -ErrorAction SilentlyContinue) {return $true}
+		if(Get-Variable -Name $Name -Scope $Scope -ErrorAction Ignore) {return $true}
 		$Error.RemoveAt(0)
 		Write-Debug "$($MyInvocation.MyCommand.Name): $Name not found in $Scope scope"
 		return $false
