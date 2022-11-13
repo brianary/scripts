@@ -1,5 +1,4 @@
-[Scripts](https://github.com/brianary/Scripts/)
-=========
+Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[Add-CapturesToMatches.ps1](Add-CapturesToMatches.ps1.md)**: Adds named capture group values as note properties to Select-String MatchInfo objects.
 - **[Add-Counter.ps1](Add-Counter.ps1.md)**: Adds an incrementing integer property to each pipeline object.

@@ -318,8 +318,7 @@ function Export-PSScriptPages
 		Write-Verbose
 	$Local:OFS = [Environment]::NewLine
 	@"
-[Scripts](https://github.com/brianary/Scripts/)
-=========
+Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 $(Format-PSScripts -Extension '.md' -entities)
 "@ |Out-File docs\index.md
