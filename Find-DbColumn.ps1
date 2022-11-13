@@ -46,7 +46,7 @@ Sales       SalesOrderDetail        UnitPriceDiscount money       False ((0.0))
 # Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string] $ConnectionString,
 # Specifies an SMO Database object to query.
-[Parameter(ParameterSetName='ByDatabase',Mandadory=$true)]
+[Parameter(ParameterSetName='ByDatabase',Mandatory=$true)]
 [Microsoft.SqlServer.Management.Smo.Database] $SmoDatabase,
 # The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string] $ConnectionName,

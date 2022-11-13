@@ -28,7 +28,7 @@ Invoke-Sqlcmd
 # Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
 # Specifies an SMO Database object to query.
-[Parameter(ParameterSetName='ByDatabase',Mandadory=$true)]
+[Parameter(ParameterSetName='ByDatabase',Mandatory=$true)]
 [Microsoft.SqlServer.Management.Smo.Database] $SmoDatabase,
 # The connection string name from the ConfigurationManager to use when executing the query.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,

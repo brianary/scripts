@@ -8,6 +8,10 @@ https://www.microsoft.com/download/details.aspx?id=40760
 
 #Requires -Version 3
 #Requires -Modules SqlServer
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns','',
+Justification='This script deals with lists, and this is a pretty questionable rule.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','',
+Justification='ScriptAnalyzer does not recognize parameters used as global values.')]
 [CmdletBinding()][OutputType([void])] Param(
 # The dependency image filename.
 [string]$DependenciesImage = 'dependencies.svg',
@@ -36,10 +40,10 @@ digraph ScriptDependencies
 		if($help.Name -notlike "$PSScriptRoot\*" -or
 			!(Get-Member relatedLinks -InputObject $help -MemberType Properties)) {continue}
 		$help.relatedLinks.navigationLink |
-			? {Get-Member linkText -InputObject $_ -MemberType Properties} |
-			foreach {$_.linkText} |
-			? {$_ -like '*.ps1'} |
-			foreach {"    `"$(Split-Path $help.Name -Leaf)`" -> `"$_`" "}
+			Where-Object {Get-Member linkText -InputObject $_ -MemberType Properties} |
+			ForEach-Object {$_.linkText} |
+			Where-Object {$_ -like '*.ps1'} |
+			ForEach-Object {"    `"$(Split-Path $help.Name -Leaf)`" -> `"$_`" "}
 	}
 	$env:Path = $path
 	@'
@@ -77,21 +81,21 @@ function Get-StatusSymbol([string]$status)
 	}
 }
 
-function Format-PSScripts
+function Format-PSScripts([string] $Extension = '')
 {
 	Write-Progress 'Enumerating PowerShell scripts' 'Getting list of recent changes'
 	$status = @{}
 	git diff --name-status $(git rev-list -1 --before="$StatusAge" main) |
-		foreach {if($_ -match '^(?<Status>\w)\t(?<Script>\S.*)') {$status[$Matches.Script] = Get-StatusSymbol $Matches.Status}}
+		ForEach-Object {if($_ -match '^(?<Status>\w)\t(?<Script>\S.*)') {$status[$Matches.Script] = Get-StatusSymbol $Matches.Status}}
 	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\*.ps1
 	$i,$max = 0,($scripts.Count/100)
 	$scripts |
-		foreach {Get-Help $_.FullName} |
-		foreach {
+		ForEach-Object {Get-Help $_.FullName} |
+		ForEach-Object {
 			$name = Split-Path $_.Name -Leaf
 			Write-Progress 'Enumerating PowerShell scripts' 'Writing list' -curr $name -percent ($i++/$max)
 			$symbol = if($status.ContainsKey($name)){$status[$name]}
-			"- $symbol**[$name]($name)**: $($_.Synopsis)"
+			"- $symbol**[$name]($name$Extension)**: $($_.Synopsis)"
 		}
 	Write-Progress 'Enumerating PowerShell scripts' -Completed
 }
@@ -107,7 +111,7 @@ function Export-FSharpFormatting
 	}
 	Write-Progress 'Exporting F# script documentation' 'Exporting literate documentation as HTML'
 	$input,$output = "$PSScriptRoot\.fsxtmp","$PSScriptRoot\docs"
-	if(Test-Path $input -PathType Container) {rm -Force -Recurse $input}
+	if(Test-Path $input -PathType Container) {Remove-Item -Force -Recurse $input}
 	mkdir $input |Out-Null
 	Copy-Item $PSScriptRoot\*.fsx $input
 	if(!(Test-Path $output -Type Container)) {mkdir $output}
@@ -131,9 +135,9 @@ function Format-FSScripts
 	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\*.fsx
 	$i,$max = 0,($scripts.Count/100)
 	$scripts |
-		foreach {(Resolve-Path $_.FullName -Relative) -replace '\\','/' -replace '\A\./',''} |
-		? {(Get-Content $_ -TotalCount 1) -match '\A\s*\(\*\*\s*\z'} |
-		foreach {
+		ForEach-Object {(Resolve-Path $_.FullName -Relative) -replace '\\','/' -replace '\A\./',''} |
+		Where-Object {(Get-Content $_ -TotalCount 1) -match '\A\s*\(\*\*\s*\z'} |
+		ForEach-Object {
 			Write-Progress 'Enumerating F# scripts' 'Writing list' -curr $_ -percent ($i++/$max)
 			if((Get-Content $_ -Raw) -match $FSFHeadPattern)
 			{
@@ -150,8 +154,8 @@ function Format-VBAScripts
 	[IO.FileInfo[]] $scripts = Get-Item .\*.vba
 	$i,$max = 0,($scripts.Count/100)
 	$scripts |
-		foreach {(Resolve-Path $_.FullName -Relative) -replace '\\','/' -replace '\A\./',''} |
-		foreach {
+		ForEach-Object {(Resolve-Path $_.FullName -Relative) -replace '\\','/' -replace '\A\./',''} |
+		ForEach-Object {
 			Write-Progress 'Enumerating VisualBasic for Applications scripts' 'Writing list' -curr $_ -percent ($i++/$max)
 			if((Get-Content $_ -Raw) -match $VBAHeadPattern)
 			{
@@ -167,8 +171,8 @@ function Format-SysCfgScripts
 	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\syscfg\*.ps1
 	$i,$max = 0,($scripts.Count/100)
 	$scripts |
-		foreach {Get-Help $_.FullName} |
-		foreach {
+		ForEach-Object {Get-Help $_.FullName} |
+		ForEach-Object {
 			Write-Progress 'Enumerating System Configuration PowerShell scripts' 'Writing list' -curr $_.Name -percent ($i++/$max)
 			$name = Split-Path $_.Name -Leaf
 			"- **[$name]($name)**: $($_.Synopsis)"
@@ -182,12 +186,14 @@ function Format-PS5Scripts
 		Param($repo)
 		Write-Progress 'Enumerating Windows PowerShell 5.x scripts'
 		Import-Module Microsoft.PowerShell.Utility
+		Import-Module SqlServer -ErrorAction Ignore
+		Import-Module dbatools -ErrorAction Ignore
 		Add-Type -AN System.Web
 		[IO.FileInfo[]] $scripts = Get-Item $repo\PS5\*.ps1
 		$i,$max = 0,($scripts.Count/100)
 		$scripts |
-			foreach {Get-Help $_.FullName} |
-			foreach {
+			ForEach-Object {Get-Help $_.FullName} |
+			ForEach-Object {
 				Write-Progress 'Enumerating Windows PowerShell 5.x scripts' 'Writing list' `
 					-curr $_.Name -percent ($i++/$max)
 				'- **[{0}]({0})**: {1}' -f (Split-Path $_.Name -Leaf),$_.Synopsis
@@ -198,7 +204,7 @@ function Format-PS5Scripts
 
 function Format-SysCfgReadme
 {
-	$local:OFS="`n"
+	$Local:OFS = [Environment]::NewLine
 	@"
 PowerShell System Configuration Scripts
 =======================================
@@ -213,7 +219,7 @@ $(Format-SysCfgScripts)
 
 function Format-PS5Readme
 {
-	$local:OFS="`n"
+	$Local:OFS = [Environment]::NewLine
 	@"
 PowerShell 5.1 Scripts
 ======================
@@ -232,7 +238,7 @@ function Format-Readme
 	Write-Progress 'Building readme' 'Exporting dependencies'
 	Export-Dependencies $DependenciesImage
 	Write-Progress 'Building readme' 'Writing readme.md'
-	$local:OFS="`n"
+	$Local:OFS = [Environment]::NewLine
 	@"
 Useful General-Purpose Scripts
 ==============================
@@ -277,15 +283,22 @@ function Export-PSScriptPages
 	Import-Module platyPS
 	Write-Progress 'Export PowerShell script help pages' 'Removing docs for old scripts'
 	Get-Item $PSScriptRoot\docs\*.ps1.md |
-		where {!(Test-Path "$PSScriptRoot\$([IO.Path]::GetFileNameWithoutExtension($_.Name))" -Type Leaf)} |
+		Where-Object {!(Test-Path "$PSScriptRoot\$([IO.Path]::GetFileNameWithoutExtension($_.Name))" -Type Leaf)} |
 		Remove-Item
 	Write-Progress 'Export PowerShell script help pages' 'Updating script docs'
 	Update-MarkdownHelp $PSScriptRoot\docs\*.ps1.md -ErrorAction Ignore |Write-Verbose
 	Write-Progress 'Export PowerShell script help pages' 'Adding docs for new scripts'
 	Get-Item $PSScriptRoot\*.ps1 |
-		where {!(Test-Path "$PSScriptRoot\$($_.Name).md" -Type Leaf)} |
-		foreach {New-MarkdownHelp -Command $_.Name -OutputFolder docs -ErrorAction Ignore} |
+		Where-Object {!(Test-Path "$PSScriptRoot\$($_.Name).md" -Type Leaf)} |
+		ForEach-Object {New-MarkdownHelp -Command $_.Name -OutputFolder docs -ErrorAction Ignore} |
 		Write-Verbose
+	$Local:OFS = [Environment]::NewLine
+	@"
+[Scripts][https://github.com/brianary/Scripts/]
+=========
+
+$(Format-PSScripts -Extension '.md')
+"@ |Out-File docs\index.md
 	Write-Progress 'Export PowerShell script help pages' -Completed
 }
 

@@ -20,7 +20,7 @@ To use this script, add any or all of these parameter sets:
 # Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string] $ConnectionString,
 # Specifies an SMO Database object to query.
-[Parameter(ParameterSetName='ByDatabase',Mandadory=$true)]
+[Parameter(ParameterSetName='ByDatabase',Mandatory=$true)]
 [Microsoft.SqlServer.Management.Smo.Database] $SmoDatabase,
 # The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string] $ConnectionName
@@ -37,7 +37,7 @@ Or, if you wish to support Use-SqlcmdParams.ps1 in scripts that call your script
 # Specifies a connection string to connect to the server.
 [Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
 # Specifies an SMO Database object to query.
-[Parameter(ParameterSetName='ByDatabase',Mandadory=$true)]
+[Parameter(ParameterSetName='ByDatabase',Mandatory=$true)]
 [Microsoft.SqlServer.Management.Smo.Database] $SmoDatabase,
 # The connection string name from the ConfigurationManager to use.
 [Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName
