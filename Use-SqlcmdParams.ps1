@@ -72,7 +72,7 @@ function Get-SqlcmdParameterSet($ParameterSetName)
 	{
 		ByConnectionParameters {@{'Invoke-Sqlcmd:ServerInstance'=$ServerInstance;'Invoke-Sqlcmd:Database'=$Database}}
 		ByConnectionString {@{'Invoke-Sqlcmd:ConnectionString'=$ConnectionString}}
-		ByDatabase {@{'Invoke-Sqlcmd:ServerInstance'=$SmoDatabase.GetServerName();'Invoke-Sqlcmd:Database'=$SmoDatabase.Name}}
+		ByDatabase {@{'Invoke-Sqlcmd:ServerInstance'=$SmoDatabase.Parent.Name;'Invoke-Sqlcmd:Database'=$SmoDatabase.Name}}
 		ByConnectionName
 		{
 			try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration} # get access to the config connection strings
