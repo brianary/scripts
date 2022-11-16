@@ -27,7 +27,9 @@ webPages:Enabled false
 [Parameter(ParameterSetName='Element',Position=0,Mandatory=$true,ValueFromPipeline=$true)][Xml.XmlElement] $Element,
 # Output from the Select-Xml cmdlet.
 [Parameter(ParameterSetName='SelectXmlInfo',Position=0,Mandatory=$true,ValueFromPipeline=$true)]
-[Microsoft.PowerShell.Commands.SelectXmlInfo]$SelectXmlInfo
+[Microsoft.PowerShell.Commands.SelectXmlInfo] $SelectXmlInfo,
+# Only include attributes, ignore other child nodes.
+[Alias('Attributes','Atts')][switch] $OnlyAttributes
 )
 Process
 {
@@ -37,7 +39,11 @@ Process
 		SelectXmlInfo { @($SelectXmlInfo |ForEach-Object {[Xml.XmlElement]$_.Node} |ConvertFrom-XmlElement.ps1) }
 		Element
 		{
-			if($Element.HasChildNodes -and !($Element.ChildNodes.NodeType |
+			if($OnlyAttributes)
+			{
+				$Element.Attributes |ForEach-Object {[void]$properties.Add($_.Name,$_.Value)}
+			}
+			elseif($Element.HasChildNodes -and !($Element.ChildNodes.NodeType |
 				Select-Object -Unique |
 				Where-Object {$_ -notin [Xml.XmlNodeType]::Text,[Xml.XmlNodeType]::CDATA}))
 			{
