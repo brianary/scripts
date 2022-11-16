@@ -48,7 +48,9 @@ Process
 		{
 			if($OnlyAttributes)
 			{
+				$properties = @{}
 				$Element.Attributes |ForEach-Object {[void]$properties.Add($_.Name,$_.Value)}
+				return [pscustomobject]$properties
 			}
 			elseif($Element.HasChildNodes -and !($Element.ChildNodes.NodeType |
 				Select-Object -Unique |
