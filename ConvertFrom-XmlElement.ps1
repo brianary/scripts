@@ -3,7 +3,10 @@
 Converts named nodes of an element to properties of a PSObject, recursively.
 
 .INPUTS
-Microsoft.PowerShell.Commands.SelectXmlInfo output from Select-Xml.
+System.Xml.XmlElement to convert into a PSObject, or
+System.Xml.XmlDocument to convert the document element into a PSObject, or
+Microsoft.PowerShell.Commands.SelectXmlInfo output from Select-Xml to convert
+each selected node into a PSObject.
 
 .OUTPUTS
 System.Management.Automation.PSCustomObject object created from selected XML.
@@ -35,8 +38,12 @@ Process
 {
 	switch($PSCmdlet.ParameterSetName)
 	{
-		Document {$Document.DocumentElement |ConvertFrom-XmlElement.ps1}
-		SelectXmlInfo { @($SelectXmlInfo |ForEach-Object {[Xml.XmlElement]$_.Node} |ConvertFrom-XmlElement.ps1) }
+		Document {$Document.DocumentElement |ConvertFrom-XmlElement.ps1 -OnlyAttributes:$OnlyAttributes}
+		SelectXmlInfo
+		{
+			@($SelectXmlInfo |ForEach-Object {[Xml.XmlElement]$_.Node} |
+				ConvertFrom-XmlElement.ps1 -OnlyAttributes:$OnlyAttributes)
+		}
 		Element
 		{
 			if($OnlyAttributes)
