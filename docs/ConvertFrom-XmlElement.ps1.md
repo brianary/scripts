@@ -14,17 +14,17 @@ Converts named nodes of an element to properties of a PSObject, recursively.
 
 ### Document
 ```
-ConvertFrom-XmlElement.ps1 [-Document] <XmlDocument> [<CommonParameters>]
+ConvertFrom-XmlElement.ps1 [-Document] <XmlDocument> [-OnlyAttributes] [<CommonParameters>]
 ```
 
 ### Element
 ```
-ConvertFrom-XmlElement.ps1 [-Element] <XmlElement> [<CommonParameters>]
+ConvertFrom-XmlElement.ps1 [-Element] <XmlElement> [-OnlyAttributes] [<CommonParameters>]
 ```
 
 ### SelectXmlInfo
 ```
-ConvertFrom-XmlElement.ps1 [-SelectXmlInfo] <SelectXmlInfo> [<CommonParameters>]
+ConvertFrom-XmlElement.ps1 [-SelectXmlInfo] <SelectXmlInfo> [-OnlyAttributes] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -85,6 +85,21 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -OnlyAttributes
+Only include attributes, ignore other child nodes.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: Attributes, Atts
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

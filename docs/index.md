@@ -7,29 +7,29 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Add-NoteProperty.ps1](Add-NoteProperty.ps1.md)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
 - &#x1F199; **[Add-ParameterDefault.ps1](Add-ParameterDefault.ps1.md)**: Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1.md)**: Convert a scope level to account for another call stack level.
-- **[Add-ScriptCredential.ps1](Add-ScriptCredential.ps1.md)**: Serializes a an encrypted credential to a PowerShell script using 32-byte random key file.
+- &#x1F199; **[Add-ScriptCredential.ps1](Add-ScriptCredential.ps1.md)**: Serializes a an encrypted credential to a PowerShell script using 32-byte random key file.
 - **[Add-TimeSpan.ps1](Add-TimeSpan.ps1.md)**: Adds a timespan to DateTime values.
 - **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1.md)**: Adds a VS Code MSSQL database connection to the repo.
 - **[Backup-File.ps1](Backup-File.ps1.md)**: Create a backup as a sibling to a file, with date and time values in the name.
-- &#x1F199; **[Backup-SchTasks.ps1](Backup-SchTasks.ps1.md)**: Exports the local list of Scheduled Tasks into a single XML file.
+- **[Backup-SchTasks.ps1](Backup-SchTasks.ps1.md)**: Exports the local list of Scheduled Tasks into a single XML file.
 - **[Compare-Properties.ps1](Compare-Properties.ps1.md)**: Compares the properties of two objects.
 - **[Compare-Xml.ps1](Compare-Xml.ps1.md)**: Compares two XML documents and returns the differences.
 - **[Compress-EnvironmentVariables.ps1](Compress-EnvironmentVariables.ps1.md)**: Replaces each of the longest matching parts of a string with an embedded environment variable with that value.
 - **[Connect-SshKey.ps1](Connect-SshKey.ps1.md)**: Uses OpenSSH to generate a key and connect it to an ssh server.
 - **[Convert-ChocolateyToWinget.ps1](Convert-ChocolateyToWinget.ps1.md)**: Change from managing various packages with Chocolatey to WinGet.
 - **[Convert-ClipboardTsvToHtml.ps1](Convert-ClipboardTsvToHtml.ps1.md)**: Parses TSV clipboard data into HTML table data which is copied back to the clipboard.
-- &#x1F199; **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
+- **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
 - **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
 - **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1.md)**: Convert a CimInstance object to a PSObject.
 - **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
-- **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1.md)**: Parses a Timespan from a ISO8601 duration string.
+- &#x1F199; **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1.md)**: Parses a Timespan from a ISO8601 duration string.
 - **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1.md)**: Parse escaped XML into XML and serialize it.
 - **[ConvertFrom-Hex.ps1](ConvertFrom-Hex.ps1.md)**: Convert a string of hexadecimal digits into a byte array.
-- **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1.md)**: Converts named nodes of an element to properties of a PSObject, recursively.
+- &#x1F199; **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1.md)**: Converts named nodes of an element to properties of a PSObject, recursively.
 - **[ConvertTo-Base64.ps1](ConvertTo-Base64.ps1.md)**: Converts bytes or text to base64-encoded text.
 - **[ConvertTo-BasicAuthentication.ps1](ConvertTo-BasicAuthentication.ps1.md)**: Produces a basic authentication header string from a credential.
 - **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1.md)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
-- **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1.md)**: Converts supported objects to the RFC 5545 iCalendar format.
+- &#x1F199; **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1.md)**: Converts supported objects to the RFC 5545 iCalendar format.
 - **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1.md)**: Formats a datetime as a LogParser literal.
 - **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1.md)**: Creates multipart/form-data to send as a request body.
 - **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1.md)**: Converts an object to an ordered dictionary of properties and values.
@@ -43,7 +43,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Expand-EnvironmentVariables.ps1](Expand-EnvironmentVariables.ps1.md)**: Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string.
 - **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1.md)**: Exports MS SQL script for an object from the given server.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
-- **[Export-Fake4TargetsGraph.ps1](Export-Fake4TargetsGraph.ps1.md)**: Exports a graph of a Fake4 build script's targets.
+- &#x1F199; **[Export-Fake4TargetsGraph.ps1](Export-Fake4TargetsGraph.ps1.md)**: Exports a graph of a Fake4 build script's targets.
 - **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
 - &#x1F199; **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
 - &#x1F199; **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
@@ -64,7 +64,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1.md)**: Escape URLs more aggressively.
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1.md)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Format-Permutations.ps1](Format-Permutations.ps1.md)**: Builds format strings using every combination of elements from multiple arrays.
-- **[Format-Xml.ps1](Format-Xml.ps1.md)**: Pretty-print XML.
+- &#x1F199; **[Format-Xml.ps1](Format-Xml.ps1.md)**: Pretty-print XML.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1.md)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-AssemblyFramework.ps1](Get-AssemblyFramework.ps1.md)**: Gets the framework version an assembly was compiled for.
 - **[Get-CachedCredential.ps1](Get-CachedCredential.ps1.md)**: Return a credential from secure storage, or prompt the user for it if not found.
@@ -122,7 +122,7 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[New-DbProviderObject.ps1](New-DbProviderObject.ps1.md)**: Create a common database object.
 - **[New-Jwt.ps1](New-Jwt.ps1.md)**: Generates a JSON Web Token (JWT)
 - **[New-NamespaceManager.ps1](New-NamespaceManager.ps1.md)**: Creates an object to lookup XML namespace prefixes.
-- **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
+- &#x1F199; **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-RandomVehicle.ps1](New-RandomVehicle.ps1.md)**: Generates random vehicle details with a valid VIN.
 - **[New-Script.ps1](New-Script.ps1.md)**: Creates a simple boilerplate script.
 - **[New-Shortcut.ps1](New-Shortcut.ps1.md)**: Create a Windows shortcut.
@@ -140,7 +140,7 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
 - &#x1F199; **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1.md)**: Finds database constraints with system-generated names and gives them deterministic names.
 - &#x1F199; **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1.md)**: Finds database constraints that have been incompletely re-enabled.
-- **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1.md)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
+- &#x1F199; **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1.md)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
 - **[Resolve-XmlSchemaLocation.ps1](Resolve-XmlSchemaLocation.ps1.md)**: Gets the namespaces and their URIs and URLs from a document.
 - **[Resolve-XPath.ps1](Resolve-XPath.ps1.md)**: Returns the XPath of the location of an XML node.
 - **[Restore-SchTasks.ps1](Restore-SchTasks.ps1.md)**: Imports from a single XML file into the local Scheduled Tasks.
@@ -158,7 +158,7 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 - **[Show-DataRef.ps1](Show-DataRef.ps1.md)**: Display an HTML view of an XML schema or WSDL using Saxon.
 - &#x1F199; **[Show-HttpStatus.ps1](Show-HttpStatus.ps1.md)**: Displays the HTTP status code info.
-- **[Show-Time.ps1](Show-Time.ps1.md)**: Displays a formatted date using powerline font characters.
+- &#x1F199; **[Show-Time.ps1](Show-Time.ps1.md)**: Displays a formatted date using powerline font characters.
 - **[Split-FileName.ps1](Split-FileName.ps1.md)**: Returns the specified part of the filename.
 - **[Split-Keys.ps1](Split-Keys.ps1.md)**: Clones a dictionary keeping only the specified keys.
 - &#x1F199; **[Stop-ThrowError.ps1](Stop-ThrowError.ps1.md)**: Throws a better error than "throw".
@@ -191,4 +191,5 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - &#x1F199; **[Use-ReasonableDefaults.ps1](Use-ReasonableDefaults.ps1.md)**: Sets certain cmdlet parameter defaults to rational, useful values.
 - **[Use-SeqServer.ps1](Use-SeqServer.ps1.md)**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 - &#x1F199; **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1.md)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
-- **[Write-VisibleString.ps1](Write-VisibleString.ps1.md)**: Displays a string, showing nonprintable characters.
+- &#x1F195; **[Write-Info.ps1](Write-Info.ps1.md)**: Writes to the information stream, with color support and more.
+- &#x1F199; **[Write-VisibleString.ps1](Write-VisibleString.ps1.md)**: Displays a string, showing nonprintable characters.
