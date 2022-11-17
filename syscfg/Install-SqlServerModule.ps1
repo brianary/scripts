@@ -86,7 +86,7 @@ function Uninstall-OldModules
 function Remove-AnyOldModule
 {
 	if(!(Get-Module SQLPS -ListAvailable))
-	{ Write-Host 'Found no old SQLPS modules.' -ForegroundColor Green -BackgroundColor DarkMagenta }
+	{ Write-Info.ps1 'Found no old SQLPS modules.' -ForegroundColor Green -BackgroundColor DarkMagenta }
 	else
 	{
 		Write-Verbose 'Found old SQLPS modules.'
@@ -98,10 +98,10 @@ function Remove-AnyOldModule
 		Update-PSModulePathProcess
 	}
 	if(!(Get-Module SqlServer -ListAvailable |? Version -lt $Version))
-	{ Write-Host 'Found no old SqlServer modules.' -ForegroundColor Green -BackgroundColor DarkMagenta }
+	{ Write-Info.ps1 'Found no old SqlServer modules.' -ForegroundColor Green -BackgroundColor DarkMagenta }
 	else
 	{
-		Write-Host 'Found old SqlServer modules.' -ForegroundColor Green -BackgroundColor DarkMagenta
+		Write-Info.ps1 'Found old SqlServer modules.' -ForegroundColor Green -BackgroundColor DarkMagenta
 		Get-Module SqlServer -ListAvailable |? Version -lt $Version |Remove-Module -Verbose
 	}
 }
@@ -113,11 +113,11 @@ function Install-NewSqlServerModule
 		Get-Module SqlServer -ListAvailable |
 			? Version -ge $Version |
 			select -Unique -ExpandProperty Version |
-			% {Write-Host "SqlServer version $_ already installed." -ForegroundColor Green -BackgroundColor DarkMagenta}
+			% {Write-Info.ps1 "SqlServer version $_ already installed." -ForegroundColor Green -BackgroundColor DarkMagenta}
 	}
 	else
 	{
-		Write-Host "Installing SqlServer" -ForegroundColor Green -BackgroundColor DarkMagenta
+		Write-Info.ps1 "Installing SqlServer" -ForegroundColor Green -BackgroundColor DarkMagenta
 		Install-Module SqlServer -Scope AllUsers
 	}
 }

@@ -98,7 +98,7 @@ Begin
 
 	function Write-Step([string]$Message)
 	{
-		Write-Host $Message -ForegroundColor White -BackgroundColor DarkGray
+		Write-Info.ps1 $Message -ForegroundColor White -BackgroundColor DarkGray
 	}
 
 	function Invoke-EssentialUpdates
@@ -223,7 +223,7 @@ Begin
 		Set-Alias dcu-cli "$(Resolve-Path "C:\Program Files*\Dell\CommandUpdate\dcu-cli.exe")"
 		dcu-cli /scan
 		if($LASTEXITCODE -ne 500) {dcu-cli /applyUpdates -reboot=enable}
-		Write-Host ''
+		Write-Info.ps1 ''
 	}
 
 	function Update-Windows

@@ -35,9 +35,9 @@ Show-Time.ps1 Iso8601Z Iso8601WeekDate Iso8601OrdinalDate -Separator ' * '
 [consolecolor] $BackgroundColor = $host.UI.RawUI.ForegroundColor
 )
 
-Write-Host (Get-Unicode.ps1 0xE0B6) -ForegroundColor $BackgroundColor -NoNewline
-Write-Host ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
-Write-Host (($Format |foreach {Format-Date.ps1 $_ -Date $Date}) -join $Separator) `
+Write-Info.ps1 (Get-Unicode.ps1 0xE0B6) -ForegroundColor $BackgroundColor -NoNewline
+Write-Info.ps1 ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
+Write-Info.ps1 (($Format |foreach {Format-Date.ps1 $_ -Date $Date}) -join $Separator) `
 	-ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
-Write-Host ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
-Write-Host (Get-Unicode.ps1 0xE0B4) -fore $BackgroundColor
+Write-Info.ps1 ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
+Write-Info.ps1 (Get-Unicode.ps1 0xE0B4) -fore $BackgroundColor

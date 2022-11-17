@@ -35,12 +35,12 @@ Begin
 				Select-Object -First 1
 			if(!$nextScript)
 			{
-				Write-Host 'Congratulations, all of the scripts in this directory have test files.' -ForegroundColor Green
+				Write-Info.ps1 'Congratulations, all of the scripts in this directory have test files.' -ForegroundColor Green
 				return
 			}
 			else
 			{
-				Write-Host "Creating new tests script for $nextScript" -ForegroundColor Green
+				Write-Info.ps1 "Creating new tests script for $nextScript" -ForegroundColor Green
 				return &$PSCommandPath -Script $nextScript -Directory $Directory
 			}
 		}

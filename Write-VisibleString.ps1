@@ -28,23 +28,23 @@ function Write-Strings([string[]] $String)
 	if(![char]::IsControl($c) -and ![char]::IsWhiteSpace($c) -and
 		![char]::IsLowSurrogate($c) -and ![char]::IsHighSurrogate($c))
 	{
-		Write-Host $String[0] -NoNewline
+		Write-Info.ps1 $String[0] -NoNewline
 	}
 	else
 	{
 		if($AsSymbols -and ([int]$c) -le 0x20)
 		{
 			$Local:OFS = ''
-			Write-Host ([string]($String[0].ToCharArray() |foreach {[char](0x2400+[int]$_)})) `
+			Write-Info.ps1 ([string]($String[0].ToCharArray() |foreach {[char](0x2400+[int]$_)})) `
 				-NoNewline -ForegroundColor $AltColor
 		}
 		else
 		{
-			Write-Host " $($String[0].GetEnumerator() |foreach $formatHex) " `
+			Write-Info.ps1 " $($String[0].GetEnumerator() |foreach $formatHex) " `
 				-NoNewline -ForegroundColor $AltColor
 		}
 	}
 	if($String.Length -gt 1) {Write-Strings ($String[1..($String.Length-1)])}
-	else {Write-Host}
+	else {Write-Info.ps1}
 }
 Write-Strings ([convert]::ToString($InputObject) -split '((?:\p{C}+|\p{Z}+))')

@@ -28,7 +28,7 @@ if(!$Finish)
 	Use-Command.ps1 bcdedit "$env:windir\system32\bcdedit.exe" -Fail
 	if((Get-CimInstance CIM_ComputerSystem).BootupState -notlike 'Fail-safe *')
 	{
-		Write-Host "Reboot in Safe Mode before running $scriptname" -fore Magenta
+		Write-Info.ps1 "Reboot in Safe Mode before running $scriptname" -fore Magenta
 		if($PSCmdlet.ShouldProcess($env:ComputerName,'reboot into safe mode'))
 		{
 			bcdedit --% /set {current} safeboot network
@@ -40,7 +40,7 @@ if(!$Finish)
 	Stop-Service wuauserv
 	Set-Service wuauserv -StartupType Disabled
 	Use-Command.ps1 'Display Driver Uninstaller' "$env:ChocolateyInstall\bin\Display Driver Uninstaller.exe" -cinst ddu
-	Write-Host "In Display Driver Uninstaller, run Clean and restart, then run $scriptname with -Finish" -fore Green
+	Write-Info.ps1 "In Display Driver Uninstaller, run Clean and restart, then run $scriptname with -Finish" -fore Green
 	Start-Process 'Display Driver Uninstaller.exe'
 	# is the following needed?
 	bcdedit --% /deletevalue {current} safeboot
