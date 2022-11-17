@@ -21,18 +21,18 @@ Removes all but the oldest file with the same size and hash value.
 )
 Begin
 {
-    if(!(Get-Command Get-FileHash -CommandType Function -Module Microsoft.PowerShell.Utility))
-    {throw "Get-FileHash not found."}
+    if(!(Get-Command Get-FileHash -Module Microsoft.PowerShell.Utility -ErrorAction Ignore))
+    {throw 'Get-FileHash not found.'}
     $total,$totalsize = 0,0
 }
 End
 {
-    foreach($size in ($input |group Length |? Count -gt 1))
+    foreach($size in ($Files |Group-Object Length |Where-Object Count -gt 1))
     {
-        foreach($hash in ($size.Group |group @{e={(Get-FileHash $_.FullName).Hash}} |? Count -gt 1))
+        foreach($hash in ($size.Group |Group-Object @{e={(Get-FileHash $_.FullName).Hash}} |Where-Object Count -gt 1))
         {
-            $first = $hash.Group |sort LastWriteTime |select -First 1
-            foreach($dup in ($hash.Group |sort LastWriteTime |select -Skip 1))
+            $first = $hash.Group |Sort-Object LastWriteTime |Select-Object -First 1
+            foreach($dup in ($hash.Group |Sort-Object LastWriteTime |Select-Object -Skip 1))
             {
                 Write-Verbose "$($dup.FullName) (duplicates $($first.FullName))"
                 Write-Output $dup.FullName

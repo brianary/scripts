@@ -29,7 +29,7 @@ Same as previous example, but adds a progress indicator within an existing pipel
 )
 End
 {
-	[psobject[]] $values = $input
+	[psobject[]] $values = if($input) {$input} else {@($InputObject)}
 	$i,$max,$id = 0,($values.Length/100),(Get-Random)
 	try
 	{

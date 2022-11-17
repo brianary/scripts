@@ -187,8 +187,9 @@ $Name {
 }
 End
 {
-	$input |Format-TableAsMermaid
-	$input |
+	[Microsoft.SqlServer.Management.Smo.Table[]] $tables = if($input) {$input} else {@($Table)}
+	$tables |Format-TableAsMermaid
+	$tables |
 		ForEach-Object ForeignKeys |
 		Format-ForeignKeyAsMermaid -AllDatabaseTables $input[0].Parent.Tables -SelectedTableUrns $input.Urn.Value
 }

@@ -59,13 +59,13 @@ End
 		{
 			ChoicesArray
 			{
-				$Choices = $input.ForEach({$_}) # flatten nested arrays
-				$Choices |foreach {New-Object System.Management.Automation.Host.ChoiceDescription $_}
+				$Choices = $Choices.ForEach({$_}) # flatten nested arrays
+				$Choices |ForEach-Object {New-Object System.Management.Automation.Host.ChoiceDescription $_}
 			}
 			ChoicesHash
 			{
 				$Choices = @($ChoiceHash.Keys)
-				$Choices |foreach {New-Object System.Management.Automation.Host.ChoiceDescription $_,$ChoiceHash[$_]}
+				$Choices |ForEach-Object {New-Object System.Management.Automation.Host.ChoiceDescription $_,$ChoiceHash[$_]}
 			}
 		}
 	$Choices[$Host.UI.PromptForChoice($Caption,$Message,$choicelist,$DefaultIndex)]

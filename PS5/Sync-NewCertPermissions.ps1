@@ -48,14 +48,16 @@ Begin
 }
 End
 {
-	[System.Security.Cryptography.X509Certificates.X509Certificate2[]] $certs = $input.ForEach({$_}) # flatten nested arrays
-	$newcert, $prevcert = $certs.Group |sort NotAfter -Descending
+	[System.Security.Cryptography.X509Certificates.X509Certificate2[]] $certs =
+		if($input) {$input.ForEach({$_})} # flatten nested arrays
+		else {$Certificate}
+	$newcert, $prevcert = $certs.Group |Sort-Object NotAfter -Descending
 	$newcertname = Format-Certificate.ps1 $newcert
-	[string[]] $prevperms = @(Get-CertificatePermissions.ps1 $prevcert |Select-Relevant |ConvertTo-JsonRule |sort)
-	[string[]] $newperms = @(Get-CertificatePermissions.ps1 $newcert |Select-Relevant |ConvertTo-JsonRule |sort)
+	[string[]] $prevperms = @(Get-CertificatePermissions.ps1 $prevcert |Select-Relevant |ConvertTo-JsonRule |Sort-Object)
+	[string[]] $newperms = @(Get-CertificatePermissions.ps1 $newcert |Select-Relevant |ConvertTo-JsonRule |Sort-Object)
 	$addperms = @()
 	$removeperms = @()
-	foreach ($diff in compare $prevperms $newperms)
+	foreach ($diff in Compare-Object $prevperms $newperms)
 	{
 		$value = ConvertFrom-Json $diff.InputObject
 		if ($diff.SideIndicator -eq '=>') { $removeperms += New-Object Security.AccessControl.FileSystemAccessRule $value }
