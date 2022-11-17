@@ -13,7 +13,7 @@ Calculate the standard deviation of numeric values.
 ## SYNTAX
 
 ```
-Measure-StandardDeviation.ps1 [[-InputObject] <Double>] [<CommonParameters>]
+Measure-StandardDeviation.ps1 [[-InputObject] <Double[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,7 +34,7 @@ Get-Process |% Handles |Measure-StandardDeviation.ps1
 The numeric values to analyze.
 
 ```yaml
-Type: Double
+Type: Double[]
 Parameter Sets: (All)
 Aliases:
 

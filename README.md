@@ -65,21 +65,21 @@ PowerShell Scripts
 - **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1)**: Exports MS SQL script for an object from the given server.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - :up: **[Export-Fake4TargetsGraph.ps1](Export-Fake4TargetsGraph.ps1)**: Exports a graph of a Fake4 build script's targets.
-- **[Export-MermaidER.ps1](Export-MermaidER.ps1)**: Generates a Mermaid entity relation diagram for database tables.
+- :up: **[Export-MermaidER.ps1](Export-MermaidER.ps1)**: Generates a Mermaid entity relation diagram for database tables.
 - :up: **[Export-Readme.ps1](Export-Readme.ps1)**: Generate README.md file for the scripts repo.
 - :up: **[Export-TableMerge.ps1](Export-TableMerge.ps1)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-Comics.ps1](Find-Comics.ps1)**: Finds comics.
 - :up: **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1)**: Searches an entire database for a field value.
 - :up: **[Find-DbColumn.ps1](Find-DbColumn.ps1)**: Searches for database columns.
 - **[Find-DotNetGlobalTools.ps1](Find-DotNetGlobalTools.ps1)**: Returns a list of global dotnet tools.
-- **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1)**: Removes duplicates from a list of files.
+- :up: **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1)**: Removes duplicates from a list of files.
 - :up: **[Find-Indexes.ps1](Find-Indexes.ps1)**: Returns indexes using a column with the given name.
 - **[Find-InstalledPrograms.ps1](Find-InstalledPrograms.ps1)**: Searches installed programs.
 - **[Find-Lines.ps1](Find-Lines.ps1)**: Searches a specific subset of files for lines matching a pattern.
 - :up: **[Find-NewestFile.ps1](Find-NewestFile.ps1)**: Finds the most recent file.
 - **[Find-ProjectPackages.ps1](Find-ProjectPackages.ps1)**: Find modules used in projects.
 - :up: **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1)**: Reports text, ntext, and image datatypes found in a given database.
-- **[ForEach-Progress.ps1](ForEach-Progress.ps1)**: Performs an operation against each item in a collection of input objects, with a progress bar.
+- :up: **[ForEach-Progress.ps1](ForEach-Progress.ps1)**: Performs an operation against each item in a collection of input objects, with a progress bar.
 - **[Format-ByteUnits.ps1](Format-ByteUnits.ps1)**: Converts bytes to largest possible units, to improve readability.
 - **[Format-Date.ps1](Format-Date.ps1)**: Returns a date/time as a named format.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1)**: Escape URLs more aggressively.
@@ -135,7 +135,7 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1)**: Provides sorted counts of SQL Server column values.
 - **[Measure-DbTable.ps1](Measure-DbTable.ps1)**: Provides frequency details about SQL Server table data.
 - **[Measure-Indents.ps1](Measure-Indents.ps1)**: Measures the indentation characters used in a text file.
-- **[Measure-StandardDeviation.ps1](Measure-StandardDeviation.ps1)**: Calculate the standard deviation of numeric values.
+- :up: **[Measure-StandardDeviation.ps1](Measure-StandardDeviation.ps1)**: Calculate the standard deviation of numeric values.
 - **[Measure-TextFile.ps1](Measure-TextFile.ps1)**: Counts each type of indent and line ending.
 - **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1)**: Create a new PSObject by recursively combining the properties of PSObjects.
@@ -152,7 +152,7 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Optimize-Path.ps1](Optimize-Path.ps1)**: Sorts, prunes, and normalizes both user and system Path entries.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1)**: Pushes the current VS Code editor workspace location to the location stack.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1)**: Retrieves the a summary from the Chocolatey log.
-- **[Read-Choice.ps1](Read-Choice.ps1)**: Returns choice selected from a list of options.
+- :up: **[Read-Choice.ps1](Read-Choice.ps1)**: Returns choice selected from a list of options.
 - **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1)**: Removes a credential from secure storage.
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1)**: Removes a file that may be prone to locking.
 - **[Remove-NullValues.ps1](Remove-NullValues.ps1)**: Removes dictionary entries with null vaules.
@@ -226,4 +226,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 11/16/2022 20:11:25 -->
+<!-- generated 11/16/2022 20:57:13 -->

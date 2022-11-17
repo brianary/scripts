@@ -44,21 +44,21 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1.md)**: Exports MS SQL script for an object from the given server.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - &#x1F199; **[Export-Fake4TargetsGraph.ps1](Export-Fake4TargetsGraph.ps1.md)**: Exports a graph of a Fake4 build script's targets.
-- **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
+- &#x1F199; **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
 - &#x1F199; **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
 - &#x1F199; **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-Comics.ps1](Find-Comics.ps1.md)**: Finds comics.
 - &#x1F199; **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
 - &#x1F199; **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
 - **[Find-DotNetGlobalTools.ps1](Find-DotNetGlobalTools.ps1.md)**: Returns a list of global dotnet tools.
-- **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1.md)**: Removes duplicates from a list of files.
+- &#x1F199; **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1.md)**: Removes duplicates from a list of files.
 - &#x1F199; **[Find-Indexes.ps1](Find-Indexes.ps1.md)**: Returns indexes using a column with the given name.
 - **[Find-InstalledPrograms.ps1](Find-InstalledPrograms.ps1.md)**: Searches installed programs.
 - **[Find-Lines.ps1](Find-Lines.ps1.md)**: Searches a specific subset of files for lines matching a pattern.
 - &#x1F199; **[Find-NewestFile.ps1](Find-NewestFile.ps1.md)**: Finds the most recent file.
 - **[Find-ProjectPackages.ps1](Find-ProjectPackages.ps1.md)**: Find modules used in projects.
 - &#x1F199; **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1.md)**: Reports text, ntext, and image datatypes found in a given database.
-- **[ForEach-Progress.ps1](ForEach-Progress.ps1.md)**: Performs an operation against each item in a collection of input objects, with a progress bar.
+- &#x1F199; **[ForEach-Progress.ps1](ForEach-Progress.ps1.md)**: Performs an operation against each item in a collection of input objects, with a progress bar.
 - **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
 - **[Format-Date.ps1](Format-Date.ps1.md)**: Returns a date/time as a named format.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1.md)**: Escape URLs more aggressively.
@@ -114,7 +114,7 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1.md)**: Provides sorted counts of SQL Server column values.
 - **[Measure-DbTable.ps1](Measure-DbTable.ps1.md)**: Provides frequency details about SQL Server table data.
 - **[Measure-Indents.ps1](Measure-Indents.ps1.md)**: Measures the indentation characters used in a text file.
-- **[Measure-StandardDeviation.ps1](Measure-StandardDeviation.ps1.md)**: Calculate the standard deviation of numeric values.
+- &#x1F199; **[Measure-StandardDeviation.ps1](Measure-StandardDeviation.ps1.md)**: Calculate the standard deviation of numeric values.
 - **[Measure-TextFile.ps1](Measure-TextFile.ps1.md)**: Counts each type of indent and line ending.
 - **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1.md)**: Create a new PSObject by recursively combining the properties of PSObjects.
@@ -131,7 +131,7 @@ Get-UnicodeName.ps1 [-Character] <string> [<CommonParameters>]
 - **[Optimize-Path.ps1](Optimize-Path.ps1.md)**: Sorts, prunes, and normalizes both user and system Path entries.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1.md)**: Pushes the current VS Code editor workspace location to the location stack.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1.md)**: Retrieves the a summary from the Chocolatey log.
-- **[Read-Choice.ps1](Read-Choice.ps1.md)**: Returns choice selected from a list of options.
+- &#x1F199; **[Read-Choice.ps1](Read-Choice.ps1.md)**: Returns choice selected from a list of options.
 - **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1.md)**: Removes a credential from secure storage.
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1.md)**: Removes a file that may be prone to locking.
 - **[Remove-NullValues.ps1](Remove-NullValues.ps1.md)**: Removes dictionary entries with null vaules.
