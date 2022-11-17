@@ -44,7 +44,8 @@ An ISO8601 duration string in one of four formats:
 * PyyyyMMddTHHmmss
 #>
 [Parameter(Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments)]
-[ValidatePattern('\AP\d(?:\w+|\d\d\d(?:-\d\d){2}T\d\d(?::\d\d){2})\z')]
+[ValidatePattern('\AP\d(?:\w+|\d\d\d(?:-\d\d){2}T\d\d(?::\d\d){2})\z',
+ErrorMessage='An ISO8601 duration is required')]
 [string[]] $InputObject,
 # Supresses warnings about approximate conversions.
 [Alias('Quiet')][switch]$NoWarnings

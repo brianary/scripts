@@ -84,8 +84,8 @@ Begin
 	function ConvertFrom-SimpleInterval
 	{
 		[CmdletBinding()][OutputType([string])] Param(
-		[Parameter(Position=0,Mandatory=$true)][ValidatePattern('\AP\d+[YMD]|T\d+[HMS]\z')]
-		[string] $Interval
+		[ValidatePattern('\AP\d+[YMD]|T\d+[HMS]\z',ErrorMessage='A simple (single-unit) ISO8601 duration is required')]
+		[Parameter(Position=0,Mandatory=$true)][string] $Interval
 		)
 		$Interval -match '\d+' |Out-Null
 		[int] $value = $Matches[0]

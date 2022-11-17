@@ -23,7 +23,8 @@ Parses build.fsx and shows the target dependency graph in build.svg.
 # The filename to output the graph to.
 [string] $OutFile = "build.$Format",
 # The specific version of Fake4 to install if it is missing.
-[ValidatePattern('\A4\.\S+\z')][string] $FakeVersion = '4.64.17'
+[ValidatePattern('\A4\.\S+\z',ErrorMessage='A FAKE version is required')]
+[string] $FakeVersion = '4.64.17'
 )
 Begin
 {

@@ -61,8 +61,8 @@ The name of elements to return all occurrences of,
 or a dot followed by the class of elements to return all occurrences of,
 or a hash followed by the ID of elements to return all occurrences of.
 #>
-[Parameter(Position=1)][ValidatePattern('\A(?:\w+|[.#]\w+(?:-\w+)*)\z')]
-[Alias('Element','TagName','ClassName','ElementId')][string] $Select = 'table',
+[ValidatePattern('\A(?:\w+|[.#]\w+(?:-\w+)*)\z',ErrorMessage='An element name, .class name, or #id is required')]
+[Parameter(Position=1)][Alias('Element','TagName','ClassName','ElementId')][string] $Select = 'table',
 # Only elements whose inner text contain this value are included.
 [Parameter(ParameterSetName='Contains')][string] $Contains,
 # The position of an individual element to select, or all matching elements by default.

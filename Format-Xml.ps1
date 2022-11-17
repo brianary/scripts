@@ -75,7 +75,8 @@ Get-PSProvider alias |ConvertTo-Xml |Format-Xml.ps1 -NewLineOnAttributes
 # The XML string or document to format.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][xml] $Xml,
 # A whitespace indent character to use, space by default.
-[ValidatePattern('\s')][char] $IndentChar = ' ',
+[ValidatePattern('\A\s\z',ErrorMessage='A whitespace character is required')]
+[char] $IndentChar = ' ',
 <#
 The number of IndentChars to use per level of indent, 2 by default.
 Set to zero for no indentation.

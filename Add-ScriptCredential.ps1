@@ -14,7 +14,8 @@ ConvertTo-PowerShell.ps1
 # The script path to add the serialized credential to.
 [Parameter(Position=0,Mandatory=$true)][string] $Path,
 # The variable name to assign the credential to within the script.
-[Parameter(Position=1,Mandatory=$true)][ValidatePattern('\w+')][string] $Name,
+[ValidatePattern('\A\w+\z',ErrorMessage='An alphanumeric identifier is required')]
+[Parameter(Position=1,Mandatory=$true)][string] $Name,
 # The credential to serialize.
 [Parameter(Position=2,Mandatory=$true,ValueFromPipeline=$true)][PSCredential] $Credential,
 # The key file to use, which will be generated and encrypted if it doesn't exist.
