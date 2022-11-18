@@ -18,6 +18,9 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 		'' |Out-File nothing
 		git add -A
 		git commit -m first
+		'' |Out-File nothing2
+		git add -A
+		git commit -m second
 	}
 	AfterEach {
 		if("$PWD" -match "\A$([regex]::Escape($TestDrive))") {Pop-Location}
