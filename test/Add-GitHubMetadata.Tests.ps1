@@ -13,15 +13,15 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 		if(!(git config --global user.name)) {git config --global user.name "Test User"}
 	}
 	BeforeEach {
-		throw 'BeforeEach'
 		Push-Location (mkdir "TestDrive:\$(New-Guid)")
-		git init
+		git init |ForEach-Object {Write-Output "::debug::$_"}
 		'' |Out-File nothing
 		git add -A
-		git commit -m first
+		git commit -m first |ForEach-Object {Write-Output "::debug::$_"}
+		git status |ForEach-Object {Write-Output "::debug::$_"}
+		git shortlog |ForEach-Object {Write-Output "::debug::$_"}
 	}
 	AfterEach {
-		throw 'AfterEach'
 		if("$PWD" -match "\A$([regex]::Escape($TestDrive))") {Pop-Location}
 	}
 	Context 'Script style' -Tag Style {
@@ -38,9 +38,6 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			'.editorconfig' |Should -Not -Exist -Because 'a new repo should not have an .editorconfig'
 			'.github\CODEOWNERS' |Should -Not -Exist -Because 'a new repo should not have a CODEOWNERS'
 			'README.md' |Should -Not -Exist -Because 'a new repo should not have a readme'
-			git shortlog -nes |Should -HaveCount 1
-			git shortlog -nes |Should -MatchExactly '^\s*(?<Commits>\d+)\s+(?<Name>\b[^>]+\b)\s+<(?<Email>[^>]+)>$'
-			git status
 			Add-GitHubMetadata.ps1 -DefaultOwner arthurd@example.com -NoWarnings
 			'.gitattributes' |Should -Exist
 			'.gitattributes' |Should -FileContentMatchExactly '\*\*/packages/\*\* linguist-vendored'
