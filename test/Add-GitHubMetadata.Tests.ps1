@@ -13,16 +13,15 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 		if(!(git config --global user.name)) {git config --global user.name "Test User"}
 	}
 	BeforeEach {
+		throw 'BeforeEach'
 		Push-Location (mkdir "TestDrive:\$(New-Guid)")
 		git init
 		'' |Out-File nothing
 		git add -A
 		git commit -m first
-		'' |Out-File nothing2
-		git add -A
-		git commit -m second
 	}
 	AfterEach {
+		throw 'AfterEach'
 		if("$PWD" -match "\A$([regex]::Escape($TestDrive))") {Pop-Location}
 	}
 	Context 'Script style' -Tag Style {
