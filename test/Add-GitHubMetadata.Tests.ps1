@@ -39,6 +39,9 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			'.editorconfig' |Should -Not -Exist -Because 'a new repo should not have an .editorconfig'
 			'.github\CODEOWNERS' |Should -Not -Exist -Because 'a new repo should not have a CODEOWNERS'
 			'README.md' |Should -Not -Exist -Because 'a new repo should not have a readme'
+			git shortlog -nes |measure
+			git shortlog -nes
+			git status
 			Add-GitHubMetadata.ps1 -DefaultOwner arthurd@example.com -NoWarnings
 			'.gitattributes' |Should -Exist
 			'.gitattributes' |Should -FileContentMatchExactly '\*\*/packages/\*\* linguist-vendored'
