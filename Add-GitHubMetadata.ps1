@@ -223,20 +223,11 @@ function Add-CodeOwners
 	if(!$DefaultOwner)
 	{
 		Write-Verbose 'Determining default code owner(s).'
-		Write-Information "pwd: $pwd" -infa Continue
-		git config -l --show-origin |Write-Information -infa Continue
-		git status |Write-Information -infa Continue
-		'git log --oneline' |Write-Information -infa Continue
-		git log --oneline |Write-Information -infa Continue
-		'git shortlog -n -e -s' |Write-Information -infa Continue
-		git shortlog -n -e -s |Write-Information -infa Continue
 		$authors = git shortlog -nes |
 			Select-String '^\s*(?<Commits>\d+)\s+(?<Name>\b[^>]+\b)\s+<(?<Email>[^>]+)>$' |
 			Add-CapturesToMatches.ps1
 		$authors |Out-String |Write-Verbose
 		[int] $max = ($authors |Measure-Object Commits -Maximum).Maximum
-		Write-Information "max: $max  authors: $authors" -infa Continue
-		Write-Information "commits: $($authors.Commits)" -infa Continue
 		[int] $oneSigmaFromTop = $max - ($authors.Commits |Measure-StandardDeviation.ps1)
 		Write-Verbose "Authors with $oneSigmaFromTop or more commits will be included as default code owners."
 		$DefaultOwner = $authors |Where-Object {[int] $_.Commits -ge $oneSigmaFromTop} |ForEach-Object Email

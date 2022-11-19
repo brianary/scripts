@@ -3,7 +3,7 @@
 Tests Adds GitHub Linguist overrides to a repo's .gitattributes.
 #>
 
-Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
+Describe 'Add-GitHubMetadata' -Skip -Tag Add-GitHubMetadata {
 	BeforeAll {
 		if(!(Get-Module -List Detextive)) {Install-Module Detextive -Force}
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
