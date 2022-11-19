@@ -38,13 +38,13 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			'.editorconfig' |Should -Not -Exist -Because 'a new repo should not have an .editorconfig'
 			'.github\CODEOWNERS' |Should -Not -Exist -Because 'a new repo should not have a CODEOWNERS'
 			'README.md' |Should -Not -Exist -Because 'a new repo should not have a readme'
-			Add-GitHubMetadata.ps1 -DefaultOwner arthurd@example.com -NoWarnings
+			Add-GitHubMetadata.ps1 -DefaultOwner 'test@example.com' -NoWarnings
 			'.gitattributes' |Should -Exist
 			'.gitattributes' |Should -FileContentMatchExactly '\*\*/packages/\*\* linguist-vendored'
 			'.editorconfig' |Should -Exist
 			'.editorconfig' |Should -FileContentMatchMultilineExactly '# defaults\r?\n\[\*\]\r?\nindent_style'
 			'.github\CODEOWNERS' |Should -Exist
-			'.github\CODEOWNERS' |Should -FileContentMatchExactly '\* arthurd@example.com'
+			'.github\CODEOWNERS' |Should -FileContentMatchExactly '\* test@example.com'
 			'README.md' |Should -Exist
 			'README.md' |Should -FileContentMatchMultilineExactly '\A.+\r?\n=+\r?\n'
 		}

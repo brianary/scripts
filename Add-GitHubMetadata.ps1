@@ -228,6 +228,8 @@ function Add-CodeOwners
 			Add-CapturesToMatches.ps1
 		$authors |Out-String |Write-Verbose
 		[int] $max = ($authors |Measure-Object Commits -Maximum).Maximum
+		Write-Information "max: $max  authors: $authors" -infa Continue
+		Write-Information "commits: $($authors.Commits)" -infa Continue
 		[int] $oneSigmaFromTop = $max - ($authors.Commits |Measure-StandardDeviation.ps1)
 		Write-Verbose "Authors with $oneSigmaFromTop or more commits will be included as default code owners."
 		$DefaultOwner = $authors |Where-Object {[int] $_.Commits -ge $oneSigmaFromTop} |ForEach-Object Email
