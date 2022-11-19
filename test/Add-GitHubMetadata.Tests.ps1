@@ -3,7 +3,7 @@
 Tests Adds GitHub Linguist overrides to a repo's .gitattributes.
 #>
 
-Describe 'Add-GitHubMetadata' -Skip -Tag Add-GitHubMetadata {
+Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 	BeforeAll {
 		if(!(Get-Module -List Detextive)) {Install-Module Detextive -Force}
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
@@ -14,12 +14,12 @@ Describe 'Add-GitHubMetadata' -Skip -Tag Add-GitHubMetadata {
 	}
 	BeforeEach {
 		Push-Location (mkdir "TestDrive:\$(New-Guid)")
-		git init |ForEach-Object {Write-Output "::warning::$_"}
+		git init |Write-Information -infa Continue
 		'' |Out-File nothing
 		git add -A
-		git commit -m first |ForEach-Object {Write-Output "::warning::$_"}
-		git status |ForEach-Object {Write-Output "::warning::$_"}
-		git shortlog |ForEach-Object {Write-Output "::warning::$_"}
+		git commit -m first |Write-Information -infa Continue
+		git status |Write-Information -infa Continue
+		git shortlog |Write-Information -infa Continue
 	}
 	AfterEach {
 		if("$PWD" -match "\A$([regex]::Escape($TestDrive))") {Pop-Location}
