@@ -71,6 +71,7 @@ Get-PSProvider alias |ConvertTo-Xml |Format-Xml.ps1 -NewLineOnAttributes
 </Objects>
 #>
 
+#Requires -Version 7
 [CmdletBinding()][OutputType([string])] Param(
 # The XML string or document to format.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][xml] $Xml,

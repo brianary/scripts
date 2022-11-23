@@ -33,7 +33,7 @@ WARNING: Adding month(s) as a mean number of days (30.436875).
 1283.12:30:05
 #>
 
-#Requires -Version 3
+#Requires -Version 7
 [CmdletBinding()][OutputType([timespan])] Param(
 <#
 An ISO8601 duration string in one of four formats:

@@ -82,7 +82,7 @@ Accepts wildcards, as supported by Resolve-Path.
 [Parameter(ParameterSetName='ChocolateyPackage')]
 [Parameter(ParameterSetName='NugetPackage')]
 [Parameter(ParameterSetName='NodePackage')]
-[ValidatePattern('\A\S+\z',ErrorMessage='A version number is required')]
+[ValidatePattern('\A\S+\z')]
 [string] $Version,
 <#
 The directory to install NuGet or Node packages to.

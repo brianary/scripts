@@ -9,7 +9,7 @@ System.Management.Automation.PSCredential containing a credential to serialize.
 ConvertTo-PowerShell.ps1
 #>
 
-#Requires -Version 3
+#Requires -Version 7
 [CmdletBinding()] Param(
 # The script path to add the serialized credential to.
 [Parameter(Position=0,Mandatory=$true)][string] $Path,
