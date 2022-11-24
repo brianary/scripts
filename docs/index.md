@@ -43,7 +43,6 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Expand-EnvironmentVariables.ps1](Expand-EnvironmentVariables.ps1.md)**: Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string.
 - **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1.md)**: Exports MS SQL script for an object from the given server.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
-- &#x1F199; **[Export-Fake4TargetsGraph.ps1](Export-Fake4TargetsGraph.ps1.md)**: Exports a graph of a Fake4 build script's targets.
 - &#x1F199; **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
 - &#x1F199; **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
 - &#x1F199; **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
@@ -92,7 +91,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-RandomBytes.ps1](Get-RandomBytes.ps1.md)**: Returns random bytes.
 - **[Get-RepoName.ps1](Get-RepoName.ps1.md)**: Gets the name of the repo.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1.md)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
-- &#x1F199; **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
+- **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
 - **[Get-Todos.ps1](Get-Todos.ps1.md)**: Returns the TODOs for the current git repo, which can help document technical debt.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.
 - **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
