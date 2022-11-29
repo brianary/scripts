@@ -223,7 +223,7 @@ function Add-CodeOwners
 	if(!$DefaultOwner)
 	{
 		Write-Verbose 'Determining default code owner(s).'
-		$authors = git shortlog -nes |
+		$authors = git shortlog -nes HEAD |
 			Select-String '^\s*(?<Commits>\d+)\s+(?<Name>\b[^>]+\b)\s+<(?<Email>[^>]+)>$' |
 			Add-CapturesToMatches.ps1
 		$authors |Out-String |Write-Verbose
