@@ -39,7 +39,7 @@ ConvertFrom-Json '[{"a":1,"b":2,"c":{"d":"\/Date(1490216371478)\/","e":null}}]' 
 # Indicates the first line has already been indented. You can probably ignore this.
 [switch] $SkipInitialIndent,
 # The maximum width of string literals.
-[int] $Width,
+[ValidateRange(1,0xFFFF)][uint16] $Width = 80,
 <#
 Generates a key to use for encrypting credential and secure string literals.
 If this is omitted, credentials will be encrypted using DPAPI, which will only be
@@ -129,6 +129,7 @@ Begin
 
 	filter Format-WrapString
 	{
+		Write-Debug "Format-WrapString '$_' -Width $Width"
 		for($i = 0; ($i+$Width) -lt $_.Length; $i += $Width) {$_.Substring($i,$Width)}
 		if($_.Length % $Width) {$_.Substring($_.Length - ($_.Length % $Width))}
 	}
@@ -243,6 +244,7 @@ $tab)
 	}
 	elseif($Value -is [pscredential])
 	{
+		Write-Debug "Credential $($Value.UserName)"
 		$username = "'$($Value.UserName -replace "'","''")'"
 		$password =
 			if(!$Value.Password) {'$null'}

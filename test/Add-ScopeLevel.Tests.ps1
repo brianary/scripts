@@ -17,7 +17,7 @@ Describe 'Add-ScopeLevel' -Tag Add-ScopeLevel {
 				Should -HaveCount 0 -Because 'there should be no style errors'
 		}
 	}
-	Context 'Convert a scope level to account for another call stack level.' -Tag Example {
+	Context 'Convert a scope level to account for another call stack level.' -Tag ScopeLevel {
 		It 'Calculates local scope' {
 			Add-ScopeLevel.ps1 Local |Should -BeExactly '1'
 		}
