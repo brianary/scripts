@@ -8,6 +8,9 @@ System.DateTime values to add the TimeSpan value to.
 .OUTPUTS
 System.DateTime values with the TimeSpan added.
 
+.FUNCTIONALITY
+Date and time
+
 .EXAMPLE
 Get-Date |Add-TimeSpan.ps1 00:00:30
 

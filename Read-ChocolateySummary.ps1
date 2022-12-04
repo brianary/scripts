@@ -6,6 +6,9 @@ Retrieves the a summary from the Chocolatey log.
 System.Management.Automation.PSCustomObject with LogTime, Level, and Text of the last
 Chocolatey log entries.
 
+.FUNCTIONALITY
+Chocolatey
+
 .LINK
 https://chocolatey.org/
 

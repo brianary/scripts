@@ -5,6 +5,9 @@ Assigns a value to use for the specified cmdlet parameter to use when one is not
 .INPUTS
 System.Object containing the default value to assign.
 
+.FUNCTIONALITY
+Parameters
+
 .LINK
 Add-ScopeLevel.ps1
 

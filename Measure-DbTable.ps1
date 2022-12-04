@@ -8,6 +8,9 @@ Microsoft.SqlServer.Management.Smo.Table to analyze.
 .OUTPUTS
 System.Management.Automation.PSCustomObject that describes each table column.
 
+.FUNCTIONALITY
+Database
+
 .LINK
 https://www.powershellgallery.com/packages/SqlServer/
 

@@ -2,6 +2,9 @@
 .SYNOPSIS
 Imports from a single XML file into the local Scheduled Tasks.
 
+.FUNCTIONALITY
+Scheduled Tasks
+
 .LINK
 https://msdn.microsoft.com/library/windows/desktop/bb736357.aspx
 

@@ -2,6 +2,9 @@
 .SYNOPSIS
 Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
 
+.FUNCTIONALITY
+Scripts
+
 .LINK
 https://docs.microsoft.com/powershell/module/psscriptanalyzer/invoke-scriptanalyzer
 

@@ -9,6 +9,9 @@ System.String of Unicode characters to name.
 .OUTPUT
 System.String of the Unicode code point name.
 
+.FUNCTIONALITY
+Unicode
+
 .LINK
 https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
 

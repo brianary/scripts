@@ -8,6 +8,9 @@ System.String of JSON to combine.
 .OUTPUTS
 System.String of JSON combining the inputs.
 
+.FUNCTIONALITY
+Json
+
 .LINK
 Merge-PSObject.ps1
 

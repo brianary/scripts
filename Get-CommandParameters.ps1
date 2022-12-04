@@ -2,6 +2,9 @@
 .SYNOPSIS
 Returns the parameters of the specified cmdlet.
 
+.FUNCTIONALITY
+Command
+
 .LINK
 Stop-ThrowError.ps1
 

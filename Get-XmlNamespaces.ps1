@@ -6,6 +6,9 @@ Gets the namespaces from a document as a dictionary.
 System.Collections.Generic.Dictionary[System.String,System.String] containing namespace
 prefixes as keys and namespace URIs as values.
 
+.FUNCTIONALITY
+XML
+
 .LINK
 https://stackoverflow.com/a/26786080/54323
 

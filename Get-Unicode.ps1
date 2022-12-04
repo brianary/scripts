@@ -14,6 +14,9 @@ System.Int32 value of a Unicode codepoint.
 .OUTPUTS
 System.String of Unicode character(s) identified by codepoints.
 
+.FUNCTIONALITY
+Unicode
+
 .LINK
 https://docs.microsoft.com/dotnet/api/system.char.convertfromutf32
 

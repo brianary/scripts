@@ -2,6 +2,9 @@
 .SYNOPSIS
 Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
 
+.FUNCTIONALITY
+Scheduled Tasks
+
 .EXAMPLE
 Copy-SchTasks.ps1 SourceComputer DestComputer
 

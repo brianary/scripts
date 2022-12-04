@@ -3,7 +3,7 @@
 Combines a filename with a string.
 
 .DESCRIPTION
-Join-FileName appends a string to a filename, including a new extension 
+Join-FileName appends a string to a filename, including a new extension
 overwrites the filename's extension.
 
 .INPUTS
@@ -11,6 +11,9 @@ System.String file path.
 
 .OUTPUTS
 System.String file path with appended text.
+
+.FUNCTIONALITY
+FileName
 
 .EXAMPLE
 Join-FileName.ps1 activity.log '-20161111'

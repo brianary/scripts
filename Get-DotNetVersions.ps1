@@ -2,6 +2,9 @@
 .SYNOPSIS
 Determine which .NET Core & Framework versions are installed.
 
+.FUNCTIONALITY
+DotNet
+
 .LINK
 Get-DotNetFrameworkVersions.ps1
 

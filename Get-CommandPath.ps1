@@ -12,6 +12,9 @@ System.String of commands to get the location details of.
 .OUTPUTS
 System.String of location details for the specified commands that were found.
 
+.FUNCTIONALITY
+Command
+
 .LINK
 Get-Command
 

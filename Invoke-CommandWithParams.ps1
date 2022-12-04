@@ -5,6 +5,9 @@ Execute a command by using matching dictionary entries as parameters.
 .INPUTS
 System.Collections.IDictionary, the parameters to supply to the command.
 
+.FUNCTIONALITY
+Command
+
 .LINK
 Split-Keys.ps1
 

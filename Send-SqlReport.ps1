@@ -2,6 +2,9 @@
 .SYNOPSIS
 Execute a SQL statement and email the results.
 
+.FUNCTIONALITY
+Database
+
 .LINK
 Use-SqlcmdParams.ps1
 

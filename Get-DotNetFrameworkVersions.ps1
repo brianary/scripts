@@ -6,6 +6,9 @@ Determine which .NET Frameworks are installed on the requested system.
 System.Collections.Hashtable of semantic version names to version numbers
 of .NET frameworks installed.
 
+.FUNCTIONALITY
+DotNet
+
 .COMPONENT
 Microsoft.Win32.RegistryKey
 

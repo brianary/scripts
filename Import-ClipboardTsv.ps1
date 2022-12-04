@@ -2,6 +2,9 @@
 .SYNOPSIS
 Parses TSV clipboard data into objects.
 
+.FUNCTIONALITY
+Clipboard
+
 .LINK
 Get-Clipboard
 

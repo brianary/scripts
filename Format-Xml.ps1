@@ -8,6 +8,9 @@ System.Xml.XmlDocument to serialize.
 .OUTPUTS
 System.String containing the serialized XML document with desired indents.
 
+.FUNCTIONALITY
+XML
+
 .EXAMPLE
 Get-PSProvider alias |ConvertTo-Xml |Format-Xml.ps1
 

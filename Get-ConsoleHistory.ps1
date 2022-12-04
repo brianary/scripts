@@ -8,6 +8,9 @@ System.Management.Automation.PSObject with these properties:
 * Id: The position of the command in the console history.
 * CommandLine: The command entered in the history.
 
+.FUNCTIONALITY
+Console
+
 .EXAMPLE
 Get-ConsoleHistory.ps1 |where CommandLine -like *readme*
 

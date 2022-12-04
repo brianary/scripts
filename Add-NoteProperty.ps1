@@ -8,6 +8,9 @@ in the pipeline, or add a script property to objects which executes each time it
 
 This adds a static value to each object, but calculated from each object.
 
+.FUNCTIONALITY
+Properties
+
 .LINK
 Add-Member
 

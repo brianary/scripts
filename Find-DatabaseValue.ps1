@@ -6,6 +6,9 @@ Searches an entire database for a field value.
 System.Management.Automation.PSCustomObject for each found row, including the #TableName,
 #ColumnName, and all fields.
 
+.FUNCTIONALITY
+Database
+
 .COMPONENT
 System.Configuration
 

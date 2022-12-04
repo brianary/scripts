@@ -2,6 +2,9 @@
 .SYNOPSIS
 Set the default Server and ApiKey for Send-SeqEvent.ps1
 
+.FUNCTIONALITY
+Seq
+
 .LINK
 https://getseq.net/
 

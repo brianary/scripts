@@ -6,6 +6,9 @@ Make a command unavailable.
 System.String containing a command name, or an object with a Name of a command
 and maybe a specific CommandType.
 
+.FUNCTIONALITY
+Command
+
 .LINK
 Stop-ThrowError.ps1
 

@@ -2,6 +2,9 @@
 .SYNOPSIS
 Removes a credential from secure storage.
 
+.FUNCTIONALITY
+Credential
+
 .LINK
 ConvertTo-Base64.ps1
 

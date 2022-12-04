@@ -5,6 +5,8 @@ Creates a simple boilerplate script.
 .PARAMETER NameVerb
 The verb prefix name of the script, e.g. Get or Update or Add.
 
+.FUNCTIONALITY
+Scripts
 
 .EXAMPLE
 New-Script.ps1 Add Xml -Synopsis 'Insert XML...' -OutputType xml
@@ -61,7 +63,7 @@ Creates a basic script.
 )
 DynamicParam
 {
-    Get-Verb |foreach Verb |Add-DynamicParam.ps1 NameVerb string -Position 0 -Mandatory
+    Get-Verb |ForEach-Object Verb |Add-DynamicParam.ps1 NameVerb string -Position 0 -Mandatory
     $DynamicParams
 }
 Process

@@ -8,6 +8,9 @@ System.String value to test for a valid JSON format.
 .OUTPUTS
 System.Boolean indicating that the string can be parsed as JSON.
 
+.FUNCTIONALITY
+Json
+
 .EXAMPLE
 Test-Json.ps1 '{"value":6}'
 

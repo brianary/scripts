@@ -11,6 +11,9 @@ It can be particularly useful for creating an object-drop script, with all depen
 .INPUTS
 System.Data.DataRow, INFORMATION_SCHEMA.TABLES or INFORMATION_SCHEMA.ROUTINES records.
 
+.FUNCTIONALITY
+Database
+
 .COMPONENT
 Microsoft.SqlServer.Smo.Server
 

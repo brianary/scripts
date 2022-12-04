@@ -5,6 +5,9 @@ Gets the path of the VSCode settings.config file.
 .OUTPUTS
 System.String containing the path of the settings.config file.
 
+.FUNCTIONALITY
+VSCode
+
 .LINK
 https://code.visualstudio.com/docs/getstarted/settings
 

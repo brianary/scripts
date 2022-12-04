@@ -2,6 +2,9 @@
 .SYNOPSIS
 Parses TSV clipboard data into HTML table data which is copied back to the clipboard.
 
+.FUNCTIONALITY
+Clipboard
+
 .EXAMPLE
 Convert-ClipboardTsvToHtml.ps1
 

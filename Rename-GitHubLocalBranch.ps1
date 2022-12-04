@@ -2,6 +2,9 @@
 .SYNOPSIS
 Rename a git repository branch.
 
+.FUNCTIONALITY
+GitHub
+
 .LINK
 https://docs.github.com/en/github/administering-a-repository/managing-branches-in-your-repository/renaming-a-branch#updating-a-local-clone-after-a-branch-name-changes
 

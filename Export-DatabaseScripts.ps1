@@ -12,6 +12,9 @@ There are a default set of SMO scripting options set to do a typical export, tho
 
 This does require SMO to be installed on the machine (it comes with SQL Management Studio).
 
+.FUNCTIONALITY
+Database
+
 .COMPONENT
 Microsoft.SqlServer.Smo.Server
 

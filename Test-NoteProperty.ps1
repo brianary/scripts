@@ -9,6 +9,9 @@ or ConvertFrom-Json or Invoke-RestMethod that may have NoteProperties.
 .OUTPUTS
 System.Boolean indicating at least one matching NoteProperty was found.
 
+.FUNCTIONALITY
+Properties
+
 .EXAMPLE
 $r = Invoke-RestMethod @args; if(Test-NoteProperty.ps1 -Name Status -InputObject $r) { … }
 

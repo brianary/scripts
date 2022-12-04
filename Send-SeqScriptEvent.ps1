@@ -2,6 +2,9 @@
 .SYNOPSIS
 Sends an event (often an error) from a script to a Seq server, including script info.
 
+.FUNCTIONALITY
+Seq
+
 .LINK
 Send-SeqEvent.ps1
 

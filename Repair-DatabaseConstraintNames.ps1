@@ -2,6 +2,9 @@
 .SYNOPSIS
 Finds database constraints with system-generated names and gives them deterministic names.
 
+.FUNCTIONALITY
+Database
+
 .LINK
 Use-SqlcmdParams.ps1
 

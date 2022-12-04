@@ -22,6 +22,9 @@ System.Management.Automation.PSCustomObject that describes the column:
 * StandardDeviation
 * additonal properties, depending on type
 
+.FUNCTIONALITY
+Database
+
 .LINK
 https://www.powershellgallery.com/packages/SqlServer/
 

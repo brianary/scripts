@@ -2,6 +2,9 @@
 .SYNOPSIS
 Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string.
 
+.FUNCTIONALITY
+EnvironmentVariables
+
 .LINK
 https://docs.microsoft.com/dotnet/api/system.environment.expandenvironmentvariables
 

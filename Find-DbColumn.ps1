@@ -12,6 +12,9 @@ System.Management.Automation.PSCustomObject for each found column:
 * Nullable
 * DefaultValue
 
+.FUNCTIONALITY
+Database
+
 .COMPONENT
 System.Configuration
 

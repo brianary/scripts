@@ -11,6 +11,9 @@ System.Management.Automation.PSObject
 or System.Object[] if -AsValues is specified
 or System.Collections.Specialized.OrderedDictionary if -AsDictionary is specified
 
+.FUNCTIONALITY
+Database
+
 .EXAMPLE
 Invoke-Sqlcmd "select top 3 ProductID, Name from Production.Product" -ServerInstance ServerName -Database AdventureWorks |ConvertFrom-DataRow.ps1 |ConvertTo-Html
 #>

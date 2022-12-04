@@ -9,6 +9,9 @@ System.Xml.XmlDocument or System.String containing the path to an XML file.
 System.Management.Automation.PSCustomObject for each namespace, with Path,
 Node, Alias, Urn, and Url properties.
 
+.FUNCTIONALITY
+XML
+
 .LINK
 https://www.w3.org/TR/xmlschema-1/#schema-loc
 

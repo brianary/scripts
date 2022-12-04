@@ -11,6 +11,9 @@ System.Data.Common.DbConnection (e.g. System.Data.SqlClient.SqlConnection) or
 System.Data.Common.DbConnectionStringBuilder (e.g. System.Data.SqlClient.SqlConnectionStringBuilder),
 as requested.
 
+.FUNCTIONALITY
+Database
+
 .LINK
 https://msdn.microsoft.com/library/system.data.common.dbproviderfactories.aspx
 

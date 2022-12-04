@@ -9,6 +9,9 @@ System.String containing a file path or potential XML data.
 System.Boolean indicating the XML is parseable, or System.String containing the
 parse error if -ErrorMessage is present and the XML isn't parseable.
 
+.FUNCTIONALITY
+XML
+
 .LINK
 https://www.w3.org/TR/xmlschema-1/#xsi_schemaLocation
 

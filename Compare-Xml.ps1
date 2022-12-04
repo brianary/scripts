@@ -9,6 +9,9 @@ System.Xml.XmlDocument to compare to the reference XML.
 System.Xml.XmlDocument containing XSLT that can be applied to the reference XML to
 transform it to the difference XML. It contains templates for changed nodes.
 
+.FUNCTIONALITY
+XML
+
 .LINK
 Resolve-XPath.ps1
 

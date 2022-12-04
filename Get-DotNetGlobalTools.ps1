@@ -1,6 +1,9 @@
 ﻿<#
 .SYNOPSIS
 Returns a list of global dotnet tools.
+
+.FUNCTIONALITY
+DotNet
 #>
 
 #Requires -Version 3

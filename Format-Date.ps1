@@ -2,6 +2,9 @@
 .SYNOPSIS
 Returns a date/time as a named format.
 
+.FUNCTIONALITY
+Date and time
+
 .LINK
 Get-Date
 

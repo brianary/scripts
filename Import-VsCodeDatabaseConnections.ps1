@@ -2,6 +2,9 @@
 .SYNOPSIS
 Adds config XDT connection strings to VSCode settings.
 
+.FUNCTIONALITY
+VSCode
+
 .LINK
 https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql
 

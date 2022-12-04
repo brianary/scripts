@@ -9,6 +9,9 @@ If the command does not exist, but the path is valid, an alias is created.
 
 Otherwise, if one of several installation methods is provided, an installation attempt is made before aliasing.
 
+.FUNCTIONALITY
+Command
+
 .COMPONENT
 System.IO.Compression.FileSystem
 

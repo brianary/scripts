@@ -2,6 +2,9 @@
 .SYNOPSIS
 Sets a VSCode setting.
 
+.FUNCTIONALITY
+VSCode
+
 .LINK
 https://code.visualstudio.com/docs/getstarted/settings
 

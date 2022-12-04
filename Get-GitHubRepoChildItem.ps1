@@ -1,6 +1,9 @@
 <#
 .SYNOPSIS
 Adds any missing topics based on repo content.
+
+.FUNCTIONALITY
+GitHub
 #>
 
 #Requires -Version 7

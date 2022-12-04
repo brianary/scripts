@@ -2,6 +2,9 @@
 .SYNOPSIS
 Replaces each of the longest matching parts of a string with an embedded environment variable with that value.
 
+.FUNCTIONALITY
+EnvironmentVariables
+
 .EXAMPLE
 Compress-EnvironmentVariables.ps1 'C:\Program Files\Git\bin\git.exe'
 

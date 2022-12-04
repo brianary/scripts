@@ -2,6 +2,9 @@
 .SYNOPSIS
 Enables ANSI terminal colors.
 
+.FUNCTIONALITY
+Console
+
 .LINK
 https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_ansi_terminals
 

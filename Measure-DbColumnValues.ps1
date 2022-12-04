@@ -9,6 +9,9 @@ or Microsoft.SqlServer.Management.Smo.Table to select a column from by name.
 .OUTPUTS
 System.Management.Automation.PSCustomObject that describes each counted value.
 
+.FUNCTIONALITY
+Database
+
 .LINK
 https://www.powershellgallery.com/packages/SqlServer/
 

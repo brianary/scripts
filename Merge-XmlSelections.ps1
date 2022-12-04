@@ -8,6 +8,9 @@ System.Xml.XmlNode of XML or System.String of XML file names to select property 
 .OUTPUTS
 System.Management.Automation.PSCustomObject object with the selected properties.
 
+.FUNCTIONALITY
+XML
+
 .LINK
 https://github.com/brianary/Detextive/
 

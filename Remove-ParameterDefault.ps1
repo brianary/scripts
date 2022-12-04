@@ -5,6 +5,9 @@ Removes a value that would have been used for a parameter if none was specified,
 .INPUTS
 An object with a ParameterName property that identifies a property to remove a default for.
 
+.FUNCTIONALITY
+Parameters
+
 .LINK
 Add-ScopeLevel.ps1
 

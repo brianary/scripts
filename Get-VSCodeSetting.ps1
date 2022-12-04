@@ -5,6 +5,9 @@ Sets a VSCode setting.
 .OUTPUTS
 System.String, System.Double, System.Int32, System.Boolean depending on VS Code JSON value type.
 
+.FUNCTIONALITY
+VSCode
+
 .LINK
 https://code.visualstudio.com/docs/getstarted/settings
 

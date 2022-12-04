@@ -44,6 +44,9 @@ Or, if you wish to support Use-SqlcmdParams.ps1 in scripts that call your script
 # ...
 )
 
+.FUNCTIONALITY
+Database
+
 .COMPONENT
 System.Configuration
 

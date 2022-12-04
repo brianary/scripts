@@ -11,6 +11,9 @@ each selected node into a PSObject.
 .OUTPUTS
 System.Management.Automation.PSCustomObject object created from selected XML.
 
+.FUNCTIONALITY
+XML
+
 .LINK
 Select-Xml
 

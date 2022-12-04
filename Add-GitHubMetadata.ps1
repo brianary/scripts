@@ -6,6 +6,9 @@ Adds GitHub Linguist overrides to a repo's .gitattributes.
 There is a lot of metadata that should be added to a good repo.
 This script simplifies adding much of that metadata.
 
+.FUNCTIONALITY
+GitHub
+
 .LINK
 https://github.com/blog/2392-introducing-code-owners
 

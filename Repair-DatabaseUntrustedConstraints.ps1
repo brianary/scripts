@@ -2,6 +2,9 @@
 .SYNOPSIS
 Finds database constraints that have been incompletely re-enabled.
 
+.FUNCTIONALITY
+Database
+
 .LINK
 Use-SqlcmdParams.ps1
 

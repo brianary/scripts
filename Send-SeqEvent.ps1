@@ -8,6 +8,9 @@ or System.Collections.Specialized.OrderedDictionary
 or System.Data.DataRow
 or an object
 
+.FUNCTIONALITY
+Seq
+
 .LINK
 Invoke-RestMethod
 

@@ -5,6 +5,9 @@ Parse escaped XML into XML and serialize it.
 .INPUTS
 System.String, some escaped XML.
 
+.FUNCTIONALITY
+XML
+
 .OUTPUTS
 System.String, the XML parsed and serialized.
 

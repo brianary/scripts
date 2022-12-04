@@ -2,6 +2,9 @@
 .SYNOPSIS
 Adds a VS Code MSSQL database connection to the repo.
 
+.FUNCTIONALITY
+VSCode
+
 .LINK
 https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql
 

@@ -8,6 +8,9 @@ System.String containing JSON.
 .OUTPUTS
 System.String containing updated JSON.
 
+.FUNCTIONALITY
+Json
+
 .LINK
 ConvertFrom-Json
 

@@ -2,6 +2,9 @@
 .SYNOPSIS
 Sets the progress bar display view.
 
+.FUNCTIONALITY
+Progress
+
 .LINK
 about_ANSI_Terminals
 

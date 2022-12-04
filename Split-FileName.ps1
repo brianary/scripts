@@ -3,7 +3,7 @@
 Returns the specified part of the filename.
 
 .DESCRIPTION
-Split-FileName returns only the specified part of a filename: 
+Split-FileName returns only the specified part of a filename:
 either the filename without extension (default) or extension.
 It can also tell whether the filename has an extension.
 
@@ -13,6 +13,9 @@ System.String file path to parse.
 .OUTPUTS
 System.String containing the base file name (or extension),
 or System.Boolean if the -HasAttribute switch is present.
+
+.FUNCTIONALITY
+FileName
 
 .EXAMPLE
 Split-FileName.ps1 readme.txt

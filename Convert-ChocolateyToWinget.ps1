@@ -8,6 +8,9 @@ Convert-ChocolateyToWinget.ps1 -SkipPackages autohotkey,git
 Moves package management from Chocolatey to WinGet for everything except
 autohotkey (maybey you are managing Adobe Digital Editions with Chocolatey),
 or git (maybe you are managing PoshGit with Chocolatey).
+
+.FUNCTIONALITY
+Chocolatey
 #>
 
 #Requires -Version 3

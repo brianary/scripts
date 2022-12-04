@@ -8,6 +8,9 @@ System.Object (any object) to serialize.
 .OUTPUTS
 System.String for each XML-serialized value or property.
 
+.FUNCTIONALITY
+XML
+
 .EXAMPLE
 ConvertTo-XmlElements.ps1 @{html=@{body=@{p='Some text.'}}}
 

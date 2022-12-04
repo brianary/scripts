@@ -2,6 +2,9 @@
 .SYNOPSIS
 Renames all instances of a script, and updates any usage of it.
 
+.FUNCTIONALITY
+Scripts
+
 .LINK
 Set-RegexReplace.ps1
 

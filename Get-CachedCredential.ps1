@@ -12,6 +12,9 @@ Register-SecretVault Microsoft.PowerShell.SecretStore -name $VaultName [-Default
 
 You can control whether the vault prompts for a password using Set-SecretStoreConfiguration
 
+.FUNCTIONALITY
+Credential
+
 .LINK
 https://devblogs.microsoft.com/powershell/secretmanagement-and-secretstore-are-generally-available/
 

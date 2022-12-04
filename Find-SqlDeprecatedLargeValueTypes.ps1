@@ -58,6 +58,9 @@ Routine
 
 * TODO
 
+.FUNCTIONALITY
+Database
+
 .LINK
 Use-SqlcmdParams.ps1
 

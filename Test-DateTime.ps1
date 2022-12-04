@@ -8,6 +8,9 @@ System.String containing a possible date to test parse.
 .OUTPUTS
 System.Boolean indicating the string is a parseable date.
 
+.FUNCTIONALITY
+Date and time
+
 .LINK
 https://msdn.microsoft.com/library/8kb3ddd4.aspx
 

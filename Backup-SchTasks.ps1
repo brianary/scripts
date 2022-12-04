@@ -2,6 +2,9 @@
 .SYNOPSIS
 Exports the local list of Scheduled Tasks into a single XML file.
 
+.FUNCTIONALITY
+Scheduled Tasks
+
 .LINK
 https://msdn.microsoft.com/library/windows/desktop/bb736357.aspx
 

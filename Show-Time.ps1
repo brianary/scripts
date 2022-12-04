@@ -11,6 +11,9 @@ Format-Date.ps1
 .LINK
 Get-Date
 
+.FUNCTIONALITY
+Date and time
+
 .EXAMPLE
 Show-Time.ps1 Iso8601Z Iso8601WeekDate Iso8601OrdinalDate -Separator ' * '
 

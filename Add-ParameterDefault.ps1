@@ -5,6 +5,9 @@ Appends or creates a value to use for the specified cmdlet parameter to use when
 .DESCRIPTION
 This conveniently sets cmdlet defaults.
 
+.FUNCTIONALITY
+Parameters
+
 .INPUTS
 System.Object containing a default value to include.
 

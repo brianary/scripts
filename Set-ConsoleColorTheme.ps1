@@ -2,6 +2,9 @@
 .SYNOPSIS
 Overrides ConsoleClass window color palette entries with a preset color theme.
 
+.FUNCTIONALITY
+Console
+
 .LINK
 Set-ConsoleColors.ps1
 
