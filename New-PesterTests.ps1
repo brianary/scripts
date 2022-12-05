@@ -2,6 +2,9 @@
 .SYNOPSIS
 Creates a new Pester testing script from a script's examples and parameter sets.
 
+.FUNCTIONALITY
+Scripts
+
 .LINK
 Stop-ThrowError.ps1
 

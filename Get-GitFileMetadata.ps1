@@ -2,6 +2,9 @@
 .SYNOPSIS
 Returns the creation and last modification metadata for a file in a git repo.
 
+.FUNCTIONALITY
+Git and GitHub
+
 .LINK
 Use-Command.ps1
 

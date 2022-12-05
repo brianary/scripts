@@ -8,6 +8,9 @@ Objects with System.String Path or FullName properties.
 .OUTPUTS
 System.String of the repo name (the final segment of the first remote location).
 
+.FUNCTIONALITY
+Git and GitHub
+
 .EXAMPLE
 Get-RepoName.ps1
 #>

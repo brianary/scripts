@@ -8,6 +8,9 @@ Any .NET object to convert into a properties hash.
 .OUTPUTS
 System.Collections.Specialized.OrderedDictionary of the object's property names and values.
 
+.FUNCTIONALITY
+Dictionary
+
 .LINK
 Get-Member
 

@@ -12,6 +12,9 @@ returned by Get-ScheduledTask.
 .OUTPUTS
 System.String containing iCalendar data.
 
+.FUNCTIONALITY
+Scheduled Tasks
+
 .LINK
 http://webcoder.info/recurrence.html
 

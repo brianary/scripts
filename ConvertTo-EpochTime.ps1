@@ -8,6 +8,9 @@ System.DateTime values to convert to integers.
 .OUTPUTS
 System.Int32 values converted from date and time values.
 
+.FUNCTIONALITY
+Date and time
+
 .LINK
 https://en.wikipedia.org/wiki/Unix_time
 

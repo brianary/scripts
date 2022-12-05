@@ -6,7 +6,7 @@ Returns the name of a Unicode code point.
 System.Int32 of a Unicode code point value to name, or
 System.String of Unicode characters to name.
 
-.OUTPUT
+.OUTPUTS
 System.String of the Unicode code point name.
 
 .FUNCTIONALITY

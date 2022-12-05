@@ -25,6 +25,9 @@ date and time in these properties:
 * DecimalTime: the decimal time (10 hours/day, 100 minutes/hour, 100 seconds/minute)
 * GregorianDate: the original Gregorian date, as provided
 
+.FUNCTIONALITY
+Date and time
+
 .LINK
 https://wikipedia.org/wiki/French_Republican_calendar
 

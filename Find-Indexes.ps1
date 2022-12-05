@@ -14,6 +14,9 @@ System.Management.Automation.PSCustomObject with these properties:
 * IsDisabled
 * ColumnsInIndex
 
+.FUNCTIONALITY
+Database
+
 .LINK
 Invoke-Sqlcmd
 

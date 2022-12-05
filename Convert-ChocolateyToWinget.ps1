@@ -10,7 +10,7 @@ autohotkey (maybey you are managing Adobe Digital Editions with Chocolatey),
 or git (maybe you are managing PoshGit with Chocolatey).
 
 .FUNCTIONALITY
-Chocolatey
+System and updates
 #>
 
 #Requires -Version 3

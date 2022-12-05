@@ -5,6 +5,9 @@ Gets the SHA-1 hash of the first commit of the current repo.
 .OUTPUTS
 System.String containing the SHA-1 hash of this repo's first commit.
 
+.FUNCTIONALITY
+Git and GitHub
+
 .LINK
 Use-Command.ps1
 

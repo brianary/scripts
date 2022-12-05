@@ -6,7 +6,7 @@ Copies specified source files that exist in the destination directory.
 System.String of paths to copy from, if matches exist in the destination.
 
 .FUNCTIONALITY
-File
+Files
 
 .EXAMPLE
 Update-Files.ps1 C:\Source\*.txt D:\Dest

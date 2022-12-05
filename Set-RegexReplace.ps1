@@ -9,6 +9,9 @@ Microsoft.PowerShell.Commands.MatchInfo containing a regex match than will be re
 System.String of the input string if the Select-String's input was a string instead of a file.
 (File changes will be saved back to the file.)
 
+.FUNCTIONALITY
+Search and replace
+
 .LINK
 https://docs.microsoft.com/dotnet/standard/base-types/substitutions-in-regular-expressions
 

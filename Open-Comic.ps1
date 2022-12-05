@@ -2,6 +2,9 @@
 .SYNOPSIS
 Opens a comic's PreviewsWorld page.
 
+.FUNCTIONALITY
+Comics
+
 .EXAMPLE
 Find-Comics.ps1 -Creator 'Grant Morrison' |Open-Comic.ps1
 

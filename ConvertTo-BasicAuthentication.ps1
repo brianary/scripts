@@ -8,6 +8,9 @@ System.Management.Automation.PSCredential to convert to the Authorization HTTP h
 .OUTPUTS
 System.String to use as the Authorization HTTP header value.
 
+.FUNCTIONALITY
+HTTP
+
 .LINK
 https://tools.ietf.org/html/rfc1945#section-11.1
 

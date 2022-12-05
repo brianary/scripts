@@ -1,6 +1,9 @@
 <#
 .SYNOPSIS
 Writes to the information stream, with color support and more.
+
+.FUNCTIONALITY
+PowerShell
 #>
 
 #Requires -Version 5.1

@@ -3,7 +3,7 @@
 Sets the progress bar display view.
 
 .FUNCTIONALITY
-Progress
+PowerShell
 
 .LINK
 about_ANSI_Terminals

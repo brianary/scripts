@@ -5,6 +5,9 @@ Adds an incrementing integer property to each pipeline object.
 .DESCRIPTION
 If you want to add a quick index property to objects in a pipeline, this does that.
 
+.FUNCTIONALITY
+PowerShell
+
 .LINK
 Add-Member
 

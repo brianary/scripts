@@ -2,6 +2,9 @@
 .SYNOPSIS
 Updates everything it can on the system.
 
+.FUNCTIONALITY
+System and updates
+
 .LINK
 https://docs.microsoft.com/windows/package-manager/winget/
 

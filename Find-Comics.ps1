@@ -2,6 +2,9 @@
 .SYNOPSIS
 Finds comics.
 
+.FUNCTIONALITY
+Comics
+
 .LINK
 https://api.shortboxed.com/
 

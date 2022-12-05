@@ -5,6 +5,9 @@ Removes a file that may be prone to locking.
 .INPUTS
 System.String containing the path of a file to delete (or rename if deleting fails).
 
+.FUNCTIONALITY
+Files
+
 .EXAMPLE
 Remove-LockyFile.ps1 InUse.dll
 

@@ -2,6 +2,9 @@
 .SYNOPSIS
 Sets certain cmdlet parameter defaults to rational, useful values.
 
+.FUNCTIONALITY
+PowerShell
+
 .LINK
 Use-NetMailConfig.ps1
 

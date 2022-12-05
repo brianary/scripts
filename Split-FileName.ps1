@@ -15,7 +15,7 @@ System.String containing the base file name (or extension),
 or System.Boolean if the -HasAttribute switch is present.
 
 .FUNCTIONALITY
-FileName
+Files
 
 .EXAMPLE
 Split-FileName.ps1 readme.txt

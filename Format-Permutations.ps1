@@ -5,6 +5,9 @@ Builds format strings using every combination of elements from multiple arrays.
 .OUTPUTS
 System.String list of all combinations
 
+.FUNCTIONALITY
+PowerShell
+
 .LINK
 https://social.technet.microsoft.com/wiki/contents/articles/7855.powershell-using-the-f-format-operator.aspx
 

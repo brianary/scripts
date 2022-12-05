@@ -9,6 +9,9 @@ with named capture groups.
 .OUTPUTS
 System.Management.Automation.PSObject containing selected capture group values.
 
+.FUNCTIONALITY
+Search and replace
+
 .EXAMPLE
 Select-String '^(?<Name>.*?\b)\s*(?<Email>\S+@\S+)$' addrbook.txt |Select-CapturesFromMatches.ps1
 

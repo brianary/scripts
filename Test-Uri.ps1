@@ -8,6 +8,9 @@ System.String value to test for a valid URI format.
 .OUTPUTS
 System.Boolean indicating that the string can be parsed as a URI.
 
+.FUNCTIONALITY
+Data formats
+
 .EXAMPLE
 Test-Uri.ps1 http://example.org
 

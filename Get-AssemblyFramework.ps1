@@ -8,6 +8,9 @@ Objects with System.String properties named Path or FullName.
 .OUTPUTS
 System.Management.Automation.PSCustomObject with RuntimeVersion and CompileVersion properties.
 
+.FUNCTIONALITY
+DotNet
+
 .LINK
 https://stackoverflow.com/questions/3460982/determine-net-framework-version-for-dll#25649840
 

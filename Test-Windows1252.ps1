@@ -5,6 +5,9 @@ Determines whether a file contains Windows-1252 bytes that are invalid UTF-8 byt
 .INPUTS
 System.String containing the path to a file to test.
 
+.FUNCTIONALITY
+Data formats
+
 .LINK
 https://en.wikipedia.org/wiki/Windows-1252#Character_set
 

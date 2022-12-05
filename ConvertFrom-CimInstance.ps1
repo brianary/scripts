@@ -8,6 +8,9 @@ Microsoft.Management.Infrastructure.CimInstance to convert to a PSObject.
 .OUTPUTS
 PSObject converted from the CimInstance entered.
 
+.FUNCTIONALITY
+Scheduled Tasks
+
 .EXAMPLE
 $tasks = Get-ScheduledTask |ConvertFrom-CimInstance.ps1
 

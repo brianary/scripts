@@ -2,6 +2,9 @@
 .SYNOPSIS
 Returns a cached list of comics from the Shortboxed API.
 
+.FUNCTIONALITY
+Comics
+
 .LINK
 https://api.shortboxed.com/
 

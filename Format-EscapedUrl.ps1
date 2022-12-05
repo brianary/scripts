@@ -8,6 +8,9 @@ but are a hassle within certain formats (Markdown, JSON, SQL, &c).
 
 This script URL-escapes these characters to %xx format.
 
+.FUNCTIONALITY
+Data formats
+
 .INPUTS
 System.Uri to escape.
 

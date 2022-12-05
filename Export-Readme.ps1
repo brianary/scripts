@@ -111,17 +111,23 @@ function Format-PSScripts([string] $Extension = '', [switch] $entities)
 				$status[$Matches.Script] = Get-StatusSymbol $Matches.Status -entity:$entities
 			}
 		}
-	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\*.ps1
-	$i,$max = 0,($scripts.Count/100)
-	$scripts |
+	[Microsoft.PowerShell.Commands.GroupInfo[]] $functionalities = Get-Item $PSScriptRoot\*.ps1 |
 		ForEach-Object {Get-Help $_.FullName} |
-		ForEach-Object {
-			$name = Split-Path $_.Name -Leaf
-			Write-Progress 'Enumerating PowerShell scripts' 'Writing list' -curr $name -percent ($i++/$max)
-			$symbol = if($status.ContainsKey($name)){$status[$name]}
-			"- $symbol**[$name]($name$Extension)**: $($_.Synopsis)"
-		}
-	Write-Progress 'Enumerating PowerShell scripts' -Completed
+		Group-Object Functionality |
+		Sort-Object {if($_.Name){$_.Name}else{'ZZZ'}}
+	foreach($functionality in $functionalities)
+	{
+		''
+		$category = if($functionality.Name) {$functionality.Name} else {'Other'}
+		"### $category"
+		''
+		$functionality.Group |
+			ForEach-Object {
+				$name = Split-Path $_.Name -Leaf
+				$symbol = if($status.ContainsKey($name)){$status[$name]}
+				"- $symbol**[$name]($name$Extension)**: $($_.Synopsis)"
+			}
+	}
 }
 
 function Export-FSharpFormatting
@@ -286,8 +292,8 @@ See [PS5](PS5) for legacy scripts, [syscfg](syscfg) for single-use system config
 
 PowerShell Scripts
 ------------------
-![script dependencies]($DependenciesImage)
 
+![script dependencies]($DependenciesImage)
 $(Format-PSScripts)
 
 F# Scripts

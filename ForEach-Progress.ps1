@@ -6,7 +6,7 @@ Performs an operation against each item in a collection of input objects, with a
 System.Management.Automation.PSObject to process.
 
 .FUNCTIONALITY
-Progress
+PowerShell
 
 .EXAMPLE
 1..10 |ForEach-Progress.ps1 -Activity 'Processing' {"$_"} {Write-Host "item: $_"; sleep 2}

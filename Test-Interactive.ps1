@@ -5,6 +5,9 @@ Determines whether both the user and process are interactive.
 .OUTPUTS
 System.Boolean indicating whether the session is interactive.
 
+.FUNCTIONALITY
+PowerShell
+
 .EXAMPLE
 Test-Interactive.ps1
 

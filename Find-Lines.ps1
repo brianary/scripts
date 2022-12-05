@@ -5,6 +5,9 @@ Searches a specific subset of files for lines matching a pattern.
 .OUTPUTS
 Microsoft.PowerShell.Commands.MatchInfo with each match found.
 
+.FUNCTIONALITY
+Search and replace
+
 .EXAMPLE
 Find-Lines 'using System;' *.cs "$env:USERPROFILE\Documents\Visual Studio*\Projects" -CaseSensitive -List
 

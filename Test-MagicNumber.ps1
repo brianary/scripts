@@ -8,6 +8,9 @@ System.String path of a file to read.
 .OUTPUTS
 System.Boolean affirming that the bytes provided were found at the position given in the specified file.
 
+.FUNCTIONALITY
+Data formats
+
 .LINK
 https://en.wikipedia.org/wiki/Magic_number_(programming)
 

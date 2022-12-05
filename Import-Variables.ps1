@@ -6,6 +6,9 @@ Creates local variables from a data row or dictionary (hashtable).
 System.Collections.IDictionary with keys and values to import as variables,
 or System.Management.Automation.PSCustomObject with properties to import as variables.
 
+.FUNCTIONALITY
+PowerShell
+
 .LINK
 Add-ScopeLevel.ps1
 

@@ -9,7 +9,7 @@ System.String or System.Byte[] of data to base64-encode.
 System.String containing the base64-encoded data.
 
 .FUNCTIONALITY
-Base64
+Data encoding
 
 .LINK
 https://docs.microsoft.com/dotnet/api/system.convert.tobase64string

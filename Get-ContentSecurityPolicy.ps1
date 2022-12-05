@@ -10,6 +10,9 @@ any object with a Uri or Url property
 .OUTPUTS
 System.Management.Automation.PSCustomObject containing the parsed policy.
 
+.FUNCTIONALITY
+HTTP
+
 .LINK
 https://content-security-policy.com/
 

@@ -8,6 +8,9 @@ System.String name of a variable.
 .OUTPUTS
 System.Boolean indicating whether the variable name is defined.
 
+.FUNCTIONALITY
+PowerShell
+
 .LINK
 Add-ScopeLevel.ps1
 

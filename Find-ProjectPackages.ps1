@@ -9,6 +9,9 @@ System.String containing a package name (wildcards supported).
 System.Management.Automation.PSCustomObject each with properties for the Name,
 Version, and File of packages found.
 
+.FUNCTIONALITY
+Packages and libraries
+
 .LINK
 Select-Xml
 

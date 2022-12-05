@@ -11,6 +11,9 @@ System.Collections.IDictionary, the source dictionary to select key-value pairs 
 .OUTPUTS
 System.Collections.Specialized.OrderedDictionary, the dictionary matching key-value pairs are copied to.
 
+.FUNCTIONALITY
+Dictionary
+
 .LINK
 https://msdn.microsoft.com/library/System.Collections.IDictionary.aspx
 

@@ -7,6 +7,9 @@ Object with System.String property named Path containing the path to a file to t
 
 .OUTPUTS
 System.Boolean indicating whether the file is locked.
+
+.FUNCTIONALITY
+Files
 #>
 
 #Requires -Version 3

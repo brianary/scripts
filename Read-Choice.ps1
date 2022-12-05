@@ -8,6 +8,9 @@ System.String containing a choice to offer.
 .OUTPUTS
 System.String containing the choice that was selected.
 
+.FUNCTIONALITY
+PowerShell
+
 .LINK
 https://msdn.microsoft.com/library/system.management.automation.host.pshostuserinterface.promptforchoice.aspx
 

@@ -8,6 +8,9 @@ System.IO.FileInfo list, typically piped from Get-ChildItem.
 .OUTPUTS
 System.String containing the full paths of the both matching files.
 
+.FUNCTIONALITY
+Files
+
 .EXAMPLE
 Get-ChildItem -Recurse -File |Find-DuplicateFiles.ps1 |Remove-Item
 

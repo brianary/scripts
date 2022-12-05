@@ -8,6 +8,9 @@ Any System.Collections.IDictionary type of key-value pairs to encode.
 .OUTPUTS
 System.Byte[] of encoded key-value data.
 
+.FUNCTIONALITY
+HTTP
+
 .LINK
 https://docs.microsoft.com/dotnet/api/system.net.http.multipartformdatacontent
 

@@ -5,6 +5,9 @@ Cleans up comment-based help blocks by fully unindenting and capitalizing dot ke
 .INPUTS
 An object with a Path or FullName property.
 
+.FUNCTIONALITY
+Scripts
+
 .EXAMPLE
 Optimize-Help.ps1 Get-Thing.ps1
 

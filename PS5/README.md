@@ -22,6 +22,7 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Format-Certificate.ps1](Format-Certificate.ps1)**: Generates a formatted name/description from a certificate.
 - **[Get-CertificatePath.ps1](Get-CertificatePath.ps1)**: Gets the physical path on disk of a certificate's private key.
 - **[Get-CertificatePermissions.ps1](Get-CertificatePermissions.ps1)**: Returns the permissions of a certificate's private key file.
+- **[Get-ClassicAspEvents.ps1](Get-ClassicAspEvents.ps1)**: Gets Classic ASP errors from the event log on the given server.
 - **[Get-ConsoleColors.ps1](Get-ConsoleColors.ps1)**: Gets current console color details.
 - **[Get-FileContentsInfo.ps1](Get-FileContentsInfo.ps1)**: Returns whether the file is binary or text, and what encoding, line endings, and indents text files contain.
 - **[Get-FileEncoding.ps1](Get-FileEncoding.ps1)**: Returns the encoding for a given file, suitable for passing to encoding parameters.
@@ -41,4 +42,4 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Restart-HttpListener.ps1](Restart-HttpListener.ps1)**: Stops and restarts an HTTP listener.
 - **[Save-CertificatePermissions.ps1](Save-CertificatePermissions.ps1)**: Saves the permissions of found certificates to a file.
 
-<!-- generated 11/28/2022 20:40:58 -->
+<!-- generated 12/04/2022 21:55:45 -->

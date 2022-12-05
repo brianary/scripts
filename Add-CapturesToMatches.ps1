@@ -16,6 +16,9 @@ with named capture groups.
 Microsoft.PowerShell.Commands.MatchInfo with additional note properties for each named
 capture group.
 
+.FUNCTIONALITY
+Search and replace
+
 .LINK
 Add-Member
 

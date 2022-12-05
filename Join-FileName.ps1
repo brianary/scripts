@@ -13,7 +13,7 @@ System.String file path.
 System.String file path with appended text.
 
 .FUNCTIONALITY
-FileName
+Files
 
 .EXAMPLE
 Join-FileName.ps1 activity.log '-20161111'

@@ -8,6 +8,9 @@ System.String of hex digits.
 .OUTPUTS
 System.Byte[] of bytes parsed from hex digits.
 
+.FUNCTIONALITY
+Data encoding
+
 .LINK
 https://docs.microsoft.com/dotnet/api/system.numerics.biginteger.parse#System_Numerics_BigInteger_Parse_System_String_System_Globalization_NumberStyles_
 

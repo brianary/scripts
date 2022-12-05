@@ -1,17 +1,20 @@
 {
-    "powershell.codeFormatting.preset": "Allman",
-    "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
-    "powershell.codeFormatting.useCorrectCasing": true,
-    "mssql.connections": [
-        {
-            "server": "(localdb)\\ProjectsV13",
-            "database": "AdventureWorks2014",
-            "authenticationType": "Integrated",
-            "profileName": "AdventureWorks2014",
-            "password": ""
-        }
-    ],
-    "workbench.colorTheme": "PowerShell ISE",
-    "powershell.codeFormatting.addWhitespaceAroundPipe": true,
-    "pester.autoRunOnSave": false
+	"markdownlint.config": {
+		"header-style": {"style": "setext_with_atx"}
+	},
+	"pester.autoRunOnSave": false,
+	"powershell.codeFormatting.addWhitespaceAroundPipe": true,
+	"powershell.codeFormatting.preset": "Allman",
+	"powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
+	"powershell.codeFormatting.useCorrectCasing": true,
+	"mssql.connections": [
+		{
+			"server": "(localdb)\\ProjectsV13",
+			"database": "AdventureWorks2014",
+			"authenticationType": "Integrated",
+			"profileName": "AdventureWorks2014",
+			"password": ""
+		}
+	],
+	"workbench.colorTheme": "PowerShell ISE"
 }

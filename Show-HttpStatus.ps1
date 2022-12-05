@@ -2,6 +2,9 @@
 .SYNOPSIS
 Displays the HTTP status code info.
 
+.FUNCTIONALITY
+HTTP
+
 .EXAMPLE
 Show-HttpStatus.ps1 ServiceUnavailable -AsCat
 

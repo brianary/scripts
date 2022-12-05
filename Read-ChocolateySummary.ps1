@@ -7,7 +7,7 @@ System.Management.Automation.PSCustomObject with LogTime, Level, and Text of the
 Chocolatey log entries.
 
 .FUNCTIONALITY
-Chocolatey
+System and updates
 
 .LINK
 https://chocolatey.org/

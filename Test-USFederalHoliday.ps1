@@ -32,6 +32,9 @@ System.DateTime values to check.
 .OUTPUTS
 System.Boolean indicating whether the date is a holiday.
 
+.FUNCTIONALITY
+Date and time
+
 .LINK
 http://www.federalreserve.gov/aboutthefed/k8.htm
 

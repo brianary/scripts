@@ -8,6 +8,9 @@ System.IO.FileInfo[] a list of files to compare.
 .OUTPUTS
 System.IO.FileInfo representing the newest of the files compared.
 
+.FUNCTIONALITY
+Files
+
 .LINK
 Test-NewerFile.ps1
 

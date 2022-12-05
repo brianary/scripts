@@ -9,6 +9,9 @@ System.String of the path to a .NET config file with connection strings.
 System.Management.Automation.PSCustomObject with the Name and ConnectionString
 (a ConnectionStringBuilder) for each connection string found.
 
+.FUNCTIONALITY
+Configuration
+
 .LINK
 Select-Xml
 

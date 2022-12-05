@@ -8,6 +8,9 @@ System.DateTime to encode for use as a literal in a LogParser query.
 .OUTPUTS
 System.String to use as a timestamp literal in a LogParser query.
 
+.FUNCTIONALITY
+Date and time
+
 .LINK
 https://www.microsoft.com/en-us/download/details.aspx?id=24659
 

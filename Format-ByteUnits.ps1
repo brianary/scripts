@@ -8,6 +8,9 @@ System.Numerics.BigInteger representing a number of bytes.
 .OUTPUTS
 System.String containing the number of bytes scaled to fit the appropriate units.
 
+.FUNCTIONALITY
+PowerShell
+
 .LINK
 http://en.wikipedia.org/wiki/Binary_prefix
 

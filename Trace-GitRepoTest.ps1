@@ -2,6 +2,9 @@
 .SYNOPSIS
 Uses git bisect to search for the point in the repo history that the test script starts returning true.
 
+.FUNCTIONALITY
+Git and GitHub
+
 .EXAMPLE
 Trace-GitRepoTest.ps1 { dotnet build; !$? }
 

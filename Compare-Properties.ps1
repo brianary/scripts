@@ -15,6 +15,9 @@ with these fields:
 * Difference
 * DifferentValue
 
+.FUNCTIONALITY
+Properties
+
 .LINK
 https://docs.microsoft.com/dotnet/api/system.management.automation.psmemberset
 

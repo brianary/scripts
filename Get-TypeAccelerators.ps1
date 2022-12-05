@@ -5,6 +5,9 @@ Returns the list of PowerShell type accelerators.
 .OUTPUTS
 Collections.Generic.Dictionary[string,type]
 
+.FUNCTIONALITY
+PowerShell
+
 .EXAMPLE
 Get-TypeAccelerators.ps1
 

@@ -5,6 +5,9 @@ Creates an object to lookup XML namespace prefixes.
 .OUTPUTS
 System.Xml.XmlNamespaceManager containing the given namespaces.
 
+.FUNCTIONALITY
+XML
+
 .LINK
 https://docs.microsoft.com/dotnet/api/system.xml.xmlnamespacemanager
 

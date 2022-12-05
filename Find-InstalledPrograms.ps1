@@ -5,6 +5,9 @@ Searches installed programs.
 .OUTPUTS
 System.Management.ManagementObject for each program found.
 
+.FUNCTIONALITY
+System and updates
+
 .LINK
 Get-CimInstance
 

@@ -2,6 +2,8 @@
 .SYNOPSIS
 Uninstalls old module versions.
 
+.FUNCTIONALITY
+PowerShell Modules
 #>
 
 #Requires -Version 3
@@ -11,9 +13,9 @@ Uninstalls old module versions.
 )
 
 Get-Module -List |
-	where {$PSVersionTable.PSVersion -lt [version]'6.0' -or $_.ModuleBase -notlike '*\WindowsPowerShell\*'} |
-	group Name |
-	where Count -gt 1 |
-	foreach {$_.Group |sort Version -Descending |select -Skip 1} |
-	where {$PSCmdlet.ShouldProcess("$($_.Name) v$($_.Version)",'Uninstall-Module')} |
-	foreach {Uninstall-Module $_.Name -RequiredVersion $_.Version -Force:$Force}
+	Where-Object {$PSVersionTable.PSVersion -lt [version]'6.0' -or $_.ModuleBase -notlike '*\WindowsPowerShell\*'} |
+	Group-Object Name |
+	Where-Object Count -gt 1 |
+	ForEach-Object {$_.Group |sort Version -Descending |select -Skip 1} |
+	Where-Object {$PSCmdlet.ShouldProcess("$($_.Name) v$($_.Version)",'Uninstall-Module')} |
+	ForEach-Object {Uninstall-Module $_.Name -RequiredVersion $_.Version -Force:$Force}

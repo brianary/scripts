@@ -2,6 +2,9 @@
 .SYNOPSIS
 Create a Windows shortcut.
 
+.FUNCTIONALITY
+Files
+
 .LINK
 https://ss64.com/vb/shortcut.html
 

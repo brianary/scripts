@@ -8,6 +8,9 @@ System.Collections.IDictionary to combine.
 .OUTPUTS
 System.Collections.IDictionary combining the inputs.
 
+.FUNCTIONALITY
+Dictionary
+
 .EXAMPLE
 Join-Keys.ps1 @{a=1;b=2} @{b=0;c=3}
 

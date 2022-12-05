@@ -5,6 +5,9 @@ Exports table data as a T-SQL MERGE statement.
 .OUTPUTS
 System.String of SQL MERGE script to replicate the table's data.
 
+.FUNCTIONALITY
+Database
+
 .LINK
 Use-SqlcmdParams.ps1
 

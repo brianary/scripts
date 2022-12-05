@@ -5,6 +5,9 @@ Downloads a given URL to a file, automatically determining the filename.
 .INPUTS
 Object with System.Uri property named Uri.
 
+.FUNCTIONALITY
+HTTP
+
 .LINK
 https://tools.ietf.org/html/rfc2183
 

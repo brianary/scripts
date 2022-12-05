@@ -8,6 +8,9 @@ Adding dynamic parameters is a complex process, this attempts to simplify that.
 .INPUTS
 System.Object[] a list of possible values for this parameter to validate against.
 
+.FUNCTIONALITY
+PowerShell
+
 .EXAMPLE
 DynamicParam { Add-DynamicParam.ps1 Path string -Mandatory; $DynamicParams } Process { Import-Variables.ps1 $PSBoundParameters; ... }
 #>

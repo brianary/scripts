@@ -10,6 +10,9 @@ System.Management.Automation.PSCustomObject with certifcated details and
 properties indicating support for SSL protocols with the cypher algorithm used
 if supported or false if not supported.
 
+.FUNCTIONALITY
+HTTP
+
 .LINK
 https://msdn.microsoft.com/library/system.security.authentication.sslprotocols.aspx
 

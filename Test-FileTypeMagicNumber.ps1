@@ -8,6 +8,9 @@ System.String path of a file to test.
 .OUTPUTS
 System.Boolean affirming that the magic number for the specified file type was found.
 
+.FUNCTIONALITY
+Data formats
+
 .LINK
 https://en.wikipedia.org/wiki/List_of_file_signatures
 

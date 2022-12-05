@@ -8,6 +8,9 @@ Any object to test.
 .OUTPUTS
 System.Boolean, or the input object if -Filter is specified.
 
+.FUNCTIONALITY
+PowerShell
+
 .EXAMPLE
 Get-Item *.ps1 |Test-Range.ps1 {$_.Name -like 'Join-*.ps1'} {$_.Name -like 'New-*.ps1'} -Filter |select Name
 

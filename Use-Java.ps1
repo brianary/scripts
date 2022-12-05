@@ -5,6 +5,9 @@ Switch the Java version for the current process by modifying environment variabl
 .INPUTS
 System.String path to use as the new JAVA_HOME environment variable.
 
+.FUNCTIONALITY
+System and updates
+
 .EXAMPLE
 Use-Java.ps1 "$env:ProgramFiles\OpenJDK\jdk-11.0.1"
 #>

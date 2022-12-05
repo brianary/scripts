@@ -14,12 +14,12 @@ schema: 2.0.0
 
 ### CodePoint
 ```
-Get-UnicodeName.ps1 -CodePoint <Int32> [<CommonParameters>]
+Get-UnicodeName.ps1 [-CodePoint] <Int32> [<CommonParameters>]
 ```
 
 ### Character
 ```
-Get-UnicodeName.ps1 -Character <String> [<CommonParameters>]
+Get-UnicodeName.ps1 [-Character] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,21 +36,6 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Character
-{{ Fill Character Description }}
-
-```yaml
-Type: String
-Parameter Sets: Character
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -CodePoint
 {{ Fill CodePoint Description }}
 
@@ -60,7 +45,22 @@ Parameter Sets: CodePoint
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Character
+{{ Fill Character Description }}
+
+```yaml
+Type: String
+Parameter Sets: Character
+Aliases:
+
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False

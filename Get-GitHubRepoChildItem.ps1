@@ -3,7 +3,7 @@
 Adds any missing topics based on repo content.
 
 .FUNCTIONALITY
-GitHub
+Git and GitHub
 #>
 
 #Requires -Version 7

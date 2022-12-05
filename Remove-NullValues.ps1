@@ -8,6 +8,9 @@ System.Collections.IDictionary to remove nulls from.
 .OUTPUTS
 System.Collections.IDictionary with null-valued entries removed.
 
+.FUNCTIONALITY
+Dictionary
+
 .EXAMPLE
 @{ a = 1; b = $null; c = 3 } |Remove-NullValues.ps1
 

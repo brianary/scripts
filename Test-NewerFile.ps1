@@ -5,6 +5,8 @@ Returns true if the difference file is newer than the reference file.
 .OUTPUTS
 System.Boolean indicating the difference file is newer.
 
+.FUNCTIONALITY
+Files
 #>
 
 #requires -version 3

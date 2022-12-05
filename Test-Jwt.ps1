@@ -8,6 +8,9 @@ System.String value to test for a valid URI format.
 .OUTPUTS
 System.Boolean indicating that the string can be parsed as a URI.
 
+.FUNCTIONALITY
+Data formats
+
 .EXAMPLE
 Test-Jwt.ps1 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOjE1MTYyMzkwMjIsInN1YiI6IjEyMzQ1Njc4OTAifQ.-zAn1et1mf6QHakJbOTt5-p4gv33R7cIikKy8-9aiNs' (ConvertTo-SecureString swordfish -AsPlainText -Force)
 

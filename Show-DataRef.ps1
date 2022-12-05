@@ -2,6 +2,9 @@
 .SYNOPSIS
 Display an HTML view of an XML schema or WSDL using Saxon.
 
+.FUNCTIONALITY
+XML
+
 .EXAMPLE
 Show-DataRef.ps1 DataModel.xsd
 

@@ -18,6 +18,9 @@ System.Management.Automation.PSCustomObject with properties about the computer:
 * Shares: The file shares configured, if any.
 * NetVersions: The versions of .NET on the system.
 
+.FUNCTIONALITY
+System and updates
+
 .LINK
 https://en.wikipedia.org/wiki/List_of_Microsoft_Windows_versions
 

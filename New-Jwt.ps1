@@ -5,6 +5,9 @@ Generates a JSON Web Token (JWT)
 .OUTPUTS
 System.String of an encoded, signed JWT
 
+.FUNCTIONALITY
+Data formats
+
 .LINK
 ConvertTo-Base64.ps1
 

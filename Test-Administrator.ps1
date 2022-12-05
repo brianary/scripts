@@ -1,6 +1,9 @@
 ﻿<#
 .SYNOPSIS
 Checks whether the current session has administrator privileges.
+
+.FUNCTIONALITY
+PowerShell
 #>
 
 #Requires -Version 2

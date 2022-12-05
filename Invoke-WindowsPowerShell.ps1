@@ -2,6 +2,9 @@
 .SYNOPSIS
 Runs commands in Windows PowerShell (typically from PowerShell Core).
 
+.FUNCTIONALITY
+PowerShell
+
 .LINK
 Use-Command.ps1
 

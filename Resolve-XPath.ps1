@@ -11,6 +11,9 @@ System.Management.Automation.PSCustomObject with the following properties:
 * XPath: The XPath that locates the node.
 * Namespace: The namespace table used to select the node.
 
+.FUNCTIONALITY
+XML
+
 .LINK
 https://docs.microsoft.com/dotnet/api/system.xml.xmlnode
 

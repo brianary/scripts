@@ -169,6 +169,9 @@ IsWord
 * Nd  Number, decimal digit
 * Pc  Punctuation, connector (includes _)
 
+.FUNCTIONALITY
+Unicode
+
 .COMPONENT
 System.Web
 

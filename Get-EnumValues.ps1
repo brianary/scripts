@@ -9,6 +9,9 @@ System.Type of an Enum to get the values for.
 System.Management.Automation.PSCustomObject with the Value and Name for each defined
 value of the Enum.
 
+.FUNCTIONALITY
+PowerShell
+
 .EXAMPLE
 Get-EnumValues Management.Automation.ActionPreference
 

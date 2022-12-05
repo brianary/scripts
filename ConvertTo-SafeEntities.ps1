@@ -8,6 +8,9 @@ System.String of HTML or XML data to encode.
 .OUTPUTS
 System.String of HTML or XML data, encoded.
 
+.FUNCTIONALITY
+Unicode
+
 .LINK
 https://docs.microsoft.com/dotnet/api/system.char.issurrogatepair
 

@@ -8,6 +8,9 @@ System.String containing an ISO8601 duration.
 .OUTPUTS
 System.Timespan containing the duration, as parsed and converted to a Timespan.
 
+.FUNCTIONALITY
+Date and time
+
 .LINK
 https://en.wikipedia.org/wiki/ISO_8601#Durations
 

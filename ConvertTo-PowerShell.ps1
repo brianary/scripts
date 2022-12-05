@@ -8,6 +8,9 @@ System.Object (any object) to serialize.
 .OUTPUTS
 System.String containing the object serialized to PowerShell literal statements.
 
+.FUNCTIONALITY
+Data formats
+
 .EXAMPLE
 4096LMB |ConvertTo-PowerShell.ps1
 

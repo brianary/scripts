@@ -8,6 +8,9 @@ Stop-ThrowError.ps1
 .LINK
 Get-PSCallStack
 
+.FUNCTIONALITY
+PowerShell
+
 .EXAMPLE
 Add-ScopeLevel.ps1 Local
 

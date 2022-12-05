@@ -6,7 +6,7 @@ Create a backup as a sibling to a file, with date and time values in the name.
 System.String, a file path to back up.
 
 .FUNCTIONALITY
-File
+Files
 
 .EXAMPLE
 Backup-File.ps1 logfile.log

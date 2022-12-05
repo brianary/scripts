@@ -32,6 +32,9 @@ target object, then using that to call ThrowTerminatingError() is pretty inconve
 
 This script combines that process into a few simple parameters.
 
+.FUNCTIONALITY
+PowerShell
+
 .LINK
 https://docs.microsoft.com/dotnet/api/system.management.automation.cmdlet.throwterminatingerror
 

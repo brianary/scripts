@@ -8,6 +8,9 @@ System.Management.Automation.PSObject to combine.
 .OUTPUTS
 System.Management.Automation.PSObject combining the inputs.
 
+.FUNCTIONALITY
+PowerShell
+
 .LINK
 Get-Member
 
