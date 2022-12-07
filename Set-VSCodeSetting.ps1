@@ -42,7 +42,7 @@ Sets {"workbench.colorTheme": "PowerShell ISE"} in the VSCode workspace settings
 
 ${settings.json} = Get-VSCodeSettingsFile.ps1 -Workspace:$Workspace
 
-if(!(${settings.json} |Split-Path |Test-Path -PathType Container)) {${settings.json} |Split-Path |mkdir |Out-Null}
+if(!(${settings.json} |Split-Path |Test-Path -PathType Container)) {mkdir (${settings.json} |Split-Path) |Out-Null}
 if(!(Test-Path ${settings.json} -PathType Leaf)) {'{}' |Out-File ${settings.json} -Encoding utf8}
 
 $settings = Get-Content ${settings.json} -Raw

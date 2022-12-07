@@ -46,7 +46,7 @@ ${settings.json} =
 	if($Workspace)
 	{
 		Use-Command.ps1 git "$env:ProgramFiles\Git\cmd\git.exe" -choco git
-		if($psEditor.GetType().FullName -eq 'Microsoft.PowerShell.EditorServices.Extensions.EditorObject')
+		if(Get-Variable psEditor -Scope Global -ErrorAction Ignore)
 		{
 			Join-Path $psEditor.Workspace.Path .vscode/settings.json
 		}
@@ -64,14 +64,14 @@ ${settings.json} =
 	{
 		if(!(Test-Path variable:IsWindows))
 		{
-			$IsWindows = $PSVersionTable.PSEdition -eq 'Desktop' -or  $env:OS -eq 'Windows_NT'
+			Set-Variable IsWindows ($PSVersionTable.PSEdition -eq 'Desktop' -or  $env:OS -eq 'Windows_NT')
 		}
 		if($IsWindows)
 		{
 			# could also try Resolve-Path "$env:APPDATA\Code*\User\settings.json", but this is better targetted
 			"$env:APPDATA\Code - Insiders\User\settings.json","$env:APPDATA\Code\User\settings.json" |
-				where {Test-Path $_ -PathType Leaf} |
-				select -First 1
+				Where-Object {Test-Path $_ -PathType Leaf} |
+				Select-Object -First 1
 		}
 		elseif($IsLinux)
 		{

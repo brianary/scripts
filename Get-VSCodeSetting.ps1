@@ -43,9 +43,10 @@ PowerShell ISE
 [switch] $Workspace
 )
 
+${settings.json} = Get-VSCodeSettingsFile.ps1 -Workspace:$Workspace
+if(!(Test-Path ${settings.json} -Type Leaf)) {return $null}
 $UnescapedPathSeparator = "(?<=(?:\A|[^\\])(?:\\\\)*)/"
 $nameSegment,$path = ($Name -split $UnescapedPathSeparator) -replace '(?s)\\(.)','$1'
-${settings.json} = Get-VSCodeSettingsFile.ps1 -Workspace:$Workspace
 $property = Get-Content ${settings.json} -Raw |ConvertFrom-Json
 while($nameSegment)
 {

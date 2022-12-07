@@ -135,4 +135,9 @@ Process
 	Get-Help (Resolve-Path $Script) |
 		Format-ScriptPesterTests -Name $name -CmdInfo $cmd |
 		Out-File $testfile -Encoding utf8BOM
+	if((Get-Variable psEditor -Scope Global -ErrorAction Ignore) -and (Test-Path $testfile -Type Leaf))
+	{
+		$psEditor.Workspace.OpenFile($Script)
+		$psEditor.Workspace.OpenFile($testfile)
+	}
 }
