@@ -29,7 +29,7 @@ Describe 'Backup-File' -Tag Backup-File {
 			Backup-File.ps1 logfile.log
 			'logfile.log' |Should -Not -Exist
 			$backup = Get-Item logfile*.log
-			($backup |Measure-Object).Count |Should -Be 1
+			$backup |Should -HaveCount 1
 			$backup.FullName |Should -Exist
 			$backup.Name |Should -Match '\Alogfile-\d{14}\.log\z'
 		}

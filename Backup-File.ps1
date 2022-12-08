@@ -22,6 +22,9 @@ The parameter name ("-Path") is optional.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true,ValueFromRemainingArguments=$true)]
 [string]$Path
 )
-$name = Split-Path $Path -Leaf
-$name = "$([IO.Path]::GetFileNameWithoutExtension($name))-$(Get-Date -Format yyyyMMddHHmmss)$([IO.Path]::GetExtension($name))"
-Rename-Item $Path $name
+Process
+{
+	$name = Split-Path $Path -Leaf
+	$name = "$([IO.Path]::GetFileNameWithoutExtension($name))-$(Get-Date -Format yyyyMMddHHmmss)$([IO.Path]::GetExtension($name))"
+	Rename-Item $Path $name
+}
