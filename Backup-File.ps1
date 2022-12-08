@@ -26,5 +26,5 @@ Process
 {
 	$name = Split-Path $Path -Leaf
 	$name = "$([IO.Path]::GetFileNameWithoutExtension($name))-$(Get-Date -Format yyyyMMddHHmmss)$([IO.Path]::GetExtension($name))"
-	Rename-Item $Path $name
+	Copy-Item $Path (Resolve-Path $Path |Split-Path |Join-Path -ChildPath $name)
 }

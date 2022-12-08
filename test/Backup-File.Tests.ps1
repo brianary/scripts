@@ -25,10 +25,10 @@ Describe 'Backup-File' -Tag Backup-File {
 	}
 	Context 'Simple backup' -Tag BackupFile {
 		It 'Create a backup as a sibling to a file, with date and time values in the name' {
-			'' |Out-File logfile.log
+			"$(New-Guid)" |Out-File logfile.log
 			Backup-File.ps1 logfile.log
-			'logfile.log' |Should -Not -Exist
-			$backup = Get-Item logfile*.log
+			'logfile.log' |Should -Exist
+			$null,$backup = Get-Item logfile*.log |Sort-Object CreationTime
 			$backup |Should -HaveCount 1
 			$backup.FullName |Should -Exist
 			$backup.Name |Should -Match '\Alogfile-\d{14}\.log\z'
