@@ -23,5 +23,5 @@ The parameter name ("-Path") is optional.
 [string]$Path
 )
 $name = Split-Path $Path -Leaf
-$name = "$([IO.Path]::GetFileNameWithoutExtension($name))-$(Get-Date -Format yyyyMMddHHmmss).$([IO.Path]::GetExtension($name))"
-Copy-Item $Path (Join-Path (Split-Path $Path) $name)
+$name = "$([IO.Path]::GetFileNameWithoutExtension($name))-$(Get-Date -Format yyyyMMddHHmmss)$([IO.Path]::GetExtension($name))"
+Rename-Item $Path $name

@@ -137,7 +137,7 @@ Process
 		Out-File $testfile -Encoding utf8BOM
 	if((Get-Variable psEditor -Scope Global -ErrorAction Ignore) -and (Test-Path $testfile -Type Leaf))
 	{
-		$psEditor.Workspace.OpenFile($Script)
+		$psEditor.Workspace.OpenFile("$(Resolve-Path $Script)")
 		$psEditor.Workspace.OpenFile($testfile)
 	}
 }
