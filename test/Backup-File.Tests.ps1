@@ -28,7 +28,7 @@ Describe 'Backup-File' -Tag Backup-File {
 			"$(New-Guid)" |Out-File logfile.log
 			Backup-File.ps1 logfile.log
 			'logfile.log' |Should -Exist
-			$null,$backup = Get-Item logfile*.log |Sort-Object CreationTime
+			$null,$backup = Get-Item logfile*.log |Sort-Object {$_.Name.Length}
 			$backup |Should -HaveCount 1
 			$backup.FullName |Should -Exist
 			$backup.Name |Should -Match '\Alogfile-\d{14}\.log\z'
