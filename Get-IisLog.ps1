@@ -2,6 +2,10 @@
 .SYNOPSIS
 Easily query IIS logs.
 
+.DESCRIPTION
+This allows searching through various versions of IIS logs for matches to date ranges, URI path,
+IP address, username, &c. and returns each entry as an object, with the Time converted to localtime.
+
 .OUTPUTS
 System.Management.Automation.PSObject[] with properties from the log file
 for each request found:

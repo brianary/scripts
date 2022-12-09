@@ -100,6 +100,85 @@ function Get-StatusSymbol([string]$status,[switch]$entity)
 	}
 }
 
+filter Test-HasTest([ValidateScript({Test-Path $_.FullName -Type Leaf})][IO.FileInfo] $Script)
+{
+	if($Script.Name -notmatch '\A\w+-\w+\.ps1\z') {return $false}
+	if(Test-Path "$PSScriptRoot\test\$($Script.BaseName).Tests.ps1" -Type Leaf) {return $true}
+	else {return $false}
+}
+
+function Measure-PesterCoveragePerMil([Parameter(ValueFromPipeline)][IO.FileInfo] $Script)
+{
+	End
+	{
+		return [int](1000 * ($input |Where-Object {Test-HasTest $_} |Measure-Object).Count / $input.Count)
+	}
+}
+
+function Measure-CommitsTimeSpan
+{
+	[CmdletBinding()][OutputType([TimeSpan])] Param(
+	[Parameter(Mandatory=$true)][string] $Path
+	)
+	return git log --follow --format=%ad --date=iso ($Path -replace '\\','/') |
+		ForEach-Object {[DateTimeOffset]$_} |
+		Measure-Object -Minimum -Maximum |
+		ForEach-Object {$_.Maximum - $_.Minimum}
+}
+
+filter Format-RoundTimeSpan([Parameter(ValueFromPipeline)][TimeSpan] $TimeSpan)
+{
+	switch($TimeSpan)
+	{
+		{$_.Days -gt 0}         {return "$($_.Days) days"}
+		{$_.Hours -gt 0}        {return "$($_.Hours) hours"}
+		{$_.Minutes -gt 0}      {return "$($_.Minutes) minutes"}
+		{$_.Seconds -gt 0}      {return "$($_.Seconds) seconds"}
+		{$_.Milliseconds -gt 0} {return "$($_.Milliseconds) milliseconds"}
+		{$_.Microseconds -gt 0} {return "$($_.Microseconds) microseconds"}
+		{$_.Ticks -eq 0}        {return "at once"}
+		default                 {return "$($_.Ticks) ticks"}
+	}
+}
+
+function Get-PesterCoverageBadge([switch]$UseLines)
+{
+	if($UseLines)
+	{
+		$unit = [uri]::EscapeUriString((Get-Unicode.ps1 0x2031)) # PER TEN THOUSAND SIGN (permyriad)
+		[int] $coverage = 10000 * (Get-Item $PSScriptRoot\*.ps1 |
+			Where-Object {Test-HasTest $_} |
+			Get-Content |
+			Measure-Object -Line).Lines /
+			(Get-Item $PSScriptRoot\*.ps1 |Get-Content |Measure-Object -Line).Lines
+		$color = switch($coverage)
+		{
+			{$_ -gt 9500} {'brightgreen'}
+			{$_ -gt 8000} {'green'}
+			{$_ -gt 5000} {'yellowgreen'}
+			{$_ -gt 3000} {'orange'}
+			{$_ -gt  500} {'red'}
+			default       {'lightgray'}
+		}
+	}
+	else
+	{
+		$unit = [uri]::EscapeUriString((Get-Unicode.ps1 0x2030)) # PER MILLE SIGN (permil)
+		[int] $coverage = 1000 * (Get-Item $PSScriptRoot\test\*.ps1 |Measure-Object).Count /
+			(Get-Item $PSScriptRoot\*.ps1 |Measure-Object).Count
+		$color = switch($coverage)
+		{
+			{$_ -gt 950} {'brightgreen'}
+			{$_ -gt 800} {'green'}
+			{$_ -gt 500} {'yellowgreen'}
+			{$_ -gt 300} {'orange'}
+			{$_ -gt  50} {'red'}
+			default      {'lightgray'}
+		}
+	}
+	return "https://img.shields.io/badge/Pester_coverage-${coverage}_$unit-$color"
+}
+
 function Format-PSScripts([string] $Extension = '', [switch] $entities)
 {
 	Write-Progress 'Enumerating PowerShell scripts' 'Getting list of recent changes'
@@ -235,7 +314,7 @@ function Format-PS5Scripts
 function Format-SysCfgReadme
 {
 	$Local:OFS = [Environment]::NewLine
-	@"
+	return @"
 PowerShell System Configuration Scripts
 =======================================
 
@@ -250,7 +329,7 @@ $(Format-SysCfgScripts)
 function Format-PS5Readme
 {
 	$Local:OFS = [Environment]::NewLine
-	@"
+	return @"
 PowerShell 5.1 Scripts
 ======================
 
@@ -263,18 +342,70 @@ $(Format-PS5Scripts)
 "@
 }
 
+filter Format-TestsVerb
+{
+	Param(
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Name,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][IO.FileInfo[]] $Group
+	)
+	$permil = $Group |Measure-PesterCoveragePerMil
+	$time = $permil -eq 0 ? '' : "&#x1F4C5; $(Measure-CommitsTimeSpan "$PSScriptRoot\test\$Name*.Tests.ps1" |Format-RoundTimeSpan)"
+	$Local:OFS = [Environment]::NewLine
+	return @"
+<details style="margin-left:2em"><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
+$Name ($($Group.Count)) $time</summary>
+
+$($Group |ForEach-Object {"- $((Test-HasTest $_) ? '&#x2714;&#xFE0F;' : '&#x2716;&#xFE0F;') $_"})
+
+</details>
+"@
+}
+
+filter Format-TestsLetter
+{
+	Param(
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Name,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][IO.FileInfo[]] $Group
+	)
+	$permil = $Group |Measure-PesterCoveragePerMil
+	$time = $permil -eq 0 ? '' : "&#x1F4C5; $(Measure-CommitsTimeSpan "$PSScriptRoot\test\$Name*.Tests.ps1" |Format-RoundTimeSpan)"
+	$Local:OFS = [Environment]::NewLine
+	return @"
+<details style="margin-left:2em"><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
+$Name ($($Group.Count)) $time</summary>
+$($Group |Group-Object {($_.BaseName -split '-',2)[0]} |Format-TestsVerb)</details>
+"@
+}
+
+function Format-TestsReadme
+{
+	$Scripts = Get-Item $PSScriptRoot\*.ps1
+	$permil = $Scripts |Measure-PesterCoveragePerMil
+	$time = $permil -eq 0 ? '' : "&#x1F4C5; $(Measure-CommitsTimeSpan "$PSScriptRoot\test\*.Tests.ps1" |Format-RoundTimeSpan)"
+	$Local:OFS = [Environment]::NewLine
+	return @"
+Script Tests
+============
+
+<details><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
+Scripts repo ($($Scripts.Count)) $time</summary>
+$(Get-Item $PSScriptRoot\*.ps1 |Group-Object {$_.Name[0]} |Format-TestsLetter)</details>
+"@
+}
+
 function Format-Readme
 {
 	Write-Progress 'Building readme' 'Exporting dependencies'
 	Export-Dependencies $DependenciesImage
 	Write-Progress 'Building readme' 'Writing readme.md'
 	$Local:OFS = [Environment]::NewLine
-	@"
+	return @"
 Useful General-Purpose Scripts
 ==============================
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
+[![Pester tests coverage]($(Get-PesterCoverageBadge -UseLines))](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -324,9 +455,10 @@ function Export-PSScriptPages
 		ForEach-Object {New-MarkdownHelp -Command $_.Name -OutputFolder docs -ErrorAction Ignore} |
 		Write-Verbose
 	$Local:OFS = [Environment]::NewLine
-	@"
+	return @"
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
+[![Pester tests coverage]($(Get-PesterCoverageBadge -UseLines))](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -347,6 +479,7 @@ $(Format-PSScripts -Extension '.md' -entities)
 
 Add-Type -AN System.Web
 Format-Readme |Out-File $PSScriptRoot\README.md -Encoding utf8 -Width ([int]::MaxValue)
+Format-TestsReadme |Out-File $PSScriptRoot\test\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Format-SysCfgReadme |Out-File $PSScriptRoot\syscfg\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Format-PS5Readme |Out-File $PSScriptRoot\PS5\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Export-PSScriptPages

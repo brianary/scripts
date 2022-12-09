@@ -8,6 +8,12 @@ in the pipeline, or add a script property to objects which executes each time it
 
 This adds a static value to each object, but calculated from each object.
 
+.INPUTS
+System.Management.Automation.PSObject item to add a note property to.
+
+.OUTPUTS
+System.Management.Automation.PSObject with the added note property.
+
 .FUNCTIONALITY
 Properties
 
@@ -39,7 +45,7 @@ Size   Name
 1.2KB  Get-XmlNamespaces.ps1
 #>
 
-[CmdletBinding()][OutputType([void],[psobject])] Param(
+[CmdletBinding()][OutputType([psobject])] Param(
 # The name of the NoteProperty to add to the object.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
 # The expression to use to set the value of the NoteProperty.

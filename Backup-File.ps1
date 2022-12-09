@@ -2,11 +2,30 @@
 .SYNOPSIS
 Create a backup as a sibling to a file, with date and time values in the name.
 
+.DESCRIPTION
+This provides a quick way to back up a file, usually before making changes that may need
+to be reverted.
+
 .INPUTS
 System.String, a file path to back up.
 
 .FUNCTIONALITY
 Files
+
+.LINK
+Copy-Item
+
+.LINK
+Split-Path
+
+.LINK
+Join-Path
+
+.LINK
+Resolve-Path
+
+.LINK
+Get-Date
 
 .EXAMPLE
 Backup-File.ps1 logfile.log

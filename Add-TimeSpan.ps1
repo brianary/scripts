@@ -2,6 +2,9 @@
 .SYNOPSIS
 Adds a timespan to DateTime values.
 
+.DESCRIPTION
+This is a more PowerShell-idiomatic, pipeline-based way to add a timespan to a datetime.
+
 .INPUTS
 System.DateTime values to add the TimeSpan value to.
 

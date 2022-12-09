@@ -1,9 +1,11 @@
 <#
 .SYNOPSIS
-Converts supported objects to the RFC 5545 iCalendar format.
+Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
 
-.NOTES
-This is still a work in progress.
+.DESCRIPTION
+This converts the schedule of a Scheduled Task to a format that can be parsed by calendar apps,
+allowing for debugging a schedule, correlating to errors and resource shortages, and examining
+job distribution over time.
 
 .INPUTS
 Microsoft.Management.Infrastructure.CimInstance of CIM class MSFT_ScheduledTask, as
@@ -46,7 +48,9 @@ New-ScheduledTaskTrigger
 Get-Date
 
 .EXAMPLE
-Get-ScheduledTask -TaskPath \ |ConvertTo-ICalendar.ps1 |Out-File tasks.ical utf8
+Get-ScheduledTask -TaskPath \ |ConvertTo-ICalendar.ps1 |Out-File tasks.ics utf8
+
+Creates file tasks.ics to import into Google Calendar, iCalendar, or Outlook to review job schedules.
 #>
 
 #Requires -Version 7

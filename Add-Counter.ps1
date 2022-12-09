@@ -5,6 +5,12 @@ Adds an incrementing integer property to each pipeline object.
 .DESCRIPTION
 If you want to add a quick index property to objects in a pipeline, this does that.
 
+.INPUTS
+System.Management.Automation.PSObject item to add an index property to.
+
+.OUTPUTS
+System.Management.Automation.PSObject with the added index property.
+
 .FUNCTIONALITY
 PowerShell
 

@@ -2,6 +2,16 @@
 .SYNOPSIS
 Exports the local list of Scheduled Tasks into a single XML file.
 
+.DESCRIPTION
+This backs up the Scheduled Tasks set up on the system to a file which can be restored
+again later. This can be useful before migrating a server/workstation, or before making
+significant changes to some tasks that may need to be reverted.
+
+.NOTES
+Notice that the root Tasks element does not have an XML namespace, but the individual
+Task child element elements are in the http://schemas.microsoft.com/windows/2004/02/mit/task
+namespace.
+
 .FUNCTIONALITY
 Scheduled Tasks
 
@@ -16,7 +26,7 @@ Backs up Windows Scheduled Tasks to tasks.xml.
 .EXAMPLE
 Backup-SchTasks.ps1 tasks-backup.xml -Stylesheet tasks.css
 
-Saves scheduled tasks to tasks-backup.xml using tasks.css as a viewing stylesheet.
+Saves scheduled tasks to tasks-backup.xml using tasks.css as a display stylesheet.
 #>
 
 [CmdletBinding()][OutputType([void])] Param(

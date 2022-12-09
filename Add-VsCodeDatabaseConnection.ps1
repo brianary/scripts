@@ -2,6 +2,17 @@
 .SYNOPSIS
 Adds a VS Code MSSQL database connection to the repo.
 
+.DESCRIPTION
+The VSCode MSSQL extension can use saved database connections to connect to for queries,
+and this allows adding those to the VSCode settings in the current git repo.
+
+.INPUTS
+Any object with these properties, used to construct a database connection entry:
+* ProfileName or Name
+* ServerInstance or Server or DataSource
+* Database or InitialCatalog
+* UserName or UID
+
 .FUNCTIONALITY
 VSCode
 
@@ -36,8 +47,8 @@ connects to the server ServerName\instance and database DatabaseName.
 The username to connect with. No password will be stored.
 If no username is given, a trusted connection will be created.
 #>
-[Parameter(Position=3,ValueFromPipelineByPropertyName=$true)][Alias('UID')]
-[string] $UserName,
+[Parameter(Position=3,ValueFromPipelineByPropertyName=$true)]
+[Alias('UID')][string] $UserName,
 # Overwrite an existing profile with the same name.
 [switch] $Force
 )
