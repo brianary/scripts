@@ -11,6 +11,7 @@ Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 		Write-Verbose "using date format '$datefmt' => '$(Get-Date -f $datefmt)'"
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
+	AfterEach {try{Unregister-ScheduledTask -TaskName x -Confirm:$false -EA Stop}catch{Write-Warning "$_"}}
 	Context 'Script style' -Tag Style {
 		It "Should follow best practices for style" {
 			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\ConvertTo-ICalendar.ps1" -Severity Warning |
@@ -139,5 +140,4 @@ Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 				Should -BeExactly $Rule
 		}
 	}
-	AfterEach {try{Unregister-ScheduledTask -TaskName x -Confirm:$false -EA Stop}catch{Write-Warning "$_"}}
 }
