@@ -47,19 +47,22 @@ Global
 # Global, Local, Private, Script, or a positive integer.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $Scope
 )
-if($Scope -match '\A\d+\z') {return "$(1+[int]$Scope)"}
-switch($Scope)
+Process
 {
-	Global  {'Global'}
-	Local   {'1'}
-	Private {'1'}
-	Script
+	if($Scope -match '\A\d+\z') {return "$(1+[int]$Scope)"}
+	switch($Scope)
 	{
-		$stack = Get-PSCallStack
-		for($i = 2; $i -lt $stack.Length; $i++)
+		Global  {return 'Global'}
+		Local   {return '1'}
+		Private {return '1'}
+		Script
 		{
-			if($stack[$i].Command -and $stack[$i].FunctionName -like '<ScriptBlock>*') {return "$($i-1)"}
+			$stack = Get-PSCallStack
+			for($i = 2; $i -lt $stack.Length; $i++)
+			{
+				if($stack[$i].Command -and $stack[$i].FunctionName -like '<ScriptBlock>*') {return "$($i-1)"}
+			}
+			Stop-ThrowError.ps1 'Unable to find Script scope' -Argument Scope
 		}
-		Stop-ThrowError.ps1 'Unable to find Script scope' -Argument Scope
 	}
 }
