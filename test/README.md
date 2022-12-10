@@ -1,12 +1,9 @@
 Script Tests
 ============
 
-<details><summary><meter low="300" max="1000" optimum="1000" value="70">70 &#x2030;</meter>
-Scripts repo (187) &#x1F4C5; 132 days</summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="1000">1000 &#x2030;</meter>
-A (9) &#x1F4C5; 60 days</summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="1000">1000 &#x2030;</meter>
-Add (9) &#x1F4C5; 60 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='70'>70 &#x2030;</meter> Scripts repo (187) &#x1F4C5; 132 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 60 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 60 days</summary>
 
 - &#x2714;&#xFE0F; Add-CapturesToMatches.ps1
 - &#x2714;&#xFE0F; Add-Counter.ps1
@@ -19,46 +16,38 @@ Add (9) &#x1F4C5; 60 days</summary>
 - &#x2714;&#xFE0F; Add-VsCodeDatabaseConnection.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="1000">1000 &#x2030;</meter>
-B (2) &#x1F4C5; 2 days</summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="1000">1000 &#x2030;</meter>
-Backup (2) &#x1F4C5; 2 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> B (2) &#x1F4C5; 2 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Backup (2) &#x1F4C5; 2 days</summary>
 
 - &#x2714;&#xFE0F; Backup-File.ps1
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="38">38 &#x2030;</meter>
-C (26) &#x1F4C5; 132 days</summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Compare (2) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='38'>38 &#x2030;</meter> C (26) &#x1F4C5; 132 days</summary>
+<ul><li><details><summary>not started Compare (2) </summary>
 
 - &#x2716;&#xFE0F; Compare-Properties.ps1
 - &#x2716;&#xFE0F; Compare-Xml.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Compress (1) </summary>
+<li><details><summary>not started Compress (1) </summary>
 
 - &#x2716;&#xFE0F; Compress-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Connect (1) </summary>
+<li><details><summary>not started Connect (1) </summary>
 
 - &#x2716;&#xFE0F; Connect-SshKey.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Convert (3) </summary>
+<li><details><summary>not started Convert (3) </summary>
 
 - &#x2716;&#xFE0F; Convert-ChocolateyToWinget.ps1
 - &#x2716;&#xFE0F; Convert-ClipboardTsvToHtml.ps1
 - &#x2716;&#xFE0F; Convert-Xml.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-ConvertFrom (7) </summary>
+<li><details><summary>not started ConvertFrom (7) </summary>
 
 - &#x2716;&#xFE0F; ConvertFrom-Base64.ps1
 - &#x2716;&#xFE0F; ConvertFrom-CimInstance.ps1
@@ -69,8 +58,7 @@ ConvertFrom (7) </summary>
 - &#x2716;&#xFE0F; ConvertFrom-XmlElement.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="91">91 &#x2030;</meter>
-ConvertTo (11) &#x1F4C5; 132 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='91'>91 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 132 days</summary>
 
 - &#x2716;&#xFE0F; ConvertTo-Base64.ps1
 - &#x2716;&#xFE0F; ConvertTo-BasicAuthentication.ps1
@@ -85,36 +73,29 @@ ConvertTo (11) &#x1F4C5; 132 days</summary>
 - &#x2716;&#xFE0F; ConvertTo-XmlElements.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Copy (1) </summary>
+<li><details><summary>not started Copy (1) </summary>
 
 - &#x2716;&#xFE0F; Copy-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-D (1) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Disable (1) </summary>
+<li><details><summary>not started D (1) </summary>
+<ul><li><details><summary>not started Disable (1) </summary>
 
 - &#x2716;&#xFE0F; Disable-AnsiColor.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-E (7) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Enable (1) </summary>
+<li><details><summary>not started E (7) </summary>
+<ul><li><details><summary>not started Enable (1) </summary>
 
 - &#x2716;&#xFE0F; Enable-AnsiColor.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Expand (1) </summary>
+<li><details><summary>not started Expand (1) </summary>
 
 - &#x2716;&#xFE0F; Expand-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Export (5) </summary>
+<li><details><summary>not started Export (5) </summary>
 
 - &#x2716;&#xFE0F; Export-DatabaseObjectScript.ps1
 - &#x2716;&#xFE0F; Export-DatabaseScripts.ps1
@@ -123,10 +104,8 @@ Export (5) </summary>
 - &#x2716;&#xFE0F; Export-TableMerge.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-F (18) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Find (11) </summary>
+<li><details><summary>not started F (18) </summary>
+<ul><li><details><summary>not started Find (11) </summary>
 
 - &#x2716;&#xFE0F; Find-Comics.ps1
 - &#x2716;&#xFE0F; Find-DatabaseValue.ps1
@@ -141,14 +120,12 @@ Find (11) </summary>
 - &#x2716;&#xFE0F; Find-SqlDeprecatedLargeValueTypes.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-ForEach (1) </summary>
+<li><details><summary>not started ForEach (1) </summary>
 
 - &#x2716;&#xFE0F; ForEach-Progress.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Format (6) </summary>
+<li><details><summary>not started Format (6) </summary>
 
 - &#x2716;&#xFE0F; Format-ByteUnits.ps1
 - &#x2716;&#xFE0F; Format-Date.ps1
@@ -158,10 +135,8 @@ Format (6) </summary>
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="30">30 &#x2030;</meter>
-G (33) &#x1F4C5; 49 days</summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="30">30 &#x2030;</meter>
-Get (33) &#x1F4C5; 49 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='30'>30 &#x2030;</meter> G (33) &#x1F4C5; 49 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='30'>30 &#x2030;</meter> Get (33) &#x1F4C5; 49 days</summary>
 
 - &#x2716;&#xFE0F; Get-AspNetEvents.ps1
 - &#x2716;&#xFE0F; Get-AssemblyFramework.ps1
@@ -198,44 +173,35 @@ Get (33) &#x1F4C5; 49 days</summary>
 - &#x2716;&#xFE0F; Get-XmlNamespaces.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-H (1) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Hide (1) </summary>
+<li><details><summary>not started H (1) </summary>
+<ul><li><details><summary>not started Hide (1) </summary>
 
 - &#x2716;&#xFE0F; Hide-Command.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-I (5) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Import (3) </summary>
+<li><details><summary>not started I (5) </summary>
+<ul><li><details><summary>not started Import (3) </summary>
 
 - &#x2716;&#xFE0F; Import-ClipboardTsv.ps1
 - &#x2716;&#xFE0F; Import-Variables.ps1
 - &#x2716;&#xFE0F; Import-VsCodeDatabaseConnections.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Invoke (2) </summary>
+<li><details><summary>not started Invoke (2) </summary>
 
 - &#x2716;&#xFE0F; Invoke-CommandWithParams.ps1
 - &#x2716;&#xFE0F; Invoke-WindowsPowerShell.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-J (2) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Join (2) </summary>
+<li><details><summary>not started J (2) </summary>
+<ul><li><details><summary>not started Join (2) </summary>
 
 - &#x2716;&#xFE0F; Join-FileName.ps1
 - &#x2716;&#xFE0F; Join-Keys.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-M (9) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Measure (6) </summary>
+<li><details><summary>not started M (9) </summary>
+<ul><li><details><summary>not started Measure (6) </summary>
 
 - &#x2716;&#xFE0F; Measure-DbColumn.ps1
 - &#x2716;&#xFE0F; Measure-DbColumnValues.ps1
@@ -245,18 +211,15 @@ Measure (6) </summary>
 - &#x2716;&#xFE0F; Measure-TextFile.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Merge (3) </summary>
+<li><details><summary>not started Merge (3) </summary>
 
 - &#x2716;&#xFE0F; Merge-Json.ps1
 - &#x2716;&#xFE0F; Merge-PSObject.ps1
 - &#x2716;&#xFE0F; Merge-XmlSelections.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-N (7) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-New (7) </summary>
+<li><details><summary>not started N (7) </summary>
+<ul><li><details><summary>not started New (7) </summary>
 
 - &#x2716;&#xFE0F; New-DbProviderObject.ps1
 - &#x2716;&#xFE0F; New-Jwt.ps1
@@ -267,40 +230,32 @@ New (7) </summary>
 - &#x2716;&#xFE0F; New-Shortcut.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-O (3) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Open (1) </summary>
+<li><details><summary>not started O (3) </summary>
+<ul><li><details><summary>not started Open (1) </summary>
 
 - &#x2716;&#xFE0F; Open-Comic.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Optimize (2) </summary>
+<li><details><summary>not started Optimize (2) </summary>
 
 - &#x2716;&#xFE0F; Optimize-Help.ps1
 - &#x2716;&#xFE0F; Optimize-Path.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-P (1) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Push (1) </summary>
+<li><details><summary>not started P (1) </summary>
+<ul><li><details><summary>not started Push (1) </summary>
 
 - &#x2716;&#xFE0F; Push-WorkspaceLocation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-R (14) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Read (2) </summary>
+<li><details><summary>not started R (14) </summary>
+<ul><li><details><summary>not started Read (2) </summary>
 
 - &#x2716;&#xFE0F; Read-ChocolateySummary.ps1
 - &#x2716;&#xFE0F; Read-Choice.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Remove (4) </summary>
+<li><details><summary>not started Remove (4) </summary>
 
 - &#x2716;&#xFE0F; Remove-CachedCredential.ps1
 - &#x2716;&#xFE0F; Remove-LockyFile.ps1
@@ -308,51 +263,43 @@ Remove (4) </summary>
 - &#x2716;&#xFE0F; Remove-ParameterDefault.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Rename (2) </summary>
+<li><details><summary>not started Rename (2) </summary>
 
 - &#x2716;&#xFE0F; Rename-GitHubLocalBranch.ps1
 - &#x2716;&#xFE0F; Rename-Script.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Repair (3) </summary>
+<li><details><summary>not started Repair (3) </summary>
 
 - &#x2716;&#xFE0F; Repair-DatabaseConstraintNames.ps1
 - &#x2716;&#xFE0F; Repair-DatabaseUntrustedConstraints.ps1
 - &#x2716;&#xFE0F; Repair-ScriptStyle.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Resolve (2) </summary>
+<li><details><summary>not started Resolve (2) </summary>
 
 - &#x2716;&#xFE0F; Resolve-XmlSchemaLocation.ps1
 - &#x2716;&#xFE0F; Resolve-XPath.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Restore (1) </summary>
+<li><details><summary>not started Restore (1) </summary>
 
 - &#x2716;&#xFE0F; Restore-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-S (18) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Save (2) </summary>
+<li><details><summary>not started S (18) </summary>
+<ul><li><details><summary>not started Save (2) </summary>
 
 - &#x2716;&#xFE0F; Save-PodcastEpisodes.ps1
 - &#x2716;&#xFE0F; Save-WebRequest.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Select (1) </summary>
+<li><details><summary>not started Select (1) </summary>
 
 - &#x2716;&#xFE0F; Select-CapturesFromMatches.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Send (4) </summary>
+<li><details><summary>not started Send (4) </summary>
 
 - &#x2716;&#xFE0F; Send-MailMessageFile.ps1
 - &#x2716;&#xFE0F; Send-SeqEvent.ps1
@@ -360,8 +307,7 @@ Send (4) </summary>
 - &#x2716;&#xFE0F; Send-SqlReport.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Set (5) </summary>
+<li><details><summary>not started Set (5) </summary>
 
 - &#x2716;&#xFE0F; Set-ConsoleColorTheme.ps1
 - &#x2716;&#xFE0F; Set-JsonProperty.ps1
@@ -370,31 +316,26 @@ Set (5) </summary>
 - &#x2716;&#xFE0F; Set-VSCodeSetting.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Show (3) </summary>
+<li><details><summary>not started Show (3) </summary>
 
 - &#x2716;&#xFE0F; Show-DataRef.ps1
 - &#x2716;&#xFE0F; Show-HttpStatus.ps1
 - &#x2716;&#xFE0F; Show-Time.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Split (2) </summary>
+<li><details><summary>not started Split (2) </summary>
 
 - &#x2716;&#xFE0F; Split-FileName.ps1
 - &#x2716;&#xFE0F; Split-Keys.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Stop (1) </summary>
+<li><details><summary>not started Stop (1) </summary>
 
 - &#x2716;&#xFE0F; Stop-ThrowError.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-T (18) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Test (17) </summary>
+<li><details><summary>not started T (18) </summary>
+<ul><li><details><summary>not started Test (17) </summary>
 
 - &#x2716;&#xFE0F; Test-Administrator.ps1
 - &#x2716;&#xFE0F; Test-DateTime.ps1
@@ -415,30 +356,25 @@ Test (17) </summary>
 - &#x2716;&#xFE0F; Test-Xml.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Trace (1) </summary>
+<li><details><summary>not started Trace (1) </summary>
 
 - &#x2716;&#xFE0F; Trace-GitRepoTest.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-U (11) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Uninstall (1) </summary>
+<li><details><summary>not started U (11) </summary>
+<ul><li><details><summary>not started Uninstall (1) </summary>
 
 - &#x2716;&#xFE0F; Uninstall-OldModules.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Update (3) </summary>
+<li><details><summary>not started Update (3) </summary>
 
 - &#x2716;&#xFE0F; Update-Everything.ps1
 - &#x2716;&#xFE0F; Update-Files.ps1
 - &#x2716;&#xFE0F; Update-Modules.ps1
 
 </details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Use (7) </summary>
+<li><details><summary>not started Use (7) </summary>
 
 - &#x2716;&#xFE0F; Use-Command.ps1
 - &#x2716;&#xFE0F; Use-Java.ps1
@@ -449,10 +385,8 @@ Use (7) </summary>
 - &#x2716;&#xFE0F; Use-SqlcmdParams.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-W (2) </summary>
-<ul><li><details><summary><meter low="300" max="1000" optimum="1000" value="0">0 &#x2030;</meter>
-Write (2) </summary>
+<li><details><summary>not started W (2) </summary>
+<ul><li><details><summary>not started Write (2) </summary>
 
 - &#x2716;&#xFE0F; Write-Info.ps1
 - &#x2716;&#xFE0F; Write-VisibleString.ps1

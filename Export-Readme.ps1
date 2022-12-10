@@ -350,10 +350,10 @@ filter Format-TestsVerb
 	)
 	$permil = $Group |Measure-PesterCoveragePerMil
 	$time = $permil -eq 0 ? '' : "&#x1F4C5; $(Measure-CommitsTimeSpan "$PSScriptRoot\test\$Name*.Tests.ps1" |Format-RoundTimeSpan)"
+	$progress = $permil -eq 0 ? 'not started' : "<meter low='300' max='1000' optimum='1000' value='$permil'>$permil &#x2030;</meter>"
 	$Local:OFS = [Environment]::NewLine
 	return @"
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
-$Name ($($Group.Count)) $time</summary>
+<li><details><summary>$progress $Name ($($Group.Count)) $time</summary>
 
 $($Group |ForEach-Object {"- $((Test-HasTest $_) ? '&#x2714;&#xFE0F;' : '&#x2716;&#xFE0F;') $($_.Name)"})
 
@@ -369,10 +369,10 @@ filter Format-TestsLetter
 	)
 	$permil = $Group |Measure-PesterCoveragePerMil
 	$time = $permil -eq 0 ? '' : "&#x1F4C5; $(Measure-CommitsTimeSpan "$PSScriptRoot\test\$Name*.Tests.ps1" |Format-RoundTimeSpan)"
+	$progress = $permil -eq 0 ? 'not started' : "<meter low='300' max='1000' optimum='1000' value='$permil'>$permil &#x2030;</meter>"
 	$Local:OFS = [Environment]::NewLine
 	return @"
-<li><details><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
-$Name ($($Group.Count)) $time</summary>
+<li><details><summary>$progress $Name ($($Group.Count)) $time</summary>
 <ul>$($Group |Group-Object {($_.BaseName -split '-',2)[0]} |Format-TestsVerb)</ul></details></li>
 "@
 }
@@ -382,13 +382,13 @@ function Format-TestsReadme
 	$Scripts = Get-Item $PSScriptRoot\*.ps1
 	$permil = $Scripts |Measure-PesterCoveragePerMil
 	$time = $permil -eq 0 ? '' : "&#x1F4C5; $(Measure-CommitsTimeSpan "$PSScriptRoot\test\*.Tests.ps1" |Format-RoundTimeSpan)"
+	$progress = $permil -eq 0 ? 'not started' : "<meter low='300' max='1000' optimum='1000' value='$permil'>$permil &#x2030;</meter>"
 	$Local:OFS = [Environment]::NewLine
 	return @"
 Script Tests
 ============
 
-<details><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
-Scripts repo ($($Scripts.Count)) $time</summary>
+<details><summary>$progress Scripts repo ($($Scripts.Count)) $time</summary>
 <ul>$(Get-Item $PSScriptRoot\*.ps1 |Group-Object {$_.Name[0]} |Format-TestsLetter)</ul></details>
 "@
 }
