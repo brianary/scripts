@@ -28,7 +28,7 @@ Describe 'Compare-Properties' -Tag Compare-Properties {
 	}
 	Context 'Compares the properties of two objects' -Tag Compare,Properties {
 		It 'Should find the difference between PSProviders' {
-			$drives,$imptype,$name = Compare-Properties.ps1 (Get-PSProvider variable) (Get-PSProvider alias) |Sort-Object PropertyName
+			$drives,$imptype,$name,$null = Compare-Properties.ps1 (Get-PSProvider variable) (Get-PSProvider alias) |Sort-Object PropertyName
 			@($drives,$imptype,$name).Reference |Should -BeTrue
 			@($drives,$imptype,$name).Difference |Should -BeTrue
 			$drives.PropertyName |Should -BeExactly Drives
