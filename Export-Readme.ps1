@@ -352,12 +352,12 @@ filter Format-TestsVerb
 	$time = $permil -eq 0 ? '' : "&#x1F4C5; $(Measure-CommitsTimeSpan "$PSScriptRoot\test\$Name*.Tests.ps1" |Format-RoundTimeSpan)"
 	$Local:OFS = [Environment]::NewLine
 	return @"
-<details style="margin-left:2em"><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
+<li><details><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
 $Name ($($Group.Count)) $time</summary>
 
-$($Group |ForEach-Object {"- $((Test-HasTest $_) ? '&#x2714;&#xFE0F;' : '&#x2716;&#xFE0F;') $_"})
+$($Group |ForEach-Object {"- $((Test-HasTest $_) ? '&#x2714;&#xFE0F;' : '&#x2716;&#xFE0F;') $($_.Name)"})
 
-</details>
+</details></li>
 "@
 }
 
@@ -371,9 +371,9 @@ filter Format-TestsLetter
 	$time = $permil -eq 0 ? '' : "&#x1F4C5; $(Measure-CommitsTimeSpan "$PSScriptRoot\test\$Name*.Tests.ps1" |Format-RoundTimeSpan)"
 	$Local:OFS = [Environment]::NewLine
 	return @"
-<details style="margin-left:2em"><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
+<li><details><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
 $Name ($($Group.Count)) $time</summary>
-$($Group |Group-Object {($_.BaseName -split '-',2)[0]} |Format-TestsVerb)</details>
+<ul>$($Group |Group-Object {($_.BaseName -split '-',2)[0]} |Format-TestsVerb)</ul></details></li>
 "@
 }
 
@@ -389,7 +389,7 @@ Script Tests
 
 <details><summary><meter low="300" max="1000" optimum="1000" value="$permil">$permil &#x2030;</meter>
 Scripts repo ($($Scripts.Count)) $time</summary>
-$(Get-Item $PSScriptRoot\*.ps1 |Group-Object {$_.Name[0]} |Format-TestsLetter)</details>
+<ul>$(Get-Item $PSScriptRoot\*.ps1 |Group-Object {$_.Name[0]} |Format-TestsLetter)</ul></details>
 "@
 }
 
