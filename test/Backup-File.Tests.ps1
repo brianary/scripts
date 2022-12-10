@@ -19,10 +19,10 @@ Describe 'Backup-File' -Tag Backup-File {
 		It "Should follow best practices for style" {
 			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Backup-File.ps1" -Severity Warning |
 				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly '' -Because 'there should be no style warnings'
+				Should -BeExactly $null -Because 'there should be no style warnings'
 			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Backup-File.ps1" -Severity Error |
 				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly '' -Because 'there should be no style errors'
+				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
 	Context 'Simple backup' -Tag BackupFile {

@@ -13,10 +13,10 @@ Describe 'Add-TimeSpan' -Tag Add-TimeSpan {
 		It "Should follow best practices for style" {
 			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-TimeSpan.ps1" -Severity Warning |
 				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly '' -Because 'there should be no style warnings'
+				Should -BeExactly $null -Because 'there should be no style warnings'
 			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-TimeSpan.ps1" -Severity Error |
 				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly '' -Because 'there should be no style errors'
+				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
 	Context 'Adds a timespan to DateTime values.' -Tag AddTime {
