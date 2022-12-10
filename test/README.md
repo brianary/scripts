@@ -1,9 +1,9 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='70'>70 &#x2030;</meter> Scripts repo (187) &#x1F4C5; 132 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 60 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 60 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='75'>75 &#x2030;</meter> Scripts repo (187) &#x1F4C5; 133 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 61 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 61 days</summary>
 
 - &#x2714;&#xFE0F; Add-CapturesToMatches.ps1
 - &#x2714;&#xFE0F; Add-Counter.ps1
@@ -23,10 +23,10 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='38'>38 &#x2030;</meter> C (26) &#x1F4C5; 132 days</summary>
-<ul><li><details><summary>not started Compare (2) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='77'>77 &#x2030;</meter> C (26) &#x1F4C5; 133 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='500'>500 &#x2030;</meter> Compare (2) &#x1F4C5; at once</summary>
 
-- &#x2716;&#xFE0F; Compare-Properties.ps1
+- &#x2714;&#xFE0F; Compare-Properties.ps1
 - &#x2716;&#xFE0F; Compare-Xml.ps1
 
 </details></li>
