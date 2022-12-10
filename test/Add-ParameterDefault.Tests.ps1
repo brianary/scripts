@@ -12,9 +12,11 @@ Describe 'Add-ParameterDefault' -Tag Add-ParameterDefault {
 	Context 'Script style' -Tag Style {
 		It "Should follow best practices for style" {
 			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-ParameterDefault.ps1" -Severity Warning |
-				Should -HaveCount 0 -Because 'there should be no style warnings'
+				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
+				Should -BeExactly '' -Because 'there should be no style warnings'
 			Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\Add-ParameterDefault.ps1" -Severity Error |
-				Should -HaveCount 0 -Because 'there should be no style errors'
+				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
+				Should -BeExactly '' -Because 'there should be no style errors'
 		}
 	}
 	Context 'Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.' -Tag Example {

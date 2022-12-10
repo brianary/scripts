@@ -109,9 +109,11 @@ Describe '$shortname' -Tag $shortname {
 	Context 'Script style' -Tag Style {
 		It "Should follow best practices for style" {
 			Invoke-ScriptAnalyzer -Path "`$PSScriptRoot\..\$shortname.ps1" -Severity Warning |
-				Should -HaveCount 0 -Because 'there should be no style warnings'
+				ForEach-Object {`$_.Severity,`$_.ScriptName,`$_.Line,`$_.Column,`$_.RuleName,`$_.Message -join ':'} |
+				Should -BeExactly '' -Because 'there should be no style warnings'
 			Invoke-ScriptAnalyzer -Path "`$PSScriptRoot\..\$shortname.ps1" -Severity Error |
-				Should -HaveCount 0 -Because 'there should be no style errors'
+				ForEach-Object {`$_.Severity,`$_.ScriptName,`$_.Line,`$_.Column,`$_.RuleName,`$_.Message -join ':'} |
+				Should -BeExactly '' -Because 'there should be no style errors'
 		}
 	}
 	Context '$($Synopsis -replace "'","''")' -Tag Example {
