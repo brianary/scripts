@@ -49,13 +49,16 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			'README.md' |Should -Not -Exist -Because 'a new repo should not have a readme'
 			Add-GitHubMetadata.ps1 -DefaultOwner 'test@example.com' -NoWarnings
 			'.gitattributes' |Should -Exist
-			'.gitattributes' |Should -FileContentMatchExactly '\*\*/packages/\*\* linguist-vendored'
+			'.gitattributes' |Should -FileContentMatchExactly '\*\*/packages/\*\* linguist-vendored' `
+				-Because 'default Linguist settings should be added'
 			'.editorconfig' |Should -Exist
-			'.editorconfig' |Should -FileContentMatchMultilineExactly '# defaults\r?\n\[\*\]\r?\nindent_style'
+			'.editorconfig' |Should -FileContentMatchMultilineExactly '# defaults\r?\n\[\*\]\r?\nindent_style' `
+				-Because 'default .editorconfig settings should be added'
 			'.github\CODEOWNERS' |Should -Exist
 			'.github\CODEOWNERS' |Should -FileContentMatchExactly '\* test@example.com'
 			'README.md' |Should -Exist
-			'README.md' |Should -FileContentMatchMultilineExactly '\A.+\r?\n=+\r?\n'
+			'README.md' |Should -FileContentMatchMultilineExactly '\A.+\r?\n=+\r?\n' `
+				-Because 'the readme should include a CommonMark Setext header'
 		}
 	}
 	Context 'Set Linguist rules' -Tag Metadata,Linguist {

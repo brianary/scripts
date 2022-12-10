@@ -29,15 +29,15 @@ Describe 'Add-DynamicParam' -Tag Add-DynamicParam {
 	Context 'Adding parameters' {
 		It "Adds a required string parameter" {
 			Add-DynamicParam.ps1 -Name Path -Type string -Mandatory
-			$DynamicParams.Count |Should -Be 1
-			$DynamicParams.Keys |Should -Contain Path
-			$DynamicParams['Path'].ParameterType |Should -Be string
-			$DynamicParams['Path'].Attributes.Count |Should -Be 1
-			$DynamicParams['Path'].Attributes[0].ParameterSetName |Should -BeExactly __AllParameterSets
-			$DynamicParams['Path'].Attributes[0].Mandatory |Should -BeTrue
-			$DynamicParams['Path'].Attributes[0].ValueFromPipeline |Should -BeFalse
-			$DynamicParams['Path'].Attributes[0].ValueFromPipelineByPropertyName |Should -BeFalse
-			$DynamicParams['Path'].Attributes[0].ValueFromRemainingArguments |Should -BeFalse
+			$DynamicParams.Count |Should -Be 1 -Because 'one should have been added'
+			$DynamicParams.Keys |Should -Contain Path -Because 'the right one should have been added'
+			$DynamicParams['Path'].ParameterType |Should -Be string -Because 'it should be the right type'
+			$DynamicParams['Path'].Attributes.Count |Should -Be 1 -Because 'one attribute should exist'
+			$DynamicParams['Path'].Attributes[0].ParameterSetName |Should -BeExactly __AllParameterSets -Because 'the parameter set should be the default'
+			$DynamicParams['Path'].Attributes[0].Mandatory |Should -BeTrue -Because 'it should be required'
+			$DynamicParams['Path'].Attributes[0].ValueFromPipeline |Should -BeFalse -Because 'it shouldn''t accept values from the pipeline'
+			$DynamicParams['Path'].Attributes[0].ValueFromPipelineByPropertyName |Should -BeFalse -Because 'it shouldn''t accept the property from the pipeline'
+			$DynamicParams['Path'].Attributes[0].ValueFromRemainingArguments |Should -BeFalse -Because 'it shouldn''t accept the rest of the unnamed params'
 		}
 		It "Adds several alternative parameters" {
 			Add-DynamicParam.ps1 -Name Document -Type Xml.XmlDocument -ParameterSetName Document `
@@ -46,7 +46,7 @@ Describe 'Add-DynamicParam' -Tag Add-DynamicParam {
 				-Position 0 -Mandatory -ValueFromPipeline
 			Add-DynamicParam.ps1 -Name SelectXmlInfo -Type Microsoft.PowerShell.Commands.SelectXmlInfo `
 				-ParameterSetName SelectXmlInfo -Position 0 -Mandatory -ValueFromPipeline
-			$DynamicParams.Count |Should -Be 3
+			$DynamicParams.Count |Should -Be 3 -Because 'three should''ve been added'
 			$DynamicParams.Keys |Should -Contain Document
 			$DynamicParams['Document'].ParameterType |Should -Be xml
 			$DynamicParams['Document'].Attributes.Count |Should -Be 1

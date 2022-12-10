@@ -38,9 +38,9 @@ Describe 'Backup-File' -Tag Backup-File {
 			Backup-File.ps1 logfile.log
 			'logfile.log' |Should -Exist
 			$null,$backup = Get-Item logfile*.log |Sort-Object {$_.Name.Length}
-			$backup |Should -HaveCount 1
-			$backup.FullName |Should -Exist
-			$backup.Name |Should -Match '\Alogfile-\d{14}\.log\z'
+			$backup |Should -HaveCount 1 -Because 'another file with a longer name should exist'
+			$backup.FullName |Should -Exist -Because 'the file should exist'
+			$backup.Name |Should -Match '\Alogfile-\d{14}\.log\z' -Because 'the backup file should include the date & time'
 		}
 	}
 }

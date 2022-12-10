@@ -1,13 +1,13 @@
 ﻿<#
 .SYNOPSIS
-Tests adding named capture group values as note properties to Select-String MatchInfo objects.
+Tests comparing the properties of two objects.
 #>
 
-Describe 'Add-CapturesToMatches' -Tag Add-CapturesToMatches,Select-Xml {
+Describe 'Compare-Properties' -Tag Compare-Properties {
 	BeforeAll {
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Add-CapturesToMatches.ps1
+		$ScriptName = Join-Path $scriptsdir Compare-Properties.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Comment-based help' -Tag CommentHelp {
@@ -26,15 +26,18 @@ Describe 'Add-CapturesToMatches' -Tag Add-CapturesToMatches,Select-Xml {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Add to regex selection' {
-		It "Value '<Text>' should add '<Name>' and '<Email>'" -TestCases @(
-			@{ Text = 'Arthur Dent adent@example.org'; Name = 'Arthur Dent'; Email = 'adent@example.org' }
-			@{ Text = 'Tricia McMillan trillian@example.com'; Name = 'Tricia McMillan'; Email = 'trillian@example.com' }
-		 ) {
-			Param([string]$Text,[string]$Name,[string]$Email)
-			$result = $Text |Select-String '^(?<Name>.*?\b)\s*(?<Email>\S+@\S+)$' |Add-CapturesToMatches.ps1
-			$result.Name |Should -BeExactly $Name -Because 'the name capture should be added'
-			$result.Email |Should -BeExactly $Email -Because 'the email capture should be added'
+	Context 'Compares the properties of two objects' -Tag Compare,Properties {
+		It 'Should find the difference between PSProviders' {
+			$drives,$imptype,$name = Compare-Properties.ps1 (Get-PSProvider variable) (Get-PSProvider alias) |Sort-Object PropertyName
+			@($drives,$imptype,$name).Reference |Should -BeTrue
+			@($drives,$imptype,$name).Difference |Should -BeTrue
+			$drives.PropertyName |Should -BeExactly Drives
+			$imptype.PropertyName |Should -BeExactly ImplementingType
+			$imptype.Value |Should -BeExactly Microsoft.PowerShell.Commands.VariableProvider
+			$imptype.DifferentValue |Should -BeExactly Microsoft.PowerShell.Commands.AliasProvider
+			$name.PropertyName |Should -BeExactly Name
+			$name.Value |Should -BeExactly Variable
+			$name.DifferentValue |Should -BeExactly Alias
 		}
 	}
 }

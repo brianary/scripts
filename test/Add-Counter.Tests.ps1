@@ -31,7 +31,7 @@ Describe 'Add-Counter' -Tag Add-Counter {
 			[psobject[]] $providers = Get-PSProvider |Add-Counter.ps1 -PropertyName Position -InitialValue 0 -Force
 			foreach($i in 0..($providers.Count -1))
 			{
-				$providers[$i].Position |Should -Be $i
+				$providers[$i].Position |Should -Be $i -Because 'Position should be a simple incrementing integer'
 			}
 		}
 		It "Given JSON '<JsonInput>', adding a '<PropertyName>' counter results in '<JsonOutput>'" -Tag From-One -TestCases @(
@@ -43,7 +43,7 @@ Describe 'Add-Counter' -Tag Add-Counter {
 				ConvertFrom-Json |
 				Add-Counter.ps1 -PropertyName $PropertyName |
 				ConvertTo-Json -Compress |
-				Should -BeExactly $JsonOutput
+				Should -BeExactly $JsonOutput -Because 'an incrementing id property should have been added'
 		}
 	}
 }

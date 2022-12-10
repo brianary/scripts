@@ -29,7 +29,8 @@ Describe 'Add-ParameterDefault' -Tag Add-ParameterDefault {
 	Context 'Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.' -Tag Example {
 		It "Setting a simple default" {
 			Add-ParameterDefault.ps1 epcsv nti $true -Scope Global
-			$PSDefaultParameterValues.ContainsKey('Export-Csv:NoTypeInformation') |Should -BeTrue
+			$PSDefaultParameterValues.ContainsKey('Export-Csv:NoTypeInformation') |
+				Should -BeTrue -Because 'defaults should be added after looking up cmdlet and param aliases'
 			$PSDefaultParameterValues['Export-Csv:NoTypeInformation'] |Should -BeTrue
 		}
 		It "Setting a hashtable default" {

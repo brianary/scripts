@@ -41,11 +41,13 @@ Describe 'Add-VsCodeDatabaseConnection' -Tag Add-VsCodeDatabaseConnection {
 			@{ ProfileName = 'AdventureWorks' ; ServerInstance = '(localdb)\ProjectsV13'; Database = 'AdventureWorks2016' }
 		 ) {
 			Param([string] $ProfileName, [string] $ServerInstance, [string] $Database)
+			Join-Path .vscode settings.json |Should -Not -Exist -Because 'no settings should exist yet'
 			Add-VsCodeDatabaseConnection.ps1 -ProfileName $ProfileName `
 				-ServerInstance $ServerInstance -Database $Database
-			Join-Path .vscode settings.json |Should -Exist
+			Join-Path .vscode settings.json |Should -Exist -Because 'VSCode settings should now exist'
 			$conn = (Get-Content .vscode/settings.json |ConvertFrom-Json).'mssql.connections'
-			$conn.authenticationType |Should -BeExactly Integrated
+			$conn.authenticationType |Should -BeExactly Integrated `
+				-Because 'without credentials, create a trusted/integrated connection'
 			$conn.profileName |Should -BeExactly $ProfileName
 			$conn.server |Should -BeExactly $ServerInstance
 			$conn.database |Should -BeExactly $Database

@@ -109,7 +109,7 @@ Describe '$shortname' -Tag $shortname {
 	}
 	Context 'Comment-based help' -Tag CommentHelp {
 		It "Should produce help object" {
-			Get-Help `$ScriptName |Should -Not -BeOfType string `
+			Get-Help `$ScriptName |Should -Not -BeOfType string ``
 				-Because 'Get-Help should not fall back to the default help string'
 		}
 	}
