@@ -28,14 +28,13 @@ Describe 'Compare-Properties' -Tag Compare-Properties {
 	}
 	Context 'Compares the properties of two objects' -Tag Compare,Properties {
 		It 'Should find the difference between PSProviders' {
-			$drives,$imptype,$name,$null = Compare-Properties.ps1 (Get-PSProvider variable) (Get-PSProvider alias) |Sort-Object PropertyName
-			@($drives,$imptype,$name).Reference |Should -BeTrue
-			@($drives,$imptype,$name).Difference |Should -BeTrue
-			$drives.PropertyName |Should -BeExactly Drives
-			$imptype.PropertyName |Should -BeExactly ImplementingType
+			$diff = Compare-Properties.ps1 (Get-PSProvider variable) (Get-PSProvider alias) |Sort-Object PropertyName
+			$diff.Reference |Should -BeTrue
+			$diff.Difference |Should -BeTrue
+			$imptype = $diff |Where-Object PropertyName -eq ImplementingType
 			$imptype.Value |Should -BeExactly Microsoft.PowerShell.Commands.VariableProvider
 			$imptype.DifferentValue |Should -BeExactly Microsoft.PowerShell.Commands.AliasProvider
-			$name.PropertyName |Should -BeExactly Name
+			$name = $diff |Where-Object PropertyName -eq Name
 			$name.Value |Should -BeExactly Variable
 			$name.DifferentValue |Should -BeExactly Alias
 		}

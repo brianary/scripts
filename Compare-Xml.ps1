@@ -19,7 +19,6 @@ Resolve-XPath.ps1
 Compare-Xml.ps1 '<a b="z"/>' '<a b="y"/>' |Format-Xml.ps1
 
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:output omit-xml-declaration="yes" method="xml" />
   <xsl:template match="@*|node()">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" />
@@ -34,7 +33,6 @@ Compare-Xml.ps1 '<a b="z"/>' '<a b="y"/>' |Format-Xml.ps1
 Compare-Xml.ps1 '<a b="z"/>' '<a c="y"/>' |Format-Xml.ps1
 
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:output omit-xml-declaration="yes" method="xml" />
   <xsl:template match="@*|node()">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()" />
@@ -60,9 +58,8 @@ Compare-Xml.ps1 '<a><b/><c/><!-- d --></a>' '<a><c/><b/></a>' |Format-Xml.ps1
   </xsl:template>
   <xsl:template match="/a">
     <xsl:copy>
-      <xsl:apply-templates select="@*" />
       <xsl:apply-templates select="c" />
-      <xsl:apply-templates select="b" />
+      <b />
     </xsl:copy>
   </xsl:template>
 </xsl:transform>
@@ -88,6 +85,8 @@ Compare-Xml.ps1 '<a/>' '<a><!-- annotation --><new/><?node details?></a>' |Forma
 
 #Requires -Version 3
 using namespace System.Xml
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','',Justification='These params are used.')]
+ [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns','',Justification='These plurals are fine.')]
 [CmdletBinding()][OutputType([xml])] Param(
 # The original XML document to be compared.
 [Parameter(Position=0,Mandatory=$true)][xml] $ReferenceXml,
@@ -264,9 +263,9 @@ function Measure-XmlNodePosition([Parameter(Position=0,Mandatory=$true)][XmlNode
 	else {return}
 }
 
-function Format-ApplyTemplates
+filter Format-ApplyTemplates
 {
-	[CmdletBinding()] Param(
+	[CmdletBinding()][OutputType([string])] Param(
 	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][XmlNodeType] $NodeType,
 	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ValidateNotNullOrEmpty()][string] $Name,
 	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $LocalName,
@@ -294,18 +293,17 @@ function Format-ApplyTemplates
 
 function ConvertTo-XmlNodeLiteral
 {
-	[CmdletBinding()] Param([Parameter(Position=0,Mandatory=$true)][XmlNode] $Node)
-	$ns = 'xmlns:xsl="http://www.w3.org/1999/XSL/Transform"'
+	[CmdletBinding()][OutputType([string])] Param([Parameter(Position=0,Mandatory=$true)][XmlNode] $Node)
 	switch($Node.NodeType)
 	{
-		CDATA {"<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
-		Comment {"<xsl:comment><![CDATA[$($Node.Value)]]></xsl:comment>"}
-		Element {$Node.OuterXml}
-		ProcessingInstruction {("<{0} name='$($Node.Name)'><![CDATA[$($Node.Value)]]></{0}>" -f
+		CDATA {return "<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
+		Comment {return "<xsl:comment><![CDATA[$($Node.Value)]]></xsl:comment>"}
+		Element {return $Node.OuterXml}
+		ProcessingInstruction {return ("<{0} name='$($Node.Name)'><![CDATA[$($Node.Value)]]></{0}>" -f
 			'xsl:processing-instruction')}
-		SignificantWhitespace {"<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
-		Text {"<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
-		Whitespace {"<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
+		SignificantWhitespace {return "<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
+		Text {return "<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
+		Whitespace {return "<xsl:text><![CDATA[$($Node.Value)]]></xsl:text>"}
 		default {return}
 	}
 }
@@ -352,9 +350,9 @@ function Merge-XmlNodes
 	})
 }
 
-function Add-XmlAttribute
+filter Add-XmlAttribute
 {
-	[CmdletBinding()] Param(
+	[CmdletBinding()][OutputType([string])] Param(
 	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ValidateNotNullOrEmpty()][string] $Name,
 	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $LocalName,
 	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Value,
