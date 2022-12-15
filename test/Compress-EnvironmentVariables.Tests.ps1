@@ -3,6 +3,10 @@
 Tests replacing each of the longest matching parts of a string with an embedded environment variable with that value.
 #>
 
+Write-Information "# env vars = $([Environment]::GetEnvironmentVariables().Count)"
+[Environment]::GetEnvironmentVariables() |
+	Out-String |
+	Write-Information
 Describe 'Compress-EnvironmentVariables' -Tag Compress-EnvironmentVariables {
 	BeforeAll {
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
