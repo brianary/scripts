@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='80'>80 &#x2030;</meter> Scripts repo (187) &#x1F4C5; 133 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='86'>86 &#x2030;</meter> Scripts repo (187) &#x1F4C5; 137 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 61 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 61 days</summary>
 
@@ -23,16 +23,16 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='115'>115 &#x2030;</meter> C (26) &#x1F4C5; 133 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='154'>154 &#x2030;</meter> C (26) &#x1F4C5; 137 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (2) &#x1F4C5; 8 hours</summary>
 
 - &#x2714;&#xFE0F; Compare-Properties.ps1
 - &#x2714;&#xFE0F; Compare-Xml.ps1
 
 </details></li>
-<li><details><summary>not started Compress (1) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compress (1) &#x1F4C5; at once</summary>
 
-- &#x2716;&#xFE0F; Compress-EnvironmentVariables.ps1
+- &#x2714;&#xFE0F; Compress-EnvironmentVariables.ps1
 
 </details></li>
 <li><details><summary>not started Connect (1) </summary>
