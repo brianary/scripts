@@ -3,10 +3,10 @@
 Tests replacing each of the longest matching parts of a string with an embedded environment variable with that value.
 #>
 
-Write-Information "# env vars = $([Environment]::GetEnvironmentVariables().Count)"
+Write-Information "# env vars = $([Environment]::GetEnvironmentVariables().Count)" -infa Continue
 [Environment]::GetEnvironmentVariables() |
 	Out-String |
-	Write-Information
+	Write-Information -infa Continue
 Describe 'Compress-EnvironmentVariables' -Tag Compress-EnvironmentVariables {
 	BeforeAll {
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
@@ -37,6 +37,7 @@ Describe 'Compress-EnvironmentVariables' -Tag Compress-EnvironmentVariables {
 			@{ Value ="$env:TEMP\tempdata"; Result = '%TEMP%\tempdata' }
 		) {
 			Param([string] $Value, [string] $Result)
+			throw "$([Environment]::GetEnvironmentVariables() |Out-String)"
 			Compress-EnvironmentVariables.ps1 $Value |Should -Be $Result
 		}
 	}
