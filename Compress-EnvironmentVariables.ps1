@@ -32,8 +32,7 @@ Compress-EnvironmentVariables.ps1 'C:\Program Files\Git\bin\git.exe'
 )
 Begin
 {
-	$envs = [Environment]::GetEnvironmentVariables().GetEnumerator() |
-		Where-Object Key -notin 'ProgramW6432','ALLUSERSPROFILE','PROCESSOR_LEVEL','NUMBER_OF_PROCESSORS'
+	$envs = Get-ChildItem env: |Where-Object Value -match '\D'
 	function Get-EnvMatch([string] $Text)
 	{
 		return $envs |
