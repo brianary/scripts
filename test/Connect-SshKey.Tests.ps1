@@ -46,20 +46,14 @@ Describe 'Connect-SshKey' -Tag Connect-SshKey {
 			Connect-SshKey.ps1 crowpi -UserName pi
 			try
 			{
-				$Error.Clear()
 				Assert-MockCalled -CommandName ssh -ParameterFilter {
 					$args.Count -eq 2 -and $args[0] -eq 'pi@crowpi' -and $args[1] -eq 'cat >> .ssh/authorized_keys'
 				}
 			}
 			catch
 			{
-				try{Write-Error "$_" -infa Continue}catch{Write-Information 'cannot show error' -infa Continue}
-				try{$_ |Format-List * |Out-String |Write-Error}catch{Write-Information 'cannot show error record' -infa Continue}
-				try{$_.Exception |Format-List * |Out-String |Write-Error}catch{Write-Information 'cannot show exception' -infa Continue}
-				$_ = $Error[0]
-				try{Write-Error "$_" -infa Continue}catch{Write-Information 'cannot show error' -infa Continue}
-				try{$_ |Format-List * |Out-String |Write-Error}catch{Write-Information 'cannot show error record' -infa Continue}
-				try{$_.Exception |Format-List * |Out-String |Write-Error}catch{Write-Information 'cannot show exception' -infa Continue}
+				if($_ -eq $null) {Write-Information 'Something went wrong checking the mock call' -infa Continue}
+				else {Write-Information "$($_.GetType().FullName): $_"}
 			}
 		}
 	}
