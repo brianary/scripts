@@ -47,7 +47,7 @@ Describe 'Connect-SshKey' -Tag Connect-SshKey {
 			try
 			{
 				$Error.Clear()
-				Should -Invoke -CommandName ssh -ParameterFilter {
+				Assert-MockCalled -CommandName ssh -ParameterFilter {
 					$args.Count -eq 2 -and $args[0] -eq 'pi@crowpi' -and $args[1] -eq 'cat >> .ssh/authorized_keys'
 				}
 			}
