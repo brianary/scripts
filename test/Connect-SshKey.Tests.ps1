@@ -52,9 +52,9 @@ Describe 'Connect-SshKey' -Tag Connect-SshKey {
 			}
 			catch
 			{
-				Write-Error "$_"
-				$_ |Format-List * |Out-String |Write-Error
-				$_.Exception |Format-List * |Out-String |Write-Error
+				try{Write-Error "$_" -infa Continue}catch{Write-Information 'cannot show error' -infa Continue}
+				try{$_ |Format-List * |Out-String |Write-Error}catch{Write-Information 'cannot show error record' -infa Continue}
+				try{$_.Exception |Format-List * |Out-String |Write-Error}catch{Write-Information 'cannot show exception' -infa Continue}
 			}
 		}
 	}
