@@ -44,11 +44,7 @@ Describe 'Connect-SshKey' -Tag Connect-SshKey {
 	Context 'Uses OpenSSH to generate a key and connect it to an ssh server' -Tag SshKey {
 		It 'Sets up SSH key on server using ssh' {
 			Connect-SshKey.ps1 crowpi -UserName pi
-			Write-Information 'connect called, trying assert' -infa Continue
-			Assert-MockCalled -CommandName ssh -ParameterFilter {
-				$args.Count -eq 2 -and $args[0] -eq 'pi@crowpi' -and $args[1] -eq 'cat >> .ssh/authorized_keys'
-			}
-			Write-Information 'assert called, trying should' -infa Continue
+			$ErrorView = 'DetailedView'
 			Should -Invoke -CommandName ssh -ParameterFilter {
 				$args.Count -eq 2 -and $args[0] -eq 'pi@crowpi' -and $args[1] -eq 'cat >> .ssh/authorized_keys'
 			}
