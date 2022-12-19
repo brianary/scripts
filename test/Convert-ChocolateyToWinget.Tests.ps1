@@ -10,24 +10,6 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 		$ScriptName = Join-Path $scriptsdir Convert-ChocolateyToWinget.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	BeforeEach {
-		Mock choco {
-			if($args.Count -gt 1 -and $args[0] -eq 'list')
-			{
-				'Chocolatey v1.2.1'
-				if($args[1] -in '7zip','gh','git','vscode') {$args[1]}
-			}
-		}
-		if(Get-Command winget -EA Ignore) {function winget {}}
-		Mock winget {
-			if($args.Count -gt 1 -and $args[0] -eq 'install' -and $args[1] -eq '-e' -and $args[2] -eq '--id')
-			{
-				'Chocolatey v1.2.1'
-				if($args[3] -in '7zip.7zip','GitHub.cli','Git.Git','Microsoft.VisualStudioCode') {"Installing $($args[3])..."}
-				else {throw "Can't install $($args[3])"}
-			}
-		}
-	}
 	Context 'Comment-based help' -Tag CommentHelp {
 		It "Should produce help object" {
 			Get-Help $ScriptName |Should -Not -BeOfType string `
@@ -47,6 +29,21 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 	Context 'Change from managing various packages with Chocolatey to WinGet' -Tag Winget `
 		-Skip:(!(([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).`
 			IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
+		Mock choco {
+			if($args.Count -gt 1 -and $args[0] -eq 'list')
+			{
+				'Chocolatey v1.2.1'
+				if($args[1] -in '7zip','gh','git','vscode') {$args[1]}
+			}
+		}
+		Mock winget {
+			if($args.Count -gt 1 -and $args[0] -eq 'install' -and $args[1] -eq '-e' -and $args[2] -eq '--id')
+			{
+				'Chocolatey v1.2.1'
+				if($args[3] -in '7zip.7zip','GitHub.cli','Git.Git','Microsoft.VisualStudioCode') {"Installing $($args[3])..."}
+				else {throw "Can't install $($args[3])"}
+			}
+		}
 		It 'Convert chocolatey packages to winget' {
 			Convert-ChocolateyToWinget.ps1 -Confirm:$false
 			Assert-MockCalled -CommandName winget -ParameterFilter {
