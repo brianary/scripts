@@ -1,9 +1,9 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='91'>91 &#x2030;</meter> Scripts repo (187) &#x1F4C5; 141 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 61 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 61 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='102'>102 &#x2030;</meter> Scripts repo (187) &#x1F4C5; 141 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 69 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 69 days</summary>
 
 - &#x2714;&#xFE0F; Add-CapturesToMatches.ps1
 - &#x2714;&#xFE0F; Add-Counter.ps1
@@ -23,7 +23,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='192'>192 &#x2030;</meter> C (26) &#x1F4C5; 141 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='269'>269 &#x2030;</meter> C (26) &#x1F4C5; 141 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (2) &#x1F4C5; 8 hours</summary>
 
 - &#x2714;&#xFE0F; Compare-Properties.ps1
@@ -35,15 +35,15 @@ Script Tests
 - &#x2714;&#xFE0F; Compress-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Connect (1) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Connect (1) &#x1F4C5; 20 hours</summary>
 
 - &#x2714;&#xFE0F; Connect-SshKey.ps1
 
 </details></li>
-<li><details><summary>not started Convert (3) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='667'>667 &#x2030;</meter> Convert (3) &#x1F4C5; 141 days</summary>
 
-- &#x2716;&#xFE0F; Convert-ChocolateyToWinget.ps1
-- &#x2716;&#xFE0F; Convert-ClipboardTsvToHtml.ps1
+- &#x2714;&#xFE0F; Convert-ChocolateyToWinget.ps1
+- &#x2714;&#xFE0F; Convert-ClipboardTsvToHtml.ps1
 - &#x2716;&#xFE0F; Convert-Xml.ps1
 
 </details></li>

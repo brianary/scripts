@@ -1,6 +1,6 @@
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1450_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1540_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -18,7 +18,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Clipboard
 
 - &#x1F199; **[Convert-ClipboardTsvToHtml.ps1](Convert-ClipboardTsvToHtml.ps1.md)**: Parses TSV clipboard data into HTML table data which is copied back to the clipboard.
-- &#x1F199; **[Import-ClipboardTsv.ps1](Import-ClipboardTsv.ps1.md)**: Parses TSV clipboard data into objects.
+- **[Import-ClipboardTsv.ps1](Import-ClipboardTsv.ps1.md)**: Parses TSV clipboard data into objects.
 
 ### Comics
 
@@ -28,11 +28,11 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Command
 
-- &#x1F199; **[Get-CommandParameters.ps1](Get-CommandParameters.ps1.md)**: Returns the parameters of the specified cmdlet.
-- &#x1F199; **[Get-CommandPath.ps1](Get-CommandPath.ps1.md)**: Locates a command.
-- &#x1F199; **[Hide-Command.ps1](Hide-Command.ps1.md)**: Make a command unavailable.
-- &#x1F199; **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1.md)**: Execute a command by using matching dictionary entries as parameters.
-- &#x1F199; **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
+- **[Get-CommandParameters.ps1](Get-CommandParameters.ps1.md)**: Returns the parameters of the specified cmdlet.
+- **[Get-CommandPath.ps1](Get-CommandPath.ps1.md)**: Locates a command.
+- **[Hide-Command.ps1](Hide-Command.ps1.md)**: Make a command unavailable.
+- **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1.md)**: Execute a command by using matching dictionary entries as parameters.
+- **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 
 ### Configuration
 
@@ -41,15 +41,15 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Console
 
-- &#x1F199; **[Disable-AnsiColor.ps1](Disable-AnsiColor.ps1.md)**: Disables ANSI terminal colors.
-- &#x1F199; **[Enable-AnsiColor.ps1](Enable-AnsiColor.ps1.md)**: Enables ANSI terminal colors.
-- &#x1F199; **[Get-ConsoleHistory.ps1](Get-ConsoleHistory.ps1.md)**: Returns the DOSKey-style console command history (up arrow or F8).
-- &#x1F199; **[Set-ConsoleColorTheme.ps1](Set-ConsoleColorTheme.ps1.md)**: Overrides ConsoleClass window color palette entries with a preset color theme.
+- **[Disable-AnsiColor.ps1](Disable-AnsiColor.ps1.md)**: Disables ANSI terminal colors.
+- **[Enable-AnsiColor.ps1](Enable-AnsiColor.ps1.md)**: Enables ANSI terminal colors.
+- **[Get-ConsoleHistory.ps1](Get-ConsoleHistory.ps1.md)**: Returns the DOSKey-style console command history (up arrow or F8).
+- **[Set-ConsoleColorTheme.ps1](Set-ConsoleColorTheme.ps1.md)**: Overrides ConsoleClass window color palette entries with a preset color theme.
 
 ### Credential
 
-- &#x1F199; **[Get-CachedCredential.ps1](Get-CachedCredential.ps1.md)**: Return a credential from secure storage, or prompt the user for it if not found.
-- &#x1F199; **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1.md)**: Removes a credential from secure storage.
+- **[Get-CachedCredential.ps1](Get-CachedCredential.ps1.md)**: Return a credential from secure storage, or prompt the user for it if not found.
+- **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1.md)**: Removes a credential from secure storage.
 
 ### Data encoding
 
@@ -70,22 +70,22 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Database
 
-- &#x1F199; **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
-- &#x1F199; **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1.md)**: Exports MS SQL script for an object from the given server.
-- &#x1F199; **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+- **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
+- **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1.md)**: Exports MS SQL script for an object from the given server.
+- **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - &#x1F199; **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
-- &#x1F199; **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
-- &#x1F199; **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
+- **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
+- **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
 - &#x1F199; **[Find-Indexes.ps1](Find-Indexes.ps1.md)**: Returns indexes using a column with the given name.
-- &#x1F199; **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1.md)**: Reports text, ntext, and image datatypes found in a given database.
-- &#x1F199; **[Measure-DbColumn.ps1](Measure-DbColumn.ps1.md)**: Provides statistics about SQL Server column data.
-- &#x1F199; **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1.md)**: Provides sorted counts of SQL Server column values.
-- &#x1F199; **[Measure-DbTable.ps1](Measure-DbTable.ps1.md)**: Provides frequency details about SQL Server table data.
-- &#x1F199; **[New-DbProviderObject.ps1](New-DbProviderObject.ps1.md)**: Create a common database object.
-- &#x1F199; **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1.md)**: Finds database constraints with system-generated names and gives them deterministic names.
-- &#x1F199; **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1.md)**: Finds database constraints that have been incompletely re-enabled.
-- &#x1F199; **[Send-SqlReport.ps1](Send-SqlReport.ps1.md)**: Execute a SQL statement and email the results.
-- &#x1F199; **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1.md)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
+- **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1.md)**: Reports text, ntext, and image datatypes found in a given database.
+- **[Measure-DbColumn.ps1](Measure-DbColumn.ps1.md)**: Provides statistics about SQL Server column data.
+- **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1.md)**: Provides sorted counts of SQL Server column values.
+- **[Measure-DbTable.ps1](Measure-DbTable.ps1.md)**: Provides frequency details about SQL Server table data.
+- **[New-DbProviderObject.ps1](New-DbProviderObject.ps1.md)**: Create a common database object.
+- **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1.md)**: Finds database constraints with system-generated names and gives them deterministic names.
+- **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1.md)**: Finds database constraints that have been incompletely re-enabled.
+- **[Send-SqlReport.ps1](Send-SqlReport.ps1.md)**: Execute a SQL statement and email the results.
+- **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1.md)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
 ### Date and time
 
@@ -93,10 +93,10 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - &#x1F199; **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1.md)**: Parses a Timespan from a ISO8601 duration string.
 - &#x1F199; **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1.md)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
 - &#x1F199; **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1.md)**: Formats a datetime as a LogParser literal.
-- &#x1F199; **[Format-Date.ps1](Format-Date.ps1.md)**: Returns a date/time as a named format.
+- **[Format-Date.ps1](Format-Date.ps1.md)**: Returns a date/time as a named format.
 - &#x1F199; **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1.md)**: Returns a date and time converted to the French Republican Calendar.
-- &#x1F199; **[Show-Time.ps1](Show-Time.ps1.md)**: Displays a formatted date using powerline font characters.
-- &#x1F199; **[Test-DateTime.ps1](Test-DateTime.ps1.md)**: Tests whether the given string can be parsed as a date.
+- **[Show-Time.ps1](Show-Time.ps1.md)**: Displays a formatted date using powerline font characters.
+- **[Test-DateTime.ps1](Test-DateTime.ps1.md)**: Tests whether the given string can be parsed as a date.
 - &#x1F199; **[Test-USFederalHoliday.ps1](Test-USFederalHoliday.ps1.md)**: Returns true if the given date is a U.S. federal holiday.
 
 ### Dictionary
@@ -108,16 +108,16 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### DotNet
 
-- &#x1F199; **[Find-DotNetGlobalTools.ps1](Find-DotNetGlobalTools.ps1.md)**: Returns a list of global dotnet tools.
+- **[Find-DotNetGlobalTools.ps1](Find-DotNetGlobalTools.ps1.md)**: Returns a list of global dotnet tools.
 - &#x1F199; **[Get-AssemblyFramework.ps1](Get-AssemblyFramework.ps1.md)**: Gets the framework version an assembly was compiled for.
-- &#x1F199; **[Get-DotNetFrameworkVersions.ps1](Get-DotNetFrameworkVersions.ps1.md)**: Determine which .NET Frameworks are installed on the requested system.
-- &#x1F199; **[Get-DotNetGlobalTools.ps1](Get-DotNetGlobalTools.ps1.md)**: Returns a list of global dotnet tools.
+- **[Get-DotNetFrameworkVersions.ps1](Get-DotNetFrameworkVersions.ps1.md)**: Determine which .NET Frameworks are installed on the requested system.
+- **[Get-DotNetGlobalTools.ps1](Get-DotNetGlobalTools.ps1.md)**: Returns a list of global dotnet tools.
 - &#x1F199; **[Get-DotNetVersions.ps1](Get-DotNetVersions.ps1.md)**: Determine which .NET Core & Framework versions are installed.
 
 ### EnvironmentVariables
 
 - &#x1F199; **[Compress-EnvironmentVariables.ps1](Compress-EnvironmentVariables.ps1.md)**: Replaces each of the longest matching parts of a string with an embedded environment variable with that value.
-- &#x1F199; **[Expand-EnvironmentVariables.ps1](Expand-EnvironmentVariables.ps1.md)**: Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string.
+- **[Expand-EnvironmentVariables.ps1](Expand-EnvironmentVariables.ps1.md)**: Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string.
 
 ### Files
 
@@ -153,9 +153,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Json
 
-- &#x1F199; **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
-- &#x1F199; **[Set-JsonProperty.ps1](Set-JsonProperty.ps1.md)**: Sets a property of arbitrary depth in a JSON string.
-- &#x1F199; **[Test-Json.ps1](Test-Json.ps1.md)**: Determines whether a string is valid JSON.
+- **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
+- **[Set-JsonProperty.ps1](Set-JsonProperty.ps1.md)**: Sets a property of arbitrary depth in a JSON string.
+- **[Test-Json.ps1](Test-Json.ps1.md)**: Determines whether a string is valid JSON.
 
 ### Packages and libraries
 
@@ -165,8 +165,8 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Parameters
 
 - &#x1F199; **[Add-ParameterDefault.ps1](Add-ParameterDefault.ps1.md)**: Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
-- &#x1F199; **[Remove-ParameterDefault.ps1](Remove-ParameterDefault.ps1.md)**: Removes a value that would have been used for a parameter if none was specified, if one existed.
-- &#x1F199; **[Set-ParameterDefault.ps1](Set-ParameterDefault.ps1.md)**: Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
+- **[Remove-ParameterDefault.ps1](Remove-ParameterDefault.ps1.md)**: Removes a value that would have been used for a parameter if none was specified, if one existed.
+- **[Set-ParameterDefault.ps1](Set-ParameterDefault.ps1.md)**: Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
 
 ### PowerShell
 
@@ -200,23 +200,23 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - &#x1F199; **[Add-NoteProperty.ps1](Add-NoteProperty.ps1.md)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
 - &#x1F199; **[Compare-Properties.ps1](Compare-Properties.ps1.md)**: Compares the properties of two objects.
-- &#x1F199; **[Test-NoteProperty.ps1](Test-NoteProperty.ps1.md)**: Looks for any matching NoteProperties on an object.
+- **[Test-NoteProperty.ps1](Test-NoteProperty.ps1.md)**: Looks for any matching NoteProperties on an object.
 
 ### Scheduled Tasks
 
 - &#x1F199; **[Backup-SchTasks.ps1](Backup-SchTasks.ps1.md)**: Exports the local list of Scheduled Tasks into a single XML file.
 - &#x1F199; **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1.md)**: Convert a CimInstance object to a PSObject.
 - &#x1F199; **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1.md)**: Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
-- &#x1F199; **[Copy-SchTasks.ps1](Copy-SchTasks.ps1.md)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
-- &#x1F199; **[Restore-SchTasks.ps1](Restore-SchTasks.ps1.md)**: Imports from a single XML file into the local Scheduled Tasks.
+- **[Copy-SchTasks.ps1](Copy-SchTasks.ps1.md)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
+- **[Restore-SchTasks.ps1](Restore-SchTasks.ps1.md)**: Imports from a single XML file into the local Scheduled Tasks.
 
 ### Scripts
 
 - &#x1F199; **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
-- &#x1F199; **[New-Script.ps1](New-Script.ps1.md)**: Creates a simple boilerplate script.
+- **[New-Script.ps1](New-Script.ps1.md)**: Creates a simple boilerplate script.
 - &#x1F199; **[Optimize-Help.ps1](Optimize-Help.ps1.md)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
-- &#x1F199; **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
-- &#x1F199; **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1.md)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
+- **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
+- **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1.md)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
 
 ### Search and replace
 
@@ -227,9 +227,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Seq
 
-- &#x1F199; **[Send-SeqEvent.ps1](Send-SeqEvent.ps1.md)**: Send an event to a Seq server.
-- &#x1F199; **[Send-SeqScriptEvent.ps1](Send-SeqScriptEvent.ps1.md)**: Sends an event (often an error) from a script to a Seq server, including script info.
-- &#x1F199; **[Use-SeqServer.ps1](Use-SeqServer.ps1.md)**: Set the default Server and ApiKey for Send-SeqEvent.ps1
+- **[Send-SeqEvent.ps1](Send-SeqEvent.ps1.md)**: Send an event to a Seq server.
+- **[Send-SeqScriptEvent.ps1](Send-SeqScriptEvent.ps1.md)**: Sends an event (often an error) from a script to a Seq server, including script info.
+- **[Use-SeqServer.ps1](Use-SeqServer.ps1.md)**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 
 ### System and updates
 
@@ -244,7 +244,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - &#x1F199; **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1.md)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 - &#x1F199; **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
-- &#x1F199; **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
+- **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
 - &#x1F199; **[Get-UnicodeName.ps1](Get-UnicodeName.ps1.md)**: Returns the name of a Unicode code point.
 
 ### VSCode
@@ -252,25 +252,25 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - &#x1F199; **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1.md)**: Adds a VS Code MSSQL database connection to the repo.
 - &#x1F199; **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 - &#x1F199; **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1.md)**: Gets the path of the VSCode settings.config file.
-- &#x1F199; **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1.md)**: Adds config XDT connection strings to VSCode settings.
+- **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1.md)**: Adds config XDT connection strings to VSCode settings.
 - &#x1F199; **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1.md)**: Pushes the current VS Code editor workspace location to the location stack.
 - &#x1F199; **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 
 ### XML
 
 - &#x1F199; **[Compare-Xml.ps1](Compare-Xml.ps1.md)**: Compares two XML documents and returns the differences.
-- &#x1F199; **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
-- &#x1F199; **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1.md)**: Parse escaped XML into XML and serialize it.
-- &#x1F199; **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1.md)**: Converts named nodes of an element to properties of a PSObject, recursively.
-- &#x1F199; **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1.md)**: Serializes complex content into XML elements.
-- &#x1F199; **[Format-Xml.ps1](Format-Xml.ps1.md)**: Pretty-print XML.
-- &#x1F199; **[Get-XmlNamespaces.ps1](Get-XmlNamespaces.ps1.md)**: Gets the namespaces from a document as a dictionary.
-- &#x1F199; **[Merge-XmlSelections.ps1](Merge-XmlSelections.ps1.md)**: Builds an object using the named XPath selections as properties.
+- **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
+- **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1.md)**: Parse escaped XML into XML and serialize it.
+- **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1.md)**: Converts named nodes of an element to properties of a PSObject, recursively.
+- **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1.md)**: Serializes complex content into XML elements.
+- **[Format-Xml.ps1](Format-Xml.ps1.md)**: Pretty-print XML.
+- **[Get-XmlNamespaces.ps1](Get-XmlNamespaces.ps1.md)**: Gets the namespaces from a document as a dictionary.
+- **[Merge-XmlSelections.ps1](Merge-XmlSelections.ps1.md)**: Builds an object using the named XPath selections as properties.
 - &#x1F199; **[New-NamespaceManager.ps1](New-NamespaceManager.ps1.md)**: Creates an object to lookup XML namespace prefixes.
-- &#x1F199; **[Resolve-XmlSchemaLocation.ps1](Resolve-XmlSchemaLocation.ps1.md)**: Gets the namespaces and their URIs and URLs from a document.
+- **[Resolve-XmlSchemaLocation.ps1](Resolve-XmlSchemaLocation.ps1.md)**: Gets the namespaces and their URIs and URLs from a document.
 - &#x1F199; **[Resolve-XPath.ps1](Resolve-XPath.ps1.md)**: Returns the XPath of the location of an XML node.
 - &#x1F199; **[Show-DataRef.ps1](Show-DataRef.ps1.md)**: Display an HTML view of an XML schema or WSDL using Saxon.
-- &#x1F199; **[Test-Xml.ps1](Test-Xml.ps1.md)**: Try parsing text as XML, and validating it if a schema is provided.
+- **[Test-Xml.ps1](Test-Xml.ps1.md)**: Try parsing text as XML, and validating it if a schema is provided.
 
 ### Other
 

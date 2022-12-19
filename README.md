@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1450_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1540_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -27,7 +27,7 @@ PowerShell Scripts
 ### Clipboard
 
 - :up: **[Convert-ClipboardTsvToHtml.ps1](Convert-ClipboardTsvToHtml.ps1)**: Parses TSV clipboard data into HTML table data which is copied back to the clipboard.
-- :up: **[Import-ClipboardTsv.ps1](Import-ClipboardTsv.ps1)**: Parses TSV clipboard data into objects.
+- **[Import-ClipboardTsv.ps1](Import-ClipboardTsv.ps1)**: Parses TSV clipboard data into objects.
 
 ### Comics
 
@@ -37,11 +37,11 @@ PowerShell Scripts
 
 ### Command
 
-- :up: **[Get-CommandParameters.ps1](Get-CommandParameters.ps1)**: Returns the parameters of the specified cmdlet.
-- :up: **[Get-CommandPath.ps1](Get-CommandPath.ps1)**: Locates a command.
-- :up: **[Hide-Command.ps1](Hide-Command.ps1)**: Make a command unavailable.
-- :up: **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1)**: Execute a command by using matching dictionary entries as parameters.
-- :up: **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
+- **[Get-CommandParameters.ps1](Get-CommandParameters.ps1)**: Returns the parameters of the specified cmdlet.
+- **[Get-CommandPath.ps1](Get-CommandPath.ps1)**: Locates a command.
+- **[Hide-Command.ps1](Hide-Command.ps1)**: Make a command unavailable.
+- **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1)**: Execute a command by using matching dictionary entries as parameters.
+- **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 
 ### Configuration
 
@@ -50,15 +50,15 @@ PowerShell Scripts
 
 ### Console
 
-- :up: **[Disable-AnsiColor.ps1](Disable-AnsiColor.ps1)**: Disables ANSI terminal colors.
-- :up: **[Enable-AnsiColor.ps1](Enable-AnsiColor.ps1)**: Enables ANSI terminal colors.
-- :up: **[Get-ConsoleHistory.ps1](Get-ConsoleHistory.ps1)**: Returns the DOSKey-style console command history (up arrow or F8).
-- :up: **[Set-ConsoleColorTheme.ps1](Set-ConsoleColorTheme.ps1)**: Overrides ConsoleClass window color palette entries with a preset color theme.
+- **[Disable-AnsiColor.ps1](Disable-AnsiColor.ps1)**: Disables ANSI terminal colors.
+- **[Enable-AnsiColor.ps1](Enable-AnsiColor.ps1)**: Enables ANSI terminal colors.
+- **[Get-ConsoleHistory.ps1](Get-ConsoleHistory.ps1)**: Returns the DOSKey-style console command history (up arrow or F8).
+- **[Set-ConsoleColorTheme.ps1](Set-ConsoleColorTheme.ps1)**: Overrides ConsoleClass window color palette entries with a preset color theme.
 
 ### Credential
 
-- :up: **[Get-CachedCredential.ps1](Get-CachedCredential.ps1)**: Return a credential from secure storage, or prompt the user for it if not found.
-- :up: **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1)**: Removes a credential from secure storage.
+- **[Get-CachedCredential.ps1](Get-CachedCredential.ps1)**: Return a credential from secure storage, or prompt the user for it if not found.
+- **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1)**: Removes a credential from secure storage.
 
 ### Data encoding
 
@@ -79,22 +79,22 @@ PowerShell Scripts
 
 ### Database
 
-- :up: **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
-- :up: **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1)**: Exports MS SQL script for an object from the given server.
-- :up: **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+- **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
+- **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1)**: Exports MS SQL script for an object from the given server.
+- **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - :up: **[Export-TableMerge.ps1](Export-TableMerge.ps1)**: Exports table data as a T-SQL MERGE statement.
-- :up: **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1)**: Searches an entire database for a field value.
-- :up: **[Find-DbColumn.ps1](Find-DbColumn.ps1)**: Searches for database columns.
+- **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1)**: Searches an entire database for a field value.
+- **[Find-DbColumn.ps1](Find-DbColumn.ps1)**: Searches for database columns.
 - :up: **[Find-Indexes.ps1](Find-Indexes.ps1)**: Returns indexes using a column with the given name.
-- :up: **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1)**: Reports text, ntext, and image datatypes found in a given database.
-- :up: **[Measure-DbColumn.ps1](Measure-DbColumn.ps1)**: Provides statistics about SQL Server column data.
-- :up: **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1)**: Provides sorted counts of SQL Server column values.
-- :up: **[Measure-DbTable.ps1](Measure-DbTable.ps1)**: Provides frequency details about SQL Server table data.
-- :up: **[New-DbProviderObject.ps1](New-DbProviderObject.ps1)**: Create a common database object.
-- :up: **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1)**: Finds database constraints with system-generated names and gives them deterministic names.
-- :up: **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1)**: Finds database constraints that have been incompletely re-enabled.
-- :up: **[Send-SqlReport.ps1](Send-SqlReport.ps1)**: Execute a SQL statement and email the results.
-- :up: **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
+- **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1)**: Reports text, ntext, and image datatypes found in a given database.
+- **[Measure-DbColumn.ps1](Measure-DbColumn.ps1)**: Provides statistics about SQL Server column data.
+- **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1)**: Provides sorted counts of SQL Server column values.
+- **[Measure-DbTable.ps1](Measure-DbTable.ps1)**: Provides frequency details about SQL Server table data.
+- **[New-DbProviderObject.ps1](New-DbProviderObject.ps1)**: Create a common database object.
+- **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1)**: Finds database constraints with system-generated names and gives them deterministic names.
+- **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1)**: Finds database constraints that have been incompletely re-enabled.
+- **[Send-SqlReport.ps1](Send-SqlReport.ps1)**: Execute a SQL statement and email the results.
+- **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
 ### Date and time
 
@@ -102,10 +102,10 @@ PowerShell Scripts
 - :up: **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1)**: Parses a Timespan from a ISO8601 duration string.
 - :up: **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
 - :up: **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1)**: Formats a datetime as a LogParser literal.
-- :up: **[Format-Date.ps1](Format-Date.ps1)**: Returns a date/time as a named format.
+- **[Format-Date.ps1](Format-Date.ps1)**: Returns a date/time as a named format.
 - :up: **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1)**: Returns a date and time converted to the French Republican Calendar.
-- :up: **[Show-Time.ps1](Show-Time.ps1)**: Displays a formatted date using powerline font characters.
-- :up: **[Test-DateTime.ps1](Test-DateTime.ps1)**: Tests whether the given string can be parsed as a date.
+- **[Show-Time.ps1](Show-Time.ps1)**: Displays a formatted date using powerline font characters.
+- **[Test-DateTime.ps1](Test-DateTime.ps1)**: Tests whether the given string can be parsed as a date.
 - :up: **[Test-USFederalHoliday.ps1](Test-USFederalHoliday.ps1)**: Returns true if the given date is a U.S. federal holiday.
 
 ### Dictionary
@@ -117,16 +117,16 @@ PowerShell Scripts
 
 ### DotNet
 
-- :up: **[Find-DotNetGlobalTools.ps1](Find-DotNetGlobalTools.ps1)**: Returns a list of global dotnet tools.
+- **[Find-DotNetGlobalTools.ps1](Find-DotNetGlobalTools.ps1)**: Returns a list of global dotnet tools.
 - :up: **[Get-AssemblyFramework.ps1](Get-AssemblyFramework.ps1)**: Gets the framework version an assembly was compiled for.
-- :up: **[Get-DotNetFrameworkVersions.ps1](Get-DotNetFrameworkVersions.ps1)**: Determine which .NET Frameworks are installed on the requested system.
-- :up: **[Get-DotNetGlobalTools.ps1](Get-DotNetGlobalTools.ps1)**: Returns a list of global dotnet tools.
+- **[Get-DotNetFrameworkVersions.ps1](Get-DotNetFrameworkVersions.ps1)**: Determine which .NET Frameworks are installed on the requested system.
+- **[Get-DotNetGlobalTools.ps1](Get-DotNetGlobalTools.ps1)**: Returns a list of global dotnet tools.
 - :up: **[Get-DotNetVersions.ps1](Get-DotNetVersions.ps1)**: Determine which .NET Core & Framework versions are installed.
 
 ### EnvironmentVariables
 
 - :up: **[Compress-EnvironmentVariables.ps1](Compress-EnvironmentVariables.ps1)**: Replaces each of the longest matching parts of a string with an embedded environment variable with that value.
-- :up: **[Expand-EnvironmentVariables.ps1](Expand-EnvironmentVariables.ps1)**: Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string.
+- **[Expand-EnvironmentVariables.ps1](Expand-EnvironmentVariables.ps1)**: Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string.
 
 ### Files
 
@@ -162,9 +162,9 @@ PowerShell Scripts
 
 ### Json
 
-- :up: **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
-- :up: **[Set-JsonProperty.ps1](Set-JsonProperty.ps1)**: Sets a property of arbitrary depth in a JSON string.
-- :up: **[Test-Json.ps1](Test-Json.ps1)**: Determines whether a string is valid JSON.
+- **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
+- **[Set-JsonProperty.ps1](Set-JsonProperty.ps1)**: Sets a property of arbitrary depth in a JSON string.
+- **[Test-Json.ps1](Test-Json.ps1)**: Determines whether a string is valid JSON.
 
 ### Packages and libraries
 
@@ -174,8 +174,8 @@ PowerShell Scripts
 ### Parameters
 
 - :up: **[Add-ParameterDefault.ps1](Add-ParameterDefault.ps1)**: Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
-- :up: **[Remove-ParameterDefault.ps1](Remove-ParameterDefault.ps1)**: Removes a value that would have been used for a parameter if none was specified, if one existed.
-- :up: **[Set-ParameterDefault.ps1](Set-ParameterDefault.ps1)**: Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
+- **[Remove-ParameterDefault.ps1](Remove-ParameterDefault.ps1)**: Removes a value that would have been used for a parameter if none was specified, if one existed.
+- **[Set-ParameterDefault.ps1](Set-ParameterDefault.ps1)**: Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
 
 ### PowerShell
 
@@ -209,23 +209,23 @@ PowerShell Scripts
 
 - :up: **[Add-NoteProperty.ps1](Add-NoteProperty.ps1)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
 - :up: **[Compare-Properties.ps1](Compare-Properties.ps1)**: Compares the properties of two objects.
-- :up: **[Test-NoteProperty.ps1](Test-NoteProperty.ps1)**: Looks for any matching NoteProperties on an object.
+- **[Test-NoteProperty.ps1](Test-NoteProperty.ps1)**: Looks for any matching NoteProperties on an object.
 
 ### Scheduled Tasks
 
 - :up: **[Backup-SchTasks.ps1](Backup-SchTasks.ps1)**: Exports the local list of Scheduled Tasks into a single XML file.
 - :up: **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1)**: Convert a CimInstance object to a PSObject.
 - :up: **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1)**: Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
-- :up: **[Copy-SchTasks.ps1](Copy-SchTasks.ps1)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
-- :up: **[Restore-SchTasks.ps1](Restore-SchTasks.ps1)**: Imports from a single XML file into the local Scheduled Tasks.
+- **[Copy-SchTasks.ps1](Copy-SchTasks.ps1)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
+- **[Restore-SchTasks.ps1](Restore-SchTasks.ps1)**: Imports from a single XML file into the local Scheduled Tasks.
 
 ### Scripts
 
 - :up: **[New-PesterTests.ps1](New-PesterTests.ps1)**: Creates a new Pester testing script from a script's examples and parameter sets.
-- :up: **[New-Script.ps1](New-Script.ps1)**: Creates a simple boilerplate script.
+- **[New-Script.ps1](New-Script.ps1)**: Creates a simple boilerplate script.
 - :up: **[Optimize-Help.ps1](Optimize-Help.ps1)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
-- :up: **[Rename-Script.ps1](Rename-Script.ps1)**: Renames all instances of a script, and updates any usage of it.
-- :up: **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
+- **[Rename-Script.ps1](Rename-Script.ps1)**: Renames all instances of a script, and updates any usage of it.
+- **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
 
 ### Search and replace
 
@@ -236,9 +236,9 @@ PowerShell Scripts
 
 ### Seq
 
-- :up: **[Send-SeqEvent.ps1](Send-SeqEvent.ps1)**: Send an event to a Seq server.
-- :up: **[Send-SeqScriptEvent.ps1](Send-SeqScriptEvent.ps1)**: Sends an event (often an error) from a script to a Seq server, including script info.
-- :up: **[Use-SeqServer.ps1](Use-SeqServer.ps1)**: Set the default Server and ApiKey for Send-SeqEvent.ps1
+- **[Send-SeqEvent.ps1](Send-SeqEvent.ps1)**: Send an event to a Seq server.
+- **[Send-SeqScriptEvent.ps1](Send-SeqScriptEvent.ps1)**: Sends an event (often an error) from a script to a Seq server, including script info.
+- **[Use-SeqServer.ps1](Use-SeqServer.ps1)**: Set the default Server and ApiKey for Send-SeqEvent.ps1
 
 ### System and updates
 
@@ -253,7 +253,7 @@ PowerShell Scripts
 
 - :up: **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 - :up: **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
-- :up: **[Get-Unicode.ps1](Get-Unicode.ps1)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
+- **[Get-Unicode.ps1](Get-Unicode.ps1)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
 - :up: **[Get-UnicodeName.ps1](Get-UnicodeName.ps1)**: Returns the name of a Unicode code point.
 
 ### VSCode
@@ -261,25 +261,25 @@ PowerShell Scripts
 - :up: **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1)**: Adds a VS Code MSSQL database connection to the repo.
 - :up: **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1)**: Sets a VSCode setting.
 - :up: **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1)**: Gets the path of the VSCode settings.config file.
-- :up: **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1)**: Adds config XDT connection strings to VSCode settings.
+- **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1)**: Adds config XDT connection strings to VSCode settings.
 - :up: **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1)**: Pushes the current VS Code editor workspace location to the location stack.
 - :up: **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1)**: Sets a VSCode setting.
 
 ### XML
 
 - :up: **[Compare-Xml.ps1](Compare-Xml.ps1)**: Compares two XML documents and returns the differences.
-- :up: **[Convert-Xml.ps1](Convert-Xml.ps1)**: Transform XML using an XSLT template.
-- :up: **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1)**: Parse escaped XML into XML and serialize it.
-- :up: **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1)**: Converts named nodes of an element to properties of a PSObject, recursively.
-- :up: **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1)**: Serializes complex content into XML elements.
-- :up: **[Format-Xml.ps1](Format-Xml.ps1)**: Pretty-print XML.
-- :up: **[Get-XmlNamespaces.ps1](Get-XmlNamespaces.ps1)**: Gets the namespaces from a document as a dictionary.
-- :up: **[Merge-XmlSelections.ps1](Merge-XmlSelections.ps1)**: Builds an object using the named XPath selections as properties.
+- **[Convert-Xml.ps1](Convert-Xml.ps1)**: Transform XML using an XSLT template.
+- **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1)**: Parse escaped XML into XML and serialize it.
+- **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1)**: Converts named nodes of an element to properties of a PSObject, recursively.
+- **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1)**: Serializes complex content into XML elements.
+- **[Format-Xml.ps1](Format-Xml.ps1)**: Pretty-print XML.
+- **[Get-XmlNamespaces.ps1](Get-XmlNamespaces.ps1)**: Gets the namespaces from a document as a dictionary.
+- **[Merge-XmlSelections.ps1](Merge-XmlSelections.ps1)**: Builds an object using the named XPath selections as properties.
 - :up: **[New-NamespaceManager.ps1](New-NamespaceManager.ps1)**: Creates an object to lookup XML namespace prefixes.
-- :up: **[Resolve-XmlSchemaLocation.ps1](Resolve-XmlSchemaLocation.ps1)**: Gets the namespaces and their URIs and URLs from a document.
+- **[Resolve-XmlSchemaLocation.ps1](Resolve-XmlSchemaLocation.ps1)**: Gets the namespaces and their URIs and URLs from a document.
 - :up: **[Resolve-XPath.ps1](Resolve-XPath.ps1)**: Returns the XPath of the location of an XML node.
 - :up: **[Show-DataRef.ps1](Show-DataRef.ps1)**: Display an HTML view of an XML schema or WSDL using Saxon.
-- :up: **[Test-Xml.ps1](Test-Xml.ps1)**: Try parsing text as XML, and validating it if a schema is provided.
+- **[Test-Xml.ps1](Test-Xml.ps1)**: Try parsing text as XML, and validating it if a schema is provided.
 
 ### Other
 
@@ -315,4 +315,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 12/17/2022 21:45:03 -->
+<!-- generated 12/18/2022 18:18:35 -->
