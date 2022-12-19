@@ -114,6 +114,6 @@ Process
 		Write-Verbose "Uninstalling Chocolatey package '$p'"
 		choco uninstall $p -y @cunistparams
 		Write-Verbose "Installing WinGet package '$($packages.$p)'"
-		winget install $packages.$p
+		winget install -e --id $packages.$p
 	}
 }

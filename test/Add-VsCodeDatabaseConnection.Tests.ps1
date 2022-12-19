@@ -35,7 +35,9 @@ Describe 'Add-VsCodeDatabaseConnection' -Tag Add-VsCodeDatabaseConnection {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Adds a VS Code MSSQL database connection to the repo.' -Skip:(!!$psEditor) -Tag VsCodeDatabaseConnection {
+	Context 'Adds a VS Code MSSQL database connection to the repo.' `
+		-Skip:(!!(Get-Variable psEditor -EA Ignore)) `
+		-Tag VsCodeDatabaseConnection {
 		It 'Should add a trusted connection' -TestCases @(
 			@{ ProfileName = 'ConnectionName'; ServerInstance = 'ServerName\instance'; Database = 'Database' }
 			@{ ProfileName = 'AdventureWorks' ; ServerInstance = '(localdb)\ProjectsV13'; Database = 'AdventureWorks2016' }
