@@ -14,9 +14,11 @@ Justification='This script deals with lists, and this is a pretty questionable r
 Justification='ScriptAnalyzer does not recognize parameters used as global values.')]
 [CmdletBinding()][OutputType([void])] Param(
 # The dependency image filename.
-[string]$DependenciesImage = 'dependencies.svg',
+[string] $DependenciesImage = 'dependencies.svg',
 # The oldest change to mark as updated.
-[string]$StatusAge = '2 weeks ago'
+[string] $StatusAge = '2 weeks ago',
+# Commit the update.
+[switch] $Commit
 )
 
 function Format-Dependencies
@@ -483,3 +485,4 @@ Format-TestsReadme |Out-File $PSScriptRoot\test\README.md -Encoding utf8 -Width 
 Format-SysCfgReadme |Out-File $PSScriptRoot\syscfg\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Format-PS5Readme |Out-File $PSScriptRoot\PS5\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Export-PSScriptPages
+if($Commit) {git add -A ; git commit -m "$(Get-Unicode.ps1 0x1F4DD) Update readme"}
