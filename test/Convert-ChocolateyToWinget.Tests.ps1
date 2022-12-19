@@ -3,8 +3,6 @@
 Tests Change from managing various packages with Chocolatey to WinGet.
 #>
 
-([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).`
-	IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator) |Write-Information -infa Continue
 Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 	BeforeAll {
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
@@ -20,6 +18,7 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 				if($args[1] -in '7zip','gh','git','vscode') {$args[1]}
 			}
 		}
+		if(Get-Command winget -EA Ignore) {function winget {}}
 		Mock winget {
 			if($args.Count -gt 1 -and $args[0] -eq 'install' -and $args[1] -eq '-e' -and $args[2] -eq '--id')
 			{

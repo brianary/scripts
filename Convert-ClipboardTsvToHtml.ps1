@@ -13,7 +13,15 @@ TSV clipboard data may now be pasted into an email or document as a table.
 
 #Requires -Version 3
 [CmdletBinding()] Param()
-Import-ClipboardTsv.ps1 |
-	ConvertTo-Html -Fragment |
-	ConvertTo-SafeEntities.ps1 |
-	Set-Clipboard -AsHtml
+
+if($PSVersionTable.PSEdition -ne 'Desktop')
+{
+	Invoke-WindowsPowerShell.ps1 { Convert-ClipboardTsvToHtml.ps1 }
+}
+else
+{
+	Import-ClipboardTsv.ps1 |
+		ConvertTo-Html -Fragment |
+		ConvertTo-SafeEntities.ps1 |
+		Set-Clipboard -AsHtml
+}
