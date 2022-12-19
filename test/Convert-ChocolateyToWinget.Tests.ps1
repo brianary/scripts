@@ -45,6 +45,7 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 			}
 		}
 		It 'Convert chocolatey packages to winget' {
+			if(!(Get-Command winget -EA Ignore)) {return}
 			Convert-ChocolateyToWinget.ps1 -Confirm:$false
 			Assert-MockCalled -CommandName winget -ParameterFilter {
 				$args[3] -in '7zip.7zip','GitHub.cli','Git.Git','Microsoft.VisualStudioCode'
