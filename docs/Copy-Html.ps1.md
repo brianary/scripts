@@ -5,15 +5,15 @@ online version:
 schema: 2.0.0
 ---
 
-# Export-Readme.ps1
+# Copy-Html.ps1
 
 ## SYNOPSIS
-Generate README.md file for the scripts repo.
+Copies objects as an HTML table.
 
 ## SYNTAX
 
 ```
-Export-Readme.ps1 [[-DependenciesImage] <String>] [[-StatusAge] <String>] [-Commit] [<CommonParameters>]
+Copy-Html.ps1 [[-Property] <Array>] [-InputObject <PSObject>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,57 +21,43 @@ Export-Readme.ps1 [[-DependenciesImage] <String>] [[-StatusAge] <String>] [-Comm
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Get-PSDrive |Copy-Html.ps1 Name,Description
 ```
 
-{{ Add example description here }}
+Copies an HTML table with two columns to the clipboard as formatted text
+that can be pasted into emails or other formatted documents.
 
 ## PARAMETERS
 
-### -DependenciesImage
-{{ Fill DependenciesImage Description }}
+### -Property
+Columns to include in the copied table.
 
 ```yaml
-Type: String
+Type: Array
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 1
-Default value: Dependencies.svg
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -StatusAge
-{{ Fill StatusAge Description }}
+### -InputObject
+The objects to turn into table rows.
 
 ```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: 2 weeks ago
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Commit
-Commit the update.
-
-```yaml
-Type: SwitchParameter
+Type: PSObject
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: Named
-Default value: False
-Accept pipeline input: False
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -80,6 +66,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### System.Management.Automation.PSObject to be turned into a table row.
 ## OUTPUTS
 
 ### System.Void
@@ -87,5 +74,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://www.microsoft.com/download/details.aspx?id=40760](https://www.microsoft.com/download/details.aspx?id=40760)
+[Format-HtmlDataTable.ps1]()
+
+[ConvertTo-SafeEntities.ps1]()
+
+[Invoke-WindowsPowerShell.ps1]()
 

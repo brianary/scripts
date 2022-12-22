@@ -13,7 +13,7 @@ Generate README.md file for the scripts repo.
 ## SYNTAX
 
 ```
-Export-Readme.ps1 [[-DependenciesImage] <String>] [[-StatusAge] <String>] [<CommonParameters>]
+Export-Readme.ps1 [[-DependenciesImage] <String>] [[-StatusAge] <String>] [-Commit] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,6 +56,21 @@ Aliases:
 Required: False
 Position: 2
 Default value: 2 weeks ago
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Commit
+Commit the update.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
