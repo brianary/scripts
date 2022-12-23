@@ -14,6 +14,8 @@ PowerShell
 [Alias('fg')][Nullable[ConsoleColor]] $ForegroundColor,
 # Specifies the background color. There is no default.
 [Alias('bg')][Nullable[ConsoleColor]] $BackgroundColor,
+# Specifies a log file to write the information string to.
+[string] $LogFile,
 <#
 The string representations of the input objects are concatenated to form the output.
 No spaces or newlines are inserted between the output strings.
@@ -28,6 +30,7 @@ This uses the standard $InformationPreference instead.
 )
 Process
 {
+	if($LogFile) {Add-Content -Path $LogFile -Value $Message -Encoding utf8}
 	if(!$UseInformationPreference) {$Local:InformationPreference = 'Continue'}
 	Write-Information ([Management.Automation.HostInformationMessage]@{
 		Message         = $Message
