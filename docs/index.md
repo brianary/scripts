@@ -1,4 +1,4 @@
-<script data-goatcounter="https://webcoder.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://webcoderscripts.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
