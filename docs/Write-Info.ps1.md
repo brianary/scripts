@@ -14,7 +14,7 @@ Writes to the information stream, with color support and more.
 
 ```
 Write-Info.ps1 [-Message] <Object> [-ForegroundColor <ConsoleColor>] [-BackgroundColor <ConsoleColor>]
- [-NoNewLine] [-UseInformationPreference] [<CommonParameters>]
+ [-LogFile <String>] [-NoNewLine] [-UseInformationPreference] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -70,6 +70,21 @@ There is no default.
 Type: ConsoleColor
 Parameter Sets: (All)
 Aliases: bg
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LogFile
+Specifies a log file to write the information string to.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
