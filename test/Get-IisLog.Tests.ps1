@@ -14,6 +14,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 	BeforeAll {
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
+		$datadir = Join-Path $PSScriptRoot .. 'test','data'
 		$ScriptName = Join-Path $scriptsdir Get-IisLog.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
@@ -35,7 +36,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 	}
 	Context 'Query log directory' -Tag IisLogDirectory {
 		It "Query very old IISW3C logs" -Skip:$Global:noLogParser {
-			$entry = Get-IisLog.ps1 -LogDirectory "$PSScriptRoot\..\test\data" -After 1996-01-01 -Before 1997-01-01 `
+			$entry = Get-IisLog.ps1 -LogDirectory $datadir -After 1996-01-01 -Before 1997-01-01 `
 				-UriPathLike '/default.htm' -LogFormat IISW3C
 			$entry.Time |Should -Be (Get-Date 1996-01-01T10:48:02Z)
 			$entry.Server |Should -Be '192.166.0.24'
@@ -56,7 +57,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 			$entry.WinStatus.Message |Should -Be 'The operation completed successfully.'
 		}
 		It "Query old IISW3C logs from IIS 7.0" -Skip:$Global:noLogParser {
-			$entry = Get-IisLog.ps1 -LogDirectory "$PSScriptRoot\..\test\data" -After 2010-08-15 -Before 2010-08-16 `
+			$entry = Get-IisLog.ps1 -LogDirectory $datadir -After 2010-08-15 -Before 2010-08-16 `
 				-UriPathLike /robots.txt -LogFormat IISW3C |
 				Where-Object UserAgent -like '*Firefox*'
 			$entry.Time |Should -Be (Get-Date 2010-08-15T21:28:09Z)
@@ -79,7 +80,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 			$entry.WinStatus.Message |Should -Be 'The operation completed successfully.'
 		}
 		It "Query old IISW3C logs from IIS 8.5" -Skip:$Global:noLogParser {
-			$entry = Get-IisLog.ps1 -LogDirectory test\data -After 2016-01-10 -Before 2016-01-11 `
+			$entry = Get-IisLog.ps1 -LogDirectory $datadir -After 2016-01-10 -Before 2016-01-11 `
 				-UriPathLike '/images/logo.png' -LogFormat IISW3C
 			$entry.Time |Should -Be (Get-Date 2016-01-10T15:48:55Z)
 			$entry.Server |Should -Be '172.31.22.76:80'

@@ -79,7 +79,7 @@ Process
 	{
 		$absOutFile = [IO.Path]::Combine($PWD,$OutFile)
 		if((Test-Path $absOutFile) -and
-			!$PSCmdlet.ShouldContinue("$(Get-Item $absOutFile |select FullName,LastWriteTime,Length)","Overwrite File?"))
+			!$PSCmdlet.ShouldContinue("$(Get-Item $absOutFile |Select-Object FullName,LastWriteTime,Length)","Overwrite File?"))
 		{Write-Warning "Skipping transform from $absPath to $OutFile"; return}
 		$sw = New-Object IO.StreamWriter $absOutFile
 		$xslt.Transform([Xml.XPath.IXPathNavigable]$Xml,(New-Object Xml.XmlTextWriter $sw))
