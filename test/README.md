@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='101'>101 &#x2030;</meter> Scripts repo (188) &#x1F4C5; 141 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='106'>106 &#x2030;</meter> Scripts repo (188) &#x1F4C5; 171 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 69 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 69 days</summary>
 
@@ -23,7 +23,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='259'>259 &#x2030;</meter> C (27) &#x1F4C5; 141 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='296'>296 &#x2030;</meter> C (27) &#x1F4C5; 171 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (2) &#x1F4C5; 8 hours</summary>
 
 - &#x2714;&#xFE0F; Compare-Properties.ps1
@@ -40,11 +40,11 @@ Script Tests
 - &#x2714;&#xFE0F; Connect-SshKey.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='667'>667 &#x2030;</meter> Convert (3) &#x1F4C5; 141 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 171 days</summary>
 
 - &#x2714;&#xFE0F; Convert-ChocolateyToWinget.ps1
 - &#x2714;&#xFE0F; Convert-ClipboardTsvToHtml.ps1
-- &#x2716;&#xFE0F; Convert-Xml.ps1
+- &#x2714;&#xFE0F; Convert-Xml.ps1
 
 </details></li>
 <li><details><summary>not started ConvertFrom (7) </summary>
@@ -136,8 +136,8 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='30'>30 &#x2030;</meter> G (33) &#x1F4C5; 49 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='30'>30 &#x2030;</meter> Get (33) &#x1F4C5; 49 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='30'>30 &#x2030;</meter> G (33) &#x1F4C5; 88 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='30'>30 &#x2030;</meter> Get (33) &#x1F4C5; 88 days</summary>
 
 - &#x2716;&#xFE0F; Get-AspNetEvents.ps1
 - &#x2716;&#xFE0F; Get-AssemblyFramework.ps1
