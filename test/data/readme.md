@@ -23,3 +23,10 @@ IIS Logs
 [logparser.w3c]: https://documentation.help/Log-Parser/W3CI.htm "W3C Input Format"
 [u_ex100815.log]: https://github.com/bherila/waikolai/blob/fece3ed9b40add5c291322844ca8dbf00009f753/logs/W3SVC20/u_ex100815.log "IIS 7.0 logfile"
 [u_ex160110.log]: https://github.com/know-it-peru/WebKnowIT/blob/8d0ee70a97095c1508d893092758306fa50617e4/logs/LogFiles/W3SVC1/u_ex160110.log "IIS 8.5 logfile"
+
+XSLT Tests
+----------
+
+- **[xslt-test.xslt](xslt-test.xslt)** — A simple XSLT transform script.
+- **[xslt-test.xml](xslt-test.xml)** — Test data to transform.
+- **[xslt-test.txt](xslt-test.txt)** — Expected test transform result.

@@ -32,7 +32,7 @@ Describe 'Backup-File' -Tag Backup-File {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Simple backup' -Tag BackupFile {
+	Context 'Simple backup' -Tag BackupFile,Backup,File {
 		It 'Create a backup as a sibling to a file, with date and time values in the name' {
 			"$(New-Guid)" |Out-File logfile.log
 			Backup-File.ps1 logfile.log

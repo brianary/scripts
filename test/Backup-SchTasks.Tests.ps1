@@ -35,7 +35,7 @@ Describe 'Backup-SchTasks' -Tag Backup-SchTasks {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Exports the local list of Scheduled Tasks into a single XML file' -Tag BackupSchTasks {
+	Context 'Exports the local list of Scheduled Tasks into a single XML file' -Tag BackupSchTasks,Backup,SchTasks {
 		It 'Export to tasks.xml' {
 			Backup-SchTasks.ps1
 			'tasks.xml' |Should -Exist

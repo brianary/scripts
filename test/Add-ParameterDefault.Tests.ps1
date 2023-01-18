@@ -26,7 +26,8 @@ Describe 'Add-ParameterDefault' -Tag Add-ParameterDefault {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.' -Tag Example {
+	Context 'Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.' `
+		-Tag AddParameterDefault,Add,ParameterDefault {
 		It "Setting a simple default" {
 			Add-ParameterDefault.ps1 epcsv nti $true -Scope Global
 			$PSDefaultParameterValues.ContainsKey('Export-Csv:NoTypeInformation') |

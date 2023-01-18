@@ -26,7 +26,7 @@ Describe 'Add-CapturesToMatches' -Tag Add-CapturesToMatches,Select-Xml {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Add to regex selection' {
+	Context 'Add to regex selection' -Tag AddCapturesToMatches,Add,Captures,Xml {
 		It "Value '<Text>' should add '<Name>' and '<Email>'" -TestCases @(
 			@{ Text = 'Arthur Dent adent@example.org'; Name = 'Arthur Dent'; Email = 'adent@example.org' }
 			@{ Text = 'Tricia McMillan trillian@example.com'; Name = 'Tricia McMillan'; Email = 'trillian@example.com' }

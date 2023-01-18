@@ -26,7 +26,7 @@ Describe 'Add-DynamicParam' -Tag Add-DynamicParam {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Adding parameters' {
+	Context 'Adding parameters' -Tag AddDynamicParam,Add,'DynamicParam' {
 		It "Adds a required string parameter" {
 			Add-DynamicParam.ps1 -Name Path -Type string -Mandatory
 			$DynamicParams.Count |Should -Be 1 -Because 'one should have been added'

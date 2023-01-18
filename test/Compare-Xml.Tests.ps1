@@ -26,7 +26,7 @@ Describe 'Compare-Xml' -Tag Compare-Xml {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Compares two XML documents and returns the differences as XSLT' -Tag Compare,Xml {
+	Context 'Compares two XML documents and returns the differences as XSLT' -Tag CompareXml,Compare,Xml {
 		It 'Should return a diff that updates an attribute value' {
 			Compare-Xml.ps1 '<a b="z"/>' '<a b="y"/>' |Format-Xml.ps1 |Should -BeExactly @"
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">

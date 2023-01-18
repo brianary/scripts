@@ -26,7 +26,7 @@ Describe 'Add-Counter' -Tag Add-Counter {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Adds a counter property' -Tag From-Zero {
+	Context 'Adds a counter property' -Tag AddCounter,Add,Counter {
 		It "Providers get numbered" {
 			[psobject[]] $providers = Get-PSProvider |Add-Counter.ps1 -PropertyName Position -InitialValue 0 -Force
 			foreach($i in 0..($providers.Count -1))

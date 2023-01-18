@@ -41,7 +41,8 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Add basic GitHub metadata' -Tag Metadata,Readme,EditorConfig,CodeOwners,Linguist {
+	Context 'Add basic GitHub metadata' `
+		-Tag AddGitHubMetadata,Add,GitHubMetadata,GitHub,Metadata,Readme,EditorConfig,CodeOwners,Linguist {
 		It "Creates README.md, .editorconfig, CODEOWNERS, and .gitattributes (Linguist)" {
 			'.gitattributes' |Should -Not -Exist -Because 'a new repo should not have a .gitattributes'
 			'.editorconfig' |Should -Not -Exist -Because 'a new repo should not have an .editorconfig'
@@ -61,7 +62,7 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 				-Because 'the readme should include a CommonMark Setext header'
 		}
 	}
-	Context 'Set Linguist rules' -Tag Metadata,Linguist {
+	Context 'Set Linguist rules' -Tag AddGitHubMetadata,Add,GitHubMetadata,GitHub,Metadata,Linguist {
 		It "Sets Linguist rules in .gitattributes" -Tag Linguist {
 			Add-GitHubMetadata.ps1 -VendorCode openapi/*.cs -DocumentationCode docs/* `
 				-GeneratedCode *.svg -NoWarnings
@@ -70,7 +71,7 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			'.gitattributes' |Should -FileContentMatchExactly '^\*\.svg linguist-generated=true$'
 		}
 	}
-	Context 'Set .editorconfig rules' -Tag Metadata,EditorConfig {
+	Context 'Set .editorconfig rules' -Tag AddGitHubMetadata,Add,GitHubMetadata,GitHub,Metadata,EditorConfig {
 		It "Sets .editorconfig rules" {
 			Add-GitHubMetadata.ps1 -DefaultUsesTabs -DefaultIndentSize 6 -DefaultLineEndings cr `
 				-DefaultCharset latin1 -DefaultKeepTrailingSpace -DefaultNoFinalNewLine -NoWarnings
@@ -83,7 +84,7 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			'.editorconfig' |Should -FileContentMatchExactly '^insert_final_newline\s*=\s*false$'
 		}
 	}
-	Context 'Set CODEOWNERS' -Tag Metadata,CodeOwners {
+	Context 'Set CODEOWNERS' -Tag AddGitHubMetadata,Add,GitHubMetadata,GitHub,Metadata,CodeOwners {
 		It "Sets specific CODEOWNERS by pattern" {
 			Add-GitHubMetadata.ps1 -DefaultOwner zaphodb@example.com -Owners @{
 				'sql/*'  = 'eddie@example.com','marvin@example.com'
@@ -94,7 +95,7 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			'.github/CODEOWNERS' |Should -FileContentMatchExactly '^docs/\* fordp@example\.com$'
 		}
 	}
-	Context 'Set templates' -Tag Metadata,Template {
+	Context 'Set templates' -Tag AddGitHubMetadata,Add,GitHubMetadata,GitHub,Metadata,Template {
 		It "Set issue template" {
 			'.github\ISSUE_TEMPLATE.md' |Should -Not -Exist -Because 'a new repo should not have a ISSUE_TEMPLATE.md'
 			$content = 'Thanks for submitting an issue'

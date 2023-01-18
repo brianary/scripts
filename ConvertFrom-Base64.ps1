@@ -15,9 +15,24 @@ Data encoding
 https://docs.microsoft.com/dotnet/api/system.convert.frombase64string
 
 .EXAMPLE
-ConvertFrom-Base64.ps1 dXNlcm5hbWU6QmFkUEBzc3dvcmQ= utf8
+ConvertFrom-Base64.ps1 dXNlcm5hbWU6QmFkUEBzc3dvcmQ= -Encoding utf8
 
 username:BadP@ssword
+
+.EXAMPLE
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' |ConvertFrom-Base64.ps1 -Encoding ascii -UriStyle
+
+{"alg":"HS256","typ":"JWT"}
+
+.EXAMPLE
+'77u/dHJ1ZQ0K' |ConvertFrom-Base64.ps1 |Format-Hex
+
+   Label: Byte (System.Byte) <3D01E7E8>
+
+          Offset Bytes                                           Ascii
+                 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+          ------ ----------------------------------------------- -----
+0000000000000000 EF BB BF 74 72 75 65 0D 0A                      ï»¿true��
 #>
 
 #Requires -Version 3

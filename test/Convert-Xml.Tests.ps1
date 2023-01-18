@@ -28,7 +28,7 @@ Describe 'Convert-Xml' -Tag Convert-Xml {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Transform XML using an XSLT template' -Tag Convert-Xml,XML,XSLT {
+	Context 'Transform XML using an XSLT template' -Tag ConvertXml,Convert,Xml,Xslt {
 		It "Trivial transform to pipeline" {
 			Convert-Xml.ps1 '<a xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>' '<z/>' |
 				Format-Xml.ps1 |

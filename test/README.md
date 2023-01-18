@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='106'>106 &#x2030;</meter> Scripts repo (188) &#x1F4C5; 171 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='117'>117 &#x2030;</meter> Scripts repo (188) &#x1F4C5; 171 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 69 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 69 days</summary>
 
@@ -23,7 +23,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='296'>296 &#x2030;</meter> C (27) &#x1F4C5; 171 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='370'>370 &#x2030;</meter> C (27) &#x1F4C5; 171 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (2) &#x1F4C5; 8 hours</summary>
 
 - &#x2714;&#xFE0F; Compare-Properties.ps1
@@ -47,9 +47,9 @@ Script Tests
 - &#x2714;&#xFE0F; Convert-Xml.ps1
 
 </details></li>
-<li><details><summary>not started ConvertFrom (7) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='143'>143 &#x2030;</meter> ConvertFrom (7) &#x1F4C5; at once</summary>
 
-- &#x2716;&#xFE0F; ConvertFrom-Base64.ps1
+- &#x2714;&#xFE0F; ConvertFrom-Base64.ps1
 - &#x2716;&#xFE0F; ConvertFrom-CimInstance.ps1
 - &#x2716;&#xFE0F; ConvertFrom-DataRow.ps1
 - &#x2716;&#xFE0F; ConvertFrom-Duration.ps1
@@ -58,9 +58,9 @@ Script Tests
 - &#x2716;&#xFE0F; ConvertFrom-XmlElement.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='91'>91 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 132 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='182'>182 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 132 days</summary>
 
-- &#x2716;&#xFE0F; ConvertTo-Base64.ps1
+- &#x2714;&#xFE0F; ConvertTo-Base64.ps1
 - &#x2716;&#xFE0F; ConvertTo-BasicAuthentication.ps1
 - &#x2716;&#xFE0F; ConvertTo-EpochTime.ps1
 - &#x2714;&#xFE0F; ConvertTo-ICalendar.ps1

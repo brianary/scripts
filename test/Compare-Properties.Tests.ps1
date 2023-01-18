@@ -26,7 +26,7 @@ Describe 'Compare-Properties' -Tag Compare-Properties {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Compares the properties of two objects' -Tag Compare,Properties {
+	Context 'Compares the properties of two objects' -Tag CompareProperties,Compare,Properties {
 		It 'Should find the difference between PSProviders' {
 			$diff = Compare-Properties.ps1 (Get-PSProvider variable) (Get-PSProvider alias) |Sort-Object PropertyName
 			$diff.Reference |Should -BeTrue

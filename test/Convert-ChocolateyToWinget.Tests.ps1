@@ -26,7 +26,8 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Change from managing various packages with Chocolatey to WinGet' -Tag Winget `
+	Context 'Change from managing various packages with Chocolatey to WinGet' `
+		-Tag ConvertChocolateyToWinget,Convert,Chocolatey,Winget `
 		-Skip:(!(([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).`
 			IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
 		Mock choco {

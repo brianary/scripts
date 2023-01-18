@@ -41,7 +41,7 @@ Describe 'Connect-SshKey' -Tag Connect-SshKey {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Uses OpenSSH to generate a key and connect it to an ssh server' -Tag SshKey {
+	Context 'Uses OpenSSH to generate a key and connect it to an ssh server' -Tag ConnectSshKey,Connect,SshKey {
 		It 'Sets up SSH key on server using ssh' {
 			Connect-SshKey.ps1 crowpi -UserName pi
 			try

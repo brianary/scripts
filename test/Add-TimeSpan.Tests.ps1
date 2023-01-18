@@ -26,7 +26,7 @@ Describe 'Add-TimeSpan' -Tag Add-TimeSpan {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Adds a timespan to DateTime values.' -Tag AddTime {
+	Context 'Adds a timespan to DateTime values.' -Tag AddTimeSpan,Add,TimeSpan {
 		It 'Add seconds' {
 			Get-Date 2000-01-01T00:00:00 |Add-TimeSpan.ps1 00:00:30 |Should -Be (Get-Date 2000-01-01T00:00:30)
 			Get-Date 2020-12-31T23:59:00 |Add-TimeSpan.ps1 00:00:59 |Should -Be (Get-Date 2020-12-31T23:59:59)

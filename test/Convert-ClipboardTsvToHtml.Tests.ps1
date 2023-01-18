@@ -27,7 +27,8 @@ Describe 'Convert-ClipboardTsvToHtml' -Tag Convert-ClipboardTsvToHtml {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Parses TSV clipboard data into HTML table data which is copied back to the clipboard' -Tag ClipboardTsvToHtml {
+	Context 'Parses TSV clipboard data into HTML table data which is copied back to the clipboard' `
+		-Tag ConvertClipboardTsvToHtml,Convert,ClipboardTsv,Clipboard,Tsv,Html {
 		It "Converts '<TsvData>' to '<HtmlData>'" -TestCases @(
 @{ TsvData = @"
 Id`tName
