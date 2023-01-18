@@ -41,16 +41,16 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 			Mock winget {
 				if($args.Count -gt 1 -and $args[0] -eq 'install' -and $args[1] -eq '-e' -and $args[2] -eq '--id')
 				{
-					'Chocolatey v1.2.1'
+					'winget v1.4.3132-preview'
 					if($args[3] -in '7zip.7zip','GitHub.cli','Git.Git','Microsoft.VisualStudioCode') {"Installing $($args[3])..."}
 					else {throw "Can't install $($args[3])"}
 				}
 			}
 		}
-		It 'Convert chocolatey packages to winget' {
-			if(!(Get-Command winget -EA Ignore)) {return}
+		It 'Convert chocolatey packages to winget' -Skip:(!(Get-Command winget -EA Ignore)) {
 			Convert-ChocolateyToWinget.ps1 -Confirm:$false
 			Assert-MockCalled -CommandName winget -ParameterFilter {
+				$args[0] -eq 'install' -and $args[1] -eq '-e' -and $args[2] -eq '--id' -and
 				$args[3] -in '7zip.7zip','GitHub.cli','Git.Git','Microsoft.VisualStudioCode'
 			} -Times 4
 		}
