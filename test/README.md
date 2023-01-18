@@ -1,9 +1,9 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='117'>117 &#x2030;</meter> Scripts repo (188) &#x1F4C5; 171 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 69 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 69 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='117'>117 &#x2030;</meter> Scripts repo (188) &#x1F4C5; 172 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 100 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 100 days</summary>
 
 - &#x2714;&#xFE0F; Add-CapturesToMatches.ps1
 - &#x2714;&#xFE0F; Add-Counter.ps1
@@ -16,31 +16,31 @@ Script Tests
 - &#x2714;&#xFE0F; Add-VsCodeDatabaseConnection.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> B (2) &#x1F4C5; 2 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Backup (2) &#x1F4C5; 2 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> B (2) &#x1F4C5; 41 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Backup (2) &#x1F4C5; 41 days</summary>
 
 - &#x2714;&#xFE0F; Backup-File.ps1
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='370'>370 &#x2030;</meter> C (27) &#x1F4C5; 171 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (2) &#x1F4C5; 8 hours</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='370'>370 &#x2030;</meter> C (27) &#x1F4C5; 172 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (2) &#x1F4C5; 38 days</summary>
 
 - &#x2714;&#xFE0F; Compare-Properties.ps1
 - &#x2714;&#xFE0F; Compare-Xml.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compress (1) &#x1F4C5; 22 hours</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compress (1) &#x1F4C5; 34 days</summary>
 
 - &#x2714;&#xFE0F; Compress-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Connect (1) &#x1F4C5; 20 hours</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Connect (1) &#x1F4C5; 31 days</summary>
 
 - &#x2714;&#xFE0F; Connect-SshKey.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 171 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 172 days</summary>
 
 - &#x2714;&#xFE0F; Convert-ChocolateyToWinget.ps1
 - &#x2714;&#xFE0F; Convert-ClipboardTsvToHtml.ps1
@@ -58,7 +58,7 @@ Script Tests
 - &#x2716;&#xFE0F; ConvertFrom-XmlElement.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='182'>182 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 132 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='182'>182 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 172 days</summary>
 
 - &#x2714;&#xFE0F; ConvertTo-Base64.ps1
 - &#x2716;&#xFE0F; ConvertTo-BasicAuthentication.ps1

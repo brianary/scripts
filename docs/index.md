@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1591_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1660_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -10,7 +10,8 @@
 [![GitHub issues badge](https://badgen.net/github/open-issues/brianary/Scripts)](https://github.com/brianary/scripts/issues "Issues")
 [![GitHub commits badge](https://badgen.net/github/commits/brianary/Scripts/main)](https://github.com/brianary/scripts/commits/main "Commits")
 [![GitHub last commit badge](https://badgen.net/github/last-commit/brianary/Scripts/main)](https://github.com/brianary/scripts/commits/main "Last commit")
-[![Mastodon: @brianary@mastodon.spotek.io](https://badgen.net/mastodon/follow/brianary@mastodon.spotek.io)](https://mastodon.spotek.io/@brianary "Mastodon profile")
+[![Mastodon: @dataelemental@tilde.zone](https://badgen.net/mastodon/follow/dataelemental@tilde.zone)](https://tilde.zone/@dataelemental "DataElemental Mastodon profile")
+[![Mastodon: @brianary@mastodon.spotek.io](https://badgen.net/mastodon/follow/brianary@mastodon.spotek.io)](https://mastodon.spotek.io/@brianary "brianary Mastodon profile")
 
 [pester.yml]: https://github.com/brianary/scripts/actions/workflows/pester.yml "Pester test run history"
 
@@ -55,9 +56,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Data encoding
 
-- **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
+- &#x1F199; **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
 - **[ConvertFrom-Hex.ps1](ConvertFrom-Hex.ps1.md)**: Convert a string of hexadecimal digits into a byte array.
-- **[ConvertTo-Base64.ps1](ConvertTo-Base64.ps1.md)**: Converts bytes or text to base64-encoded text.
+- &#x1F199; **[ConvertTo-Base64.ps1](ConvertTo-Base64.ps1.md)**: Converts bytes or text to base64-encoded text.
 
 ### Data formats
 
