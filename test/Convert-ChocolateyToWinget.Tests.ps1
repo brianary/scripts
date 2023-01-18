@@ -30,7 +30,7 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 		-Tag ConvertChocolateyToWinget,Convert,Chocolatey,Winget `
 		-Skip:(!(([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).`
 			IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
-		BeforeAll {
+		It 'Convert chocolatey packages to winget' {
 			Mock choco {
 				if($args.Count -gt 1 -and $args[0] -eq 'list')
 				{
@@ -38,6 +38,7 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 					if($args[1] -in '7zip','gh','git','vscode') {$args[1]}
 				}
 			}
+			if(!(Get-Command winget -EA Ignore)) {function winget {Write-Information 'winget (placeholder)' -infa Continue}}
 			Mock winget {
 				if($args.Count -gt 1 -and $args[0] -eq 'install' -and $args[1] -eq '-e' -and $args[2] -eq '--id')
 				{
@@ -46,8 +47,6 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 					else {throw "Can't install $($args[3])"}
 				}
 			}
-		}
-		It 'Convert chocolatey packages to winget' -Skip:(!(Get-Command winget -EA Ignore)) {
 			Convert-ChocolateyToWinget.ps1 -Confirm:$false
 			Assert-MockCalled -CommandName winget -ParameterFilter {
 				$args[0] -eq 'install' -and $args[1] -eq '-e' -and $args[2] -eq '--id' -and
