@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-Tests Converts bytes or text to base64-encoded text.
+Tests converting bytes or text to base64-encoded text.
 #>
 
 Describe 'ConvertTo-Base64' -Tag ConvertTo-Base64 {
