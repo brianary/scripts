@@ -37,7 +37,7 @@ Process
 {
     if($AsValues) {return $DataRow.ItemArray}
     $fields = [ordered]@{}
-    if($DataRow.Table -is [Data.DataTable]) {$DataRow.Table.Columns.ColumnName |% {[void]$fields.Add($_,$DataRow[$_])}}
+    if($DataRow.Table -is [Data.DataTable]) {$DataRow.Table.Columns.ColumnName |ForEach-Object {[void]$fields.Add($_,$DataRow[$_])}}
     if($AsDictionary) {return $fields}
     elseif($fields.Count) {return [pscustomobject]$fields}
 }
