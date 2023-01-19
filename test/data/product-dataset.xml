@@ -1,0 +1,18 @@
+﻿<NewDataSet>
+	<Product>
+		<ProductID>1</ProductID>
+		<Name>Widget</Name>
+	</Product>
+	<Product>
+		<ProductID>2</ProductID>
+		<Name>Gimmick</Name>
+	</Product>
+	<Product>
+		<ProductID>3</ProductID>
+		<Name>Gadget</Name>
+	</Product>
+	<Product>
+		<ProductID>4</ProductID>
+		<Name>Contrivance</Name>
+	</Product>
+</NewDataSet>
