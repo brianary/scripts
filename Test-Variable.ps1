@@ -56,30 +56,28 @@ True
 
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param(
-# A variable name to test the existence of.
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][AllowEmptyString()][AllowNull()][string] $Name,
-# The scope of the variable to test, Global, Local, Script, or the number of a calling parent context.
-[Parameter(Position=1)][string] $Scope
+	# A variable name to test the existence of.
+	[Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true)][AllowEmptyString()][AllowNull()][string] $Name,
+	# The scope of the variable to test, Global, Local, Script, or the number of a calling parent context.
+	[Parameter(Position = 1)][string] $Scope
 )
 Process
 {
-    if($Name -in $null,'')
-    {
-        return $false
-    }
-    elseif(!$Scope)
-    {
-		if(Get-Variable -Name $Name -ErrorAction Ignore) {return $true}
-		$Error.RemoveAt(0)
+	if ($Name -in $null, '')
+	{
+		return $false
+	}
+	elseif (!$Scope)
+	{
+		if (Get-Variable -Name $Name -ErrorAction Ignore) { return $true }
 		Write-Debug "$($MyInvocation.MyCommand.Name): $Name not found in default scope"
-        return $false
-    }
-    else
-    {
+		return $false
+	}
+	else
+	{
 		$Scope = Add-ScopeLevel.ps1 $Scope
-		if(Get-Variable -Name $Name -Scope $Scope -ErrorAction Ignore) {return $true}
-		$Error.RemoveAt(0)
+		if (Get-Variable -Name $Name -Scope $Scope -ErrorAction Ignore) { return $true }
 		Write-Debug "$($MyInvocation.MyCommand.Name): $Name not found in $Scope scope"
 		return $false
-    }
+	}
 }

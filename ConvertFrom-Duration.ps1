@@ -47,7 +47,7 @@ An ISO8601 duration string in one of four formats:
 * PyyyyMMddTHHmmss
 #>
 [Parameter(Position=0,ValueFromPipeline=$true,ValueFromRemainingArguments)]
-[ValidatePattern('\AP\d(?:\w+|\d\d\d(?:-\d\d){2}T\d\d(?::\d\d){2})\z',
+[ValidatePattern('\AP(?:T?\d\w+|\d\d\d\d(?:-\d\d){2}T\d\d(?::\d\d){2})\z',
 ErrorMessage='An ISO8601 duration is required')]
 [string[]] $InputObject,
 # Supresses warnings about approximate conversions.
@@ -56,7 +56,7 @@ ErrorMessage='An ISO8601 duration is required')]
 Begin
 {
     $MeanMonth,$MeanYear = 30.436875,365.2425
-    [regex[]]$formats = '\AP(?<Weeks>\d+)W\z',
+    [regex[]] $formats = '\AP(?<Weeks>\d+)W\z',
         '\AP(?:(?<Years>\d+)Y)?(?:(?<Months>\d+)M)?(?:(?<Days>\d+)D)?(?:T(?:(?<Hours>\d+)H)?(?:(?<Minutes>\d+)M)?(?:(?<Seconds>\d+)S)?)?\z',
         '\AP(?<Years>\d{4})-(?<Months>\d{2})-(?<Days>\d{2})T(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\z',
         '\AP(?<Years>\d{4})(?<Months>\d{2})(?<Days>\d{2})T(?<Hours>\d{2})(?<Minutes>\d{2})(?<Seconds>\d{2})\z'
