@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1708_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1764_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -73,7 +73,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Database
 
-- **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
+- &#x1F199; **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
 - **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1.md)**: Exports MS SQL script for an object from the given server.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
@@ -93,7 +93,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Date and time
 
 - **[Add-TimeSpan.ps1](Add-TimeSpan.ps1.md)**: Adds a timespan to DateTime values.
-- **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1.md)**: Parses a Timespan from a ISO8601 duration string.
+- &#x1F199; **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1.md)**: Parses a Timespan from a ISO8601 duration string.
 - **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1.md)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
 - **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1.md)**: Formats a datetime as a LogParser literal.
 - **[Format-Date.ps1](Format-Date.ps1.md)**: Returns a date/time as a named format.
@@ -189,7 +189,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Test-Administrator.ps1](Test-Administrator.ps1.md)**: Checks whether the current session has administrator privileges.
 - **[Test-Interactive.ps1](Test-Interactive.ps1.md)**: Determines whether both the user and process are interactive.
 - **[Test-Range.ps1](Test-Range.ps1.md)**: Returns true from an initial condition until a terminating condition; a latching test.
-- **[Test-Variable.ps1](Test-Variable.ps1.md)**: Indicates whether a variable has been defined.
+- &#x1F199; **[Test-Variable.ps1](Test-Variable.ps1.md)**: Indicates whether a variable has been defined.
 - **[Use-ProgressView.ps1](Use-ProgressView.ps1.md)**: Sets the progress bar display view.
 - **[Use-ReasonableDefaults.ps1](Use-ReasonableDefaults.ps1.md)**: Sets certain cmdlet parameter defaults to rational, useful values.
 - **[Write-Info.ps1](Write-Info.ps1.md)**: Writes to the information stream, with color support and more.
