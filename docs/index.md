@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1875_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1895_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -147,7 +147,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### HTTP
 
-- **[ConvertTo-BasicAuthentication.ps1](ConvertTo-BasicAuthentication.ps1.md)**: Produces a basic authentication header string from a credential.
+- &#x1F199; **[ConvertTo-BasicAuthentication.ps1](ConvertTo-BasicAuthentication.ps1.md)**: Produces a basic authentication header string from a credential.
 - **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1.md)**: Creates multipart/form-data to send as a request body.
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1.md)**: Returns the content security policy at from the given URL.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1.md)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
