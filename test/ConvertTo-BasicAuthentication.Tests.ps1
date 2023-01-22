@@ -35,7 +35,8 @@ Describe 'ConvertTo-BasicAuthentication' -Tag ConvertTo-BasicAuthentication {
 		) {
 			Param([string]$UserName,[string]$SingleFactor,[string]$Result)
 			$credential = New-Object pscredential $UserName,(ConvertTo-SecureString $SingleFactor -AsPlainText -Force)
-			ConvertTo-BasicAuthentication.ps1 $credential |Should -BeExactly $Result
+			ConvertTo-BasicAuthentication.ps1 $credential |Should -BeExactly $Result -Because 'parameter should work'
+			$credential |ConvertTo-BasicAuthentication.ps1 |Should -BeExactly $Result -Because 'pipeline should work'
 		}
 	}
 }
