@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='154'>154 &#x2030;</meter> Scripts repo (188) &#x1F4C5; 175 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='160'>160 &#x2030;</meter> Scripts repo (188) &#x1F4C5; 175 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 103 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 103 days</summary>
 
@@ -23,7 +23,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='630'>630 &#x2030;</meter> C (27) &#x1F4C5; 175 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='667'>667 &#x2030;</meter> C (27) &#x1F4C5; 175 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (2) &#x1F4C5; 38 days</summary>
 
 - &#x2714;&#xFE0F; Compare-Properties.ps1
@@ -58,11 +58,11 @@ Script Tests
 - &#x2714;&#xFE0F; ConvertFrom-XmlElement.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='273'>273 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 175 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='364'>364 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 175 days</summary>
 
 - &#x2714;&#xFE0F; ConvertTo-Base64.ps1
 - &#x2714;&#xFE0F; ConvertTo-BasicAuthentication.ps1
-- &#x2716;&#xFE0F; ConvertTo-EpochTime.ps1
+- &#x2714;&#xFE0F; ConvertTo-EpochTime.ps1
 - &#x2714;&#xFE0F; ConvertTo-ICalendar.ps1
 - &#x2716;&#xFE0F; ConvertTo-LogParserTimestamp.ps1
 - &#x2716;&#xFE0F; ConvertTo-MultipartFormData.ps1
