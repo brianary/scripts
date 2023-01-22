@@ -27,14 +27,14 @@ Describe 'Add-Counter' -Tag Add-Counter {
 		}
 	}
 	Context 'Adds a counter property' -Tag AddCounter,Add,Counter {
-		It "Providers get numbered" {
+		It "Should number providers" {
 			[psobject[]] $providers = Get-PSProvider |Add-Counter.ps1 -PropertyName Position -InitialValue 0 -Force
 			foreach($i in 0..($providers.Count -1))
 			{
 				$providers[$i].Position |Should -Be $i -Because 'Position should be a simple incrementing integer'
 			}
 		}
-		It "Given JSON '<JsonInput>', adding a '<PropertyName>' counter results in '<JsonOutput>'" -Tag From-One -TestCases @(
+		It "Given JSON '<JsonInput>', adding a '<PropertyName>' counter should result in '<JsonOutput>'" -Tag From-One -TestCases @(
 			@{ JsonInput = '[{"name": "A"},{"name": "B"},{"name": "C"}]'; PropertyName = 'id'
 				JsonOutput = '[{"name":"A","id":1},{"name":"B","id":2},{"name":"C","id":3}]' }
 		) {

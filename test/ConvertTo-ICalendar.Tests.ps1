@@ -30,7 +30,7 @@ Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 		}
 	}
 	Context 'One-time' -Tag ConvertToICalendar,Convert,ConvertTo,ICalendar,Once {
-		It "A one-time trigger at '<DtStart>' should produce a matching DTSTART." -TestCases @(
+		It "A one-time trigger at '<DtStart>' should produce a matching DTSTART" -TestCases @(
 			@{ DtStart = '2000-01-01T07:00' }
 			@{ DtStart = '2002-02-20T22:11:33' }
 			@{ DtStart = '2020-02-02T20:02' }
@@ -46,7 +46,7 @@ Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 		}
 	}
 	Context 'By minute' -Tag ConvertToICalendar,Convert,ConvertTo,ICalendar,Minutely {
-		It "A minutely trigger that runs every '<Interval>' should include recurrence '<Rule>'." -TestCases @(
+		It "A minutely trigger that runs every '<Interval>' should include recurrence '<Rule>'" -TestCases @(
 			@{ Interval = 1; Rule = 'RRULE:FREQ=MINUTELY;INTERVAL=1' }
 			@{ Interval = 2; Rule = 'RRULE:FREQ=MINUTELY;INTERVAL=2' }
 			@{ Interval = 3; Rule = 'RRULE:FREQ=MINUTELY;INTERVAL=3' }
@@ -63,7 +63,7 @@ Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 		}
 	}
 	Context 'By hour' -Tag ConvertToICalendar,Convert,ConvertTo,ICalendar,Hourly {
-		It "An hourly trigger that runs every '<Interval>' should include recurrence '<Rule>'." -TestCases @(
+		It "An hourly trigger that runs every '<Interval>' should include recurrence '<Rule>'" -TestCases @(
 			@{ Interval = 1; Rule = 'RRULE:FREQ=HOURLY;INTERVAL=1' }
 			@{ Interval = 2; Rule = 'RRULE:FREQ=HOURLY;INTERVAL=2' }
 			@{ Interval = 3; Rule = 'RRULE:FREQ=HOURLY;INTERVAL=3' }
@@ -80,7 +80,7 @@ Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 		}
 	}
 	Context 'By day' -Tag ConvertToICalendar,Convert,ConvertTo,ICalendar,Daily {
-		It "A daily trigger that runs every '<Interval>' should include recurrence '<Rule>'." -TestCases @(
+		It "A daily trigger that runs every '<Interval>' should include recurrence '<Rule>'" -TestCases @(
 			@{ Interval = 1; Rule = 'RRULE:FREQ=DAILY;INTERVAL=1' }
 			@{ Interval = 2; Rule = 'RRULE:FREQ=DAILY;INTERVAL=2' }
 			@{ Interval = 3; Rule = 'RRULE:FREQ=DAILY;INTERVAL=3' }
@@ -98,7 +98,7 @@ Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 		}
 	}
 	Context 'By week' -Tag ConvertToICalendar,Convert,ConvertTo,ICalendar,Weekly {
-		It "A weekly trigger that runs every '<Interval>' on days '<Days>' should include recurrence '<Rule>'." -TestCases @(
+		It "A weekly trigger that runs every '<Interval>' on days '<Days>' should include recurrence '<Rule>'" -TestCases @(
 			@{ Interval = 1; Days = @(); Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=1' }
 			@{ Interval = 1; Days = 'Tuesday','Thursday'; Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TU,TH' }
 			@{ Interval = 2; Days = @(); Rule = 'RRULE:FREQ=WEEKLY;INTERVAL=2' }
@@ -126,7 +126,7 @@ Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 		}
 	}
 	Context 'By month' -Tag ConvertToICalendar,Convert,ConvertTo,ICalendar,Monthly {
-		It "A monthly trigger that runs '<Modifier>' '<Days>' '<Months>' should include recurrence '<Rule>'." -TestCases @(
+		It "A monthly trigger that runs '<Modifier>' '<Days>' '<Months>' should include recurrence '<Rule>'" -TestCases @(
 			@{ Modifier = $null; Days = $null; Months = $null; Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=1' }
 			@{ Modifier = $null; Days = 13; Months = $null; Rule = 'RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=13' }
 			@{ Modifier = $null; Days = 28; Months = 'FEB'; Rule = 'RRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=2;BYDAY=28' }

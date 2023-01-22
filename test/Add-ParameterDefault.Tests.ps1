@@ -28,13 +28,13 @@ Describe 'Add-ParameterDefault' -Tag Add-ParameterDefault {
 	}
 	Context 'Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.' `
 		-Tag AddParameterDefault,Add,ParameterDefault {
-		It "Setting a simple default" {
+		It "Should set a simple default" {
 			Add-ParameterDefault.ps1 epcsv nti $true -Scope Global
 			$PSDefaultParameterValues.ContainsKey('Export-Csv:NoTypeInformation') |
 				Should -BeTrue -Because 'defaults should be added after looking up cmdlet and param aliases'
 			$PSDefaultParameterValues['Export-Csv:NoTypeInformation'] |Should -BeTrue
 		}
-		It "Setting a hashtable default" {
+		It "Should set a hashtable default" {
 			Add-ParameterDefault.ps1 Select-Xml Namespace @{svg = 'http://www.w3.org/2000/svg'}
 			$PSDefaultParameterValues.ContainsKey('Select-Xml:Namespace') |Should -BeTrue
 			$PSDefaultParameterValues['Select-Xml:Namespace'].ContainsKey('svg') |Should -BeTrue

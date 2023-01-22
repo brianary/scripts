@@ -27,13 +27,13 @@ Describe 'Add-ScopeLevel' -Tag Add-ScopeLevel {
 		}
 	}
 	Context 'Convert a scope level to account for another call stack level.' -Tag AddScopeLevel,Add,ScopeLevel {
-		It 'Calculates local scope' {
+		It 'Should calculate local scope' {
 			Add-ScopeLevel.ps1 Local |Should -BeExactly '1' -Because 'local is zero scope'
 		}
-		It 'Calculates a numeric scope' {
+		It 'Should calculate a numeric scope' {
 			1..8 |ForEach-Object {Add-ScopeLevel.ps1 $_ |Should -BeExactly "$($_+1)"}
 		}
-		It 'Calulates global scope' {
+		It 'Should calulate global scope' {
 			Add-ScopeLevel.ps1 Global |Should -BeExactly Global -Because 'global is the top scope'
 		}
 	}

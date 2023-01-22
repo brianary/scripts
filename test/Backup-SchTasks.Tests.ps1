@@ -36,7 +36,7 @@ Describe 'Backup-SchTasks' -Tag Backup-SchTasks {
 		}
 	}
 	Context 'Exports the local list of Scheduled Tasks into a single XML file' -Tag BackupSchTasks,Backup,SchTasks {
-		It 'Export to tasks.xml' {
+		It 'Should export to tasks.xml' {
 			Backup-SchTasks.ps1
 			'tasks.xml' |Should -Exist
 			$taskxml = Select-Xml "/Tasks/t:Task[t:RegistrationInfo/t:URI='\x']" .\tasks.xml `
@@ -47,7 +47,7 @@ Describe 'Backup-SchTasks' -Tag Backup-SchTasks {
 			$taskxml.Node.Actions.Exec.Command |Should -BeExactly 'pwsh'
 			Remove-Item tasks.xml
 		}
-		It 'Export to tasks-backup.xml using the tasks.css stylesheet' {
+		It 'Should export to tasks-backup.xml using the tasks.css stylesheet' {
 			Backup-SchTasks.ps1 tasks-backup.xml -Stylesheet tasks.css
 			'tasks-backup.xml' |Should -Exist
 			$taskxml = Select-Xml "/Tasks/t:Task[t:RegistrationInfo/t:URI='\x']" .\tasks-backup.xml `

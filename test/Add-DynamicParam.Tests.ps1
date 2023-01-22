@@ -27,7 +27,7 @@ Describe 'Add-DynamicParam' -Tag Add-DynamicParam {
 		}
 	}
 	Context 'Adding parameters' -Tag AddDynamicParam,Add,'DynamicParam' {
-		It "Adds a required string parameter" {
+		It "Should add a required string parameter" {
 			Add-DynamicParam.ps1 -Name Path -Type string -Mandatory
 			$DynamicParams.Count |Should -Be 1 -Because 'one should have been added'
 			$DynamicParams.Keys |Should -Contain Path -Because 'the right one should have been added'
@@ -39,7 +39,7 @@ Describe 'Add-DynamicParam' -Tag Add-DynamicParam {
 			$DynamicParams['Path'].Attributes[0].ValueFromPipelineByPropertyName |Should -BeFalse -Because 'it shouldn''t accept the property from the pipeline'
 			$DynamicParams['Path'].Attributes[0].ValueFromRemainingArguments |Should -BeFalse -Because 'it shouldn''t accept the rest of the unnamed params'
 		}
-		It "Adds several alternative parameters" {
+		It "Should add several alternative parameters" {
 			Add-DynamicParam.ps1 -Name Document -Type Xml.XmlDocument -ParameterSetName Document `
 				-Position 0 -Mandatory -ValueFromPipeline
 			Add-DynamicParam.ps1 -Name Element -Type Xml.XmlElement -Parameter Element `

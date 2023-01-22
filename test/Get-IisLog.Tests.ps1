@@ -35,7 +35,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 		}
 	}
 	Context 'Query log directory' -Tag GetIisLog,Get,IisLog,IisLogDirectory {
-		It "Query very old IISW3C logs" -Skip:$Global:noLogParser {
+		It "Should query very old IISW3C logs" -Skip:$Global:noLogParser {
 			$entry = Get-IisLog.ps1 -LogDirectory $datadir -After 1996-01-01 -Before 1997-01-01 `
 				-UriPathLike '/default.htm' -LogFormat IISW3C
 			$entry.Time |Should -Be (Get-Date 1996-01-01T10:48:02Z)
@@ -56,7 +56,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 			$entry.WinStatus.NativeErrorCode |Should -Be 0
 			$entry.WinStatus.Message |Should -Be 'The operation completed successfully.'
 		}
-		It "Query old IISW3C logs from IIS 7.0" -Skip:$Global:noLogParser {
+		It "Should query old IISW3C logs from IIS 7.0" -Skip:$Global:noLogParser {
 			$entry = Get-IisLog.ps1 -LogDirectory $datadir -After 2010-08-15 -Before 2010-08-16 `
 				-UriPathLike /robots.txt -LogFormat IISW3C |
 				Where-Object UserAgent -like '*Firefox*'
@@ -79,7 +79,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 			$entry.WinStatus.NativeErrorCode |Should -Be 0
 			$entry.WinStatus.Message |Should -Be 'The operation completed successfully.'
 		}
-		It "Query old IISW3C logs from IIS 8.5" -Skip:$Global:noLogParser {
+		It "Should query old IISW3C logs from IIS 8.5" -Skip:$Global:noLogParser {
 			$entry = Get-IisLog.ps1 -LogDirectory $datadir -After 2016-01-10 -Before 2016-01-11 `
 				-UriPathLike '/images/logo.png' -LogFormat IISW3C
 			$entry.Time |Should -Be (Get-Date 2016-01-10T15:48:55Z)

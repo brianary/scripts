@@ -27,16 +27,16 @@ Describe 'ConvertTo-Base64' -Tag ConvertTo-Base64 {
 		}
 	}
 	Context 'Converts bytes or text to base64-encoded text.' -Tag ConvertToBase64,Convert,ConvertTo,Base64 {
-		It "Encodes a string parameter as a standard base-64 string" {
+		It "Should encode a string parameter as a standard base-64 string" {
 			ConvertTo-Base64.ps1 'username:BadP@ssword' -Encoding utf8 |
 				Should -BeExactly 'dXNlcm5hbWU6QmFkUEBzc3dvcmQ='
 		}
-		It "Encodes a string from pipeline to a URI-style base-64 string" {
+		It "Should encode a string from pipeline to a URI-style base-64 string" {
 			'{"alg":"HS256","typ":"JWT"}' |
 				ConvertTo-Base64.ps1 -UriStyle |
 				Should -BeExactly 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
 		}
-		It "Encodes a byte array from pipeline to a base-64 string from pipeline" {
+		It "Should encode a byte array from pipeline to a base-64 string from pipeline" {
 			,([byte[]]@(0xEF,0xBB,0xBF,0x74,0x72,0x75,0x65,0x0D,0x0A)) |
 				ConvertTo-Base64.ps1 |
 				Should -BeExactly '77u/dHJ1ZQ0K'

@@ -37,7 +37,7 @@ Describe 'ConvertFrom-CimInstance' -Tag ConvertFrom-CimInstance {
 			try { Unregister-ScheduledTask -TaskName x -Confirm:$false -EA Stop }
 			catch { Write-Warning "$_" }
 		}
-		It "Convert a Scheduled Task CIM instance into a PSCustomObject" {
+		It "Should convert a Scheduled Task CIM instance into a PSCustomObject" {
 			$task = Get-ScheduledTask -TaskName x |ConvertFrom-CimInstance.ps1
 			$task |Should -BeOfType pscustomobject
 			$task.'#CimClassName' |Should -BeExactly MSFT_ScheduledTask

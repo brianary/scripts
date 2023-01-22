@@ -29,12 +29,12 @@ Describe 'Convert-Xml' -Tag Convert-Xml {
 		}
 	}
 	Context 'Transform XML using an XSLT template' -Tag ConvertXml,Convert,Xml,Xslt {
-		It "Trivial transform to pipeline" {
+		It "Should perform a trivial transform to pipeline data" {
 			Convert-Xml.ps1 '<a xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>' '<z/>' |
 				Format-Xml.ps1 |
 				Should -BeExactly '<a />'
 		}
-		It "Simple transform to pipeline" {
+		It "Should perform a simple transform to pipeline data" {
 			Convert-Xml.ps1 `
 				-TransformXslt @"
 <a xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -44,7 +44,7 @@ href="{/link/@href}"><xsl:value-of select="/link/@title"/></a>
 				Format-Xml.ps1 |
 				Should -BeExactly '<a href="https://example.com/">Example</a>'
 		}
-		It "Text transform to file" {
+		It "Should perform a text transform to a file" {
 			$outfile = Join-Path $env:temp temp.txt
 			Convert-Xml.ps1 `
 				-TransformFile (Join-Path $datadir xslt-test.xslt) `

@@ -33,7 +33,7 @@ Describe 'Backup-File' -Tag Backup-File {
 		}
 	}
 	Context 'Simple backup' -Tag BackupFile,Backup,File {
-		It 'Create a backup as a sibling to a file, with date and time values in the name' {
+		It 'Should create a backup as a sibling to a file, with date and time values in the name' {
 			"$(New-Guid)" |Out-File logfile.log
 			Backup-File.ps1 logfile.log
 			'logfile.log' |Should -Exist

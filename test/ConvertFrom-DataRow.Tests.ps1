@@ -33,19 +33,19 @@ Describe 'ConvertFrom-DataRow' -Tag ConvertFrom-DataRow {
 			$data = New-Object Data.DataSet
 			[void]$data.ReadXml((Join-Path $datadir 'product-dataset.xml'))
 		}
-		It "Converts rows to objects" {
+		It "Should convert rows to objects" {
 			$rows = $data.Tables['Product'] |ConvertFrom-DataRow.ps1
 			$rows |Should -BeOfType pscustomobject
 			$rows.ProductID |Should -BeExactly 1,2,3,4
 			$rows.Name |Should -BeExactly 'Widget','Gimmick','Gadget','Contrivance'
 		}
-		It "Converts rows to dictionaries" {
+		It "Should convert rows to dictionaries" {
 			$rows = $data.Tables['Product'] |ConvertFrom-DataRow.ps1 -AsDictionary
 			$rows |Should -BeOfType Collections.Specialized.OrderedDictionary
 			$rows.ProductID |Should -BeExactly 1,2,3,4
 			$rows.Name |Should -BeExactly 'Widget','Gimmick','Gadget','Contrivance'
 		}
-		It "Converts rows to values" {
+		It "Should convert rows to values" {
 			$rows = $data.Tables['Product'] |ConvertFrom-DataRow.ps1 -AsValues
 			$rows |Should -BeOfType pscustomobject
 			$rows |Should -BeExactly 1,'Widget',2,'Gimmick',3,'Gadget',4,'Contrivance'

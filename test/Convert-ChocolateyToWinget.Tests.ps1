@@ -30,7 +30,7 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 		-Tag ConvertChocolateyToWinget,Convert,Chocolatey,Winget `
 		-Skip:(!(([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).`
 			IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
-		It 'Convert chocolatey packages to winget' {
+		It 'Should convert chocolatey packages to winget' {
 			Mock choco {
 				if($args.Count -gt 1 -and $args[0] -eq 'list')
 				{

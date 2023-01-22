@@ -28,7 +28,7 @@ Describe 'Compress-EnvironmentVariables' -Tag Compress-EnvironmentVariables {
 	}
 	Context 'Replaces each of the longest matching parts of a string with an embedded environment variable with that value' `
 		-Tag CompressEnvironmentVariables,Compress,EnvironmentVariables {
-		It "For '<Value>', returns '<Result>'" -TestCases @(
+		It "For '<Value>', should return '<Result>'" -TestCases @(
 			@{ Value ="[$env:APPDATA]"; Result = '[%APPDATA%]' }
 			@{ Value ="[$env:COMPUTERNAME]"; Result = '[%COMPUTERNAME%]' }
 			@{ Value ="$env:TEMP\tempdata"; Result = '%TEMP%\tempdata' }

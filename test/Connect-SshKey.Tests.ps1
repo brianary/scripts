@@ -42,7 +42,7 @@ Describe 'Connect-SshKey' -Tag Connect-SshKey {
 		}
 	}
 	Context 'Uses OpenSSH to generate a key and connect it to an ssh server' -Tag ConnectSshKey,Connect,SshKey {
-		It 'Sets up SSH key on server using ssh' {
+		It 'Should set up an SSH key to a server using ssh' {
 			Connect-SshKey.ps1 crowpi -UserName pi
 			try
 			{
