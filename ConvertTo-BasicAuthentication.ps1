@@ -34,5 +34,8 @@ Calls a REST method that requires Basic authentication on the first request (wit
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
 [PSCredential][Management.Automation.Credential()]$Credential
 )
-
-'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($Credential.UserName+':'+$Credential.GetNetworkCredential().Password))
+Process
+{
+	return 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(
+		$Credential.UserName+':'+$Credential.GetNetworkCredential().Password))
+}
