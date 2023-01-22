@@ -1,0 +1,72 @@
+<Scripts>
+	<Script>
+		<Functionality>Data encoding</Functionality>
+		<Hash>
+			<SHA256>75AEF407A47E70EA93F82D9DAC29F3FBEDEE9B5A907BD786147557CE3F6C6181</SHA256>
+		</Hash>
+		<Lines>57</Lines>
+		<Name>ConvertFrom-Base64.ps1</Name>
+		<Size>2061</Size>
+		<Synopsis>Converts base64-encoded text to bytes or text.</Synopsis>
+	</Script>
+	<Script>
+		<Functionality>Scheduled Tasks</Functionality>
+		<Hash>
+			<SHA256>CCDF00DFE20D432ECDDA81DC1A7BDB7C2FAA1F3CD31C17EE72B266850CE66452</SHA256>
+		</Hash>
+		<Lines>34</Lines>
+		<Name>ConvertFrom-CimInstance.ps1</Name>
+		<Size>1235</Size>
+		<Synopsis>Convert a CimInstance object to a PSObject.</Synopsis>
+	</Script>
+	<Script>
+		<Functionality>Database</Functionality>
+		<Hash>
+			<SHA256>D35F629498EE9B6D29F226A78DE28BB7E6B369AAF050A977B56048933CC3ABCF</SHA256>
+		</Hash>
+		<Lines>38</Lines>
+		<Name>ConvertFrom-DataRow.ps1</Name>
+		<Size>1796</Size>
+		<Synopsis>Converts a DataRow object to a PSObject, Hashtable, or single value.</Synopsis>
+	</Script>
+	<Script>
+		<Functionality>Date and time</Functionality>
+		<Hash>
+			<SHA256>4B26C70E8B593110C557DA0EFA50AEE978F356D7E55DEBE304D96CFD40419DD6</SHA256>
+		</Hash>
+		<Lines>83</Lines>
+		<Name>ConvertFrom-Duration.ps1</Name>
+		<Size>3032</Size>
+		<Synopsis>Parses a Timespan from a ISO8601 duration string.</Synopsis>
+	</Script>
+	<Script>
+		<Functionality>XML</Functionality>
+		<Hash>
+			<SHA256>2695325EAEC3F169C11593B07B3FFF669867E2F5365E9D137FB064D386F17211</SHA256>
+		</Hash>
+		<Lines>32</Lines>
+		<Name>ConvertFrom-EscapedXml.ps1</Name>
+		<Size>986</Size>
+		<Synopsis>Parse escaped XML into XML and serialize it.</Synopsis>
+	</Script>
+	<Script>
+		<Functionality>Data encoding</Functionality>
+		<Hash>
+			<SHA256>A5D1D7D2D906BA8604CA6527A591F15952401AB873B100E6AFF054C2BD95CB79</SHA256>
+		</Hash>
+		<Lines>38</Lines>
+		<Name>ConvertFrom-Hex.ps1</Name>
+		<Size>1152</Size>
+		<Synopsis>Convert a string of hexadecimal digits into a byte array.</Synopsis>
+	</Script>
+	<Script>
+		<Functionality>XML</Functionality>
+		<Hash>
+			<SHA256>E0CD4B1D6BE201EDEFE38F3A868A18624E18CC9280B4BBC10F57BE84BA15A64A</SHA256>
+		</Hash>
+		<Lines>98</Lines>
+		<Name>ConvertFrom-XmlElement.ps1</Name>
+		<Size>3436</Size>
+		<Synopsis>Converts named nodes of an element to properties of a PSObject, recursively.</Synopsis>
+	</Script>
+</Scripts>
