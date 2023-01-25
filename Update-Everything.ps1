@@ -89,11 +89,11 @@ Attempts to update packages, features, and system.
 Justification='This script is not intended for pipelining.')]
 [CmdletBinding()] Param(
 # The sources of updates to install, in order.
-[ValidateSet('Chocolatey','DellCommand','Dotnet','Essentials','Npm','PSHelp',
-	'PSModules','Scoop','Windows','WindowsStore','WinGet')]
+[ValidateSet('Chocolatey','DellCommand','Dotnet','Essentials','GitHubCli','Npm',
+	'PSHelp','PSModules','Scoop','Windows','WindowsStore','WinGet')]
 [Parameter(Position=0,ValueFromRemainingArguments=$true)][string[]] $Steps =
 	@('Essentials','WindowsStore','Scoop','Chocolatey','WinGet','Npm','Dotnet',
-		'PSModules','PSHelp','DellCommand','Windows')
+		'GitHubCli','PSModules','PSHelp','DellCommand','Windows')
 )
 Begin
 {
@@ -192,6 +192,14 @@ Begin
 					Where-Object PackageName -eq $_.PackageName).Version
 			} |
 			ForEach-Object {dotnet tool update -g $_.PackageName}
+	}
+
+	function Update-GitHubCli
+	{
+		if(!(Get-Command gh -ErrorAction Ignore))
+		{Write-Verbose 'gh not found, skipping'; return}
+		Write-Step "${UP!} Updating GitHub CLI extensions"
+		gh extension upgrade --all
 	}
 
 	function Update-PSModules
