@@ -123,7 +123,7 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			Add-GitHubMetadata.ps1 -LicenseFile $file -NoWarnings
 			'LICENSE.md' |Should -FileContentMatchMultilineExactly "\A$([regex]::Escape($content))\r?\Z"
 		}
-		It "Should set Prettier disable" -Tag temp {
+		It "Should set Prettier disable" {
 			if(Get-Variable psEditor -EA Ignore) {throw "Unable to run within VSCode terminal"}
 			'.vscode\settings.json' |Should -Not -Exist -Because 'a new repo should not have VSCode settings'
 			Add-GitHubMetadata.ps1 -VSCodeDisablePrettierForMarkdown

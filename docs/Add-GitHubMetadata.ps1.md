@@ -17,8 +17,8 @@ Add-GitHubMetadata.ps1 [[-DefaultOwner] <String[]>] [[-Owners] <Hashtable>] [[-V
  [[-DocumentationCode] <String[]>] [[-GeneratedCode] <String[]>] [[-IssueTemplate] <String>]
  [[-PullRequestTemplate] <String>] [[-ContributingFile] <String>] [[-LicenseFile] <String>]
  [[-DefaultCharset] <String>] [[-DefaultLineEndings] <String>] [[-DefaultIndentSize] <Int32>]
- [-DefaultUsesTabs] [-DefaultKeepTrailingSpace] [-DefaultNoFinalNewLine] [-NoWarnings] [-Force] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [-DefaultUsesTabs] [-DefaultKeepTrailingSpace] [-DefaultNoFinalNewLine] [-NoWarnings]
+ [-VSCodeDisablePrettierForMarkdown] [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -297,6 +297,25 @@ Indicates warnings about new content should be skipped.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -VSCodeDisablePrettierForMarkdown
+Configure VSCode settings to disable the Prettier extension for Markdown files,
+since Prettier's formatting settings are not configurable, and some break Markdown
+for some interpreters (e.g. lower-casing footnote links is incompatible with GitHub Pages),
+and some formatting choices may not be desirable or may conflict with organizational
+standards.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: DisablePrettierMarkdown, NoPrettierMarkdown
 
 Required: False
 Position: Named
