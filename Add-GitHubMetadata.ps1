@@ -141,6 +141,14 @@ line ending will be added automatically if it is missing.
 [switch] $DefaultNoFinalNewLine,
 # Indicates warnings about new content should be skipped.
 [switch] $NoWarnings,
+<#
+Configure VSCode settings to disable the Prettier extension for Markdown files,
+since Prettier's formatting settings are not configurable, and some break Markdown
+for some interpreters (e.g. lower-casing footnote links is incompatible with GitHub Pages),
+and some formatting choices may not be desirable or may conflict with organizational
+standards.
+#>
+[Alias('DisablePrettierMarkdown','NoPrettierMarkdown')][switch] $VSCodeDisablePrettierForMarkdown,
 # Do not prompt to append Linguist settings.
 [switch] $Force
 )
@@ -151,15 +159,17 @@ function Resolve-RepoPath
 	Process { (Resolve-Path $Path -Relative) -replace '^.\\','' -replace '\\','/' }
 }
 
-function Test-SkipFile
+function Test-KeepFile
 {
 	[CmdletBinding(SupportsShouldProcess=$true)][OutputType([bool])] Param(
-	[Parameter(Position=0)][string] $Filename
+	[Parameter(Position=0)][string] $Filename,
+	[switch] $Keep
 	)
-	if((Test-Path $Filename) -and !$PSCmdlet.ShouldProcess($Filename,'overwrite'))
-	{ Write-Verbose "File $Filename exists!"; return $true }
-	else
-	{ return $false }
+	$exists = Test-Path $Filename -Type Leaf
+	if($exists -and $Keep) { Write-Verbose "Keeping existing $Filename"; return $true }
+	if(!$exists) { return $false }
+	Write-Verbose "$Filename exists"
+	return !$PSCmdlet.ShouldProcess($Filename,'overwrite')
 }
 
 function Copy-GitHubFile
@@ -168,7 +178,7 @@ function Copy-GitHubFile
 	[Parameter(Position=0,Mandatory=$true)][string] $Filename,
 	[Parameter(Position=1,Mandatory=$true)][Alias('Path','Url')][uri] $Source
 	)
-	if(Test-SkipFile $Filename){return}
+	if(Test-KeepFile $Filename){return}
 	if($Source.IsFile){Copy-Item $Source.LocalPath $Filename}
 	else{Invoke-WebRequest $Source -OutFile $Filename} #TODO: authentication for private repos?
 }
@@ -185,10 +195,12 @@ function Add-File
 	[Parameter(Position=1,Mandatory=$true)][string] $Contents,
 	[Parameter(Position=2)][ValidateSet('utf8','ASCII')][string] $Encoding = 'utf8',
 	[switch] $Warn,
+	[switch] $Keep,
 	[switch] $Force
 	)
+	if($Keep -and (Test-Path $Filename -Type Leaf)) { return }
 	if(!$Contents){Write-Verbose "No contents to add to $Filename."; return }
-	if(!$Force -and (Test-SkipFile $Filename)){ Write-Verbose "File $Filename exists!"; return }
+	if(!$Force -and (Test-KeepFile $Filename)){ Write-Verbose "File $Filename exists!"; return }
 	$Contents |Out-File $Filename -Encoding $Encoding
 	git add -N $Filename |Out-Null
 	if($Warn){ Write-Warning "The file $Filename has been added, be sure to review it and customize as needed." }
@@ -218,7 +230,7 @@ function Add-CodeOwners
 	[hashtable] $Owners,
 	[switch] $NoWarnings
 	)
-	if(Test-SkipFile .github/CODEOWNERS)
+	if(Test-KeepFile .github/CODEOWNERS -Keep:(!$DefaultOwner -and !$Owners))
 	{
 		if(Test-FileTypeMagicNumber.ps1 utf8 .github/CODEOWNERS){Remove-Utf8Signature .github/CODEOWNERS}
 		return
@@ -348,7 +360,16 @@ charset = utf-8
 [*.css]
 charset = utf-8
 
-"@ -Warn:$(!$NoWarnings)
+"@ -Warn:$(!$NoWarnings) -Keep
+}
+
+function Disable-VsCodePrettier
+{
+	if(!(Test-Path .vscode -PathType Container)) {mkdir .vscode |Out-Null}
+	Set-VSCodeSetting.ps1 prettier.disableLanguages @('markdown') -Workspace
+	Set-VSCodeSetting.ps1 '[markdown]' @{
+		'editor.defaultFormatter' = 'yzhang.markdown-all-in-one'
+	} -Workspace
 }
 
 function Add-Metadata
@@ -387,6 +408,7 @@ function Add-Metadata
 		-DefaultIndentSize $DefaultIndentSize -DefaultUsesTabs:$DefaultUsesTabs `
 		-DefaultKeepTrailingSpace:$DefaultKeepTrailingSpace -DefaultNoFinalNewLine:$DefaultNoFinalNewLine `
 		-NoWarnings:$NoWarnings
+	if($VSCodeDisablePrettierForMarkdown) {Disable-VsCodePrettier}
 	Pop-Location
 }
 

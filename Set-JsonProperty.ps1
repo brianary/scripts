@@ -96,7 +96,7 @@ Process
 		if($WarnOverwrite) {Write-Warning "Property $PropertyName overwriting '$($property.$nameSegment)'."}
 		$property.$nameSegment = $PropertyValue
 	}
-	else {$property |Add-Member ($jsonpath[-1]) $PropertyValue}
+	else {$property |Add-Member ($jsonpath[-1]) $PropertyValue -Force}
 	$value = $object |ConvertTo-Json -Depth 100
 	if($Path) {$value |Out-File $Path utf8NoBOM}
 	else {return $value}

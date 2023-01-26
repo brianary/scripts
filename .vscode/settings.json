@@ -1,19 +1,27 @@
 {
-	"markdownlint.config": {
-		"header-style": {"style": "setext_with_atx"}
-	},
-	"pester.autoRunOnSave": false,
-	"powershell.codeFormatting.addWhitespaceAroundPipe": true,
-	"powershell.codeFormatting.preset": "Allman",
-	"powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
-	"powershell.codeFormatting.useCorrectCasing": true,
-	"mssql.connections": [
-		{
-			"server": "(localdb)\\ProjectsV13",
-			"database": "AdventureWorks2014",
-			"authenticationType": "Integrated",
-			"profileName": "AdventureWorks2014",
-			"password": ""
-		}
-	]
+  "markdownlint.config": {
+    "header-style": {
+      "style": "setext_with_atx"
+    }
+  },
+  "pester.autoRunOnSave": false,
+  "powershell.codeFormatting.addWhitespaceAroundPipe": true,
+  "powershell.codeFormatting.preset": "Allman",
+  "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
+  "powershell.codeFormatting.useCorrectCasing": true,
+  "mssql.connections": [
+    {
+      "server": "(localdb)\\ProjectsV13",
+      "database": "AdventureWorks2014",
+      "authenticationType": "Integrated",
+      "profileName": "AdventureWorks2014",
+      "password": ""
+    }
+  ],
+  "prettier.disableLanguages": [
+    "markdown"
+  ],
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  }
 }
