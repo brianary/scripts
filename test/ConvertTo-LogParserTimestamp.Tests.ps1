@@ -1,0 +1,44 @@
+﻿<#
+.SYNOPSIS
+Tests formattting a datetime as a LogParser literal.
+#>
+
+Describe 'ConvertTo-LogParserTimestamp' -Tag ConvertTo-LogParserTimestamp {
+	BeforeAll {
+		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
+		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
+		$ScriptName = Join-Path $scriptsdir ConvertTo-LogParserTimestamp.ps1
+		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
+	}
+	Context 'Comment-based help' -Tag CommentHelp {
+		It "Should produce help object" {
+			Get-Help $ScriptName |Should -Not -BeOfType string `
+				-Because 'Get-Help should not fall back to the default help string'
+		}
+	}
+	Context 'Script style' -Tag Style {
+		It "Should follow best practices for style" {
+			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Warning |
+				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
+				Should -BeExactly $null -Because 'there should be no style warnings'
+			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Error |
+				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
+				Should -BeExactly $null -Because 'there should be no style errors'
+		}
+	}
+	Context 'Formats a datetime as a LogParser literal' `
+		-Tag ConvertToLogParserTimestamp,Convert,ConvertTo,LogParserTimestamp,LogParser {
+		It "Converts a date/time value into a LogParser timestamp expression" `
+		-TestCases @(
+			@{ DateTime = (Get-Date) }
+			@{ DateTime = '2000-01-01' }
+			@{ DateTime = '2002-02-20 02:20:02' }
+			@{ DateTime = '2022-02-22 22:20:20' }
+		) {
+			Param([datetime] $DateTime)
+			$DateTime |
+				ConvertTo-LogParserTimestamp.ps1 |
+				Should -BeExactly "timestamp('$(Get-Date $DateTime -f 'yyyy-MM-dd HH:mm:ss')','yyyy-MM-dd HH:mm:ss')"
+		}
+	}
+}

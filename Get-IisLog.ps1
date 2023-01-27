@@ -77,6 +77,7 @@ WinStatus     : Access is denied
 #>
 
 #Requires -Version 3
+#Requires -Modules Microsoft.PowerShell.Utility
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingCmdletAliases','',
 Justification='This script sets up and uses logparser.')]
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(

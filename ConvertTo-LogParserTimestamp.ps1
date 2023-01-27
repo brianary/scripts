@@ -23,4 +23,4 @@ logparser "select * from ex17*.log where to_localtime(timestamp(date,time)) < $(
 # The DateTime value to convert to a LogParser literal.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][datetime]$Value
 )
-"timestamp('$(Get-Date $Value -Format 'yyyy-MM-dd HH:mm:ss')','yyyy-MM-dd HH:mm:ss')"
+Process{"timestamp('$(Get-Date $Value -Format 'yyyy-MM-dd HH:mm:ss')','yyyy-MM-dd HH:mm:ss')"}

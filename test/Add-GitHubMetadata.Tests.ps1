@@ -96,22 +96,19 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 		}
 	}
 	Context 'Set templates' -Tag AddGitHubMetadata,Add,GitHubMetadata,GitHub,Metadata,Template {
-		It "Should set issue template" {
-			if(Get-Variable psEditor -EA Ignore) {throw "Unable to run within VSCode terminal"}
+		It "Should set issue template" -Skip:$([bool](Get-Variable psEditor -EA Ignore)) {
 			'.github\ISSUE_TEMPLATE.md' |Should -Not -Exist -Because 'a new repo should not have a ISSUE_TEMPLATE.md'
 			$content = 'Thanks for submitting an issue'
 			Add-GitHubMetadata.ps1 -IssueTemplate $content -NoWarnings
 			'.github\ISSUE_TEMPLATE.md' |Should -FileContentMatchMultilineExactly "\A$([regex]::Escape($content))\r?\Z"
 		}
-		It "Should set pull request template" {
-			if(Get-Variable psEditor -EA Ignore) {throw "Unable to run within VSCode terminal"}
+		It "Should set pull request template" -Skip:$([bool](Get-Variable psEditor -EA Ignore)) {
 			'.github\PULL_REQUEST_TEMPLATE.md' |Should -Not -Exist -Because 'a new repo should not have a PULL_REQUEST_TEMPLATE.md'
 			$content = 'Thanks for submitting a pull request'
 			Add-GitHubMetadata.ps1 -PullRequestTemplate $content -NoWarnings
 			'.github\PULL_REQUEST_TEMPLATE.md' |Should -FileContentMatchMultilineExactly "\A$([regex]::Escape($content))\r?\Z"
 		}
-		It "Should set contributing guidelines" {`
-			if(Get-Variable psEditor -EA Ignore) {throw "Unable to run within VSCode terminal"}
+		It "Should set contributing guidelines" -Skip:$([bool](Get-Variable psEditor -EA Ignore)) {`
 			'.github\CONTRIBUTING.md' |Should -Not -Exist -Because 'a new repo should not have a CONTRIBUTING.md'
 			$content,$file = 'Thanks for your interest in contributing, here are the guidelines for the project',
 				[io.path]::GetTempFileName()
@@ -119,16 +116,14 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			Add-GitHubMetadata.ps1 -ContributingFile $file -NoWarnings
 			'.github\CONTRIBUTING.md' |Should -FileContentMatchMultilineExactly "\A$([regex]::Escape($content))\r?\Z"
 		}
-		It "Should set license" {
-			if(Get-Variable psEditor -EA Ignore) {throw "Unable to run within VSCode terminal"}
+		It "Should set license" -Skip:$([bool](Get-Variable psEditor -EA Ignore)) {
 			'LICENSE.md' |Should -Not -Exist -Because 'a new repo should not have a LICENSE.md'
 			$content,$file = 'Thanks for using this project, here are the terms of use',[io.path]::GetTempFileName()
 			$content |Out-File $file utf8BOM
 			Add-GitHubMetadata.ps1 -LicenseFile $file -NoWarnings
 			'LICENSE.md' |Should -FileContentMatchMultilineExactly "\A$([regex]::Escape($content))\r?\Z"
 		}
-		It "Should set VSCode extension recommendations" {
-			if(Get-Variable psEditor -EA Ignore) {throw "Unable to run within VSCode terminal"}
+		It "Should set VSCode extension recommendations" -Skip:$([bool](Get-Variable psEditor -EA Ignore)) {
 			'.vscode\settings.json' |Should -Not -Exist -Because 'a new repo should not have VSCode settings'
 			Add-GitHubMetadata.ps1 -VsCodeExtensionRecommendations
 			'.vscode\settings.json' |Should -Exist
@@ -139,8 +134,7 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 			$settings.recommendations |Should -Contain yzhang.markdown-all-in-one
 			$settings.recommendations |Should -Contain EditorConfig.EditorConfig
 		}
-		It "Should set VSCode Prettier disable" {
-			if(Get-Variable psEditor -EA Ignore) {throw "Unable to run within VSCode terminal"}
+		It "Should set VSCode Prettier disable" -Skip:$([bool](Get-Variable psEditor -EA Ignore)) {
 			'.vscode\settings.json' |Should -Not -Exist -Because 'a new repo should not have VSCode settings'
 			Add-GitHubMetadata.ps1 -VSCodeDisablePrettierForMarkdown
 			'.vscode\settings.json' |Should -Exist

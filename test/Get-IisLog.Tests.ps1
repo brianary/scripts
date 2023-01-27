@@ -34,7 +34,7 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 				Should -BeExactly $null -Because 'there should be no style errors'
 		}
 	}
-	Context 'Query log directory' -Tag GetIisLog,Get,IisLog,IisLogDirectory {
+	Context 'Query log directory' -Tag GetIisLog,Get,IisLog,IisLogDirectory,LogParser {
 		It "Should query very old IISW3C logs" -Skip:$Global:noLogParser {
 			$entry = Get-IisLog.ps1 -LogDirectory $datadir -After 1996-01-01 -Before 1997-01-01 `
 				-UriPathLike '/default.htm' -LogFormat IISW3C
