@@ -24,7 +24,7 @@ Invoke-RestMethod
 New-Guid
 
 .EXAMPLE
-@{ title = 'Name'; file = Get-Item avartar.png } |ConvertTo-MultipartFormData.ps1 |Invoke-WebRequest $url -Method POST
+@{ title = 'Name'; file = Get-Item avatar.png } |ConvertTo-MultipartFormData.ps1 |Invoke-WebRequest $url -Method POST
 
 Sends two fields, one of which is a file upload.
 #>
@@ -39,45 +39,46 @@ Values of the System.IO.FileInfo type will be read, as for a file upload.
 )
 DynamicParam
 {
-    $boundary = "$(New-Guid)"
-    $PSDefaultParameterValues['Invoke-WebRequest:ContentType'] = "multipart/form-data; boundary=$boundary"
-    $PSDefaultParameterValues['Invoke-RestMethod:ContentType'] = "multipart/form-data; boundary=$boundary"
+	$boundary = "$(New-Guid)"
+	$PSDefaultParameterValues['Invoke-WebRequest:ContentType'] = "multipart/form-data; boundary=$boundary"
+	$PSDefaultParameterValues['Invoke-RestMethod:ContentType'] = "multipart/form-data; boundary=$boundary"
 }
 Begin
 {
-    $cmdletname = $MyInvocation.MyCommand.Name
-    if((Get-Module Microsoft.PowerShell.Utility).Version -ge [version]6.1)
-    {
-        Write-Warning "Invoke-WebRequest and Invoke-RestMethod appear to natively support multipart/form-data."
-    }
-    try{[void][Net.Http.StringContent]}catch{Add-Type -AN System.Net.Http |Out-Null}
+	$cmdletname = $MyInvocation.MyCommand.Name
+	if((Get-Module Microsoft.PowerShell.Utility).Version -ge [version]6.1)
+	{
+		Write-Warning "Invoke-WebRequest and Invoke-RestMethod appear to natively support multipart/form-data."
+	}
+	try{[void][Net.Http.StringContent]}catch{Add-Type -AN System.Net.Http |Out-Null}
 }
 Process
 {
-    $content = New-Object Net.Http.MultipartFormDataContent $boundary
-    foreach($field in $Fields.GetEnumerator())
-    {
-        if($field.Value -isnot [IO.FileInfo])
-        {
-            $content.Add([Net.Http.StringContent]$field.Value,$field.Key)
-            Write-Verbose "$cmdletname : $($field.Key)=$($field.Value)"
-        }
-        else
-        {
-            Write-Verbose "$cmdletname : Adding file $($field.Value.FullName)"
-            $content.Add((New-Object Net.Http.StreamContent] ($field.Value.OpenRead())),'file',$field.Value.Name)
-        }
-    }
-    $content.Headers.GetEnumerator() |% {Write-Verbose "$cmdletname header : $($_.Key)=$($_.Value -join "`n`t")"}
-    [Threading.Tasks.Task[byte[]]]$getbody = $content.ReadAsByteArrayAsync()
-    $getbody.Wait()
-    [byte[]]$body = $getbody.Result
-    $content.Dispose()
-    Write-Verbose "$cmdletname : Body is $($body.Length) bytes"
-    return,$body
+	$content = New-Object Net.Http.MultipartFormDataContent $boundary
+	foreach($field in $Fields.GetEnumerator())
+	{
+		if($field.Value -isnot [IO.FileInfo])
+		{
+			$content.Add([Net.Http.StringContent]$field.Value,$field.Key)
+			Write-Verbose "$cmdletname : $($field.Key)=$($field.Value)"
+		}
+		else
+		{
+			Write-Verbose "$cmdletname : Adding file $($field.Value.FullName)"
+			$content.Add((New-Object Net.Http.StreamContent ($field.Value.OpenRead())),$field.Key,$field.Value.Name)
+		}
+	}
+	$content.Headers.GetEnumerator() |
+		ForEach-Object {Write-Verbose "$cmdletname header : $($_.Key)=$($_.Value -join "`n`t")"}
+	[Threading.Tasks.Task[byte[]]]$getbody = $content.ReadAsByteArrayAsync()
+	$getbody.Wait()
+	[byte[]]$body = $getbody.Result
+	$content.Dispose()
+	Write-Verbose "$cmdletname : Body is $($body.Length) bytes"
+	return,$body
 }
 End
 {
-    $PSDefaultParameterValues.Remove('Invoke-WebRequest:ContentType')
-    $PSDefaultParameterValues.Remove('Invoke-RestMethod:ContentType')
+	$PSDefaultParameterValues.Remove('Invoke-WebRequest:ContentType')
+	$PSDefaultParameterValues.Remove('Invoke-RestMethod:ContentType')
 }

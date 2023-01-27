@@ -2,6 +2,7 @@ name: Pester tests
 on: push
 jobs:
   test:
+    name: Run Pester tests
     runs-on: windows-latest
     steps:
     - name: Check out repo

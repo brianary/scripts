@@ -28,17 +28,25 @@ Describe 'ConvertTo-LogParserTimestamp' -Tag ConvertTo-LogParserTimestamp {
 	}
 	Context 'Formats a datetime as a LogParser literal' `
 		-Tag ConvertToLogParserTimestamp,Convert,ConvertTo,LogParserTimestamp,LogParser {
-		It "Converts a date/time value into a LogParser timestamp expression" `
-		-TestCases @(
+		It "Converts a date/time value into a LogParser timestamp expression" -TestCases @(
 			@{ DateTime = (Get-Date) }
 			@{ DateTime = '2000-01-01' }
 			@{ DateTime = '2002-02-20 02:20:02' }
 			@{ DateTime = '2022-02-22 22:20:20' }
+			@{ DateTime =  (Get-Date '1970-01-01Z').AddSeconds((Get-Random)) }
+			@{ DateTime =  (Get-Date '1970-01-01Z').AddSeconds((Get-Random)) }
+			@{ DateTime =  (Get-Date '1970-01-01Z').AddSeconds((Get-Random)) }
+			@{ DateTime =  (Get-Date '1970-01-01Z').AddSeconds((Get-Random)) }
+			@{ DateTime =  (Get-Date '1970-01-01Z').AddSeconds((Get-Random)) }
 		) {
 			Param([datetime] $DateTime)
 			$DateTime |
 				ConvertTo-LogParserTimestamp.ps1 |
-				Should -BeExactly "timestamp('$(Get-Date $DateTime -f 'yyyy-MM-dd HH:mm:ss')','yyyy-MM-dd HH:mm:ss')"
+				Should -BeExactly "timestamp('$(Get-Date $DateTime -f 'yyyy-MM-dd HH:mm:ss')','yyyy-MM-dd HH:mm:ss')" `
+				-Because 'pipeline should work'
+			ConvertTo-LogParserTimestamp.ps1 $DateTime |
+				Should -BeExactly "timestamp('$(Get-Date $DateTime -f 'yyyy-MM-dd HH:mm:ss')','yyyy-MM-dd HH:mm:ss')" `
+				-Because 'parameter should work'
 		}
 	}
 }
