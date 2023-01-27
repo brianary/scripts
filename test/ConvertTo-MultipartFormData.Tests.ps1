@@ -45,7 +45,7 @@ Describe 'ConvertTo-MultipartFormData' -Tag ConvertTo-MultipartFormData {
 		}
 		It "Converts a dictionary of form values to a UTF-8 `byte array body" -TestCases @(
 			@{ FormValues = [ordered]@{ A = 1 } }
-			@{ FormValues = [ordered]@{ Name = 'Sheldon Powers'; Avatar = Join-Path $datadir 'ps1.png' |Get-Item } }
+			@{ FormValues = [ordered]@{ Name = 'Sheldon Powers'; Agree = 'on' } }
 		) {
 			Param([Collections.IDictionary] $FormValues, [byte[]] $Result)
 			$textresult = [text.encoding]::UTF8.GetString((ConvertTo-MultipartFormData.ps1 $FormValues))

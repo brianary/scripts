@@ -28,7 +28,7 @@ Describe 'ConvertTo-LogParserTimestamp' -Tag ConvertTo-LogParserTimestamp {
 	}
 	Context 'Formats a datetime as a LogParser literal' `
 		-Tag ConvertToLogParserTimestamp,Convert,ConvertTo,LogParserTimestamp,LogParser {
-		It "Converts a date/time value into a LogParser timestamp expression" -TestCases @(
+		It "Converts '<DateTime>' into a LogParser timestamp expression" -TestCases @(
 			@{ DateTime = (Get-Date) }
 			@{ DateTime = '2000-01-01' }
 			@{ DateTime = '2002-02-20 02:20:02' }
