@@ -18,7 +18,8 @@ Add-GitHubMetadata.ps1 [[-DefaultOwner] <String[]>] [[-Owners] <Hashtable>] [[-V
  [[-PullRequestTemplate] <String>] [[-ContributingFile] <String>] [[-LicenseFile] <String>]
  [[-DefaultCharset] <String>] [[-DefaultLineEndings] <String>] [[-DefaultIndentSize] <Int32>]
  [-DefaultUsesTabs] [-DefaultKeepTrailingSpace] [-DefaultNoFinalNewLine] [-NoWarnings]
- [-VSCodeDisablePrettierForMarkdown] [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-VsCodeExtensionRecommendations] [-VSCodeDisablePrettierForMarkdown] [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -297,6 +298,21 @@ Indicates warnings about new content should be skipped.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -VsCodeExtensionRecommendations
+Configure VSCode settings to recommend relevant extensions based on repo content.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: Recommendations
 
 Required: False
 Position: Named

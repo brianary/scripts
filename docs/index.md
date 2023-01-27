@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-1923_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2004_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -95,7 +95,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Add-TimeSpan.ps1](Add-TimeSpan.ps1.md)**: Adds a timespan to DateTime values.
 - &#x1F199; **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1.md)**: Parses a Timespan from a ISO8601 duration string.
 - **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1.md)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
-- **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1.md)**: Formats a datetime as a LogParser literal.
+- &#x1F199; **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1.md)**: Formats a datetime as a LogParser literal.
 - **[Format-Date.ps1](Format-Date.ps1.md)**: Returns a date/time as a named format.
 - **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1.md)**: Returns a date and time converted to the French Republican Calendar.
 - **[Show-Time.ps1](Show-Time.ps1.md)**: Displays a formatted date using powerline font characters.
@@ -148,7 +148,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### HTTP
 
 - &#x1F199; **[ConvertTo-BasicAuthentication.ps1](ConvertTo-BasicAuthentication.ps1.md)**: Produces a basic authentication header string from a credential.
-- **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1.md)**: Creates multipart/form-data to send as a request body.
+- &#x1F199; **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1.md)**: Creates multipart/form-data to send as a request body.
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1.md)**: Returns the content security policy at from the given URL.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1.md)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
 - **[Save-WebRequest.ps1](Save-WebRequest.ps1.md)**: Downloads a given URL to a file, automatically determining the filename.
@@ -285,7 +285,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1.md)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1.md)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-Dns.ps1](Get-Dns.ps1.md)**: Looks up DNS info, given a hostname or address.
-- **[Get-IisLog.ps1](Get-IisLog.ps1.md)**: Easily query IIS logs.
+- &#x1F199; **[Get-IisLog.ps1](Get-IisLog.ps1.md)**: Easily query IIS logs.
 - **[Get-PocketArticles.ps1](Get-PocketArticles.ps1.md)**: Retrieves a list of saved articles from a Pocket account.
 - **[Get-RandomBytes.ps1](Get-RandomBytes.ps1.md)**: Returns random bytes.
 - **[Get-Todos.ps1](Get-Todos.ps1.md)**: Returns the TODOs for the current git repo, which can help document technical debt.
