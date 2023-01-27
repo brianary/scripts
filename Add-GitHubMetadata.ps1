@@ -144,6 +144,10 @@ line ending will be added automatically if it is missing.
 # Indicates warnings about new content should be skipped.
 [switch] $NoWarnings,
 <#
+Configure VSCode settings to recommend relevant extensions based on repo content.
+#>
+[Alias('Recommendations')][switch] $VsCodeExtensionRecommendations,
+<#
 Configure VSCode settings to disable the Prettier extension for Markdown files,
 since Prettier's formatting settings are not configurable, and some break Markdown
 for some interpreters (e.g. lower-casing footnote links is incompatible with GitHub Pages),
@@ -365,6 +369,34 @@ charset = utf-8
 "@ -Warn:$(!$NoWarnings) -Keep
 }
 
+function Add-VsCodeExtensionRecommendations
+{
+	if(!(Test-Path .vscode -PathType Container)) {mkdir .vscode |Out-Null}
+	$recommendations = New-Object Collections.Generic.HashSet[string]
+	[string[]] $previous = Get-VSCodeSetting.ps1 recommendations -Workspace
+	if($previous) {$previous |ForEach-Object {[void]$recommendations.Add($_)}}
+	[void]$recommendations.Add('yzhang.markdown-all-in-one')
+	[void]$recommendations.Add('EditorConfig.EditorConfig')
+	if(Get-ChildItem -Recurse -Filter *.md |Select-String '```mermaid' |Select-Object -First 1)
+	{
+		[void]$recommendations.Add('bierner.markdown-mermaid')
+		[void]$recommendations.Add('bpruitt-goddard.mermaid-markdown-syntax-highlighting')
+	}
+	if(Get-ChildItem -Recurse -Filter *.http |Select-Object -First 1)
+	{
+		[void]$recommendations.Add('humao.rest-client')
+	}
+	if(Get-ChildItem -Recurse -Filter *.ps1 |Select-Object -First 1)
+	{
+		[void]$recommendations.Add('ms-vscode.powershell')
+	}
+	if(Get-ChildItem -Recurse -Filter *.sql |Select-Object -First 1)
+	{
+		[void]$recommendations.Add('ms-mssql.mssql')
+	}
+	Set-VSCodeSetting.ps1 recommendations $recommendations -Workspace
+}
+
 function Disable-VsCodePrettier
 {
 	if(!(Test-Path .vscode -PathType Container)) {mkdir .vscode |Out-Null}
@@ -410,6 +442,7 @@ function Add-Metadata
 		-DefaultIndentSize $DefaultIndentSize -DefaultUsesTabs:$DefaultUsesTabs `
 		-DefaultKeepTrailingSpace:$DefaultKeepTrailingSpace -DefaultNoFinalNewLine:$DefaultNoFinalNewLine `
 		-NoWarnings:$NoWarnings
+	if($VsCodeExtensionRecommendations) {Add-VsCodeExtensionRecommendations}
 	if($VSCodeDisablePrettierForMarkdown) {Disable-VsCodePrettier}
 	Pop-Location
 }
