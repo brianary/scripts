@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2004_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2022_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -56,9 +56,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Data encoding
 
-- &#x1F199; **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
+- **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
 - **[ConvertFrom-Hex.ps1](ConvertFrom-Hex.ps1.md)**: Convert a string of hexadecimal digits into a byte array.
-- &#x1F199; **[ConvertTo-Base64.ps1](ConvertTo-Base64.ps1.md)**: Converts bytes or text to base64-encoded text.
+- **[ConvertTo-Base64.ps1](ConvertTo-Base64.ps1.md)**: Converts bytes or text to base64-encoded text.
 
 ### Data formats
 
@@ -73,7 +73,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Database
 
-- &#x1F199; **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
+- **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
 - **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1.md)**: Exports MS SQL script for an object from the given server.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
@@ -104,7 +104,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Dictionary
 
-- **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1.md)**: Converts an object to an ordered dictionary of properties and values.
+- &#x1F199; **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1.md)**: Converts an object to an ordered dictionary of properties and values.
 - **[Join-Keys.ps1](Join-Keys.ps1.md)**: Combines dictionaries together into a single dictionary.
 - **[Remove-NullValues.ps1](Remove-NullValues.ps1.md)**: Removes dictionary entries with null vaules.
 - **[Split-Keys.ps1](Split-Keys.ps1.md)**: Clones a dictionary keeping only the specified keys.
@@ -262,7 +262,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### XML
 
 - **[Compare-Xml.ps1](Compare-Xml.ps1.md)**: Compares two XML documents and returns the differences.
-- &#x1F199; **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
+- **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
 - &#x1F199; **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1.md)**: Parse escaped XML into XML and serialize it.
 - **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1.md)**: Converts named nodes of an element to properties of a PSObject, recursively.
 - **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1.md)**: Serializes complex content into XML elements.
@@ -281,7 +281,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1.md)**: Convert a number to a Roman numeral.
 - **[Copy-Html.ps1](Copy-Html.ps1.md)**: Copies objects as an HTML table.
 - **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
-- &#x1F199; **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
+- **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1.md)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1.md)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-Dns.ps1](Get-Dns.ps1.md)**: Looks up DNS info, given a hostname or address.
