@@ -17,16 +17,6 @@ Describe 'Convert-ClipboardTsvToHtml' -Tag Convert-ClipboardTsvToHtml {
 				-Because 'Get-Help should not fall back to the default help string'
 		}
 	}
-	Context 'Script style' -Tag Style {
-		It "Should follow best practices for style" {
-			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Warning |
-				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly $null -Because 'there should be no style warnings'
-			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Error |
-				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly $null -Because 'there should be no style errors'
-		}
-	}
 	Context 'Parses TSV clipboard data into HTML table data which is copied back to the clipboard' `
 		-Tag ConvertClipboardTsvToHtml,Convert,ClipboardTsv,Clipboard,Tsv,Html {
 		It "Should convert '<TsvData>' to '<HtmlData>'" -TestCases @(

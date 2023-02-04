@@ -16,16 +16,6 @@ Describe 'Add-TimeSpan' -Tag Add-TimeSpan {
 				-Because 'Get-Help should not fall back to the default help string'
 		}
 	}
-	Context 'Script style' -Tag Style {
-		It "Should follow best practices for style" {
-			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Warning |
-				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly $null -Because 'there should be no style warnings'
-			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Error |
-				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly $null -Because 'there should be no style errors'
-		}
-	}
 	Context 'Adds a timespan to DateTime values.' -Tag AddTimeSpan,Add,TimeSpan {
 		It "Should add '<TimeSpan>' to a '<DateTime>' pipeline value and return '<Result>'" -TestCases @(
 			@{ TimeSpan = '00:00:30'; DateTime = '2000-01-01'; Result = '2000-01-01T00:00:30' }

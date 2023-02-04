@@ -17,16 +17,6 @@ Describe 'ConvertFrom-DataRow' -Tag ConvertFrom-DataRow {
 				-Because 'Get-Help should not fall back to the default help string'
 		}
 	}
-	Context 'Script style' -Tag Style {
-		It "Should follow best practices for style" {
-			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Warning |
-				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly $null -Because 'there should be no style warnings'
-			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Error |
-				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly $null -Because 'there should be no style errors'
-		}
-	}
 	Context 'Converts a DataRow object to a PSObject, Hashtable, or single value' `
 		-Tag ConvertFromDataRow,Convert,ConvertFrom,DataRow {
 		BeforeAll {

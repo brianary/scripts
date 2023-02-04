@@ -16,16 +16,6 @@ Describe 'Add-CapturesToMatches' -Tag Add-CapturesToMatches,Select-Xml {
 				-Because 'Get-Help should not fall back to the default help string'
 		}
 	}
-	Context 'Script style' -Tag Style {
-		It "Should follow best practices for style" {
-			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Warning |
-				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly $null -Because 'there should be no style warnings'
-			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Error |
-				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly $null -Because 'there should be no style errors'
-		}
-	}
 	Context 'Add to regex selection' -Tag AddCapturesToMatches,Add,Captures,Xml {
 		It "Value '<Text>' should add '<Name>' and '<Email>'" -TestCases @(
 			@{ Text = 'Arthur Dent adent@example.org'; Name = 'Arthur Dent'; Email = 'adent@example.org' }

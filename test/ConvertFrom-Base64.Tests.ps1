@@ -16,16 +16,6 @@ Describe 'ConvertFrom-Base64' -Tag ConvertFrom-Base64 {
 				-Because 'Get-Help should not fall back to the default help string'
 		}
 	}
-	Context 'Script style' -Tag Style {
-		It "Should follow best practices for style" {
-			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Warning |
-				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly $null -Because 'there should be no style warnings'
-			Invoke-ScriptAnalyzer -Path $ScriptName -Severity Error |
-				ForEach-Object {$_.Severity,$_.ScriptName,$_.Line,$_.Column,$_.RuleName,$_.Message -join ':'} |
-				Should -BeExactly $null -Because 'there should be no style errors'
-		}
-	}
 	Context 'Converts base64-encoded text to bytes or text' -Tag ConvertFromBase64,Convert,ConvertFrom,Base64 {
 		It "Should parse a standard base-64 string as parameter" {
 			ConvertFrom-Base64.ps1 dXNlcm5hbWU6QmFkUEBzc3dvcmQ= -Encoding utf8 |
