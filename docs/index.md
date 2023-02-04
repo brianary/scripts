@@ -158,7 +158,6 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - &#x1F199; **[Set-JsonProperty.ps1](Set-JsonProperty.ps1.md)**: Sets a property of arbitrary depth in a JSON string.
-- **[Test-Json.ps1](Test-Json.ps1.md)**: Determines whether a string is valid JSON.
 
 ### Packages and libraries
 

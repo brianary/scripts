@@ -31,19 +31,19 @@ Process
     $head64,$body64,$sign64 = $InputObject -split '\.'
     $head = ConvertFrom-Base64.ps1 $head64 utf8 -UriStyle
     Write-Verbose "JWT head: $head"
-    if(!(Test-Json.ps1 $head)) {Write-Verbose 'JWT header does not decode to valid JSON'; return $false}
+    if(!(Test-Json $head)) {Write-Verbose 'JWT header does not decode to valid JSON'; return $false}
     $head = ConvertFrom-Json $head
     if($head.typ -ne 'JWT') {Write-Verbose "JWT type is $($head.typ)"; return $false}
     if($head.alg -notin 'HS256','HS384','HS512') {Write-Verbose "Unsupported algorithm: $($head.alg)"; return $false}
     $body = ConvertFrom-Base64.ps1 $body64 utf8 -UriStyle
     Write-Verbose "JWT body: $body"
-    if(!(Test-Json.ps1 $body)) {Write-Verbose 'JWT body does not decode to valid JSON'; return $false}
+    if(!(Test-Json $body)) {Write-Verbose 'JWT body does not decode to valid JSON'; return $false}
     $body = ConvertFrom-Json $body
     [byte[]]$sign = ConvertFrom-Base64.ps1 $sign64 -UriStyle
     $secred = New-Object pscredential 'secret',$Secret
     [byte[]]$secbytes = [Text.Encoding]::UTF8.GetBytes($secred.GetNetworkCredential().Password)
     $hash = New-Object "Security.Cryptography.$($head.alg -replace '\AHS','HMACSHA')" (,$secbytes)
-    if(compare $sign ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes("$head64.$body64"))))
+    if(Compare-Object $sign ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes("$head64.$body64"))))
     {Write-Verbose "JWT hashes do not match"; return $false}
     return $true
 }

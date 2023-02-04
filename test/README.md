@@ -343,7 +343,6 @@ Script Tests
 - &#x2716;&#xFE0F; Test-FileTypeMagicNumber.ps1
 - &#x2716;&#xFE0F; Test-HttpSecurity.ps1
 - &#x2716;&#xFE0F; Test-Interactive.ps1
-- &#x2716;&#xFE0F; Test-Json.ps1
 - &#x2716;&#xFE0F; Test-Jwt.ps1
 - &#x2716;&#xFE0F; Test-LockedFile.ps1
 - &#x2716;&#xFE0F; Test-MagicNumber.ps1
