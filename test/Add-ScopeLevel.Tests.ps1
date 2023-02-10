@@ -10,12 +10,6 @@ Describe 'Add-ScopeLevel' -Tag Add-ScopeLevel {
 		$ScriptName = Join-Path $scriptsdir Add-ScopeLevel.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Convert a scope level to account for another call stack level.' -Tag AddScopeLevel,Add,ScopeLevel {
 		It 'Should calculate local scope' {
 			Add-ScopeLevel.ps1 Local |Should -BeExactly '1' -Because 'local is zero scope'

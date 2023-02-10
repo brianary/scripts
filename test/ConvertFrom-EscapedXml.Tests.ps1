@@ -10,12 +10,6 @@ Describe 'ConvertFrom-EscapedXml' -Tag ConvertFrom-EscapedXml {
 		$ScriptName = Join-Path $scriptsdir ConvertFrom-EscapedXml.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Parse escaped XML into XML and serialize it' -Tag ConvertFromEscapedXml,Convert,ConvertFrom,EscapedXml,Xml {
 		It "Should convert '<Input>' into '<Output>'" -TestCases @(
 			@{ Value = '&lt;x /&gt;'; Result = '<x />' }

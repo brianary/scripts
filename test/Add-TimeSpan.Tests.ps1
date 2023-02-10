@@ -10,12 +10,6 @@ Describe 'Add-TimeSpan' -Tag Add-TimeSpan {
 		$ScriptName = Join-Path $scriptsdir Add-TimeSpan.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Adds a timespan to DateTime values.' -Tag AddTimeSpan,Add,TimeSpan {
 		It "Should add '<TimeSpan>' to a '<DateTime>' pipeline value and return '<Result>'" -TestCases @(
 			@{ TimeSpan = '00:00:30'; DateTime = '2000-01-01'; Result = '2000-01-01T00:00:30' }

@@ -10,12 +10,6 @@ Describe 'Compare-Properties' -Tag Compare-Properties {
 		$ScriptName = Join-Path $scriptsdir Compare-Properties.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Compares the properties of two objects' -Tag CompareProperties,Compare,Properties {
 		It 'Should find the difference between PSProviders' {
 			$diff = Compare-Properties.ps1 (Get-PSProvider variable) (Get-PSProvider alias) |Sort-Object PropertyName

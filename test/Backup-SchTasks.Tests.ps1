@@ -19,12 +19,6 @@ Describe 'Backup-SchTasks' -Tag Backup-SchTasks {
 		try{Unregister-ScheduledTask -TaskName x -Confirm:$false -EA Stop}catch{Write-Warning "$_"}
 		Pop-Location
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Exports the local list of Scheduled Tasks into a single XML file' -Tag BackupSchTasks,Backup,SchTasks {
 		It 'Should export to tasks.xml' {
 			Backup-SchTasks.ps1

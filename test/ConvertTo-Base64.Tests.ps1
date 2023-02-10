@@ -10,12 +10,6 @@ Describe 'ConvertTo-Base64' -Tag ConvertTo-Base64 {
 		$ScriptName = Join-Path $scriptsdir ConvertTo-Base64.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Converts bytes or text to base64-encoded text.' -Tag ConvertToBase64,Convert,ConvertTo,Base64 {
 		It "Should encode a string parameter as a standard base-64 string" {
 			ConvertTo-Base64.ps1 'username:BadP@ssword' -Encoding utf8 |

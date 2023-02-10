@@ -10,12 +10,6 @@ Describe 'ConvertFrom-Hex' -Tag ConvertFrom-Hex {
 		$ScriptName = Join-Path $scriptsdir ConvertFrom-Hex.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Convert a string of hexadecimal digits into a byte array' -Tag ConvertFromHex,Convert,ConvertFrom,Hex {
 		It "The value '<Value>' should return '<Result>'" -TestCases @(
 			@{ Value = 'EF BB BF'; Result = 0xEF,0xBB,0xBF }

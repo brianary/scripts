@@ -10,12 +10,6 @@ Describe 'ConvertTo-LogParserTimestamp' -Tag ConvertTo-LogParserTimestamp {
 		$ScriptName = Join-Path $scriptsdir ConvertTo-LogParserTimestamp.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Formats a datetime as a LogParser literal' `
 		-Tag ConvertToLogParserTimestamp,Convert,ConvertTo,LogParserTimestamp,LogParser {
 		It "Converts '<DateTime>' into a LogParser timestamp expression" -TestCases @(

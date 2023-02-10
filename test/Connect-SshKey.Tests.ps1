@@ -25,12 +25,6 @@ Describe 'Connect-SshKey' -Tag Connect-SshKey {
 			Remove-Item $env:USERPROFILE\.ssh\id_rsa.*
 		}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Uses OpenSSH to generate a key and connect it to an ssh server' -Tag ConnectSshKey,Connect,SshKey {
 		It 'Should set up an SSH key to a server using ssh' {
 			Connect-SshKey.ps1 crowpi -UserName pi

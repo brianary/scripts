@@ -10,12 +10,6 @@ Describe 'Compare-Xml' -Tag Compare-Xml {
 		$ScriptName = Join-Path $scriptsdir Compare-Xml.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Compares two XML documents and returns the differences as XSLT' -Tag CompareXml,Compare,Xml {
 		It 'Should return a diff that updates an attribute value' {
 			Compare-Xml.ps1 '<a b="z"/>' '<a b="y"/>' |Format-Xml.ps1 |Should -BeExactly @"

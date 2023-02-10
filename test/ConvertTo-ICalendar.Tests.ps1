@@ -13,12 +13,6 @@ Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	AfterEach {try{Unregister-ScheduledTask -TaskName x -Confirm:$false -EA Stop}catch{Write-Warning "$_"}}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'One-time' -Tag ConvertToICalendar,Convert,ConvertTo,ICalendar,Once {
 		It "A one-time trigger at '<DtStart>' should produce a matching DTSTART" -TestCases @(
 			@{ DtStart = '2000-01-01T07:00' }

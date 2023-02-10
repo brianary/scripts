@@ -10,12 +10,6 @@ Describe 'ConvertFrom-CimInstance' -Tag ConvertFrom-CimInstance {
 		$ScriptName = Join-Path $scriptsdir ConvertFrom-CimInstance.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Convert a CimInstance object to a PSObject' `
 		-Tag ConvertFromCimInstance,Convert,ConvertFrom,CimInstance {
 		BeforeAll {

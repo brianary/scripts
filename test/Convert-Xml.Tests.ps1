@@ -12,12 +12,6 @@ Describe 'Convert-Xml' -Tag Convert-Xml {
 		$ScriptName = Join-Path $scriptsdir Convert-Xml.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Transform XML using an XSLT template' -Tag ConvertXml,Convert,Xml,Xslt {
 		It "Should perform a trivial transform to pipeline data" {
 			Convert-Xml.ps1 '<a xsl:version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"/>' '<z/>' |

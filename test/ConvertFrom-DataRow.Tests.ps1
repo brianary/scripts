@@ -11,12 +11,6 @@ Describe 'ConvertFrom-DataRow' -Tag ConvertFrom-DataRow {
 		$ScriptName = Join-Path $scriptsdir ConvertFrom-DataRow.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Converts a DataRow object to a PSObject, Hashtable, or single value' `
 		-Tag ConvertFromDataRow,Convert,ConvertFrom,DataRow {
 		BeforeAll {

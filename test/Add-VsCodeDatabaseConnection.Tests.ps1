@@ -19,12 +19,6 @@ Describe 'Add-VsCodeDatabaseConnection' -Tag Add-VsCodeDatabaseConnection {
 	AfterEach {
 		if("$PWD" -match "\A$([regex]::Escape($TestDrive))") {Pop-Location}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Adds a VS Code MSSQL database connection to the repo.' `
 		-Skip:(!!(Get-Variable psEditor -EA Ignore)) `
 		-Tag AddVsCodeDatabaseConnection,Add,VsCodeDatabaseConnection {

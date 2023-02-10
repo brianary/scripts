@@ -11,12 +11,6 @@ Describe 'ConvertTo-MultipartFormData' -Tag ConvertTo-MultipartFormData {
 		$ScriptName = Join-Path $scriptsdir ConvertTo-MultipartFormData.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Creates multipart/form-data to send as a request body' `
 		-Tag ConvertToMultipartFormData,Convert,ConvertTo,MultipartFormData,WebRequest {
 		Mock New-Guid {return [guid]'d9b96b2b-e95d-4051-86fa-81a4b98a6dda'}

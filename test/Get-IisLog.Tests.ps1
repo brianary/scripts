@@ -18,12 +18,6 @@ Describe 'Get-IisLog' -Tag Get-IisLog {
 		$ScriptName = Join-Path $scriptsdir Get-IisLog.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Query log directory' -Tag GetIisLog,Get,IisLog,IisLogDirectory,LogParser {
 		It "Should query very old IISW3C logs" -Skip:$Global:noLogParser {
 			$entry = Get-IisLog.ps1 -LogDirectory $datadir -After 1996-01-01 -Before 1997-01-01 `

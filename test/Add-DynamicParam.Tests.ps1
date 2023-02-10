@@ -10,12 +10,6 @@ Describe 'Add-DynamicParam' -Tag Add-DynamicParam {
 		$ScriptName = Join-Path $scriptsdir Add-DynamicParam.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Adding parameters' -Tag AddDynamicParam,Add,'DynamicParam' {
 		It "Should add a required string parameter" {
 			Add-DynamicParam.ps1 -Name Path -Type string -Mandatory

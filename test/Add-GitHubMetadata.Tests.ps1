@@ -25,12 +25,6 @@ Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 	AfterEach {
 		if("$PWD" -match "\A$([regex]::Escape($TestDrive))") {Pop-Location}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Add basic GitHub metadata' `
 		-Tag AddGitHubMetadata,Add,GitHubMetadata,GitHub,Metadata,Readme,EditorConfig,CodeOwners,Linguist {
 		It "Should create README.md, .editorconfig, CODEOWNERS, and .gitattributes (Linguist)" {

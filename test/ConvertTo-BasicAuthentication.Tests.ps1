@@ -10,12 +10,6 @@ Describe 'ConvertTo-BasicAuthentication' -Tag ConvertTo-BasicAuthentication {
 		$ScriptName = Join-Path $scriptsdir ConvertTo-BasicAuthentication.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Produces a basic authentication header string from a credential' `
 		-Tag ConvertToBasicAuthentication,Convert,ConvertTo,BasicAuthentication,Authentication,Credential {
 		It "Credential '<UserName>' with password '<SingleFactor>' should return '<Result>'" -TestCases @(

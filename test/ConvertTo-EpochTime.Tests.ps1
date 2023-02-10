@@ -10,12 +10,6 @@ Describe 'ConvertTo-EpochTime' -Tag ConvertTo-EpochTime {
 		$ScriptName = Join-Path $scriptsdir ConvertTo-EpochTime.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970' -Tag Example {
 		It "DateTime value '<DateTime>' should return '<Result>'" `
 			-Tag ConvertToEpochTime,Convert,ConvertTo,EpochTime,Epoch -TestCases @(

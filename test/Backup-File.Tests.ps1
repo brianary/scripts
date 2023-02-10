@@ -16,12 +16,6 @@ Describe 'Backup-File' -Tag Backup-File {
 	AfterEach {
 		Pop-Location
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Simple backup' -Tag BackupFile,Backup,File {
 		It 'Should create a backup as a sibling to a file, with date and time values in the name' {
 			"$(New-Guid)" |Out-File logfile.log

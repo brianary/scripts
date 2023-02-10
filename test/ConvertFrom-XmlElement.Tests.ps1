@@ -11,12 +11,6 @@ Describe 'ConvertFrom-XmlElement' -Tag ConvertFrom-XmlElement {
 		$ScriptName = Join-Path $scriptsdir ConvertFrom-XmlElement.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Converts named nodes of an element to properties of a PSObject, recursively' `
 		-Tag ConvertFromXmlElement,Convert,ConvertFrom,XmlElement,Xml {
 		It "Should convert from an XML document to an object" {

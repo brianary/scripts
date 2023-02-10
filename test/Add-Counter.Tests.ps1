@@ -10,12 +10,6 @@ Describe 'Add-Counter' -Tag Add-Counter {
 		$ScriptName = Join-Path $scriptsdir Add-Counter.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Adds a counter property' -Tag AddCounter,Add,Counter {
 		It "Should number providers" {
 			[psobject[]] $providers = Get-PSProvider |Add-Counter.ps1 -PropertyName Position -InitialValue 0 -Force

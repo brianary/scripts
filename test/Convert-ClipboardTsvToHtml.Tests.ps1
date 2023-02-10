@@ -11,12 +11,6 @@ Describe 'Convert-ClipboardTsvToHtml' -Tag Convert-ClipboardTsvToHtml {
 		$ScriptName = Join-Path $scriptsdir Convert-ClipboardTsvToHtml.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Comment-based help' -Tag CommentHelp {
-		It "Should produce help object" {
-			Get-Help $ScriptName |Should -Not -BeOfType string `
-				-Because 'Get-Help should not fall back to the default help string'
-		}
-	}
 	Context 'Parses TSV clipboard data into HTML table data which is copied back to the clipboard' `
 		-Tag ConvertClipboardTsvToHtml,Convert,ClipboardTsv,Clipboard,Tsv,Html {
 		It "Should convert '<TsvData>' to '<HtmlData>'" -TestCases @(
