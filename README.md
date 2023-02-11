@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2022_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2220_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -69,11 +69,11 @@ PowerShell Scripts
 
 ### Data formats
 
-- **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1)**: Serializes complex content into PowerShell literals.
+- :up: **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1)**: Serializes complex content into PowerShell literals.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1)**: Escape URLs more aggressively.
 - **[New-Jwt.ps1](New-Jwt.ps1)**: Generates a JSON Web Token (JWT)
 - **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1)**: Tests for a given common file type by magic number.
-- **[Test-Jwt.ps1](Test-Jwt.ps1)**: Determines whether a string is a valid JWT.
+- :up: **[Test-Jwt.ps1](Test-Jwt.ps1)**: Determines whether a string is a valid JWT.
 - **[Test-MagicNumber.ps1](Test-MagicNumber.ps1)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
 - **[Test-Uri.ps1](Test-Uri.ps1)**: Determines whether a string is a valid URI.
 - **[Test-Windows1252.ps1](Test-Windows1252.ps1)**: Determines whether a file contains Windows-1252 bytes that are invalid UTF-8 bytes.
@@ -100,9 +100,9 @@ PowerShell Scripts
 ### Date and time
 
 - **[Add-TimeSpan.ps1](Add-TimeSpan.ps1)**: Adds a timespan to DateTime values.
-- :up: **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1)**: Parses a Timespan from a ISO8601 duration string.
+- **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1)**: Parses a Timespan from a ISO8601 duration string.
 - **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
-- :up: **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1)**: Formats a datetime as a LogParser literal.
+- **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1)**: Formats a datetime as a LogParser literal.
 - **[Format-Date.ps1](Format-Date.ps1)**: Returns a date/time as a named format.
 - **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1)**: Returns a date and time converted to the French Republican Calendar.
 - **[Show-Time.ps1](Show-Time.ps1)**: Displays a formatted date using powerline font characters.
@@ -144,7 +144,7 @@ PowerShell Scripts
 
 ### Git and GitHub
 
-- :up: **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
+- **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1)**: Gets the SHA-1 hash of the first commit of the current repo.
 - **[Get-GitHubRepoChildItem.ps1](Get-GitHubRepoChildItem.ps1)**: Adds any missing topics based on repo content.
@@ -154,8 +154,8 @@ PowerShell Scripts
 
 ### HTTP
 
-- :up: **[ConvertTo-BasicAuthentication.ps1](ConvertTo-BasicAuthentication.ps1)**: Produces a basic authentication header string from a credential.
-- :up: **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1)**: Creates multipart/form-data to send as a request body.
+- **[ConvertTo-BasicAuthentication.ps1](ConvertTo-BasicAuthentication.ps1)**: Produces a basic authentication header string from a credential.
+- **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1)**: Creates multipart/form-data to send as a request body.
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1)**: Returns the content security policy at from the given URL.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
 - **[Save-WebRequest.ps1](Save-WebRequest.ps1)**: Downloads a given URL to a file, automatically determining the filename.
@@ -164,7 +164,7 @@ PowerShell Scripts
 ### Json
 
 - **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
-- :up: **[Set-JsonProperty.ps1](Set-JsonProperty.ps1)**: Sets a property of arbitrary depth in a JSON string.
+- **[Set-JsonProperty.ps1](Set-JsonProperty.ps1)**: Sets a property of arbitrary depth in a JSON string.
 
 ### Packages and libraries
 
@@ -195,7 +195,7 @@ PowerShell Scripts
 - **[Test-Administrator.ps1](Test-Administrator.ps1)**: Checks whether the current session has administrator privileges.
 - **[Test-Interactive.ps1](Test-Interactive.ps1)**: Determines whether both the user and process are interactive.
 - **[Test-Range.ps1](Test-Range.ps1)**: Returns true from an initial condition until a terminating condition; a latching test.
-- :up: **[Test-Variable.ps1](Test-Variable.ps1)**: Indicates whether a variable has been defined.
+- **[Test-Variable.ps1](Test-Variable.ps1)**: Indicates whether a variable has been defined.
 - **[Use-ProgressView.ps1](Use-ProgressView.ps1)**: Sets the progress bar display view.
 - **[Use-ReasonableDefaults.ps1](Use-ReasonableDefaults.ps1)**: Sets certain cmdlet parameter defaults to rational, useful values.
 - **[Write-Info.ps1](Write-Info.ps1)**: Writes to the information stream, with color support and more.
@@ -221,7 +221,7 @@ PowerShell Scripts
 
 ### Scripts
 
-- **[New-PesterTests.ps1](New-PesterTests.ps1)**: Creates a new Pester testing script from a script's examples and parameter sets.
+- :up: **[New-PesterTests.ps1](New-PesterTests.ps1)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-Script.ps1](New-Script.ps1)**: Creates a simple boilerplate script.
 - **[Optimize-Help.ps1](Optimize-Help.ps1)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
 - **[Rename-Script.ps1](Rename-Script.ps1)**: Renames all instances of a script, and updates any usage of it.
@@ -246,7 +246,7 @@ PowerShell Scripts
 - **[Find-InstalledPrograms.ps1](Find-InstalledPrograms.ps1)**: Searches installed programs.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1)**: Collects some useful system hardware and operating system details via CIM.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1)**: Retrieves the a summary from the Chocolatey log.
-- :up: **[Update-Everything.ps1](Update-Everything.ps1)**: Updates everything it can on the system.
+- **[Update-Everything.ps1](Update-Everything.ps1)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1)**: Switch the Java version for the current process by modifying environment variables.
 
 ### Unicode
@@ -269,7 +269,7 @@ PowerShell Scripts
 
 - **[Compare-Xml.ps1](Compare-Xml.ps1)**: Compares two XML documents and returns the differences.
 - **[Convert-Xml.ps1](Convert-Xml.ps1)**: Transform XML using an XSLT template.
-- :up: **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1)**: Parse escaped XML into XML and serialize it.
+- **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1)**: Parse escaped XML into XML and serialize it.
 - **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1)**: Converts named nodes of an element to properties of a PSObject, recursively.
 - **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1)**: Serializes complex content into XML elements.
 - **[Format-Xml.ps1](Format-Xml.ps1)**: Pretty-print XML.
@@ -291,7 +291,7 @@ PowerShell Scripts
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-Dns.ps1](Get-Dns.ps1)**: Looks up DNS info, given a hostname or address.
-- :up: **[Get-IisLog.ps1](Get-IisLog.ps1)**: Easily query IIS logs.
+- **[Get-IisLog.ps1](Get-IisLog.ps1)**: Easily query IIS logs.
 - **[Get-PocketArticles.ps1](Get-PocketArticles.ps1)**: Retrieves a list of saved articles from a Pocket account.
 - **[Get-RandomBytes.ps1](Get-RandomBytes.ps1)**: Returns random bytes.
 - **[Get-Todos.ps1](Get-Todos.ps1)**: Returns the TODOs for the current git repo, which can help document technical debt.
@@ -312,8 +312,8 @@ F# Scripts
 
 Office VBA Scripts
 ------------------
-- **[OutlookExpireTag.vba](OutlookExpireTag.vba)**: Too many emails remain beyond their period of relevance: daily personnel schedule changes, found item notices, office food notices, server reboot notices, weather/traffic warnings, &c. This Outlook script will allow specifying an expiration date as a hashtag in the subject of outgoing emails, since Outlook does such a good job of hiding the UI for that field. -BL
-- **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work)
-- **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work)
+- **[OutlookExpireTag.vba](OutlookExpireTag.vba)**: Too many emails remain beyond their period of relevance: daily personnel schedule changes, found item notices, office food notices, server reboot notices, weather/traffic warnings, &c. This Outlook script will allow specifying an expiration date as a hashtag in the subject of outgoing emails, since Outlook does such a good job of hiding the UI for that field. -BL 
+- **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
+- **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 02/01/2023 21:04:37 -->
+<!-- generated 02/11/2023 13:14:36 -->
