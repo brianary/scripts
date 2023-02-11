@@ -5,9 +5,7 @@ Tests Change from managing various packages with Chocolatey to WinGet.
 
 Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Convert-ChocolateyToWinget.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Change from managing various packages with Chocolatey to WinGet' `

@@ -5,9 +5,7 @@ Tests parsing a Timespan from a ISO8601 duration string.
 
 Describe 'ConvertFrom-Duration' -Tag ConvertFrom-Duration {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir ConvertFrom-Duration.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Parses a Timespan from a ISO8601 duration string' `

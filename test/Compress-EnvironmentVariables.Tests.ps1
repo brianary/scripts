@@ -5,9 +5,7 @@ Tests replacing each of the longest matching parts of a string with an embedded 
 
 Describe 'Compress-EnvironmentVariables' -Tag Compress-EnvironmentVariables {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Compress-EnvironmentVariables.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Replaces each of the longest matching parts of a string with an embedded environment variable with that value' `

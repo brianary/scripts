@@ -5,9 +5,7 @@ Tests using OpenSSH to generate a key and connect it to an ssh server.
 
 Describe 'Connect-SshKey' -Tag Connect-SshKey {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Connect-SshKey.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	BeforeEach {

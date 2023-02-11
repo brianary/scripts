@@ -5,9 +5,7 @@ Tests converting a CimInstance object to a PSObject.
 
 Describe 'ConvertFrom-CimInstance' -Tag ConvertFrom-CimInstance {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir ConvertFrom-CimInstance.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Convert a CimInstance object to a PSObject' `

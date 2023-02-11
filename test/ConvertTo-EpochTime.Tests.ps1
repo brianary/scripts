@@ -5,9 +5,7 @@ Tests converting a DateTime value into an integer Unix (POSIX) time, seconds sin
 
 Describe 'ConvertTo-EpochTime' -Tag ConvertTo-EpochTime {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir ConvertTo-EpochTime.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970' -Tag Example {

@@ -5,9 +5,7 @@ Tests converting a string of hexadecimal digits into a byte array.
 
 Describe 'ConvertFrom-Hex' -Tag ConvertFrom-Hex {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir ConvertFrom-Hex.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Convert a string of hexadecimal digits into a byte array' -Tag ConvertFromHex,Convert,ConvertFrom,Hex {

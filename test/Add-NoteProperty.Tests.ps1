@@ -5,9 +5,7 @@ Tests adding a NoteProperty to a PSObject, calculating the value with the object
 
 Describe 'Add-NoteProperty' -Tag Add-NoteProperty {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Add-NoteProperty.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Add a calculated property value' -Tag AddNoteProperty,Add,NoteProperty {

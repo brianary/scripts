@@ -5,9 +5,7 @@ Tests adding a VS Code MSSQL database connection to the repo.
 
 Describe 'Add-VsCodeDatabaseConnection' -Tag Add-VsCodeDatabaseConnection {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Add-VsCodeDatabaseConnection.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 		if(!(git config --global user.email)) {git config --global user.email "test@example.com"}
 		if(!(git config --global user.name)) {git config --global user.name "Test User"}

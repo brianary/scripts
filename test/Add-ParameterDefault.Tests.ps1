@@ -5,9 +5,7 @@ Tests appending or creating a value to use for the specified cmdlet parameter to
 
 Describe 'Add-ParameterDefault' -Tag Add-ParameterDefault {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Add-ParameterDefault.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.' `

@@ -5,9 +5,7 @@ Tests producing a basic authentication header string from a credential.
 
 Describe 'ConvertTo-BasicAuthentication' -Tag ConvertTo-BasicAuthentication {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir ConvertTo-BasicAuthentication.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Produces a basic authentication header string from a credential' `

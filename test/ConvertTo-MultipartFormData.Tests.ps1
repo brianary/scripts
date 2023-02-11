@@ -6,9 +6,7 @@ Tests creating multipart/form-data to send as a request body.
 $datadir = Join-Path $PSScriptRoot .. 'test','data'
 Describe 'ConvertTo-MultipartFormData' -Tag ConvertTo-MultipartFormData {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir ConvertTo-MultipartFormData.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Creates multipart/form-data to send as a request body' `

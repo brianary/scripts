@@ -5,9 +5,7 @@ Tests formattting a datetime as a LogParser literal.
 
 Describe 'ConvertTo-LogParserTimestamp' -Tag ConvertTo-LogParserTimestamp {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir ConvertTo-LogParserTimestamp.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Formats a datetime as a LogParser literal' `

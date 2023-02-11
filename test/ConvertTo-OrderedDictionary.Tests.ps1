@@ -5,9 +5,7 @@ Tests converting an object to an ordered dictionary of properties and values.
 
 Describe 'ConvertTo-OrderedDictionary' -Tag ConvertTo-OrderedDictionary {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir ConvertTo-OrderedDictionary.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Converts an object to an ordered dictionary of properties and values.' `

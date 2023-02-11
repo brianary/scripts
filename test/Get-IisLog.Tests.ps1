@@ -12,10 +12,8 @@ try
 catch {Write-Warning 'Could not install LogParser'; $Global:noLogParser = $true}
 Describe 'Get-IisLog' -Tag Get-IisLog {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		$datadir = Join-Path $PSScriptRoot .. 'test','data'
-		$ScriptName = Join-Path $scriptsdir Get-IisLog.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Query log directory' -Tag GetIisLog,Get,IisLog,IisLogDirectory,LogParser {

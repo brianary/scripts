@@ -195,10 +195,13 @@ Process
 	elseif([int],[long],[byte],[decimal],[double],[float],[short],[sbyte],[uint16],[uint32],[uint64],[bigint] -contains $Value.GetType())
 	{
 		$number,$unit = $Value,''
-		for($magnitude = 1LKB; $magnitude -le 1PB -and !($Value % $magnitude); $magnitude *= 1LKB)
+		if($number -ge 1KB)
 		{
-			$number = $Value / $magnitude
-			$unit = $units[$magnitude]
+			for($magnitude = 1LKB; $magnitude -le 1PB -and !($Value % $magnitude); $magnitude *= 1LKB)
+			{
+				$number = $Value / $magnitude
+				$unit = $units[$magnitude]
+			}
 		}
 		$suffix,$prefix =
 			if($Value -is [int]) {}

@@ -5,10 +5,8 @@ Tests Converts a DataRow object to a PSObject, Hashtable, or single value.
 
 Describe 'ConvertFrom-DataRow' -Tag ConvertFrom-DataRow {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		$datadir = Join-Path $PSScriptRoot .. 'test','data'
-		$ScriptName = Join-Path $scriptsdir ConvertFrom-DataRow.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Converts a DataRow object to a PSObject, Hashtable, or single value' `

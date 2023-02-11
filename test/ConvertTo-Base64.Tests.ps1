@@ -5,9 +5,7 @@ Tests converting bytes or text to base64-encoded text.
 
 Describe 'ConvertTo-Base64' -Tag ConvertTo-Base64 {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir ConvertTo-Base64.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Converts bytes or text to base64-encoded text.' -Tag ConvertToBase64,Convert,ConvertTo,Base64 {

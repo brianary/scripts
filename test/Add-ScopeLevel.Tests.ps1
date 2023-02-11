@@ -5,9 +5,7 @@ Tests conversion of a scope level to account for another call stack level.
 
 Describe 'Add-ScopeLevel' -Tag Add-ScopeLevel {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Add-ScopeLevel.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Convert a scope level to account for another call stack level.' -Tag AddScopeLevel,Add,ScopeLevel {

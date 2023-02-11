@@ -5,10 +5,8 @@ Tests the script that transforms objects into iCalendar data.
 
 Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep,$datefmt = (Split-Path $PSScriptRoot),[io.path]::PathSeparator,
 			([cultureinfo]::CurrentCulture.DateTimeFormat.ShortDatePattern -replace '(?-i)\b([Md])\b','$1$1')
-		$ScriptName = Join-Path $scriptsdir ConvertTo-ICalendar.ps1
 		Write-Verbose "using date format '$datefmt' => '$(Get-Date -f $datefmt)'"
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}

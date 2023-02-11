@@ -5,11 +5,9 @@ Tests transforming XML using an XSLT template.
 
 Describe 'Convert-Xml' -Tag Convert-Xml {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		if(!(Get-Module -List SelectXmlExtensions)) {Install-Module SelectXmlExtensions -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		$datadir = Join-Path $PSScriptRoot .. 'test','data'
-		$ScriptName = Join-Path $scriptsdir Convert-Xml.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Transform XML using an XSLT template' -Tag ConvertXml,Convert,Xml,Xslt {

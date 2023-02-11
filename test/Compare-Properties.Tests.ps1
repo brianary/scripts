@@ -5,9 +5,7 @@ Tests comparing the properties of two objects.
 
 Describe 'Compare-Properties' -Tag Compare-Properties {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Compare-Properties.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Compares the properties of two objects' -Tag CompareProperties,Compare,Properties {

@@ -5,9 +5,7 @@ Tests adding named capture group values as note properties to Select-String Matc
 
 Describe 'Add-CapturesToMatches' -Tag Add-CapturesToMatches,Select-Xml {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Add-CapturesToMatches.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Add to regex selection' -Tag AddCapturesToMatches,Add,Captures,Xml {

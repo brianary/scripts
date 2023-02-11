@@ -5,10 +5,8 @@ Tests Converts named nodes of an element to properties of a PSObject, recursivel
 
 Describe 'ConvertFrom-XmlElement' -Tag ConvertFrom-XmlElement {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		$datadir = Join-Path $PSScriptRoot .. 'test','data'
-		$ScriptName = Join-Path $scriptsdir ConvertFrom-XmlElement.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Converts named nodes of an element to properties of a PSObject, recursively' `

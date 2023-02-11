@@ -5,9 +5,7 @@ Tests exporting the local list of Scheduled Tasks into a single XML file.
 
 Describe 'Backup-SchTasks' -Tag Backup-SchTasks {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Backup-SchTasks.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 		Register-ScheduledTask -TaskName x -Description 'This is a test.' `
 			-Action (New-ScheduledTaskAction -Execute pwsh -Argument 1) `

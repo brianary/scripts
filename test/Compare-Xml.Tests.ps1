@@ -5,9 +5,7 @@ Tests Compares two XML documents and returns the differences.
 
 Describe 'Compare-Xml' -Tag Compare-Xml {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Compare-Xml.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Compares two XML documents and returns the differences as XSLT' -Tag CompareXml,Compare,Xml {

@@ -6,9 +6,7 @@ Tests parsing TSV clipboard data into HTML table data which is copied back to th
 $sixspaces = New-Object string ' ',6
 Describe 'Convert-ClipboardTsvToHtml' -Tag Convert-ClipboardTsvToHtml {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Convert-ClipboardTsvToHtml.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Parses TSV clipboard data into HTML table data which is copied back to the clipboard' `

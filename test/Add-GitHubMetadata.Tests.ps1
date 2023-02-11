@@ -6,9 +6,7 @@ Tests Adds GitHub Linguist overrides to a repo's .gitattributes.
 Describe 'Add-GitHubMetadata' -Tag Add-GitHubMetadata {
 	BeforeAll {
 		if(!(Get-Module -List Detextive)) {Install-Module Detextive -Force}
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Add-GitHubMetadata.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 		if(!(git config --global user.email)) {git config --global user.email "test@example.com"}
 		if(!(git config --global user.name)) {git config --global user.name "Test User"}

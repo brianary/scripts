@@ -5,9 +5,7 @@ Tests adding a dynamic parameter to a DynamicParam object.
 
 Describe 'Add-DynamicParam' -Tag Add-DynamicParam {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Add-DynamicParam.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Adding parameters' -Tag AddDynamicParam,Add,'DynamicParam' {

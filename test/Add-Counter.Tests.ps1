@@ -5,9 +5,7 @@ Tests adding an incrementing integer property to each pipeline object.
 
 Describe 'Add-Counter' -Tag Add-Counter {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$ScriptName = Join-Path $scriptsdir Add-Counter.ps1
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Adds a counter property' -Tag AddCounter,Add,Counter {
