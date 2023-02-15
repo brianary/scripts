@@ -8,7 +8,7 @@ System.Management.Automation.PSCredential entered by the user, potentially loade
 .NOTES
 You'll need to have a registered secret vault.
 
-Register-SecretVault Microsoft.PowerShell.SecretStore -name $VaultName [-DefaultVault]
+Register-SecretVault Microsoft.PowerShell.SecretStore -Name $VaultName [-DefaultVault]
 
 You can control whether the vault prompts for a password using Set-SecretStoreConfiguration
 
