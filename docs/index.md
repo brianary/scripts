@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2220_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2198_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -51,7 +51,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Credential
 
-- **[Get-CachedCredential.ps1](Get-CachedCredential.ps1.md)**: Return a credential from secure storage, or prompt the user for it if not found.
+- &#x1F195; **[Export-SecretVault.ps1](Export-SecretVault.ps1.md)**: Exports secret vault content.
+- &#x1F199; **[Get-CachedCredential.ps1](Get-CachedCredential.ps1.md)**: Return a credential from secure storage, or prompt the user for it if not found.
+- &#x1F195; **[Import-SecretVault.ps1](Import-SecretVault.ps1.md)**: Imports secrets into secret vaults.
 - **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1.md)**: Removes a credential from secure storage.
 
 ### Data encoding
@@ -236,6 +238,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### System and updates
 
 - **[Convert-ChocolateyToWinget.ps1](Convert-ChocolateyToWinget.ps1.md)**: Change from managing various packages with Chocolatey to WinGet.
+- &#x1F195; **[Export-InstalledPackages.ps1](Export-InstalledPackages.ps1.md)**: Exports the list of packages installed by various tools.
 - **[Find-InstalledPrograms.ps1](Find-InstalledPrograms.ps1.md)**: Searches installed programs.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1.md)**: Retrieves the a summary from the Chocolatey log.

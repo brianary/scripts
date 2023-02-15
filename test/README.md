@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='182'>182 &#x2030;</meter> Scripts repo (187) &#x1F4C5; 196 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='179'>179 &#x2030;</meter> Scripts repo (190) &#x1F4C5; 196 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 124 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 124 days</summary>
 
@@ -85,7 +85,7 @@ Script Tests
 - &#x2716;&#xFE0F; Disable-AnsiColor.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started E (7) </summary>
+<li><details><summary>not started E (9) </summary>
 <ul><li><details><summary>not started Enable (1) </summary>
 
 - &#x2716;&#xFE0F; Enable-AnsiColor.ps1
@@ -96,12 +96,14 @@ Script Tests
 - &#x2716;&#xFE0F; Expand-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary>not started Export (5) </summary>
+<li><details><summary>not started Export (7) </summary>
 
 - &#x2716;&#xFE0F; Export-DatabaseObjectScript.ps1
 - &#x2716;&#xFE0F; Export-DatabaseScripts.ps1
+- &#x2716;&#xFE0F; Export-InstalledPackages.ps1
 - &#x2716;&#xFE0F; Export-MermaidER.ps1
 - &#x2716;&#xFE0F; Export-Readme.ps1
+- &#x2716;&#xFE0F; Export-SecretVault.ps1
 - &#x2716;&#xFE0F; Export-TableMerge.ps1
 
 </details></li></ul></details></li>
@@ -180,10 +182,11 @@ Script Tests
 - &#x2716;&#xFE0F; Hide-Command.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started I (5) </summary>
-<ul><li><details><summary>not started Import (3) </summary>
+<li><details><summary>not started I (6) </summary>
+<ul><li><details><summary>not started Import (4) </summary>
 
 - &#x2716;&#xFE0F; Import-ClipboardTsv.ps1
+- &#x2716;&#xFE0F; Import-SecretVault.ps1
 - &#x2716;&#xFE0F; Import-Variables.ps1
 - &#x2716;&#xFE0F; Import-VsCodeDatabaseConnections.ps1
 
