@@ -2,6 +2,13 @@
 .SYNOPSIS
 Exports secret vault content.
 
+.OUTPUTS
+System.Management.Automation.PSObject with these fields:
+* Name: The secret name, used to identify the secret.
+* Type: The data type of the secret.
+* VaultName: Which vault the secret is stored in.
+* Metadata: A simple hash (string to string/int/datetime) of extra secret context details.
+
 .FUNCTIONALITY
 Credential
 

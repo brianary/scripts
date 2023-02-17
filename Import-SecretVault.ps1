@@ -6,6 +6,13 @@ Imports secrets into secret vaults.
 This is likely the configuration you'll need to run this:
 Set-SecretStoreConfiguration -Scope CurrentUser -Authentication None -Interaction None
 
+.INPUTS
+System.Management.Automation.PSObject with these fields:
+* Name: The secret name, used to identify the secret.
+* Type: The data type of the secret.
+* VaultName: Which vault the secret is stored in.
+* Metadata: A simple hash (string to string/int/datetime) of extra secret context details.
+
 .FUNCTIONALITY
 Credential
 
@@ -51,6 +58,7 @@ Process
 		Register-SecretVault -Name $Vault -ModuleName Microsoft.PowerShell.SecretStore
 	}
 	$meta = @($Metadata.PSObject.Properties).Count ? @{Metadata=ConvertTo-OrderedDictionary.ps1 $Metadata} : @{}
+	foreach($k in $meta.Keys) {if($meta[$k] -is [long]){$meta[$k] = [int]$meta[$k]}}
 	switch($Type)
 	{
 		ByteArray {Set-Secret $Name ([Convert]::FromHexString($Value)) -Vault $Vault @meta}
