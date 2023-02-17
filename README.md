@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2198_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2186_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -113,7 +113,7 @@ PowerShell Scripts
 
 ### Dictionary
 
-- :up: **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1)**: Converts an object to an ordered dictionary of properties and values.
+- **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1)**: Converts an object to an ordered dictionary of properties and values.
 - **[Join-Keys.ps1](Join-Keys.ps1)**: Combines dictionaries together into a single dictionary.
 - **[Remove-NullValues.ps1](Remove-NullValues.ps1)**: Removes dictionary entries with null vaules.
 - **[Split-Keys.ps1](Split-Keys.ps1)**: Clones a dictionary keeping only the specified keys.
@@ -245,9 +245,11 @@ PowerShell Scripts
 ### System and updates
 
 - **[Convert-ChocolateyToWinget.ps1](Convert-ChocolateyToWinget.ps1)**: Change from managing various packages with Chocolatey to WinGet.
+- :new: **[Export-EdgeKeywords.ps1](Export-EdgeKeywords.ps1)**: Returns the configured search keywords from an Edge SQLite file.
 - :new: **[Export-InstalledPackages.ps1](Export-InstalledPackages.ps1)**: Exports the list of packages installed by various tools.
 - **[Find-InstalledPrograms.ps1](Find-InstalledPrograms.ps1)**: Searches installed programs.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1)**: Collects some useful system hardware and operating system details via CIM.
+- :new: **[Import-EdgeKeywords.ps1](Import-EdgeKeywords.ps1)**: Adds search keywords to an Edge SQLite profile configuration.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1)**: Retrieves the a summary from the Chocolatey log.
 - **[Update-Everything.ps1](Update-Everything.ps1)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1)**: Switch the Java version for the current process by modifying environment variables.
@@ -303,6 +305,7 @@ PowerShell Scripts
 - **[Measure-TextFile.ps1](Measure-TextFile.ps1)**: Counts each type of indent and line ending.
 - **[New-RandomVehicle.ps1](New-RandomVehicle.ps1)**: Generates random vehicle details with a valid VIN.
 - **[Optimize-Path.ps1](Optimize-Path.ps1)**: Sorts, prunes, and normalizes both user and system Path entries.
+- :new: **[Repair-AppxPackages.ps1](Repair-AppxPackages.ps1)**: Re-registers all installed Appx packages.
 - **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1)**: Saves enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1)**: Scan sites using Mozilla's Observatory.
@@ -319,4 +322,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 02/14/2023 22:04:50 -->
+<!-- generated 02/16/2023 22:06:52 -->

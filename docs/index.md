@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2198_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2186_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -106,7 +106,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Dictionary
 
-- &#x1F199; **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1.md)**: Converts an object to an ordered dictionary of properties and values.
+- **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1.md)**: Converts an object to an ordered dictionary of properties and values.
 - **[Join-Keys.ps1](Join-Keys.ps1.md)**: Combines dictionaries together into a single dictionary.
 - **[Remove-NullValues.ps1](Remove-NullValues.ps1.md)**: Removes dictionary entries with null vaules.
 - **[Split-Keys.ps1](Split-Keys.ps1.md)**: Clones a dictionary keeping only the specified keys.
@@ -238,9 +238,11 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### System and updates
 
 - **[Convert-ChocolateyToWinget.ps1](Convert-ChocolateyToWinget.ps1.md)**: Change from managing various packages with Chocolatey to WinGet.
+- &#x1F195; **[Export-EdgeKeywords.ps1](Export-EdgeKeywords.ps1.md)**: Returns the configured search keywords from an Edge SQLite file.
 - &#x1F195; **[Export-InstalledPackages.ps1](Export-InstalledPackages.ps1.md)**: Exports the list of packages installed by various tools.
 - **[Find-InstalledPrograms.ps1](Find-InstalledPrograms.ps1.md)**: Searches installed programs.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
+- &#x1F195; **[Import-EdgeKeywords.ps1](Import-EdgeKeywords.ps1.md)**: Adds search keywords to an Edge SQLite profile configuration.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1.md)**: Retrieves the a summary from the Chocolatey log.
 - **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1.md)**: Switch the Java version for the current process by modifying environment variables.
@@ -296,6 +298,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Measure-TextFile.ps1](Measure-TextFile.ps1.md)**: Counts each type of indent and line ending.
 - **[New-RandomVehicle.ps1](New-RandomVehicle.ps1.md)**: Generates random vehicle details with a valid VIN.
 - **[Optimize-Path.ps1](Optimize-Path.ps1.md)**: Sorts, prunes, and normalizes both user and system Path entries.
+- &#x1F195; **[Repair-AppxPackages.ps1](Repair-AppxPackages.ps1.md)**: Re-registers all installed Appx packages.
 - **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1.md)**: Saves enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1.md)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1.md)**: Scan sites using Mozilla's Observatory.

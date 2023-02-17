@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='179'>179 &#x2030;</meter> Scripts repo (190) &#x1F4C5; 196 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='176'>176 &#x2030;</meter> Scripts repo (193) &#x1F4C5; 196 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 124 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 124 days</summary>
 
@@ -85,7 +85,7 @@ Script Tests
 - &#x2716;&#xFE0F; Disable-AnsiColor.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started E (9) </summary>
+<li><details><summary>not started E (10) </summary>
 <ul><li><details><summary>not started Enable (1) </summary>
 
 - &#x2716;&#xFE0F; Enable-AnsiColor.ps1
@@ -96,10 +96,11 @@ Script Tests
 - &#x2716;&#xFE0F; Expand-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary>not started Export (7) </summary>
+<li><details><summary>not started Export (8) </summary>
 
 - &#x2716;&#xFE0F; Export-DatabaseObjectScript.ps1
 - &#x2716;&#xFE0F; Export-DatabaseScripts.ps1
+- &#x2716;&#xFE0F; Export-EdgeKeywords.ps1
 - &#x2716;&#xFE0F; Export-InstalledPackages.ps1
 - &#x2716;&#xFE0F; Export-MermaidER.ps1
 - &#x2716;&#xFE0F; Export-Readme.ps1
@@ -182,10 +183,11 @@ Script Tests
 - &#x2716;&#xFE0F; Hide-Command.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started I (6) </summary>
-<ul><li><details><summary>not started Import (4) </summary>
+<li><details><summary>not started I (7) </summary>
+<ul><li><details><summary>not started Import (5) </summary>
 
 - &#x2716;&#xFE0F; Import-ClipboardTsv.ps1
+- &#x2716;&#xFE0F; Import-EdgeKeywords.ps1
 - &#x2716;&#xFE0F; Import-SecretVault.ps1
 - &#x2716;&#xFE0F; Import-Variables.ps1
 - &#x2716;&#xFE0F; Import-VsCodeDatabaseConnections.ps1
@@ -252,7 +254,7 @@ Script Tests
 - &#x2716;&#xFE0F; Push-WorkspaceLocation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started R (14) </summary>
+<li><details><summary>not started R (15) </summary>
 <ul><li><details><summary>not started Read (2) </summary>
 
 - &#x2716;&#xFE0F; Read-ChocolateySummary.ps1
@@ -273,8 +275,9 @@ Script Tests
 - &#x2716;&#xFE0F; Rename-Script.ps1
 
 </details></li>
-<li><details><summary>not started Repair (3) </summary>
+<li><details><summary>not started Repair (4) </summary>
 
+- &#x2716;&#xFE0F; Repair-AppxPackages.ps1
 - &#x2716;&#xFE0F; Repair-DatabaseConstraintNames.ps1
 - &#x2716;&#xFE0F; Repair-DatabaseUntrustedConstraints.ps1
 - &#x2716;&#xFE0F; Repair-ScriptStyle.ps1
