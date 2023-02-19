@@ -13,7 +13,7 @@ Displays a string, showing nonprintable characters.
 ## SYNTAX
 
 ```
-Write-VisibleString.ps1 [-InputObject] <Object> [-AltColor <ConsoleColor>] [-AsSymbols] [<CommonParameters>]
+Write-VisibleString.ps1 [-InputObject] <Object> [-AsRunes] [-UseSymbols] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,23 +45,22 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -AltColor
-The color to use for nonprintable chars.
+### -AsRunes
+Parse Runes from the string rather than Chars.
 
 ```yaml
-Type: ConsoleColor
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
-Accepted values: Black, DarkBlue, DarkGreen, DarkCyan, DarkRed, DarkMagenta, DarkYellow, Gray, DarkGray, Blue, Green, Cyan, Red, Magenta, Yellow, White
 
 Required: False
 Position: Named
-Default value: DarkYellow
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AsSymbols
+### -UseSymbols
 Print control characters as control picture symbols rather than hex values.
 
 ```yaml
