@@ -78,22 +78,23 @@ By default, the default vault is used.
 Set-ParameterDefault.ps1 Invoke-RestMethod Method Post
 Set-ParameterDefault.ps1 Invoke-RestMethod ContentType application/json
 Set-ParameterDefault.ps1 Invoke-RestMethod Headers @{'X-Accept'='application/json'}
-$consumerKey = try{(New-Object PSCredential PocketApiConsumerKey,( $Vault ?
+$consumerKey = try{( $Vault ?
 	(Get-Secret PocketApiConsumerKey -Vault $Vault -ErrorAction Ignore) :
-	(Get-Secret PocketApiConsumerKey -ErrorAction Ignore) )).GetNetworkCredential().Password}
+	(Get-Secret PocketApiConsumerKey -ErrorAction Ignore) ) |
+	ConvertFrom-SecureString -AsPlainText}
 	catch{}
 if(!$consumerKey)
 {
 	$consumerKey = Get-Credential PocketApiConsumerKey -Message 'Pocket API consumer key'
 	$VaultOrDefault = if($Vault) {@{Vault=$Vault}} else {@{}}
 	Set-Secret PocketApiConsumerKey $consumerKey.Password @VaultOrDefault
-	$consumerKey = $consumerKey.GetNetworkCredential().Password
+	$consumerKey = $consumerKey.Password |ConvertFrom-SecureString -AsPlainText
 }
 $tokenfile = Join-Path ~ .pocket
 $token =
 	if(Test-Path $tokenfile -Type Leaf)
 	{
-		(New-Object pscredential pocket,(Get-Content $tokenfile |ConvertTo-SecureString)).GetNetworkCredential().Password
+		Get-Content $tokenfile |ConvertTo-SecureString |ConvertFrom-SecureString -AsPlainText
 	}
 	else
 	{

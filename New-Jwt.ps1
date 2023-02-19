@@ -59,7 +59,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM
 [ValidateScript({foreach($s in $_){if($s.Contains(':') -and !(Test-Uri.ps1 $s)){return $false}};return $true})]
 [ValidateCount(1,2147483647)][System.String[]] $Audience,
 # Additional claims to add to the body of the JWT.
-[hashtable] $Claims
+[hashtable] $Claims = @{}
 )
 
 function ConvertTo-JSON64($o) {ConvertTo-Base64.ps1 ([Text.Encoding]::UTF8.GetBytes((ConvertTo-Json $o -Compress))) -UriStyle}
@@ -71,7 +71,7 @@ function ConvertTo-NumericDate([datetime]$d)
 function ConvertFrom-NumericDate([int]$i)
 {
 	if(!$i) {return}
-	(New-Object datetime 1970,1,1,0,0,0,0,'Utc').AddSeconds($i).ToLocalTime()
+	(New-Object datetime 1970,1,1,0,0,0,([DateTimeKind]::Utc)).AddSeconds($i).ToLocalTime()
 }
 
 $Headers['alg'] = $Algorithm
@@ -81,7 +81,7 @@ if($IncludeIssuedAt) {$Body['iat'] = ConvertTo-NumericDate (Get-Date)}
 elseif($IssuedAt) {$Body['iat'] = ConvertTo-NumericDate $IssuedAt}
 if($ExpirationTime) {$Body['exp'] = ConvertTo-NumericDate $ExpirationTime}
 elseif($ExpiresAfter) {$Body['exp'] = ConvertTo-NumericDate ((Get-Date).Add($ExpiresAfter))}
-'iat','nbf','exp' |foreach {Set-Variable $_ $(if($Body.ContainsKey($_)){ConvertFrom-NumericDate $Body[$_]}else{'whenever'})}
+'iat','nbf','exp' |ForEach-Object {Set-Variable $_ $(if($Body.ContainsKey($_)){ConvertFrom-NumericDate $Body[$_]}else{'whenever'})}
 Write-Verbose "JWT issued $iat valid $nbf to $exp"
 if($JwtId) {$Body['jti'] = $JwtId}
 if($Issuer) {$Body['iss'] = $Issuer}
@@ -93,7 +93,7 @@ Write-Verbose "JWT body: $(ConvertTo-Json $Body -Compress)"
 $jwt = "$(ConvertTo-JSON64 $Headers).$(ConvertTo-JSON64 $Body)"
 Write-Verbose "Unsigned JWT: $jwt"
 $secred = New-Object pscredential 'secret',$Secret
-[byte[]]$secbytes = [Text.Encoding]::UTF8.GetBytes($secred.GetNetworkCredential().Password)
+[byte[]]$secbytes = [Text.Encoding]::UTF8.GetBytes(($secred.Password |ConvertFrom-SecureString -AsPlainText))
 $hash = New-Object "Security.Cryptography.$($Algorithm -replace '\AHS','HMACSHA')" (,$secbytes)
 $secbytes = $null
 Write-Verbose "Signing JWT with $($hash.GetType().Name)"

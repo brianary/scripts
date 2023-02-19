@@ -41,7 +41,7 @@ Process
     $body = ConvertFrom-Json $body
     [byte[]]$sign = ConvertFrom-Base64.ps1 $sign64 -UriStyle
     $secred = New-Object pscredential 'secret',$Secret
-    [byte[]]$secbytes = [Text.Encoding]::UTF8.GetBytes($secred.GetNetworkCredential().Password)
+    [byte[]]$secbytes = [Text.Encoding]::UTF8.GetBytes(($secred.Password |ConvertFrom-SecureString -AsPlainText))
     $hash = New-Object "Security.Cryptography.$($head.alg -replace '\AHS','HMACSHA')" (,$secbytes)
     if(Compare-Object $sign ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes("$head64.$body64"))))
     {Write-Verbose "JWT hashes do not match"; return $false}

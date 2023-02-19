@@ -31,11 +31,11 @@ Calls a REST method that requires Basic authentication on the first request (wit
 
 [CmdletBinding()][OutputType([string])] Param(
 # Specifies a user account to authenticate an HTTP request that only accepts Basic authentication.
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)]
+[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
 [PSCredential][Management.Automation.Credential()]$Credential
 )
 Process
 {
 	return 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(
-		$Credential.UserName+':'+$Credential.GetNetworkCredential().Password))
+		"$($Credential.UserName):$($Credential.Password |ConvertFrom-SecureString -AsPlainText)"))
 }

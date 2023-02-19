@@ -87,7 +87,7 @@ Begin
 	{
 		[byte[]] $salt = Get-RandomBytes.ps1 8
 		$hash = New-Object Security.Cryptography.Rfc2898DeriveBytes `
-			([Text.Encoding]::UTF8.GetBytes($Credential.GetNetworkCredential().Password)),$salt,
+			([Text.Encoding]::UTF8.GetBytes(($Credential.Password |ConvertFrom-SecureString -AsPlainText))),$salt,
 			(Get-Random 9999 -Minimum 1000)
 		$iterations = $hash.IterationCount
 		[byte[]] $salt = $hash.Salt
@@ -95,7 +95,7 @@ Begin
 		$hash.Dispose(); $hash = $null
 		$creduser = $Credential.UserName -replace "'","''"
 		"`$hash = New-Object Security.Cryptography.Rfc2898DeriveBytes ``"
-		"	([Text.Encoding]::UTF8.GetBytes((Get-Credential '$creduser').GetNetworkCredential().Password)),"
+		"	([Text.Encoding]::UTF8.GetBytes(((Get-Credential '$creduser').Password |ConvertFrom-SecureString -AsPlainText)),"
 		"	($($salt -join ',')),$iterations"
 		"[byte[]]`$key = `$hash.GetBytes(32)"
 		"`$hash.Dispose(); `$hash = `$null"

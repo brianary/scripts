@@ -58,7 +58,7 @@ foreach($task in ((Get-Content $Path -Raw) -replace '(?<=\A|>)\s*</?Tasks>\s*(?=
             if(!$credentials.ContainsKey($cred.UserName)) { $credentials[$cred.UserName] = $cred }
         }
         if($user -ne $cred.UserName) { Write-Verbose "Importing to run as $($cred.UserName)" }
-        schtasks /Create /RU $cred.UserName /RP $cred.GetNetworkCredential().Password /TN $name /XML "$name.xml"
+        schtasks /Create /RU $cred.UserName /RP ($cred.Password |ConvertFrom-SecureString -AsPlainText) /TN $name /XML "$name.xml"
     }
-    rm "$name.xml"
+    Remove-Item "$name.xml"
 }
