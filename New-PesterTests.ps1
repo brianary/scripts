@@ -104,7 +104,6 @@ Describe '$shortname' -Tag $shortname {
 	BeforeAll {
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		`$scriptsdir,`$sep = (Split-Path `$PSScriptRoot),[io.path]::PathSeparator
-		`$ScriptName = Join-Path `$scriptsdir $shortname.ps1
 		if(`$scriptsdir -notin (`$env:Path -split `$sep)) {`$env:Path += "`$sep`$scriptsdir"}
 	}
 	Context '$($Synopsis -replace "'","''")' -Tag Example {
