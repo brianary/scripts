@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2214_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2288_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -269,7 +269,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
 - **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1.md)**: Parse escaped XML into XML and serialize it.
 - **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1.md)**: Converts named nodes of an element to properties of a PSObject, recursively.
-- **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1.md)**: Serializes complex content into XML elements.
+- &#x1F199; **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1.md)**: Serializes complex content into XML elements.
 - **[Format-Xml.ps1](Format-Xml.ps1.md)**: Pretty-print XML.
 - **[Get-XmlNamespaces.ps1](Get-XmlNamespaces.ps1.md)**: Gets the namespaces from a document as a dictionary.
 - **[Merge-XmlSelections.ps1](Merge-XmlSelections.ps1.md)**: Builds an object using the named XPath selections as properties.
@@ -282,7 +282,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Other
 
 - **[Connect-SshKey.ps1](Connect-SshKey.ps1.md)**: Uses OpenSSH to generate a key and connect it to an ssh server.
-- **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1.md)**: Convert a number to a Roman numeral.
+- &#x1F199; **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1.md)**: Convert a number to a Roman numeral.
 - **[Copy-Html.ps1](Copy-Html.ps1.md)**: Copies objects as an HTML table.
 - **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
 - **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.

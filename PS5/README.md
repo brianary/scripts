@@ -42,4 +42,4 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Restart-HttpListener.ps1](Restart-HttpListener.ps1)**: Stops and restarts an HTTP listener.
 - **[Save-CertificatePermissions.ps1](Save-CertificatePermissions.ps1)**: Saves the permissions of found certificates to a file.
 
-<!-- generated 02/25/2023 12:42:29 -->
+<!-- generated 02/25/2023 14:41:40 -->

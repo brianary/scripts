@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='181'>181 &#x2030;</meter> Scripts repo (193) &#x1F4C5; 210 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='192'>192 &#x2030;</meter> Scripts repo (193) &#x1F4C5; 210 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 124 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 124 days</summary>
 
@@ -23,7 +23,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='852'>852 &#x2030;</meter> C (27) &#x1F4C5; 210 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='926'>926 &#x2030;</meter> C (27) &#x1F4C5; 210 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (2) &#x1F4C5; 63 days</summary>
 
 - &#x2714;&#xFE0F; Compare-Properties.ps1
@@ -58,7 +58,7 @@ Script Tests
 - &#x2714;&#xFE0F; ConvertFrom-XmlElement.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='818'>818 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 210 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 210 days</summary>
 
 - &#x2714;&#xFE0F; ConvertTo-Base64.ps1
 - &#x2714;&#xFE0F; ConvertTo-BasicAuthentication.ps1
@@ -69,8 +69,8 @@ Script Tests
 - &#x2714;&#xFE0F; ConvertTo-OrderedDictionary.ps1
 - &#x2714;&#xFE0F; ConvertTo-PowerShell.ps1
 - &#x2714;&#xFE0F; ConvertTo-RomanNumeral.ps1
-- &#x2716;&#xFE0F; ConvertTo-SafeEntities.ps1
-- &#x2716;&#xFE0F; ConvertTo-XmlElements.ps1
+- &#x2714;&#xFE0F; ConvertTo-SafeEntities.ps1
+- &#x2714;&#xFE0F; ConvertTo-XmlElements.ps1
 
 </details></li>
 <li><details><summary>not started Copy (2) </summary>
