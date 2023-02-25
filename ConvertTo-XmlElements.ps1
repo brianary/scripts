@@ -23,16 +23,10 @@ ConvertTo-XmlElements.ps1 @{html=@{body=@{p='Some text.'}}}
 <UserName>username</UserName>
 
 .EXAMPLE
-Get-ChildItem *.txt |ConvertTo-XmlElements.ps1
+'{"item": {"name": "Test", "id": 1 } }' |ConvertFrom-Json |ConvertTo-XmlElements.ps1
 
-<PSPath>Microsoft.PowerShell.Core\FileSystem::C:\temp\test.txt</PSPath>
-<PSParentPath>Microsoft.PowerShell.Core\FileSystem::C:\scripts</PSParentPath>
-<PSChildName>test.txt</PSChildName>
-<PSDrive></PSDrive>
-<PSProvider></PSProvider>
-<VersionInfo><FileVersionRaw></FileVersionRaw>
-<ProductVersionRaw></ProductVersionRaw>
-…
+<item><id>1</id>
+<name>Test</name></item>
 #>
 
 #Requires -Version 3
@@ -47,6 +41,7 @@ Each hash value or object property value may itself be a hash or object or XML e
 Begin {$Script:OFS = "`n"}
 Process
 {
+	Write-Debug "value: $Value ($( $null -eq $Value ? 'null' : $Value.GetType().FullName )) [$((Get-PSCallStack).Count)]"
     if($null -eq $Value) {}
     elseif($Value -is [Array])
     { $Value |ConvertTo-XmlElements.ps1 }
@@ -57,14 +52,14 @@ Process
     elseif($Value -is [string] -or $Value -is [char])
     { [Net.WebUtility]::HtmlEncode($Value) }
     elseif($Value -is [Hashtable] -or $Value -is [Collections.Specialized.OrderedDictionary])
-    { $Value.Keys |? {$_ -match '^\w+$'} |% {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"} }
+    { $Value.Keys |Where-Object {$_ -match '^\w+$'} |ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"} }
     elseif($Value -is [PSObject])
     {
         $Value |
             Get-Member -MemberType Properties |
-            ? Name -NotLike '\W' |
-            % Name |
-            % {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"}
+            Where-Object Name -NotLike '\W' |
+            ForEach-Object Name |
+            ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"}
     }
     elseif($Value -is [xml])
     { $Value.OuterXml }
@@ -72,8 +67,8 @@ Process
     {
         $Value |
             Get-Member -MemberType Properties |
-            ? Name -NotLike '\W' |
-            % Name |
-            % {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"}
+            Where-Object Name -NotLike '\W' |
+            ForEach-Object Name |
+            ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"}
     }
 }

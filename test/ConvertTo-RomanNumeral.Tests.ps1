@@ -54,7 +54,8 @@ Describe 'ConvertTo-RomanNumeral' -Tag ConvertTo-RomanNumeral {
 			@{ Value = 2022; Result = 'MMXXII' }
 		) {
 			Param([int] $Value, [string] $Result)
-			ConvertTo-RomanNumeral.ps1 $Value |Should -BeExactly $Result
+			ConvertTo-RomanNumeral.ps1 $Value |Should -BeExactly $Result -Because 'parameter should work'
+			$Value |ConvertTo-RomanNumeral.ps1 |Should -BeExactly $Result -Because 'pipeline should work'
 		}
 		It "Should convert '<Value>' to '<Result>' (Unicode)" -TestCases @(
 			@{ Value = 1; Result = 'Ⅰ' }
@@ -100,7 +101,8 @@ Describe 'ConvertTo-RomanNumeral' -Tag ConvertTo-RomanNumeral {
 			@{ Value = 2022; Result = 'ⅯⅯⅩⅩⅡ' }
 		) {
 			Param([int] $Value, [string] $Result)
-			ConvertTo-RomanNumeral.ps1 $Value -Unicode |Should -BeExactly $Result
+			ConvertTo-RomanNumeral.ps1 $Value -Unicode |Should -BeExactly $Result -Because 'parameter should work'
+			$Value |ConvertTo-RomanNumeral.ps1 -Unicode |Should -BeExactly $Result -Because 'pipeline should work'
 		}
 	}
 }

@@ -26,6 +26,10 @@ VIII
 #>
 
 #Requires -Version 3
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingPositionalParameters','',
+Justification='This function is reasonable to use positional parameters with.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments','',
+Justification='These variables are used by Get-Variable, which isn''t detected correctly.')]
 [CmdletBinding()][OutputType([string])] Param(
 # The numeric value to convert into a Roman numeral string.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][ValidateRange(1,3999)][int] $Value,
