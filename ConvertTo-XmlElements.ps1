@@ -41,34 +41,33 @@ Each hash value or object property value may itself be a hash or object or XML e
 Begin {$Script:OFS = "`n"}
 Process
 {
-	Write-Debug "value: $Value ($( $null -eq $Value ? 'null' : $Value.GetType().FullName )) [$((Get-PSCallStack).Count)]"
-    if($null -eq $Value) {}
-    elseif($Value -is [Array])
-    { $Value |ConvertTo-XmlElements.ps1 }
-    elseif([bool],[byte],[DateTimeOffset],[decimal],[double],[float],[guid],[int],[int16],[long],[sbyte],[timespan],[uint16],[uint32],[uint64] -contains $Value.GetType())
-    { [Xml.XmlConvert]::ToString($Value) }
-    elseif($Value -is [datetime])
-    { [Xml.XmlConvert]::ToString($Value,'yyyy-MM-dd\THH:mm:ss') }
-    elseif($Value -is [string] -or $Value -is [char])
-    { [Net.WebUtility]::HtmlEncode($Value) }
-    elseif($Value -is [Hashtable] -or $Value -is [Collections.Specialized.OrderedDictionary])
-    { $Value.Keys |Where-Object {$_ -match '^\w+$'} |ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"} }
-    elseif($Value -is [PSObject])
-    {
-        $Value |
-            Get-Member -MemberType Properties |
-            Where-Object Name -NotLike '\W' |
-            ForEach-Object Name |
-            ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"}
-    }
-    elseif($Value -is [xml])
-    { $Value.OuterXml }
-    else
-    {
-        $Value |
-            Get-Member -MemberType Properties |
-            Where-Object Name -NotLike '\W' |
-            ForEach-Object Name |
-            ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"}
-    }
+	if($null -eq $Value) {}
+	elseif($Value -is [Array])
+	{ $Value |ConvertTo-XmlElements.ps1 }
+	elseif([bool],[byte],[DateTimeOffset],[decimal],[double],[float],[guid],[int],[int16],[long],[sbyte],[timespan],[uint16],[uint32],[uint64] -contains $Value.GetType())
+	{ [Xml.XmlConvert]::ToString($Value) }
+	elseif($Value -is [datetime])
+	{ [Xml.XmlConvert]::ToString($Value,'yyyy-MM-dd\THH:mm:ss') }
+	elseif($Value -is [string] -or $Value -is [char])
+	{ [Net.WebUtility]::HtmlEncode($Value) }
+	elseif($Value -is [Hashtable] -or $Value -is [Collections.Specialized.OrderedDictionary])
+	{ $Value.Keys |Where-Object {$_ -match '^\w+$'} |ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"} }
+	elseif($Value -is [PSObject])
+	{
+		$Value |
+			Get-Member -MemberType Properties |
+			Where-Object Name -NotLike '\W' |
+			ForEach-Object Name |
+			ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"}
+	}
+	elseif($Value -is [xml])
+	{ $Value.OuterXml }
+	else
+	{
+		$Value |
+			Get-Member -MemberType Properties |
+			Where-Object Name -NotLike '\W' |
+			ForEach-Object Name |
+			ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"}
+	}
 }
