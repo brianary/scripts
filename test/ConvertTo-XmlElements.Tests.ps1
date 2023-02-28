@@ -14,9 +14,9 @@ Describe 'ConvertTo-XmlElements' -Tag ConvertTo-XmlElements {
 			@{ Value = @{html=@{body=@{p='Some text.'}}}
 				Result = '<html><body><p>Some text.</p></body></html>' }
 			@{ Value = [pscustomobject]@{UserName='username';Computer='COMPUTERNAME'}
-				Result = @('<Computer>COMPUTERNAME</Computer>','<UserName>username</UserName>') }
+				Result = @('<UserName>username</UserName>','<Computer>COMPUTERNAME</Computer>') }
 			@{ Value = '{"item": {"name": "Test", "id": 1 } }' |ConvertFrom-Json
-				Result = "<item><id>1</id>`n<name>Test</name></item>" }
+				Result = "<item><name>Test</name>`n<id>1</id></item>" }
 		) {
 			Param([psobject] $Value, [psobject] $Result)
 			ConvertTo-XmlElements.ps1 $Value |Should -BeExactly $Result -Because 'parameter should work'
