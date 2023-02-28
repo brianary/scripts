@@ -36,7 +36,13 @@ A hash or XML element or other object to be serialized as XML elements.
 
 Each hash value or object property value may itself be a hash or object or XML element.
 #>
-[Parameter(Position=0,ValueFromPipeline=$true)] $Value
+[Parameter(Position=0,ValueFromPipeline=$true)] $Value,
+<#
+Specifies how many levels of contained objects are included in the JSON representation.
+The value can be any number from 0 to 100. The default value is 2.
+ConvertTo-Json emits a warning if the number of levels in an input object exceeds this number.
+#>
+[ValidateRange('NonNegative')][int] $Depth = 3
 )
 Begin {$Script:OFS = "`n"}
 Process
@@ -51,23 +57,52 @@ Process
 	elseif($Value -is [string] -or $Value -is [char])
 	{ [Net.WebUtility]::HtmlEncode($Value) }
 	elseif($Value -is [Hashtable] -or $Value -is [Collections.Specialized.OrderedDictionary])
-	{ $Value.Keys |Where-Object {$_ -match '^\w+$'} |ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"} }
+	{
+		if($Depth -gt 1)
+		{
+			$Value.Keys |
+				ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
+				ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_ -Depth ($Depth-1))</$_>"}
+		}
+		else
+		{
+			$Value.Keys |
+				ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
+				ForEach-Object {"<$_>$($Value.$_)</$_>"}
+		}
+	}
 	elseif($Value -is [PSObject])
 	{
-		$Value |
-			Get-Member -MemberType Properties |
-			Where-Object Name -NotLike '\W' |
-			ForEach-Object Name |
-			ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"}
+		if($Depth -gt 1)
+		{
+			$Value.PSObject.Properties.Name |
+				ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
+				ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_ -Depth ($Depth-1))</$_>"}
+		}
+		else
+		{
+			$Value.PSObject.Properties.Name |
+				ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
+				ForEach-Object {"<$_>$($Value.$_)</$_>"}
+		}
 	}
 	elseif($Value -is [xml])
 	{ $Value.OuterXml }
 	else
 	{
-		$Value |
-			Get-Member -MemberType Properties |
-			Where-Object Name -NotLike '\W' |
-			ForEach-Object Name |
-			ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_)</$_>"}
+		if($Depth -gt 1)
+		{
+			$Value |
+				Get-Member -MemberType Properties |
+				ForEach-Object {$_.Name -replace '\A\W+','_' -replace '\W+','-'} |
+				ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_ -Depth ($Depth-1))</$_>"}
+		}
+		else
+		{
+			$Value |
+				Get-Member -MemberType Properties |
+				ForEach-Object {$_.Name -replace '\A\W+','_' -replace '\W+','-'} |
+				ForEach-Object {"<$_>$($Value.$_)</$_>"}
+		}
 	}
 }
