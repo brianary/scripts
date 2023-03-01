@@ -18,98 +18,89 @@ Database
 https://msdn.microsoft.com/library/system.data.common.dbproviderfactories.aspx
 
 .EXAMPLE
-New-DbProviderObject.ps1 SqlClient ConnectionStringBuilder 'Server=ServerName;Database=DbName;Integrated Security=True'
+New-DbProviderObject.ps1 ConnectionStringBuilder 'Server=(localdb)\ProjectsV13;Database=AdventureWorks;Integrated Security=SSPI;Encrypt=True'
 
 Key                 Value
 ---                 -----
-Data Source         ServerName
-Initial Catalog     DbName
+Data Source         (localdb)\ProjectsV13
+Initial Catalog     AdventureWorks
 Integrated Security True
+Encrypt             True
 
 .EXAMPLE
-$conn = New-DbProviderObject.ps1 SqlClient Connection $connstr -Open
+$conn = New-DbProviderObject.ps1 Connection $connstr -Open
 
 ($conn contains an open DbConnection object.)
 
 .EXAMPLE
-$cmd = New-DbProviderObject.ps1 odbc Command -ConnectionString $connstr -StoredProcedure -OpenConnection
+$cmd = New-DbProviderObject.ps1 Command -ConnectionString $connstr -Provider Odbc -StoredProcedure -OpenConnection
 
-($cmd contains a DbCommand with a CommandType of StoredProcedure and an open connection to $connstr.)
+($cmd contains an OdbcCommand with a CommandType of StoredProcedure and an open connection to $connstr.)
 #>
 
-#Requires -Version 4
+#Requires -Version 7
 [CmdletBinding()][OutputType([Data.Common.DbCommand],[Data.Common.DbConnection],
 [Data.Common.DbConnectionStringBuilder])] Param(
-# The invariant name of the DbProviderFactory to use to create the requested object.
-[Parameter(Mandatory=$true,Position=0)][AllowEmptyString()][string]$ProviderName,
 # The type of object to create.
 [ValidateSet('Command','Connection','ConnectionStringBuilder')]
-[Parameter(Mandatory=$true,Position=1)][string]$TypeName,
+[Parameter(Mandatory=$true,Position=0)][string] $TypeName,
 <#
 A value to initialize the object with, such as CommandText for a Command object, or
 a ConnectionString for a Connection or ConnectionStringBuilder.
 #>
-[Parameter(Position=2,ValueFromPipeline=$true)][Alias('Value')][string]$InitialValue,
+[Parameter(Position=2,ValueFromPipeline=$true)][Alias('Value')][string] $InitialValue,
+# The DbProviderFactory subclass to use to create the object.
+[ValidateSet('Odbc','OleDb','Oracle','Sql')][string] $Provider = 'Sql',
 <#
 A connection string to use (when creating a Command object).
 No connection will be made if not specified.
 #>
-[Parameter(Position=3)][Alias('CS')][string]$ConnectionString,
+[Parameter(Position=3)][Alias('CS')][string] $ConnectionString,
 <#
 Sets the CommandType property of a Command object to StoredProcedure.
 Ignored for other objects.
 #>
-[switch]$StoredProcedure,
+[switch] $StoredProcedure,
 # Opens the Connection object (or Command connection) if an InitialValue was provided, ignored otherwise.
-[switch]$OpenConnection
+[switch] $OpenConnection
 )
 
-$obj = $null
-$providers = [Data.Common.DbProviderFactories]::GetFactoryClasses() |% InvariantName
-if($ProviderName -inotin $providers)
+$factory = switch($Provider)
 {
-    if(!$ProviderName)
-    {
-        if($TypeName -eq 'ConnectionStringBuilder')
-        { # e.g. System.Web.Security.AuthorizationStoreRoleProvider uses a provider-free connection string
-            $obj = New-Object Data.Common.DbConnectionStringBuilder
-        }
-        else {throw "Unable to create a $TypeName without a provider. Available providers: $($providers -join ', ')"}
-    }
-    elseif("System.Data.$ProviderName" -iin $providers) {$ProviderName = "System.Data.$ProviderName"}
-    else {$ProviderName = $providers |? {$_ -ilike "*$ProviderName*"} |select -First 1}
+	Odbc {[Data.Odbc.OdbcFactory]::Instance}
+	OleDb {[Data.OleDb.OleDbFactory]::Instance}
+	Oracle {[Data.OracleClient.OracleClientFactory]::Instance}
+	Sql {[Data.SqlClient.SqlClientFactory]::Instance}
 }
-$obj =
-    if($obj) {$obj}
-    else
-    {
-        $provider = [Data.Common.DbProviderFactories]::GetFactory($ProviderName)
-        $provider."Create$TypeName"()
-    }
+$value = switch($TypeName)
+{
+	Command {$factory.CreateCommand()}
+	Connection {$factory.CreateConnection()}
+	ConnectionStringBuilder {$factory.CreateConnectionStringBuilder()}
+}
 if($InitialValue)
 {
-    switch($TypeName)
-    {
-        Command
-        {
-            $obj.CommandText = $InitialValue
-        }
-        Connection
-        {
-            $obj.ConnectionString = $InitialValue
-            if($OpenConnection){$obj.Open()}
-        }
-        ConnectionStringBuilder
-        { # PowerShell must use the method form of SqlConnectionStringBuilder
-            if($ProviderName) { $obj.set_ConnectionString($InitialValue) }
-            else { $obj.ConnectionString=$InitialValue } # DbConnectionStringBuilder does not support method form
-        }
-    }
+	switch($TypeName)
+	{
+		Command
+		{
+			$value.CommandText = $InitialValue
+		}
+		Connection
+		{
+			$value.ConnectionString = $InitialValue
+			if($OpenConnection) {$value.Open()}
+		}
+		ConnectionStringBuilder
+		{ # PowerShell must use the method form
+			$value.set_ConnectionString($InitialValue)
+		}
+	}
 }
-if($obj -is [Data.Common.DbCommand])
+if($TypeName -eq 'Command')
 {
-    if($StoredProcedure) { $obj.CommandType = 'StoredProcedure' }
-    if($ConnectionString)
-    { $obj.Connection = New-DbProviderObject.ps1 $ProviderName Connection $ConnectionString -OpenConnection:$OpenConnection }
+	if($StoredProcedure) {$obj.CommandType = 'StoredProcedure'}
+	if($ConnectionString)
+	{$obj.Connection = New-DbProviderObject.ps1 Connection $ConnectionString -Provider:$Provider -OpenConnection:$OpenConnection}
 }
-$obj
+return $value
