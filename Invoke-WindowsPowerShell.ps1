@@ -26,6 +26,22 @@ PowerToys.KeyboardManagerEngine.exe
 PowerLauncher.exe
 powershell.exe
 powershell.exe
+
+.EXAMPLE
+Invoke-WindowsPowerShell.ps1 { Get-ADDefaultDomainPasswordPolicy }
+
+ComplexityEnabled           : True
+DistinguishedName           : DC=fabrikam,DC=com
+LockoutDuration             : 00:20:00
+LockoutObservationWindow    : 00:20:00
+LockoutThreshold            : 3
+MaxPasswordAge              : 90.00:00:00
+MinPasswordAge              : 2.00:00:00
+MinPasswordLength           : 12
+objectClass                 : {domainDNS}
+objectGuid                  : 1d032086-5e5b-434c-a028-9eba90b663be
+PasswordHistoryCount        : 5
+ReversibleEncryptionEnabled : False
 #>
 
 #Requires -Version 5
