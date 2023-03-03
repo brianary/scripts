@@ -12,18 +12,20 @@ System.String for each XML-serialized value or property.
 XML
 
 .EXAMPLE
-ConvertTo-XmlElements.ps1 @{html=@{body=@{p='Some text.'}}}
+ConvertTo-XmlElements.ps1 @{html=@{body=@{p='Some text.'}}} -SkipRoot
 
 <html><body><p>Some text.</p></body></html>
 
 .EXAMPLE
 [pscustomobject]@{UserName=$env:USERNAME;Computer=$env:COMPUTERNAME} |ConvertTo-XmlElements.ps1
 
-<Computer>COMPUTERNAME</Computer>
-<UserName>username</UserName>
+<PSCustomObject>
+<UserName>brian</UserName>
+<Computer>GRAYSWANDIR</Computer>
+</PSCustomObject>
 
 .EXAMPLE
-'{"item": {"name": "Test", "id": 1 } }' |ConvertFrom-Json |ConvertTo-XmlElements.ps1
+'{"item": {"name": "Test", "id": 1 } }' |ConvertFrom-Json |ConvertTo-XmlElements.ps1 -SkipRoot
 
 <item><id>1</id>
 <name>Test</name></item>
@@ -36,73 +38,92 @@ A hash or XML element or other object to be serialized as XML elements.
 
 Each hash value or object property value may itself be a hash or object or XML element.
 #>
-[Parameter(Position=0,ValueFromPipeline=$true)] $Value,
+[Parameter(Position=0,ValueFromPipeline=$true)] $InputObject,
 <#
 Specifies how many levels of contained objects are included in the JSON representation.
 The value can be any number from 0 to 100. The default value is 2.
 ConvertTo-Json emits a warning if the number of levels in an input object exceeds this number.
 #>
-[ValidateRange('NonNegative')][int] $Depth = 3
+[ValidateRange('NonNegative')][int] $Depth = 3,
+# Do not wrap the input in a root element.
+[switch] $SkipRoot
 )
-Begin {$Script:OFS = "`n"}
+Begin
+{
+	$Script:OFS = [Environment]::NewLine
+	function ConvertTo-XmlElement
+	{
+		[CmdletBinding()][OutputType([string])] Param(
+		[Parameter(Position=0,ValueFromPipeline=$true)] $InputObject,
+		[ValidateRange('NonNegative')][int] $Depth = 3,
+		[switch] $SkipRoot # not used here
+		)
+		if($null -eq $InputObject) {}
+		elseif($InputObject -is [Array])
+		{ $InputObject |ConvertTo-XmlElement }
+		elseif([bool],[byte],[DateTimeOffset],[decimal],[double],[float],[guid],[int],[int16],[long],[sbyte],[timespan],[uint16],[uint32],[uint64] -contains $InputObject.GetType())
+		{ [Xml.XmlConvert]::ToString($InputObject) }
+		elseif($InputObject -is [datetime])
+		{ [Xml.XmlConvert]::ToString($InputObject,'yyyy-MM-dd\THH:mm:ss') }
+		elseif($InputObject -is [string] -or $InputObject -is [char])
+		{ [Net.WebUtility]::HtmlEncode($InputObject) }
+		elseif($InputObject -is [Hashtable] -or $InputObject -is [Collections.Specialized.OrderedDictionary])
+		{
+			if($Depth -gt 1)
+			{
+				$InputObject.Keys |
+					ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
+					ForEach-Object {"<$_>$(ConvertTo-XmlElement $InputObject.$_ -Depth ($Depth-1))</$_>"}
+			}
+			else
+			{
+				$InputObject.Keys |
+					ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
+					ForEach-Object {"<$_>$($InputObject.$_)</$_>"}
+			}
+		}
+		elseif($InputObject -is [PSObject])
+		{
+			if($Depth -gt 1)
+			{
+				$InputObject.PSObject.Properties.Name |
+					ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
+					ForEach-Object {"<$_>$(ConvertTo-XmlElement $InputObject.$_ -Depth ($Depth-1))</$_>"}
+			}
+			else
+			{
+				$InputObject.PSObject.Properties.Name |
+					ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
+					ForEach-Object {"<$_>$($InputObject.$_)</$_>"}
+			}
+		}
+		elseif($InputObject -is [xml])
+		{ $InputObject.OuterXml }
+		else
+		{
+			if($Depth -gt 1)
+			{
+				$InputObject |
+					Get-Member -MemberType Properties |
+					ForEach-Object {$_.Name -replace '\A\W+','_' -replace '\W+','-'} |
+					ForEach-Object {"<$_>$(ConvertTo-XmlElement $InputObject.$_ -Depth ($Depth-1))</$_>"}
+			}
+			else
+			{
+				$InputObject |
+					Get-Member -MemberType Properties |
+					ForEach-Object {$_.Name -replace '\A\W+','_' -replace '\W+','-'} |
+					ForEach-Object {"<$_>$($InputObject.$_)</$_>"}
+			}
+		}
+	}
+}
 Process
 {
-	if($null -eq $Value) {}
-	elseif($Value -is [Array])
-	{ $Value |ConvertTo-XmlElements.ps1 }
-	elseif([bool],[byte],[DateTimeOffset],[decimal],[double],[float],[guid],[int],[int16],[long],[sbyte],[timespan],[uint16],[uint32],[uint64] -contains $Value.GetType())
-	{ [Xml.XmlConvert]::ToString($Value) }
-	elseif($Value -is [datetime])
-	{ [Xml.XmlConvert]::ToString($Value,'yyyy-MM-dd\THH:mm:ss') }
-	elseif($Value -is [string] -or $Value -is [char])
-	{ [Net.WebUtility]::HtmlEncode($Value) }
-	elseif($Value -is [Hashtable] -or $Value -is [Collections.Specialized.OrderedDictionary])
-	{
-		if($Depth -gt 1)
-		{
-			$Value.Keys |
-				ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
-				ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_ -Depth ($Depth-1))</$_>"}
-		}
-		else
-		{
-			$Value.Keys |
-				ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
-				ForEach-Object {"<$_>$($Value.$_)</$_>"}
-		}
-	}
-	elseif($Value -is [PSObject])
-	{
-		if($Depth -gt 1)
-		{
-			$Value.PSObject.Properties.Name |
-				ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
-				ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_ -Depth ($Depth-1))</$_>"}
-		}
-		else
-		{
-			$Value.PSObject.Properties.Name |
-				ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
-				ForEach-Object {"<$_>$($Value.$_)</$_>"}
-		}
-	}
-	elseif($Value -is [xml])
-	{ $Value.OuterXml }
+	if($SkipRoot) {return ConvertTo-XmlElement @PSBoundParameters}
 	else
 	{
-		if($Depth -gt 1)
-		{
-			$Value |
-				Get-Member -MemberType Properties |
-				ForEach-Object {$_.Name -replace '\A\W+','_' -replace '\W+','-'} |
-				ForEach-Object {"<$_>$(ConvertTo-XmlElements.ps1 $Value.$_ -Depth ($Depth-1))</$_>"}
-		}
-		else
-		{
-			$Value |
-				Get-Member -MemberType Properties |
-				ForEach-Object {$_.Name -replace '\A\W+','_' -replace '\W+','-'} |
-				ForEach-Object {"<$_>$($Value.$_)</$_>"}
-		}
+		$root = $InputObject.GetType().Name -replace '\W+','-'
+		return "<$root>$Script:OFS$(ConvertTo-XmlElement @PSBoundParameters)$Script:OFS</$root>"
 	}
 }
