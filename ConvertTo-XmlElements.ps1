@@ -14,21 +14,27 @@ XML
 .EXAMPLE
 ConvertTo-XmlElements.ps1 @{html=@{body=@{p='Some text.'}}} -SkipRoot
 
-<html><body><p>Some text.</p></body></html>
+<html>
+<body>
+<p>Some text.</p>
+</body>
+</html>
 
 .EXAMPLE
-[pscustomobject]@{UserName=$env:USERNAME;Computer=$env:COMPUTERNAME} |ConvertTo-XmlElements.ps1
+[pscustomobject]@{UserName='zaphodb';Computer='eddie'} |ConvertTo-XmlElements.ps1
 
 <PSCustomObject>
-<UserName>brian</UserName>
-<Computer>GRAYSWANDIR</Computer>
+<UserName>zaphodb</UserName>
+<Computer>eddie</Computer>
 </PSCustomObject>
 
 .EXAMPLE
 '{"item": {"name": "Test", "id": 1 } }' |ConvertFrom-Json |ConvertTo-XmlElements.ps1 -SkipRoot
 
-<item><id>1</id>
-<name>Test</name></item>
+<item>
+<name>Test</name>
+<id>1</id>
+</item>
 #>
 
 #Requires -Version 3
@@ -51,16 +57,49 @@ ConvertTo-Json emits a warning if the number of levels in an input object exceed
 Begin
 {
 	$Script:OFS = [Environment]::NewLine
-	function ConvertTo-XmlElement
+
+	function ConvertTo-CompoundXmlElements
+	{
+		[CmdletBinding()] Param(
+		[Parameter(ValueFromPipeline=$true)][string] $PropertyName,
+		[switch] $IsFirst
+		)
+		Begin {if(!$IsFirst) {Write-Output ''}} # adds OFS
+		Process
+		{
+			$name = $PropertyName -replace '\[\]','Array' -replace '\A\W+','_' -replace '\W+','-'
+			Write-Output "<$name>$(ConvertTo-XmlElement $InputObject.$PropertyName -Depth ($Depth-1))</$name>"
+		}
+		End {if(!$IsFirst) {Write-Output ''}} # adds OFS
+	}
+
+	function ConvertTo-SimpleXmlElements
+	{
+		[CmdletBinding()] Param(
+		[Parameter(ValueFromPipeline=$true)][string] $PropertyName,
+		[switch] $IsFirst
+		)
+		Begin {if(!$IsFirst) {Write-Output ''}} # adds OFS
+		Process
+		{
+			$name = $PropertyName -replace '\[\]','Array' -replace '\A\W+','_' -replace '\W+','-'
+			Write-Output "<$name>$($InputObject.$PropertyName)</$name>"
+		}
+		End {if(!$IsFirst) {Write-Output ''}} # adds OFS
+	}
+
+	filter ConvertTo-XmlElement
 	{
 		[CmdletBinding()][OutputType([string])] Param(
 		[Parameter(Position=0,ValueFromPipeline=$true)] $InputObject,
 		[ValidateRange('NonNegative')][int] $Depth = 3,
+		[switch] $IsFirst,
 		[switch] $SkipRoot # not used here
 		)
-		if($null -eq $InputObject) {}
+		if($null -eq $InputObject) {return '<null />'}
+		elseif($InputObject -is [DBNull]) {return '<DBNull />'}
 		elseif($InputObject -is [Array])
-		{ $InputObject |ConvertTo-XmlElement }
+		{ $InputObject |ConvertTo-XmlElement |ForEach-Object -Begin {''} -Process {"<Item>$_</Item>"} -End {''} }
 		elseif([bool],[byte],[DateTimeOffset],[decimal],[double],[float],[guid],[int],[int16],[long],[sbyte],[timespan],[uint16],[uint32],[uint64] -contains $InputObject.GetType())
 		{ [Xml.XmlConvert]::ToString($InputObject) }
 		elseif($InputObject -is [datetime])
@@ -69,61 +108,45 @@ Begin
 		{ [Net.WebUtility]::HtmlEncode($InputObject) }
 		elseif($InputObject -is [Hashtable] -or $InputObject -is [Collections.Specialized.OrderedDictionary])
 		{
-			if($Depth -gt 1)
-			{
-				$InputObject.Keys |
-					ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
-					ForEach-Object {"<$_>$(ConvertTo-XmlElement $InputObject.$_ -Depth ($Depth-1))</$_>"}
-			}
-			else
-			{
-				$InputObject.Keys |
-					ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
-					ForEach-Object {"<$_>$($InputObject.$_)</$_>"}
-			}
+			if($Depth -gt 1) {$InputObject.Keys |ConvertTo-CompoundXmlElements -IsFirst:$IsFirst}
+			else {$InputObject.Keys |ConvertTo-SimpleXmlElements -IsFirst:$IsFirst}
 		}
 		elseif($InputObject -is [PSObject])
 		{
-			if($Depth -gt 1)
-			{
-				$InputObject.PSObject.Properties.Name |
-					ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
-					ForEach-Object {"<$_>$(ConvertTo-XmlElement $InputObject.$_ -Depth ($Depth-1))</$_>"}
-			}
-			else
-			{
-				$InputObject.PSObject.Properties.Name |
-					ForEach-Object {$_ -replace '\A\W+','_' -replace '\W+','-'} |
-					ForEach-Object {"<$_>$($InputObject.$_)</$_>"}
-			}
+			if(!@($InputObject.PSObject.Properties)) {return}
+			elseif($Depth -gt 1) {$InputObject.PSObject.Properties.Name |ConvertTo-CompoundXmlElements -IsFirst:$IsFirst}
+			else {$InputObject.PSObject.Properties.Name |ConvertTo-SimpleXmlElements -IsFirst:$IsFirst}
 		}
 		elseif($InputObject -is [xml])
 		{ $InputObject.OuterXml }
 		else
 		{
-			if($Depth -gt 1)
+			if(!@($InputObject.PSObject.Properties)) {return}
+			elseif($Depth -gt 1)
 			{
 				$InputObject |
 					Get-Member -MemberType Properties |
-					ForEach-Object {$_.Name -replace '\A\W+','_' -replace '\W+','-'} |
-					ForEach-Object {"<$_>$(ConvertTo-XmlElement $InputObject.$_ -Depth ($Depth-1))</$_>"}
+					Select-Object -ExpandProperty Name |
+					ConvertTo-CompoundXmlElements -IsFirst:$IsFirst
 			}
 			else
 			{
 				$InputObject |
 					Get-Member -MemberType Properties |
-					ForEach-Object {$_.Name -replace '\A\W+','_' -replace '\W+','-'} |
-					ForEach-Object {"<$_>$($InputObject.$_)</$_>"}
+					Select-Object -ExpandProperty Name |
+					ConvertTo-SimpleXmlElements -IsFirst:$IsFirst
 			}
 		}
 	}
 }
 Process
 {
-	if($SkipRoot) {return ConvertTo-XmlElement @PSBoundParameters}
+	if($null -eq $InputObject) {return '<null />'}
+	elseif($InputObject -is [DBNull]) {return '<DBNull />'}
+	elseif($SkipRoot) {return "$(ConvertTo-XmlElement @PSBoundParameters -IsFirst)"}
 	else
 	{
-		$root = $InputObject.GetType().Name -replace '\W+','-'
-		return "<$root>$Script:OFS$(ConvertTo-XmlElement @PSBoundParameters)$Script:OFS</$root>"
+		$root = $InputObject.GetType().Name -replace '\[\]','Array' -replace '\A\W+','_' -replace '\W+','-'
+		return "<$root>$(ConvertTo-XmlElement @PSBoundParameters)</$root>"
 	}
 }
