@@ -13,7 +13,7 @@ Serializes complex content into XML elements.
 ## SYNTAX
 
 ```
-ConvertTo-XmlElements.ps1 [[-Value] <Object>] [<CommonParameters>]
+ConvertTo-XmlElements.ps1 [[-InputObject] <Object>] [-Depth <Int32>] [-SkipRoot] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,7 +52,7 @@ Get-ChildItem *.txt |ConvertTo-XmlElements.ps1
 
 ## PARAMETERS
 
-### -Value
+### -InputObject
 A hash or XML element or other object to be serialized as XML elements.
 
 Each hash value or object property value may itself be a hash or object or XML element.
@@ -66,6 +66,38 @@ Required: False
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Depth
+Specifies how many levels of contained objects are included in the JSON representation.
+The value can be any number from 0 to 100. The default value is 2.
+ConvertTo-Json emits a warning if the number of levels in an input object exceeds this number.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 3
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SkipRoot
+Do not wrap the input in a root element.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

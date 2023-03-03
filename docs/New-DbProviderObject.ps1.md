@@ -13,7 +13,7 @@ Create a common database object.
 ## SYNTAX
 
 ```
-New-DbProviderObject.ps1 [-ProviderName] <String> [-TypeName] <String> [[-InitialValue] <String>]
+New-DbProviderObject.ps1 [-TypeName] <String> [[-InitialValue] <String>] [-Provider <String>]
  [[-ConnectionString] <String>] [-StoredProcedure] [-OpenConnection] [<CommonParameters>]
 ```
 
@@ -49,21 +49,6 @@ $cmd = New-DbProviderObject.ps1 odbc Command -ConnectionString $connstr -StoredP
 
 ## PARAMETERS
 
-### -ProviderName
-The invariant name of the DbProviderFactory to use to create the requested object.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -TypeName
 The type of object to create.
 
@@ -73,7 +58,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -92,6 +77,21 @@ Required: False
 Position: 3
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Provider
+The DbProviderFactory subclass to use to create the object.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Sql
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

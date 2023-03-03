@@ -32,6 +32,7 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Get-WebRequestBody.ps1](Get-WebRequestBody.ps1)**: Listens on a given port of the localhost, returning the body of a single web request, and responding with an empty 204.
 - **[Grant-CertificateAccess.ps1](Grant-CertificateAccess.ps1)**: Grants certificate file read access to an app pool or user.
 - **[Import-Html.ps1](Import-Html.ps1)**: Imports from an HTML table's rows, given a URL.
+- **[New-DbProviderObjectWPS.ps1](New-DbProviderObjectWPS.ps1)**: Create a common database object.
 - **[New-Password.ps1](New-Password.ps1)**: Generate a new password.
 - **[Read-WebRequest.ps1](Read-WebRequest.ps1)**: Parses an HTTP listener request.
 - **[Receive-WebRequest.ps1](Receive-WebRequest.ps1)**: Listens for an HTTP request and returns an HTTP request & response.
@@ -42,4 +43,4 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Restart-HttpListener.ps1](Restart-HttpListener.ps1)**: Stops and restarts an HTTP listener.
 - **[Save-CertificatePermissions.ps1](Save-CertificatePermissions.ps1)**: Saves the permissions of found certificates to a file.
 
-<!-- generated 02/25/2023 14:41:40 -->
+<!-- generated 03/03/2023 12:45:54 -->
