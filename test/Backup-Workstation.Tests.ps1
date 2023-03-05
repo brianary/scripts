@@ -7,6 +7,7 @@ Describe 'Backup-Workstation' -Tag Backup-Workstation {
 	BeforeAll {
 		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		if(!(Get-Module -List PSSQLite)) {Install-Module PSSQLite -Force}
+		if(!(Get-Module -List Microsoft.PowerShell.SecretManagement)) {Install-Module Microsoft.PowerShell.SecretManagement -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
@@ -18,7 +19,7 @@ Describe 'Backup-Workstation' -Tag Backup-Workstation {
 			Backup-Workstation.ps1 $file
 			$file |Should -Exist
 			Expand-Archive $file -DestinationPath TestDrive:\
-			Get-ChildItem TestDrive:\ -Recurse
+			Get-ChildItem TestDrive:\ -Recurse |Write-Information -infa Continue
 		}
 	}
 }
