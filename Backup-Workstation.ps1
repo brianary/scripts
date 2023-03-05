@@ -71,9 +71,12 @@ function Backup-Workstation
 		User    = [Environment]::GetEnvironmentVariables('User')
 		Machine = [Environment]::GetEnvironmentVariables('Machine')
 	} |Copy-ContentToBackup $dir env-vars.json
-	Export-InstalledPackages.ps1 |Copy-ContentToBackup $dir packages.json
-	Export-EdgeKeywords.ps1 |Copy-ContentToBackup $dir edge-keywords.json
+	if(Join-Path $env:LocalAppData Microsoft Edge 'User Data' Default |Test-Path -Type Container)
+	{
+		Export-EdgeKeywords.ps1 |Copy-ContentToBackup $dir edge-keywords.json
+	}
 	Export-SecretVault.ps1 -Confirm:$false |Copy-ContentToBackup $dir secret-vault.json
+	Export-InstalledPackages.ps1 |Copy-ContentToBackup $dir packages.json
 	Get-ChildItem $dir |Compress-Archive -DestinationPath $Path
 	Remove-Item $dir -Recurse -Force
 }
