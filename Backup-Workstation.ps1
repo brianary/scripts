@@ -19,7 +19,8 @@ Saves various config data to COMPUTERNAME-20230304T125000.zip.
 
 #Requires -Version 7
 [CmdletBinding()] Param(
-[Parameter(Position=0)][string] $Path = (Join-Path ~ ('{0}-{1:yyyyMMdd\THHmmss}.zip' -f $env:COMPUTERNAME,(Get-Date)))
+[Parameter(Position=0)][string] $Path =
+	(Join-Path ~ ('{0}-{1:yyyyMMdd\THHmmss}.zip' -f $env:COMPUTERNAME,(Get-Date)))
 )
 
 filter Copy-ItemToBackup
@@ -72,7 +73,7 @@ function Backup-Workstation
 	} |Copy-ContentToBackup $dir env-vars.json
 	Export-InstalledPackages.ps1 |Copy-ContentToBackup $dir packages.json
 	Export-EdgeKeywords.ps1 |Copy-ContentToBackup $dir edge-keywords.json
-	Export-SecretVault.ps1 |Copy-ContentToBackup $dir secret-vault.json
+	Export-SecretVault.ps1 -Confirm:$false |Copy-ContentToBackup $dir secret-vault.json
 	Get-ChildItem $dir |Compress-Archive -DestinationPath $Path
 	Remove-Item $dir -Recurse -Force
 }
