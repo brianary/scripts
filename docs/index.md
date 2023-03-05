@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2356_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2353_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -40,6 +40,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Configuration
 
 - **[Get-ConfigConnectionStringBuilders.ps1](Get-ConfigConnectionStringBuilders.ps1.md)**: Return named connection string builders for connection strings in a config file.
+- &#x1F195; **[Get-NuGetConfigs.ps1](Get-NuGetConfigs.ps1.md)**: Returns the available NuGet configuration files, in order of preference.
 - **[Use-NetMailConfig.ps1](Use-NetMailConfig.ps1.md)**: Use .NET configuration to set defaults for Send-MailMessage.
 
 ### Console
@@ -64,11 +65,11 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Data formats
 
-- &#x1F199; **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1.md)**: Serializes complex content into PowerShell literals.
+- **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1.md)**: Serializes complex content into PowerShell literals.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1.md)**: Escape URLs more aggressively.
-- &#x1F199; **[New-Jwt.ps1](New-Jwt.ps1.md)**: Generates a JSON Web Token (JWT)
+- **[New-Jwt.ps1](New-Jwt.ps1.md)**: Generates a JSON Web Token (JWT)
 - **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1.md)**: Tests for a given common file type by magic number.
-- &#x1F199; **[Test-Jwt.ps1](Test-Jwt.ps1.md)**: Determines whether a string is a valid JWT.
+- **[Test-Jwt.ps1](Test-Jwt.ps1.md)**: Determines whether a string is a valid JWT.
 - **[Test-MagicNumber.ps1](Test-MagicNumber.ps1.md)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
 - **[Test-Uri.ps1](Test-Uri.ps1.md)**: Determines whether a string is a valid URI.
 - **[Test-Windows1252.ps1](Test-Windows1252.ps1.md)**: Determines whether a file contains Windows-1252 bytes that are invalid UTF-8 bytes.
@@ -149,7 +150,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### HTTP
 
-- &#x1F199; **[ConvertTo-BasicAuthentication.ps1](ConvertTo-BasicAuthentication.ps1.md)**: Produces a basic authentication header string from a credential.
+- **[ConvertTo-BasicAuthentication.ps1](ConvertTo-BasicAuthentication.ps1.md)**: Produces a basic authentication header string from a credential.
 - **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1.md)**: Creates multipart/form-data to send as a request body.
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1.md)**: Returns the content security policy at from the given URL.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1.md)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
@@ -211,8 +212,8 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Backup-SchTasks.ps1](Backup-SchTasks.ps1.md)**: Exports the local list of Scheduled Tasks into a single XML file.
 - **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1.md)**: Convert a CimInstance object to a PSObject.
 - **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1.md)**: Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
-- &#x1F199; **[Copy-SchTasks.ps1](Copy-SchTasks.ps1.md)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
-- &#x1F199; **[Restore-SchTasks.ps1](Restore-SchTasks.ps1.md)**: Imports from a single XML file into the local Scheduled Tasks.
+- **[Copy-SchTasks.ps1](Copy-SchTasks.ps1.md)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
+- **[Restore-SchTasks.ps1](Restore-SchTasks.ps1.md)**: Imports from a single XML file into the local Scheduled Tasks.
 
 ### Scripts
 
@@ -291,7 +292,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1.md)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-Dns.ps1](Get-Dns.ps1.md)**: Looks up DNS info, given a hostname or address.
 - **[Get-IisLog.ps1](Get-IisLog.ps1.md)**: Easily query IIS logs.
-- &#x1F199; **[Get-PocketArticles.ps1](Get-PocketArticles.ps1.md)**: Retrieves a list of saved articles from a Pocket account.
+- **[Get-PocketArticles.ps1](Get-PocketArticles.ps1.md)**: Retrieves a list of saved articles from a Pocket account.
 - **[Get-RandomBytes.ps1](Get-RandomBytes.ps1.md)**: Returns random bytes.
 - **[Get-Todos.ps1](Get-Todos.ps1.md)**: Returns the TODOs for the current git repo, which can help document technical debt.
 - **[Measure-Indents.ps1](Measure-Indents.ps1.md)**: Measures the indentation characters used in a text file.

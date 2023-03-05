@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='195'>195 &#x2030;</meter> Scripts repo (195) &#x1F4C5; 217 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='194'>194 &#x2030;</meter> Scripts repo (196) &#x1F4C5; 217 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 124 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 124 days</summary>
 
@@ -16,8 +16,8 @@ Script Tests
 - &#x2714;&#xFE0F; Add-VsCodeDatabaseConnection.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> B (3) &#x1F4C5; 86 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Backup (3) &#x1F4C5; 86 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> B (3) &#x1F4C5; 87 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Backup (3) &#x1F4C5; 87 days</summary>
 
 - &#x2714;&#xFE0F; Backup-File.ps1
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
@@ -140,8 +140,8 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='30'>30 &#x2030;</meter> G (33) &#x1F4C5; 113 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='30'>30 &#x2030;</meter> Get (33) &#x1F4C5; 113 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='29'>29 &#x2030;</meter> G (34) &#x1F4C5; 113 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='29'>29 &#x2030;</meter> Get (34) &#x1F4C5; 113 days</summary>
 
 - &#x2716;&#xFE0F; Get-AspNetEvents.ps1
 - &#x2716;&#xFE0F; Get-AssemblyFramework.ps1
@@ -164,6 +164,7 @@ Script Tests
 - &#x2716;&#xFE0F; Get-GitHubRepoChildItem.ps1
 - &#x2714;&#xFE0F; Get-IisLog.ps1
 - &#x2716;&#xFE0F; Get-LibraryVulnerabilityInfo.ps1
+- &#x2716;&#xFE0F; Get-NuGetConfigs.ps1
 - &#x2716;&#xFE0F; Get-PocketArticles.ps1
 - &#x2716;&#xFE0F; Get-RandomBytes.ps1
 - &#x2716;&#xFE0F; Get-RepoName.ps1
