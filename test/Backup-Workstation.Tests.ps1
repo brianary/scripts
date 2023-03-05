@@ -19,7 +19,19 @@ Describe 'Backup-Workstation' -Tag Backup-Workstation {
 			Backup-Workstation.ps1 $file
 			$file |Should -Exist
 			Expand-Archive $file -DestinationPath TestDrive:\
-			Get-ChildItem TestDrive:\ -Recurse |Write-Information -infa Continue
+			'TestDrive:\env-vars.json' |Should -Exist
+			<#
+			https://github.com/brianary/scripts/actions/runs/4334380944/jobs/7568242489 :
+			AppData
+			backup.zip
+			edge-keywords.json
+			env-vars.json
+			packages.json
+			secret-vault.json
+			AppData\Roaming
+			AppData\Roaming\NuGet
+			AppData\Roaming\NuGet\nuget.config
+			#>
 		}
 	}
 }
