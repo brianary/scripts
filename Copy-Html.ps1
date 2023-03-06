@@ -28,13 +28,22 @@ that can be pasted into emails or other formatted documents.
 # The objects to turn into table rows.
 [Parameter(ValueFromPipeline=$true)][psobject] $InputObject
 )
+Begin
+{
+	$data = @()
+}
+Process
+{
+	$data += $InputObject
+}
 End
 {
-	$input |
+	$data |
 		Select-Object -Property $Property |
 		ConvertTo-Html -Fragment |
 		Format-HtmlDataTable.ps1 |
 		ConvertTo-SafeEntities.ps1 |
+		Out-String |
 		Set-Clipboard
 	Invoke-WindowsPowerShell.ps1 { Get-Clipboard |Set-Clipboard -AsHtml }
 }
