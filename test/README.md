@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='199'>199 &#x2030;</meter> Scripts repo (196) &#x1F4C5; 218 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='204'>204 &#x2030;</meter> Scripts repo (196) &#x1F4C5; 221 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 124 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 124 days</summary>
 
@@ -24,7 +24,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='963'>963 &#x2030;</meter> C (27) &#x1F4C5; 218 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> C (27) &#x1F4C5; 221 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (2) &#x1F4C5; 63 days</summary>
 
 - &#x2714;&#xFE0F; Compare-Properties.ps1
@@ -74,10 +74,10 @@ Script Tests
 - &#x2714;&#xFE0F; ConvertTo-XmlElements.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='500'>500 &#x2030;</meter> Copy (2) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Copy (2) &#x1F4C5; 2 days</summary>
 
 - &#x2714;&#xFE0F; Copy-Html.ps1
-- &#x2716;&#xFE0F; Copy-SchTasks.ps1
+- &#x2714;&#xFE0F; Copy-SchTasks.ps1
 
 </details></li></ul></details></li>
 <li><details><summary>not started D (1) </summary>
