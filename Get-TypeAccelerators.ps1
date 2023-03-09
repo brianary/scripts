@@ -121,26 +121,49 @@ psaliasproperty              System.Management.Automation.PSAliasProperty
 psvariableproperty           System.Management.Automation.PSVariableProperty
 #>
 
-[CmdletBinding()][OutputType([Collections.Generic.Dictionary[string,type]])] Param()
-([PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')::Get).GetEnumerator() |
-	ForEach-Object {[pscustomobject]@{
-		Alias = $_.Key
-		Type  = [type]$_.Value
-		Suffix = switch($_.Key)
-		{
-			byte    {'y'}
-			sbyte   {'uy'}
-			short   {'s'}
-			ushort  {'us'}
-			int16   {'s'}
-			uint16  {'us'}
-			long    {'l'}
-			ulong   {'ul'}
-			int64   {'l'}
-			uint64  {'ul'}
-			uint    {'u'}
-			uint32  {'u'}
-			bigint  {'n'}
-			decimal {'d'}
-		}
-	}}
+[CmdletBinding()][OutputType([Collections.Generic.Dictionary[string,type]])] Param(
+[ValidateSet('Alias','Type','TypeName')][string] $DictionaryKey
+)
+if($DictionaryKey -eq 'Alias')
+{
+	return [PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')::Get
+}
+elseif($DictionaryKey -eq 'Type')
+{
+	$dictionary = @{}
+	([PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')::Get).GetEnumerator() |
+		ForEach-Object {$dictionary[$_.Value] = $_.Key}
+	return $dictionary
+}
+elseif($DictionaryKey -eq 'TypeName')
+{
+	$dictionary = @{}
+	([PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')::Get).GetEnumerator() |
+		ForEach-Object {$dictionary[$_.Value.FullName] = $_.Key}
+	return $dictionary
+}
+else
+{
+	return ([PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')::Get).GetEnumerator() |
+		ForEach-Object {[pscustomobject]@{
+			Alias = $_.Key
+			Type  = [type]$_.Value
+			Suffix = switch($_.Key)
+			{
+				byte    {'y'}
+				sbyte   {'uy'}
+				short   {'s'}
+				ushort  {'us'}
+				int16   {'s'}
+				uint16  {'us'}
+				long    {'l'}
+				ulong   {'ul'}
+				int64   {'l'}
+				uint64  {'ul'}
+				uint    {'u'}
+				uint32  {'u'}
+				bigint  {'n'}
+				decimal {'d'}
+			}
+		}}
+}

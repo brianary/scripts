@@ -137,11 +137,7 @@ Begin
 		if($_.Length % $Width) {$_.Substring($_.Length - ($_.Length % $Width))}
 	}
 
-	$typealias = @{}
-	(Get-TypeAccelerators.ps1).GetEnumerator() |% {$typealias[$_.Value.FullName] = $_.Key}
-	$typealias['System.Int16'] = 'short'
-	$typealias['System.Int32'] = 'int'
-	$typealias['System.Int64'] = 'long'
+	$typealias = Get-TypeAccelerators.ps1 -DictionaryKey TypeName
 	filter Format-ParameterType
 	{
 		$type = $_.ParameterType.FullName
@@ -161,9 +157,9 @@ Begin
 				if($ParameterSetName -ne '__AllParameterSets') {$props += "ParameterSetName=$ParameterSetName"}
 				if($Position -ne [int]::MinValue) {$props += "Position=$Position"}
 				'Mandatory','ValueFromPipeline','ValueFromPipelineByPropertyName','ValueFromRemainingArguments' |
-					foreach {try{Get-Variable $_ -ErrorAction Stop}catch{}} |
-					where {$_.Value} |
-					foreach {$props += "$($_.Name)=`$$($_.Value.ToString().ToLower())"}
+					ForEach-Object {try{Get-Variable $_ -ErrorAction Stop}catch{}} |
+					Where-Object {$_.Value} |
+					ForEach-Object {$props += "$($_.Name)=`$$($_.Value.ToString().ToLower())"}
 				if($props){"[$name($($props -join ','))]"} else {''}
 			}
 			Alias {"[Alias($(($AliasNames |ConvertTo-PowerShell.ps1 -SkipInitialIndent) -join ','))]"}
@@ -181,9 +177,9 @@ Begin
 	function Format-Children($InputObject,[switch]$UseKeys)
 	{
 		if($InputObject -eq $null) {return}
-		$(if($UseKeys){$InputObject.Keys}else{Get-Member -InputObject $InputObject -MemberType Properties |foreach Name}) |
-			where {$_ -notmatch '\W'} |
-			foreach {"$IndentBy$_ = $(ConvertTo-PowerShell.ps1 $InputObject.$_ -Indent "$tab$IndentBy" -SkipInitialIndent)"}
+		$(if($UseKeys){$InputObject.Keys}else{Get-Member -InputObject $InputObject -MemberType Properties |ForEach-Object Name}) |
+			Where-Object {$_ -notmatch '\W'} |
+			ForEach-Object {"$IndentBy$_ = $(ConvertTo-PowerShell.ps1 $InputObject.$_ -Indent "$tab$IndentBy" -SkipInitialIndent)"}
 	}
 }
 Process
@@ -240,7 +236,7 @@ Process
 	elseif($Value -is [array])
 	{@"
 $itab@(
-$($Value |% {ConvertTo-PowerShell.ps1 $_})
+$($Value |ForEach-Object {ConvertTo-PowerShell.ps1 $_})
 $tab)
 "@}
 	elseif($Value -is [securestring])
@@ -264,7 +260,7 @@ $tab)
 	elseif($Value -is [Management.Automation.RuntimeDefinedParameterDictionary])
 	{@"
 ${itab}Param(
-$(($Value.GetEnumerator() |% {"$tabtab$(ConvertTo-PowerShell.ps1 $_.Value)"}) -join ',')
+$(($Value.GetEnumerator() |ForEach-Object {"$tabtab$(ConvertTo-PowerShell.ps1 $_.Value)"}) -join ',')
 $tab)
 "@}
 	elseif($Value -is [Management.Automation.RuntimeDefinedParameter])
