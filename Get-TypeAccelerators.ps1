@@ -11,31 +11,37 @@ PowerShell
 .EXAMPLE
 Get-TypeAccelerators.ps1
 
-Key                          Value
----                          -----
+
+Alias                        Type                                                                Suffix
+-----                        ----                                                                ------
 Alias                        System.Management.Automation.AliasAttribute
 AllowEmptyCollection         System.Management.Automation.AllowEmptyCollectionAttribute
 AllowEmptyString             System.Management.Automation.AllowEmptyStringAttribute
 AllowNull                    System.Management.Automation.AllowNullAttribute
 ArgumentCompleter            System.Management.Automation.ArgumentCompleterAttribute
+ArgumentCompletions          System.Management.Automation.ArgumentCompletionsAttribute
 array                        System.Array
 bool                         System.Boolean
-byte                         System.Byte
+byte                         System.Byte                                                         y
 char                         System.Char
 CmdletBinding                System.Management.Automation.CmdletBindingAttribute
 datetime                     System.DateTime
-decimal                      System.Decimal
+decimal                      System.Decimal                                                      d
 double                       System.Double
 DscResource                  System.Management.Automation.DscResourceAttribute
+ExperimentAction             System.Management.Automation.ExperimentAction
+Experimental                 System.Management.Automation.ExperimentalAttribute
+ExperimentalFeature          System.Management.Automation.ExperimentalFeature
 float                        System.Single
 single                       System.Single
 guid                         System.Guid
 hashtable                    System.Collections.Hashtable
 int                          System.Int32
 int32                        System.Int32
-int16                        System.Int16
-long                         System.Int64
-int64                        System.Int64
+short                        System.Int16                                                        s
+int16                        System.Int16                                                        s
+long                         System.Int64                                                        l
+int64                        System.Int64                                                        l
 ciminstance                  Microsoft.Management.Infrastructure.CimInstance
 cimclass                     Microsoft.Management.Infrastructure.CimClass
 cimtype                      Microsoft.Management.Infrastructure.CimType
@@ -44,6 +50,7 @@ IPEndpoint                   System.Net.IPEndPoint
 NullString                   System.Management.Automation.Language.NullString
 OutputType                   System.Management.Automation.OutputTypeAttribute
 ObjectSecurity               System.Security.AccessControl.ObjectSecurity
+ordered                      System.Collections.Specialized.OrderedDictionary
 Parameter                    System.Management.Automation.ParameterAttribute
 PhysicalAddress              System.Net.NetworkInformation.PhysicalAddress
 pscredential                 System.Management.Automation.PSCredential
@@ -56,17 +63,20 @@ ref                          System.Management.Automation.PSReference
 PSTypeNameAttribute          System.Management.Automation.PSTypeNameAttribute
 regex                        System.Text.RegularExpressions.Regex
 DscProperty                  System.Management.Automation.DscPropertyAttribute
-sbyte                        System.SByte
+sbyte                        System.SByte                                                        uy
 string                       System.String
 SupportsWildcards            System.Management.Automation.SupportsWildcardsAttribute
 switch                       System.Management.Automation.SwitchParameter
 cultureinfo                  System.Globalization.CultureInfo
-bigint                       System.Numerics.BigInteger
+bigint                       System.Numerics.BigInteger                                          n
 securestring                 System.Security.SecureString
 timespan                     System.TimeSpan
-uint16                       System.UInt16
-uint32                       System.UInt32
-uint64                       System.UInt64
+ushort                       System.UInt16                                                       us
+uint16                       System.UInt16                                                       us
+uint                         System.UInt32                                                       u
+uint32                       System.UInt32                                                       u
+ulong                        System.UInt64                                                       ul
+uint64                       System.UInt64                                                       ul
 uri                          System.Uri
 ValidateCount                System.Management.Automation.ValidateCountAttribute
 ValidateDrive                System.Management.Automation.ValidateDriveAttribute
@@ -77,6 +87,7 @@ ValidatePattern              System.Management.Automation.ValidatePatternAttribu
 ValidateRange                System.Management.Automation.ValidateRangeAttribute
 ValidateScript               System.Management.Automation.ValidateScriptAttribute
 ValidateSet                  System.Management.Automation.ValidateSetAttribute
+ValidateTrustedData          System.Management.Automation.ValidateTrustedDataAttribute
 ValidateUserDrive            System.Management.Automation.ValidateUserDriveAttribute
 version                      System.Version
 void                         System.Void
@@ -87,13 +98,15 @@ X509Certificate              System.Security.Cryptography.X509Certificates.X509C
 X500DistinguishedName        System.Security.Cryptography.X509Certificates.X500DistinguishedName
 xml                          System.Xml.XmlDocument
 CimSession                   Microsoft.Management.Infrastructure.CimSession
+mailaddress                  System.Net.Mail.MailAddress
+semver                       System.Management.Automation.SemanticVersion
 adsi                         System.DirectoryServices.DirectoryEntry
 adsisearcher                 System.DirectoryServices.DirectorySearcher
 wmiclass                     System.Management.ManagementClass
 wmi                          System.Management.ManagementObject
 wmisearcher                  System.Management.ManagementObjectSearcher
-mailaddress                  System.Net.Mail.MailAddress
 scriptblock                  System.Management.Automation.ScriptBlock
+pspropertyexpression         Microsoft.PowerShell.Commands.PSPropertyExpression
 psvariable                   System.Management.Automation.PSVariable
 type                         System.Type
 psmoduleinfo                 System.Management.Automation.PSModuleInfo
@@ -109,4 +122,25 @@ psvariableproperty           System.Management.Automation.PSVariableProperty
 #>
 
 [CmdletBinding()][OutputType([Collections.Generic.Dictionary[string,type]])] Param()
-[PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')::Get
+([PSObject].Assembly.GetType('System.Management.Automation.TypeAccelerators')::Get).GetEnumerator() |
+	ForEach-Object {[pscustomobject]@{
+		Alias = $_.Key
+		Type  = [type]$_.Value
+		Suffix = switch($_.Key)
+		{
+			byte    {'y'}
+			sbyte   {'uy'}
+			short   {'s'}
+			ushort  {'us'}
+			int16   {'s'}
+			uint16  {'us'}
+			long    {'l'}
+			ulong   {'ul'}
+			int64   {'l'}
+			uint64  {'ul'}
+			uint    {'u'}
+			uint32  {'u'}
+			bigint  {'n'}
+			decimal {'d'}
+		}
+	}}
