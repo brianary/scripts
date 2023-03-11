@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='204'>204 &#x2030;</meter> Scripts repo (196) &#x1F4C5; 221 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='214'>214 &#x2030;</meter> Scripts repo (196) &#x1F4C5; 223 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 124 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 124 days</summary>
 
@@ -80,16 +80,16 @@ Script Tests
 - &#x2714;&#xFE0F; Copy-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started D (1) </summary>
-<ul><li><details><summary>not started Disable (1) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> D (1) &#x1F4C5; at once</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Disable (1) &#x1F4C5; at once</summary>
 
-- &#x2716;&#xFE0F; Disable-AnsiColor.ps1
+- &#x2714;&#xFE0F; Disable-AnsiColor.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started E (10) </summary>
-<ul><li><details><summary>not started Enable (1) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='100'>100 &#x2030;</meter> E (10) &#x1F4C5; at once</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Enable (1) &#x1F4C5; at once</summary>
 
-- &#x2716;&#xFE0F; Enable-AnsiColor.ps1
+- &#x2714;&#xFE0F; Enable-AnsiColor.ps1
 
 </details></li>
 <li><details><summary>not started Expand (1) </summary>

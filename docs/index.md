@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2406_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2417_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -65,7 +65,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Data formats
 
-- **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1.md)**: Serializes complex content into PowerShell literals.
+- &#x1F199; **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1.md)**: Serializes complex content into PowerShell literals.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1.md)**: Escape URLs more aggressively.
 - **[New-Jwt.ps1](New-Jwt.ps1.md)**: Generates a JSON Web Token (JWT)
 - **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1.md)**: Tests for a given common file type by magic number.
@@ -182,7 +182,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
 - **[Format-Permutations.ps1](Format-Permutations.ps1.md)**: Builds format strings using every combination of elements from multiple arrays.
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1.md)**: Returns the possible values of the specified enumeration.
-- **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.
+- &#x1F199; **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.
 - **[Import-Variables.ps1](Import-Variables.ps1.md)**: Creates local variables from a data row or dictionary (hashtable).
 - &#x1F199; **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1.md)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1.md)**: Create a new PSObject by recursively combining the properties of PSObjects.
