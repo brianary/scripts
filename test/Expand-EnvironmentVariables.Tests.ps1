@@ -16,8 +16,8 @@ Describe 'Expand-EnvironmentVariables' -Tag Expand-EnvironmentVariables {
 			@{ String = '%CommonProgramFiles%\System\ado'; Result = 'C:\Program Files\Common Files\System\ado' }
 		) {
 			Param([string] $String, [string] $Result)
-			Expand-EnvironmentVariables.ps1 $String |Should -BeExactly $Result -Because 'parameter should work'
-			$String |Expand-EnvironmentVariables.ps1 |Should -BeExactly $Result -Because 'pipeline should work'
+			Expand-EnvironmentVariables.ps1 $String |Should -Be $Result -Because 'parameter should work'
+			$String |Expand-EnvironmentVariables.ps1 |Should -Be $Result -Because 'pipeline should work'
 		}
 	}
 }
