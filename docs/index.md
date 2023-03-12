@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2417_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2428_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -217,7 +217,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Scripts
 
-- &#x1F199; **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
+- **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-Script.ps1](New-Script.ps1.md)**: Creates a simple boilerplate script.
 - **[Optimize-Help.ps1](Optimize-Help.ps1.md)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
 - **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
@@ -284,7 +284,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - &#x1F195; **[Backup-Workstation.ps1](Backup-Workstation.ps1.md)**: Adds various configuration files and exported settings to a ZIP file.
 - **[Connect-SshKey.ps1](Connect-SshKey.ps1.md)**: Uses OpenSSH to generate a key and connect it to an ssh server.
-- &#x1F199; **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1.md)**: Convert a number to a Roman numeral.
+- **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1.md)**: Convert a number to a Roman numeral.
 - &#x1F199; **[Copy-Html.ps1](Copy-Html.ps1.md)**: Copies objects as an HTML table.
 - **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
 - **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
