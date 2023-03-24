@@ -13,7 +13,7 @@ Imports secrets into secret vaults.
 ## SYNTAX
 
 ```
-Import-SecretVault.ps1 [[-Name] <String>] [[-Type] <String>] [[-Value] <String>] [[-Vault] <String>]
+Import-SecretVault.ps1 [[-Name] <String>] [[-Type] <String>] [[-Value] <PSObject>] [[-Vault] <String>]
  [[-Metadata] <PSObject>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -65,7 +65,7 @@ Accept wildcard characters: False
 {{ Fill Value Description }}
 
 ```yaml
-Type: String
+Type: PSObject
 Parameter Sets: (All)
 Aliases:
 
