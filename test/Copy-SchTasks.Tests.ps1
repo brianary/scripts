@@ -5,7 +5,6 @@ Tests copying scheduled jobs from another computer to this one, using a GUI list
 
 Describe 'Copy-SchTasks' -Tag Copy-SchTasks {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}

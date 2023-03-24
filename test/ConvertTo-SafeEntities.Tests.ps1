@@ -6,7 +6,6 @@ Tests encoding text as XML/HTML, escaping all characters outside 7-bit ASCII.
 #Requires -Version 7
 Describe 'ConvertTo-SafeEntities' -Tag ConvertTo-SafeEntities {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}

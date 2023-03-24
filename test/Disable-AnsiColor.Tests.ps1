@@ -5,7 +5,6 @@ Tests disabling ANSI terminal colors.
 
 Describe 'Disable-AnsiColor' -Tag Disable-AnsiColor {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}

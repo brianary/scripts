@@ -6,7 +6,6 @@ Tests serializing complex content into XML elements.
 $NL = [Environment]::NewLine
 Describe 'ConvertTo-XmlElements' -Tag ConvertTo-XmlElements {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}

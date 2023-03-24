@@ -5,7 +5,6 @@ Tests replacing the name of each environment variable embedded in the specified 
 
 Describe 'Expand-EnvironmentVariables' -Tag Expand-EnvironmentVariables {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}

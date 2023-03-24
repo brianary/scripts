@@ -36,7 +36,7 @@ Justification='This script exports secrets.')]
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)] Param(
 [Parameter(ValueFromPipelineByPropertyName=$true)][string] $Name,
 [Parameter(ValueFromPipelineByPropertyName=$true)][string] $Type,
-[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Value,
+[Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Value,
 [Parameter(ValueFromPipelineByPropertyName=$true)][string] $Vault,
 [Parameter(ValueFromPipelineByPropertyName=$true)][psobject] $Metadata
 )

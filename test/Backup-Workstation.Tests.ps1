@@ -5,7 +5,6 @@ Tests Adds various configuration files and exported settings to a ZIP file.
 
 Describe 'Backup-Workstation' -Tag Backup-Workstation {
 	BeforeAll {
-		if(!(Get-Module -List PSScriptAnalyzer)) {Install-Module PSScriptAnalyzer -Force}
 		if(!(Get-Module -List PSSQLite)) {Install-Module PSSQLite -Force}
 		if(!(Get-Module -List Microsoft.PowerShell.SecretManagement)) {Install-Module Microsoft.PowerShell.SecretManagement -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
