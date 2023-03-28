@@ -42,6 +42,18 @@ objectClass                 : {domainDNS}
 objectGuid                  : 1d032086-5e5b-434c-a028-9eba90b663be
 PasswordHistoryCount        : 5
 ReversibleEncryptionEnabled : False
+
+.EXAMPLE
+Invoke-WindowsPowerShell.ps1 { Get-ADGroupMembers Taskmaster |Select-Object -ExpandProperty Name }
+
+Greg Davies
+Alex Horne
+
+.EXAMPLE
+Invoke-WindowsPowerShell.ps1 { Get-ADPrincipalGroupMembership  alexh |Select-Object -ExpandProperty Name }
+
+Taskmaster
+The Horne Section
 #>
 
 #Requires -Version 5
