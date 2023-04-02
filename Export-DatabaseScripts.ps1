@@ -7,139 +7,98 @@ This script exports all database objects as scripts into a subdirectory with the
 and further subdirectories by object type. The directory is deleted and recreated each time this script is
 run, to clean up objects that have been deleted from the database.
 
-There are a default set of SMO scripting options set to do a typical export, though these may be overridden
-(see the link below for a list of these options).
-
-This does require SMO to be installed on the machine (it comes with SQL Management Studio).
-
 .FUNCTIONALITY
 Database
-
-.COMPONENT
-Microsoft.SqlServer.Smo.Server
-
-.COMPONENT
-Microsoft.SqlServer.Management.Smo.ScriptingOptions
-
-.LINK
-https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.aspx
 
 .LINK
 https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingoptions_properties.aspx
 
-.EXAMPLE
-Export-DatabaseScripts.ps1 ServerName\instance AdventureWorks2014
+.LINK
+Export-DbaScript
 
-Outputs SQL scripts to files.
+.EXAMPLE
+Get-DbaDatabase -SqlInstance ServerName\instance -Database AdventureWorks2014 |Export-DatabaseScript.ps1
+
+Outputs SQL scripts to files using the default options.
 #>
 
 #Requires -Version 3
-#Requires -Module SqlServer
+#Requires -Module dbatools
 [CmdletBinding()][OutputType([void])] Param(
-# The name of the server (and instance) to connect to.
-[Parameter(Position=0,Mandatory=$true)][string] $Server,
-# The name of the database to connect to on the server.
-[Parameter(Position=1,Mandatory=$true)][string] $Database,
-# The file encoding to use for the SQL scripts.
-[Parameter(Position=2)][ValidateSet('Unicode','UTF7','UTF8','UTF32','ASCII','BigEndianUnicode','Default','OEM')][string]$Encoding = 'UTF8',
-# Provides a list of boolean SMO ScriptingOptions properties to set to true.
-[Parameter(Position=3,ValueFromRemainingArguments=$true)][string[]] $ScriptingOptions = (@'
-EnforceScriptingOptions ExtendedProperties Permissions DriAll Indexes Triggers ScriptBatchTerminator
-'@.Trim() -split '\W+'),
-<#
-The SQL version to target when scripting.
-By default, uses the version from the source server.
-Versions greater than the source server's version may fail.
-#>
-[Microsoft.SqlServer.Management.Smo.SqlServerVersion]$SqlVersion
+# The database from which to export scripts.
+[Parameter(ValueFromPipeline=$true,Mandatory=$true)]
+[Microsoft.SqlServer.Management.Smo.Database] $Database,
+# Controls how the scripts are generated.
+[Microsoft.SqlServer.Management.Smo.ScriptingOptions] $Options = (New-DbaScriptingOption)
 )
 
-# connect to database
-$srv = New-Object Microsoft.SqlServer.Management.Smo.Server($Server)
-if(!$SqlVersion)
+function ConvertTo-FileName($Name) { $Name -replace '[:<>\\/"|\t]+','_' }
+filter Test-SystemObject
 {
-	[Microsoft.SqlServer.Management.Smo.SqlServerVersion]$SqlVersion = "Version$($srv.VersionMajor)$($srv.VersionMinor/10)"
-}
-$db = $srv.Databases[$Database]
-if(!$db) {return}
-Write-Verbose "Connected to $srv.$db $($srv.Product) $($srv.Edition) $($srv.VersionString) $($srv.ProductLevel) (Windows $($srv.OSVersion))"
-if((Test-Path $Database -PathType Container)) { Remove-Item -Force -Recurse $Database } # to reflect removed items
-mkdir $Database -EA:SilentlyContinue |Out-Null ; Push-Location $Database
-
-# set up scripting options
-$opts = New-Object Microsoft.SqlServer.Management.Smo.ScriptingOptions
-$ScriptingOptions |
-	% {
-		if(($opts |Get-Member $_) -and $opts.$_ -is [bool]) {$opts.$_ = $true}
-		else {Write-Warning "Not a boolean scripting option: '$_'"}
-	}
-$opts.TargetServerVersion = $SqlVersion
-$opts.ToFileOnly = $true
-$opts.Encoding =
-	if($Encoding -eq 'OEM') {$OutputEncoding.GetEncoder().Encoding}
-	else {[Text.Encoding]::$Encoding}
-Write-Verbose "Scripting options flags: $(($opts |Get-Member -MemberType Property |% Name |? {$opts.$_ -is [bool] -and $opts.$_}) -join ', ')"
-Write-Verbose "Scripting options values: $(($opts |Get-Member -MemberType Property |% Name |? {$opts.$_ -isnot [bool] -and $opts.$_} |% {"$_=$($opts.$_)"}) -join ', ')"
-
-# map database SMO object collection properties to folder structure
-$folder = @{
-	# Property           = # Folder
-	Assemblies           = 'Assemblies'
-	Triggers             = 'Database Triggers'
-	Defaults             = 'Defaults'
-	ExtendedProperties   = 'Extended Properties'
-	UserDefinedFunctions = 'Functions'
-	Rules                = 'Rules'
-	AsymmetricKeys       = 'Security\Asymmetric Keys'
-	Certificates         = 'Security\Certificates'
-	Roles                = 'Security\Roles'
-	Schemas              = 'Security\Schemas'
-	SymmetricKeys        = 'Security\Symmetric Keys'
-	Users                = 'Security\Users'
-	Sequences            = 'Sequences'
-	FullTextCatalogs     = 'Storage\Full Text Catalogs'
-	FullTextStopLists    = 'Storage\Full Text Stop Lists'
-	PartitionFunctions   = 'Storage\Partition Functions'
-	PartitionSchemes     = 'Storage\Partition Schemes'
-	StoredProcedures     = 'Stored Procedures'
-	Synonyms             = 'Synonyms'
-	Tables               = 'Tables'
-	UserDefinedDataTypes = 'Types\User-defined Data Types'
-	XmlSchemaCollections = 'Types\XML Schema Collections'
-	Views                = 'Views'
-}
-$brkr = @{ # not something we currently use
-	ServiceContracts      = 'Service Broker\Contracts'
-	# ?                   = 'Service Broker\Event Notifications'
-	MessageTypes          = 'Service Broker\Message Types'
-	Queues                = 'Service Broker\Queues'
-	RemoteServiceBindings = 'Service Broker\Remote Service Bindings'
-	Routes                = 'Service Broker\Routes'
-	Services              = 'Service Broker\Services'
+	Param(
+	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][bool] $IsSystemObject = $false
+	)
+	return $IsSystemObject
 }
 
-function ConvertTo-FileName($Name) { $Name -replace '[<>\\/"|\t]+','_' }
+filter Get-ScriptName
+{
+	[CmdletBinding()] Param(
+	[Parameter(Position=0,Mandatory=$true)][string] $Subfolder,
+	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
+	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Schema
+	)
+	if(!(Test-Path $Subfolder -Type Container)) {New-Item $Subfolder -Type Directory |Out-Null}
+	return Join-Path $Subfolder (ConvertTo-FileName ($Schema ? "$Schema.$Name.sql" : "$Name.sql"))
+}
 
-# script all mapped SMO object collection properties
-# skip collections that are empty, only system objects, and only fixed roles
-# skip system objects and fixed roles
-$folder.Keys |
-	? {$db.$_ -and $db.$_.Count} |
-	? {$db.$_ -isnot [Microsoft.SqlServer.Management.Smo.DatabaseRoleCollection] -or ($db.$_ |? IsFixedRole -eq $false)} |
-	? {!($db.$_ |Get-Member IsSystemObject) -or ($db.$_ |? IsSystemObject -eq $false)} |
-	% {
-		mkdir $folder.$_ -EA:SilentlyContinue |Out-Null ; Push-Location $folder.$_
-		$db.$_ |
-			? {!($_|Get-Member IsSystemObject) -or !($_.IsSystemObject)} |
-			? {$_ -isnot [Microsoft.SqlServer.Management.Smo.DatabaseRole] -or !($_.IsFixedRole)} |
-			% {
-				$opts.FileName =
-					if($_|Get-Member Schema) {"$pwd\$(ConvertTo-FileName $_.Schema).$(ConvertTo-FileName $_.Name).sql"}
-					else {"$pwd\$(ConvertTo-FileName $_.Name).sql"}
-				Write-Verbose "Export $($_.GetType().Name) $_ to $($opts.FileName)"
-				$_.Script($opts)
-			}
-		Pop-Location # object collection folder
-	}
+filter Export-DatabaseScript
+{
+	[CmdletBinding()] Param(
+	[Parameter(Position=0,Mandatory=$true)][string] $Subfolder,
+	[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
+	[Microsoft.SqlServer.Management.Smo.ScriptNameObjectBase] $InputObject
+	)
+	if(!$InputObject -or ($InputObject |Test-SystemObject)) {return}
+	$InputObject |Export-DbaScript -ScriptingOptionsObject $Options -FilePath ($InputObject |Get-ScriptName $Subfolder)
+}
 
-Pop-Location # Database
+function Export-DatabaseObjects
+{
+	[CmdletBinding()] Param()
+	$Database.Assemblies |Export-DatabaseScript 'Assemblies'
+	$Database.Triggers |Export-DatabaseScript 'Database Triggers'
+	$Database.Defaults |Export-DatabaseScript 'Defaults'
+	$Database.ExtendedProperties |Export-DatabaseScript 'Extended Properties'
+	$Database.UserDefinedFunctions |Export-DatabaseScript 'Functions'
+	$Database.Rules |Export-DatabaseScript 'Rules'
+	$Database.AsymmetricKeys |Export-DatabaseScript 'Security/Asymmetric Keys'
+	$Database.Certificates |Export-DatabaseScript 'Security/Certificates'
+	$Database.Roles |
+		Where-Object {$_ -isnot [Microsoft.SqlServer.Management.Smo.DatabaseRole] -or !$_.IsFixedRole} |
+		Export-DatabaseScript 'Security/Roles'
+	$Database.Schemas |Export-DatabaseScript 'Security/Schemas'
+	$Database.SymmetricKeys |Export-DatabaseScript 'Security/Symmetric Keys'
+	$Database.Users |Export-DatabaseScript 'Security/Users'
+	$Database.Sequences |Export-DatabaseScript 'Sequences'
+	$Database.FullTextCatalogs |Export-DatabaseScript 'Storage/Full Text Catalogs'
+	$Database.FullTextStopLists |Export-DatabaseScript 'Storage/Full Text Stop Lists'
+	$Database.PartitionFunctions |Export-DatabaseScript 'Storage/Partition Functions'
+	$Database.PartitionSchemes |Export-DatabaseScript 'Storage/Partition Schemes'
+	$Database.StoredProcedures |Export-DatabaseScript 'Stored Procedures'
+	$Database.Synonyms |Export-DatabaseScript 'Synonyms'
+	$Database.Tables |Export-DatabaseScript 'Tables'
+	$Database.UserDefinedDataTypes |Export-DatabaseScript 'Types/User-defined Data Types'
+	$Database.XmlSchemaCollections |Export-DatabaseScript 'Types/XML Schema Collections'
+	$Database.Views |Export-DatabaseScript 'Views'
+	$Database.ServiceBroker.ServiceContracts |Export-DatabaseScript 'Service Broker/Contracts'
+	#$Database.ServiceBroker.? |Export-DatabaseScript 'Service Broker/Event Notifications'
+	$Database.ServiceBroker.MessageTypes |Export-DatabaseScript 'Service Broker/Message Types'
+	$Database.ServiceBroker.Queues |Export-DatabaseScript 'Service Broker/Queues'
+	$Database.ServiceBroker.RemoteServiceBindings |Export-DatabaseScript 'Service Broker/Remote Service Bindings'
+	$Database.ServiceBroker.Routes |Export-DatabaseScript 'Service Broker/Routes'
+	$Database.ServiceBroker.Services |Export-DatabaseScript 'Service Broker/Services'
+}
+
+Export-DatabaseObjects
