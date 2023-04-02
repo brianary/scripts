@@ -16,6 +16,9 @@ https://msdn.microsoft.com/library/microsoft.sqlserver.management.smo.scriptingo
 .LINK
 Export-DbaScript
 
+.LINK
+New-DbaScriptingOption
+
 .EXAMPLE
 Get-DbaDatabase -SqlInstance ServerName\instance -Database AdventureWorks2014 |Export-DatabaseScript.ps1
 
@@ -23,7 +26,7 @@ Outputs SQL scripts to files using the default options.
 #>
 
 #Requires -Version 3
-#Requires -Module dbatools
+#Requires -Modules dbatools
 [CmdletBinding()][OutputType([void])] Param(
 # The database from which to export scripts.
 [Parameter(ValueFromPipeline=$true,Mandatory=$true)]
@@ -67,6 +70,12 @@ filter Export-DatabaseScript
 function Export-DatabaseObjects
 {
 	[CmdletBinding()] Param()
+	$dir = (ConvertTo-FileName $Database.Name)
+	if(Test-Path $dir)
+	{
+		Stop-ThrowError.ps1 "Directory $dir already exists" -OperationContext $dir
+	}
+	New-Item $dir -Type Directory |Push-Location
 	$Database.Assemblies |Export-DatabaseScript 'Assemblies'
 	$Database.Triggers |Export-DatabaseScript 'Database Triggers'
 	$Database.Defaults |Export-DatabaseScript 'Defaults'
@@ -92,13 +101,17 @@ function Export-DatabaseObjects
 	$Database.UserDefinedDataTypes |Export-DatabaseScript 'Types/User-defined Data Types'
 	$Database.XmlSchemaCollections |Export-DatabaseScript 'Types/XML Schema Collections'
 	$Database.Views |Export-DatabaseScript 'Views'
-	$Database.ServiceBroker.ServiceContracts |Export-DatabaseScript 'Service Broker/Contracts'
-	#$Database.ServiceBroker.? |Export-DatabaseScript 'Service Broker/Event Notifications'
-	$Database.ServiceBroker.MessageTypes |Export-DatabaseScript 'Service Broker/Message Types'
-	$Database.ServiceBroker.Queues |Export-DatabaseScript 'Service Broker/Queues'
-	$Database.ServiceBroker.RemoteServiceBindings |Export-DatabaseScript 'Service Broker/Remote Service Bindings'
-	$Database.ServiceBroker.Routes |Export-DatabaseScript 'Service Broker/Routes'
-	$Database.ServiceBroker.Services |Export-DatabaseScript 'Service Broker/Services'
+	if($Database.ServiceBroker)
+	{
+		$Database.ServiceBroker.ServiceContracts |Export-DatabaseScript 'Service Broker/Contracts'
+		#$Database.ServiceBroker.? |Export-DatabaseScript 'Service Broker/Event Notifications'
+		$Database.ServiceBroker.MessageTypes |Export-DatabaseScript 'Service Broker/Message Types'
+		$Database.ServiceBroker.Queues |Export-DatabaseScript 'Service Broker/Queues'
+		$Database.ServiceBroker.RemoteServiceBindings |Export-DatabaseScript 'Service Broker/Remote Service Bindings'
+		$Database.ServiceBroker.Routes |Export-DatabaseScript 'Service Broker/Routes'
+		$Database.ServiceBroker.Services |Export-DatabaseScript 'Service Broker/Services'
+	}
+	Pop-Location
 }
 
 Export-DatabaseObjects
