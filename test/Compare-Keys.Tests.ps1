@@ -28,7 +28,7 @@ D       Added                6
 			Compare-Keys.ps1 $ReferenceDictionary $DifferenceDictionary -IncludeEqual |
 				Sort-Object Key |
 				Out-String |
-				ForEach-Object {$_.Trim()} |
+				ForEach-Object {Write-Information $_ -infa Continue; $_.Trim()} |
 				Should -BeExactly $Result
 		}
 	}
