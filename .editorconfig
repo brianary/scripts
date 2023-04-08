@@ -18,10 +18,17 @@ max_line_length          = 128
 [{.gitattributes,CODEOWNERS}]
 charset = utf-8
 
+# YAML
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+tab_width = 2
+
 # CSS https://www.w3.org/International/questions/qa-utf8-bom.en#bytheway
 # JSON https://tools.ietf.org/html/rfc8259#section-8.1
 [*.{css,json}]
 charset = utf-8
 
+# XML
 [*.{xml,xsl,xslt,xsd}]
 indent_style = tab
