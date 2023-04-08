@@ -26,6 +26,7 @@ D       Added                6
 		) {
 			Param([Collections.IDictionary]$ReferenceDictionary,[Collections.IDictionary]$DifferenceDictionary,[string]$Result)
 			Compare-Keys.ps1 $ReferenceDictionary $DifferenceDictionary -IncludeEqual |
+				Sort-Object Key |
 				Out-String |
 				ForEach-Object {$_.Trim()} |
 				Should -BeExactly $Result
