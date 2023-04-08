@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2458_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2526_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -54,7 +54,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[Export-SecretVault.ps1](Export-SecretVault.ps1.md)**: Exports secret vault content.
 - **[Get-CachedCredential.ps1](Get-CachedCredential.ps1.md)**: Return a credential from secure storage, or prompt the user for it if not found.
-- &#x1F199; **[Import-SecretVault.ps1](Import-SecretVault.ps1.md)**: Imports secrets into secret vaults.
+- **[Import-SecretVault.ps1](Import-SecretVault.ps1.md)**: Imports secrets into secret vaults.
 - **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1.md)**: Removes a credential from secure storage.
 
 ### Data encoding
@@ -77,8 +77,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Database
 
 - **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
-- **[Export-DatabaseObjectScript.ps1](Export-DatabaseObjectScript.ps1.md)**: Exports MS SQL script for an object from the given server.
-- **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+- &#x1F199; **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
@@ -107,6 +106,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Dictionary
 
+- &#x1F195; **[Compare-Keys.ps1](Compare-Keys.ps1.md)**: Returns the differences between two dictionaries.
 - **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1.md)**: Converts an object to an ordered dictionary of properties and values.
 - **[Join-Keys.ps1](Join-Keys.ps1.md)**: Combines dictionaries together into a single dictionary.
 - **[Remove-NullValues.ps1](Remove-NullValues.ps1.md)**: Removes dictionary entries with null vaules.
@@ -141,7 +141,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Git and GitHub
 
 - **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1.md)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
-- &#x1F195; **[Copy-GitHubLabels.ps1](Copy-GitHubLabels.ps1.md)**: Copies configured issue labels from one repo to another.
+- **[Copy-GitHubLabels.ps1](Copy-GitHubLabels.ps1.md)**: Copies configured issue labels from one repo to another.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1.md)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1.md)**: Gets the SHA-1 hash of the first commit of the current repo.
 - **[Get-GitHubRepoChildItem.ps1](Get-GitHubRepoChildItem.ps1.md)**: Adds any missing topics based on repo content.
@@ -185,7 +185,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1.md)**: Returns the possible values of the specified enumeration.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.
 - **[Import-Variables.ps1](Import-Variables.ps1.md)**: Creates local variables from a data row or dictionary (hashtable).
-- **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1.md)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
+- &#x1F199; **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1.md)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1.md)**: Create a new PSObject by recursively combining the properties of PSObjects.
 - **[Read-Choice.ps1](Read-Choice.ps1.md)**: Returns choice selected from a list of options.
 - **[Stop-ThrowError.ps1](Stop-ThrowError.ps1.md)**: Throws a better error than "throw".
@@ -218,7 +218,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Scripts
 
-- &#x1F199; **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
+- **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-Script.ps1](New-Script.ps1.md)**: Creates a simple boilerplate script.
 - **[Optimize-Help.ps1](Optimize-Help.ps1.md)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
 - **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
