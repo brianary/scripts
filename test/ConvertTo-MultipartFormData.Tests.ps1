@@ -4,7 +4,11 @@ Tests creating multipart/form-data to send as a request body.
 #>
 
 $datadir = Join-Path $PSScriptRoot .. 'test','data'
-Describe 'ConvertTo-MultipartFormData' -Tag ConvertTo-MultipartFormData {
+$basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
+$skip = !(Test-Path .changes -Type Leaf) ? $false :
+	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
+if($skip) {Write-Information "No changes to $basename" -infa Continue}
+Describe 'ConvertTo-MultipartFormData' -Tag ConvertTo-MultipartFormData -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}

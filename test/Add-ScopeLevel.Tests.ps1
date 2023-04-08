@@ -3,7 +3,11 @@
 Tests conversion of a scope level to account for another call stack level.
 #>
 
-Describe 'Add-ScopeLevel' -Tag Add-ScopeLevel {
+$basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
+$skip = !(Test-Path .changes -Type Leaf) ? $false :
+	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
+if($skip) {Write-Information "No changes to $basename" -infa Continue}
+Describe 'Add-ScopeLevel' -Tag Add-ScopeLevel -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}

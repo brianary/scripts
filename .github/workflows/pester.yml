@@ -17,10 +17,7 @@ jobs:
       run: |
         Install-Module Pester -Force
         Write-Information "PSC $($PSVersionTable.PSVersion) running on CLR v$([Environment]::Version) on $($PSVersionTable.OS)" -infa Continue
-        $PSVersionTable |Out-String |Write-Information -infa Continue
         '${{ steps.changes.outputs.added_modified }}' -split ',' |Out-File .changes utf8
-        Write-Information 'Changes' -infa Continue
-        Get-Content .changes |Write-Information -infa Continue
         Invoke-Pester -Output Diagnostic -Path test -PassThru |Export-NUnitReport -Path TestResults.xml
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2

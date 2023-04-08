@@ -3,7 +3,11 @@
 Tests Converts a DataRow object to a PSObject, Hashtable, or single value.
 #>
 
-Describe 'ConvertFrom-DataRow' -Tag ConvertFrom-DataRow {
+$basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
+$skip = !(Test-Path .changes -Type Leaf) ? $false :
+	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
+if($skip) {Write-Information "No changes to $basename" -infa Continue}
+Describe 'ConvertFrom-DataRow' -Tag ConvertFrom-DataRow -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		$datadir = Join-Path $PSScriptRoot .. 'test','data'

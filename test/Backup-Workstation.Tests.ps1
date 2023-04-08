@@ -3,7 +3,11 @@
 Tests Adds various configuration files and exported settings to a ZIP file.
 #>
 
-Describe 'Backup-Workstation' -Tag Backup-Workstation {
+$basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
+$skip = !(Test-Path .changes -Type Leaf) ? $false :
+	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
+if($skip) {Write-Information "No changes to $basename" -infa Continue}
+Describe 'Backup-Workstation' -Tag Backup-Workstation -Skip:$skip {
 	BeforeAll {
 		if(!(Get-Module -List PSSQLite)) {Install-Module PSSQLite -Force}
 		if(!(Get-Module -List Microsoft.PowerShell.SecretManagement)) {Install-Module Microsoft.PowerShell.SecretManagement -Force}

@@ -3,7 +3,11 @@
 Tests the script that transforms objects into iCalendar data.
 #>
 
-Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar {
+$basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
+$skip = !(Test-Path .changes -Type Leaf) ? $false :
+	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
+if($skip) {Write-Information "No changes to $basename" -infa Continue}
+Describe 'ConvertTo-ICalendar' -Tag ConvertTo-ICalendar -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep,$datefmt = (Split-Path $PSScriptRoot),[io.path]::PathSeparator,
 			([cultureinfo]::CurrentCulture.DateTimeFormat.ShortDatePattern -replace '(?-i)\b([Md])\b','$1$1')

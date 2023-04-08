@@ -3,7 +3,11 @@
 Tests parsing escaped XML into XML and serialization.
 #>
 
-Describe 'ConvertFrom-EscapedXml' -Tag ConvertFrom-EscapedXml {
+$basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
+$skip = !(Test-Path .changes -Type Leaf) ? $false :
+	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
+if($skip) {Write-Information "No changes to $basename" -infa Continue}
+Describe 'ConvertFrom-EscapedXml' -Tag ConvertFrom-EscapedXml -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}

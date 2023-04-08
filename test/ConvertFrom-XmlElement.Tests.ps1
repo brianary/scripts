@@ -3,7 +3,11 @@
 Tests Converts named nodes of an element to properties of a PSObject, recursively.
 #>
 
-Describe 'ConvertFrom-XmlElement' -Tag ConvertFrom-XmlElement {
+$basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
+$skip = !(Test-Path .changes -Type Leaf) ? $false :
+	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
+if($skip) {Write-Information "No changes to $basename" -infa Continue}
+Describe 'ConvertFrom-XmlElement' -Tag ConvertFrom-XmlElement -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		$datadir = Join-Path $PSScriptRoot .. 'test','data'

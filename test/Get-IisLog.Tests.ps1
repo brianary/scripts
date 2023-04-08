@@ -10,7 +10,11 @@ try
 	$Global:noLogParser = !(Get-Command logparser -ErrorAction Ignore)
 }
 catch {Write-Warning 'Could not install LogParser'; $Global:noLogParser = $true}
-Describe 'Get-IisLog' -Tag Get-IisLog {
+$basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
+$skip = !(Test-Path .changes -Type Leaf) ? $false :
+	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
+if($skip) {Write-Information "No changes to $basename" -infa Continue}
+Describe 'Get-IisLog' -Tag Get-IisLog -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		$datadir = Join-Path $PSScriptRoot .. 'test','data'
