@@ -52,8 +52,19 @@ D       Added                6
 )
 Process
 {
-	Compare-Object @($ReferenceDictionary.GetEnumerator()) @($DifferenceDictionary.GetEnumerator()) `
-		-ExcludeDifferent:$ExcludeDifferent -IncludeEqual:$IncludeEqual |
+	if([Environment]::Version.Major -lt 7)
+	{
+		$refEntries = @($ReferenceDictionary.GetEnumerator()) |
+			Add-Member -MemberType ScriptMethod -Name ToString -Value {'[{0}, {1}]' -f $this.Key, $this.Value} -Force -PassThru
+		$diffEntries = @($DifferenceDictionary.GetEnumerator()) |
+			Add-Member -MemberType ScriptMethod -Name ToString -Value {'[{0}, {1}]' -f $this.Key, $this.Value} -Force -PassThru
+	}
+	else
+	{
+		$refEntries = @($ReferenceDictionary.GetEnumerator())
+		$diffEntries = @($DifferenceDictionary.GetEnumerator())
+	}
+	Compare-Object $refEntries $diffEntries -ExcludeDifferent:$ExcludeDifferent -IncludeEqual:$IncludeEqual |
 		Group-Object {$_.InputObject.Key} |
 		ForEach-Object {
 			$key = $_.Values[0]
