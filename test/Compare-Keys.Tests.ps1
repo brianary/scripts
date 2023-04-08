@@ -25,8 +25,6 @@ D       Added                6
 			}
 		) {
 			Param([Collections.IDictionary]$ReferenceDictionary,[Collections.IDictionary]$DifferenceDictionary,[string]$Result)
-			$ReferenceDictionary |Out-String |Write-Information -infa Continue
-			$DifferenceDictionary |Out-String |Write-Information -infa Continue
 			Compare-Keys.ps1 -ReferenceDictionary $ReferenceDictionary -DifferenceDictionary $DifferenceDictionary -IncludeEqual |
 				Sort-Object Key |
 				Out-String |

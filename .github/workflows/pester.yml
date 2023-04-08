@@ -11,6 +11,7 @@ jobs:
       shell: pwsh -noninteractive -command ". '{0}'"
       run: |
         Install-Module Pester -Force
+        $PSVersionTable |Out-String |Write-Information -infa Continue
         Invoke-Pester -Output Diagnostic -Path test -PassThru |Export-NUnitReport -Path TestResults.xml
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2

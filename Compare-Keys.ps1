@@ -54,15 +54,6 @@ Process
 {
 	Compare-Object @($ReferenceDictionary.GetEnumerator()) @($DifferenceDictionary.GetEnumerator()) `
 		-ExcludeDifferent:$ExcludeDifferent -IncludeEqual:$IncludeEqual |
-		Out-String |
-		Write-Information -infa Continue
-	Compare-Object @($ReferenceDictionary.GetEnumerator()) @($DifferenceDictionary.GetEnumerator()) `
-		-ExcludeDifferent:$ExcludeDifferent -IncludeEqual:$IncludeEqual |
-		Group-Object {$_.InputObject.Key} |
-		Out-String |
-		Write-Information -infa Continue
-	Compare-Object @($ReferenceDictionary.GetEnumerator()) @($DifferenceDictionary.GetEnumerator()) `
-		-ExcludeDifferent:$ExcludeDifferent -IncludeEqual:$IncludeEqual |
 		Group-Object {$_.InputObject.Key} |
 		ForEach-Object {
 			$key = $_.Values[0]
