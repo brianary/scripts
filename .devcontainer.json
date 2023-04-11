@@ -1,0 +1,13 @@
+{
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "GitHub.vscode-github-actions",
+        "DavidAnson.vscode-markdownlint",
+        "bierner.markdown-mermaid",
+        "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
+      ]
+    }
+  }
+}

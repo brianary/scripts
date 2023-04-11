@@ -32,7 +32,7 @@ D       Added                6
 			Compare-Keys.ps1 -ReferenceDictionary $ReferenceDictionary -DifferenceDictionary $DifferenceDictionary -IncludeEqual |
 				Sort-Object Key |
 				Out-String |
-				ForEach-Object {Write-Information $_ -infa Continue; $_.Trim()} |
+				ForEach-Object {$_.Trim()} |
 				Should -BeExactly $Result
 		}
 	}

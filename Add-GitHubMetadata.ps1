@@ -143,9 +143,7 @@ line ending will be added automatically if it is missing.
 [switch] $DefaultNoFinalNewLine,
 # Indicates warnings about new content should be skipped.
 [switch] $NoWarnings,
-<#
-Configure VSCode settings to recommend relevant extensions based on repo content.
-#>
+# Configure VSCode settings to recommend relevant extensions based on repo content.
 [Alias('Recommendations')][switch] $VsCodeExtensionRecommendations,
 <#
 Configure VSCode settings to disable the Prettier extension for Markdown files,
@@ -155,6 +153,10 @@ and some formatting choices may not be desirable or may conflict with organizati
 standards.
 #>
 [Alias('DisablePrettierMarkdown','NoPrettierMarkdown')][switch] $VSCodeDisablePrettierForMarkdown,
+# Configure settings for Dev Containers, used for Codespaces.
+[Alias('Codespaces')][switch] $DevContainer,
+# Disables adding or updating the CODEOWNERS file.
+[switch] $NoOwners,
 # Do not prompt to append Linguist settings.
 [switch] $Force
 )
@@ -375,12 +377,21 @@ function Add-VsCodeExtensionRecommendations
 	$recommendations = New-Object Collections.Generic.HashSet[string]
 	[string[]] $previous = Get-VSCodeSetting.ps1 recommendations -Workspace
 	if($previous) {$previous |ForEach-Object {[void]$recommendations.Add($_)}}
+	if((Test-Path .github -Type Container) -and (Test-Path .github/workflows -Type Container) -and
+		(Get-ChildItem .github/workflows -Filter *.yml |Select-Object -First 1))
+	{
+		[void]$recommendations.Add('GitHub.vscode-github-actions')
+	}
 	[void]$recommendations.Add('yzhang.markdown-all-in-one')
 	[void]$recommendations.Add('EditorConfig.EditorConfig')
 	if(Get-ChildItem -Recurse -Filter *.md |Select-String '```mermaid' |Select-Object -First 1)
 	{
 		[void]$recommendations.Add('bierner.markdown-mermaid')
 		[void]$recommendations.Add('bpruitt-goddard.mermaid-markdown-syntax-highlighting')
+	}
+	if(Get-ChildItem -Recurse -Filter *.adoc |Select-Object -First 1)
+	{
+		[void]$recommendations.Add('asciidoctor.asciidoctor-vscode')
 	}
 	if(Get-ChildItem -Recurse -Filter *.http |Select-Object -First 1)
 	{
@@ -395,6 +406,73 @@ function Add-VsCodeExtensionRecommendations
 		[void]$recommendations.Add('ms-mssql.mssql')
 	}
 	Set-VSCodeSetting.ps1 recommendations $recommendations -Workspace
+}
+
+function Add-DevContainerSettings
+{
+	if(Test-Path .devcontainer/devcontainer.json -Type Leaf)
+	{
+		${devcontainer.json} = '.devcontainer/devcontainer.json'
+		$settings = Get-Content ${devcontainer.json} |ConvertFrom-Json
+	}
+	elseif(Test-Path .devcontainer.json -Type Leaf)
+	{
+		${devcontainer.json} = '.devcontainer.json'
+		$settings = Get-Content ${devcontainer.json} |ConvertFrom-Json
+	}
+	else
+	{
+		${devcontainer.json} = '.devcontainer.json'
+		$settings = [pscustomobject]@{
+			customizations = [pscustomobject]@{
+				vscode = [pscustomobject]@{
+					settings=[pscustomobject]@{}
+					extensions=@()
+				}
+			}
+		}
+	}
+	if(!$settings.PSObject.Properties.Match('customizations').Count)
+	{
+		$settings |Add-Member -NotePropertyName customizations -NotePropertyValue ([pscustomobject]@{
+			vscode = @{
+				settings=[pscustomobject]@{}
+				extensions=@()
+			}
+		})
+	}
+	elseif(!$settings.customizations.PSObject.Properties.Match('vscode').Count)
+	{
+		$settings.customizations |Add-Member -NotePropertyName vscode -NotePropertyValue ([pscustomobject]@{
+			settings=[pscustomobject]@{}
+			extensions=@()
+		})
+	}
+	elseif(!$settings.customizations.vscode.PSObject.Properties.Match('extensions').Count)
+	{
+		$settings.customizations.vscode |Add-Member -NotePropertyName extensions -NotePropertyValue @()
+	}
+	$extensions = $settings.customizations.vscode.extensions -isnot [array] ?
+		$settings.customizations.vscode.extensions : @()
+	if(Get-ChildItem .github/workflows -Filter *.yml |Select-Object -First 1)
+	{
+		$extensions += 'GitHub.vscode-github-actions'
+	}
+	if(Get-ChildItem -Recurse -Filter *.md |Select-Object -First 1)
+	{
+		$extensions += 'DavidAnson.vscode-markdownlint'
+	}
+	if(Get-ChildItem -Recurse -Filter *.md |Select-String '```mermaid' |Select-Object -First 1)
+	{
+		$extensions += 'bierner.markdown-mermaid'
+		$extensions += 'bpruitt-goddard.mermaid-markdown-syntax-highlighting'
+	}
+	if(Get-ChildItem -Recurse -Filter *.adoc |Select-Object -First 1)
+	{
+		$extensions += 'asciidoctor.asciidoctor-vscode'
+	}
+	$settings.customizations.vscode.extensions = @($extensions |Select-Object -Unique)
+	$settings |ConvertTo-Json -Depth 5 |Out-File ${devcontainer.json} utf8
 }
 
 function Disable-VsCodePrettier
@@ -431,7 +509,7 @@ function Add-Metadata
 	Push-Location $(git rev-parse --show-toplevel)
 	Add-GitHubDirectory
 	Add-Readme -NoWarnings:$NoWarnings
-	Add-CodeOwners -DefaultOwner $DefaultOwner -Owners $Owners -NoWarnings:$NoWarnings
+	if(!$NoOwners) {Add-CodeOwners -DefaultOwner $DefaultOwner -Owners $Owners -NoWarnings:$NoWarnings}
 	Add-LinguistOverrides -VendorCode $VendorCode -DocumentationCode $DocumentationCode `
 		-GeneratedCode $GeneratedCode -Force:$Force
 	Add-IssueTemplate -IssueTemplate $IssueTemplate
@@ -444,6 +522,7 @@ function Add-Metadata
 		-NoWarnings:$NoWarnings
 	if($VsCodeExtensionRecommendations) {Add-VsCodeExtensionRecommendations}
 	if($VSCodeDisablePrettierForMarkdown) {Disable-VsCodePrettier}
+	if($DevContainer) {Add-DevContainerSettings}
 	Pop-Location
 }
 
