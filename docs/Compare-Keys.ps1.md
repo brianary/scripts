@@ -107,7 +107,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### System.Management.Automation.PSObject with these properties:
 ### * Key: The dictionary key being compared.
 ### * Action: A Data.DataRowState that indicates whether the key-value pair has been
-###   Added, Deleted, Modified, or Unchanged.
+### Added, Deleted, Modified, or Unchanged.
 ### * ReferenceValue: The original value.
 ### * DifferenceValue: The new value.
 ## NOTES

@@ -18,8 +18,8 @@ Add-GitHubMetadata.ps1 [[-DefaultOwner] <String[]>] [[-Owners] <Hashtable>] [[-V
  [[-PullRequestTemplate] <String>] [[-ContributingFile] <String>] [[-LicenseFile] <String>]
  [[-DefaultCharset] <String>] [[-DefaultLineEndings] <String>] [[-DefaultIndentSize] <Int32>]
  [-DefaultUsesTabs] [-DefaultKeepTrailingSpace] [-DefaultNoFinalNewLine] [-NoWarnings]
- [-VsCodeExtensionRecommendations] [-VSCodeDisablePrettierForMarkdown] [-Force] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-VsCodeExtensionRecommendations] [-VSCodeDisablePrettierForMarkdown] [-DevContainer] [-NoOwners] [-Force]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -332,6 +332,36 @@ standards.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: DisablePrettierMarkdown, NoPrettierMarkdown
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DevContainer
+Configure settings for Dev Containers, used for Codespaces.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: Codespaces
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoOwners
+Disables adding or updating the CODEOWNERS file.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
