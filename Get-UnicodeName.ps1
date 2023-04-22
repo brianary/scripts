@@ -28,15 +28,20 @@ SPACE
 # The Unicode character.
 [Parameter(ParameterSetName='Character',Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $Character
 )
-Begin {$name = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'txt')) -Raw)}
+Begin
+{
+	$cc = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'cc.txt')) -Raw)
+	$name = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'txt')) -Raw)
+}
 Process
 {
 	if($PSCmdlet.ParameterSetName -eq 'Character')
 	{
-		return $Character.GetEnumerator() |foreach {[int]$_} |Get-UnicodeName.ps1
+		return $Character.GetEnumerator() |ForEach-Object {[int]$_} |Get-UnicodeName.ps1
 	}
 	else
 	{
-		return $name['{0:X4}' -f $CodePoint]
+		$hex = '{0:X4}' -f $CodePoint
+		return $cc.ContainsKey($hex) ? $cc[$hex] : $name[$hex]
 	}
 }
