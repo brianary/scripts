@@ -84,7 +84,6 @@ Attempts to update packages, features, and system.
 #>
 
 #Requires -Version 3
-#Requires -RunAsAdministrator
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost','',
 Justification='This script is not intended for pipelining.')]
 [CmdletBinding()] Param(
@@ -116,6 +115,7 @@ Begin
 
 	function Update-Essentials
 	{
+		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Essentials."; return}
 		Write-Step "$([char]0xD83D)$([char]0xDD1C) Checking for essential updates"
 		if(Get-Command choco -ErrorAction Ignore)
 		{
@@ -159,6 +159,7 @@ Begin
 
 	function Update-Chocolatey
 	{
+		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Chocolatey."; return}
 		if(!(Get-Command choco -ErrorAction Ignore))
 		{Write-Verbose 'Chocolatey not found, skipping'; return}
 		Write-Step "${UP!} Updating Chocolatey packages"
@@ -228,6 +229,7 @@ Begin
 
 	function Update-DellCommand
 	{
+		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping DellCommand."; return}
 		if(!(Resolve-Path "C:\Program Files*\Dell\CommandUpdate\dcu-cli.exe"))
 		{Write-Verbose 'Dell Command not found, skipping'; return}
 		Write-Step "${UP!} Updating Dell firmware & system software"
@@ -239,6 +241,7 @@ Begin
 
 	function Update-Windows
 	{
+		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Windows."; return}
 		if(!(Get-Module PSWindowsUpdate -ListAvailable))
 		{Write-Verbose 'PSWindowsUpdate module not found, skipping Windows Updates'; return}
 		Write-Step "${UP!} Updating Windows"
