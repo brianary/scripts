@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2568_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2538_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -77,7 +77,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Database
 
 - **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
-- &#x1F199; **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+- **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
@@ -106,7 +106,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Dictionary
 
-- &#x1F195; **[Compare-Keys.ps1](Compare-Keys.ps1.md)**: Returns the differences between two dictionaries.
+- **[Compare-Keys.ps1](Compare-Keys.ps1.md)**: Returns the differences between two dictionaries.
 - **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1.md)**: Converts an object to an ordered dictionary of properties and values.
 - **[Join-Keys.ps1](Join-Keys.ps1.md)**: Combines dictionaries together into a single dictionary.
 - **[Remove-NullValues.ps1](Remove-NullValues.ps1.md)**: Removes dictionary entries with null vaules.
@@ -185,7 +185,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1.md)**: Returns the possible values of the specified enumeration.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.
 - **[Import-Variables.ps1](Import-Variables.ps1.md)**: Creates local variables from a data row or dictionary (hashtable).
-- &#x1F199; **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1.md)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
+- **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1.md)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1.md)**: Create a new PSObject by recursively combining the properties of PSObjects.
 - **[Read-Choice.ps1](Read-Choice.ps1.md)**: Returns choice selected from a list of options.
 - **[Stop-ThrowError.ps1](Stop-ThrowError.ps1.md)**: Throws a better error than "throw".
@@ -218,7 +218,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Scripts
 
-- &#x1F199; **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
+- **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-Script.ps1](New-Script.ps1.md)**: Creates a simple boilerplate script.
 - **[Optimize-Help.ps1](Optimize-Help.ps1.md)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
 - **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
@@ -246,7 +246,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
 - **[Import-EdgeKeywords.ps1](Import-EdgeKeywords.ps1.md)**: Adds search keywords to an Edge SQLite profile configuration.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1.md)**: Retrieves the a summary from the Chocolatey log.
-- **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
+- &#x1F199; **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1.md)**: Switch the Java version for the current process by modifying environment variables.
 
 ### Unicode
@@ -254,7 +254,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1.md)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 - **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
-- **[Get-UnicodeName.ps1](Get-UnicodeName.ps1.md)**: Returns the name of a Unicode code point.
+- &#x1F195; **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
+- &#x1F195; **[Get-UnicodeData.ps1](Get-UnicodeData.ps1.md)**: Returns the current (cached) Unicode character data.
+- &#x1F199; **[Get-UnicodeName.ps1](Get-UnicodeName.ps1.md)**: Returns the name of a Unicode code point.
 
 ### VSCode
 

@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='228'>228 &#x2030;</meter> Scripts repo (197) &#x1F4C5; 254 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='225'>225 &#x2030;</meter> Scripts repo (200) &#x1F4C5; 254 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 180 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 180 days</summary>
 
@@ -141,9 +141,10 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='29'>29 &#x2030;</meter> G (34) &#x1F4C5; 169 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='29'>29 &#x2030;</meter> Get (34) &#x1F4C5; 169 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='27'>27 &#x2030;</meter> G (37) &#x1F4C5; 169 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='27'>27 &#x2030;</meter> Get (37) &#x1F4C5; 169 days</summary>
 
+- &#x2716;&#xFE0F; Get-ADUserStatus.ps1
 - &#x2716;&#xFE0F; Get-AspNetEvents.ps1
 - &#x2716;&#xFE0F; Get-AssemblyFramework.ps1
 - &#x2716;&#xFE0F; Get-CachedCredential.ps1
@@ -174,6 +175,8 @@ Script Tests
 - &#x2716;&#xFE0F; Get-Todos.ps1
 - &#x2716;&#xFE0F; Get-TypeAccelerators.ps1
 - &#x2716;&#xFE0F; Get-Unicode.ps1
+- &#x2716;&#xFE0F; Get-UnicodeByName.ps1
+- &#x2716;&#xFE0F; Get-UnicodeData.ps1
 - &#x2716;&#xFE0F; Get-UnicodeName.ps1
 - &#x2716;&#xFE0F; Get-VSCodeSetting.ps1
 - &#x2716;&#xFE0F; Get-VSCodeSettingsFile.ps1

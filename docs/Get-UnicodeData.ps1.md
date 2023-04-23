@@ -1,30 +1,19 @@
 ---
 external help file: -help.xml
 Module Name:
-online version:
+online version: https://www.unicode.org/L2/L1999/UnicodeData.html
 schema: 2.0.0
 ---
 
-# Get-UnicodeName.ps1
+# Get-UnicodeData.ps1
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Returns the current (cached) Unicode character data.
 
 ## SYNTAX
 
-### CodePoint
 ```
-Get-UnicodeName.ps1 [-CodePoint] <Int32> [<CommonParameters>]
-```
-
-### Character
-```
-Get-UnicodeName.ps1 [-Character] <String> [<CommonParameters>]
-```
-
-### Update
-```
-Get-UnicodeName.ps1 [-Update] [<CommonParameters>]
+Get-UnicodeData.ps1 [[-Url] <Uri>] [[-DataFile] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,47 +30,32 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -CodePoint
-{{ Fill CodePoint Description }}
+### -Url
+The location of the latest Unicode data.
 
 ```yaml
-Type: Int32
-Parameter Sets: CodePoint
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Character
-{{ Fill Character Description }}
-
-```yaml
-Type: String
-Parameter Sets: Character
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Update
-Update the character name database.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Update
+Type: Uri
+Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: False
+Position: 1
+Default value: Https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DataFile
+{{ Fill DataFile Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: (Join-Path $env:TEMP ($Url.Segments[-1]))
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -93,6 +67,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### System.Management.Automation.PSCustomObject for each character entry with these properties:
 ## NOTES
 
 ## RELATED LINKS
+
+[https://www.unicode.org/L2/L1999/UnicodeData.html](https://www.unicode.org/L2/L1999/UnicodeData.html)
+

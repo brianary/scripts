@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2568_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2538_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -84,7 +84,7 @@ PowerShell Scripts
 ### Database
 
 - **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
-- :up: **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+- **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-TableMerge.ps1](Export-TableMerge.ps1)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1)**: Searches an entire database for a field value.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1)**: Searches for database columns.
@@ -113,7 +113,7 @@ PowerShell Scripts
 
 ### Dictionary
 
-- :new: **[Compare-Keys.ps1](Compare-Keys.ps1)**: Returns the differences between two dictionaries.
+- **[Compare-Keys.ps1](Compare-Keys.ps1)**: Returns the differences between two dictionaries.
 - **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1)**: Converts an object to an ordered dictionary of properties and values.
 - **[Join-Keys.ps1](Join-Keys.ps1)**: Combines dictionaries together into a single dictionary.
 - **[Remove-NullValues.ps1](Remove-NullValues.ps1)**: Removes dictionary entries with null vaules.
@@ -192,7 +192,7 @@ PowerShell Scripts
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1)**: Returns the possible values of the specified enumeration.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1)**: Returns the list of PowerShell type accelerators.
 - **[Import-Variables.ps1](Import-Variables.ps1)**: Creates local variables from a data row or dictionary (hashtable).
-- :up: **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
+- **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1)**: Create a new PSObject by recursively combining the properties of PSObjects.
 - **[Read-Choice.ps1](Read-Choice.ps1)**: Returns choice selected from a list of options.
 - **[Stop-ThrowError.ps1](Stop-ThrowError.ps1)**: Throws a better error than "throw".
@@ -225,7 +225,7 @@ PowerShell Scripts
 
 ### Scripts
 
-- :up: **[New-PesterTests.ps1](New-PesterTests.ps1)**: Creates a new Pester testing script from a script's examples and parameter sets.
+- **[New-PesterTests.ps1](New-PesterTests.ps1)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-Script.ps1](New-Script.ps1)**: Creates a simple boilerplate script.
 - **[Optimize-Help.ps1](Optimize-Help.ps1)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
 - **[Rename-Script.ps1](Rename-Script.ps1)**: Renames all instances of a script, and updates any usage of it.
@@ -253,7 +253,7 @@ PowerShell Scripts
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1)**: Collects some useful system hardware and operating system details via CIM.
 - **[Import-EdgeKeywords.ps1](Import-EdgeKeywords.ps1)**: Adds search keywords to an Edge SQLite profile configuration.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1)**: Retrieves the a summary from the Chocolatey log.
-- **[Update-Everything.ps1](Update-Everything.ps1)**: Updates everything it can on the system.
+- :up: **[Update-Everything.ps1](Update-Everything.ps1)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1)**: Switch the Java version for the current process by modifying environment variables.
 
 ### Unicode
@@ -261,7 +261,9 @@ PowerShell Scripts
 - **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 - **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-Unicode.ps1](Get-Unicode.ps1)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
-- **[Get-UnicodeName.ps1](Get-UnicodeName.ps1)**: Returns the name of a Unicode code point.
+- :new: **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
+- :new: **[Get-UnicodeData.ps1](Get-UnicodeData.ps1)**: Returns the current (cached) Unicode character data.
+- :up: **[Get-UnicodeName.ps1](Get-UnicodeName.ps1)**: Returns the name of a Unicode code point.
 
 ### VSCode
 
@@ -326,4 +328,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 04/10/2023 20:01:01 -->
+<!-- generated 04/22/2023 22:30:42 -->
