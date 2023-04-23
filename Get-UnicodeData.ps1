@@ -5,6 +5,9 @@ Returns the current (cached) Unicode character data.
 .OUTPUTS
 System.Management.Automation.PSCustomObject for each character entry with these properties:
 
+.FUNCTIONALITY
+Unicode
+
 .LINK
 https://www.unicode.org/L2/L1999/UnicodeData.html
 #>
