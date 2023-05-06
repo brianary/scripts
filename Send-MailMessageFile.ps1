@@ -51,25 +51,25 @@ Process
         $stream.Close()
         $to = New-Object Net.Mail.MailAddressCollection
         $to.Add($eml.To)
-        $msg = @{ From = $eml.From; To = $to |% {"$_"}; Subject = $eml.Subject }
+        $msg = @{ From = $eml.From; To = $to |ForEach-Object {"$_"}; Subject = $eml.Subject }
         if($eml.CC)
         {
             $cc = New-Object Net.Mail.MailAddressCollection
             $cc.Add($eml.CC)
-            [void]$msg.Add('Cc',($cc |% {"$_"}))
+            [void]$msg.Add('Cc',($cc |ForEach-Object {"$_"}))
         }
         if($eml.BCC)
         {
             $bcc = New-Object Net.Mail.MailAddressCollection
             $bcc.Add($eml.BCC)
-            [void]$msg.Add('Bcc',($bcc |% {"$_"}))
+            [void]$msg.Add('Bcc',($bcc |ForEach-Object {"$_"}))
         }
         $priority = try{$msg.Fields('urn:schemas:mailheader:importance').Value}catch{}
         if($priority) {[void]$msg.Add('Priority',$priority)}
         if($eml.HTMLBody) {[void]$msg.Add('Body',$eml.HTMLBody);[void]$msg.Add('BodyAsHtml',$true)}
         else {[void]$msg.Add('Body',$eml.TextBody)}
         [string[]]$atts =
-            if($eml.Attachments.Count) {$eml.Attachments |% {$f = "$env:TEMP\$([guid]::NewGuid())"; $_.SaveToFile($f); $f}}
+            if($eml.Attachments.Count) {$eml.Attachments |ForEach-Object {$f = "$env:TEMP\$([guid]::NewGuid())"; $_.SaveToFile($f); $f}}
             else {@()}
         if($atts) {[void]$msg.Add('Attachments',$atts)}
         if($PSCmdlet.ShouldProcess("email $file ($($eml.Subject))",'Send')) {Send-MailMessage @msg}

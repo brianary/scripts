@@ -41,7 +41,7 @@ Justification='All configurations are returned as a collection.')]
 function Get-ConfigConnections
 {
 	$connections = @()
-	foreach($config in (Get-ChildItem -Recurse -Filter *.config |ForEach-Object FullName))
+	foreach($config in (Get-ChildItem -Recurse -Filter *.config |Select-Object -ExpandProperty FullName))
 	{
 		foreach($cs in (Get-ConfigConnectionStringBuilders.ps1 $config))
 		{

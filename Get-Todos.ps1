@@ -13,10 +13,10 @@ Shows TODOs in this repo.
 
 Push-Location $(git rev-parse --show-toplevel)
 Find-Lines.ps1 TODO * src -Simple -CaseSensitive |
-    foreach {
+    ForEach-Object {
         $blame = git blame -p -L "$($_.LineNumber),$($_.LineNumber)" -- $_.Path
-        $author = $blame |where {$_ -match '^author (?<Author>.*)$'} |foreach {$Matches.Author}
-        $Time = $blame |where {$_ -match '^author-time (?<Time>.*)$'} |foreach {(Get-Date 1970-01-01).AddSeconds([int]$Matches.Time)}
+        $author = $blame |Where-Object {$_ -match '^author (?<Author>.*)$'} |ForEach-Object {$Matches.Author}
+        $Time = $blame |Where-Object {$_ -match '^author-time (?<Time>.*)$'} |ForEach-Object {(Get-Date 1970-01-01).AddSeconds([int]$Matches.Time)}
         [pscustomobject]@{
             Author = $author
             Time = $time
@@ -25,5 +25,5 @@ Find-Lines.ps1 TODO * src -Simple -CaseSensitive |
             LineNumber = $_.LineNumber
         }
     } |
-    sort Time -Descending
+    Sort-Object Time -Descending
 Pop-Location

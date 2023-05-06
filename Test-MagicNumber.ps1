@@ -51,7 +51,7 @@ Begin
 	$readbytes =
 		if((Get-Command Get-Content).Parameters.Encoding.ParameterType -eq [Text.Encoding]) {@{AsByteStream=$true}}
 		else {@{Encoding='Byte'}}
-	Write-Verbose "Testing for magic number $(($Bytes |% {$_.ToString("X")}) -join ' ') at $Offset"
+	Write-Verbose "Testing for magic number $(($Bytes |ForEach-Object {$_.ToString("X")}) -join ' ') at $Offset"
 	$GetBytes =
 		if(!$Offset)
 		{{param($f); Get-Content $f @readbytes -TotalCount $Bytes.Count}.GetNewClosure()}

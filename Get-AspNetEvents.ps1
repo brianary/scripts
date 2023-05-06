@@ -91,8 +91,8 @@ $query = [xml]@"
 "@
 Write-Verbose $query.OuterXml
 $ComputerName |
-    % {Get-WinEvent $query -CN $_} |
-    % {
+    ForEach-Object {Get-WinEvent $query -CN $_} |
+    ForEach-Object {
         $fields = @{EntryType=$_.LevelDisplayName;Source=$_.ProviderName}
         if($_.Properties.Count -lt 2 -or !$IdFields.Contains($_.Id))
         { # not structured nicely
@@ -105,13 +105,13 @@ $ComputerName |
         }
         else
         {
-            $values = $_.Properties |% Value
+            $values = $_.Properties |Select-Object -ExpandProperty Value
             $names = $IdFields[$_.Id]
             if($values.Length -gt $names.Length) { Write-Warning ('Unexpected field values: {0} > {1}' -f $values.Length,$names.Length) }
-            0..($values.Length-1) |% {[void]$fields.Add($names[$_],$values[$_].TrimEnd())}
-            $RemoveFields |% {$fields.Remove($_)}
-            $BoolFields |% {$fields[$_]=[bool]$fields[$_]}
-            $IntFields |% {$fields[$_]=[int]$fields[$_]}
+            0..($values.Length-1) |ForEach-Object {[void]$fields.Add($names[$_],$values[$_].TrimEnd())}
+            $RemoveFields |ForEach-Object {$fields.Remove($_)}
+            $BoolFields |ForEach-Object {$fields[$_]=[bool]$fields[$_]}
+            $IntFields |ForEach-Object {$fields[$_]=[int]$fields[$_]}
             $fields.RequestUrl= [uri]$fields.RequestUrl
             $fields.EventTime= [datetime]::Parse($fields.EventTime,$null,[Globalization.DateTimeStyles]::AssumeLocal)
             if($AllProperties -or $fields.EventTime -ne $_.TimeCreated) {$fields.LogTime = $_.TimeCreated}
@@ -122,7 +122,7 @@ $ComputerName |
         }
         if($fields.Count -eq 2) {return}
         $ordered = [ordered]@{}
-        $order |? {$fields.ContainsKey($_)} |% {[void]$ordered.Add($_,$fields.$_)}
+        $order |Where-Object {$fields.ContainsKey($_)} |ForEach-Object {[void]$ordered.Add($_,$fields.$_)}
         $event = New-Object PSObject -Property $ordered
         $event.PSObject.TypeNames.Insert(0,'AspNetApplicationEventLogEntry')
         $event

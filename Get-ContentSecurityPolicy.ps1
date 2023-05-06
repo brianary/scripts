@@ -43,6 +43,6 @@ Process
     if(!$Response.Headers.ContainsKey('Content-Security-Policy')){return}
     $csp = @{}
     $Response.Headers['Content-Security-Policy'] -split '\s*;\s*' |
-        % {$directive,$values=$_ -split '\s+'; $csp[$directive]=[string[]]$values}
+        ForEach-Object {$directive,$values=$_ -split '\s+'; $csp[$directive]=[string[]]$values}
     return [pscustomobject]$csp
 }

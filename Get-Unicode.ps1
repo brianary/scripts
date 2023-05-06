@@ -47,12 +47,12 @@ for characters that support both a simple text presentation as well as a color e
 Begin { [char[]] $c = @() }
 Process
 {
-	[char]::ConvertFromUtf32($Codepoint).GetEnumerator() |foreach {$c += $_}
+	[char]::ConvertFromUtf32($Codepoint).GetEnumerator() |ForEach-Object {$c += $_}
 	if($AsEmoji) {$c += 0xFE0F}
 }
 End
 {
 	$s = New-Object string (,$c)
 	if(!$AsStringLiteral) {$s}
-	else {$Local:OFS='';"`"$($s.GetEnumerator() |% {'$([char]0x{0:X4})' -f [int]$_})`""}
+	else {$Local:OFS='';"`"$($s.GetEnumerator() |ForEach-Object {'$([char]0x{0:X4})' -f [int]$_})`""}
 }

@@ -93,9 +93,9 @@ if($SeqUrl){Use-SeqServer.ps1 $SeqUrl}
 $mailhost = ([Net.Mail.MailAddress]$PSDefaultParameterValues['Send-MailMessage:From']).Host |Out-String
 if($mailhost)
 {
-    $To = $To |% { if($_ -like '*@*'){$_}else{"$_@$mailhost"} } # allow username-only emails
-    $Cc = $Cc |% { if($_ -like '*@*'){$_}elseif($_){"$_@$mailhost"} } # allow username-only emails
-    if($Bcc) { $Bcc = $Bcc |% { if($_ -like '*@*'){$_}else{"$_@$mailhost"} } } # allow username-only emails
+    $To = $To |ForEach-Object { if($_ -like '*@*'){$_}else{"$_@$mailhost"} } # allow username-only emails
+    $Cc = $Cc |ForEach-Object { if($_ -like '*@*'){$_}elseif($_){"$_@$mailhost"} } # allow username-only emails
+    if($Bcc) { $Bcc = $Bcc |ForEach-Object { if($_ -like '*@*'){$_}else{"$_@$mailhost"} } } # allow username-only emails
 }
 
 $Msg = @{

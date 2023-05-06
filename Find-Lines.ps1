@@ -69,15 +69,15 @@ function ConvertTo-DateTimeOffset([Parameter(Position=0)][int] $UnixTime,[Parame
 $culturetextinfo = (Get-Culture).TextInfo
 function Get-LineBlameInfo([Parameter(Position=0)][string] $Path,[Parameter(Position=1)][int] $LineNumber)
 {
-    pushd "$([IO.Path]::GetDirectoryName($Path))"
+    Push-Location "$([IO.Path]::GetDirectoryName($Path))"
     $lineinfo = [Collections.Generic.List[string]]@(git blame -l -p -L "$LineNumber,$LineNumber" -- $Path)
-    popd
+    Pop-Location
     ($sha1,$linetext) = ($lineinfo[0],$lineinfo[$lineinfo.Count -1])
     $lineinfo.RemoveAt($lineinfo.Count -1)
     $lineinfo.RemoveAt(0)
     $linehash = @{SHA1 = $sha1; Line = $linetext}
     $lineinfo |
-        % {
+        ForEach-Object {
             ($k,$v)= $_ -split ' ',2
             $linehash.Add(($culturetextinfo.ToTitleCase($k) -replace '-',''),$v)
         }
@@ -99,7 +99,7 @@ if($List) { $ssopt.List=$true }
 if($NotMatch) { $ssopt.NotMatch=$true }
 if($SimpleMatch) { $ssopt.SimpleMatch=$true }
 # the filter parameter is much faster than the include parameter
-$lookin = if($Filters) { $Filters|% {Get-ChildItem @lsopt -Filter $_} } else { Get-ChildItem @lsopt }
+$lookin = if($Filters) { $Filters|ForEach-Object {Get-ChildItem @lsopt -Filter $_} } else { Get-ChildItem @lsopt }
 # TODO: Manually handle Include and Exclude for the FullName.
 $found = Select-String -Path $lookin @ssopt
 if($ChooseMatches) { $found = $found |Out-GridView -Title "Select matches: $Pattern $Filters $Path" -PassThru }
@@ -107,5 +107,5 @@ switch($PSCmdlet.ParameterSetName)
 {
     Default { $found }
     Open    { $found |Invoke-Item }
-    Blame   { $found |% {Get-LineBlameInfo $_.Path $_.LineNumber} }
+    Blame   { $found |ForEach-Object {Get-LineBlameInfo $_.Path $_.LineNumber} }
 }

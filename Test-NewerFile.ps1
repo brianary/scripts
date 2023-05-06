@@ -41,7 +41,7 @@ if($ReferenceFile.Length -eq $DifferenceFile.Length)
 		else {@{Encoding='Byte'}}
     if(Get-Command -Verb Get -Noun FileHash) {if((Get-FileHash $ReferenceFile).Hash -eq (Get-FileHash $DifferenceFile).Hash)
     {Write-Verbose 'Identical hash values.'; return $false}}
-    elseif(!(compare (Get-Content $ReferenceFile @readbytes) (Get-Content $DifferenceFile @readbytes)))
+    elseif(!(Compare-Object (Get-Content $ReferenceFile @readbytes) (Get-Content $DifferenceFile @readbytes)))
     {Write-Verbose 'Identical contents.'; return $false}
 }
 if($ReferenceFile.LastWriteTimeUtc -lt $DifferenceFile.LastWriteTimeUtc)

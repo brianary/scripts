@@ -17,4 +17,4 @@ True
 #Requires -Version 3
 [CmdletBinding()][OutputType([bool])] Param()
 [Environment]::UserInteractive -and
-    !([Environment]::GetCommandLineArgs() |? {$_ -ilike '-NonI*'})
+    !([Environment]::GetCommandLineArgs() |Where-Object {$_ -ilike '-NonI*'})

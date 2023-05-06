@@ -102,7 +102,7 @@ $token =
 		$code = @{consumer_key=$consumerKey;redirect_uri=$redirectUri} |
 			ConvertTo-Json -Compress |
 			Invoke-RestMethod https://getpocket.com/v3/oauth/request -ContentType application/json |
-			ForEach-Object code
+			Select-Object -ExpandProperty code
 		Start-Process "https://getpocket.com/auth/authorize?request_token=$code&redirect_uri=$([uri]::EscapeDataString($redirectUri))" -Wait
 		if(!$PSCmdlet.ShouldContinue('Has the token been authorized?','Authorize')) {return}
 		$code = @{consumer_key=$consumerKey;code=$code} |

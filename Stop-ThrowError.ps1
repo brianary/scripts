@@ -81,7 +81,7 @@ An string unique to the script that identifies the error.
 By default this will use the line number it is called from.
 #>
 [Parameter(ParameterSetName='Detailed',Position=4)][string] $ErrorId =
-	"L$(Get-PSCallStack |select -First 1 |% ScriptLineNumber)",
+	"L$(Get-PSCallStack |Select-Object -First 1 |Select-Object -ExpandProperty ScriptLineNumber)",
 [Parameter(Position=0,ParameterSetName='Format',Mandatory=$true)]
 [Parameter(Position=0,ParameterSetName='InvalidArgument',Mandatory=$true)]
 [Parameter(Position=0,ParameterSetName='InvalidOperation',Mandatory=$true)]

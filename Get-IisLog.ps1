@@ -293,12 +293,12 @@ filter Convert-Result
 # get the log files
 $LogDirectory =
 	if ($ComputerName) { $ComputerName |ForEach-Object {"\\$_\LogFiles$"} }
-	else { $LogDirectory |Resolve-Path |ForEach-Object Path }
+	else { $LogDirectory |Resolve-Path |Select-Object -ExpandProperty Path }
 $from = ' from ' +
 	((Get-ChildItem $LogDirectory -Filter *.log |
 		Where-Object LastWriteTime -GE $After.AddDays(-1) |
 		Where-Object CreationTime -LE $Before.AddDays(1) |
-		ForEach-Object FullName) -join ',')
+		Select-Object -ExpandProperty FullName) -join ',')
 if($from -eq ' from ') { $from += $($LogDirectory|ForEach-Object {"$_\*.log"}) -join ',' }
 
 # build the where clause

@@ -253,7 +253,7 @@ function Add-CodeOwners
 		[int] $max = ($authors |Measure-Object Commits -Maximum).Maximum
 		[int] $oneSigmaFromTop = $max - ($authors.Commits |Measure-StandardDeviation.ps1)
 		Write-Verbose "Authors with $oneSigmaFromTop or more commits will be included as default code owners."
-		$DefaultOwner = $authors |Where-Object {[int] $_.Commits -ge $oneSigmaFromTop} |ForEach-Object Email
+		$DefaultOwner = $authors |Where-Object {[int] $_.Commits -ge $oneSigmaFromTop} |Select-Object -ExpandProperty Email
 		Write-Verbose "Default code owners determined to be $DefaultOwner."
 	}
 	$Local:OFS = [Environment]::NewLine

@@ -76,7 +76,7 @@ Process
 		Path = $Path
 		Encoding = $enc
 		Lines = $lines
-		LineEndings = 'CRLF','LF','CR' |where {Get-Variable $_ -ValueOnly}
+		LineEndings = 'CRLF','LF','CR' |Where-Object {Get-Variable $_ -ValueOnly}
 		Indentation =
 			if($indent.ht -and !($indent.sp -or $indent.htsp)) {'Tabs'}
 			elseif($indent.sp -and !($indent.ht -or $indent.htsp)) {'Spaces'}

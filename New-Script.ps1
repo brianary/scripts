@@ -63,7 +63,7 @@ Creates a basic script.
 )
 DynamicParam
 {
-    Get-Verb |ForEach-Object Verb |Add-DynamicParam.ps1 NameVerb string -Position 0 -Mandatory
+    Get-Verb |Select-Object -ExpandProperty Verb |Add-DynamicParam.ps1 NameVerb string -Position 0 -Mandatory
     $DynamicParams
 }
 Process
@@ -76,16 +76,16 @@ Process
     $name = "$NameVerb-$NameNoun.ps1"
     $commenthelp = @()
     if($Synopsis) {$commenthelp += '.Synopsis',"$Indent$Synopsis",''}
-    if($Parameters -and $Parameters.Count) {$commenthelp += $Parameters.GetEnumerator() |% Key |% {".Parameter $_",''}}
+    if($Parameters -and $Parameters.Count) {$commenthelp += $Parameters.GetEnumerator() |Select-Object -ExpandProperty Key |ForEach-Object {".Parameter $_",''}}
     if($Inputs) {$commenthelp += '.Inputs',"$Indent$Inputs",''}
     if($Outputs) {$commenthelp += '.Outputs',"$Indent$Outputs",''}
-    if($Links) {$commenthelp += $Links |% {'.Link',"$Indent$_",''}}
-    if($Example) {$commenthelp += $Example |% {'.Example',"$Indent$_",''}}
+    if($Links) {$commenthelp += $Links |ForEach-Object {'.Link',"$Indent$_",''}}
+    if($Example) {$commenthelp += $Example |ForEach-Object {'.Example',"$Indent$_",''}}
     $requires = @()
     $reqver = if($RequiresVersion -eq [decimal][int]$RequiresVersion){[int]$RequiresVersion}else{$RequiresVersion}
     $requires += "#Requires -Version $reqver"
     if($RequiresRunAsAdmin) {$requires += '#Requires -RunAsAdministrator'}
-    if($RequiresModule -and $RequiresModule.Count) {$requires += $RequiresModule |% {"#Requires -Module $_"}}
+    if($RequiresModule -and $RequiresModule.Count) {$requires += $RequiresModule |ForEach-Object {"#Requires -Module $_"}}
     $cmdletbinding = @()
     if($ConfirmImpact) {$cmdletbinding += "ConfirmImpact=$ConfirmImpact"}
     if($DefaultParameterSetName) {$cmdletbinding += "DefaultParameterSetName=$DefaultParameterSetName"}

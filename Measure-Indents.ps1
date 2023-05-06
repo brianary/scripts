@@ -32,7 +32,7 @@ Process
     foreach($line in (Get-Content $Path))
     {
         if($line -notmatch '^(?<Indent>\s+)') {continue}
-        $IndentChars = $Matches.Indent.ToCharArray() |select -Unique
+        $IndentChars = $Matches.Indent.ToCharArray() |Select-Object -Unique
         if($IndentChars -is [object[]]) {$Count.Mix++}
         elseif($IndentChars -is [char])
         {

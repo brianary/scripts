@@ -38,8 +38,8 @@ $ndp = $hklm.OpenSubKey('SOFTWARE\Microsoft\NET Framework Setup\NDP')
 $versions = @{}
 # get v1-v3.x
 $ndp.GetSubKeyNames() |
-	? {$_ -like 'v[123].*'} |
-	% {
+	Where-Object {$_ -like 'v[123].*'} |
+	ForEach-Object {
 		$k = $ndp.OpenSubKey($_)
 		$v = $k.GetValue('Version')
 		Write-Verbose "Found '$_' subkey, version $v"

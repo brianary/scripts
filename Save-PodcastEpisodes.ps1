@@ -30,7 +30,7 @@ Saves podcast episodes to the current directory.
 )
 Begin
 {
-	[regex] $invalidchars = "(?:$(([io.path]::GetInvalidFileNameChars() |foreach {'\x{0:X2}' -f [int]$_}) -join '|'))+"
+	[regex] $invalidchars = "(?:$(([io.path]::GetInvalidFileNameChars() |ForEach-Object {'\x{0:X2}' -f [int]$_}) -join '|'))+"
 }
 Process
 {
@@ -39,16 +39,16 @@ Process
 	$activity = "Downloading $($channel.title)"
 	[object[]] $episodes = Invoke-RestMethod $Uri
 	foreach($episode in $episodes) {$episode |Add-Member published ([datetime]$episode.pubDate)}
-	if($PSBoundParameters.ContainsKey('After')) {[object[]] $episodes = $episodes |where published -gt $After}
-	if($PSBoundParameters.ContainsKey('Before')) {[object[]] $episodes = $episodes |where published -lt $Before}
-	if($PSBoundParameters.ContainsKey('First')) {[object[]] $episodes = $episodes |sort published |select -First $First}
-	if($PSBoundParameters.ContainsKey('Last')) {[object[]] $episodes = $episodes |sort published |select -Last $Last}
+	if($PSBoundParameters.ContainsKey('After')) {[object[]] $episodes = $episodes |Where-Object published -gt $After}
+	if($PSBoundParameters.ContainsKey('Before')) {[object[]] $episodes = $episodes |Where-Object published -lt $Before}
+	if($PSBoundParameters.ContainsKey('First')) {[object[]] $episodes = $episodes |Sort-Object published |Select-Object -First $First}
+	if($PSBoundParameters.ContainsKey('Last')) {[object[]] $episodes = $episodes |Sort-Object published |Select-Object -Last $Last}
 	if($CreateFolder) {New-Item ($channel.title -replace $invalidchars,'_') -ItemType Directory |Push-Location}
 	$i,$max = 0,($episodes.Count/100)
 	foreach($episode in $episodes)
 	{
 		$episode |Format-List |Out-String |Write-Verbose
-		$title = $episode.title |select -First 1
+		$title = $episode.title |Select-Object -First 1
 		Write-Progress $activity $title -curr $episode.enclosure.url -percent ($i++/$max)
 		if($UseTitle)
 		{

@@ -26,5 +26,5 @@ $value = @{
     'Send-SeqEvent.ps1:ApiKey' = $ApiKey
 }
 $defaults = Get-Variable -Scope 1 -Name PSDefaultParameterValues -EA SilentlyContinue
-if($defaults) {$value.Keys |? {$defaults.Value.Contains($_)} |% {$defaults.Value.Remove($_)}; $defaults.Value += $value}
+if($defaults) {$value.Keys |Where-Object {$defaults.Value.Contains($_)} |ForEach-Object {$defaults.Value.Remove($_)}; $defaults.Value += $value}
 else {Set-Variable -Scope 1 -Name PSDefaultParameterValues -Value $value}

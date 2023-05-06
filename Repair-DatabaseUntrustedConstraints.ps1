@@ -56,7 +56,7 @@ A SQL query that produces a single-column result set, named "command", containin
 executable SQL.
 #>
     $count,$i = 0,0
-    [string[]]$commands = Invoke-Sqlcmd $Query |% command
+    [string[]]$commands = Invoke-Sqlcmd $Query |Select-Object -ExpandProperty command
     if(!$commands){return}
     $max,$act = ($commands.Count/100),($Action -f -1,$commands.Count)
     Write-Verbose ($Action -f 1,$commands.Count)
@@ -99,7 +99,7 @@ select 'if exists (select * from sys.foreign_keys where object_id = object_id(''
    and is_not_for_replication = 0
    and is_disabled = 0;
 "@
-    } |% {Resolve-SqlcmdResults @_}
+    } |ForEach-Object {Resolve-SqlcmdResults @_}
 }
 
 Repair-DefaultNames

@@ -29,7 +29,7 @@ Returns the connection strings found in the debug web.config XDT.
 Process
 {
     Select-Xml '//connectionStrings/add' $Path |
-        % {
+        ForEach-Object {
             $provider = $_.Node.Attributes.GetNamedItem('providerName')
             if($provider){$provider=$provider.Value}
             [pscustomobject]@{

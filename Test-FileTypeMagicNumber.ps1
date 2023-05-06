@@ -75,7 +75,7 @@ Begin
                     (Test-MagicNumber.ps1 0xFF,0xFE $f) -or          # UTF-16 BOM (little-endian)
                     # US-ASCII (POSIX)
                     ((Test-MagicNumber.ps1 0x0A $f -Offset -1) -and (0 -notin (Get-Content $f @readbytes -Total 1KB))) -or
-                    (!(Get-Content $f @readbytes -Total 1KB |? {$_ -gt 0x7F -or $_ -eq 0}))
+                    (!(Get-Content $f @readbytes -Total 1KB |Where-Object {$_ -gt 0x7F -or $_ -eq 0}))
             }}
             xml
             {{ param($f)

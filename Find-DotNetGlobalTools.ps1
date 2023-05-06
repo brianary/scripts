@@ -15,7 +15,7 @@ DotNet
 
 Use-Command.ps1 dotnet "$env:ProgramFiles\dotnet\dotnet.exe" -cinst dotnet-sdk
 
-foreach($line in dotnet tool search $Name |where {$_ -match '^\S+\s+\d+(?:\.\d+)+\b'})
+foreach($line in dotnet tool search $Name |Where-Object {$_ -match '^\S+\s+\d+(?:\.\d+)+\b'})
 {
 	$package,$version,$authors,$downloads,$verified = $line -split '\s\s+',5
 	[pscustomobject]@{

@@ -176,7 +176,7 @@ select 'Column' [ObjectType],
            then 1 else 0 end as bit) IsMsDbTools,
        '$($updatesql -replace "'","''")' ConvertSqlScript
   from $table;
-"@ |% {Write-Verbose $_ ; Invoke-Sqlcmd $_ |ConvertFrom-DataRow.ps1}
+"@ |ForEach-Object {Write-Verbose $_ ; Invoke-Sqlcmd $_ |ConvertFrom-DataRow.ps1}
     }
 <#
 TODO: params

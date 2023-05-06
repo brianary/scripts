@@ -58,19 +58,19 @@ Begin
     }
     $action = 'Find Project Packages'
     Write-Progress $action 'Getting proj package lists' -PercentComplete 0
-    [string[]]$projFiles = Get-ChildItem $Path -Recurse -Filter *proj |% FullName
+    [string[]]$projFiles = Get-ChildItem $Path -Recurse -Filter *proj |Select-Object -ExpandProperty FullName
     if(!$projFiles) {[string[]]$projFiles = @()}
     Write-Verbose "Found $($projFiles.Length) *proj files."
     Write-Progress $action 'Getting NuGet package lists' -PercentComplete 15
-    [string[]]$nugetFiles = Get-ChildItem $Path -Recurse -Filter packages.config |% FullName
+    [string[]]$nugetFiles = Get-ChildItem $Path -Recurse -Filter packages.config |Select-Object -ExpandProperty FullName
     if(!$nugetFiles) {[string[]]$nugetFiles = @()}
     Write-Verbose "Found $($nugetFiles.Length) packages.config files."
     Write-Progress $action 'Getting npm package lists' -PercentComplete 30
-    [string[]]$npmFiles   = Get-ChildItem $Path -Recurse -Filter package.json |% FullName
+    [string[]]$npmFiles   = Get-ChildItem $Path -Recurse -Filter package.json |Select-Object -ExpandProperty FullName
     if(!$npmFiles) {[string[]]$npmFiles = @()}
     Write-Verbose "Found $($npmFiles.Length) package.json files."
     Write-Progress $action 'Getting paket.lock package lists' -PercentComplete 45
-    [string[]]$paketFiles   = Get-ChildItem $Path -Recurse -Filter paket.lock |% FullName
+    [string[]]$paketFiles   = Get-ChildItem $Path -Recurse -Filter paket.lock |Select-Object -ExpandProperty FullName
     if(!$paketFiles) {[string[]]$paketFiles = @()}
     Write-Verbose "Found $($paketFiles.Length) paket.lock files."
     $max = $projFiles.Length + $nugetFiles.Length + $npmFiles.Length + $paketFiles.Length
@@ -83,9 +83,9 @@ Begin
         Write-Progress $action "Parsing *proj package files: found $($projFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+60)
         $p = Select-Xml //msbuild:HintPath $file -Namespace @{'msbuild'='http://schemas.microsoft.com/developer/msbuild/2003'}
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange([object[]]( $p |% {$dll = Join-Path (Split-Path $_.Path) $_.Node.InnerText; [pscustomobject]@{
+        [void]$packages.AddRange([object[]]( $p |ForEach-Object {$dll = Join-Path (Split-Path $_.Path) $_.Node.InnerText; [pscustomobject]@{
             name    = $_.Node.ParentNode.Attributes['Include'].Value
-            version = $(if(Test-Path $dll -PathType Leaf) {ls $dll |% VersionInfo |% ProductVersion})
+            version = $(if(Test-Path $dll -PathType Leaf) {Get-ChildItem $dll |Select-Object -ExpandProperty VersionInfo |Select-Object -ExpandProperty ProductVersion})
             file    = $file
         }}))
     }
@@ -93,9 +93,9 @@ Begin
     {
         Write-Verbose "Parsing $file"
         Write-Progress $action "Parsing NuGet package files: found $($nugetFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+70)
-        $p = Select-Xml /packages/package $file |% Node
+        $p = Select-Xml /packages/package $file |Select-Object -ExpandProperty Node
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange([object[]]( $p |% {[pscustomobject]@{
+        [void]$packages.AddRange([object[]]( $p |ForEach-Object {[pscustomobject]@{
             name    = $_.id
             version = $_.version
             file    = $file
@@ -107,9 +107,9 @@ Begin
         Write-Progress $action "Parsing npm package files: found $($npmFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+80)
         $j = ConvertFrom-Json (Get-Content $file -Raw)
         if(!(Get-Member -InputObject $j -Name dependencies)) {Write-Verbose "No dependencies found in $file"; continue}
-        $p = Get-Member -InputObject $j.dependencies -MemberType NoteProperty |% Name
+        $p = Get-Member -InputObject $j.dependencies -MemberType NoteProperty |Select-Object -ExpandProperty Name
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange([object[]]( $p |% {[pscustomobject]@{
+        [void]$packages.AddRange([object[]]( $p |ForEach-Object {[pscustomobject]@{
             name    = $_
             version = $j.dependencies.$_
             file    = $file
@@ -120,9 +120,9 @@ Begin
         Write-Verbose "Parsing $file"
         Write-Progress $action "Parsing paket.lock package files: found $($paketFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+90)
         $lockpattern = '\A\s{4}(?<Name>\w\S+)\s\((?:>= )?(?<Version>\d+(?:\.\d+)+)\b'
-        $p = Get-Content $file |% {if($_ -match $lockpattern){[pscustomobject]@{Name=$Matches.Name;Version=$Matches.Version}}}
+        $p = Get-Content $file |ForEach-Object {if($_ -match $lockpattern){[pscustomobject]@{Name=$Matches.Name;Version=$Matches.Version}}}
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange([object[]]( $p |% {[pscustomobject]@{
+        [void]$packages.AddRange([object[]]( $p |ForEach-Object {[pscustomobject]@{
             name    = $_.Name
             version = $_.Version
             file    = $file
@@ -133,6 +133,6 @@ Begin
 Process
 {
     $packages |
-        ? {$_.Name -like $PackageName} |
-        ? {Compare-Version $_.Version}
+        Where-Object {$_.Name -like $PackageName} |
+        Where-Object {Compare-Version $_.Version}
 }

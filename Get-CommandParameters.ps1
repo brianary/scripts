@@ -60,9 +60,9 @@ Process
 	{
 		$params = $cmd.ParameterSets |
 			Where-Object Name -eq $ParameterSet |
-			ForEach-Object Parameters |
+			Select-Object -ExpandProperty Parameters |
 			Where-Object Name -notin $excludeParams
-		if($NamesOnly) {return $params |ForEach-Object Name}
+		if($NamesOnly) {return $params |Select-Object -ExpandProperty Name}
 		else {return $params}
 	}
 	else

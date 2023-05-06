@@ -177,7 +177,7 @@ Begin
 	function Format-Children($InputObject,[switch]$UseKeys)
 	{
 		if($InputObject -eq $null) {return}
-		$(if($UseKeys){$InputObject.Keys}else{Get-Member -InputObject $InputObject -MemberType Properties |ForEach-Object Name}) |
+		$(if($UseKeys){$InputObject.Keys}else{Get-Member -InputObject $InputObject -MemberType Properties |Select-Object -ExpandProperty Name}) |
 			Where-Object {$_ -notmatch '\W'} |
 			ForEach-Object {"$IndentBy$_ = $(ConvertTo-PowerShell.ps1 $InputObject.$_ -Indent "$tab$IndentBy" -SkipInitialIndent)"}
 	}

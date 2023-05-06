@@ -37,7 +37,7 @@ Process
     {
         $entry = [Net.Dns]::GetHostEntry($h)
         if(!$PSBoundParameters.ContainsKey('OnlyAddresses')) {$entry}
-        elseif($OnlyAddresses -eq [Net.Sockets.AddressFamily]::Unspecified) {$entry.AddressList |foreach {$_.IPAddressToString}}
-        else {$entry.AddressList |where AddressFamily -eq $OnlyAddresses |foreach {$_.IPAddressToString}}
+        elseif($OnlyAddresses -eq [Net.Sockets.AddressFamily]::Unspecified) {$entry.AddressList |ForEach-Object {$_.IPAddressToString}}
+        else {$entry.AddressList |Where-Object AddressFamily -eq $OnlyAddresses |ForEach-Object {$_.IPAddressToString}}
     }
 }

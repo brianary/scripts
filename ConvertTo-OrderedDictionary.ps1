@@ -27,7 +27,7 @@ Process
 {
     $properties = [ordered]@{}
     Get-Member -InputObject $InputObject -MemberType Properties |
-        ForEach-Object Name |
+        Select-Object -ExpandProperty Name |
         ForEach-Object {[void]$properties.Add($_,$InputObject.$_)}
     $properties
 }

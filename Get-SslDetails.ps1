@@ -46,7 +46,7 @@ Tls12              : Aes128
 # The remote port to connect to.
 [Parameter(ValueFromPipelineByPropertyName=$true)][int]$Port = 443
 )
-Begin {$protocols = Get-EnumValues.ps1 Security.Authentication.SslProtocols |? Name -notin 'None','Default' |% Name}
+Begin {$protocols = Get-EnumValues.ps1 Security.Authentication.SslProtocols |Where-Object Name -notin 'None','Default' |Select-Object -ExpandProperty Name}
 Process
 {
     $result = [ordered]@{

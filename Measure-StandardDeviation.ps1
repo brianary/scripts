@@ -31,7 +31,7 @@ Measure-StandardDeviation.ps1 (1..20)
 End
 {
 	[double[]] $values = if($input) {$input} else {$InputObject}
-	[double] $average = $values |Measure-Object -Average |ForEach-Object Average
+	[double] $average = $values |Measure-Object -Average |Select-Object -ExpandProperty Average
 	Write-Verbose "Average = $average"
 	[double[]] $deviations = $values |ForEach-Object {[math]::Pow(($_-$average),2)}
 	Write-Verbose "Deviations = { $deviations }"

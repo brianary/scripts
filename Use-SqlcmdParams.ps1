@@ -102,6 +102,6 @@ foreach($param in 'HostName','QueryTimeout','ConnectionTimeout','ErrorLevel','Se
 }
 Write-Verbose "Params: $(ConvertTo-Json $value -Compress)"
 $defaults = Get-Variable -Scope 1 -Name PSDefaultParameterValues -EA SilentlyContinue
-try { [void]$value.Keys } catch { gm -i $value }
-if($defaults) {$value.Keys |? {$value.$_ -and $defaults.Value.Contains($_)} |% {$defaults.Value.Remove($_)}; $defaults.Value += $value}
+try { [void]$value.Keys } catch { Get-Member -i $value }
+if($defaults) {$value.Keys |Where-Object {$value.$_ -and $defaults.Value.Contains($_)} |ForEach-Object {$defaults.Value.Remove($_)}; $defaults.Value += $value}
 else {Set-Variable -Scope 1 -Name PSDefaultParameterValues -Value $value}

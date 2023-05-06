@@ -52,9 +52,9 @@ return the comic.
 )
 switch($PSCmdlet.ParameterSetName)
 {
-	Title {Get-Comics.ps1 $ReleaseWeek -pv c |where {$Title |where {$c -and $c.title -like "*$_*"}}}
-	Creator {Get-Comics.ps1 $ReleaseWeek -pv c |where {$Creator |where {$c -and $c.creators -like "*$_*"}}}
-	TitleMatch {Get-Comics.ps1 $ReleaseWeek |where {$_.title -match $TitleMatch}}
-	CreatorMatch {Get-Comics.ps1 $ReleaseWeek |where {$_.creators -match $CreatorMatch}}
-	Condition {Get-Comics.ps1 $ReleaseWeek |where $Condition}
+	Title {Get-Comics.ps1 $ReleaseWeek -pv c |Where-Object {$Title |Where-Object {$c -and $c.title -like "*$_*"}}}
+	Creator {Get-Comics.ps1 $ReleaseWeek -pv c |Where-Object {$Creator |Where-Object {$c -and $c.creators -like "*$_*"}}}
+	TitleMatch {Get-Comics.ps1 $ReleaseWeek |Where-Object {$_.title -match $TitleMatch}}
+	CreatorMatch {Get-Comics.ps1 $ReleaseWeek |Where-Object {$_.creators -match $CreatorMatch}}
+	Condition {Get-Comics.ps1 $ReleaseWeek |Where-Object $Condition}
 }

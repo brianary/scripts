@@ -27,6 +27,6 @@ Process
     $xslt = Join-Path $PSScriptRoot 'dataref.xslt'
     $html = [IO.Path]::ChangeExtension($SchemaFile,'html')
     Copy-Item $css .
-    saxon -s:$SchemaFile -xsl:$xslt -o:$html
+    C:\ProgramData\chocolatey\bin\SaxonHE\bin\Transform.exe -s:$SchemaFile -xsl:$xslt -o:$html
     Invoke-Item $html
 }

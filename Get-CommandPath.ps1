@@ -47,13 +47,13 @@ Process
     {
         $files =
             if([io.path]::GetExtension($ApplicationName)) {$ApplicationName}
-            else {$env:PATHEXT.ToLower() -split ';' |foreach {[io.path]::ChangeExtension($ApplicationName,$_)}}
+            else {$env:PATHEXT.ToLower() -split ';' |ForEach-Object {[io.path]::ChangeExtension($ApplicationName,$_)}}
         Write-Verbose "Searching Path for $($files -join ', ')"
         foreach($p in $env:Path -split ';')
         {
             $files |
-                foreach {Join-Path $p $_} |
-                where {Test-Path $_ -Type Leaf}
+                ForEach-Object {Join-Path $p $_} |
+                Where-Object {Test-Path $_ -Type Leaf}
         }
     }
     else

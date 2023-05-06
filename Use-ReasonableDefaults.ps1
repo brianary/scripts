@@ -46,7 +46,7 @@ else
 			if([Net.ServicePointManager]::SecurityProtocol -band [Net.SecurityProtocolType]'Ssl3')
 			{
 				[Net.ServicePointManager]::SecurityProtocol =
-					Get-EnumValues.ps1 Net.SecurityProtocolType |select -Last 1 -ExpandProperty Name
+					Get-EnumValues.ps1 Net.SecurityProtocolType |Select-Object -Last 1 -ExpandProperty Name
 			}
 		}
 	}

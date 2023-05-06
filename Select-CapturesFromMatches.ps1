@@ -34,20 +34,20 @@ Process
 	$value = @{}
 	if($ValuesOnly)
 	{
-		return $MatchInfo.Matches.Groups.Value |select -Skip 1
+		return $MatchInfo.Matches.Groups.Value |Select-Object -Skip 1
 	}
 	elseif($PSVersionTable.PSEdition -eq 'Desktop' -and $PSVersionTable.CLRVersion -lt [version]4.7)
 	{ # old CLR is really tedious to get group names
 		[regex]$regex = $MatchInfo.Pattern
 		$regex.GetGroupNames() |
-			where {$_ -Match '\D'} |
-			foreach {$value.Add($_,$MatchInfo.Matches.Groups[$regex.GroupNumberFromName($_)].Value)}
+			Where-Object {$_ -Match '\D'} |
+			ForEach-Object {$value.Add($_,$MatchInfo.Matches.Groups[$regex.GroupNumberFromName($_)].Value)}
 	}
 	else
 	{
 		$MatchInfo.Matches.Groups |
-			where Name -Match '\D' |
-			foreach {$value.Add($_.Name,$_.Value)}
+			Where-Object Name -Match '\D' |
+			ForEach-Object {$value.Add($_.Name,$_.Value)}
 	}
 	return [pscustomobject]$value
 }

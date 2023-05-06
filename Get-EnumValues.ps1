@@ -92,5 +92,5 @@ Get-EnumValues.ps1 System.Web.Security.AntiXss.MidCodeCharts
 )
 Process
 {
-    [enum]::GetNames($Type) |foreach {[pscustomobject]@{Value=[int][enum]::Parse($Type,$_);Name=$_}}
+    [enum]::GetNames($Type) |ForEach-Object {[pscustomobject]@{Value=[int][enum]::Parse($Type,$_);Name=$_}}
 }

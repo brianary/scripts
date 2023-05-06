@@ -40,7 +40,7 @@ foreach($dir in $ScriptDirectory)
 Write-Progress "Renaming $OldName to $NewName" -Completed
 
 Write-Progress "Updating uses of $OldName to $NewName" 'Finding uses'
-$scope = $ScriptDirectory |foreach {"$_\*.ps1"}
+$scope = $ScriptDirectory |ForEach-Object {"$_\*.ps1"}
 [Microsoft.PowerShell.Commands.MatchInfo[]] $uses =
 	@(Select-String "\b$([regex]::Escape([io.path]::GetFileNameWithoutExtension($OldName)))(?:\.ps1)?\b" $scope -List)
 if($uses.Length -eq 0)

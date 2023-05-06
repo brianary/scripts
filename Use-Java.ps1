@@ -36,7 +36,7 @@ if($env:CLASSPATH)
     $env:CLASSPATH = ".;$env:JAVA_HOME\lib;$env:JAVA_HOME\jre\lib"
     Write-Verbose "CLASSPATH=$env:CLASSPATH"
 }
-$env:Path = ($env:Path -split ';' |% {if($_ -match 'Java|JDK'){"$Path\bin"}else{$_}}) -join ';'
+$env:Path = ($env:Path -split ';' |ForEach-Object {if($_ -match 'Java|JDK'){"$Path\bin"}else{$_}}) -join ';'
 Write-Verbose "Path=$($env:Path -replace ';',([Environment]::NewLine))"
 ${java.exe} = (Get-Command java.exe -CommandType Application).Path
 Write-Verbose "Using Java ${java.exe} ($((Get-Item ${java.exe}).VersionInfo.ProductVersion))"

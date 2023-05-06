@@ -243,18 +243,18 @@ DTEND;$(ConvertTo-DateTimeWithZone -Value $end -TimeZone $TimeZone)
 					ForEach-Object {Write-Warning "Ignoring non-calendar trigger: $_"}
 				$calendarTrigger = @($task.Triggers |
 					Where-Object {$_.PSObject.Properties.Match('CalendarTrigger').Count -gt 0} |
-					ForEach-Object CalendarTrigger)
+					Select-Object -ExpandProperty CalendarTrigger)
 				$calendarTrigger |
 					Where-Object {$_.PSObject.Properties.Match('ScheduleByMonth*').Count -eq 0} |
 					ConvertTo-Json -Compress -Depth 5 |
 					ForEach-Object {Write-Warning "Ignoring non-month calendar trigger: $_"}
 				$schedule += $calendarTrigger |
 					Where-Object {$_.PSObject.Properties.Match('ScheduleByMonth').Count -gt 0} |
-					ForEach-Object ScheduleByMonth |
+					Select-Object -ExpandProperty ScheduleByMonth |
 					ConvertFrom-ScheduleByMonth
 				$schedule += $calendarTrigger |
 					Where-Object {$_.PSObject.Properties.Match('ScheduleByMonthDayOfWeek').Count -gt 0} |
-					ForEach-Object ScheduleByMonthDayOfWeek |
+					Select-Object -ExpandProperty ScheduleByMonthDayOfWeek |
 					ConvertFrom-ScheduleByMonthDayOfWeek
 			}
 			default {Write-Warning "$_ will be ignored"}

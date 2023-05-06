@@ -32,6 +32,6 @@ Process
         if(!(Test-Path $destfile -PathType Leaf)) {continue}
         if((!$NewerOnly -or (Test-NewerFile.ps1 "$destfile" "$file")) -and
             $PSCmdlet.ShouldProcess("'$file' over '$destfile'",'copy'))
-        {cp $file $destfile}
+        {Copy-Item $file $destfile}
     }
 }

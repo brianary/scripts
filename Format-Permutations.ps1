@@ -66,8 +66,8 @@ format with the supplied format string.
 function Format-Permute([string]$Format,[object[][]]$NextValues,[object[]]$Values = @())
 {
 	Write-Verbose "'$Format' -f $NextValues  ($Values)"
-    if($NextValues.Length -eq 1) {$NextValues[0] |foreach {$Format -f ($Values+$_)}}
-    else {$NextValues[0] |foreach {Format-Permute $Format $NextValues[1..($NextValues.Length-1)] ($Values+$_)}}
+    if($NextValues.Length -eq 1) {$NextValues[0] |ForEach-Object {$Format -f ($Values+$_)}}
+    else {$NextValues[0] |ForEach-Object {Format-Permute $Format $NextValues[1..($NextValues.Length-1)] ($Values+$_)}}
 }
 
 Format-Permute $Format $InputObject

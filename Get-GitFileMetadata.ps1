@@ -42,9 +42,9 @@ Process
 	foreach($f in Get-ChildItem $Path -Recurse:$Recurse)
 	{
 		$create_commit,$create_author,$create_email,$create_date =
-			(git log --reverse --format="%h%x09%cn%x09%ae%x09%ai" $f |select -f 1) -split '\t'
+			(git log --reverse --format="%h%x09%cn%x09%ae%x09%ai" $f |Select-Object -f 1) -split '\t'
 		$last_commit,$last_author,$last_email,$last_date =
-			(git log -1 --format="%h%x09%cn%x09%ae%x09%ai" $f |select -f 1) -split '\t'
+			(git log -1 --format="%h%x09%cn%x09%ae%x09%ai" $f |Select-Object -f 1) -split '\t'
 		[pscustomobject]@{
 			Path = Resolve-Path $f -Relative
 			CreateCommit = $create_commit

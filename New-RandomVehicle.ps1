@@ -13,8 +13,8 @@ https://vingenerator.org
 $vinpage = Invoke-WebRequest https://vingenerator.org -UseBasicParsing:$false
 [string] $vin = $vinpage.InputFields.value
 [string] $details = $vinpage.ParsedHtml.getElementsByTagName('div') |
-	where className -eq description |
-	foreach InnerText
+	Where-Object className -eq description |
+	Select-Object -ExpandProperty InnerText
 if($details -match $detailpattern)
 {
 	Import-Variables.ps1 $Matches

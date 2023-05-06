@@ -21,10 +21,10 @@ function Initialize-PathCollections
     $Script:pathext = $env:PATHEXT -split ';'
     # get list of directory environment variables
     $Script:evmatch = Get-ChildItem env: |
-        ? {Test-Path $_.Value -PathType Container} |
-        ? {'windir','TMP','ProgramW6432','CommonProgramW6432','SystemDrive','HomeDrive','HomePath' -inotcontains $_.Name} |
-        % {$_.Value = '^' + ($_.Value.Trim('\') -replace '(\W)','\$1') + '(?=\\|$)'; $_} |
-        sort @{e={$_.Value.Length};asc=$false},@{e={$_.Name.Length};asc=$true}
+        Where-Object {Test-Path $_.Value -PathType Container} |
+        Where-Object {'windir','TMP','ProgramW6432','CommonProgramW6432','SystemDrive','HomeDrive','HomePath' -inotcontains $_.Name} |
+        ForEach-Object {$_.Value = '^' + ($_.Value.Trim('\') -replace '(\W)','\$1') + '(?=\\|$)'; $_} |
+        Sort-Object @{e={$_.Value.Length};asc=$false},@{e={$_.Name.Length};asc=$true}
 }
 
 function Backup-Path([Parameter(Position=0,Mandatory=$true)][EnvironmentVariableTarget]$Target)
@@ -42,7 +42,7 @@ filter Get-PathDetail([Parameter(Position=0,Mandatory=$true)][EnvironmentVariabl
     Write-Verbose "$Target Path: $Entry$(if($Entry -ne $fullpath){' ('+$fullpath+')'})"
     if(!(Test-Path $fullpath -PathType Container)) {Write-Warning "$Target Path: Entry $Entry not found!"; return}
     if($Target -ne 'User' -and $entry.StartsWith("$env:USERPROFILE\")) {Write-Warning "$Target Path: Entry $entry under user profile!"; $user+= $entry; continue}
-    [IO.FileInfo[]]$cmd = Get-ChildItem $fullpath -File |? {$pathext -icontains $_.Extension}
+    [IO.FileInfo[]]$cmd = Get-ChildItem $fullpath -File |Where-Object {$pathext -icontains $_.Extension}
     if(!$cmd) {Write-Warning "$Target Path: Entry $Entry contains no executables."; return}
     elseif($cmd.Count -eq 1) {Write-Warning "$Target Path: Entry $Entry contains only one command! ($($cmd[0].Name))"}
     else {Write-Verbose "$Target Path: Entry $Entry contains $($cmd.Count) commands."}
@@ -51,7 +51,7 @@ filter Get-PathDetail([Parameter(Position=0,Mandatory=$true)][EnvironmentVariabl
         if($app[$c.Name]) {$app[$c.Name]+=$Entry}
         else {[string[]]$app[$c.Name] = $Entry}
     }
-    $ev = $evmatch |? {$Entry -match $_.Value} |select -First 1
+    $ev = $evmatch |Where-Object {$Entry -match $_.Value} |Select-Object -First 1
     if($ev) {Write-Verbose "$Target Path: $entry matches $($ev.Name) /$($ev.Value)/"}
     $evpath =
         if($Entry -like '%*') {$Entry}
@@ -80,8 +80,8 @@ function Resolve-PathConflicts([Parameter(Position=0,Mandatory=$true)][Environme
                                [Parameter(Position=1,Mandatory=$true)][Collections.Generic.List[psobject]]$PathDetails)
 {
     # examine conflicts
-    if(!(gcm -Verb Test -Noun NewerFile)) {Set-Alias Test-NewerFile "$PSScriptRoot\Test-NewerFile.ps1"}
-    foreach($c in $app.Keys |? {$app.$_.Count -gt 1})
+    if(!(Get-Command -Verb Test -Noun NewerFile)) {Set-Alias Test-NewerFile "$PSScriptRoot\Test-NewerFile.ps1"}
+    foreach($c in $app.Keys |Where-Object {$app.$_.Count -gt 1})
     {
         $newest,$rest = $app[$c]
         [string[]]$precede = @()
@@ -115,7 +115,7 @@ function Update-Path([Parameter(Position=0,Mandatory=$true)][EnvironmentVariable
     if($ResolveConflicts) {$path = Resolve-PathConflicts $path}
     if($PSCmdlet.ShouldProcess("$Target Path",'Update'))
     {
-        $newpath = ($path |select -Unique -ExpandProperty EnvVarPath) -join ';'
+        $newpath = ($path |Select-Object -Unique -ExpandProperty EnvVarPath) -join ';'
         Write-Verbose "New $Target Path: $newpath"
         Backup-Path $Target
         [Environment]::SetEnvironmentVariable('Path',$newpath,$Target)

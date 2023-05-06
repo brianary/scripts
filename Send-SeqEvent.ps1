@@ -74,5 +74,5 @@ Process
                 }
             )
         } |ConvertTo-Json -Depth 5 -Compress
-    } |% {Invoke-RestMethod @_ |Write-Verbose}
+    } |ForEach-Object {Invoke-RestMethod @_ |Write-Verbose}
 }

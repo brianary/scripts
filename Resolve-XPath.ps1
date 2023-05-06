@@ -63,11 +63,11 @@ Begin
 		{
 			if($Node.get_NamespaceURI() -in $Namespace.Values)
 			{
-				$prefix = $Namespace.GetEnumerator() |where Value -eq $Node.get_NamespaceURI() |select -First 1 -exp Key
+				$prefix = $Namespace.GetEnumerator() |Where-Object Value -eq $Node.get_NamespaceURI() |Select-Object -First 1 -exp Key
 			}
 			else
 			{
-				$prefix = ([uri]$Node.get_NamespaceURI()).Segments |where {$_ -match '\A[A-Za-z]\w*\z'} |select -Last 1
+				$prefix = ([uri]$Node.get_NamespaceURI()).Segments |Where-Object {$_ -match '\A[A-Za-z]\w*\z'} |Select-Object -Last 1
 				if(!$prefix) {$prefix = 'ns'}
 				while($Namespace.ContainsKey($prefix)) {$prefix += Get-Random -Maximum 99}
 				$Namespace.Add($prefix,$Node.get_NamespaceURI())

@@ -27,7 +27,7 @@ a                              1
 )
 Process
 {
-    $nullvaluekeys = $InputObject.Keys |where {$InputObject[$_] -eq $null}
-    $nullvaluekeys |foreach {$InputObject.Remove($_)}
+    $nullvaluekeys = $InputObject.Keys |Where-Object {$InputObject[$_] -eq $null}
+    $nullvaluekeys |ForEach-Object {$InputObject.Remove($_)}
     return $InputObject
 }

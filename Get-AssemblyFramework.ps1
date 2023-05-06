@@ -31,6 +31,6 @@ $assembly = [Reflection.Assembly]::ReflectionOnlyLoadFrom((Resolve-Path $Path))
 [PSCustomObject]@{
     RuntimeVersion = $assembly.ImageRuntimeVersion
     CompileVersion = $assembly.CustomAttributes |
-        ? {$_.AttributeType.Name -eq "TargetFrameworkAttribute" } |
-        % {$_.ConstructorArguments.value}
+        Where-Object {$_.AttributeType.Name -eq "TargetFrameworkAttribute" } |
+        ForEach-Object {$_.ConstructorArguments.value}
 }

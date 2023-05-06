@@ -56,7 +56,7 @@ A SQL query that produces a single-column result set, named "command", containin
 executable SQL.
 #>
     $count,$i = 0,0
-    [string[]]$commands = Invoke-Sqlcmd $Query |% command
+    [string[]]$commands = Invoke-Sqlcmd $Query |Select-Object -ExpandProperty command
     if(!$commands){return}
     $max,$act = ($commands.Count/100),($Action -f -1,$commands.Count)
     Write-Verbose ($Action -f 1,$commands.Count)
@@ -87,7 +87,7 @@ select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(nam
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
 "@
-    } |% {Resolve-SqlcmdResults @_}
+    } |ForEach-Object {Resolve-SqlcmdResults @_}
 }
 
 function Repair-PrimaryKeyNames
@@ -106,7 +106,7 @@ select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(nam
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
 "@
-    } |% {Resolve-SqlcmdResults @_}
+    } |ForEach-Object {Resolve-SqlcmdResults @_}
 }
 
 function Repair-ForeignKeyNames
@@ -125,7 +125,7 @@ select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(nam
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
 "@
-    } |% {Resolve-SqlcmdResults @_}
+    } |ForEach-Object {Resolve-SqlcmdResults @_}
 }
 
 Repair-DefaultNames

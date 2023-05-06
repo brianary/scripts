@@ -58,8 +58,8 @@ Process
 {
     $isDict = $InputObject -is [Collections.IDictionary]
     [string[]]$vars =
-        if($isDict) {$InputObject.Keys |? {$_ -is [string]}}
-        else {Get-Member -InputObject $InputObject -MemberType $MemberType |% Name}
+        if($isDict) {$InputObject.Keys |Where-Object {$_ -is [string]}}
+        else {Get-Member -InputObject $InputObject -MemberType $MemberType |Select-Object -ExpandProperty Name}
     if(!$vars){return}
     Write-Verbose "Importing $($vars.Count) $(if($isDict){'keys'}else{"$MemberType properties"}): $vars"
     foreach($var in $vars) {Set-Variable $var $InputObject.$var @sv}

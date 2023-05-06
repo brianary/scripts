@@ -25,4 +25,4 @@ Id CommandLine
 
 $id = 0
 Get-Content $env:AppData\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt |
-	foreach {[pscustomobject]@{Id=++$id;CommandLine=$_}}
+	ForEach-Object {[pscustomobject]@{Id=++$id;CommandLine=$_}}

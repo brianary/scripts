@@ -58,8 +58,8 @@ Begin
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Code,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][psobject[]] $Remarks
 		)
-		$cmdtext = (($Introduction |Where-Object Text -notin 'PS > ',' ','',$null |ForEach-Object Text) -join $NL) + $Code
-		$output = ($Remarks |Where-Object {$_.Text} |ForEach-Object Text) -join $NL
+		$cmdtext = (($Introduction |Where-Object Text -notin 'PS > ',' ','',$null |Select-Object -ExpandProperty Text) -join $NL) + $Code
+		$output = ($Remarks |Where-Object {$_.Text} |Select-Object -ExpandProperty Text) -join $NL
 		return @"
 		It "$($Title.Trim(' -'))" -Skip {
 			$cmdtext |Should -BeExactly @"

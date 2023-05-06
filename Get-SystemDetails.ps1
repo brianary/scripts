@@ -171,9 +171,9 @@ $os = Get-CimInstance CIM_OperatingSystem
 		}
 	OSArchitecture = $os.OSArchitecture
 	Processors = (Get-CimInstance CIM_Processor |
-		ForEach-Object Name |
+		Select-Object -ExpandProperty Name |
 		ForEach-Object {$_ -replace '\s{2,}',' '})
-	Video = Get-CimInstance CIM_VideoController |ForEach-Object Name
+	Video = Get-CimInstance CIM_VideoController |Select-Object -ExpandProperty Name
 	Drives = (Get-CimInstance CIM_StorageVolume |
 		Where-Object {$_.DriveType -eq 3 -and $_.DriveLetter -and $_.Capacity} |
 		Sort-Object DriveLetter |

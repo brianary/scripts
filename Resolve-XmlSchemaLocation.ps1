@@ -46,7 +46,7 @@ Process
 {
 	$xmlsrc = if($Path) {@{Path=$Path}} else {@{Xml=$Xml}}
 	foreach($element in (Select-Xml '//*[@xsi:schemaLocation]' @xmlsrc -Namespace @{
-		xsi='http://www.w3.org/2001/XMLSchema-instance'} |% Node))
+		xsi='http://www.w3.org/2001/XMLSchema-instance'} |Select-Object -ExpandProperty Node))
 	{
 		$nonsatt = $element.Attributes.GetNamedItem('noNamespaceSchemaLocation',
 			'http://www.w3.org/2001/XMLSchema-instance')

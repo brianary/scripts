@@ -169,7 +169,7 @@ function Import-Msas
 	if(!`$PSCmdlet.ShouldProcess('MSAs','rebind')) {return}
 	Write-Verbose 'Rebinding managed service accounts.'
 	Get-ADServiceAccount -Filter * |
-		Where-Object HostComputers -contains "`$(Get-ADComputer '${env:ComputerName}' |ForEach-Object DistinguishedName)" |
+		Where-Object HostComputers -contains "`$(Get-ADComputer '${env:ComputerName}' |Select-Object -ExpandProperty DistinguishedName)" |
 		Install-ADServiceAccount
 }
 "@

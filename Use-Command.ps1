@@ -125,8 +125,8 @@ Default is 32767
 )
 function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Position=1)][string]$Path)
 {
-	Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |ForEach-Object Path |Find-NewestFile.ps1 |
-		ForEach-Object FullName) -Scope Global
+	Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |Select-Object -ExpandProperty Path |Find-NewestFile.ps1 |
+		Select-Object -ExpandProperty FullName) -Scope Global
 }
 if((Get-Command $Name -ErrorAction Ignore)) { Write-Verbose "$Name command found." ; return }
 if($Path -and (Test-Path $Path)) { Set-ResolvedAlias $Name $Path ; return }

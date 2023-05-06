@@ -79,7 +79,7 @@ function Format-LikeCondition([string]$column,[string[]]$patterns,[switch]$not)
 	$like,$andOr = if($not){'not like','and'}else{'like','or'}
 @"
 
-   and ( $(($patterns |% {"$column $like '$($_ -replace '''','''''')' escape '\'"}) -join " $andOr ") )
+   and ( $(($patterns |ForEach-Object {"$column $like '$($_ -replace '''','''''')' escape '\'"}) -join " $andOr ") )
 
 "@
 }

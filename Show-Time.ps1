@@ -40,7 +40,7 @@ Show-Time.ps1 Iso8601Z Iso8601WeekDate Iso8601OrdinalDate -Separator ' * '
 
 Write-Info.ps1 (Get-Unicode.ps1 0xE0B6) -ForegroundColor $BackgroundColor -NoNewline
 Write-Info.ps1 ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
-Write-Info.ps1 (($Format |foreach {Format-Date.ps1 $_ -Date $Date}) -join $Separator) `
+Write-Info.ps1 (($Format |ForEach-Object {Format-Date.ps1 $_ -Date $Date}) -join $Separator) `
 	-ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
 Write-Info.ps1 ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
 Write-Info.ps1 (Get-Unicode.ps1 0xE0B4) -fore $BackgroundColor

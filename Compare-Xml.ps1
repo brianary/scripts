@@ -346,7 +346,7 @@ function Merge-XmlNodes
 				else {ConvertTo-XmlNodeLiteral $_.DifferenceNode}
 			}
 		) -join [environment]::NewLine
-		Templates         = $list |Where-Object Template -ne $null |ForEach-Object Template
+		Templates         = $list |Where-Object Template -ne $null |Select-Object -ExpandProperty Template
 	})
 }
 

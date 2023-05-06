@@ -71,10 +71,10 @@ function Format-SqlValue($value)
 }
 
 $tablename = Format-SqlValue $Table
-if(!$Schema){$Schema = Invoke-Sqlcmd "select object_schema_name(object_id($tablename)) as schema_name" |% schema_name}
+if(!$Schema){$Schema = Invoke-Sqlcmd "select object_schema_name(object_id($tablename)) as schema_name" |Select-Object -ExpandProperty schema_name}
 $schemaname = Format-SqlValue $Schema
-$fqtn = Invoke-Sqlcmd "select quotename($schemaname) + '.' + quotename($tablename) as fqtn" |% fqtn
-$rowcount = Invoke-Sqlcmd "select count(*) rows from $fqtn" |% rows
+$fqtn = Invoke-Sqlcmd "select quotename($schemaname) + '.' + quotename($tablename) as fqtn" |Select-Object -ExpandProperty fqtn
+$rowcount = Invoke-Sqlcmd "select count(*) rows from $fqtn" |Select-Object -ExpandProperty rows
 if($rowcount -gt 10000) {Write-Warning "The table $fqtn contains $rowcount rows, which may not export well as a merge script."}
 else {Write-Verbose "Exporting $rowcount rows from table $fqtn."}
 
@@ -90,7 +90,7 @@ select quotename(kcu.COLUMN_NAME) as COLUMN_NAME
    and tc.TABLE_NAME = $tablename
    and tc.CONSTRAINT_TYPE = 'PRIMARY KEY' -- UNIQUE?
  order by kcu.ORDINAL_POSITION;
-"@ |% COLUMN_NAME
+"@ |Select-Object -ExpandProperty COLUMN_NAME
 $nonkeyidentity = Invoke-Sqlcmd @"
   with PrimaryKeyColumns as (
 select kcu.COLUMN_NAME
@@ -110,7 +110,7 @@ select quotename(c.COLUMN_NAME) as COLUMN_NAME
    and c.TABLE_NAME = $tablename
    and c.COLUMN_NAME not in (select COLUMN_NAME from PrimaryKeyColumns)
    and columnproperty(object_id(c.TABLE_NAME), c.COLUMN_NAME,'IsIdentity') = 1;
-"@ |% COLUMN_NAME
+"@ |Select-Object -ExpandProperty COLUMN_NAME
 if($nonkeyidentity)
 {
     Write-Verbose "Non-primary-key identity column detected: $nonkeyidentity"
@@ -124,7 +124,7 @@ Specify -UseIdentityInKey to include it in the primary key.
     }
 }
 Write-Verbose "Primary key: $pk"
-$pkjoin = ($pk |% {"source.{0} = target.{0}" -f $_}) -join ' AND '
+$pkjoin = ($pk |ForEach-Object {"source.{0} = target.{0}" -f $_}) -join ' AND '
 
 $data = Invoke-Sqlcmd "select * from $fqtn"
 if(!$data) {throw "No data in table."}
@@ -134,15 +134,15 @@ select quotename(COLUMN_NAME) as COLUMN_NAME
  where TABLE_SCHEMA = $schemaname
    and TABLE_NAME = $tablename
  order by ORDINAL_POSITION;
-"@ |% COLUMN_NAME
-$dataupdates = ($columns |? {$_ -notin $pk} |% {"{0} = source.{0}" -f $_}) -join ",$([environment]::NewLine)"
+"@ |Select-Object -ExpandProperty COLUMN_NAME
+$dataupdates = ($columns |Where-Object {$_ -notin $pk} |ForEach-Object {"{0} = source.{0}" -f $_}) -join ",$([environment]::NewLine)"
 $dataupdates =
     if($dataupdates) {"when matched then${EOL}update set $dataupdates"}
     else {"-- skip 'matched' condition (no non-key columns to update)"}
 $targetlist = $columns -join ','
-$sourcelist = ($columns |% {"source.{0}" -f $_}) -join ','
+$sourcelist = ($columns |ForEach-Object {"source.{0}" -f $_}) -join ','
 
-$data = ($data |% {($_.ItemArray |% {Format-SqlValue $_}) -join ','} |% {"($_)"}) -join ",$([environment]::NewLine)"
+$data = ($data |ForEach-Object {($_.ItemArray |ForEach-Object {Format-SqlValue $_}) -join ','} |ForEach-Object {"($_)"}) -join ",$([environment]::NewLine)"
 
 @"
 if exists (select * from information_schema.columns where table_schema = $schemaname and table_name = $tablename
