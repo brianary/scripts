@@ -174,7 +174,7 @@ Begin
 		}
 	}
 
-	function Format-Children($InputObject,[switch]$UseKeys)
+	function Format-Child($InputObject,[switch]$UseKeys)
 	{
 		if($InputObject -eq $null) {return}
 		$(if($UseKeys){$InputObject.Keys}else{Get-Member -InputObject $InputObject -MemberType Properties |Select-Object -ExpandProperty Name}) |

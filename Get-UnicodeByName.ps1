@@ -56,7 +56,7 @@ Begin
 	$codepoint = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'txt')) -Raw)
 	$html = Get-Content ([io.path]::ChangeExtension($PSCommandPath,'html.json')) -Raw |ConvertFrom-Json -AsHashtable
 	$github = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'github.txt')) -Raw)
-	filter ConvertTo-Chars([Parameter(ValueFromPipeline)][string] $Value)
+	filter ConvertTo-Char([Parameter(ValueFromPipeline)][string] $Value)
 	{
 		return (($Value -split '\W+') |
 			ForEach-Object {[char]::ConvertFromUtf32([convert]::ToInt32($_,16))}) -join ''

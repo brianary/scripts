@@ -13,7 +13,7 @@ with the newest version ahead of the others.
 [switch]$ResolveConflicts
 )
 
-function Initialize-PathCollections
+function Initialize-PathCollection
 {
     # initialize collections
     $Script:app,$Script:user = @{},@()
@@ -66,7 +66,7 @@ filter Get-PathDetail([Parameter(Position=0,Mandatory=$true)][EnvironmentVariabl
     }
 }
 
-function Get-PathDetails([Parameter(Position=0,Mandatory=$true)][EnvironmentVariableTarget]$Target)
+function Get-PathDetail([Parameter(Position=0,Mandatory=$true)][EnvironmentVariableTarget]$Target)
 {
     $path = [Environment]::GetEnvironmentVariable('Path',$Target) -split ';'
     switch($Target)
@@ -76,7 +76,7 @@ function Get-PathDetails([Parameter(Position=0,Mandatory=$true)][EnvironmentVari
     }
 }
 
-function Resolve-PathConflicts([Parameter(Position=0,Mandatory=$true)][EnvironmentVariableTarget]$Target,
+function Resolve-PathConflict([Parameter(Position=0,Mandatory=$true)][EnvironmentVariableTarget]$Target,
                                [Parameter(Position=1,Mandatory=$true)][Collections.Generic.List[psobject]]$PathDetails)
 {
     # examine conflicts

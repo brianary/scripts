@@ -58,7 +58,7 @@ Begin
 {
 	$Script:OFS = [Environment]::NewLine
 
-	function ConvertTo-CompoundXmlElements
+	function ConvertTo-CompoundXmlElement
 	{
 		[CmdletBinding()] Param(
 		[Parameter(ValueFromPipeline=$true)][string] $PropertyName,
@@ -73,7 +73,7 @@ Begin
 		End {if(!$IsFirst) {Write-Output ''}} # adds OFS
 	}
 
-	function ConvertTo-SimpleXmlElements
+	function ConvertTo-SimpleXmlElement
 	{
 		[CmdletBinding()] Param(
 		[Parameter(ValueFromPipeline=$true)][string] $PropertyName,

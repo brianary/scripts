@@ -40,7 +40,7 @@ WARNING: Checked 2 constraints
 
 Use-SqlcmdParams.ps1
 
-function Resolve-SqlcmdResults([string]$Action,[string]$Query)
+function Resolve-SqlcmdResult([string]$Action,[string]$Query)
 {
     <#
 .SYNOPSIS
@@ -70,7 +70,7 @@ executable SQL.
     if($count) {Write-Warning ($Action -f 0,$count)}
 }
 
-function Repair-DefaultNames
+function Repair-DefaultName
 {
     @{
         Action = 'Check{0:;ing;ed} {1} constraints'

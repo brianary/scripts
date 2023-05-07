@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Returns the available NuGet configuration files, in order of preference.
 
@@ -26,7 +26,7 @@ C:\ProgramData\NuGet\NuGetDefaults.config
 [Parameter(Position=0)][string] $Directory = "$PWD"
 )
 
-function Get-Parents([Parameter(Position=0)][string] $Directory)
+function Get-Parent([Parameter(Position=0)][string] $Directory)
 {
 	if($Directory -eq [io.path]::GetPathRoot($Directory)) {$Directory}
 	else {$Directory; Get-Parents (Split-Path $Directory)}

@@ -22,7 +22,7 @@ Unindents help and capitalizes dot keywords in Get-Thing.ps1
 Begin
 {
 	$EOL = [Environment]::NewLine
-	function Get-ParameterDocs([Parameter(ValueFromPipeline=$true)][string]$script)
+	function Get-ParameterDoc([Parameter(ValueFromPipeline=$true)][string]$script)
 	{
 		$params = [ordered]@{}
 		foreach($param in [regex]::Matches($script, '(?ms)^\.PARAMETER +(?<ParameterName>\w+)\r?\n(?<Description>.*?)(?=\s*^\.\w+|\s*^#>)'))

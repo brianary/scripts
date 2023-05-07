@@ -43,7 +43,7 @@ Sends an email using selected params declared by the calling script with values.
 Begin
 {
 	$getKeys = [Collections.IDictionary].GetProperty('Keys').GetGetMethod()
-	function Get-Keys($dict) { return $getKeys.Invoke($dict, @()) }
+	function Get-Key($dict) { return $getKeys.Invoke($dict, @()) }
 
 	$removeKey = [Collections.IDictionary].GetMethod('Remove')
 	function Remove-Key($dict, $key) { [void]$removeKey.Invoke($dict, @($key)) }

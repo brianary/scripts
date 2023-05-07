@@ -40,7 +40,7 @@ WARNING: Renamed 10 defaults
 
 Use-SqlcmdParams.ps1
 
-function Resolve-SqlcmdResults([string]$Action,[string]$Query)
+function Resolve-SqlcmdResult([string]$Action,[string]$Query)
 {
     <#
 .SYNOPSIS
@@ -70,7 +70,7 @@ executable SQL.
     if($count) {Write-Warning ($Action -f 0,$count)}
 }
 
-function Repair-DefaultNames
+function Repair-DefaultName
 {
     @{
         Action = 'Renam{0:e;ing;ed} {1} defaults'
@@ -90,7 +90,7 @@ select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(nam
     } |ForEach-Object {Resolve-SqlcmdResults @_}
 }
 
-function Repair-PrimaryKeyNames
+function Repair-PrimaryKeyName
 {
     @{
         Action = 'Renam{0:e;ing;ed} {1} primary keys'
@@ -109,7 +109,7 @@ select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(nam
     } |ForEach-Object {Resolve-SqlcmdResults @_}
 }
 
-function Repair-ForeignKeyNames
+function Repair-ForeignKeyName
 { #TODO: Mitigate possible deterministic naming collisions.
     @{
         Action = 'Renam{0:e;ing;ed} {1} foreign keys'

@@ -67,7 +67,7 @@ filter Export-DatabaseScript
 	$InputObject |Export-DbaScript -ScriptingOptionsObject $Options -FilePath ($InputObject |Get-ScriptName $Subfolder)
 }
 
-function Export-DatabaseObjects
+function Export-DatabaseObject
 {
 	[CmdletBinding()] Param()
 	$dir = (ConvertTo-FileName $Database.Name)

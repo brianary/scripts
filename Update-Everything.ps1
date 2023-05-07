@@ -103,7 +103,7 @@ Begin
 		Write-Info.ps1 $Message -ForegroundColor White -BackgroundColor DarkGray
 	}
 
-	function Invoke-EssentialUpdates
+	function Invoke-EssentialUpdate
 	{
 		Write-Step "${UP!} Updating PowerShell & Windows Terminal"
 		Get-Process powershell -ErrorAction Ignore |Where-Object Id -ne $PID |Stop-Process -Force
@@ -113,7 +113,7 @@ Begin
 		exit
 	}
 
-	function Update-Essentials
+	function Update-Essential
 	{
 		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Essentials."; return}
 		Write-Step "$([char]0xD83D)$([char]0xDD1C) Checking for essential updates"
@@ -203,7 +203,7 @@ Begin
 		gh extension upgrade --all
 	}
 
-	function Update-PSModules
+	function Update-PSModule
 	{
 		Write-Step "${UP!} Updating PowerShell modules"
 		Get-Module -ListAvailable |
@@ -239,7 +239,7 @@ Begin
 		Write-Info.ps1 ''
 	}
 
-	function Update-Windows
+	function Update-Window
 	{
 		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Windows."; return}
 		if(!(Get-Module PSWindowsUpdate -ListAvailable))

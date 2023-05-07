@@ -81,7 +81,7 @@ GregorianDate : 2020-07-08 00:00:00
 )
 Begin
 {
-	function Get-128YearLeapDays([int]$year)
+	function Get-128YearLeapDay([int]$year)
 	{
 		[int] $remainder = 0
 		[int] $pastdays = 31 * [math]::DivRem($year,128,[ref]$remainder) +
@@ -89,7 +89,7 @@ Begin
 		[int] $yearlength = 365+[int](!($year % 4) -and ($year % 128))
 		return $pastdays,$yearlength
 	}
-	function Get-ContinuousLeapDays([int]$year)
+	function Get-ContinuousLeapDay([int]$year)
 	{
 		[int] $remainder = 0
 		[int] $pastdays = (97 * [math]::DivRem($year+1,400,[ref]$remainder)) +
@@ -98,7 +98,7 @@ Begin
 		[int] $yearlength = 365+[int]([datetime]::IsLeapYear($year+1))
 		return $pastdays,$yearlength
 	}
-	function Get-RommeLeapDays([int]$year)
+	function Get-RommeLeapDay([int]$year)
 	{
 		[int] $remainder = 0
 		[int] $pastdays = (97 * [math]::DivRem($year,400,[ref]$remainder)) +

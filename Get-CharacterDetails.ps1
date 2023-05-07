@@ -262,6 +262,8 @@ IsWord              : True
 
 #Requires -Version 2
 #TODO: finish documenting params
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','',
+Justification='The values are captured in function bodies.')]
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 # A specific Unicode block (or named range) of characters to return.
 [Parameter(ParameterSetName='Block',Position=0)]
@@ -699,7 +701,7 @@ public class PasswordCharacter
 			default {[int][char]::MinValue,[int][char]::MaxValue}
 		}
 	}
-	function Find-UnicodeCategoryClasses([char]$c)
+	function Find-UnicodeCategoryClass([char]$c)
 	{
 		@('Lu','Ll','Lt','Lm','Lo','L','Mn','Mc','Me','M','Nd','Nl','No','N','Pc','Pd','Ps','Pe','Pi',
 			'Pf','Po','P','Sm','Sc','Sk','So','S','Zs','Zl','Zp','Z','Cc','Cf','Cs','Co','Cn','C') |
@@ -845,15 +847,14 @@ VerticalForms
 		$properties.MatchesBlock = if($notablock -contains $b) {'Error'} else {$c -match "\p{Is$b}"}
 		New-Object PSObject -Property $properties
 	}
-	function Get-CharactersDetails([Parameter(ValueFromPipeline=$true)][string]$Chars)
+	function Get-CharactersDetail([Parameter(ValueFromPipeline=$true)][string]$Chars)
 	{
 		foreach($c in $Chars.GetEnumerator()) {Get-CharacterDetail $c}
 	}
-	function Get-CharacterRangeDetails([int]$start,[int]$stop)
+	function Get-CharacterRangeDetail([int]$start,[int]$stop)
 	{
 		$i,$max = 0,(($stop - $start)/100)
-		for($_ = $start; $_ -le $stop; $_++)
-		{
+		$start..$stop |ForEach-Object {
 			[char]$c = $_
 			Get-CharacterDetail $c
 			Write-Progress 'Gathering Character Details' -CurrentOperation ('Character: U+{0:X4} {1}' -f $_,$c) -PercentComplete ($i++/$max) -EA SilentlyContinue

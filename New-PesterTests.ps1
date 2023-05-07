@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Creates a new Pester testing script from a script's examples and parameter sets.
 
@@ -84,7 +84,7 @@ $('"@')
 "@
 	}
 
-	filter Format-ScriptPesterTests
+	filter Format-ScriptPesterTest
 	{
 		Param(
 		[Parameter(Position=0,Mandatory=$true)][string] $Name,

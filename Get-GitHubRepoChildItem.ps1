@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Adds any missing topics based on repo content.
 
@@ -32,7 +32,7 @@ Begin
         $Global:TopicsChangeList += $PSBoundParameters
     }
 
-    function Complete-GitHubRepositoryTopics
+    function Complete-GitHubRepositoryTopic
     {
         $Global:TopicsChangeList |ForEach-Object {Add-GitHubRepositoryTopic @_}
         Remove-Variable TopicsChangeList -Scope Global
@@ -116,7 +116,7 @@ Begin
         }
     }
 
-    filter Add-Topics([Parameter(ValueFromPipelineByPropertyName)][psobject] $Owner,
+    filter Add-Topic([Parameter(ValueFromPipelineByPropertyName)][psobject] $Owner,
         [Parameter(ValueFromPipelineByPropertyName)][string] $Name,
         [Parameter(ValueFromPipelineByPropertyName)][string[]] $Topics,
         [Parameter(ValueFromPipeline)][psobject] $InputObject)
