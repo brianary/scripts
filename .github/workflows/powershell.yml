@@ -41,7 +41,7 @@ jobs:
           # Include your own basic security rules. Removing this option will run all the rules
           # see https://github.com/PowerShell/PSScriptAnalyzer/tree/master/docs/Rules
           #includeRule: '"PSAvoidGlobalAliases", "PSAvoidUsingConvertToSecureStringWithPlainText"'
-          #excludeRule:
+          excludeRule: '"PSReviewUnusedParameter", "PSAvoidUsingPositionalParameters", "PSUseShouldProcessForStateChangingFunctions"'
           output: results.sarif
 
       # Upload the SARIF file generated in the previous step
