@@ -4,7 +4,7 @@ Tests copying scheduled jobs from another computer to this one, using a GUI list
 #>
 
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
-Justification='These are tests.')]
+Justification='These are tests.')] Param()
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments','',
 Justification='Usage is not tracked accurately.')]
 $basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
