@@ -99,7 +99,7 @@ select 'if exists (select * from sys.foreign_keys where object_id = object_id(''
    and is_not_for_replication = 0
    and is_disabled = 0;
 "@
-    } |ForEach-Object {Resolve-SqlcmdResults @_}
+    } |ForEach-Object {Resolve-SqlcmdResult @_}
 }
 
-Repair-DefaultNames
+Repair-DefaultName

@@ -199,10 +199,10 @@ Process
 		[int] $lastyear = [math]::DivRem(${jour de l'année},365,[ref]${jour de l'année})
 		[int] ${past leap days}, [int] ${last year length} = switch($Method)
 		{
-			128Year {Get-128YearLeapDays $lastyear}
-			Coninuous {Get-ContinuousLeapDays $lastyear}
+			128Year {Get-128YearLeapDay $lastyear}
+			Coninuous {Get-ContinuousLeapDay $lastyear}
 			Equinox {Stop-ThrowError.ps1 'Equinox isn''t supported yet' -NotImplemented}
-			Romme {Get-RommeLeapDays $lastyear}
+			Romme {Get-RommeLeapDay $lastyear}
 		}
 		${jour de l'année} -= ${past leap days}
 		if(${jour de l'année} -gt -1) {${l'année} = $lastyear +1; ${jour de l'année}++}

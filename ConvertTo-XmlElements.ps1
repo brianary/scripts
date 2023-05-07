@@ -108,14 +108,14 @@ Begin
 		{ [Net.WebUtility]::HtmlEncode($InputObject) }
 		elseif($InputObject -is [Hashtable] -or $InputObject -is [Collections.Specialized.OrderedDictionary])
 		{
-			if($Depth -gt 1) {$InputObject.Keys |ConvertTo-CompoundXmlElements -IsFirst:$IsFirst}
-			else {$InputObject.Keys |ConvertTo-SimpleXmlElements -IsFirst:$IsFirst}
+			if($Depth -gt 1) {$InputObject.Keys |ConvertTo-CompoundXmlElement -IsFirst:$IsFirst}
+			else {$InputObject.Keys |ConvertTo-SimpleXmlElement -IsFirst:$IsFirst}
 		}
 		elseif($InputObject -is [PSObject])
 		{
 			if(!@($InputObject.PSObject.Properties)) {return}
-			elseif($Depth -gt 1) {$InputObject.PSObject.Properties.Name |ConvertTo-CompoundXmlElements -IsFirst:$IsFirst}
-			else {$InputObject.PSObject.Properties.Name |ConvertTo-SimpleXmlElements -IsFirst:$IsFirst}
+			elseif($Depth -gt 1) {$InputObject.PSObject.Properties.Name |ConvertTo-CompoundXmlElement -IsFirst:$IsFirst}
+			else {$InputObject.PSObject.Properties.Name |ConvertTo-SimpleXmlElement -IsFirst:$IsFirst}
 		}
 		elseif($InputObject -is [xml])
 		{ $InputObject.OuterXml }
@@ -127,14 +127,14 @@ Begin
 				$InputObject |
 					Get-Member -MemberType Properties |
 					Select-Object -ExpandProperty Name |
-					ConvertTo-CompoundXmlElements -IsFirst:$IsFirst
+					ConvertTo-CompoundXmlElement -IsFirst:$IsFirst
 			}
 			else
 			{
 				$InputObject |
 					Get-Member -MemberType Properties |
 					Select-Object -ExpandProperty Name |
-					ConvertTo-SimpleXmlElements -IsFirst:$IsFirst
+					ConvertTo-SimpleXmlElement -IsFirst:$IsFirst
 			}
 		}
 	}

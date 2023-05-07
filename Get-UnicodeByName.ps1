@@ -86,9 +86,9 @@ Process
 	}
 	else
 	{
-		if($cc.ContainsKey($Name)) {return $cc[$Name] |ConvertTo-Chars}
-		elseif($github.ContainsKey($Name)) {return $github[$Name] |ConvertTo-Chars}
+		if($cc.ContainsKey($Name)) {return $cc[$Name] |ConvertTo-Char}
+		elseif($github.ContainsKey($Name)) {return $github[$Name] |ConvertTo-Char}
 		elseif($html.ContainsKey($Name)) {return $html[$Name].characters -join ''}
-		else {return $codepoint[$Name] |ConvertTo-Chars}
+		else {return $codepoint[$Name] |ConvertTo-Char}
 	}
 }

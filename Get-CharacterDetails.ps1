@@ -776,7 +776,7 @@ VerticalForms
 			UnicodeBlock        = ''
 			MatchesBlock        = ''
 			UnicodeCategory     = [char]::GetUnicodeCategory($c)
-			CategoryClasses     = Find-UnicodeCategoryClasses($c)
+			CategoryClasses     = Find-UnicodeCategoryClass($c)
 			PasswordCategory    = [PasswordCharacter]::GetCharacterType($c)
 			HtmlEncode          = [Net.WebUtility]::HtmlEncode($c)
 			HtmlAttributeEncode = [Web.HttpUtility]::HtmlAttributeEncode($c)
@@ -866,12 +866,12 @@ Process
 {
 	switch($PSCmdlet.ParameterSetName)
 	{
-		Block { $start,$stop = Convert-UnicodeBlockToRange $Block; Get-CharacterRangeDetails $start $stop }
-		Char  { $Char |Get-CharactersDetails }
-		Range { Get-CharacterRangeDetails $StartValue $StopValue }
+		Block { $start,$stop = Convert-UnicodeBlockToRange $Block; Get-CharacterRangeDetail $start $stop }
+		Char  { $Char |Get-CharactersDetail }
+		Range { Get-CharacterRangeDetail $StartValue $StopValue }
 		Value
 		{
-			if($Value -gt [char]::MaxValue) { [char]::ConvertFromUtf32($Value) |Get-CharactersDetails }
+			if($Value -gt [char]::MaxValue) { [char]::ConvertFromUtf32($Value) |Get-CharactersDetail }
 			else { Get-CharacterDetail $Value }
 		}
 	}

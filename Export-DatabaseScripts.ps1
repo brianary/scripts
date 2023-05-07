@@ -115,4 +115,4 @@ Begin
 		Pop-Location
 	}
 }
-Process {Export-DatabaseObjects}
+Process {Export-DatabaseObject}

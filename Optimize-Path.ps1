@@ -111,8 +111,8 @@ function Resolve-PathConflict([Parameter(Position=0,Mandatory=$true)][Environmen
 
 function Update-Path([Parameter(Position=0,Mandatory=$true)][EnvironmentVariableTarget]$Target)
 {
-    [Collections.Generic.List[psobject]]$path = Get-PathDetails $Target
-    if($ResolveConflicts) {$path = Resolve-PathConflicts $path}
+    [Collections.Generic.List[psobject]]$path = Get-PathDetail $Target
+    if($ResolveConflicts) {$path = Resolve-PathConflict $path}
     if($PSCmdlet.ShouldProcess("$Target Path",'Update'))
     {
         $newpath = ($path |Select-Object -Unique -ExpandProperty EnvVarPath) -join ';'
@@ -122,6 +122,6 @@ function Update-Path([Parameter(Position=0,Mandatory=$true)][EnvironmentVariable
     }
 }
 
-Initialize-PathCollections
+Initialize-PathCollection
 Update-Path Machine
 Update-Path User

@@ -52,7 +52,7 @@ Process
 {
 	if($null -eq $Dictionary) {return @{}}
 	$selected = $Dictionary.Clone()
-	foreach($key in Get-Keys $Dictionary)
+	foreach($key in Get-Key $Dictionary)
 	{
 		if($key -in $Keys) {continue}
 		$value = $Dictionary[$key]

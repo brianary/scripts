@@ -87,7 +87,7 @@ select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(nam
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
 "@
-    } |ForEach-Object {Resolve-SqlcmdResults @_}
+    } |ForEach-Object {Resolve-SqlcmdResult @_}
 }
 
 function Repair-PrimaryKeyName
@@ -106,7 +106,7 @@ select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(nam
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
 "@
-    } |ForEach-Object {Resolve-SqlcmdResults @_}
+    } |ForEach-Object {Resolve-SqlcmdResult @_}
 }
 
 function Repair-ForeignKeyName
@@ -125,9 +125,9 @@ select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(nam
    and parent_object_id not in (select major_id from sys.extended_properties
        where class = 1 and minor_id = 0 and name = 'microsoft_database_tools_support'); -- excludes sysdiagrams, &c
 "@
-    } |ForEach-Object {Resolve-SqlcmdResults @_}
+    } |ForEach-Object {Resolve-SqlcmdResult @_}
 }
 
-Repair-DefaultNames
-Repair-PrimaryKeyNames
-Repair-ForeignKeyNames
+Repair-DefaultName
+Repair-PrimaryKeyName
+Repair-ForeignKeyName

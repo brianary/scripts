@@ -128,7 +128,7 @@ Process
 		Stop-ThrowError.ps1 "File '$testfile' already exists" -Argument Script
 	}
 	Get-Help (Resolve-Path $Script) |
-		Format-ScriptPesterTests -Name $name -CmdInfo $cmd |
+		Format-ScriptPesterTest -Name $name -CmdInfo $cmd |
 		Out-File $testfile -Encoding utf8BOM
 	if((Get-Variable psEditor -Scope Global -ErrorAction Ignore) -and (Test-Path $testfile -Type Leaf))
 	{

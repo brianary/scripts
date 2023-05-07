@@ -29,10 +29,10 @@ C:\ProgramData\NuGet\NuGetDefaults.config
 function Get-Parent([Parameter(Position=0)][string] $Directory)
 {
 	if($Directory -eq [io.path]::GetPathRoot($Directory)) {$Directory}
-	else {$Directory; Get-Parents (Split-Path $Directory)}
+	else {$Directory; Get-Parent (Split-Path $Directory)}
 }
 
-Get-Parents $Directory |ForEach-Object {Join-Path $_ nuget.config} |Where-Object {Test-Path $_ -Type Leaf}
+Get-Parent $Directory |ForEach-Object {Join-Path $_ nuget.config} |Where-Object {Test-Path $_ -Type Leaf}
 Join-Path $env:APPDATA NuGet NuGet.config |Where-Object {Test-Path $_ -Type Leaf}
 Join-Path $env:ProgramData NuGet Config*.config |Resolve-Path -ErrorAction Ignore |Sort-Object Length -Descending
 Join-Path $env:ProgramData NuGet NuGetDefaults.config |Where-Object {Test-Path $_ -Type Leaf}

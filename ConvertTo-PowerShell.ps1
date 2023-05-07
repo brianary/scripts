@@ -273,13 +273,13 @@ $itab$($Value |Format-ParameterType) `$$($Value.Name)
 	elseif($Value -is [Collections.Specialized.OrderedDictionary])
 	{@"
 $itab[ordered]@{
-$tab$(Format-Children $Value -UseKeys)
+$tab$(Format-Child $Value -UseKeys)
 $tab}
 "@}
 	elseif($Value -is [Hashtable])
 	{@"
 $itab@{
-$tab$(Format-Children $Value -UseKeys)
+$tab$(Format-Child $Value -UseKeys)
 $tab}
 "@}
 	elseif($Value -is [xml])
@@ -287,13 +287,13 @@ $tab}
 	elseif($Value -is [PSObject])
 	{@"
 $itab[pscustomobject]@{
-$tab$(Format-Children $Value)
+$tab$(Format-Child $Value)
 $tab}
 "@}
 	else
 	{@"
 $itab@{
-$tab$(Format-Children $Value)
+$tab$(Format-Child $Value)
 $tab}
 "@}
 }

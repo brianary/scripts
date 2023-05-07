@@ -39,7 +39,7 @@ Process
 		Write-Verbose "Optimizing help in $filename"
 		$script = [regex]::Replace((Get-Content $filename -Raw).TrimEnd(), '(?s)<#\s*(\.\w+.*?)#>',
 			{[regex]::Replace(($args[0] -replace '(?m)^[\x09\x20]+',''), '(?m)^(\.\w+)\b', {"$($args[0])".ToUpper()} )})
-		$params = $script |Get-ParameterDocs
+		$params = $script |Get-ParameterDoc
 		$script = $script -replace '(?ms)^\.PARAMETER +\w+\r?\n.*?\s*(?=^\.\w+|^#>)'
 		$script = [regex]::Replace($script, '(?ms)(?<=^\[CmdletBinding.*?\]\s*Param\(\r?\n)(?<ParameterDefs>.*?\r?\n)(?=^\))',
 			{

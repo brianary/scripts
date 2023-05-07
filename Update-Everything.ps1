@@ -88,8 +88,8 @@ Attempts to update packages, features, and system.
 Justification='This script is not intended for pipelining.')]
 [CmdletBinding()] Param(
 # The sources of updates to install, in order.
-[ValidateSet('Chocolatey','DellCommand','Dotnet','Essentials','GitHubCli','Npm',
-	'PSHelp','PSModules','Scoop','Windows','WindowsStore','WinGet')]
+[ValidateSet('Chocolatey','DellCommand','Dotnet','Essential','GitHubCli','Npm',
+	'PSHelp','PSModule','Scoop','Window','WindowsStore','WinGet')]
 [Parameter(Position=0,ValueFromRemainingArguments=$true)][string[]] $Steps =
 	@('Essentials','WindowsStore','Scoop','Chocolatey','WinGet','Npm','Dotnet',
 		'GitHubCli','PSModules','PSHelp','DellCommand','Windows')
@@ -122,7 +122,7 @@ Begin
 			if(choco outdated -r |
 				ConvertFrom-Csv -Delimiter '|' -Header PackageName,LocalVersion,AvailableVersion |
 				Where-Object PackageName -in powershell,powershell-core,microsoft-windows-terminal)
-			{Invoke-EssentialUpdates}
+			{Invoke-EssentialUpdate}
 		}
 		elseif(Get-Command winget -ErrorAction Ignore)
 		{
@@ -132,7 +132,7 @@ Begin
 				winget list Microsoft.PowerShell |
 				Select-Object -Skip 2 -First 1 |
 				Select-String Available).Count -gt 0)
-			{Invoke-EssentialUpdates}
+			{Invoke-EssentialUpdate}
 		}
 		else
 		{
