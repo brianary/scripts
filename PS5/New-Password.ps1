@@ -29,8 +29,6 @@ ecRAgbdX^9)=
 #>
 
 #Requires -Version 3
-#Requires -Assembly System.Web
-using assembly System.Web
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
 Justification='This is a bootstrap problem, since the string must be created first.')]
 [CmdletBinding()][OutputType([string],[SecureString])] Param(
@@ -63,24 +61,25 @@ while($true)
 	$i++
 	if($i -gt $TryMaxTimes)
 	{ Stop-ThrowError.ps1 "Failed to meet requirements after $TryMaxTimes tries." -OperationContext $PSBoundParameters }
-	$pwd =
+	Add-Type -AssemblyName System.Web
+	$value =
 		try {[Web.Security.Membership]::GeneratePassword($Length,3)}
 		catch
 		{
 			$a = Invoke-RestMethod "https://api.duckduckgo.com/?q=pwgen+strong+$Length&format=json"
 			[Web.HttpUtility]::HtmlDecode($a.Answer) -replace ' \(random password\)\z',''
 		}
-	if($ExcludeCharacters -and $pwd.IndexOfAny($ExcludeCharacters) -gt -1)
+	if($ExcludeCharacters -and $value.IndexOfAny($ExcludeCharacters) -gt -1)
 	{Write-Verbose "Password #$i has invalid characters.; continue"}
-	if($MaxRepeats -gt 1 -and $pwd -match "(.)$('\1' * $MaxRepeats)")
+	if($MaxRepeats -gt 1 -and $value -match "(.)$('\1' * $MaxRepeats)")
 	{Write-Verbose "Password #$i has too many duplicate characters"; continue}
-	if($ValidMatch -and $pwd -notmatch $ValidMatch) {Write-Verbose "Password #$i not valid: $pwd"; continue}
-	if($InvalidMatch -and $pwd -match $InvalidMatch) {Write-Verbose "Password #$i invalid: $pwd"; continue}
-	if($HasNumber -and $pwd -notmatch '\d') {Write-Verbose "Password #$i missing number: $pwd"; continue}
-	if($HasUpper -and $pwd -cnotmatch '\p{Lu}') {Write-Verbose "Password #$i missing uppercase: $pwd"; continue}
-	if($HasLower -and $pwd -cnotmatch '\p{Ll}') {Write-Verbose "Password #$i missing lowercase: $pwd"; continue}
-	if($HasSpecial -and $pwd -inotmatch '[^0-9A-Z]') {Write-Verbose "Password #$i missing lowercase: $pwd"; continue}
+	if($ValidMatch -and $value -notmatch $ValidMatch) {Write-Verbose "Password #$i not valid: $value"; continue}
+	if($InvalidMatch -and $value -match $InvalidMatch) {Write-Verbose "Password #$i invalid: $value"; continue}
+	if($HasNumber -and $value -notmatch '\d') {Write-Verbose "Password #$i missing number: $value"; continue}
+	if($HasUpper -and $value -cnotmatch '\p{Lu}') {Write-Verbose "Password #$i missing uppercase: $value"; continue}
+	if($HasLower -and $value -cnotmatch '\p{Ll}') {Write-Verbose "Password #$i missing lowercase: $value"; continue}
+	if($HasSpecial -and $value -inotmatch '[^0-9A-Z]') {Write-Verbose "Password #$i missing lowercase: $value"; continue}
 	break
 }
-if($AsSecureString) {ConvertTo-SecureString $pwd -AsPlainText -Force}
-else {$pwd}
+if($AsSecureString) {ConvertTo-SecureString $value -AsPlainText -Force}
+else {$value}
