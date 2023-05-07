@@ -64,43 +64,45 @@ Ignored for other objects.
 # Opens the Connection object (or Command connection) if an InitialValue was provided, ignored otherwise.
 [switch] $OpenConnection
 )
-
-$factory = switch($Provider)
+Process
 {
-	Odbc {[Data.Odbc.OdbcFactory]::Instance}
-	OleDb {[Data.OleDb.OleDbFactory]::Instance}
-	Oracle {[Data.OracleClient.OracleClientFactory]::Instance}
-	Sql {[Data.SqlClient.SqlClientFactory]::Instance}
-}
-$value = switch($TypeName)
-{
-	Command {$factory.CreateCommand()}
-	Connection {$factory.CreateConnection()}
-	ConnectionStringBuilder {$factory.CreateConnectionStringBuilder()}
-}
-if($InitialValue)
-{
-	switch($TypeName)
+	$factory = switch($Provider)
 	{
-		Command
+		Odbc {[Data.Odbc.OdbcFactory]::Instance}
+		OleDb {[Data.OleDb.OleDbFactory]::Instance}
+		Oracle {[Data.OracleClient.OracleClientFactory]::Instance}
+		Sql {[Data.SqlClient.SqlClientFactory]::Instance}
+	}
+	$value = switch($TypeName)
+	{
+		Command {$factory.CreateCommand()}
+		Connection {$factory.CreateConnection()}
+		ConnectionStringBuilder {$factory.CreateConnectionStringBuilder()}
+	}
+	if($InitialValue)
+	{
+		switch($TypeName)
 		{
-			$value.CommandText = $InitialValue
-		}
-		Connection
-		{
-			$value.ConnectionString = $InitialValue
-			if($OpenConnection) {$value.Open()}
-		}
-		ConnectionStringBuilder
-		{ # PowerShell must use the method form
-			$value.set_ConnectionString($InitialValue)
+			Command
+			{
+				$value.CommandText = $InitialValue
+			}
+			Connection
+			{
+				$value.ConnectionString = $InitialValue
+				if($OpenConnection) {$value.Open()}
+			}
+			ConnectionStringBuilder
+			{ # PowerShell must use the method form
+				$value.set_ConnectionString($InitialValue)
+			}
 		}
 	}
+	if($TypeName -eq 'Command')
+	{
+		if($StoredProcedure) {$obj.CommandType = 'StoredProcedure'}
+		if($ConnectionString)
+		{$obj.Connection = New-DbProviderObject.ps1 Connection $ConnectionString -Provider:$Provider -OpenConnection:$OpenConnection}
+	}
+	return $value
 }
-if($TypeName -eq 'Command')
-{
-	if($StoredProcedure) {$obj.CommandType = 'StoredProcedure'}
-	if($ConnectionString)
-	{$obj.Connection = New-DbProviderObject.ps1 Connection $ConnectionString -Provider:$Provider -OpenConnection:$OpenConnection}
-}
-return $value

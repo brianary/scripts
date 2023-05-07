@@ -41,7 +41,9 @@ False
 # Precise, known format(s) to use to try parsing the datetime.
 [string[]]$Format
 )
-
-[ref]$value = [datetime]::MinValue
-if(!$Format) {[datetime]::TryParse($Date,$value)}
-else {[datetime]::TryParseExact($Date,$Format,[Globalization.CultureInfo]::InvariantCulture,'None',$value)}
+Process
+{
+	[ref]$value = [datetime]::MinValue
+	if(!$Format) {[datetime]::TryParse($Date,$value)}
+	else {[datetime]::TryParseExact($Date,$Format,[Globalization.CultureInfo]::InvariantCulture,'None',$value)}
+}

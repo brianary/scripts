@@ -34,84 +34,85 @@ Outputs SQL scripts to files using the default options.
 # Controls how the scripts are generated.
 [Microsoft.SqlServer.Management.Smo.ScriptingOptions] $Options = (New-DbaScriptingOption)
 )
-
-function ConvertTo-FileName($Name) { $Name -replace '[:<>\\/"|\t]+','_' }
-filter Test-SystemObject
+Begin
 {
-	Param(
-	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
-	[Parameter(ValueFromPipelineByPropertyName=$true)][bool] $IsSystemObject = $false
-	)
-	return $IsSystemObject
-}
-
-filter Get-ScriptName
-{
-	[CmdletBinding()] Param(
-	[Parameter(Position=0,Mandatory=$true)][string] $Subfolder,
-	[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
-	[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Schema
-	)
-	if(!(Test-Path $Subfolder -Type Container)) {New-Item $Subfolder -Type Directory |Out-Null}
-	return Join-Path $Subfolder (ConvertTo-FileName ($Schema ? "$Schema.$Name.sql" : "$Name.sql"))
-}
-
-filter Export-DatabaseScript
-{
-	[CmdletBinding()] Param(
-	[Parameter(Position=0,Mandatory=$true)][string] $Subfolder,
-	[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
-	[Microsoft.SqlServer.Management.Smo.ScriptNameObjectBase] $InputObject
-	)
-	if(!$InputObject -or ($InputObject |Test-SystemObject)) {return}
-	$InputObject |Export-DbaScript -ScriptingOptionsObject $Options -FilePath ($InputObject |Get-ScriptName $Subfolder)
-}
-
-function Export-DatabaseObject
-{
-	[CmdletBinding()] Param()
-	$dir = (ConvertTo-FileName $Database.Name)
-	if(Test-Path $dir)
+	function ConvertTo-FileName($Name) { $Name -replace '[:<>\\/"|\t]+','_' }
+	filter Test-SystemObject
 	{
-		Stop-ThrowError.ps1 "Directory $dir already exists" -OperationContext $dir
+		Param(
+		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
+		[Parameter(ValueFromPipelineByPropertyName=$true)][bool] $IsSystemObject = $false
+		)
+		return $IsSystemObject
 	}
-	New-Item $dir -Type Directory |Push-Location
-	$Database.Assemblies |Export-DatabaseScript 'Assemblies'
-	$Database.Triggers |Export-DatabaseScript 'Database Triggers'
-	$Database.Defaults |Export-DatabaseScript 'Defaults'
-	$Database.ExtendedProperties |Export-DatabaseScript 'Extended Properties'
-	$Database.UserDefinedFunctions |Export-DatabaseScript 'Functions'
-	$Database.Rules |Export-DatabaseScript 'Rules'
-	$Database.AsymmetricKeys |Export-DatabaseScript 'Security/Asymmetric Keys'
-	$Database.Certificates |Export-DatabaseScript 'Security/Certificates'
-	$Database.Roles |
-		Where-Object {$_ -isnot [Microsoft.SqlServer.Management.Smo.DatabaseRole] -or !$_.IsFixedRole} |
-		Export-DatabaseScript 'Security/Roles'
-	$Database.Schemas |Export-DatabaseScript 'Security/Schemas'
-	$Database.SymmetricKeys |Export-DatabaseScript 'Security/Symmetric Keys'
-	$Database.Users |Export-DatabaseScript 'Security/Users'
-	$Database.Sequences |Export-DatabaseScript 'Sequences'
-	$Database.FullTextCatalogs |Export-DatabaseScript 'Storage/Full Text Catalogs'
-	$Database.FullTextStopLists |Export-DatabaseScript 'Storage/Full Text Stop Lists'
-	$Database.PartitionFunctions |Export-DatabaseScript 'Storage/Partition Functions'
-	$Database.PartitionSchemes |Export-DatabaseScript 'Storage/Partition Schemes'
-	$Database.StoredProcedures |Export-DatabaseScript 'Stored Procedures'
-	$Database.Synonyms |Export-DatabaseScript 'Synonyms'
-	$Database.Tables |Export-DatabaseScript 'Tables'
-	$Database.UserDefinedDataTypes |Export-DatabaseScript 'Types/User-defined Data Types'
-	$Database.XmlSchemaCollections |Export-DatabaseScript 'Types/XML Schema Collections'
-	$Database.Views |Export-DatabaseScript 'Views'
-	if($Database.ServiceBroker)
-	{
-		$Database.ServiceBroker.ServiceContracts |Export-DatabaseScript 'Service Broker/Contracts'
-		#$Database.ServiceBroker.? |Export-DatabaseScript 'Service Broker/Event Notifications'
-		$Database.ServiceBroker.MessageTypes |Export-DatabaseScript 'Service Broker/Message Types'
-		$Database.ServiceBroker.Queues |Export-DatabaseScript 'Service Broker/Queues'
-		$Database.ServiceBroker.RemoteServiceBindings |Export-DatabaseScript 'Service Broker/Remote Service Bindings'
-		$Database.ServiceBroker.Routes |Export-DatabaseScript 'Service Broker/Routes'
-		$Database.ServiceBroker.Services |Export-DatabaseScript 'Service Broker/Services'
-	}
-	Pop-Location
-}
 
-Export-DatabaseObjects
+	filter Get-ScriptName
+	{
+		[CmdletBinding()] Param(
+		[Parameter(Position=0,Mandatory=$true)][string] $Subfolder,
+		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
+		[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Schema
+		)
+		if(!(Test-Path $Subfolder -Type Container)) {New-Item $Subfolder -Type Directory |Out-Null}
+		return Join-Path $Subfolder (ConvertTo-FileName ($Schema ? "$Schema.$Name.sql" : "$Name.sql"))
+	}
+
+	filter Export-DatabaseScript
+	{
+		[CmdletBinding()] Param(
+		[Parameter(Position=0,Mandatory=$true)][string] $Subfolder,
+		[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
+		[Microsoft.SqlServer.Management.Smo.ScriptNameObjectBase] $InputObject
+		)
+		if(!$InputObject -or ($InputObject |Test-SystemObject)) {return}
+		$InputObject |Export-DbaScript -ScriptingOptionsObject $Options -FilePath ($InputObject |Get-ScriptName $Subfolder)
+	}
+
+	function Export-DatabaseObject
+	{
+		[CmdletBinding()] Param()
+		$dir = (ConvertTo-FileName $Database.Name)
+		if(Test-Path $dir)
+		{
+			Stop-ThrowError.ps1 "Directory $dir already exists" -OperationContext $dir
+		}
+		New-Item $dir -Type Directory |Push-Location
+		$Database.Assemblies |Export-DatabaseScript 'Assemblies'
+		$Database.Triggers |Export-DatabaseScript 'Database Triggers'
+		$Database.Defaults |Export-DatabaseScript 'Defaults'
+		$Database.ExtendedProperties |Export-DatabaseScript 'Extended Properties'
+		$Database.UserDefinedFunctions |Export-DatabaseScript 'Functions'
+		$Database.Rules |Export-DatabaseScript 'Rules'
+		$Database.AsymmetricKeys |Export-DatabaseScript 'Security/Asymmetric Keys'
+		$Database.Certificates |Export-DatabaseScript 'Security/Certificates'
+		$Database.Roles |
+			Where-Object {$_ -isnot [Microsoft.SqlServer.Management.Smo.DatabaseRole] -or !$_.IsFixedRole} |
+			Export-DatabaseScript 'Security/Roles'
+		$Database.Schemas |Export-DatabaseScript 'Security/Schemas'
+		$Database.SymmetricKeys |Export-DatabaseScript 'Security/Symmetric Keys'
+		$Database.Users |Export-DatabaseScript 'Security/Users'
+		$Database.Sequences |Export-DatabaseScript 'Sequences'
+		$Database.FullTextCatalogs |Export-DatabaseScript 'Storage/Full Text Catalogs'
+		$Database.FullTextStopLists |Export-DatabaseScript 'Storage/Full Text Stop Lists'
+		$Database.PartitionFunctions |Export-DatabaseScript 'Storage/Partition Functions'
+		$Database.PartitionSchemes |Export-DatabaseScript 'Storage/Partition Schemes'
+		$Database.StoredProcedures |Export-DatabaseScript 'Stored Procedures'
+		$Database.Synonyms |Export-DatabaseScript 'Synonyms'
+		$Database.Tables |Export-DatabaseScript 'Tables'
+		$Database.UserDefinedDataTypes |Export-DatabaseScript 'Types/User-defined Data Types'
+		$Database.XmlSchemaCollections |Export-DatabaseScript 'Types/XML Schema Collections'
+		$Database.Views |Export-DatabaseScript 'Views'
+		if($Database.ServiceBroker)
+		{
+			$Database.ServiceBroker.ServiceContracts |Export-DatabaseScript 'Service Broker/Contracts'
+			#$Database.ServiceBroker.? |Export-DatabaseScript 'Service Broker/Event Notifications'
+			$Database.ServiceBroker.MessageTypes |Export-DatabaseScript 'Service Broker/Message Types'
+			$Database.ServiceBroker.Queues |Export-DatabaseScript 'Service Broker/Queues'
+			$Database.ServiceBroker.RemoteServiceBindings |Export-DatabaseScript 'Service Broker/Remote Service Bindings'
+			$Database.ServiceBroker.Routes |Export-DatabaseScript 'Service Broker/Routes'
+			$Database.ServiceBroker.Services |Export-DatabaseScript 'Service Broker/Services'
+		}
+		Pop-Location
+	}
+}
+Process {Export-DatabaseObjects}

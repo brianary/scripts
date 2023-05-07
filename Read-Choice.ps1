@@ -55,7 +55,7 @@ Otherwise, the first item (index 0) is the default.
 #>
 [int] $DefaultIndex
 )
-End
+Process
 {
 	[Management.Automation.Host.ChoiceDescription[]] $choicelist =
 		switch($PSCmdlet.ParameterSetName)

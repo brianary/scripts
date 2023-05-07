@@ -18,6 +18,8 @@ Removes all but the oldest file with the same size and hash value.
 #>
 
 #Requires -Version 5
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseProcessBlockForPipelineCommand','',
+Justification='This script uses input within an End block.')]
 [CmdletBinding()][OutputType([string])] Param(
 # A list of files to search for duplicates.
 [Parameter(ValueFromPipeline=$true,ValueFromRemainingArguments=$true)][IO.FileInfo[]]$Files

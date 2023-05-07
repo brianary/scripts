@@ -113,6 +113,8 @@ PurchaseOrderHeader }|--|| Vendor : "VendorID: Foreign key constraint referencin
 #>
 
 #Requires -Version 3
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseProcessBlockForPipelineCommand','',
+Justification='This script uses $input within an End block.')]
 [CmdletBinding()][OutputType([string])] Param(
 # An SMO table object to include in the diagram.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)]

@@ -23,6 +23,8 @@ Measure-StandardDeviation.ps1 (1..20)
 #>
 
 #Requires -Version 3
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseProcessBlockForPipelineCommand','',
+Justification='This script uses $input within an End block.')]
 [CmdletBinding()][OutputType([double])] Param(
 # The numeric values to analyze.
 [Parameter(Position=0,ValueFromRemainingArguments=$true,ValueFromPipeline=$true)]

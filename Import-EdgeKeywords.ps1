@@ -16,6 +16,8 @@ Restores Edge search keywords to the current profile from a backup file.
 
 #Requires -Version 3
 #Requires -Modules PSSQLite
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseProcessBlockForPipelineCommand','',
+Justification='This script uses $input within an End block.')]
 [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='Low')] Param(
 # Edge search keyword details.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][pscustomobject] $Data,

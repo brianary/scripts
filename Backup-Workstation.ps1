@@ -47,6 +47,8 @@ filter Copy-ItemToBackup
 
 function Copy-ContentToBackup
 {
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseProcessBlockForPipelineCommand','',
+	Justification='This script uses $input within an End block.')]
 	Param(
 	[Parameter(Position=0)][string] $Destination,
 	[Parameter(Position=1)][string] $FileName,

@@ -20,6 +20,8 @@ Same as previous example, but adds a progress indicator within an existing pipel
 #>
 
 #Requires -Version 3
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseProcessBlockForPipelineCommand','',
+Justification='This script uses $input within an End block.')]
 [CmdletBinding()] Param(
 # The progress title text to display.
 [Parameter(Position=0)][string] $Activity = 'Processing',

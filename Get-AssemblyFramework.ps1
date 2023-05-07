@@ -26,11 +26,13 @@ v4.0.30319     .NETFramework,Version=v4.7.2
 # The assembly to get the framework version of.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path
 )
-
-$assembly = [Reflection.Assembly]::ReflectionOnlyLoadFrom((Resolve-Path $Path))
-[PSCustomObject]@{
-    RuntimeVersion = $assembly.ImageRuntimeVersion
-    CompileVersion = $assembly.CustomAttributes |
-        Where-Object {$_.AttributeType.Name -eq "TargetFrameworkAttribute" } |
-        ForEach-Object {$_.ConstructorArguments.value}
+Process
+{
+	$assembly = [Reflection.Assembly]::ReflectionOnlyLoadFrom((Resolve-Path $Path))
+	[PSCustomObject]@{
+		RuntimeVersion = $assembly.ImageRuntimeVersion
+		CompileVersion = $assembly.CustomAttributes |
+			Where-Object {$_.AttributeType.Name -eq "TargetFrameworkAttribute" } |
+			ForEach-Object {$_.ConstructorArguments.value}
+	}
 }
