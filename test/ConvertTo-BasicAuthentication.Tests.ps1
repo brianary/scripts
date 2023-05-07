@@ -3,6 +3,8 @@
 Tests producing a basic authentication header string from a credential.
 #>
 
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
+Justification='These are tests.')]
 $basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
 $skip = !(Test-Path .changes -Type Leaf) ? $false :
 	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})

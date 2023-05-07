@@ -3,6 +3,10 @@
 Tests copying scheduled jobs from another computer to this one, using a GUI list to choose jobs.
 #>
 
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
+Justification='These are tests.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments','',
+Justification='Usage is not tracked accurately.')]
 $basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
 $skip = !(Test-Path .changes -Type Leaf) ? $false :
 	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})

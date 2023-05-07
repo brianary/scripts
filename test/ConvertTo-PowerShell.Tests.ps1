@@ -4,6 +4,8 @@ Tests serializing complex content into PowerShell literals.
 #>
 
 #Requires -Version 7
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
+Justification='These are tests.')]
 $basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
 $skip = !(Test-Path .changes -Type Leaf) ? $false :
 	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})

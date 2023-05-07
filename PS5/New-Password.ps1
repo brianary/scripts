@@ -31,6 +31,8 @@ ecRAgbdX^9)=
 #Requires -Version 3
 #Requires -Assembly System.Web
 using assembly System.Web
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
+Justification='This is a bootstrap problem, since the string must be created first.')]
 [CmdletBinding()][OutputType([string],[SecureString])] Param(
 # The length of the password in characters.
 [Parameter(Position=0,Mandatory=$true)][int] $Length,
