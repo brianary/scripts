@@ -52,4 +52,3 @@ else
 	choco install geforce-experience -y
 	Set-Service wuauserv -StartupType Manual
 }
-

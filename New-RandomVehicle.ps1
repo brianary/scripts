@@ -31,4 +31,3 @@ else
 		Description = $details
 	}
 }
-

@@ -21,4 +21,3 @@ Enables ANSI terminal colors.
 )
 
 $PSStyle.OutputRendering = $HostOnly ? 'Host' : 'Ansi'
-

@@ -24,4 +24,3 @@ Pushes the current directory onto the stack, and changes to the workspace direct
 [CmdletBinding()][OutputType([void])] Param()
 if(Test-Variable.ps1 psEditor) {Push-Location $psEditor.Workspace.Path}
 else {Stop-ThrowError.ps1 'Missing psEditor object' -NotImplemented}
-

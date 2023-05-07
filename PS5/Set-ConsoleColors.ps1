@@ -220,4 +220,3 @@ else {foreach($color in @($ColorTable.Keys)) {$ColorTable[$color] = $ColorTable[
 
 Set-ColorTable $ColorTable
 Write-Warning 'All affected ConsoleClass windows will need to be reopened to use the new colors.'
-

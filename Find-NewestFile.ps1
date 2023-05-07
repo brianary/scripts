@@ -33,4 +33,3 @@ Mode                LastWriteTime         Length Name
 Begin   { $NewestFile = $null }
 Process { $Files |ForEach-Object {if(Test-NewerFile.ps1 $NewestFile $_){$NewestFile=$_}} }
 End     { $NewestFile }
-

@@ -30,4 +30,3 @@ $hashalg = New-Object Security.Cryptography.SHA256Managed
 $entry = ConvertTo-Base64.ps1 -Data $hashalg.ComputeHash([Text.Encoding]::UTF8.GetBytes("$UserName@$Message")) -UriStyle
 $file = Join-Path $credcache $entry
 if(Test-Path $file -Type Leaf) {Remove-Item $file -Force}
-

@@ -36,4 +36,3 @@ Get-Parent $Directory |ForEach-Object {Join-Path $_ nuget.config} |Where-Object 
 Join-Path $env:APPDATA NuGet NuGet.config |Where-Object {Test-Path $_ -Type Leaf}
 Join-Path $env:ProgramData NuGet Config*.config |Resolve-Path -ErrorAction Ignore |Sort-Object Length -Descending
 Join-Path $env:ProgramData NuGet NuGetDefaults.config |Where-Object {Test-Path $_ -Type Leaf}
-

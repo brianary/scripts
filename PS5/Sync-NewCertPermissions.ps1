@@ -76,4 +76,3 @@ End
 	#TODO: remove $removeperms, conditionally after adding switch param $RemoveNewPerms
 	Set-Acl $newcertpath $acl
 }
-

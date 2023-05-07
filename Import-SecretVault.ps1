@@ -69,4 +69,3 @@ Process
 		default {Set-Secret $Name $Value -Vault $Vault @meta}
 	}
 }
-

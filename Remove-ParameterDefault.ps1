@@ -60,4 +60,3 @@ Process
 	Write-Verbose "Removing default parameter '$name'"
 	if($defaults.Value.ContainsKey($name)) {$defaults.Value.Remove($name)}
 }
-

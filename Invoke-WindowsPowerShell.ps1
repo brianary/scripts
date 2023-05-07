@@ -100,4 +100,3 @@ else
 		-Command $CommandBlock -args $BlockArgs
 }
 $env:PSModulePath = $PSModulePath # restore module path
-

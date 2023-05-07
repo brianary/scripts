@@ -70,4 +70,3 @@ Process
 	}
 	return $value
 }
-

@@ -40,4 +40,3 @@ Process
     Write-Verbose "Reading $TagName elements from '$($response.ParsedHtml.title)'"
     $response.ParsedHtml.getElementsByTagName($TagName)
 }
-

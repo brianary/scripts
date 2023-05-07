@@ -102,4 +102,3 @@ rs       = 'urn:schemas-microsoft-com:rowset'
 sodipodi = 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd'
 inkscape = 'http://www.inkscape.org/namespaces/inkscape'
 }
-

@@ -85,4 +85,3 @@ Process
 		FinalNewline = $prev -in 0x0D,0x0A
 	}
 }
-

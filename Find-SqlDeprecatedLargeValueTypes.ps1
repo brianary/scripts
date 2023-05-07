@@ -189,4 +189,3 @@ https://github.com/brianary/sqlvarmax/blob/master/SqlVarMaxScan/MaxableSubroutin
 #>
 
 }
-

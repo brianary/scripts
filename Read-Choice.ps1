@@ -73,4 +73,3 @@ Process
 		}
 	$Choices[$Host.UI.PromptForChoice($Caption,$Message,$choicelist,$DefaultIndex)]
 }
-

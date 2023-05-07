@@ -49,4 +49,3 @@ if(Get-Command gh -ErrorAction Ignore)
 
 Write-Warning "The exported packages are a verbose list that will probably require editing."
 return $installed
-

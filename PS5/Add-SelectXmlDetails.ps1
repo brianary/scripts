@@ -19,4 +19,3 @@ Process
 	$SelectXmlInfo |Add-Member Value ($SelectXmlInfo.Node.Value)
 	return $SelectXmlInfo
 }
-

@@ -46,4 +46,3 @@ Describe 'ConvertFrom-CimInstance' -Tag ConvertFrom-CimInstance -Skip:$skip {
 		}
 	}
 }
-

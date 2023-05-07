@@ -48,4 +48,3 @@ Process
 	while($value.Length -gt ($hex.Length / 2)) {$null,$value = $value}
 	return $value
 }
-

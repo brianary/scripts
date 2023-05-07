@@ -47,4 +47,3 @@ Process
     {Write-Verbose "JWT hashes do not match"; return $false}
     return $true
 }
-

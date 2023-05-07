@@ -60,4 +60,3 @@ Process
 	if($UriStyle) {$value.Trim('=') -replace '\+','-' -replace '/','_'}
 	else {$value}
 }
-

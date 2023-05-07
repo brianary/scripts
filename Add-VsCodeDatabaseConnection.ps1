@@ -89,4 +89,3 @@ End
 	$connections |ConvertTo-Json -Compress |Write-Verbose
 	Set-VSCodeSetting.ps1 mssql.connections $connections -Workspace
 }
-

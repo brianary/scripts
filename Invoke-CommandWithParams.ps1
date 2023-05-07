@@ -70,4 +70,3 @@ Process
 		ForEach-Object {"-$_ $(ConvertTo-PowerShell.ps1 $selectedParams.$_ -IndentBy '')"})"
 	return &$Name @selectedParams
 }
-

@@ -28,4 +28,3 @@ foreach($website in Get-Website)
         ? {$PSCmdlet.ShouldProcess($_.Node.Attributes['path'].Value,'remove')} |
         Remove-Xml.ps1 -Verbose
 }
-

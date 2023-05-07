@@ -66,4 +66,3 @@ Process
 	if($CreateFolder) {Pop-Location}
 	Write-Progress $activity -Completed
 }
-

@@ -31,4 +31,3 @@ $rng = New-Object Security.Cryptography.RNGCryptoServiceProvider
 $rng.GetBytes($value)
 $rng.Dispose(); $rng = $null
 return,$value
-

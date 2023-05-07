@@ -26,4 +26,3 @@ Describe 'Compare-Properties' -Tag Compare-Properties -Skip:$skip {
 		}
 	}
 }
-

@@ -78,4 +78,3 @@ select object_schema_name(i.object_id) SchemaName,
  where col_name(ic.object_id,ic.column_id) = '$($ColumnName -replace "'","''")'
  order by TableName, IndexName;
 "@ |ConvertFrom-DataRow.ps1
-

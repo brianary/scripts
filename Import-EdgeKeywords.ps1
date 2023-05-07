@@ -35,4 +35,3 @@ End
 {
 	Invoke-SQLiteBulkCopy -DataTable ($input |Out-DataTable) -DataSource $Path -Table keywords -NotifyAfter 100 -ConflictClause Ignore
 }
-

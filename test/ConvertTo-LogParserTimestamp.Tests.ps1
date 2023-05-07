@@ -36,4 +36,3 @@ Describe 'ConvertTo-LogParserTimestamp' -Tag ConvertTo-LogParserTimestamp -Skip:
 		}
 	}
 }
-

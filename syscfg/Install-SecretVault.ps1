@@ -27,4 +27,3 @@ Register-SecretVault Microsoft.PowerShell.SecretStore -Name SecretStore -Default
 Set-SecretVaultDefault SecretStore
 if((Test-SecretVault SecretStore)) {Write-Info.ps1 'SecretVault installed successfully' -fg Green}
 else {Write-Info.ps1 'SecretVault installation failed' -fg Red}
-

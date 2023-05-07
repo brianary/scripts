@@ -59,4 +59,3 @@ while($nameSegment)
 	$nameSegment,$path = $path
 }
 $property
-

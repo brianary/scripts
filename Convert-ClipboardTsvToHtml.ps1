@@ -25,4 +25,3 @@ else
 		ConvertTo-SafeEntities.ps1 |
 		Set-Clipboard -AsHtml
 }
-

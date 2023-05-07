@@ -32,4 +32,3 @@ foreach($version in 'v2.0.50727','v4.0.30319')
         Enable-SchUseStrongCrypto HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NETFramework\$version
     }
 }
-

@@ -27,4 +27,3 @@ Process
 {
 	Test-FileTypeMagicNumber.ps1 utf8 $Path
 }
-

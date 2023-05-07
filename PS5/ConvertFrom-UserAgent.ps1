@@ -151,4 +151,3 @@ Process
     $factory.ConfigureBrowserCapabilities(@{},$browser)
     $browser
 }
-

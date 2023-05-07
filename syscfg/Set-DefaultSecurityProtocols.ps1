@@ -119,4 +119,3 @@ foreach($protocol in @('Multi-Protocol Unified Hello','PCT 1.0','SSL 2.0','SSL 3
 		Value = [int](Get-Variable $_ -ValueOnly)
 	}} |
 	% {Set-RegistryValue @_}
-

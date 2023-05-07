@@ -41,4 +41,3 @@ Process
 {
     $Certificate.Archived = $true
 }
-

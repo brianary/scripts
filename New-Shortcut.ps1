@@ -79,4 +79,3 @@ if($RunAsAdministrator)
 	$lnkdata |Set-Content $fullname @readbytes
 }
 Rename-Item $fullname ([Net.WebUtility]::UrlDecode($file))
-

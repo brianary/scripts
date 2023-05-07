@@ -21,4 +21,3 @@ The $http listener is closed.
 )
 $Listener.Close()
 $Listener |Out-String |Write-Verbose
-

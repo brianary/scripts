@@ -32,4 +32,3 @@ foreach($ns in $Namespaces.GetEnumerator())
 	$value.AddNamespace($ns.Name,$ns.Value)
 }
 return,$value
-

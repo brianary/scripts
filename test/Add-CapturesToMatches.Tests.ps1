@@ -24,4 +24,3 @@ Describe 'Add-CapturesToMatches' -Tag Add-CapturesToMatches,Select-Xml -Skip:$sk
 		}
 	}
 }
-

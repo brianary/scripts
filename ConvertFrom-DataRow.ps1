@@ -41,4 +41,3 @@ Process
     if($AsDictionary) {return $fields}
     elseif($fields.Count) {return [pscustomobject]$fields}
 }
-

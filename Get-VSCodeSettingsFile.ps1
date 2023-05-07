@@ -90,4 +90,3 @@ ${settings.json} =
 Write-Verbose "Using VSCode settings ${settings.json}"
 
 ${settings.json}
-

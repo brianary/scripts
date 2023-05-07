@@ -140,4 +140,3 @@ Process
     Get-GitHubRepos.ps1 |Where-Object $Filter |ForEach-Progress.ps1 'Adding topics to repos' {$_.name} {$_ |Add-Topic}
     Complete-GitHubRepositoryTopic
 }
-

@@ -29,4 +29,3 @@ Process
 {
 	return !(Test-TextFile.ps1 $Path)
 }
-

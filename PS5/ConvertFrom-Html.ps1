@@ -66,4 +66,3 @@ Process
         default {throw "Unable to convert from HTML <$($TableElement.tagName.ToLower())> element."}
     }
 }
-

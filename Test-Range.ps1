@@ -54,4 +54,3 @@ Process
 	if(!$Filter) {return $inRange}
 	elseif($inRange) {return $InputObject}
 }
-

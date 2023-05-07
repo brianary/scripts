@@ -66,4 +66,3 @@ Describe 'Add-DynamicParam' -Tag Add-DynamicParam -Skip:$skip {
 		Remove-Variable -Name DynamicParam -Force -ErrorAction Ignore
 	}
 }
-

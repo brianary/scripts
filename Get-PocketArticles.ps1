@@ -135,4 +135,3 @@ if($articles -and $articles.list)
 {
 	$articles.list.PSObject.Properties.Value |Where-Object time_read -lt (ConvertTo-EpochTime.ps1 $Before)
 }
-

@@ -45,4 +45,3 @@ if($Stylesheet)
 schtasks /query /xml |
 	Where-Object {$_ -notlike '<?xml *?>'} |
 	Out-File $Path -Encoding utf8 -Width ([int]::MaxValue) -Append
-

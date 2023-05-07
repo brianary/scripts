@@ -65,4 +65,3 @@ function Get-ConfigConnections
 $connections = Get-ConfigConnections
 if(!$connections){Write-Verbose 'Nothing to do.'}
 else{$connections |Add-VsCodeDatabaseConnection.ps1}
-

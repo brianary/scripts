@@ -66,4 +66,3 @@ Process
 	Write-Verbose "Setting default parameter '$name' to '$Value'"
 	$defaults.Value[$name] = $Value
 }
-

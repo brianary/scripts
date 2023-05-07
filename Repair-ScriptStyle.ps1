@@ -70,4 +70,3 @@ Justification='$((Read-Host 'Justification') -replace "'","''")')]
 	}
 	Invoke-ScriptAnalyzer $Path -Fix
 }
-

@@ -44,4 +44,3 @@ Certificate        7
 )
 Begin { $i = $InitialValue }
 Process { Add-Member $PropertyName ($i++) -InputObject $InputObject -PassThru -Force:$Force }
-

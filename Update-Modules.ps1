@@ -18,4 +18,3 @@ foreach($module in Get-Module -List |Group-Object Name |Where-Object Count -gt 1
 		Uninstall-Module $oldmodule.Name -RequiredVersion $oldmodule.Version
 	}
 }
-

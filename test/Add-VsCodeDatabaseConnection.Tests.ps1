@@ -42,4 +42,3 @@ Describe 'Add-VsCodeDatabaseConnection' -Tag Add-VsCodeDatabaseConnection -Skip:
 		}
 	}
 }
-

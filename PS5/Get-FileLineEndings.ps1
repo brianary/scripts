@@ -91,4 +91,3 @@ Process
 		} |Add-Member ScriptMethod ToString -Force -PassThru {$this.LineEndings}
 	}
 }
-

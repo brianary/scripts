@@ -41,4 +41,3 @@ Process
         else {$entry.AddressList |Where-Object AddressFamily -eq $OnlyAddresses |ForEach-Object {$_.IPAddressToString}}
     }
 }
-

@@ -108,4 +108,3 @@ Process
         Add-Member host $_ -InputObject $scan.$_ -PassThru
     }
 }
-

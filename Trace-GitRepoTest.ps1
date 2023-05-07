@@ -32,4 +32,3 @@ do
 while($result |Select-String '\ABisecting: ')
 git bisect reset |Write-Verbose
 return $result
-

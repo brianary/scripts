@@ -112,4 +112,3 @@ foreach($color in [Enum]::GetValues([ConsoleColor]))
         PowerShellUsage = $usage[$color]
     }
 }
-

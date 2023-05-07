@@ -47,4 +47,3 @@ Process
 	if(!$Format) {[datetime]::TryParse($Date,$value)}
 	else {[datetime]::TryParseExact($Date,$Format,[Globalization.CultureInfo]::InvariantCulture,'None',$value)}
 }
-

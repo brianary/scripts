@@ -20,4 +20,3 @@ C:\WINDOWS\System32\cmd.exe
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $Value
 )
 Process { return [Environment]::ExpandEnvironmentVariables($Value) }
-

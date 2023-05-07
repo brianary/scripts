@@ -100,4 +100,3 @@ Write-Verbose "Signing JWT with $($hash.GetType().Name)"
 $jwt = "$jwt.$(ConvertTo-Base64.ps1 ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($jwt))) -UriStyle)"
 $hash.Dispose()
 $jwt
-

@@ -125,4 +125,3 @@ function Update-Path([Parameter(Position=0,Mandatory=$true)][EnvironmentVariable
 Initialize-PathCollection
 Update-Path Machine
 Update-Path User
-

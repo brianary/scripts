@@ -82,4 +82,3 @@ End
 	$PSDefaultParameterValues.Remove('Invoke-WebRequest:ContentType')
 	$PSDefaultParameterValues.Remove('Invoke-RestMethod:ContentType')
 }
-

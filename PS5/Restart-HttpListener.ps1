@@ -27,4 +27,3 @@ The $http listener is stopped and restarted.
 )
 Stop-HttpListener.ps1 $Listener
 Start-HttpListener.ps1 $Listener
-

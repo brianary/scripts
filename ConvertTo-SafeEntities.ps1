@@ -55,4 +55,3 @@ Process
 		}
 	New-Object String $chars,0,$chars.Length
 }
-

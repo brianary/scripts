@@ -31,4 +31,3 @@ Process
         ForEach-Object {[void]$properties.Add($_,$InputObject.$_)}
     $properties
 }
-

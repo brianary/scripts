@@ -36,4 +36,3 @@ Process
     if($Format -eq 'gv') {fake4 -dg 2>&1 |? {$_ -match '^(digraph|  |})'} |Out-File $OutFile ascii}
     else {fake4 -dg 2>&1 |? {$_ -match '^(digraph|  |})'} |Out-String |& $Renderer "-T$Format" "-o$OutFile"}
 }
-

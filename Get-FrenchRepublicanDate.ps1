@@ -233,4 +233,3 @@ Process
 	} |Add-Member ScriptMethod ToString -Force -PassThru `
 		{"$($this.Jour) ($($this.DayName)), $($this.Day) $($this.Mois) ($($this.MonthName)) $($this.AnneeUnicode)"}
 }
-

@@ -106,4 +106,3 @@ Process
 	}
 	return $value
 }
-

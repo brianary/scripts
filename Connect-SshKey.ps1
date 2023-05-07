@@ -20,4 +20,3 @@ if(!(Test-Path $env:USERPROFILE\.ssh\id_rsa.pub -Type Leaf) -or !((Get-Item $env
 	ssh-keygen
 }
 Get-Content $env:USERPROFILE\.ssh\id_rsa.pub |ssh "$UserName@$HostName" 'cat >> .ssh/authorized_keys'
-

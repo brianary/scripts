@@ -69,4 +69,3 @@ else
 }
 [void]$SeqEvent.Add('Properties',$Properties)
 Send-SeqEvent.ps1 @SeqEvent
-

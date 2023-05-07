@@ -32,4 +32,3 @@ Set-ItemProperty 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v2.0.50727' SystemDefau
 Set-ItemProperty 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v2.0.50727' SchUseStrongCrypto $value -Type Dword
 Set-ItemProperty 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v4.0.30319' SystemDefaultTlsVersions $value -Type Dword
 Set-ItemProperty 'HKLM:\SOFTWARE\Microsoft\.NETFramework\v4.0.30319' SchUseStrongCrypto $value -Type Dword
-

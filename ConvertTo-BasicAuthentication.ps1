@@ -39,4 +39,3 @@ Process
 	return 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(
 		"$($Credential.UserName):$($Credential.Password |ConvertFrom-SecureString -AsPlainText)"))
 }
-

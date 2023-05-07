@@ -21,4 +21,3 @@ Backs up Edge search keywords as JSON to a file.
 [Parameter	(Position=0)][string] $Path = "$env:LocalAppData\Microsoft\Edge\User Data\Default\Web Data"
 )
 Invoke-SqliteQuery -DataSource $Path -Query "select * from keywords;"
-

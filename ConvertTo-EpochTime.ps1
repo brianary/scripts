@@ -33,4 +33,3 @@ Get-Date |ConvertTo-EpochTime.ps1
 [Alias('UTC')][switch] $UniversalTime
 )
 Process{[int][double]::Parse((Get-Date $(if($UniversalTime){$DateTime.ToUniversalTime()}else{$DateTime}) -UFormat %s))}
-

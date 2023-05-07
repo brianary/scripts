@@ -62,4 +62,3 @@ foreach($task in ((Get-Content $Path -Raw) -replace '(?<=\A|>)\s*</?Tasks>\s*(?=
     }
     Remove-Item "$name.xml"
 }
-

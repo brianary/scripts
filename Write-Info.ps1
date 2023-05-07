@@ -39,4 +39,3 @@ Process
 		NoNewLine       = $NoNewLine
 	})
 }
-

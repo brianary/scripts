@@ -39,4 +39,3 @@ Process
     $path = Get-CertificatePath.ps1 $Certificate
     if($path -and (Test-Path $path -PathType Leaf)) {Get-Acl $path |% Access}
 }
-

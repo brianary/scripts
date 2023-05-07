@@ -23,4 +23,3 @@ Process
 {
 	[Text.Encoding]::UTF8.GetString([Text.Encoding]::GetEncoding('Windows-1252').GetBytes($InputObject)).Normalize('FormKD')
 }
-
