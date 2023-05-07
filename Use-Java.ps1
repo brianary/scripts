@@ -42,3 +42,4 @@ Process
 	${java.exe} = (Get-Command java.exe -CommandType Application).Path
 	Write-Verbose "Using Java ${java.exe} ($((Get-Item ${java.exe}).VersionInfo.ProductVersion))"
 }
+

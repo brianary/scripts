@@ -131,3 +131,4 @@ select 'if object_id(''' + quotename(schema_name(schema_id)) +'.'+ quotename(nam
 Repair-DefaultName
 Repair-PrimaryKeyName
 Repair-ForeignKeyName
+

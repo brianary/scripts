@@ -100,3 +100,4 @@ Process
     Set-Acl $path $acl
     Show-CertificatePermissions.ps1 $Certificate
 }
+

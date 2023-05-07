@@ -105,3 +105,4 @@ $defaults = Get-Variable -Scope 1 -Name PSDefaultParameterValues -EA SilentlyCon
 try { [void]$value.Keys } catch { Get-Member -i $value }
 if($defaults) {$value.Keys |Where-Object {$value.$_ -and $defaults.Value.Contains($_)} |ForEach-Object {$defaults.Value.Remove($_)}; $defaults.Value += $value}
 else {Set-Variable -Scope 1 -Name PSDefaultParameterValues -Value $value}
+

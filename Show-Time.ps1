@@ -46,3 +46,4 @@ Process
 	Write-Info.ps1 ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
 	Write-Info.ps1 (Get-Unicode.ps1 0xE0B4) -fore $BackgroundColor
 }
+

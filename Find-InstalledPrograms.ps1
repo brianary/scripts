@@ -30,3 +30,4 @@ Caption           : PowerShell 6-x64
 [string] $Name
 )
 Get-CimInstance CIM_Product -Filter "Name like '$($Name -replace "'","''")'"
+

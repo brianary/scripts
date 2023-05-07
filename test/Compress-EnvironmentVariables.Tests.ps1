@@ -24,3 +24,4 @@ Describe 'Compress-EnvironmentVariables' -Tag Compress-EnvironmentVariables -Ski
 		}
 	}
 }
+

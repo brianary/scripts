@@ -56,3 +56,4 @@ End
 	if(!$AsStringLiteral) {$s}
 	else {$Local:OFS='';"`"$($s.GetEnumerator() |ForEach-Object {'$([char]0x{0:X4})' -f [int]$_})`""}
 }
+

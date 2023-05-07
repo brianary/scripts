@@ -135,3 +135,4 @@ Process
     }
     (($Format.GetEnumerator() |% {Get-FormatValue $_}) -join '').Trim()
 }
+

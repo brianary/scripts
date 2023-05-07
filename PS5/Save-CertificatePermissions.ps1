@@ -63,3 +63,4 @@ Find-Certificate.ps1 @find |
     ? HasPrivateKey |
     Show-CertificatePermissions.ps1 |
     Out-File $FilePath $Encoding
+

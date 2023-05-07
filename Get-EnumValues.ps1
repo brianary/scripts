@@ -94,3 +94,4 @@ Process
 {
     [enum]::GetNames($Type) |ForEach-Object {[pscustomobject]@{Value=[int][enum]::Parse($Type,$_);Name=$_}}
 }
+

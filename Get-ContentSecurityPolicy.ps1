@@ -46,3 +46,4 @@ Process
         ForEach-Object {$directive,$values=$_ -split '\s+'; $csp[$directive]=[string[]]$values}
     return [pscustomobject]$csp
 }
+

@@ -28,3 +28,4 @@ Adds 30 seconds to the current date and time value.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][DateTime]$DateTime
 )
 Process{$DateTime.Add($TimeSpan)}
+

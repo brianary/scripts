@@ -102,3 +102,4 @@ foreach($line in ((Get-Content $env:ChocolateyInstall\logs\choco.summary.log -Ra
 		Text    = $Text.Trim()
 	}
 }
+

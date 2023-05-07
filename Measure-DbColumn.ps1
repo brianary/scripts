@@ -372,3 +372,4 @@ Process
         ForEach-Object {Invoke-Sqlcmd @_} |
         ConvertFrom-DataRow.ps1
 }
+

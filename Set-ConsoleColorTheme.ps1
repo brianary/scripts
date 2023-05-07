@@ -56,3 +56,4 @@ switch($ThemeName)
     SolarizedLight {Set-ConsoleColors.ps1 -BG 0xFDF6E3 -FG 0x93A1A1 -EFG 0xDC322F -EBG 0xEEE8D5 -WFG 0xB58900 -STR 0x073642 -VAR 0x6C71C4 -NUM 0x268BD2 -OP 0x2AA198 -ProcessName $ProcessName}
     Zenburn {Set-ConsoleColors.ps1 -BG 0x1F1F1F -FG 0xDCDCCC -EFG 0xFF80C0 -EBG 0xFFFFFF -WFG 0x7F9F7F -STR 0xCC9393 -VAR 0xFF8000 -NUM 0xCFCC8A -OP 0x9F9D6D -ProcessName $ProcessName}
 }
+

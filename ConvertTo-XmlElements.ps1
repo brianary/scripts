@@ -150,3 +150,4 @@ Process
 		return "<$root>$(ConvertTo-XmlElement @PSBoundParameters)</$root>"
 	}
 }
+

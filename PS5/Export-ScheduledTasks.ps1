@@ -36,3 +36,4 @@ $((Export-ScheduledTask $Task.TaskName $Task.TaskPath) -replace "(?m)^'@$",'&#39
 }
 
 Get-ScheduledTask -TaskPath $TaskPath |Export-ScheduledTaskAsXml
+

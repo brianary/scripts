@@ -131,3 +131,4 @@ By default this will use the line number it is called from.
 [Management.Automation.PSCmdlet] $caller = Get-Variable PSCmdlet -ValueOnly -Scope 1 -ErrorAction Ignore
 if(!$caller) {$caller = $PSCmdlet}
 $caller.ThrowTerminatingError((New-Object Management.Automation.ErrorRecord $params))
+

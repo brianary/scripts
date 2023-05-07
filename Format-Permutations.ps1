@@ -71,3 +71,4 @@ function Format-Permute([string]$Format,[object[][]]$NextValues,[object[]]$Value
 }
 
 Format-Permute $Format $InputObject
+

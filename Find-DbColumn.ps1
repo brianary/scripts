@@ -151,3 +151,4 @@ $colssql += ' order by TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION;'
 
 Write-Debug "Schema Query:`n$colssql"
 Invoke-Sqlcmd $colssql |ConvertFrom-DataRow.ps1
+

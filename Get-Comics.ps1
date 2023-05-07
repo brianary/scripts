@@ -36,3 +36,4 @@ if( !(Test-Path $file -Type Leaf) -or
 	(Get-Date (Get-Date).AddDays(-1) -uf %Y-%W) -ne (Get-Date (Get-Item $file).LastWriteTime.AddDays(-1) -uf %Y-%W) )
 { Invoke-WebRequest https://api.shortboxed.com/comics/v1/$name -OutFile $file }
 (Get-Content $file |ConvertFrom-Json).comics
+

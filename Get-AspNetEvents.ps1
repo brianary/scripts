@@ -127,3 +127,4 @@ $ComputerName |
         $event.PSObject.TypeNames.Insert(0,'AspNetApplicationEventLogEntry')
         $event
     }
+

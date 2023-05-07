@@ -164,3 +164,4 @@ if exists (select * from information_schema.columns where table_schema = $schema
 and columnproperty(object_id(table_name), column_name,'IsIdentity') = 1)
 set identity_insert $fqtn off;
 "@
+

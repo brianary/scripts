@@ -24,3 +24,4 @@ Accepts an HTTP request returns it in an HTTP context object.
 )
 if(!$Listener.IsListening) {Write-Warning 'The HTTP listener is not listening.'}
 $Listener.GetContext()
+

@@ -113,3 +113,4 @@ if($obj -is [Data.Common.DbCommand])
     { $obj.Connection = New-DbProviderObject.ps1 $ProviderName Connection $ConnectionString -OpenConnection:$OpenConnection }
 }
 $obj
+

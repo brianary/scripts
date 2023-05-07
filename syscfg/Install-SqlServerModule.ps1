@@ -124,3 +124,4 @@ function Install-NewSqlServerModule
 
 Remove-AnyOldModule
 Install-NewSqlServerModule
+

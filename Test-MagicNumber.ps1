@@ -68,3 +68,4 @@ Process
 	for($i = 0; $i -lt $Bytes.Count; $i++){if($data[$i] -ne $Bytes[$i]){return $false}}
 	return $true
 }
+

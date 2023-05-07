@@ -65,3 +65,4 @@ filter Export-Secret
 
 if(!$PSCmdlet.ShouldProcess('secret vaults','export')) {return}
 return @(Get-SecretInfo |Export-Secret)
+

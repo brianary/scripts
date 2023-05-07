@@ -19,3 +19,4 @@ Get-Module -List |
 	ForEach-Object {$_.Group |Sort-Object Version -Descending |Select-Object -Skip 1} |
 	Where-Object {$PSCmdlet.ShouldProcess("$($_.Name) v$($_.Version)",'Uninstall-Module')} |
 	ForEach-Object {Uninstall-Module $_.Name -RequiredVersion $_.Version -Force:$Force}
+

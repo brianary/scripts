@@ -26,3 +26,4 @@ foreach($line in dotnet tool search $Name |Where-Object {$_ -match '^\S+\s+\d+(?
 		Verified    = $verified.Trim() -eq 'x'
 	}
 }
+

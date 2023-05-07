@@ -183,3 +183,4 @@ $os = Get-CimInstance CIM_OperatingSystem
 		ForEach-Object {"$($_.Name)=$($_.Path)"})
 	NetVersions = Get-DotNetFrameworkVersions.ps1
 }
+

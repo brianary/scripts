@@ -75,3 +75,4 @@ Process
     elseif(!$odd -and $EvenRowBackground) {$Html -replace '^<tr>',"<tr style=`"background:$EvenRowBackground`">"}
     else {$Html}
 }
+

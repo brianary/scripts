@@ -23,3 +23,4 @@ Describe 'Enable-AnsiColor' -Tag Enable-AnsiColor -Skip:$skip {
 		}
 	}
 }
+

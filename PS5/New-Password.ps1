@@ -82,3 +82,4 @@ while($true)
 }
 if($AsSecureString) {ConvertTo-SecureString $pwd -AsPlainText -Force}
 else {$pwd}
+

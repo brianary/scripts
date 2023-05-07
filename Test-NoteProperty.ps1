@@ -29,3 +29,4 @@ Passes objects through the pipeline that have a property containing "Addr" in th
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][psobject]$InputObject
 )
 Process {[bool](Get-Member -InputObject $InputObject -Name $Name -MemberType NoteProperty -ErrorAction Ignore)}
+

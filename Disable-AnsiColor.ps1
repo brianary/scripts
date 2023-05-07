@@ -21,3 +21,4 @@ Disables ANSI terminal colors.
 )
 
 $PSStyle.OutputRendering = $HostOnly ? 'Host' : 'PlainText'
+

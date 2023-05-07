@@ -291,3 +291,4 @@ END:VCALENDAR
 "@
 	return $ical
 }
+

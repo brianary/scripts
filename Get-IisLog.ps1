@@ -340,3 +340,4 @@ logparser $sql -i:$LogFormat -o:TSV -headers:off -stats:off -q |
 		'Username','UserAgent','Method','UriPath','Query','Referrer',
 		'StatusCode','Status','SubStatusCode','SubStatus','WinStatusCode','WinStatus' |
 	Convert-Result
+

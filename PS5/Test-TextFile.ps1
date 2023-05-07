@@ -29,3 +29,4 @@ Process
 {
 	return (Test-FileTypeMagicNumber.ps1 text $Path)
 }
+

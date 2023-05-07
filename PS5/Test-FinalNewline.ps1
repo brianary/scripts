@@ -27,3 +27,4 @@ Process
 {
 	Test-MagicNumber.ps1 0x0A $Path -Offset -1
 }
+

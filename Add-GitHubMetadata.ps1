@@ -532,3 +532,4 @@ Add-Metadata -DefaultOwner $DefaultOwner -Owners $Owners -VendorCode $VendorCode
 	-DefaultCharset $DefaultCharset -DefaultLineEndings $DefaultLineEndings -DefaultIndentSize $DefaultIndentSize `
 	-DefaultUsesTabs:$DefaultUsesTabs -DefaultKeepTrailingSpace:$DefaultKeepTrailingSpace `
 	-DefaultNoFinalNewLine:$DefaultNoFinalNewLine -NoWarnings:$NoWarnings -Force:$Force
+

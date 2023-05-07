@@ -65,3 +65,4 @@ else
 	if(([Net.Mime.ContentType]$Request.ContentType).MediaType -match $texty) {Read-TextWebRequest}
 	else {Read-BinaryWebRequest}
 }
+

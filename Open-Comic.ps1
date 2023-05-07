@@ -18,3 +18,4 @@ Find-Comics.ps1 -Creator 'Grant Morrison' |Open-Comic.ps1
 [Alias('Id','diamond_id')][string] $DiamondId
 )
 Process { Start-Process "https://www.previewsworld.com/Catalog/$DiamondId"; Start-Sleep -Milliseconds 200 }
+

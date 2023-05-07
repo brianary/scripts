@@ -47,3 +47,4 @@ End
 		Set-Clipboard
 	Invoke-WindowsPowerShell.ps1 { Get-Clipboard |Set-Clipboard -AsHtml }
 }
+

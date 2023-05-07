@@ -29,3 +29,4 @@ if($Before){$EventQuery.Before=$Before}
 if($Newest){$EventQuery.Newest=$Newest}
 if($EntryType){$EventQuery.EntryType=$EntryType}
 Get-EventLog @EventQuery
+

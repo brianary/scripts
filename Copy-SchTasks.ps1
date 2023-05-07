@@ -44,3 +44,4 @@ schtasks /query /s $ComputerName /v /fo csv |
         Remove-Item $TempXml
     }
 $CredentialCache.Clear()
+

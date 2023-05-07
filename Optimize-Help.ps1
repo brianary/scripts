@@ -83,3 +83,4 @@ Process
 		Write-Verbose "Optimized help in $filename"
 	}
 }
+

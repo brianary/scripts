@@ -51,3 +51,4 @@ Process
 	elseif($Extension) { [IO.Path]::GetExtension($Path) }
 	else { [IO.Path]::GetFileNameWithoutExtension($Path) }
 }
+

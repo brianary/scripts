@@ -48,3 +48,4 @@ End
     }
     if($total) {Write-Verbose "Found $total duplicate files ($totalsize bytes)"}
 }
+

@@ -101,3 +101,4 @@ Process
 	if($Path) {$value |Out-File $Path utf8NoBOM}
 	else {return $value}
 }
+

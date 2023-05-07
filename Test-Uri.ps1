@@ -34,3 +34,4 @@ Process
     if(!$InputObject) {return $false}
     return [uri]::TryCreate($InputObject,$UriKind,[ref]$null)
 }
+

@@ -48,3 +48,4 @@ Write-Verbose 'git remote set-head origin -a'
 git remote set-head origin -a
 Write-Verbose 'git remote prune origin'
 git remote prune origin
+

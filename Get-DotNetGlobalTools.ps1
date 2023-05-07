@@ -20,3 +20,4 @@ foreach($line in dotnet tool list -g |Where-Object {$_ -match '^\S+\s+\d+(?:\.\d
 		Commands    = $commands
 	}
 }
+

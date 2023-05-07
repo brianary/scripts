@@ -76,3 +76,4 @@ Process
 	if($AsRunes) {[convert]::ToString($InputObject).EnumerateRunes() |Write-Rune |Out-String -NoNewline |Write-Info.ps1}
 	else {[convert]::ToString($InputObject).ToCharArray() |Write-Char |Out-String -NoNewline |Write-Info.ps1}
 }
+

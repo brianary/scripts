@@ -108,3 +108,4 @@ Process
 {
 	Resolve-XmlNode $XmlNode -AsObject
 }
+

@@ -58,3 +58,4 @@ switch($PSCmdlet.ParameterSetName)
 	CreatorMatch {Get-Comics.ps1 $ReleaseWeek |Where-Object {$_.creators -match $CreatorMatch}}
 	Condition {Get-Comics.ps1 $ReleaseWeek |Where-Object $Condition}
 }
+

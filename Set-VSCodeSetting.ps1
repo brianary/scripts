@@ -47,3 +47,4 @@ if(!(Test-Path ${settings.json} -PathType Leaf)) {'{}' |Out-File ${settings.json
 
 $settings = Get-Content ${settings.json} -Raw
 $settings |Set-JsonProperty.ps1 $Name $Value -PathSeparator / -WarnOverwrite |Out-File ${settings.json} -Encoding utf8
+

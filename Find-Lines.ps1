@@ -109,3 +109,4 @@ switch($PSCmdlet.ParameterSetName)
     Open    { $found |Invoke-Item }
     Blame   { $found |ForEach-Object {Get-LineBlameInfo $_.Path $_.LineNumber} }
 }
+

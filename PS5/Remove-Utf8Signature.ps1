@@ -32,3 +32,4 @@ Process
     # this will have to do until PS6 http://brianary.github.io/powershell-encoding.html
     [IO.File]::WriteAllText((Resolve-Path $Path),(Get-Content $Path -Raw),(New-Object System.Text.UTF8Encoding $false))
 }
+

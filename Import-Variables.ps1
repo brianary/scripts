@@ -64,3 +64,4 @@ Process
     Write-Verbose "Importing $($vars.Count) $(if($isDict){'keys'}else{"$MemberType properties"}): $vars"
     foreach($var in $vars) {Set-Variable $var $InputObject.$var @sv}
 }
+

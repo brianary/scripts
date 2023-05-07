@@ -51,3 +51,4 @@ Process
 		default {Stop-ThrowError.ps1 "Command $Name of unknown type cannot be hidden" -OperationContext $cmd}
 	}
 }
+

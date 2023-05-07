@@ -48,3 +48,4 @@ if($ReferenceFile.LastWriteTimeUtc -lt $DifferenceFile.LastWriteTimeUtc)
 {Write-Verbose "Newer date: $($ReferenceFile.LastWriteTimeUtc) < $($DifferenceFile.LastWriteTimeUtc)"; return $true}
 Write-Verbose 'Inconclusive.'
 return $false
+

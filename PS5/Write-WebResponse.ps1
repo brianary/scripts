@@ -41,3 +41,4 @@ if($Text) {[byte[]]$Bytes = $Encoding.GetBytes($Text)}
 elseif($Path) {[byte[]]$Bytes = Get-Content $Path @readbytes}
 $Response.OutputStream.Write($Bytes,0,$Bytes.Length)
 $Response.Close()
+

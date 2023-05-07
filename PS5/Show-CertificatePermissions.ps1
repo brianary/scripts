@@ -46,3 +46,4 @@ Process
         select IdentityReference,AccessControlType,FileSystemRights |
         Format-Table -AutoSize
 }
+

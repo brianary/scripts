@@ -68,3 +68,4 @@ Process
 		$encoder.GetString($value)
 	}
 }
+

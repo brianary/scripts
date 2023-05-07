@@ -91,3 +91,4 @@ $cert =
     }
 if($Require -and !$cert) {throw "Could not find certificate $FindType $FindValue in $StoreLocation $StoreName"}
 $cert
+

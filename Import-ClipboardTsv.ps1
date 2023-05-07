@@ -33,3 +33,4 @@ Eric Morden       Mr. Nobody   Alan Tudyk
 $data = Get-Clipboard
 $data[1..($data.Length-1)] |
 	ConvertFrom-Csv -Delimiter $Delimiter -Header ($data[0] -split $Delimiter)
+

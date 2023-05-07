@@ -44,3 +44,4 @@ UserPrincipalName      : alans@example.local
 )
 Get-ADUser -Identity $Identity -Properties AccountExpirationDate, AccountExpires, AccountLockoutTime, BadLogonCount,
 	BadPwdCount, LastBadPasswordAttempt, LastLogonDate, LockedOut, PasswordExpired, PasswordLastSet, PwdLastSet
+
