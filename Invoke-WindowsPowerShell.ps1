@@ -57,6 +57,10 @@ The Horne Section
 #>
 
 #Requires -Version 5
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars','',
+Justification='A global variable is used to cache values.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingInvokeExpression','',
+Justification='Invoke-Expression is neccessary for the purpose of this script.')]
 [CmdletBinding()] Param(
 # A script block to run.
 [Parameter(ParameterSetName='CommandBlock',Position=0,Mandatory=$true)][scriptblock] $CommandBlock,

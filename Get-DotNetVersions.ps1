@@ -44,4 +44,4 @@ try
 		}
 	}
 }
-catch{}
+catch{Write-Warning "Unable to enumerate .NET versions: $_"}

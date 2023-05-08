@@ -157,7 +157,7 @@ Begin
 				if($ParameterSetName -ne '__AllParameterSets') {$props += "ParameterSetName=$ParameterSetName"}
 				if($Position -ne [int]::MinValue) {$props += "Position=$Position"}
 				'Mandatory','ValueFromPipeline','ValueFromPipelineByPropertyName','ValueFromRemainingArguments' |
-					ForEach-Object {try{Get-Variable $_ -ErrorAction Stop}catch{}} |
+					Get-Variable -ErrorAction Ignore |
 					Where-Object {$_.Value} |
 					ForEach-Object {$props += "$($_.Name)=`$$($_.Value.ToString().ToLower())"}
 				if($props){"[$name($($props -join ','))]"} else {''}
@@ -176,7 +176,7 @@ Begin
 
 	function Format-Child($InputObject,[switch]$UseKeys)
 	{
-		if($InputObject -eq $null) {return}
+		if($null -eq $InputObject) {return}
 		$(if($UseKeys){$InputObject.Keys}else{Get-Member -InputObject $InputObject -MemberType Properties |Select-Object -ExpandProperty Name}) |
 			Where-Object {$_ -notmatch '\W'} |
 			ForEach-Object {"$IndentBy$_ = $(ConvertTo-PowerShell.ps1 $InputObject.$_ -Indent "$tab$IndentBy" -SkipInitialIndent)"}

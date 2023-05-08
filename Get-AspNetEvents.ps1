@@ -123,7 +123,7 @@ $ComputerName |
         if($fields.Count -eq 2) {return}
         $ordered = [ordered]@{}
         $order |Where-Object {$fields.ContainsKey($_)} |ForEach-Object {[void]$ordered.Add($_,$fields.$_)}
-        $event = New-Object PSObject -Property $ordered
-        $event.PSObject.TypeNames.Insert(0,'AspNetApplicationEventLogEntry')
-        $event
+        $value = New-Object PSObject -Property $ordered
+        $value.PSObject.TypeNames.Insert(0,'AspNetApplicationEventLogEntry')
+        $value
     }
