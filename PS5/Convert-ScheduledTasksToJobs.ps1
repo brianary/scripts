@@ -105,7 +105,7 @@ function ConvertTo-JobTrigger
                     {
                         $params += @{
                             Weekly     = $true
-                            DaysOfWeek = Select-Xml * $Trigger.ScheduleByWeek.DaysOfWeek |% {$_.Node.Name}
+                            DaysOfWeek = Select-Xml * $Trigger.ScheduleByWeek.DaysOfWeek |ForEach-Object {$_.Node.Name}
                         }
                         if($Trigger.ScheduleByWeek.WeeksInterval)
                         {
@@ -190,7 +190,7 @@ function Convert-ScheduledTaskToJob
         Credential   = $CredentialCache[$userid]
         ScheduledJobOption = New-ScheduledJobOption @options
     }
-    [Xml.XmlElement]$triggers = Export-ScheduledTask $Task.TaskName |Select-Xml /task:Task/task:Triggers |% Node
+    [Xml.XmlElement]$triggers = Export-ScheduledTask $Task.TaskName |Select-Xml /task:Task/task:Triggers |ForEach-Object Node
     if($triggers.ChildNodes.Count -eq 0){Write-Warning "Task $($Task.TaskName) has no triggers."}
     else
     {

@@ -102,7 +102,7 @@ function Add-Meta($e)
 function Add-Attributes($e)
 {
 	if($IgnoreAttributes) {return}
-	foreach($att in $e.attributes |where specified -eq $true)
+	foreach($att in $e.attributes |Where-Object specified -eq $true)
 	{
 		$hash.Add($att.nodeName, (Get-AttributeValue $att.nodeValue))
 	}
@@ -110,12 +110,12 @@ function Add-Attributes($e)
 
 function Add-List($e)
 {
-	$e.getElementsByTagName('li') |foreach {$values.Add($_.innerText)}
+	$e.getElementsByTagName('li') |ForEach-Object {$values.Add($_.innerText)}
 }
 
 function Add-Table($e)
 {
-	$headers = New-Object string[] ($e.rows |foreach {$_.cells.length} |measure -Maximum).Maximum
+	$headers = New-Object string[] ($e.rows |ForEach-Object {$_.cells.length} |Measure-Object -Maximum).Maximum
 	$rows = @()
 	if($e.tHead -and $e.tHead.rows.length -gt 0)
 	{
@@ -127,8 +127,8 @@ function Add-Table($e)
 				$headers[$c] += ConvertTo-Name $row.cells[$c].innerText
 			}
 		}
-		0..($headers.length-1) |where {!$headers[$_]} |foreach {$headers[$_] = "_$_"}
-		$rows = $e.tBodies |foreach {$_.rows}
+		0..($headers.length-1) |Where-Object {!$headers[$_]} |ForEach-Object {$headers[$_] = "_$_"}
+		$rows = $e.tBodies |ForEach-Object {$_.rows}
 	}
 	else
 	{
@@ -136,12 +136,12 @@ function Add-Table($e)
 		{
 			$headers[$c] += ConvertTo-Name $row.cells[$c].innerText
 		}
-		$rows = $e.rows |select -Skip 1
+		$rows = $e.rows |Select-Object -Skip 1
 	}
 	foreach($row in $rows)
 	{
 		$value = [ordered]@{}
-		0..($row.cells.length-1) |foreach {$value.Add($headers[$_], $row.cells[$_].innerText)}
+		0..($row.cells.length-1) |ForEach-Object {$value.Add($headers[$_], $row.cells[$_].innerText)}
 		$values.Add([pscustomobject]$value)
 	}
 }
@@ -176,7 +176,7 @@ function Add-Element($e)
 		button   {Add-Input $e}
 		textarea {Add-Input $e}
 		select   {Add-Select $e}
-		form     {$e.elements |foreach {Add-Element $_}}
+		form     {$e.elements |ForEach-Object {Add-Element $_}}
 		default
 		{
 			Add-Attributes $e
@@ -193,7 +193,7 @@ function Get-Html
 		else {Invoke-RestMethod $Uri |Out-String}
 	if(!$IncludeScript) {$html = $html -replace '<script.*?</script>',''}
 	$dom.write(([Text.Encoding]::Unicode.GetBytes($html)))
-	Get-Elements |foreach {Write-Debug "$($_ -eq $null ? '(null)' : $_.outerHTML)"; Add-Element $_}
+	Get-Elements |ForEach-Object {Write-Debug "$($_ -eq $null ? '(null)' : $_.outerHTML)"; Add-Element $_}
 	return $values
 }
 

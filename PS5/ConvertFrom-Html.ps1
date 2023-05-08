@@ -51,12 +51,12 @@ Process
             Write-Verbose "Table contains $cols columns, $rows rows"
             $i,$max,$act = 0,($TableElement.rows.length/100),"Reading '$($TableElement.document.title)' ${cols}x$rows table"
 			$headers = $TableElement.rows[0].cells |
-				foreach {$_.innerText -replace '\s+',' ' -replace '\A\s+|\s+\z',''} |
-				foreach {++$i;if([string]::IsNullOrWhiteSpace($_)){"Column_$($i)"}else{$_}}
+				ForEach-Object {$_.innerText -replace '\s+',' ' -replace '\A\s+|\s+\z',''} |
+				ForEach-Object {++$i;if([string]::IsNullOrWhiteSpace($_)){"Column_$($i)"}else{$_}}
 			$i = 0
-            1..($rows-1) |foreach {$TableElement.rows[$_]} -pv row |foreach {
+            1..($rows-1) |ForEach-Object {$TableElement.rows[$_]} -pv row |ForEach-Object {
                 $value = [ordered]@{}
-                0..($cols-1) |foreach {$value[$headers[$_]]= $row.cells[$_].innerText}
+                0..($cols-1) |ForEach-Object {$value[$headers[$_]]= $row.cells[$_].innerText}
                 $object = [pscustomobject]$value
                 Write-Progress $act (ConvertTo-Json $object -Compress) -PercentComplete ($i++/$max)
                 $object

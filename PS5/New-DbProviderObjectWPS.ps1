@@ -65,7 +65,7 @@ Ignored for other objects.
 )
 
 $obj = $null
-$providers = [Data.Common.DbProviderFactories]::GetFactoryClasses() |% InvariantName
+$providers = [Data.Common.DbProviderFactories]::GetFactoryClasses() |ForEach-Object InvariantName
 if($ProviderName -inotin $providers)
 {
     if(!$ProviderName)
@@ -77,7 +77,7 @@ if($ProviderName -inotin $providers)
         else {throw "Unable to create a $TypeName without a provider. Available providers: $($providers -join ', ')"}
     }
     elseif("System.Data.$ProviderName" -iin $providers) {$ProviderName = "System.Data.$ProviderName"}
-    else {$ProviderName = $providers |? {$_ -ilike "*$ProviderName*"} |select -First 1}
+    else {$ProviderName = $providers |Where-Object {$_ -ilike "*$ProviderName*"} |Select-Object -First 1}
 }
 $obj =
     if($obj) {$obj}

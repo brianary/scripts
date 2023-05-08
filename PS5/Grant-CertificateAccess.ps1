@@ -74,7 +74,7 @@ Begin
     # ensure admins have access to grant access to machinekeys
     $machinekeys = "$env:ProgramData\Microsoft\crypto\rsa\machinekeys"
     $acl = Get-Acl $machinekeys
-    if(!($acl.Access |? {$_.IdentityReference -eq 'BUILTIN\Administrators' -and $_.FileSystemRights -eq 'FullControl'}) -and
+    if(!($acl.Access |Where-Object {$_.IdentityReference -eq 'BUILTIN\Administrators' -and $_.FileSystemRights -eq 'FullControl'}) -and
         $PSCmdlet.ShouldProcess($machinekeys,'grant Administrators full control'))
     {
         if($acl.GetOwner([Security.Principal.NTAccount]) -ne 'BUILTIN\Administrators' -and

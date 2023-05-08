@@ -75,7 +75,7 @@ Process
             }
             Weekly
             {
-                $days = if($trigger.DaysOfWeek){" -DaysOfWeek $(($trigger.DaysOfWeek |% {"'$_'"}) -join ',')"}
+                $days = if($trigger.DaysOfWeek){" -DaysOfWeek $(($trigger.DaysOfWeek |ForEach-Object {"'$_'"}) -join ',')"}
                 $interval = if($trigger.Interval){" -WeeksInterval $($trigger.Interval)"}
                 "(New-JobTrigger -Weekly$at$days$interval$delay)"
             }
@@ -100,7 +100,7 @@ Process
     # InvocationInfo.Parameters is a List[CommandParameterCollection].
     # CommandParameterCollection contains CommandParameter name-value pairs which are not a hash.
     $cmd = @{}
-    $Job.InvocationInfo.Parameters[0] |% {[void]$cmd.Add($_.Name,$_.Value)}
+    $Job.InvocationInfo.Parameters[0] |ForEach-Object {[void]$cmd.Add($_.Name,$_.Value)}
     $FileOrScript =
         if($cmd.ContainsKey('FilePath')) {"FilePath             = $($cmd.FilePath |ConvertTo-PowerShell.ps1)"}
         elseif($cmd.ContainsKey('ScriptBlock')) {"ScriptBlock          = $($cmd.ScriptBlock |ConvertTo-PowerShell.ps1)"}

@@ -263,7 +263,7 @@ function $($_ |Get-StoreImportName)
     `$store = Get-Item $storepath
     if(!(`$PSCmdlet.ShouldProcess('$storepath server certificates','import'))){return}
     `$store.Open('OpenExistingOnly, ReadWrite')
-    $($certs |Get-CertificateImportName $_ |% {"$_ `$store"})
+    $($certs |Get-CertificateImportName $_ |ForEach-Object {"$_ `$store"})
     `$store.Close()
     `$store.Dispose()
     Write-Progress 'Importing certificates into $storepath' -Completed
@@ -322,7 +322,7 @@ function Export-CertificatePermissions(
             "Certificate $certname private key not found at $pkpath ; permissions cannot be exported"
         return
     }
-    $apppools = Get-Acl $pkpath |% Access |? IdentityReference -like 'IIS APPPOOL\*' |% IdentityReference
+    $apppools = Get-Acl $pkpath |ForEach-Object Access |Where-Object IdentityReference -like 'IIS APPPOOL\*' |ForEach-Object IdentityReference
     if(!$apppools)
     {
         Export-NoCertificatePermissions $functionname $qcertname `
@@ -348,7 +348,7 @@ function $functionname
         return
     }
     `$acl = Get-Acl `$pkpath
-    $($apppools |% {"`$acl.SetAccessRule((New-Object Security.AccessControl.FileSystemAccessRule '$_','Read','Allow'))"})
+    $($apppools |ForEach-Object {"`$acl.SetAccessRule((New-Object Security.AccessControl.FileSystemAccessRule '$_','Read','Allow'))"})
     Set-Acl `$pkpath `$acl
 }
 "@
@@ -368,7 +368,7 @@ function $($_ |Get-StoreImportName)_Permissions
     `$store = Get-Item $storepath
     if(!(`$PSCmdlet.ShouldProcess('$storepath server certificates','import'))){return}
     `$store.Open('OpenExistingOnly, ReadWrite')
-    $($certs |Get-CertificateImportName $_ |% {"${_}_Permissions"})
+    $($certs |Get-CertificateImportName $_ |ForEach-Object {"${_}_Permissions"})
     `$store.Close()
     `$store.Dispose()
     Write-Progress 'Importing certificate permissions into $storepath' -Completed
@@ -386,7 +386,7 @@ function Export-CertificatesPermissions
 function Import-CertificatePermissions
 {
     [CmdletBinding(SupportsShouldProcess=`$true,ConfirmImpact="High")] Param()
-    $($Stores |Get-StoreImportName |% {"${_}_Permissions"})
+    $($Stores |Get-StoreImportName |ForEach-Object {"${_}_Permissions"})
 }
 "@
 }
@@ -447,7 +447,7 @@ function Import-Websites
     foreach($website in $websites)
     {
         $name,$physicalpath = $website.name,$website.physicalPath
-        $primaryBinding = Get-WebBinding $name |select -First 1
+        $primaryBinding = Get-WebBinding $name |Select-Object -First 1
         $ipAddress,$port,$hostHeader =
             $primaryBinding.bindingInformation -split ':',3
         Write-Progress 'Exporting websites' $name -PercentComplete ($i/$max)
@@ -476,13 +476,13 @@ function Import-Websites
     else
     {Write-Verbose 'Website $name found'}
 "@
-        foreach($binding in Get-WebBinding $name |select -Skip 1)
+        foreach($binding in Get-WebBinding $name |Select-Object -Skip 1)
         {
             $protocol,$ipAddress,$port,$hostHeader =
                 $binding.protocol,$binding.bindingInformation -split ':',3
             $certbinding = Get-ChildItem IIS:\SslBindings |
-                ? {$_.Sites -eq $name -and $protocol -eq 'https'} |
-                % {@"
+                Where-Object {$_.Sites -eq $name -and $protocol -eq 'https'} |
+                ForEach-Object {@"
 |% {
         try{`$_.AddSslCertificate('$($_.Thumbprint)','$($_.Store)')}
         catch{Write-Error "Unable to bind certificate to ${name}: `$_"; Write-Todo 'Bind certificate for $name'}
@@ -520,13 +520,13 @@ function Import-Websites
 
 function Get-LocationConfigPaths([string]$xpath)
 {
-    Select-Xml "/configuration/location[system.webServer/$xpath]/@path" (Get-WebConfigFile) |% {$_.Node.Value}
+    Select-Xml "/configuration/location[system.webServer/$xpath]/@path" (Get-WebConfigFile) |ForEach-Object {$_.Node.Value}
 }
 
 function Export-WebApplications
 {
     $sitepath = @{}
-    Get-Website |% {$sitepath[$_.Name]=$_.PhysicalPath}
+    Get-Website |ForEach-Object {$sitepath[$_.Name]=$_.PhysicalPath}
     [object[]]$webapps = Get-WebApplication
     $i,$max,$functions = 0,($webapps.Count/100.),@()
     foreach($webapp in $webapps)
@@ -584,8 +584,8 @@ function $funcname
     {Write-Verbose 'Web application $iispath found'}
 "@
         Select-Xml "/configuration/location[@path='$site/$name']/system.webServer" (Get-WebConfigFile) |
-            % {$_.Node.SelectNodes('*')} |
-            % {
+            ForEach-Object {$_.Node.SelectNodes('*')} |
+            ForEach-Object {
                 if($_.LocalName -ne 'security') {"The $($_.LocalName) may be customized for $iispath"}
                 else
                 {
@@ -595,7 +595,7 @@ function $funcname
                         Value  = $_.access.sslFlags
                     }}
                     $_.SelectNodes('authentication/*') |
-                        % {
+                        ForEach-Object {
                             if($_.userName){"Set $iispath username to $($_.userName)"}
                             if($_.InnerXml){"Configure $iispath $($_.LocalName) for $($_.InnerXml -replace '(?m)^\s+|[\r\n]+','')"}
                             [pscustomobject]@{
@@ -606,7 +606,7 @@ function $funcname
                         }
                 }
             } |
-            % {
+            ForEach-Object {
                 if($_ -is [string])
                 {@"
     Write-Todo '$_'

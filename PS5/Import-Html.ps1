@@ -43,6 +43,6 @@ Process
 {
     Invoke-WebRequest $Uri -UseBasicParsing:$false |
         Get-Html.ps1 table |
-        select -Skip $TableIndex -First 1 |
+        Select-Object -Skip $TableIndex -First 1 |
         ConvertFrom-Html.ps1
 }

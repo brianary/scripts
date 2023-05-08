@@ -24,7 +24,7 @@ foreach($website in Get-Website)
 {
     $name,$path = $website.Name,$website.PhysicalPath
     Select-Xml "/configuration/location[starts-with(@path,'$name/')]" $env:SystemRoot\System32\inetsrv\config\applicationHost.config |
-        ? {$app = $_.Node.Attributes['path'].Value -replace "\A$name/",''; !(Test-Path $path\$app -PathType Container) -and !(Get-WebApplication -Site $name $app)} |
-        ? {$PSCmdlet.ShouldProcess($_.Node.Attributes['path'].Value,'remove')} |
+        Where-Object {$app = $_.Node.Attributes['path'].Value -replace "\A$name/",''; !(Test-Path $path\$app -PathType Container) -and !(Get-WebApplication -Site $name $app)} |
+        Where-Object {$PSCmdlet.ShouldProcess($_.Node.Attributes['path'].Value,'remove')} |
         Remove-Xml.ps1 -Verbose
 }

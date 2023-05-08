@@ -44,12 +44,12 @@ Imports SMB file shares exported from $env:ComputerName
 			'(?ms)\A.*^Permission|(\r\n){2,}|^\b.*\r\n','' -replace '\A\s*|\s*\z','' -split '\r\n\s*'
 		$access = @{}
 		$perms |
-			% {
+			ForEach-Object {
 				$user,$permission =  $_ -split ', (?=READ|CHANGE|FULL)\b'
 				[pscustomobject]@{User=$user;Access=$permission}
 			} |
-			group Access |
-			% {[void]$access.Add($_.Name,[string[]]($_.Group|% User))}
+			Group-Object Access |
+			ForEach-Object {[void]$access.Add($_.Name,[string[]]($_.Group|ForEach-Object User))}
 		$cmd = @('New-SmbShare','-Name',"'$quotablename'",'-Path',"'$quotablepath'")
 		if($share.Description){$cmd+=@('-Description',(ConvertTo-StringLiteral $share.Description))}
 		if($access.ContainsKey('FULL')){$cmd+=@('-FullAccess',(($access.FULL|ConvertTo-StringLiteral) -join ','))}

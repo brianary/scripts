@@ -95,13 +95,13 @@ Write-Progress 'Preparing' -Completed
 	Value = $DefaultSecureProtocols
 	AlsoSet32Bit = $true
 	UpdateCurrentUser = $true
-} |% {Set-RegistryValue @_}
+} |ForEach-Object {Set-RegistryValue @_}
 
 # disable old protocols
 foreach($protocol in @('Multi-Protocol Unified Hello','PCT 1.0','SSL 2.0','SSL 3.0'))
 {
 	'Client','Server' |
-		% {@{
+		ForEach-Object {@{
 			Path  = "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\$protocol\$_"
 			Name  = 'Enabled'
 			Value = 0
@@ -109,13 +109,13 @@ foreach($protocol in @('Multi-Protocol Unified Hello','PCT 1.0','SSL 2.0','SSL 3
 			Path  = "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\$protocol\$_"
 			Name  = 'DisabledByDefault'
 			Value = 1
-		}} |% {Set-RegistryValue @_}
+		}} |ForEach-Object {Set-RegistryValue @_}
 }
 
 'TLS 1.0','TLS 1.1','TLS 1.2' |
-	% {@{
+	ForEach-Object {@{
 		Path  = "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\$_\Client"
 		Name  = 'DisabledByDefault'
 		Value = [int](Get-Variable $_ -ValueOnly)
 	}} |
-	% {Set-RegistryValue @_}
+	ForEach-Object {Set-RegistryValue @_}

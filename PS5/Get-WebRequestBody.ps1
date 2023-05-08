@@ -27,7 +27,7 @@ Get-WebRequestBody.ps1
 )
 $http = Start-HttpListener.ps1 -Port $Port
 $context = Receive-WebRequest.ps1 $http
-$context.Request.Headers.Keys |foreach {Write-Verbose "${_}: $($context.Request.Headers[$_])"}
+$context.Request.Headers.Keys |ForEach-Object {Write-Verbose "${_}: $($context.Request.Headers[$_])"}
 $readbytes =
 	if((Get-Command Get-Content).Parameters.Encoding.ParameterType -eq [Text.Encoding]) {@{AsByteStream=$true}}
 	else {@{Encoding='Byte'}}

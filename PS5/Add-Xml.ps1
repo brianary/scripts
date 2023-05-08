@@ -57,7 +57,7 @@ Process
     {
         [Xml.XmlNode[]]$addnodes = $adddoc.ChildNodes
         if($Position -in 'InsertAfter','PrependChild') {[Array]::Reverse($addnodes)}
-        foreach($addnode in ($addnodes |% {$doc.ImportNode($_,$true)}))
+        foreach($addnode in ($addnodes |ForEach-Object {$doc.ImportNode($_,$true)}))
         {
             Write-Verbose "$Position $($addnode.OuterXml) to $($SelectXmlInfo.Pattern)"
             switch($Position)

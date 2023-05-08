@@ -63,7 +63,7 @@ function Update-PSModulePath([EnvironmentVariableTarget]$Target)
 	if(!$PSCmdlet.ShouldProcess("$Target PSModulePath",'Update')) {return}
 	$modulepath = [Environment]::GetEnvironmentVariable('PSModulePath',$Target)
 	Write-Verbose "Initial $Target PSModulePath: $modulepath"
-	$modulepath = ($modulepath -split ';' |? {$_} |? {!(Test-OldModulePath $_)}) -join ';'
+	$modulepath = ($modulepath -split ';' |Where-Object {$_} |Where-Object {!(Test-OldModulePath $_)}) -join ';'
 	Write-Verbose "Updated $Target PSModulePath: $modulepath"
 	[Environment]::SetEnvironmentVariable('PSModulePath',$modulepath,$Target)
 }
@@ -72,15 +72,15 @@ function Update-PSModulePathProcess
 {
 	Write-Verbose "Initial Process PSModulePath: $env:PSModulePath"
 	$env:PSModulePath = (@([Environment]::GetEnvironmentVariable('PSModulePath','User'),
-		[Environment]::GetEnvironmentVariable('PSModulePath','Machine')) |? {$_}) -join ';'
+		[Environment]::GetEnvironmentVariable('PSModulePath','Machine')) |Where-Object {$_}) -join ';'
 	Write-Verbose "Updated Process PSModulePath: $env:PSModulePath"
 }
 
 function Uninstall-OldModules
 {
 	Get-CimInstance CIM_Product -Filter "Name like '%PowerShell Extensions for SQL Server %'" |
-		? {$PSCmdlet.ShouldProcess($_.Name,'Uninstall')} |
-		% {Start-Process -FilePath msiexec.exe -ArgumentList '/x',$_.IdentifyingNumber,'/passive','/norestart' -Wait -NoNewWindow}
+		Where-Object {$PSCmdlet.ShouldProcess($_.Name,'Uninstall')} |
+		ForEach-Object {Start-Process -FilePath msiexec.exe -ArgumentList '/x',$_.IdentifyingNumber,'/passive','/norestart' -Wait -NoNewWindow}
 }
 
 function Remove-AnyOldModule
@@ -97,23 +97,23 @@ function Remove-AnyOldModule
 		Update-PSModulePath Machine
 		Update-PSModulePathProcess
 	}
-	if(!(Get-Module SqlServer -ListAvailable |? Version -lt $Version))
+	if(!(Get-Module SqlServer -ListAvailable |Where-Object Version -lt $Version))
 	{ Write-Info.ps1 'Found no old SqlServer modules.' -ForegroundColor Green -BackgroundColor DarkMagenta }
 	else
 	{
 		Write-Info.ps1 'Found old SqlServer modules.' -ForegroundColor Green -BackgroundColor DarkMagenta
-		Get-Module SqlServer -ListAvailable |? Version -lt $Version |Remove-Module -Verbose
+		Get-Module SqlServer -ListAvailable |Where-Object Version -lt $Version |Remove-Module -Verbose
 	}
 }
 
 function Install-NewSqlServerModule
 {
-	if(Get-Module SqlServer -ListAvailable |? Version -ge $Version)
+	if(Get-Module SqlServer -ListAvailable |Where-Object Version -ge $Version)
 	{
 		Get-Module SqlServer -ListAvailable |
-			? Version -ge $Version |
-			select -Unique -ExpandProperty Version |
-			% {Write-Info.ps1 "SqlServer version $_ already installed." -ForegroundColor Green -BackgroundColor DarkMagenta}
+			Where-Object Version -ge $Version |
+			Select-Object -Unique -ExpandProperty Version |
+			ForEach-Object {Write-Info.ps1 "SqlServer version $_ already installed." -ForegroundColor Green -BackgroundColor DarkMagenta}
 	}
 	else
 	{

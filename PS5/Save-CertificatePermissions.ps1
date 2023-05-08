@@ -60,6 +60,6 @@ if($StoreName) {$find['StoreName']=$StoreName}
 if($StoreLocation) {$find['StoreLocation']=$StoreLocation}
 
 Find-Certificate.ps1 @find |
-    ? HasPrivateKey |
+    Where-Object HasPrivateKey |
     Show-CertificatePermissions.ps1 |
     Out-File $FilePath $Encoding

@@ -37,5 +37,5 @@ Begin{try{Get-Command Get-Acl -CommandType Cmdlet -ErrorAction Ignore |Out-Null}
 Process
 {
     $path = Get-CertificatePath.ps1 $Certificate
-    if($path -and (Test-Path $path -PathType Leaf)) {Get-Acl $path |% Access}
+    if($path -and (Test-Path $path -PathType Leaf)) {Get-Acl $path |ForEach-Object Access}
 }

@@ -96,7 +96,7 @@ Process
             F {$Certificate.GetEffectiveDateString()}
             g {$Certificate.SignatureAlgorithm.FriendlyName}
             G {$Certificate.GetKeyAlgorithmParametersString()}
-            i {$Script:nameinfos |? {$Certificate.GetNameInfo($_,$true)} |select -f 1}
+            i {$Script:nameinfos |Where-Object {$Certificate.GetNameInfo($_,$true)} |Select-Object -f 1}
             I {$Certificate.Issuer}
             j {'{0:00}' -f $Certificate.NotAfter.Day}
             J {'{0:00}' -f $Certificate.NotBefore.Day}
@@ -105,16 +105,16 @@ Process
             m {'{0:00}' -f $Certificate.NotAfter.Month}
             M {'{0:00}' -f $Certificate.NotBefore.Month}
             n {@($Certificate.FriendlyName)+
-                @($Script:nameinfos |% {$Certificate.GetNameInfo($_,$false)})+
-                @($Certificate.Thumbprint) |? {$_} |select -f 1}
+                @($Script:nameinfos |ForEach-Object {$Certificate.GetNameInfo($_,$false)})+
+                @($Certificate.Thumbprint) |Where-Object {$_} |Select-Object -f 1}
             N {$Certificate.GetSerialNumberString()}
             o {if($Certificate.SendAsTrustedIssuer){'@'}else{' '}}
             O {if($Certificate.SendAsTrustedIssuer){'[SendAsTrustedIssuer]'}}
             p {if($Certificate.HasPrivateKey){'*'}else{' '}}
             P {if($Certificate.HasPrivateKey){'[HasPrivateKey]'}}
             q {@($Certificate.FriendlyName)+
-                @($Script:nameinfos |% {$Certificate.GetNameInfo($_,$false)})+
-                @($Certificate.Thumbprint) |? {$_} |select -f 1 |% {$_ -replace '\W+','_'}}
+                @($Script:nameinfos |ForEach-Object {$Certificate.GetNameInfo($_,$false)})+
+                @($Certificate.Thumbprint) |Where-Object {$_} |Select-Object -f 1 |ForEach-Object {$_ -replace '\W+','_'}}
             r {if($Certificate.Archived){'~'}else{' '}}
             R {if($Certificate.Archived){'[Archived]'}}
             s {$Certificate.Subject}
@@ -133,5 +133,5 @@ Process
             default {$c}
         }
     }
-    (($Format.GetEnumerator() |% {Get-FormatValue $_}) -join '').Trim()
+    (($Format.GetEnumerator() |ForEach-Object {Get-FormatValue $_}) -join '').Trim()
 }

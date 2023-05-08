@@ -70,7 +70,7 @@ Process
 				}
 			}
 		$prev = $null
-		foreach($c in $gc.InvokeReturnAsIs() |foreach $toValue)
+		foreach($c in $gc.InvokeReturnAsIs() |ForEach-Object $toValue)
 		{
 			if($c -eq $LF) { if($prev -eq $CR) {$countCrLf++} else {$countLf++} }
 			elseif($prev -eq $CR) {$countCr++}

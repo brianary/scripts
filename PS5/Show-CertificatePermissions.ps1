@@ -43,6 +43,6 @@ Process
     if(!$Certificate.HasPrivateKey) {return}
     Format-Certificate.ps1 $Certificate |Write-Output
     Get-CertificatePermissions.ps1 -Certificate $Certificate |
-        select IdentityReference,AccessControlType,FileSystemRights |
+        Select-Object IdentityReference,AccessControlType,FileSystemRights |
         Format-Table -AutoSize
 }

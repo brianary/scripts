@@ -45,11 +45,11 @@ Process
 	foreach($file in (Resolve-Path $Path).Path)
 	{
 		$countTab,$countSpace,$countMixed,$countOther = 0,0,0,0
-		foreach($indent in Select-String '^(\s+)' $file |foreach {$_.Matches.Groups[0].Value})
+		foreach($indent in Select-String '^(\s+)' $file |ForEach-Object {$_.Matches.Groups[0].Value})
 		{
 			if($indent.Trim(@($HT)) -eq '') {$countTab++}
 			elseif($indent.Trim(@($SP)) -eq '') {$countSpace++}
-			elseif(($indent.GetEnumerator() |select -Unique).Count -gt 1) {$countMixed++}
+			elseif(($indent.GetEnumerator() |Select-Object -Unique).Count -gt 1) {$countMixed++}
 			else {$countOther++}
 		}
 		Write-Verbose "Indent counts: HT=$countTab, SP=$countSpace, other/combined=$countOther"

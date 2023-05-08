@@ -36,13 +36,13 @@ Begin
     { # flail wildly
         Write-Warning "Searching more desperately for the certificate file."
         Get-ChildItem $env:USERPROFILE\.. |
-            ? {$_ -is [IO.DirectoryInfo]} |
-            % {"$($_.FullName)\AppData\Roaming\Microsoft\Crypto\RSA"} |
-            ? {Test-Path $_ -PathType Container} |
+            Where-Object {$_ -is [IO.DirectoryInfo]} |
+            ForEach-Object {"$($_.FullName)\AppData\Roaming\Microsoft\Crypto\RSA"} |
+            Where-Object {Test-Path $_ -PathType Container} |
             Get-ChildItem |
-            ? {$_ -is [IO.DirectoryInfo]} |
-            % {Join-Path $_.FullName $filename} |
-            ? {Test-Path $_ -PathType Leaf}
+            Where-Object {$_ -is [IO.DirectoryInfo]} |
+            ForEach-Object {Join-Path $_.FullName $filename} |
+            Where-Object {Test-Path $_ -PathType Leaf}
     }
     function Get-PrivateKeyFile([Parameter(Position=0,Mandatory=$true)][string]$filename)
     {

@@ -71,11 +71,11 @@ $cert =
     {
         Write-Verbose "Find '$FindValue'"
         $now = Get-Date
-        ls Cert:\CurrentUser,Cert:\LocalMachine |
-            % {ls "Cert:\$($_.Location)\$($_.Name)"} |
-            ? {!$NotArchived -or !$_.Archived} |
-            ? {$_.Subject,$_.Issuer,$_.Thumbprint |? {$_ -like "*$FindValue*"}} |
-            ? {!$Valid -or ($now -ge $_.NotBefore -and $now -le $_.NotAfter)}
+        Get-ChildItem Cert:\CurrentUser,Cert:\LocalMachine |
+            ForEach-Object {Get-ChildItem "Cert:\$($_.Location)\$($_.Name)"} |
+            Where-Object {!$NotArchived -or !$_.Archived} |
+            Where-Object {$_.Subject,$_.Issuer,$_.Thumbprint |Where-Object {$_ -like "*$FindValue*"}} |
+            Where-Object {!$Valid -or ($now -ge $_.NotBefore -and $now -le $_.NotAfter)}
     }
     else
     {
@@ -87,7 +87,7 @@ $cert =
         $found = $store.Certificates.Find($FindType,$FindValue,$Valid)
         [void] $store.Close()
         $store = $null
-        $found |? {!$NotArchived -or !$_.Archived}
+        $found |Where-Object {!$NotArchived -or !$_.Archived}
     }
 if($Require -and !$cert) {throw "Could not find certificate $FindType $FindValue in $StoreLocation $StoreName"}
 $cert

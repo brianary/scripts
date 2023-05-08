@@ -39,7 +39,7 @@ if(![Net.HttpListener]::IsSupported)
 		-Operation "$([environment]::OSVersion)"
 }
 [Net.HttpListener]$Listener = New-Object Net.HttpListener -Property @{AuthenticationSchemes=$AuthenticationSchemes}
-$Port |foreach {$Listener.Prefixes.Add("http://*:$_/")}
+$Port |ForEach-Object {$Listener.Prefixes.Add("http://*:$_/")}
 $Listener.Start()
 $Listener |Out-String |Write-Verbose
 $Listener

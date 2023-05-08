@@ -171,7 +171,7 @@ function Get-ColorTable([Parameter(Position=0,Mandatory=$true)][Collections.IDic
 {
     $usagemap = @{}
     $colormap = @{}
-    foreach($param in ($Parameters.Keys |? {$_ -like '*Color'}))
+    foreach($param in ($Parameters.Keys |Where-Object {$_ -like '*Color'}))
     {
         [ConsoleColor]$color = switch -Wildcard ($param)
         {
