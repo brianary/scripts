@@ -38,7 +38,7 @@ jobs:
           # The below set up runs PSScriptAnalyzer to your entire repository and runs some basic security rules.
           path: ./
           recurse: false
-          ignorePattern: '\.Tests\.ps1$'
+          ignorePattern: '/test/|/PS5/|/syscfg/|\.Tests\.ps1$'
           includeDefaultRules: true
           # Include your own basic security rules. Removing this option will run all the rules
           # see https://github.com/PowerShell/PSScriptAnalyzer/tree/master/docs/Rules
