@@ -43,7 +43,7 @@ Converts PowerShell Scheduled Tasks in the \ path to Scheduled Jobs.
 
 #Requires -Version 5
 #Requires -RunAsAdministrator
-using module PSScheduledJob
+#Requires -Modules PSScheduledJob
 using namespace System.Xml
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
 # Specifies the task path to export from.
