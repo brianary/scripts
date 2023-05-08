@@ -19,6 +19,7 @@ Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord
 about_Comment_Based_Help
 #>
 
+#Requires -Version 7
 function Measure-CommentBasedHelpExists
 {
 	[CmdletBinding()][OutputType([Microsoft.Windows.Powershell.ScriptAnalyzer.Generic.DiagnosticRecord[]])] Param
@@ -33,7 +34,8 @@ Comment-based help is specially-structured comments that provide details on a sc
 purpose, usage, and any limitations or other considerations that would help someone
 operate it. See about_Comment_Based_Help.
 "@ -replace '[\r\n]',' '
-		[ScriptBlock] $predicate = {
+		# Only the root script (i.e. no parent) needs to be documented.
+		[ScriptBlock] $predicate = $null -ne $ScriptAst.Parent ? {return $false} : {
 			Param(
 			[System.Management.Automation.Language.Ast] $Ast
 			)
