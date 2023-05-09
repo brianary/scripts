@@ -27,6 +27,8 @@ _links       : @{self=https://api.github.com/repos/PowerShell/PSScriptAnalyzer/c
 
 #Requires -Version 7
 #Requires -Modules PowerShellForGitHub
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars','',
+Justification='Using a global variable to cache responses, to avoid abusive API iteration.')]
 [CmdletBinding()] Param(
 # The path for which to retrieve contents.
 [Parameter(Position=0)][string] $Path = '',
@@ -57,8 +59,8 @@ Begin
     function Get-PathContentOrAlternate
     {
         [CmdletBinding()] Param(
-        [Parameter(ValueFromPipelineByPropertyName)][psobject] $OwnerName,
-        [Parameter(ValueFromPipelineByPropertyName)][string] $RepositoryName,
+        [psobject] $OwnerName,
+        [string] $RepositoryName,
         [string] $Path,
         [string] $Branch,
         [string] $AlternatePath
