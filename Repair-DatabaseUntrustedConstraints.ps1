@@ -40,9 +40,9 @@ WARNING: Checked 2 constraints
 
 Use-SqlcmdParams.ps1
 
-function Resolve-SqlcmdResult([string]$Action,[string]$Query)
+function Resolve-SqlcmdResult
 {
-    <#
+<#
 .SYNOPSIS
 Executes SQL that generates SQL strings, and optionally executes the generated SQL.
 
@@ -55,51 +55,52 @@ Descriptive text for the commands produced, with two format arguments:
 A SQL query that produces a single-column result set, named "command", containing
 executable SQL.
 #>
-    $count,$i = 0,0
-    [string[]]$commands = Invoke-Sqlcmd $Query |Select-Object -ExpandProperty command
-    if(!$commands){return}
-    $max,$act = ($commands.Count/100),($Action -f -1,$commands.Count)
-    Write-Verbose ($Action -f 1,$commands.Count)
-    foreach($command in $commands)
-    {
-        Write-Progress $act "Execute command #$i" -CurrentOperation $command -PercentComplete ($i++/$max)
-        if(!$Update) {$command}
-        elseif($PSCmdlet.ShouldProcess($command,'execute')) {Invoke-Sqlcmd $command; $count++}
-    }
-    Write-Progress ($action -f 0,$i) -Completed
-    if($count) {Write-Warning ($Action -f 0,$count)}
+	[CmdletBinding(SupportsShouldProcess=$true)] Param([string]$Action,[string]$Query)
+	$count,$i = 0,0
+	[string[]]$commands = Invoke-Sqlcmd $Query |Select-Object -ExpandProperty command
+	if(!$commands){return}
+	$max,$act = ($commands.Count/100),($Action -f -1,$commands.Count)
+	Write-Verbose ($Action -f 1,$commands.Count)
+	foreach($command in $commands)
+	{
+		Write-Progress $act "Execute command #$i" -CurrentOperation $command -PercentComplete ($i++/$max)
+		if(!$Update) {$command}
+		elseif($PSCmdlet.ShouldProcess($command,'execute')) {Invoke-Sqlcmd $command; $count++}
+	}
+	Write-Progress ($action -f 0,$i) -Completed
+	if($count) {Write-Warning ($Action -f 0,$count)}
 }
 
 function Repair-DefaultName
 {
-    @{
-        Action = 'Check{0:;ing;ed} {1} constraints'
-        Query  = @"
+	@{
+		Action = 'Check{0:;ing;ed} {1} constraints'
+		Query  = @"
 select 'if exists (select * from sys.foreign_keys where object_id = object_id('''
-       + quotename(schema_name(schema_id))
-       + '.' + quotename(object_name(object_id))
-       + ''') and is_not_trusted = 1) alter table '
-       + quotename(object_schema_name(parent_object_id))
-       + '.' + quotename(object_name(parent_object_id))
-       + ' with check check constraint ' + quotename(name) + '; -- FK' command
+	   + quotename(schema_name(schema_id))
+	   + '.' + quotename(object_name(object_id))
+	   + ''') and is_not_trusted = 1) alter table '
+	   + quotename(object_schema_name(parent_object_id))
+	   + '.' + quotename(object_name(parent_object_id))
+	   + ' with check check constraint ' + quotename(name) + '; -- FK' command
   from sys.foreign_keys
  where is_not_trusted = 1
    and is_not_for_replication = 0
    and is_disabled = 0
  union all
 select 'if exists (select * from sys.foreign_keys where object_id = object_id('''
-       + quotename(schema_name(schema_id))
-       + '.' + quotename(object_name(object_id))
-       + ''') and is_not_trusted = 1) alter table '
-       + quotename(object_schema_name(parent_object_id))
-       + '.' + quotename(object_name(parent_object_id))
-       + ' with check check constraint ' + quotename(name) + ';' command
+	   + quotename(schema_name(schema_id))
+	   + '.' + quotename(object_name(object_id))
+	   + ''') and is_not_trusted = 1) alter table '
+	   + quotename(object_schema_name(parent_object_id))
+	   + '.' + quotename(object_name(parent_object_id))
+	   + ' with check check constraint ' + quotename(name) + ';' command
   from sys.check_constraints
  where is_not_trusted = 1
    and is_not_for_replication = 0
    and is_disabled = 0;
 "@
-    } |ForEach-Object {Resolve-SqlcmdResult @_}
+	} |ForEach-Object {Resolve-SqlcmdResult @_}
 }
 
 Repair-DefaultName

@@ -80,11 +80,10 @@ By default, the default vault is used.
 Set-ParameterDefault.ps1 Invoke-RestMethod Method Post
 Set-ParameterDefault.ps1 Invoke-RestMethod ContentType application/json
 Set-ParameterDefault.ps1 Invoke-RestMethod Headers @{'X-Accept'='application/json'}
-$consumerKey = try{( $Vault ?
+$consumerKey = ( $Vault ?
 	(Get-Secret PocketApiConsumerKey -Vault $Vault -ErrorAction Ignore) :
 	(Get-Secret PocketApiConsumerKey -ErrorAction Ignore) ) |
-	ConvertFrom-SecureString -AsPlainText}
-	catch{}
+	ConvertFrom-SecureString -AsPlainText -ErrorAction Ignore
 if(!$consumerKey)
 {
 	$consumerKey = Get-Credential PocketApiConsumerKey -Message 'Pocket API consumer key'
