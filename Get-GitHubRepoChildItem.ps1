@@ -13,7 +13,16 @@ Rules.csproj   2586 Rules/Rules.csproj
 .EXAMPLE
 Get-GitHubRepoChildItem.ps1 -Path src -AlternatePath / -Filter LICENSE -File -OwnerName PowerShell -RepositoryName PSScriptAnalyzer
 
-Tries to look within the src/ folder in the repo for LICENSE, or the root if src/ doesn't exist.
+name         : LICENSE
+path         : LICENSE
+sha          : cec380d8ef7f7a1ad3ff9ef2356a88a13a78b491
+size         : 1089
+url          : https://api.github.com/repos/PowerShell/PSScriptAnalyzer/contents/LICENSE?ref=master
+html_url     : https://github.com/PowerShell/PSScriptAnalyzer/blob/master/LICENSE
+git_url      : https://api.github.com/repos/PowerShell/PSScriptAnalyzer/git/blobs/cec380d8ef7f7a1ad3ff9ef2356a88a13a78b491
+download_url : https://raw.githubusercontent.com/PowerShell/PSScriptAnalyzer/master/LICENSE
+type         : file
+_links       : @{self=https://api.github.com/repos/PowerShell/PSScriptAnalyzer/contents/LICENSE?ref=master; git=https://api.github.com/repos/PowerShell/PSScriptAnalyzer/git/blobs/cec380d8ef7f7a1ad3ff9ef2356a88a13a78b491; html=https://github.com/PowerShell/PSScriptAnalyzer/blob/master/LICENSE}
 #>
 
 #Requires -Version 7
