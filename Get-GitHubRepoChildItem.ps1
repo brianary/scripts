@@ -1,142 +1,120 @@
 ﻿<#
 .SYNOPSIS
-Adds any missing topics based on repo content.
+Gets the items and child items in one or more specified locations.
 
-.FUNCTIONALITY
-Git and GitHub
+.EXAMPLE
+Get-GitHubRepoChildItem.ps1 -Filter *.csproj -Recurse -File -OwnerName PowerShell -RepositoryName PSScriptAnalyzer |Format-Table name,size,path -AutoSize
+
+name           size path
+----           ---- ----
+Engine.csproj  3679 Engine/Engine.csproj
+Rules.csproj   2586 Rules/Rules.csproj
+
+.EXAMPLE
+Get-GitHubRepoChildItem.ps1 -Path src -AlternatePath / -Filter LICENSE -File -OwnerName PowerShell -RepositoryName PSScriptAnalyzer
+
+Tries to look within the src/ folder in the repo for LICENSE, or the root if src/ doesn't exist.
 #>
 
 #Requires -Version 7
 #Requires -Modules PowerShellForGitHub
-[CmdletBinding(SupportsShouldProcess,ConfirmImpact='High')] Param(
-[Parameter(Position=0)][scriptblock] $Filter = {$true}
+[CmdletBinding()] Param(
+# The path for which to retrieve contents.
+[Parameter(Position=0)][string] $Path = '',
+# Specifies a wildcard pattern to filter matches against.
+[string] $Filter = '*',
+# Specifies a wildcard pattern to exclude matches against.
+[string] $Exclude = '',
+# An alternate path to retrieve if the primary Path isn't found.
+[string] $AlternatePath,
+# Indicates subdirectories should be searched.
+[switch] $Recurse,
+# Indicates that only files should be returned.
+[switch] $File,
+# Indicates that only directories should be returned.
+[switch] $Directory,
+# Owner of the repository.
+[Parameter(ValueFromPipelineByPropertyName)][psobject] $OwnerName,
+# Name of the repository.
+[Parameter(ValueFromPipelineByPropertyName)][Alias('Name')][string] $RepositoryName,
+# The branch, or defaults to the default branch of not specified.
+[string] $BranchName,
+# Ignores any cached result and re-queries the GitHub API.
+[switch] $Force
 )
 Begin
 {
-    function Add-GitHubRepositoryTopic
+    if(!(Get-Variable GitHubRepoContents -Scope Global -ErrorAction SilentlyContinue)) {$Global:GitHubRepoContents = @{}}
+    function Get-PathContentOrAlternate
     {
-        [CmdletBinding(SupportsShouldProcess,ConfirmImpact='High')]
-        Param([string] $Owner, [string] $Name, [string[]] $NewTopic, [string[]] $Topics, [psobject] $InputObject)
-        if(!($NewTopic |ForEach-Object {$_ -notin $Topics})) {return}
-        Write-Verbose "$($MyInvocation.MyCommand.Name) $($PSBoundParameters |ConvertTo-Json -Compress)"
-        if(!$PSCmdlet.ShouldProcess("repository $Owner/$Name","add topic '$($NewTopic -join "','")'")) {return}
-        $value = ($Topics + $NewTopic).Where({$_ -ne 'missing-topics'})
-        Set-GitHubRepositoryTopic -Topic $value -OwnerName $Owner -RepositoryName $Name
-        if(Get-Variable GitHubRepos -Scope Global -ErrorAction Ignore) {$InputObject.topics = $value}
-    }
-
-    $Global:TopicsChangeList = @()
-    function Push-GitHubRepositoryTopic
-    {
-        [CmdletBinding()] Param([string] $Owner, [string] $Name, [string[]] $NewTopic, [string[]] $Topics, [psobject] $InputObject)
-        $Global:TopicsChangeList += $PSBoundParameters
-    }
-
-    function Complete-GitHubRepositoryTopic
-    {
-        $Global:TopicsChangeList |ForEach-Object {Add-GitHubRepositoryTopic @_}
-        Remove-Variable TopicsChangeList -Scope Global
-    }
-
-    function Get-RepoXml([string] $Filter, [string] $Owner, [string] $Name)
-    {
-        return & "$PSScriptRoot\Get-GitHubRepoChildItem.ps1" -Path src -Filter $Filter -Recurse -File -OwnerName $Owner `
-            -RepositoryName $Name -AlternatePath / |
-            ForEach-Object {[xml]((Get-GitHubContent -Path $_.path -OwnerName $Owner -RepositoryName $Name `
-                -ResultAsString).contentAsString.Trim(0xFEFF))}
-    }
-
-    function Set-AzureFunctionTopic([xml[]] $Projects, [string] $Owner, [string] $Name, [string[]] $Topics, [psobject] $InputObject)
-    {
-        if('azure-function' -in $Topics) {return} # already there, assume it's right
-        [void]$PSBoundParameters.Remove('Projects')
-        if(@($Projects |ForEach-Object {Select-Xml /Project/PropertyGroup/AzureFunctionsVersion -Xml $_}).Count -gt 0)
+        [CmdletBinding()] Param(
+        [Parameter(ValueFromPipelineByPropertyName)][psobject] $OwnerName,
+        [Parameter(ValueFromPipelineByPropertyName)][string] $RepositoryName,
+        [string] $Path,
+        [string] $Branch,
+        [string] $AlternatePath
+        )
+        [void]$PSBoundParameters.Remove('AlternatePath')
+        if($Path -in '','.','/') {[void]$PSBoundParameters.Remove('Path')}
+        try {return Get-GitHubContent @PSBoundParameters}
+        catch [Microsoft.PowerShell.Commands.HttpResponseException]
         {
-            Push-GitHubRepositoryTopic -NewTopic azure-function @PSBoundParameters
+            Write-Verbose "Could not find path $Path in $OwnerName/$RepositoryName"
+            if($_.Exception.Response.StatusCode -ne 404 -or $AlternatePath -eq $null) {throw}
+            if($AlternatePath -in '','.','/') {[void]$PSBoundParameters.Remove('Path')}
+            else {$PSBoundParameters['Path'] = $AlternatePath}
+            return Get-GitHubContent @PSBoundParameters
         }
-    }
-
-    function Set-CypressTopic([string] $Owner, [string] $Name, [string[]] $Topics, [psobject] $InputObject)
-    {
-        if('cypress' -in $Topics) {return}
-        if(@(& "$PSScriptRoot\Get-GitHubRepoChildItem.ps1" -Filter cypress -Recurse -Directory -OwnerName $Owner `
-            -RepositoryName $Name).Count -gt 0)
-        {
-            Push-GitHubRepositoryTopic -NewTopic cypress @PSBoundParameters
-        }
-    }
-
-    function Set-DatabaseSchemaTopic([string] $Owner, [string] $Name, [string[]] $Topics, [psobject] $InputObject)
-    {
-        if('database-schema' -in $Topics) {return}
-        if(@(& "$PSScriptRoot\Get-GitHubRepoChildItem.ps1" -Filter *.scpf -File -OwnerName $Owner `
-            -RepositoryName $Name).Count -gt 0)
-        {
-            Push-GitHubRepositoryTopic -NewTopic database-schema @PSBoundParameters
-        }
-    }
-
-    function Set-FakeTopic([string] $Owner, [string] $Name, [string[]] $Topics, [psobject] $InputObject)
-    {
-        if('fake' -in $Topics) {return}
-        if(@(& "$PSScriptRoot\Get-GitHubRepoChildItem.ps1" -Filter build.fsx -File -OwnerName $Owner `
-            -RepositoryName $Name).Count -gt 0)
-        {
-            Push-GitHubRepositoryTopic -NewTopic fake @PSBoundParameters
-        }
-    }
-
-    function Set-RedgateSqlChangeAutomationTopic([string] $Owner, [string] $Name, [string[]] $Topics, [psobject] $InputObject)
-    {
-        if('redgate-sql-change-automation' -in $Topics) {return}
-        if(@(& "$PSScriptRoot\Get-GitHubRepoChildItem.ps1" -Filter *.sqlproj -Recurse -File -OwnerName $Owner `
-            -RepositoryName $Name).Count -gt 0)
-        {
-            Push-GitHubRepositoryTopic -NewTopic fake @PSBoundParameters
-        }
-    }
-
-    function Set-SelfServiceTopic([xml[]] $WebConfigs, [string] $Owner, [string] $Name, [string[]] $Topics, [psobject] $InputObject)
-    {
-        if('selfservice' -in $Topics -and 'olb-sso' -in $Topics -and 'public-facing' -in $Topics) {return}
-        [void]$PSBoundParameters.Remove('WebConfigs')
-        if(@($WebConfigs |ForEach-Object {Select-Xml "/configuration/location[@path='api/overlock']" -Xml $_}).Count -gt 0)
-        {
-            Push-GitHubRepositoryTopic -NewTopic olb-sso,selfservice,public-facing @PSBoundParameters
-        }
-    }
-
-    function Set-PublicFacingTopic([xml[]] $WebConfigs, [string] $Owner, [string] $Name, [string[]] $Topics, [psobject] $InputObject)
-    {
-        if('selfservice' -in $Topics -and 'olb-sso' -in $Topics -and 'public-facing' -in $Topics) {return}
-        [void]$PSBoundParameters.Remove('WebConfigs')
-        if(@($WebConfigs |ForEach-Object {Select-Xml "/configuration/system.web/authentication[@mode='Windows']" -Xml $_}).Count -gt 0)
-        {
-            Push-GitHubRepositoryTopic -NewTopic public-facing @PSBoundParameters
-        }
-    }
-
-    filter Add-Topic([Parameter(ValueFromPipelineByPropertyName)][psobject] $Owner,
-        [Parameter(ValueFromPipelineByPropertyName)][string] $Name,
-        [Parameter(ValueFromPipelineByPropertyName)][string[]] $Topics,
-        [Parameter(ValueFromPipeline)][psobject] $InputObject)
-    {
-        if($PSBoundParameters['Owner'] -isnot [string]) {$PSBoundParameters['Owner'] = $Owner = $Owner.UserName}
-        $fullName = "$Owner/$Name"
-        Write-Verbose "Adding topics for $fullName"
-        $projects = @(Get-RepoXml *.?sproj -Owner $Owner -Name $Name)
-        $webConfig = @(Get-RepoXml Web.config -Owner $Owner -Name $Name)
-        Set-AzureFunctionTopic -Projects $projects @PSBoundParameters
-        Set-CypressTopic @PSBoundParameters
-        Set-DatabaseSchemaTopic @PSBoundParameters
-        Set-FakeTopic @PSBoundParameters
-        Set-RedgateSqlChangeAutomationTopic @PSBoundParameters
-        Set-SelfServiceTopic -WebConfigs $webConfig @PSBoundParameters
-        Set-PublicFacingTopic -WebConfigs $webConfig @PSBoundParameters
     }
 }
 Process
 {
-    Get-GitHubRepos.ps1 |Where-Object $Filter |ForEach-Progress.ps1 'Adding topics to repos' {$_.name} {$_ |Add-Topic}
-    Complete-GitHubRepositoryTopic
+    Write-Verbose $MyInvocation.Line
+    if($OwnerName -isnot [string]) {$PSBoundParameters['OwnerName'] = $OwnerName = $OwnerName.UserName}
+    $repoContext, $searchContext = "$OwnerName/$RepositoryName/$BranchName",
+        "$Path|$AlternatePath|$Filter|$Exclude|$Recurse|$File|$Directory"
+    if(!$Global:GitHubRepoContents.ContainsKey($repoContext))
+    {
+        $Global:GitHubRepoContents[$repoContext] = @{}
+    }
+    elseif(!$Force -and $Global:GitHubRepoContents[$repoContext].ContainsKey($searchContext))
+    {
+        return $Global:GitHubRepoContents[$repoContext][$searchContext]
+    }
+    $entryType = if($File -and $Directory) {''} elseif($File) {'file'} elseif($Directory) {'dir'} else {'*'}
+    $contentSpec = @{
+        OwnerName = $OwnerName
+        RepositoryName = $RepositoryName
+        Path = $Path
+        AlternatePath = $AlternatePath
+    }
+    if($BranchName) {$contentSpec += @{BranchName=$BranchName}}
+    Write-Progress "Searching $OwnerName/$RepositoryName $BranchName" ( $Path ? $Path : '/' )
+    if(!$Force -and $Global:GitHubRepoContents[$repoContext].ContainsKey("$Path|$AlternatePath"))
+    {
+        $content = $Global:GitHubRepoContents[$repoContext]["$Path|$AlternatePath"]
+    }
+    else
+    {
+        $content = Get-PathContentOrAlternate @contentSpec
+        $Global:GitHubRepoContents[$repoContext]["$Path|$AlternatePath"] = $content
+    }
+    if($content.type -eq 'file')
+    {
+        if($content.type -notlike $entryType -or $content.name -notlike $Filter -or $content.name -like $Exclude) {return}
+        $Global:GitHubRepoContents[$repoContext][$searchContext] = $content
+        return $content
+    }
+    $found = @($content.entries |
+        Where-Object {$_.type -like $entryType -and $_.name -like $Filter -and $_.name -notlike $Exclude})
+    if($Recurse)
+    {
+        $found += @($content.entries |
+            Where-Object {$_.type -eq 'dir' -and $_.name -notlike $Exclude} |
+            ForEach-Object {& $PSCommandPath -Path $_.path -Filter $Filter -Exclude $Exclude -Recurse -File:$File `
+                -Directory:$Directory -OwnerName $OwnerName -RepositoryName $RepositoryName -BranchName $BranchName})
+    }
+    $Global:GitHubRepoContents[$repoContext][$searchContext] = $found
+    Write-Progress "Searching $OwnerName/$RepositoryName $BranchName" -Completed
+    return $found
 }
