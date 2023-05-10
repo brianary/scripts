@@ -89,10 +89,10 @@ Justification='This script is not intended for pipelining.')]
 [CmdletBinding()] Param(
 # The sources of updates to install, in order.
 [ValidateSet('Chocolatey','DellCommand','Dotnet','Essential','GitHubCli','Npm',
-	'PSHelp','PSModule','Scoop','Window','WindowsStore','WinGet')]
+	'PSHelp','PSModule','Scoop','WindowsUpdate','WindowsStore','WinGet')]
 [Parameter(Position=0,ValueFromRemainingArguments=$true)][string[]] $Steps =
-	@('Essentials','WindowsStore','Scoop','Chocolatey','WinGet','Npm','Dotnet',
-		'GitHubCli','PSModules','PSHelp','DellCommand','Windows')
+	@('Essential','WindowsStore','Scoop','Chocolatey','WinGet','Npm','Dotnet',
+		'GitHubCli','PSModule','PSHelp','DellCommand','WindowsUpdate')
 )
 Begin
 {
@@ -239,7 +239,7 @@ Begin
 		Write-Info.ps1 ''
 	}
 
-	function Update-Window
+	function Update-WindowsUpdate
 	{
 		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Windows."; return}
 		if(!(Get-Module PSWindowsUpdate -ListAvailable))
