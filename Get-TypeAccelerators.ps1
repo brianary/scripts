@@ -22,7 +22,7 @@ ArgumentCompleter            System.Management.Automation.ArgumentCompleterAttri
 ArgumentCompletions          System.Management.Automation.ArgumentCompletionsAttribute
 array                        System.Array
 bool                         System.Boolean
-byte                         System.Byte                                                         y
+byte                         System.Byte                                                         uy
 char                         System.Char
 CmdletBinding                System.Management.Automation.CmdletBindingAttribute
 datetime                     System.DateTime
@@ -63,7 +63,7 @@ ref                          System.Management.Automation.PSReference
 PSTypeNameAttribute          System.Management.Automation.PSTypeNameAttribute
 regex                        System.Text.RegularExpressions.Regex
 DscProperty                  System.Management.Automation.DscPropertyAttribute
-sbyte                        System.SByte                                                        uy
+sbyte                        System.SByte                                                        y
 string                       System.String
 SupportsWildcards            System.Management.Automation.SupportsWildcardsAttribute
 switch                       System.Management.Automation.SwitchParameter
@@ -150,8 +150,8 @@ else
 			Type  = [type]$_.Value
 			Suffix = switch($_.Key)
 			{
-				byte    {'y'}
-				sbyte   {'uy'}
+				byte    {'uy'}
+				sbyte   {'y'}
 				short   {'s'}
 				ushort  {'us'}
 				int16   {'s'}
