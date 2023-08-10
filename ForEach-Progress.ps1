@@ -34,14 +34,16 @@ Justification='This script uses $input within an End block.')]
 )
 End
 {
-	[psobject[]] $values = if($input) {$input} else {@($InputObject)}
+	[psobject[]] $values = $input
+	if(!$values) {$values = @($InputObject)}
 	$i,$max,$id = 0,($values.Length/100),(Get-Random)
 	try
 	{
 		foreach($value in $values)
 		{
 			[Collections.Generic.List[psvariable]] $ctx = New-Object PSVariable _,$value
-			$itemstatus = $Status.InvokeWithContext($null,$ctx,$value)[0]
+			$itemstatus = $Status.InvokeWithContext($null,$ctx,$value) |Select-Object -First 1
+			if(!$itemstatus) {$itemstatus = '?'}
 			Write-Progress $Activity $itemstatus -Id $id -PercentComplete ($i++/$max)
 			[Collections.Generic.List[psvariable]] $ctx = New-Object PSVariable _,$value
 			$Process.InvokeWithContext($null,$ctx,$value)
