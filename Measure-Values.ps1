@@ -10,7 +10,7 @@ System.Management.Automation.PSCustomObject that describes the values with prope
 MeanAverage and StandardDeviation.
 
 .FUNCTIONALITY
-Data Analysis
+Data
 
 .EXAMPLE
 1..54 |ForEach-Object {Get-Random} |Measure-Values.ps1
