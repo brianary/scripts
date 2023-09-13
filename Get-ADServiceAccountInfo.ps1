@@ -13,8 +13,10 @@ serivce3 SERVERC       2023-08-25 17:19:49 Third MSA   {}
 #>
 
 #Requires -Modules ActiveDirectory
-[CmdletBinding()] Param()
-Get-ADServiceAccount -Properties Description,LastLogonDate,HostComputers |
+[CmdletBinding()] Param(
+[Parameter(Position=0)][string] $Filter = '*'
+)
+Get-ADServiceAccount -Filter $Filter -Properties Description,LastLogonDate,HostComputers |
 	ForEach-Object {[pscustomobject]@{
 		Name          = $_.Name
 		HostComputers = $_.HostComputers -replace '\ACN=','' -split ',',2 |Select-Object -First 1
