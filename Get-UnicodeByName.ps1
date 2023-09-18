@@ -47,6 +47,11 @@ Get-UnicodeByName.ps1 BEL
 [CmdletBinding()][OutputType([string])] Param(
 # The name or alias of a Unicode character.
 [Parameter(ParameterSetName='Name',Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $Name,
+<#
+Appends a U+FE0F VARIATION SELECTOR-16 suffix to the character, which suggests an emoji presentation
+for characters that support both a simple text presentation as well as a color emoji-style one.
+#>
+[switch] $AsEmoji,
 # Update the character name database.
 [Parameter(ParameterSetName='Update')][switch] $Update
 )
@@ -58,8 +63,9 @@ Begin
 	$github = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'github.txt')) -Raw)
 	filter ConvertTo-Char([Parameter(ValueFromPipeline)][string] $Value)
 	{
-		return (($Value -split '\W+') |
+		$result = (($Value -split '\W+') |
 			ForEach-Object {[char]::ConvertFromUtf32([convert]::ToInt32($_,16))}) -join ''
+		return $AsEmoji ? $result + ([char]0xFE0F) : $result
 	}
 }
 Process
@@ -88,7 +94,7 @@ Process
 	{
 		if($cc.ContainsKey($Name)) {return $cc[$Name] |ConvertTo-Char}
 		elseif($github.ContainsKey($Name)) {return $github[$Name] |ConvertTo-Char}
-		elseif($html.ContainsKey($Name)) {return $html[$Name].characters -join ''}
+		elseif($html.ContainsKey($Name)) {return ($html[$Name].characters -join '') + ($AsEmoji ? [char]0xFE0F : '')}
 		else {return $codepoint[$Name] |ConvertTo-Char}
 	}
 }
