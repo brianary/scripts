@@ -49,8 +49,8 @@ and alternates the rows between pale yellow and white.
 Begin
 {
     $odd = $false
-    if($OddRowBackground) {$OddRowBackground = [Net.WebUtility]::HtmlEncode($OddRowBackground) -replace '"','&quot;'}
-    if($EvenRowBackground) {$EvenRowBackground = [Net.WebUtility]::HtmlEncode($EvenRowBackground) -replace '"','&quot;'}
+    if($OddRowBackground) {$OddRowBackground = [Security.SecurityElement]::Escape($OddRowBackground)}
+    if($EvenRowBackground) {$EvenRowBackground = [Security.SecurityElement]::Escape($EvenRowBackground)}
 }
 Process
 {
@@ -68,7 +68,7 @@ Process
 		else {$Html -replace '<td>([-$]?\d+(?:,\d{3})*(?:\.\d+)?)</td>','<td align="right">$1</td>'}
     if($Html -like '*<table>*')
     {
-        if($Caption) {$Html = $Html -replace '<table>',"<table><caption $CaptionAttributes>$([Net.WebUtility]::HtmlEncode($Caption))</caption>"}
+        if($Caption) {$Html = $Html -replace '<table>',"<table><caption $CaptionAttributes>$([Security.SecurityElement]::Escape($Caption))</caption>"}
         if($TableAttributes) {$Html = $Html -replace '<table>',"<table $TableAttributes>"}
     }
     if($odd -and $OddRowBackground) {$Html -replace '^<tr>',"<tr style=`"background:$OddRowBackground`">"}

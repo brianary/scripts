@@ -37,9 +37,9 @@ PasswordCategory
   ActiveDirectory complexity rules typically require a character from at least
   three of these fairly arbitrary categories.
 
-HtmlEncode
-  The result of HTML-encoding the character using
-  System.Net.WebUtility.HtmlEncode().
+XmlEscape
+  The result of XML-encoding the character using
+  System.Security.SecurityElement.Escape().
 
 HtmlAttributeEncode
   The result of HTML-encoding the character using
@@ -232,7 +232,7 @@ UnicodeBlock        : BasicLatin
 MatchesBlock        : True
 UnicodeCategory     : ConnectorPunctuation
 CategoryClasses     : {Pc, P}
-HtmlEncode          : _
+XmlEncode           : _
 HtmlAttributeEncode : _
 UrlEncode           : _
 HttpUrlEncode       : _
@@ -778,7 +778,7 @@ VerticalForms
 			UnicodeCategory     = [char]::GetUnicodeCategory($c)
 			CategoryClasses     = Find-UnicodeCategoryClass($c)
 			PasswordCategory    = [PasswordCharacter]::GetCharacterType($c)
-			HtmlEncode          = [Net.WebUtility]::HtmlEncode($c)
+			XmlEscape           = [Security.SecurityElement]::Escape($c)
 			HtmlAttributeEncode = [Web.HttpUtility]::HtmlAttributeEncode($c)
 			UrlEncode           = [Net.WebUtility]::UrlEncode($c)
 			HttpUrlEncode       = [Web.HttpUtility]::UrlEncode("$c")

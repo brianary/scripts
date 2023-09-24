@@ -133,7 +133,7 @@ try
         {
             $Msg.Add('Body',@"
 $PreContent
-<a href=`"$([Net.WebUtility]::HtmlEncode($ReportFile))`">$([Net.WebUtility]::HtmlEncode((Split-Path $ReportFile -Leaf)))</a>
+<a href=`"$([Security.SecurityElement]::Escape($ReportFile))`">$([Security.SecurityElement]::Escape((Split-Path $ReportFile -Leaf)))</a>
 $PostContent
 "@)
         }
