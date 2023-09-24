@@ -105,7 +105,7 @@ Begin
 		elseif($InputObject -is [datetime])
 		{ [Xml.XmlConvert]::ToString($InputObject,'yyyy-MM-dd\THH:mm:ss') }
 		elseif($InputObject -is [string] -or $InputObject -is [char])
-		{ [Net.WebUtility]::HtmlEncode($InputObject) }
+		{ [Security.SecurityElement]::Escape($InputObject) }
 		elseif($InputObject -is [Hashtable] -or $InputObject -is [Collections.Specialized.OrderedDictionary])
 		{
 			if($Depth -gt 1) {$InputObject.Keys |ConvertTo-CompoundXmlElement -IsFirst:$IsFirst}
