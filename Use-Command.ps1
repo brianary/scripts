@@ -191,8 +191,8 @@ switch($PSCmdlet.ParameterSetName)
 		if($PSCmdlet.ShouldProcess("$NodePackage in $InstallDir",'npm install'))
 		{
 			Push-Location $InstallDir
-			if($Version) {npm install $NodePackage@$Version}
-			else {npm install $NodePackage}
+			if($Version) {npm install -g $NodePackage@$Version}
+			else {npm install -g $NodePackage}
 			Pop-Location
 			Set-ResolvedAlias $Name $Path
 		}
