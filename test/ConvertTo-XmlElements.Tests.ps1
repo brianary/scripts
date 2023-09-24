@@ -24,7 +24,7 @@ Describe 'ConvertTo-XmlElements' -Tag ConvertTo-XmlElements -Skip:$skip {
 			@{ InputObject = 1UY; SkipRoot = $false; Result = '<Byte>1</Byte>' }
 			@{ InputObject = 2L; SkipRoot = $false; Result = '<Int64>2</Int64>' }
 			@{ InputObject = 15E3ULPB; SkipRoot = $false; Result = '<UInt64>16888498602639360000</UInt64>' }
-			@{ InputObject = "Don't Panic!"; SkipRoot = $false; Result = '<String>Don&#39;t Panic!</String>' }
+			@{ InputObject = "Don't Panic!"; SkipRoot = $false; Result = '<String>Don&apos;t Panic!</String>' }
 			@{ InputObject = 1,2,3; SkipRoot = $false
 				Result = "<ObjectArray>$NL<Item>1</Item>$NL<Item>2</Item>$NL<Item>3</Item>$NL</ObjectArray>" }
 			@{ InputObject = @{html=@{body=@{p='Some text.'}}}
