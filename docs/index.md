@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2489_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2465_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -35,7 +35,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-CommandPath.ps1](Get-CommandPath.ps1.md)**: Locates a command.
 - **[Hide-Command.ps1](Hide-Command.ps1.md)**: Make a command unavailable.
 - **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1.md)**: Execute a command by using matching dictionary entries as parameters.
-- **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
+- &#x1F199; **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 
 ### Configuration
 
@@ -57,9 +57,10 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Import-SecretVault.ps1](Import-SecretVault.ps1.md)**: Imports secrets into secret vaults.
 - **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1.md)**: Removes a credential from secure storage.
 
-### Data Analysis
+### Data
 
-- &#x1F195; **[Measure-Values.ps1](Measure-Values.ps1.md)**: Provides analysis of supplied values.
+- **[Limit-Digits.ps1](Limit-Digits.ps1.md)**: Rounds off a number to the requested number of digits.
+- **[Measure-Values.ps1](Measure-Values.ps1.md)**: Provides analysis of supplied values.
 
 ### Data encoding
 
@@ -93,7 +94,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[New-DbProviderObject.ps1](New-DbProviderObject.ps1.md)**: Create a common database object.
 - **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1.md)**: Finds database constraints with system-generated names and gives them deterministic names.
 - **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1.md)**: Finds database constraints that have been incompletely re-enabled.
-- **[Send-SqlReport.ps1](Send-SqlReport.ps1.md)**: Execute a SQL statement and email the results.
+- &#x1F199; **[Send-SqlReport.ps1](Send-SqlReport.ps1.md)**: Execute a SQL statement and email the results.
 - **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1.md)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
 ### Date and time
@@ -135,6 +136,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1.md)**: Removes duplicates from a list of files.
 - **[Find-NewestFile.ps1](Find-NewestFile.ps1.md)**: Finds the most recent file.
 - **[Join-FileName.ps1](Join-FileName.ps1.md)**: Combines a filename with a string.
+- **[Measure-Caches.ps1](Measure-Caches.ps1.md)**: Returns a list of matching cache directories, and their sizes, sorted.
 - **[New-Shortcut.ps1](New-Shortcut.ps1.md)**: Create a Windows shortcut.
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1.md)**: Removes a file that may be prone to locking.
 - **[Split-FileName.ps1](Split-FileName.ps1.md)**: Returns the specified part of the filename.
@@ -182,10 +184,10 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Add-Counter.ps1](Add-Counter.ps1.md)**: Adds an incrementing integer property to each pipeline object.
 - **[Add-DynamicParam.ps1](Add-DynamicParam.ps1.md)**: Adds a dynamic parameter to a script, within a DynamicParam block.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1.md)**: Convert a scope level to account for another call stack level.
-- &#x1F199; **[ForEach-Progress.ps1](ForEach-Progress.ps1.md)**: Performs an operation against each item in a collection of input objects, with a progress bar.
+- **[ForEach-Progress.ps1](ForEach-Progress.ps1.md)**: Performs an operation against each item in a collection of input objects, with a progress bar.
 - **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
 - **[Format-Permutations.ps1](Format-Permutations.ps1.md)**: Builds format strings using every combination of elements from multiple arrays.
-- **[Get-EnumValues.ps1](Get-EnumValues.ps1.md)**: Returns the possible values of the specified enumeration.
+- &#x1F199; **[Get-EnumValues.ps1](Get-EnumValues.ps1.md)**: Returns the possible values of the specified enumeration.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.
 - **[Import-Variables.ps1](Import-Variables.ps1.md)**: Creates local variables from a data row or dictionary (hashtable).
 - **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1.md)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
@@ -255,9 +257,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Unicode
 
 - **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1.md)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
-- **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
+- &#x1F199; **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
-- **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
+- &#x1F199; **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
 - **[Get-UnicodeData.ps1](Get-UnicodeData.ps1.md)**: Returns the current (cached) Unicode character data.
 - **[Get-UnicodeName.ps1](Get-UnicodeName.ps1.md)**: Returns the name of a Unicode code point.
 
@@ -276,7 +278,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
 - **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1.md)**: Parse escaped XML into XML and serialize it.
 - **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1.md)**: Converts named nodes of an element to properties of a PSObject, recursively.
-- **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1.md)**: Serializes complex content into XML elements.
+- &#x1F199; **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1.md)**: Serializes complex content into XML elements.
 - **[Format-Xml.ps1](Format-Xml.ps1.md)**: Pretty-print XML.
 - **[Get-XmlNamespaces.ps1](Get-XmlNamespaces.ps1.md)**: Gets the namespaces from a document as a dictionary.
 - **[Merge-XmlSelections.ps1](Merge-XmlSelections.ps1.md)**: Builds an object using the named XPath selections as properties.
@@ -290,11 +292,13 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[Backup-Workstation.ps1](Backup-Workstation.ps1.md)**: Adds various configuration files and exported settings to a ZIP file.
 - **[Connect-SshKey.ps1](Connect-SshKey.ps1.md)**: Uses OpenSSH to generate a key and connect it to an ssh server.
+- &#x1F195; **[ConvertFrom-IsoWeekDate.ps1](ConvertFrom-IsoWeekDate.ps1.md)**: Returns a DateTime object from an ISO week date string.
 - **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1.md)**: Convert a number to a Roman numeral.
 - **[Copy-Html.ps1](Copy-Html.ps1.md)**: Copies objects as an HTML table.
 - **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
 - **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
-- **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1.md)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
+- &#x1F199; **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1.md)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
+- &#x1F199; **[Get-ADServiceAccountInfo.ps1](Get-ADServiceAccountInfo.ps1.md)**: Lists the Global Managed Service Accounts for the domain, including the computers they are bound to.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1.md)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-Dns.ps1](Get-Dns.ps1.md)**: Looks up DNS info, given a hostname or address.
 - **[Get-GitHubRepoChildItem.ps1](Get-GitHubRepoChildItem.ps1.md)**: Gets the items and child items in one or more specified locations.

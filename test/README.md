@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='224'>224 &#x2030;</meter> Scripts repo (201) &#x1F4C5; 281 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='220'>220 &#x2030;</meter> Scripts repo (205) &#x1F4C5; 421 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 209 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 209 days</summary>
 
@@ -24,7 +24,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> C (29) &#x1F4C5; 281 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='967'>967 &#x2030;</meter> C (30) &#x1F4C5; 421 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (3) &#x1F4C5; 148 days</summary>
 
 - &#x2714;&#xFE0F; Compare-Keys.ps1
@@ -42,14 +42,14 @@ Script Tests
 - &#x2714;&#xFE0F; Connect-SshKey.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 281 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 421 days</summary>
 
 - &#x2714;&#xFE0F; Convert-ChocolateyToWinget.ps1
 - &#x2714;&#xFE0F; Convert-ClipboardTsvToHtml.ps1
 - &#x2714;&#xFE0F; Convert-Xml.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertFrom (7) &#x1F4C5; 109 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='875'>875 &#x2030;</meter> ConvertFrom (8) &#x1F4C5; 109 days</summary>
 
 - &#x2714;&#xFE0F; ConvertFrom-Base64.ps1
 - &#x2714;&#xFE0F; ConvertFrom-CimInstance.ps1
@@ -57,10 +57,11 @@ Script Tests
 - &#x2714;&#xFE0F; ConvertFrom-Duration.ps1
 - &#x2714;&#xFE0F; ConvertFrom-EscapedXml.ps1
 - &#x2714;&#xFE0F; ConvertFrom-Hex.ps1
+- &#x2716;&#xFE0F; ConvertFrom-IsoWeekDate.ps1
 - &#x2714;&#xFE0F; ConvertFrom-XmlElement.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 281 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 421 days</summary>
 
 - &#x2714;&#xFE0F; ConvertTo-Base64.ps1
 - &#x2714;&#xFE0F; ConvertTo-BasicAuthentication.ps1
@@ -141,9 +142,10 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='27'>27 &#x2030;</meter> G (37) &#x1F4C5; 198 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='27'>27 &#x2030;</meter> Get (37) &#x1F4C5; 198 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> G (38) &#x1F4C5; 198 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> Get (38) &#x1F4C5; 198 days</summary>
 
+- &#x2716;&#xFE0F; Get-ADServiceAccountInfo.ps1
 - &#x2716;&#xFE0F; Get-ADUserStatus.ps1
 - &#x2716;&#xFE0F; Get-AspNetEvents.ps1
 - &#x2716;&#xFE0F; Get-AssemblyFramework.ps1
@@ -212,9 +214,16 @@ Script Tests
 - &#x2716;&#xFE0F; Join-Keys.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started M (10) </summary>
-<ul><li><details><summary>not started Measure (7) </summary>
+<li><details><summary>not started L (1) </summary>
+<ul><li><details><summary>not started Limit (1) </summary>
 
+- &#x2716;&#xFE0F; Limit-Digits.ps1
+
+</details></li></ul></details></li>
+<li><details><summary>not started M (11) </summary>
+<ul><li><details><summary>not started Measure (8) </summary>
+
+- &#x2716;&#xFE0F; Measure-Caches.ps1
 - &#x2716;&#xFE0F; Measure-DbColumn.ps1
 - &#x2716;&#xFE0F; Measure-DbColumnValues.ps1
 - &#x2716;&#xFE0F; Measure-DbTable.ps1

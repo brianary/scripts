@@ -14,12 +14,12 @@ Returns characters based on Unicode code point name, GitHub short code, or HTML 
 
 ### Name
 ```
-Get-UnicodeByName.ps1 [-Name] <String> [<CommonParameters>]
+Get-UnicodeByName.ps1 [-Name] <String> [-AsEmoji] [<CommonParameters>]
 ```
 
 ### Update
 ```
-Get-UnicodeByName.ps1 [-Update] [<CommonParameters>]
+Get-UnicodeByName.ps1 [-AsEmoji] [-Update] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -76,6 +76,22 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -AsEmoji
+Appends a U+FE0F VARIATION SELECTOR-16 suffix to the character, which suggests an emoji presentation
+for characters that support both a simple text presentation as well as a color emoji-style one.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
