@@ -40,14 +40,14 @@ Process
 		Iso8601Week
 		{
 			$V = '{0:00}' -f [int](Get-Date $Date -uf %V) # PS5 doesn't zero-pad %V
-			if(53 -eq (Get-Date $Date -uf %V) -and $Date.Month -eq 1) {"$($Date.Year-1)-W$V"}
+			if(50 -lt (Get-Date $Date -uf %V) -and $Date.Month -eq 1) {"$($Date.Year-1)-W$V"}
 			else {Get-Date $Date -uf %Y-W$V}
 		}
 		Iso8601WeekDate
 		{
 			$w = [int]$Date.DayOfWeek; if($w -eq 0) {$w = 7} # PS5-7.1 formats Sundays as zero
 			$V = '{0:00}' -f [int](Get-Date $Date -uf %V)
-			if(53 -eq (Get-Date $Date -uf %V) -and $Date.Month -eq 1) {"$($Date.Year-1)-W$V-$w"}
+			if(50 -lt (Get-Date $Date -uf %V) -and $Date.Month -eq 1) {"$($Date.Year-1)-W$V-$w"}
 			else {Get-Date $Date -uf %Y-W$V-$w}
 		}
 		Iso8601Z {"$(Get-Date $Date.ToUniversalTime() -f s)Z"}

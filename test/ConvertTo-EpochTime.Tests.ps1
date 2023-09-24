@@ -12,7 +12,8 @@ Describe 'ConvertTo-EpochTime' -Tag ConvertTo-EpochTime -Skip:$skip {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970' -Tag Example {
+	Context 'Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970' `
+		-Tag ConvertToEpochTime,Convert,ConvertTo,EpochTime {
 		It "DateTime value '<DateTime>' should return '<Result>'" `
 			-Tag ConvertToEpochTime,Convert,ConvertTo,EpochTime,Epoch -TestCases @(
 			@{ DateTime = '2000-01-01Z'; Result = 946684800 }
