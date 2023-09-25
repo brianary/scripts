@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='224'>224 &#x2030;</meter> Scripts repo (205) &#x1F4C5; 421 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='223'>223 &#x2030;</meter> Scripts repo (206) &#x1F4C5; 421 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 209 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 209 days</summary>
 
@@ -270,19 +270,20 @@ Script Tests
 - &#x2716;&#xFE0F; Push-WorkspaceLocation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started R (16) </summary>
+<li><details><summary>not started R (17) </summary>
 <ul><li><details><summary>not started Read (2) </summary>
 
 - &#x2716;&#xFE0F; Read-ChocolateySummary.ps1
 - &#x2716;&#xFE0F; Read-Choice.ps1
 
 </details></li>
-<li><details><summary>not started Remove (4) </summary>
+<li><details><summary>not started Remove (5) </summary>
 
 - &#x2716;&#xFE0F; Remove-CachedCredential.ps1
 - &#x2716;&#xFE0F; Remove-LockyFile.ps1
 - &#x2716;&#xFE0F; Remove-NullValues.ps1
 - &#x2716;&#xFE0F; Remove-ParameterDefault.ps1
+- &#x2716;&#xFE0F; Remove-PocketArticle.ps1
 
 </details></li>
 <li><details><summary>not started Rename (2) </summary>
