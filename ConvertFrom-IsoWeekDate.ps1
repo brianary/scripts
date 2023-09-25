@@ -2,6 +2,15 @@
 .SYNOPSIS
 Returns a DateTime object from an ISO week date string.
 
+.INPUTS
+System.String containing an ISO week date.
+
+.OUTPUTS
+System.DateTime corresponding to the ISO week date.
+
+.FUNCTIONALITY
+Date and time
+
 .LINK
 https://en.wikipedia.org/wiki/ISO_week_date
 
@@ -17,7 +26,7 @@ Tuesday, February 22, 2022 00:00:00
 #>
 
 #Requires -Version 3
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([datetime])] Param(
 # An ISO week date of the formatt ####-W##-#.
 [Parameter(Position=0,ValueFromPipeline=$true)][ValidatePattern('\A\d+-W\d\d-\d\z')][string] $InputObject
 )
