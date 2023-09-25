@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-Tests Returns a DateTime object from an ISO week date string.
+Tests returning a DateTime object from an ISO week date string.
 #>
 
 $basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
