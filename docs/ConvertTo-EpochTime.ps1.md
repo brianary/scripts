@@ -51,7 +51,7 @@ Indicates the DateTime provided is local, and should be converted to UTC.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: UTC
+Aliases: UTC, Z
 
 Required: False
 Position: Named

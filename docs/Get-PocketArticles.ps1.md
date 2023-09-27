@@ -15,7 +15,7 @@ Retrieves a list of saved articles from a Pocket account.
 ```
 Get-PocketArticles.ps1 [-After] <DateTime> [-Before] <DateTime> [[-Search] <String>] [-Domain <String>]
  [-State <String>] [-Tag <String>] [-Sort <String>] [-ContentType <String>] [-Vault <String>] [-Favorite]
- [-Detailed] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -182,21 +182,6 @@ Accept wildcard characters: False
 
 ### -Favorite
 Return only favorite articles.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Detailed
-Return full article details.
 
 ```yaml
 Type: SwitchParameter

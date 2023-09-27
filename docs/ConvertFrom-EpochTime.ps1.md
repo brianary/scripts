@@ -1,19 +1,19 @@
 ---
 external help file: -help.xml
 Module Name:
-online version: http://webcoder.info/recurrence.html
+online version: https://en.wikipedia.org/wiki/Unix_time
 schema: 2.0.0
 ---
 
-# ConvertTo-EpochTime.ps1
+# ConvertFrom-EpochTime.ps1
 
 ## SYNOPSIS
-Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
+Converts an integer Unix (POSIX) time (seconds since Jan 1, 1970) into a DateTime value.
 
 ## SYNTAX
 
 ```
-ConvertTo-EpochTime.ps1 [-DateTime] <DateTime> [-UniversalTime] [<CommonParameters>]
+ConvertFrom-EpochTime.ps1 [-InputObject] <Int64> [-UniversalTime] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,24 +23,24 @@ ConvertTo-EpochTime.ps1 [-DateTime] <DateTime> [-UniversalTime] [<CommonParamete
 
 ### EXAMPLE 1
 ```
-Get-Date |ConvertTo-EpochTime.ps1
+1556884381 |ConvertFrom-EpochTime.ps1
 ```
 
-1556884381
+Friday, May 3, 2019 11:53:01
 
 ## PARAMETERS
 
-### -DateTime
-The DateTime value to convert to number of seconds since Jan 1, 1970.
+### -InputObject
+The Epoch time value to convert to a DateTime.
 
 ```yaml
-Type: DateTime
+Type: Int64
 Parameter Sets: (All)
 Aliases:
 
 Required: True
 Position: 1
-Default value: None
+Default value: 0
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
@@ -65,10 +65,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.DateTime values to convert to integers.
+### System.Int32 value converted from date and time value.
 ## OUTPUTS
 
-### System.Int32 values converted from date and time values.
+### System.DateTime value to convert to integer.
 ## NOTES
 
 ## RELATED LINKS

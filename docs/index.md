@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2475_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2467_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -101,8 +101,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[Add-TimeSpan.ps1](Add-TimeSpan.ps1.md)**: Adds a timespan to DateTime values.
 - **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1.md)**: Parses a Timespan from a ISO8601 duration string.
+- &#x1F195; **[ConvertFrom-EpochTime.ps1](ConvertFrom-EpochTime.ps1.md)**: Converts an integer Unix (POSIX) time (seconds since Jan 1, 1970) into a DateTime value.
 - &#x1F195; **[ConvertFrom-IsoWeekDate.ps1](ConvertFrom-IsoWeekDate.ps1.md)**: Returns a DateTime object from an ISO week date string.
-- **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1.md)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
+- &#x1F199; **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1.md)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
 - **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1.md)**: Formats a datetime as a LogParser literal.
 - &#x1F199; **[Format-Date.ps1](Format-Date.ps1.md)**: Returns a date/time as a named format.
 - **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1.md)**: Returns a date and time converted to the French Republican Calendar.
@@ -234,7 +235,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[Add-CapturesToMatches.ps1](Add-CapturesToMatches.ps1.md)**: Adds named capture group values as note properties to Select-String MatchInfo objects.
 - **[Find-Lines.ps1](Find-Lines.ps1.md)**: Searches a specific subset of files for lines matching a pattern.
-- **[Select-CapturesFromMatches.ps1](Select-CapturesFromMatches.ps1.md)**: Selects named capture group values as note properties from Select-String MatchInfo objects.
+- &#x1F199; **[Select-CapturesFromMatches.ps1](Select-CapturesFromMatches.ps1.md)**: Selects named capture group values as note properties from Select-String MatchInfo objects.
 - **[Set-RegexReplace.ps1](Set-RegexReplace.ps1.md)**: Updates text found with Select-String, using a regular expression replacement template.
 
 ### Seq
@@ -303,9 +304,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-Dns.ps1](Get-Dns.ps1.md)**: Looks up DNS info, given a hostname or address.
 - **[Get-GitHubRepoChildItem.ps1](Get-GitHubRepoChildItem.ps1.md)**: Gets the items and child items in one or more specified locations.
 - **[Get-IisLog.ps1](Get-IisLog.ps1.md)**: Easily query IIS logs.
-- **[Get-PocketArticles.ps1](Get-PocketArticles.ps1.md)**: Retrieves a list of saved articles from a Pocket account.
+- &#x1F199; **[Get-PocketArticles.ps1](Get-PocketArticles.ps1.md)**: Retrieves a list of saved articles from a Pocket account.
 - **[Get-RandomBytes.ps1](Get-RandomBytes.ps1.md)**: Returns random bytes.
-- **[Get-Todos.ps1](Get-Todos.ps1.md)**: Returns the TODOs for the current git repo, which can help document technical debt.
+- &#x1F199; **[Get-Todos.ps1](Get-Todos.ps1.md)**: Returns the TODOs for the current git repo, which can help document technical debt.
 - **[Measure-Indents.ps1](Measure-Indents.ps1.md)**: Measures the indentation characters used in a text file.
 - **[Measure-StandardDeviation.ps1](Measure-StandardDeviation.ps1.md)**: Calculate the standard deviation of numeric values.
 - **[Measure-TextFile.ps1](Measure-TextFile.ps1.md)**: Counts each type of indent and line ending.
