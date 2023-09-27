@@ -25,7 +25,7 @@ Tricia McMillan trillian@example.com
 [CmdletBinding()][OutputType([psobject])] Param(
 # The MatchInfo output from Select-String to select named capture group values from.
 [Parameter(Position=0,ValueFromRemainingArguments=$true,ValueFromPipeline=$true)]
-[Alias('InputObject')][Microsoft.PowerShell.Commands.MatchInfo]$MatchInfo,
+[Alias('InputObject')][Microsoft.PowerShell.Commands.MatchInfo] $MatchInfo,
 # Return the capture group values without building objects.
 [switch] $ValuesOnly
 )

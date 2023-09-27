@@ -4,7 +4,21 @@ Retrieves a list of saved articles from a Pocket account.
 
 .OUTPUTS
 System.Management.Automation.PSObject containing article details.
-See https://getpocket.com/developer/docs/v3/retrieve for fields.
+* ItemId: The article ID.
+* Title: The simplified article title.
+* Url: The resolved URL.
+* IsFavorite: True if favorited.
+* IsArchived: True if archived.
+* WordCount: The approximate number of words in the article.
+* AddedAt: DateTime the article was added.
+* ReadAt: DateTime the article was read.
+* UpdatedAt: DateTime the article was last updated.
+* Tags: Keywords associated with the article.
+* Language: Linguistic culture of the article.
+* ReadDuration: The approximate time to listen to the article.
+* FullTitle: The original article title.
+* FullUrl: The original article URL.
+* Excerpt: A summary of the article.
 
 .NOTES
 You'll need a "consumer key" (API key; see the link below to "create new app").
@@ -20,6 +34,9 @@ You can control whether the vault prompts for a password using Set-SecretStoreCo
 https://getpocket.com/developer/
 
 .LINK
+https://getpocket.com/developer/docs/v3/retrieve
+
+.LINK
 https://devblogs.microsoft.com/powershell/secretmanagement-and-secretstore-are-generally-available/
 
 .LINK
@@ -32,21 +49,19 @@ ConvertTo-EpochTime.ps1
 Remove-NullValues.ps1
 
 .EXAMPLE
-Get-PocketArticles.ps1 2020-02-15 2021-03-01 -State Archive -Tag Programming -Sort Newest |Format-Table -Auto
+Get-PocketArticles.ps1 2020-02-15 2021-03-01 -State Archive -Tag Programming -Sort Newest |Format-Table Title,WordCount,AddedAt -Auto
 
-item_id    resolved_id given_url                                                                             given_title                                                                 favorite status time_added time_updated time_read  time_favorited
--------    ----------- ---------                                                                             -----------                                                                 -------- ------ ---------- ------------ ---------  --------------
-2713538930 2713538930  https://dev.to/thementor/i-run-powershell-on-android-and-so-can-you-458k              I run PowerShell on Android and so can you !! - DEV Community               1        1      1610230461 1610432554   1610430179 1610432553
-3002666222 3002666222  https://www.theregister.com/2020/06/01/linux_5_7/                                     80-characters-per-line limits should be terminal, says Linux kernel chief L 0        1      1609706654 1609781229   1609781227 0
-3195903579 3195903579  https://devblogs.microsoft.com/powershell/announcing-powershell-crescendo-preview-1/  Announcing PowerShell Crescendo Preview.1 | PowerShell                      0        1      1607526051 1608436421   1608436415 0
-3044493651 3044493651  https://www.compositional-it.com/news-blog/5-features-that-c-has-that-f-doesnt-have/  5 Features C# Has That F# Doesn't Have! | Compositional IT                  0        1      1594439301 1594500813   1594500812 0
-2908050151 2908050151  https://thesharperdev.com/examples-using-httpclient-in-fsharp/                        Examples Using HttpClient in F# – The Sharper Dev                           0        1      1583616769 1583616987   1583616986 0
-2907176185 2907176185  https://voiceofthedba.com/2020/03/06/the-developer-arguments-for-stored-procedures/   The Developer Arguments for Stored Procedures                               0        1      1583519345 1583616940   1583616940 0
-2903715421 2903715421  https://khalidabuhakmeh.com/upgraded-dotnet-console-experience                        Upgrade Your .NET Console App Experience | Khalid Abuhakmeh                 0        1      1583440478 1583715611   1583715610 0
-1526616723 1526616723  https://support.google.com/maps/answer/7047426?                                       Find and share places using plus codes                                      0        1      1565309293 1610746653   1565642230 0
+Title                                                                                         WordCount AddedAt
+-----                                                                                         --------- -------
+I run PowerShell on Android and so can you !!                                                       540 2021-01-09 22:14:21
+80-characters-per-line limits should be terminal, says Linux kernel chief Linus Torvalds            476 2021-01-03 20:44:14
+Scott Hanselman's 2021 Ultimate Developer and Power Users Tool List for Windows                    2201 2020-12-25 02:15:26
+Announcing PowerShell Crescendo Preview.1                                                          1319 2020-12-09 15:00:51
+Windows Terminal Preview 1.5 out with a host of new features, version 1.4 generally available       448 2020-11-12 03:42:00
+5 Features C# Has That F# Doesn’t Have!                                                            1489 2020-07-11 03:48:21
 #>
 
-#Requires -Version 3
+#Requires -Version 7
 #Requires -Modules Microsoft.PowerShell.SecretManagement,Microsoft.PowerShell.SecretStore
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
 Justification='This value has to be converted to text to be sent in a text body.')]
@@ -73,9 +88,7 @@ By default, the default vault is used.
 #>
 [string] $Vault,
 # Return only favorite articles.
-[switch] $Favorite,
-# Return full article details.
-[switch] $Detailed
+[switch] $Favorite
 )
 Set-ParameterDefault.ps1 Invoke-RestMethod Method Post
 Set-ParameterDefault.ps1 Invoke-RestMethod ContentType application/json
@@ -122,7 +135,7 @@ $articles = @{
 	tag          = $Tag
 	contentType  = if($ContentType) {$ContentType.ToLower()};
 	sort         = if($Sort) {$Sort.ToLower()};
-	detailType   = if($Detailed) {'complete'} else {'simple'};
+	detailType   = 'complete'
 	search       = $Search
 	domain       = $Domain
 	since        = ConvertTo-EpochTime.ps1 $After
@@ -130,7 +143,23 @@ $articles = @{
 	Remove-NullValues.ps1 |
 	ConvertTo-Json -Compress |
 	Invoke-RestMethod https://getpocket.com/v3/get
-if($articles -and $articles.list)
-{
-	$articles.list.PSObject.Properties.Value |Where-Object time_read -lt (ConvertTo-EpochTime.ps1 $Before)
-}
+${articles}?.{list}?.{PSObject}?.{Properties}?.Value |
+	ForEach-Object {[pscustomobject]@{
+		ItemId       = $_.item_id
+		Title        = $_.resolved_title
+		Url          = [uri]$_.resolved_url
+		IsFavorite   = [bool]$_.favorite
+		IsArchived   = [bool]$_.status
+		WordCount    = [long]$_.word_count
+		AddedAt      = ConvertFrom-EpochTime.ps1 $_.time_added
+		ReadAt       = ConvertFrom-EpochTime.ps1 $_.time_read
+		UpdatedAt    = ConvertFrom-EpochTime.ps1 $_.time_updated
+		Tags         = @($_.{tags}?.{PSObject}?.{Properties}?.Name)
+		#TODO: Image        = $_.{image}?.src
+		Language     = Get-Culture $_.lang
+		ReadDuration = [timespan]::FromSeconds($_.listen_duration_estimate)
+		FullTitle    = $_.given_title
+		FullUrl      = [uri]$_.given_url
+		Excerpt      = $_.excerpt
+	}} |
+	Where-Object ReadAt -lt $Before
