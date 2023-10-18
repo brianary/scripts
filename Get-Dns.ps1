@@ -20,7 +20,7 @@ HostName       Aliases AddressList
 www.google.com {}      {172.217.10.132}
 #>
 
-[CmdletBinding()][OutputType([Net.IPHostEntry],[string])] Param(
+[CmdletBinding()][OutputType([Net.IPHostEntry])][OutputType([string])] Param(
 # A host name or address to look up.
 [Parameter(Position=0,Mandatory=$true,ValueFromRemainingArguments=$true,ValueFromPipeline=$true)]
 [Alias('Address','HostAddress','Name')][string[]] $HostName,

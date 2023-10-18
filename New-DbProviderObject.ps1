@@ -39,8 +39,8 @@ $cmd = New-DbProviderObject.ps1 Command -ConnectionString $connstr -Provider Odb
 #>
 
 #Requires -Version 7
-[CmdletBinding()][OutputType([Data.Common.DbCommand],[Data.Common.DbConnection],
-[Data.Common.DbConnectionStringBuilder])] Param(
+[CmdletBinding()][OutputType([Data.Common.DbCommand])]
+[OutputType([Data.Common.DbConnection])][OutputType([Data.Common.DbConnectionStringBuilder])] Param(
 # The type of object to create.
 [ValidateSet('Command','Connection','ConnectionStringBuilder')]
 [Parameter(Mandatory=$true,Position=0)][string] $TypeName,

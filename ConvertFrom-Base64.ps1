@@ -36,7 +36,7 @@ username:BadP@ssword
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([string],[byte[]])] Param(
+[CmdletBinding()][OutputType([string])][OutputType([byte[]])] Param(
 # The base64-encoded data.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $Data,
 <#

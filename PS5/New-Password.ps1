@@ -31,7 +31,7 @@ ecRAgbdX^9)=
 #Requires -Version 3
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
 Justification='This is a bootstrap problem, since the string must be created first.')]
-[CmdletBinding()][OutputType([string],[SecureString])] Param(
+[CmdletBinding()][OutputType([string])][OutputType([SecureString])] Param(
 # The length of the password in characters.
 [Parameter(Position=0,Mandatory=$true)][int] $Length,
 # Characters to avoid in the new password.

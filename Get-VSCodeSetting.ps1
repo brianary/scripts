@@ -36,7 +36,8 @@ Get-VSCodeSetting.ps1 workbench.colorTheme -Workspace
 PowerShell ISE
 #>
 
-[CmdletBinding()][OutputType([string],[double],[int],[bool])] Param(
+[CmdletBinding()][OutputType([string])][OutputType([double])]
+[OutputType([int])][OutputType([bool])] Param(
 # The name of the setting to set, use / as a path separator for deeper structures.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
 # Indicates that the current workspace settings should be

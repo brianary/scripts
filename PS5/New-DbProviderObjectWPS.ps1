@@ -38,8 +38,8 @@ $cmd = New-DbProviderObject.ps1 odbc Command -ConnectionString $connstr -StoredP
 #>
 
 #Requires -Version 4
-[CmdletBinding()][OutputType([Data.Common.DbCommand],[Data.Common.DbConnection],
-[Data.Common.DbConnectionStringBuilder])] Param(
+[CmdletBinding()][OutputType([Data.Common.DbCommand])][OutputType([Data.Common.DbConnection])]
+[OutputType([Data.Common.DbConnectionStringBuilder])] Param(
 # The invariant name of the DbProviderFactory to use to create the requested object.
 [Parameter(Mandatory=$true,Position=0)][AllowEmptyString()][string]$ProviderName,
 # The type of object to create.

@@ -34,7 +34,9 @@ Split-FileName.ps1 readme.txt -HasExtension
 True
 #>
 
-[CmdletBinding(DefaultParameterSetName='__AllParameterSets')][OutputType([string])][OutputType([bool],ParameterSetName='HasExtension')] Param(
+[CmdletBinding(DefaultParameterSetName='__AllParameterSets')]
+[OutputType([string],ParameterSetName='__AllParameterSets')]
+[OutputType([bool],ParameterSetName='HasExtension')] Param(
 # A file path to extract a part of; the base name without extension by default.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $Path,
 <#
