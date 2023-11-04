@@ -39,19 +39,4 @@ the 7-bit ASCII range.
 #>
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject
 )
-Process
-{
-	[char[]] $chars =
-		for ($i = 0; $i -lt $InputObject.Length; $i++)
-		{
-			[int] $c = [char]$InputObject[$i]
-			Write-Verbose "$i : $c"
-			if([char]::IsSurrogatePair($InputObject,$i))
-			{ ('&#x{0:X};' -f [char]::ConvertToUtf32($InputObject,$i++)).GetEnumerator() }
-			elseif(0x7F -lt $c)
-			{ ('&#x{0:X};' -f $c).GetEnumerator() }
-			else
-			{ [char]$c }
-		}
-	New-Object String $chars,0,$chars.Length
-}
+Process {return [Text.Encodings.Web.HtmlEncoder]::Default.Encode($InputObject)}

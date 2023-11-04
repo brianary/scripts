@@ -92,7 +92,7 @@ $('"@')
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Synopsis,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][psobject[]] $Examples
 		)
-		$shortname = [io.path]::GetFileNameWithoutExtension($Name)
+		$shortname = Split-Path $Name -LeafBase
 		$Local:OFS = $NL
 		return @"
 <#

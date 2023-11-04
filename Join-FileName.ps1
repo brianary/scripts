@@ -42,8 +42,8 @@ Process
 	if($AppendText -like '.*') { [IO.Path]::ChangeExtension($Path,$AppendText) }
 	else
 	{
-		$name = [IO.Path]::GetFileNameWithoutExtension($Path) + $AppendText;
-		if($AppendText -notlike '*.*'){$name+=[IO.Path]::GetExtension($Path)}
+		$name = (Split-Path $Path -LeafBase) + $AppendText
+		if($AppendText -notlike '*.*'){ $name += Split-Path $Path -Extension }
 		if(Split-Path $Path) { Join-Path (Split-Path $Path) $name }
 		else { $name }
 	}

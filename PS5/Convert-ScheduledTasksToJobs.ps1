@@ -250,8 +250,8 @@ $CommandParam = @'
             $workdir,$filepath = $a.WorkingDirectory,$Matches.FilePath.Trim('"')
             Write-Verbose "Converting '$($Task.TaskName)' as a PowerShell file task ($filePath; $workdir)."
             $file =
-                if([io.path]::IsPathRooted($filepath)) {$filepath}
-                else { [io.path]::Combine($workdir,$filepath) }
+                if([io.path]::IsPathRooted($filepath)) { $filepath }
+                else { Join-Path $workdir $filepath }
             Convert-ScheduledTaskToJob $Task $file $Matches.Params
         }
         elseif($a.Arguments -match $CommandParam)

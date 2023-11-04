@@ -259,7 +259,7 @@ switch($PSCmdlet.ParameterSetName)
 		$dir = Split-Path $Path
 		if($PSCmdlet.ShouldProcess("$DownloadZip to $dir",'download/unzip'))
 		{
-			$filename = [IO.Path]::GetFileName($DownloadZip.LocalPath)
+			$filename = Split-Uri.ps1 $DownloadZip.LocalPath -Leaf
 			if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
 			$zippath = Join-Path $env:TEMP $filename
 			Write-Verbose "Downloading $DownloadZip to $path"

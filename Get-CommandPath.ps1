@@ -46,7 +46,7 @@ Process
     if($FindAllInPath)
     {
         $files =
-            if([io.path]::GetExtension($ApplicationName)) {$ApplicationName}
+            if((Split-Path $ApplicationName -Extension)) {$ApplicationName}
             else {$env:PATHEXT.ToLower() -split ';' |ForEach-Object {[io.path]::ChangeExtension($ApplicationName,$_)}}
         Write-Verbose "Searching Path for $($files -join ', ')"
         foreach($p in $env:Path -split ';')

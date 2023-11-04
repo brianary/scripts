@@ -28,7 +28,7 @@ C:\ProgramData\NuGet\NuGetDefaults.config
 
 function Get-Parent([Parameter(Position=0)][string] $Directory)
 {
-	if($Directory -eq [io.path]::GetPathRoot($Directory)) {$Directory}
+	if($Directory -eq "$(Join-Path (Split-Path $Directory -Qualifier) '')") {$Directory}
 	else {$Directory; Get-Parent (Split-Path $Directory)}
 }
 

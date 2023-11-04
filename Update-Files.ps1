@@ -28,7 +28,7 @@ Process
 {
     foreach($file in Resolve-Path $Path)
     {
-        $destfile = Join-Path $Destination ([IO.Path]::GetFileName($file))
+        $destfile = Join-Path $Destination (Split-Path $file -Leaf)
         if(!(Test-Path $destfile -PathType Leaf)) {continue}
         if((!$NewerOnly -or (Test-NewerFile.ps1 "$destfile" "$file")) -and
             $PSCmdlet.ShouldProcess("'$file' over '$destfile'",'copy'))

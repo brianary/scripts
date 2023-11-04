@@ -37,7 +37,8 @@ Saves f1040.pdf (or else a filename specified in the Content-Disposition header)
 
 [CmdletBinding()][OutputType([void])] Param(
 # The URL to download.
-[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('Url')][uri] $Uri,
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+[Alias('Url','Href','Src')][uri] $Uri,
 # Sets the creation time on the file to the given value.
 [datetime] $CreationTime,
 # Sets the creation time on the file to the given value.

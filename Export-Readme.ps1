@@ -6,7 +6,7 @@ Generate README.md file for the scripts repo.
 https://www.microsoft.com/download/details.aspx?id=40760
 #>
 
-#Requires -Version 3
+#Requires -Version 7
 #Requires -Modules SqlServer
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns','',
 Justification='This script deals with lists, and this is a pretty questionable rule.')]
@@ -60,7 +60,7 @@ function Export-Dependencies($image)
 	Write-Progress 'Creating dependency image'
 	$gv = Join-Path $PSScriptRoot ([IO.Path]::ChangeExtension($image,'gv'))
 	Format-Dependencies |Out-File $gv -Encoding ascii -Width ([int]::MaxValue)
-	$ext = [IO.Path]::GetExtension($image).Trim('.')
+	$ext = (Split-Path $image -Extension).Trim('.')
 	dot "-T$ext" -o $PSScriptRoot\$image $gv
 	Remove-Item $gv
 	Write-Progress 'Creating dependency image' -Completed
@@ -448,7 +448,7 @@ function Export-PSScriptPages
 	Import-Module platyPS
 	Write-Progress 'Export PowerShell script help pages' 'Removing docs for old scripts'
 	Get-Item $PSScriptRoot\docs\*.ps1.md |
-		Where-Object {!(Test-Path "$PSScriptRoot\$([IO.Path]::GetFileNameWithoutExtension($_.Name))" -Type Leaf)} |
+		Where-Object {!(Test-Path "$PSScriptRoot\$(Split-Path $_.Name -LeafBase)" -Type Leaf)} |
 		Remove-Item
 	Write-Progress 'Export PowerShell script help pages' 'Updating script docs'
 	Update-MarkdownHelp $PSScriptRoot\docs\*.ps1.md -ErrorAction Ignore |Write-Verbose

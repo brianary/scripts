@@ -39,7 +39,7 @@ Saves scheduled tasks to tasks-backup.xml using tasks.css as a display styleshee
 '<?xml version="1.0"?>' |Out-File $Path -Encoding utf8
 if($Stylesheet)
 {
-	"<?xml-stylesheet href=`"$Stylesheet`" type=`"text/$([io.path]::GetExtension($Stylesheet).Trim('.'))`"?>" |
+	"<?xml-stylesheet href=`"$Stylesheet`" type=`"text/$((Split-Path $Stylesheet -Extension).Trim('.'))`"?>" |
 		Out-File $Path -Encoding utf8 -Append
 }
 schtasks /query /xml |

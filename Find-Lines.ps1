@@ -69,7 +69,7 @@ function ConvertTo-DateTimeOffset([Parameter(Position=0)][int] $UnixTime,[Parame
 $culturetextinfo = (Get-Culture).TextInfo
 function Get-LineBlameInfo([Parameter(Position=0)][string] $Path,[Parameter(Position=1)][int] $LineNumber)
 {
-    Push-Location "$([IO.Path]::GetDirectoryName($Path))"
+    Split-Path $Path |Push-Location
     $lineinfo = [Collections.Generic.List[string]]@(git blame -l -p -L "$LineNumber,$LineNumber" -- $Path)
     Pop-Location
     ($sha1,$linetext) = ($lineinfo[0],$lineinfo[$lineinfo.Count -1])

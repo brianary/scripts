@@ -21,9 +21,6 @@ Add-VsCodeDatabaseConnection.ps1
 Get-ConfigConnectionStringBuilders.ps1
 
 .LINK
-Split-FileName.ps1
-
-.LINK
 Import-Variables.ps1
 
 .EXAMPLE
@@ -45,7 +42,7 @@ function Get-ConfigConnections
 	{
 		foreach($cs in (Get-ConfigConnectionStringBuilders.ps1 $config))
 		{
-			$name = $cs.Name + '.' + ($config |Split-FileName.ps1 |Split-FileName.ps1 -Extension).Trim('.')
+			$name = $cs.Name + '.' + ($config |Split-Path -LeafBase |Split-Path -Extension).Trim('.')
 			if($connections -and $name -in $connections.profileName){Write-Verbose "A '$name' connection already exists."; continue}
 			Import-Variables.ps1 $cs.ConnectionString
 			$vsconn = @{
