@@ -1,14 +1,15 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='222'>222 &#x2030;</meter> Scripts repo (207) &#x1F4C5; 421 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (9) &#x1F4C5; 209 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (9) &#x1F4C5; 209 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='221'>221 &#x2030;</meter> Scripts repo (208) &#x1F4C5; 421 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> A (10) &#x1F4C5; 209 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> Add (10) &#x1F4C5; 209 days</summary>
 
 - &#x2714;&#xFE0F; Add-CapturesToMatches.ps1
 - &#x2714;&#xFE0F; Add-Counter.ps1
 - &#x2714;&#xFE0F; Add-DynamicParam.ps1
 - &#x2714;&#xFE0F; Add-GitHubMetadata.ps1
+- &#x2716;&#xFE0F; Add-NotebookCell.ps1
 - &#x2714;&#xFE0F; Add-NoteProperty.ps1
 - &#x2714;&#xFE0F; Add-ParameterDefault.ps1
 - &#x2714;&#xFE0F; Add-ScopeLevel.ps1
@@ -351,8 +352,8 @@ Script Tests
 </details></li>
 <li><details><summary>not started Split (2) </summary>
 
-- &#x2716;&#xFE0F; Split-FileName.ps1
 - &#x2716;&#xFE0F; Split-Keys.ps1
+- &#x2716;&#xFE0F; Split-Uri.ps1
 
 </details></li>
 <li><details><summary>not started Stop (1) </summary>
