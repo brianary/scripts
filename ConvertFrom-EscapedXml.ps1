@@ -20,9 +20,9 @@ ConvertFrom-EscapedXml.ps1 '&lt;a href=&quot;http://example.org&quot;&gt;link&lt
 #Requires -Version 2
 [CmdletBinding()][OutputType([string])] Param(
 # The escaped XML text.
-[Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][string]$EscapedXml,
+[Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)][string] $EscapedXml,
 # Outputs the XML without indentation.
-[Alias('NoIndent')][switch]$Compress
+[Alias('NoIndent')][switch] $Compress
 )
 Process
 {

@@ -37,6 +37,27 @@ ETA: &#xBD; hour
 An HTML or XML string that may include emoji or other Unicode characters outside
 the 7-bit ASCII range.
 #>
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject,
+# Indicates that markdown characters should also be escaped.
+[switch] $IncludeMarkupChars
 )
-Process {return [Text.Encodings.Web.HtmlEncoder]::Default.Encode($InputObject)}
+Process
+{
+	if($IncludeMarkupChars) {return [Text.Encodings.Web.HtmlEncoder]::Default.Encode($InputObject)}
+	else
+	{
+		[char[]] $chars =
+		for ($i = 0; $i -lt $InputObject.Length; $i++)
+		{
+			[int] $c = [char]$InputObject[$i]
+			Write-Verbose "$i : $c"
+			if([char]::IsSurrogatePair($InputObject,$i))
+			{ ('&#x{0:X};' -f [char]::ConvertToUtf32($InputObject,$i++)).GetEnumerator() }
+			elseif(0x7F -lt $c)
+			{ ('&#x{0:X};' -f $c).GetEnumerator() }
+			else
+			{ [char]$c }
+		}
+		return New-Object String $chars,0,$chars.Length
+	}
+}

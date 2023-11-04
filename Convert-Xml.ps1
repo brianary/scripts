@@ -77,7 +77,7 @@ Process
 	}
 	else
 	{
-		$absOutFile = Join-Path "$PWD" $OutFile
+		$absOutFile = if((Split-Path $OutFile -IsAbsolute)) {$OutFile} else {Join-Path "$PWD" $OutFile}
 		if((Test-Path $absOutFile) -and
 			!$PSCmdlet.ShouldContinue("$(Get-Item $absOutFile |Select-Object FullName,LastWriteTime,Length)","Overwrite File?"))
 		{Write-Warning "Skipping transform from $absPath to $OutFile"; return}

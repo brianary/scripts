@@ -13,7 +13,7 @@ Describe 'ConvertFrom-EscapedXml' -Tag ConvertFrom-EscapedXml -Skip:$skip {
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Parse escaped XML into XML and serialize it' -Tag ConvertFromEscapedXml,Convert,ConvertFrom,EscapedXml,Xml {
-		It "Should convert '<Input>' into '<Output>'" -TestCases @(
+		It "Should convert '<Value>' into '<Result>'" -TestCases @(
 			@{ Value = '&lt;x /&gt;'; Result = '<x />' }
 			@{ Value = '&lt;a href=&quot;http://example.org&quot;&gt;link&lt;/a&gt;'
 				Result = '<a href="http://example.org">link</a>' }
