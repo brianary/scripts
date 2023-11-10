@@ -13,7 +13,7 @@ Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 ## SYNTAX
 
 ```
-ConvertTo-SafeEntities.ps1 [-InputObject] <String> [<CommonParameters>]
+ConvertTo-SafeEntities.ps1 [-InputObject] <String> [-IncludeMarkupChars] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -53,6 +53,21 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -IncludeMarkupChars
+Indicates that markdown characters should also be escaped.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

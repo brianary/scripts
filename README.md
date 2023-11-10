@@ -103,6 +103,7 @@ PowerShell Scripts
 - **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1)**: Finds database constraints with system-generated names and gives them deterministic names.
 - **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1)**: Finds database constraints that have been incompletely re-enabled.
 - **[Send-SqlReport.ps1](Send-SqlReport.ps1)**: Execute a SQL statement and email the results.
+- :new: **[Test-ConnectionString.ps1](Test-ConnectionString.ps1)**: Test a given connection string and provide details about the connection.
 - **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
 ### Date and time
@@ -289,7 +290,7 @@ PowerShell Scripts
 
 - **[Compare-Xml.ps1](Compare-Xml.ps1)**: Compares two XML documents and returns the differences.
 - :up: **[Convert-Xml.ps1](Convert-Xml.ps1)**: Transform XML using an XSLT template.
-- **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1)**: Parse escaped XML into XML and serialize it.
+- :up: **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1)**: Parse escaped XML into XML and serialize it.
 - **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1)**: Converts named nodes of an element to properties of a PSObject, recursively.
 - **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1)**: Serializes complex content into XML elements.
 - **[Format-Xml.ps1](Format-Xml.ps1)**: Pretty-print XML.
@@ -333,9 +334,9 @@ PowerShell Scripts
 
 F# Scripts
 ----------
-- **[NCrontab Schedule Test](https://webcoder.info/scripts/Test-NCrontab.html)**: Returns a sampling of the next several date & times scheduled by an NCrontab string.
-- **[Parse Unicode data](https://webcoder.info/scripts/UnicodeData.html)**: Experiment with CSV type provider to read Unicode data.
-- **[US Federal Holiday Detection](https://webcoder.info/scripts/USFederalHolidays.html)**: Here's how to determine whether a date is a US federal holiday using F#.
+- **[NCrontab Schedule Test](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/Test-NCrontab.html)**: Returns a sampling of the next several date & times scheduled by an NCrontab string.
+- **[Parse Unicode data](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/UnicodeData.html)**: Experiment with CSV type provider to read Unicode data.
+- **[US Federal Holiday Detection](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/USFederalHolidays.html)**: Here's how to determine whether a date is a US federal holiday using F#.
 
 Office VBA Scripts
 ------------------
@@ -343,4 +344,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 11/03/2023 17:53:22 -->
+<!-- generated 11/10/2023 12:20:04 -->
