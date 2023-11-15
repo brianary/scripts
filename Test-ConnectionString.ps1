@@ -70,9 +70,10 @@ select @@ServerName [ServerName], db_name() [DatabaseName],
        serverproperty('Edition') [Edition],
        app_name() [AppName];
 '@ |ConvertTo-OrderedDictionary.ps1
-            if($info.ContainsKey('Password')) {$info['Password'] = ConvertTo-SecureString $info['Password'] -AsPlainText -Force}
             [void] $info.Add('Server', $server)
-            return [pscustomobject](Join-Keys.ps1 $conn $info)
+            $connInfo = Join-Keys.ps1 $conn $info
+            if($connInfo.Contains('Password')) {$connInfo['Password'] = ConvertTo-SecureString $connInfo['Password'] -AsPlainText -Force}
+            return [pscustomobject]$connInfo
         }
         else
         {
