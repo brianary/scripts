@@ -52,11 +52,13 @@ LocalSMOVersion      : 17.100.0.0
 )
 Process
 {
-    $csb = New-DbaConnectionStringBuilder -ConnectionString $ConnectionString
-    $server = Connect-DbaInstance -ConnectionString $ConnectionString
-    $conn = Join-Keys.ps1 -ReferenceObject (New-Object Collections.Hashtable $csb) `
-        -InputObject (Test-DbaConnection $csb.DataSource -SkipPSRemoting |ConvertTo-OrderedDictionary.ps1)
-    $info = Invoke-DbaQuery -SqlInstance $server -As PSObject -Query @'
+    try
+    {
+        $csb = New-DbaConnectionStringBuilder -ConnectionString $ConnectionString
+        $server = Connect-DbaInstance -ConnectionString $ConnectionString
+        $conn = Join-Keys.ps1 -ReferenceObject (New-Object Collections.Hashtable $csb) `
+            -InputObject (Test-DbaConnection $csb.DataSource -SkipPSRemoting |ConvertTo-OrderedDictionary.ps1)
+        $info = Invoke-DbaQuery -SqlInstance $server -As PSObject -Query @'
 select @@ServerName [ServerName], db_name() [DatabaseName],
        serverproperty('ComputerNamePhysicalNetBIOS') [ComputerName],
        serverproperty('MachineName') [MachineName],
@@ -64,7 +66,10 @@ select @@ServerName [ServerName], db_name() [DatabaseName],
        current_timestamp [ServerTime],
        serverproperty('Edition') [Edition],
        app_name() [AppName];
-'@ |Add-Member -NotePropertyName Server -NotePropertyValue $server -PassThru |
-    ConvertTo-OrderedDictionary.ps1
-    return [pscustomobject](Join-Keys.ps1 $conn $info)
+'@ |ConvertTo-OrderedDictionary.ps1
+        if($info.ContainsKey('Password')) {$info['Password'] = ConvertTo-SecureString $info['Password'] -AsPlainText -Force}
+        [void] $info.Add('Server', $server)
+        return [pscustomobject](Join-Keys.ps1 $conn $info)
+    }
+    catch {return $false}
 }
