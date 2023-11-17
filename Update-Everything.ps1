@@ -96,6 +96,20 @@ Justification='This script is not intended for pipelining.')]
 )
 Begin
 {
+	function Test-EmptyDesktop([switch] $Shared)
+	{
+		if($Shared -and !(Test-Administrator.ps1)) {return $false}
+		$dir = [environment]::GetFolderPath(($Shared ? 'CommonDesktopDirectory' : 'Desktop' ))
+		return !(Get-ChildItem -Path $dir -Filter *.lnk)
+	}
+
+	function Clear-Desktop([switch] $Shared)
+	{
+		if($Shared -and !(Test-Administrator.ps1)) {return}
+		$dir = [environment]::GetFolderPath(($Shared ? 'CommonDesktopDirectory' : 'Desktop' ))
+		Remove-Item -Path $dir -Filter *.lnk
+	}
+
 	Set-Variable 'UP!' "$([char]0xD83C)$([char]0xDD99)" -Option Constant -Scope Script -Description 'UP! symbol'
 
 	function Write-Step([string]$Message)
@@ -115,7 +129,7 @@ Begin
 
 	function Update-Essential
 	{
-		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Essentials."; return}
+		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Essential."; return}
 		Write-Step "$([char]0xD83D)$([char]0xDD1C) Checking for essential updates"
 		if(Get-Command choco -ErrorAction Ignore)
 		{
@@ -142,6 +156,7 @@ Begin
 
 	function Update-WindowsStore
 	{
+		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping WindowsStore."; return}
 		if(!(Get-Command Get-CimInstance -ErrorAction Ignore))
 		{Write-Verbose 'Get-CimInstance not found, skipping WindowsStore updates'; return}
 		Write-Step "${UP!} Updating Windows Store apps (asynchronously)"
@@ -250,4 +265,14 @@ Begin
 	}
 }
 
-Process {$Steps |ForEach-Object {& "Update-$_"}}
+Process
+{
+	$emptyShared = Test-EmptyDesktop -Shared
+	$empty = Test-EmptyDesktop
+	try {$Steps |ForEach-Object {& "Update-$_"}}
+	finally
+	{
+		if($emptyShared) {Clear-Desktop -Shared}
+		if($empty) {Clear-Desktop}
+	}
+}
