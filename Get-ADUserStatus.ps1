@@ -14,6 +14,8 @@ Get-ADUser
 .EXAMPLE
 Get-ADUserStatus.ps1 alans
 
+PasswordExpires        : 07/17/2023 12:01:01 AM
+BadLogonsRemaining     : 5
 AccountExpirationDate  :
 AccountExpires         : 9223372036854775807
 AccountLockoutTime     :
@@ -42,5 +44,8 @@ UserPrincipalName      : alans@example.local
 [CmdletBinding()][OutputType([Microsoft.ActiveDirectory.Management.ADUser])] Param(
 [Parameter(Position=0,Mandatory=$true)][Microsoft.ActiveDirectory.Management.ADUser] $Identity
 )
-Get-ADUser -Identity $Identity -Properties AccountExpirationDate, AccountExpires, AccountLockoutTime, BadLogonCount,
-	BadPwdCount, LastBadPasswordAttempt, LastLogonDate, LockedOut, PasswordExpired, PasswordLastSet, PwdLastSet
+$policy = Get-ADDefaultDomainPasswordPolicy
+return Get-ADUser -Identity $Identity -Properties AccountExpirationDate, AccountExpires, AccountLockoutTime, BadLogonCount,
+	BadPwdCount, LastBadPasswordAttempt, LastLogonDate, LockedOut, PasswordExpired, PasswordLastSet, PwdLastSet |
+	Add-NoteProperty.ps1 PasswordExpires {$_.PasswordLastSet + $policy.MaxPasswordAge} -Force -PassThru |
+	Add-NoteProperty.ps1 BadLogonsRemaining {$policy.LockoutThreshold - $_.BadLogonCount} -Force -PassThru
