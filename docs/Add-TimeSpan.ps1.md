@@ -13,7 +13,8 @@ Adds a timespan to DateTime values.
 ## SYNTAX
 
 ```
-Add-TimeSpan.ps1 [-TimeSpan] <TimeSpan> [-DateTime] <DateTime> [<CommonParameters>]
+Add-TimeSpan.ps1 [-TimeSpan] <TimeSpan> [-DateTime] <DateTime> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -57,6 +58,21 @@ Required: True
 Position: 2
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

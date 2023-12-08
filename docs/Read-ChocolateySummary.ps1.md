@@ -13,7 +13,8 @@ Retrieves the a summary from the Chocolatey log.
 ## SYNTAX
 
 ```
-Read-ChocolateySummary.ps1 [[-Position] <Int32>] [[-Level] <SourceLevels>] [<CommonParameters>]
+Read-ChocolateySummary.ps1 [[-Position] <Int32>] [[-Level] <SourceLevels>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -112,6 +113,21 @@ Accepted values: Off, Critical, Error, Warning, Information, Verbose, ActivityTr
 Required: False
 Position: 2
 Default value: Warning
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -13,7 +13,8 @@ Converts an integer Unix (POSIX) time (seconds since Jan 1, 1970) into a DateTim
 ## SYNTAX
 
 ```
-ConvertFrom-EpochTime.ps1 [-InputObject] <Int64> [-UniversalTime] [<CommonParameters>]
+ConvertFrom-EpochTime.ps1 [-InputObject] <Int64> [-UniversalTime] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,6 +57,21 @@ Aliases: UTC, Z
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

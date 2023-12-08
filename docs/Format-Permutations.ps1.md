@@ -13,7 +13,8 @@ Builds format strings using every combination of elements from multiple arrays.
 ## SYNTAX
 
 ```
-Format-Permutations.ps1 [-Format] <String> [-InputObject] <Object[][]> [<CommonParameters>]
+Format-Permutations.ps1 [-Format] <String> [-InputObject] <Object[][]> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,6 +72,21 @@ Aliases:
 
 Required: True
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

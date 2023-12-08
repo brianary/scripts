@@ -13,7 +13,8 @@ Returns a date/time as a named format.
 ## SYNTAX
 
 ```
-Format-Date.ps1 [-Format] <String> [[-Date] <DateTime>] [<CommonParameters>]
+Format-Date.ps1 [-Format] <String> [[-Date] <DateTime>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -64,6 +65,21 @@ Required: False
 Position: 2
 Default value: (Get-Date)
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

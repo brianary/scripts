@@ -14,12 +14,13 @@ Runs commands in Windows PowerShell (typically from PowerShell Core).
 
 ### CommandBlock
 ```
-Invoke-WindowsPowerShell.ps1 [-CommandBlock] <ScriptBlock> [[-BlockArgs] <PSObject[]>] [<CommonParameters>]
+Invoke-WindowsPowerShell.ps1 [-CommandBlock] <ScriptBlock> [[-BlockArgs] <PSObject[]>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### CommandText
 ```
-Invoke-WindowsPowerShell.ps1 [-CommandText] <String> [<CommonParameters>]
+Invoke-WindowsPowerShell.ps1 [-CommandText] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -89,6 +90,21 @@ Aliases:
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

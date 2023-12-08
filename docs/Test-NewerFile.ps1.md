@@ -13,7 +13,8 @@ Returns true if the difference file is newer than the reference file.
 ## SYNTAX
 
 ```
-Test-NewerFile.ps1 [[-ReferenceFile] <FileInfo>] [[-DifferenceFile] <FileInfo>] [<CommonParameters>]
+Test-NewerFile.ps1 [[-ReferenceFile] <FileInfo>] [[-DifferenceFile] <FileInfo>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,6 +56,21 @@ Aliases:
 
 Required: False
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

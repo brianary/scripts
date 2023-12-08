@@ -13,7 +13,8 @@ Creates an object to lookup XML namespace prefixes.
 ## SYNTAX
 
 ```
-New-NamespaceManager.ps1 [[-Namespaces] <IDictionary>] [<CommonParameters>]
+New-NamespaceManager.ps1 [[-Namespaces] <IDictionary>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,6 +44,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: $PSDefaultParameterValues['Select-Xml:Namespace']
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2438_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2423_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -32,15 +32,15 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Command
 
 - **[Get-CommandParameters.ps1](Get-CommandParameters.ps1.md)**: Returns the parameters of the specified cmdlet.
-- &#x1F199; **[Get-CommandPath.ps1](Get-CommandPath.ps1.md)**: Locates a command.
+- **[Get-CommandPath.ps1](Get-CommandPath.ps1.md)**: Locates a command.
 - **[Hide-Command.ps1](Hide-Command.ps1.md)**: Make a command unavailable.
 - **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1.md)**: Execute a command by using matching dictionary entries as parameters.
-- &#x1F199; **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
+- **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 
 ### Configuration
 
 - **[Get-ConfigConnectionStringBuilders.ps1](Get-ConfigConnectionStringBuilders.ps1.md)**: Return named connection string builders for connection strings in a config file.
-- &#x1F199; **[Get-NuGetConfigs.ps1](Get-NuGetConfigs.ps1.md)**: Returns the available NuGet configuration files, in order of preference.
+- **[Get-NuGetConfigs.ps1](Get-NuGetConfigs.ps1.md)**: Returns the available NuGet configuration files, in order of preference.
 - **[Use-NetMailConfig.ps1](Use-NetMailConfig.ps1.md)**: Use .NET configuration to set defaults for Send-MailMessage.
 
 ### Console
@@ -73,7 +73,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1.md)**: Serializes complex content into PowerShell literals.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1.md)**: Escape URLs more aggressively.
 - **[New-Jwt.ps1](New-Jwt.ps1.md)**: Generates a JSON Web Token (JWT)
-- &#x1F195; **[Split-Uri.ps1](Split-Uri.ps1.md)**: Splits a URI into component parts.
+- **[Split-Uri.ps1](Split-Uri.ps1.md)**: Splits a URI into component parts.
 - **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1.md)**: Tests for a given common file type by magic number.
 - **[Test-Jwt.ps1](Test-Jwt.ps1.md)**: Determines whether a string is a valid JWT.
 - **[Test-MagicNumber.ps1](Test-MagicNumber.ps1.md)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
@@ -96,7 +96,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1.md)**: Finds database constraints with system-generated names and gives them deterministic names.
 - **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1.md)**: Finds database constraints that have been incompletely re-enabled.
 - **[Send-SqlReport.ps1](Send-SqlReport.ps1.md)**: Execute a SQL statement and email the results.
-- &#x1F195; **[Test-ConnectionString.ps1](Test-ConnectionString.ps1.md)**: Test a given connection string and provide details about the connection.
+- **[Test-ConnectionString.ps1](Test-ConnectionString.ps1.md)**: Test a given connection string and provide details about the connection.
 - **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1.md)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
 ### Date and time
@@ -136,16 +136,16 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Files
 
-- &#x1F199; **[Backup-File.ps1](Backup-File.ps1.md)**: Create a backup as a sibling to a file, with date and time values in the name.
+- **[Backup-File.ps1](Backup-File.ps1.md)**: Create a backup as a sibling to a file, with date and time values in the name.
 - **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1.md)**: Removes duplicates from a list of files.
 - **[Find-NewestFile.ps1](Find-NewestFile.ps1.md)**: Finds the most recent file.
-- &#x1F199; **[Join-FileName.ps1](Join-FileName.ps1.md)**: Combines a filename with a string.
+- **[Join-FileName.ps1](Join-FileName.ps1.md)**: Combines a filename with a string.
 - **[Measure-Caches.ps1](Measure-Caches.ps1.md)**: Returns a list of matching cache directories, and their sizes, sorted.
-- &#x1F199; **[New-Shortcut.ps1](New-Shortcut.ps1.md)**: Create a Windows shortcut.
+- **[New-Shortcut.ps1](New-Shortcut.ps1.md)**: Create a Windows shortcut.
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1.md)**: Removes a file that may be prone to locking.
 - **[Test-LockedFile.ps1](Test-LockedFile.ps1.md)**: Returns true if the specified file is locked.
 - **[Test-NewerFile.ps1](Test-NewerFile.ps1.md)**: Returns true if the difference file is newer than the reference file.
-- &#x1F199; **[Update-Files.ps1](Update-Files.ps1.md)**: Copies specified source files that exist in the destination directory.
+- **[Update-Files.ps1](Update-Files.ps1.md)**: Copies specified source files that exist in the destination directory.
 
 ### Git and GitHub
 
@@ -153,7 +153,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Copy-GitHubLabels.ps1](Copy-GitHubLabels.ps1.md)**: Copies configured issue labels from one repo to another.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1.md)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1.md)**: Gets the SHA-1 hash of the first commit of the current repo.
-- &#x1F199; **[Get-RepoName.ps1](Get-RepoName.ps1.md)**: Gets the name of the repo.
+- **[Get-RepoName.ps1](Get-RepoName.ps1.md)**: Gets the name of the repo.
 - **[Rename-GitHubLocalBranch.ps1](Rename-GitHubLocalBranch.ps1.md)**: Rename a git repository branch.
 - **[Trace-GitRepoTest.ps1](Trace-GitRepoTest.ps1.md)**: Uses git bisect to search for the point in the repo history that the test script starts returning true.
 
@@ -163,7 +163,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1.md)**: Creates multipart/form-data to send as a request body.
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1.md)**: Returns the content security policy at from the given URL.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1.md)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
-- &#x1F199; **[Save-WebRequest.ps1](Save-WebRequest.ps1.md)**: Downloads a given URL to a file, automatically determining the filename.
+- **[Save-WebRequest.ps1](Save-WebRequest.ps1.md)**: Downloads a given URL to a file, automatically determining the filename.
 - **[Show-HttpStatus.ps1](Show-HttpStatus.ps1.md)**: Displays the HTTP status code info.
 
 ### Json
@@ -222,7 +222,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Scheduled Tasks
 
-- &#x1F199; **[Backup-SchTasks.ps1](Backup-SchTasks.ps1.md)**: Exports the local list of Scheduled Tasks into a single XML file.
+- **[Backup-SchTasks.ps1](Backup-SchTasks.ps1.md)**: Exports the local list of Scheduled Tasks into a single XML file.
 - **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1.md)**: Convert a CimInstance object to a PSObject.
 - **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1.md)**: Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
 - **[Copy-SchTasks.ps1](Copy-SchTasks.ps1.md)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
@@ -233,13 +233,13 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - &#x1F199; **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-Script.ps1](New-Script.ps1.md)**: Creates a simple boilerplate script.
 - **[Optimize-Help.ps1](Optimize-Help.ps1.md)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
-- &#x1F199; **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
+- **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
 - **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1.md)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
 
 ### Search and replace
 
 - **[Add-CapturesToMatches.ps1](Add-CapturesToMatches.ps1.md)**: Adds named capture group values as note properties to Select-String MatchInfo objects.
-- &#x1F199; **[Find-Lines.ps1](Find-Lines.ps1.md)**: Searches a specific subset of files for lines matching a pattern.
+- **[Find-Lines.ps1](Find-Lines.ps1.md)**: Searches a specific subset of files for lines matching a pattern.
 - **[Select-CapturesFromMatches.ps1](Select-CapturesFromMatches.ps1.md)**: Selects named capture group values as note properties from Select-String MatchInfo objects.
 - **[Set-RegexReplace.ps1](Set-RegexReplace.ps1.md)**: Updates text found with Select-String, using a regular expression replacement template.
 
@@ -258,32 +258,33 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
 - **[Import-EdgeKeywords.ps1](Import-EdgeKeywords.ps1.md)**: Adds search keywords to an Edge SQLite profile configuration.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1.md)**: Retrieves the a summary from the Chocolatey log.
-- **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
+- &#x1F199; **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1.md)**: Switch the Java version for the current process by modifying environment variables.
 
 ### Unicode
 
-- &#x1F199; **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1.md)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
+- **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1.md)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 - **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
-- **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
-- **[Get-UnicodeData.ps1](Get-UnicodeData.ps1.md)**: Returns the current (cached) Unicode character data.
-- **[Get-UnicodeName.ps1](Get-UnicodeName.ps1.md)**: Returns the name of a Unicode code point.
+- &#x1F199; **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
+- &#x1F199; **[Get-UnicodeData.ps1](Get-UnicodeData.ps1.md)**: Returns the current (cached) Unicode character data.
+- &#x1F199; **[Get-UnicodeName.ps1](Get-UnicodeName.ps1.md)**: Returns the name of a Unicode code point.
+- &#x1F195; **[Import-CharConstants.ps1](Import-CharConstants.ps1.md)**: Imports characters by name as constants into the current scope.
 
 ### VSCode
 
 - **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1.md)**: Adds a VS Code MSSQL database connection to the repo.
 - **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 - **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1.md)**: Gets the path of the VSCode settings.config file.
-- &#x1F199; **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1.md)**: Adds config XDT connection strings to VSCode settings.
+- **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1.md)**: Adds config XDT connection strings to VSCode settings.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1.md)**: Pushes the current VS Code editor workspace location to the location stack.
 - **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 
 ### XML
 
 - **[Compare-Xml.ps1](Compare-Xml.ps1.md)**: Compares two XML documents and returns the differences.
-- &#x1F199; **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
-- &#x1F199; **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1.md)**: Parse escaped XML into XML and serialize it.
+- **[Convert-Xml.ps1](Convert-Xml.ps1.md)**: Transform XML using an XSLT template.
+- **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1.md)**: Parse escaped XML into XML and serialize it.
 - **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1.md)**: Converts named nodes of an element to properties of a PSObject, recursively.
 - **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1.md)**: Serializes complex content into XML elements.
 - **[Format-Xml.ps1](Format-Xml.ps1.md)**: Pretty-print XML.
@@ -302,7 +303,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1.md)**: Convert a number to a Roman numeral.
 - **[Copy-Html.ps1](Copy-Html.ps1.md)**: Copies objects as an HTML table.
 - **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
-- &#x1F199; **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
+- **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1.md)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Get-ADServiceAccountInfo.ps1](Get-ADServiceAccountInfo.ps1.md)**: Lists the Global Managed Service Accounts for the domain, including the computers they are bound to.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1.md)**: Parses ASP.NET errors from the event log on the given server.
@@ -320,7 +321,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Remove-PocketArticle.ps1](Remove-PocketArticle.ps1.md)**: Removes an article from a Pocket account.
 - **[Repair-AppxPackages.ps1](Repair-AppxPackages.ps1.md)**: Re-registers all installed Appx packages.
 - **[Restore-Workstation.ps1](Restore-Workstation.ps1.md)**: Restores various configuration files and exported settings from a ZIP file.
-- &#x1F199; **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1.md)**: Saves enclosures from a podcast feed.
+- **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1.md)**: Saves enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1.md)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1.md)**: Scan sites using Mozilla's Observatory.
 - **[Write-VisibleString.ps1](Write-VisibleString.ps1.md)**: Displays a string, showing nonprintable characters.

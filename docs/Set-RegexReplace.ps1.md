@@ -13,7 +13,8 @@ Updates text found with Select-String, using a regular expression replacement te
 ## SYNTAX
 
 ```
-Set-RegexReplace.ps1 [-Replacement] <String> [-InputObject <MatchInfo>] [<CommonParameters>]
+Set-RegexReplace.ps1 [-Replacement] <String> [-InputObject <MatchInfo>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -78,6 +79,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

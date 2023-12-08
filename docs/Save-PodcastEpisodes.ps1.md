@@ -14,7 +14,7 @@ Saves enclosures from a podcast feed.
 
 ```
 Save-PodcastEpisodes.ps1 [-Uri] <Uri> [-After <DateTime>] [-Before <DateTime>] [-First <Int32>] [-Last <Int32>]
- [-UseTitle] [-CreateFolder] [<CommonParameters>]
+ [-UseTitle] [-CreateFolder] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -132,6 +132,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

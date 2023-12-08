@@ -14,7 +14,7 @@ Uses git bisect to search for the point in the repo history that the test script
 
 ```
 Trace-GitRepoTest.ps1 [-TestScript] <ScriptBlock> [[-GoodCommit] <String>] [[-BadCommit] <String>]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -72,6 +72,21 @@ Aliases:
 Required: False
 Position: 3
 Default value: $(git rev-parse HEAD)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

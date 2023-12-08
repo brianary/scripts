@@ -13,7 +13,7 @@ Returns the configured search keywords from an Edge SQLite file.
 ## SYNTAX
 
 ```
-Export-EdgeKeywords.ps1 [[-Path] <String>] [<CommonParameters>]
+Export-EdgeKeywords.ps1 [[-Path] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,6 +41,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: "$env:LocalAppData\Microsoft\Edge\User Data\Default\Web Data"
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

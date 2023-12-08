@@ -14,7 +14,7 @@ Performs an operation against each item in a collection of input objects, with a
 
 ```
 ForEach-Progress.ps1 [[-Activity] <String>] [[-Status] <ScriptBlock>] [[-Process] <ScriptBlock>]
- -InputObject <PSObject> [<CommonParameters>]
+ -InputObject <PSObject> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -86,6 +86,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

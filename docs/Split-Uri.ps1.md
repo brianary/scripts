@@ -14,122 +14,122 @@ Splits a URI into component parts.
 
 ### AbsolutePath
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-AbsolutePath] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-AbsolutePath] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Authority
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-Authority] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-Authority] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Credentials
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-Credential] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-Credential] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Extension
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-Extension] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-Extension] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Filename
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-Filename <String>] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-Filename <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### HostNameType
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-HostNameType] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-HostNameType] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### IsAbsoluteUri
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-IsAbsoluteUri] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-IsAbsoluteUri] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### IsDefaultPort
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-IsDefaultPort] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-IsDefaultPort] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### IsFile
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-IsFile] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-IsFile] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### IsLoopback
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-IsLoopback] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-IsLoopback] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### IsUnc
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-IsUnc] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-IsUnc] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Leaf
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-Leaf] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-Leaf] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### LeafBase
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-LeafBase] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-LeafBase] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### ParentPath
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-ParentPath] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-ParentPath] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### ParentUri
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-ParentUri] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-ParentUri] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Hostname
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-Hostname] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-Hostname] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### IdnHost
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-IdnHost] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-IdnHost] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### LocalPath
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-LocalPath] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-LocalPath] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### PathAndQuery
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-PathAndQuery] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-PathAndQuery] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Port
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-Port] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-Port] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Query
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-Query] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-Query] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### QueryAsDictionary
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-QueryAsDictionary] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-QueryAsDictionary] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Scheme
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-Scheme] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-Scheme] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Segment
 ```
-Split-Uri.ps1 [-Uri] <Uri> [-Segment <Int32>] [<CommonParameters>]
+Split-Uri.ps1 [-Uri] <Uri> [-Segment <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -542,6 +542,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

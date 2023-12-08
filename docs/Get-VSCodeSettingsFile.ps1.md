@@ -13,7 +13,7 @@ Gets the path of the VSCode settings.config file.
 ## SYNTAX
 
 ```
-Get-VSCodeSettingsFile.ps1 [-Workspace] [<CommonParameters>]
+Get-VSCodeSettingsFile.ps1 [-Workspace] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,6 +48,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

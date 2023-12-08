@@ -13,7 +13,8 @@ Tests a file for a "magic number" (identifying sequence of bytes) at a given loc
 ## SYNTAX
 
 ```
-Test-MagicNumber.ps1 [-Bytes] <Byte[]> [[-Path] <String>] [-Offset <Int32>] [<CommonParameters>]
+Test-MagicNumber.ps1 [-Bytes] <Byte[]> [[-Path] <String>] [-Offset <Int32>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -86,6 +87,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -14,7 +14,7 @@ Appends or creates a value to use for the specified cmdlet parameter to use when
 
 ```
 Add-ParameterDefault.ps1 [-CommandName] <String> [-ParameterName] <String> [-Value] <Object> [-Scope <String>]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -95,6 +95,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: Local
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

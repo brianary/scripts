@@ -15,7 +15,7 @@ Create a Windows shortcut.
 ```
 New-Shortcut.ps1 [-Path] <String> [-TargetPath] <String> [[-Arguments] <String>] [[-WorkingDirectory] <String>]
  [-Description <String>] [-Hotkey <String>] [-IconLocation <String>] [-WindowStyle <String>]
- [-RunAsAdministrator] [<CommonParameters>]
+ [-RunAsAdministrator] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -166,6 +166,21 @@ Aliases: Admin
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

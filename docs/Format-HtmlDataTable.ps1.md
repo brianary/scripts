@@ -15,7 +15,7 @@ Right-aligns numeric data in an HTML table for emailing, and optionally zebra-st
 ```
 Format-HtmlDataTable.ps1 [[-Caption] <String>] [[-OddRowBackground] <String>] [[-EvenRowBackground] <String>]
  [-TableAttributes <String>] [-CaptionAttributes <String>] [-NumericFormat <String>] [-Html <String>]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -142,6 +142,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

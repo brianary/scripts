@@ -15,13 +15,13 @@ Transform XML using an XSLT template.
 ### Xml
 ```
 Convert-Xml.ps1 [-TransformXslt] <XmlDocument> [[-Xml] <XmlDocument>] [-OutFile <String>] [-TrustedXslt]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### File
 ```
-Convert-Xml.ps1 -TransformFile <String> [-Path <String>] [-OutFile <String>] [-TrustedXslt] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+Convert-Xml.ps1 -TransformFile <String> [-Path <String>] [-OutFile <String>] [-TrustedXslt]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -159,6 +159,21 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

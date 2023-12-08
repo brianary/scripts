@@ -13,7 +13,7 @@ Returns a cached list of comics from the Shortboxed API.
 ## SYNTAX
 
 ```
-Get-Comics.ps1 [[-ReleaseWeek] <String>] [<CommonParameters>]
+Get-Comics.ps1 [[-ReleaseWeek] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,6 +41,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: Upcoming
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -13,8 +13,8 @@ Renames all instances of a script, and updates any usage of it.
 ## SYNTAX
 
 ```
-Rename-Script.ps1 [-OldName] <String> [-NewName] <String> [[-ScriptDirectory] <String[]>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Rename-Script.ps1 [-OldName] <String> [-NewName] <String> [[-ScriptDirectory] <String[]>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -100,6 +100,21 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

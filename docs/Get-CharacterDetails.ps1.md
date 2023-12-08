@@ -19,7 +19,8 @@ Get-CharacterDetails.ps1 [[-Block] <String>] [-IsControl] [-NotControl] [-IsDigi
  [-NotLegalFileName] [-IsLetter] [-NotLetter] [-IsLetterOrDigit] [-NotLetterOrDigit] [-IsLower] [-NotLower]
  [-IsLowSurrogate] [-NotLowSurrogate] [-IsMark] [-NotMark] [-IsNumber] [-NotNumber] [-IsPunctuation]
  [-NotPunctuation] [-IsSeparator] [-NotSeparator] [-IsSurrogate] [-NotSurrogate] [-IsSymbol] [-NotSymbol]
- [-IsUpper] [-NotUpper] [-IsWhiteSpace] [-NotWhiteSpace] [-IsWord] [-NotWord] [<CommonParameters>]
+ [-IsUpper] [-NotUpper] [-IsWhiteSpace] [-NotWhiteSpace] [-IsWord] [-NotWord]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Char
@@ -29,7 +30,8 @@ Get-CharacterDetails.ps1 -Char <String> [-IsControl] [-NotControl] [-IsDigit] [-
  [-NotLetter] [-IsLetterOrDigit] [-NotLetterOrDigit] [-IsLower] [-NotLower] [-IsLowSurrogate]
  [-NotLowSurrogate] [-IsMark] [-NotMark] [-IsNumber] [-NotNumber] [-IsPunctuation] [-NotPunctuation]
  [-IsSeparator] [-NotSeparator] [-IsSurrogate] [-NotSurrogate] [-IsSymbol] [-NotSymbol] [-IsUpper] [-NotUpper]
- [-IsWhiteSpace] [-NotWhiteSpace] [-IsWord] [-NotWord] [<CommonParameters>]
+ [-IsWhiteSpace] [-NotWhiteSpace] [-IsWord] [-NotWord] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Value
@@ -39,7 +41,8 @@ Get-CharacterDetails.ps1 [-Value] <Int32> [-IsControl] [-NotControl] [-IsDigit] 
  [-NotLetter] [-IsLetterOrDigit] [-NotLetterOrDigit] [-IsLower] [-NotLower] [-IsLowSurrogate]
  [-NotLowSurrogate] [-IsMark] [-NotMark] [-IsNumber] [-NotNumber] [-IsPunctuation] [-NotPunctuation]
  [-IsSeparator] [-NotSeparator] [-IsSurrogate] [-NotSurrogate] [-IsSymbol] [-NotSymbol] [-IsUpper] [-NotUpper]
- [-IsWhiteSpace] [-NotWhiteSpace] [-IsWord] [-NotWord] [<CommonParameters>]
+ [-IsWhiteSpace] [-NotWhiteSpace] [-IsWord] [-NotWord] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Range
@@ -49,7 +52,8 @@ Get-CharacterDetails.ps1 [-StartValue] <Int32> [-StopValue] <Int32> [-IsControl]
  [-NotLegalFileName] [-IsLetter] [-NotLetter] [-IsLetterOrDigit] [-NotLetterOrDigit] [-IsLower] [-NotLower]
  [-IsLowSurrogate] [-NotLowSurrogate] [-IsMark] [-NotMark] [-IsNumber] [-NotNumber] [-IsPunctuation]
  [-NotPunctuation] [-IsSeparator] [-NotSeparator] [-IsSurrogate] [-NotSurrogate] [-IsSymbol] [-NotSymbol]
- [-IsUpper] [-NotUpper] [-IsWhiteSpace] [-NotWhiteSpace] [-IsWord] [-NotWord] [<CommonParameters>]
+ [-IsUpper] [-NotUpper] [-IsWhiteSpace] [-NotWhiteSpace] [-IsWord] [-NotWord]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -723,6 +727,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

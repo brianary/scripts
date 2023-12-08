@@ -13,7 +13,8 @@ Locates a command.
 ## SYNTAX
 
 ```
-Get-CommandPath.ps1 [-ApplicationName] <String[]> [-FindAllInPath] [<CommonParameters>]
+Get-CommandPath.ps1 [-ApplicationName] <String[]> [-FindAllInPath] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,6 +59,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

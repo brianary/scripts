@@ -13,7 +13,8 @@ Tests whether the given string can be parsed as a date.
 ## SYNTAX
 
 ```
-Test-DateTime.ps1 [-Date] <String> [-Format <String[]>] [<CommonParameters>]
+Test-DateTime.ps1 [-Date] <String> [-Format <String[]>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -73,6 +74,21 @@ Precise, known format(s) to use to try parsing the datetime.
 Type: String[]
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

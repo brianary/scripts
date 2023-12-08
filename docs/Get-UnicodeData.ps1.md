@@ -13,7 +13,8 @@ Returns the current (cached) Unicode character data.
 ## SYNTAX
 
 ```
-Get-UnicodeData.ps1 [[-Url] <Uri>] [[-DataFile] <String>] [<CommonParameters>]
+Get-UnicodeData.ps1 [[-Url] <Uri>] [[-DataFile] <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,6 +57,21 @@ Aliases:
 Required: False
 Position: 2
 Default value: (Join-Path $env:TEMP ($Url.Segments[-1]))
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

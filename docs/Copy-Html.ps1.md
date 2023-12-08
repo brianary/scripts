@@ -13,7 +13,8 @@ Copies objects as an HTML table.
 ## SYNTAX
 
 ```
-Copy-Html.ps1 [[-Property] <Array>] [-InputObject <PSObject>] [<CommonParameters>]
+Copy-Html.ps1 [[-Property] <Array>] [-InputObject <PSObject>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,6 +59,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

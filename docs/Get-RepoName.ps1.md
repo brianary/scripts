@@ -13,7 +13,7 @@ Gets the name of the repo.
 ## SYNTAX
 
 ```
-Get-RepoName.ps1 [[-Path] <String>] [<CommonParameters>]
+Get-RepoName.ps1 [[-Path] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,6 +40,21 @@ Required: False
 Position: 1
 Default value: $PWD.Path
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

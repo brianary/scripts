@@ -13,7 +13,8 @@ Overrides ConsoleClass window color palette entries with a preset color theme.
 ## SYNTAX
 
 ```
-Set-ConsoleColorTheme.ps1 [-ThemeName] <String> [[-ProcessName] <String>] [<CommonParameters>]
+Set-ConsoleColorTheme.ps1 [-ThemeName] <String> [[-ProcessName] <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -57,6 +58,21 @@ Aliases: ForProcessName
 Required: False
 Position: 2
 Default value: %SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

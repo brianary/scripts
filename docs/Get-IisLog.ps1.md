@@ -16,7 +16,8 @@ Easily query IIS logs.
 ```
 Get-IisLog.ps1 [-ComputerName <String[]>] [[-After] <DateTime>] [[-Before] <DateTime>] [-IpAddr <String[]>]
  [-Username <String[]>] [-Status <Int32[]>] [-Method <WebRequestMethod[]>] [-UriPathLike <String>]
- [-QueryLike <String>] [-ReferrerLike <String>] [-LogFormat <String>] [<CommonParameters>]
+ [-QueryLike <String>] [-ReferrerLike <String>] [-LogFormat <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Directory
@@ -24,7 +25,7 @@ Get-IisLog.ps1 [-ComputerName <String[]>] [[-After] <DateTime>] [[-Before] <Date
 Get-IisLog.ps1 [-LogDirectory <DirectoryInfo[]>] [[-After] <DateTime>] [[-Before] <DateTime>]
  [-IpAddr <String[]>] [-Username <String[]>] [-Status <Int32[]>] [-Method <WebRequestMethod[]>]
  [-UriPathLike <String>] [-QueryLike <String>] [-ReferrerLike <String>] [-LogFormat <String>]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -236,6 +237,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: Iisw3c
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

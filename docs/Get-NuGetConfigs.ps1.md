@@ -13,7 +13,7 @@ Returns the available NuGet configuration files, in order of preference.
 ## SYNTAX
 
 ```
-Get-NuGetConfigs.ps1 [[-Directory] <String>] [<CommonParameters>]
+Get-NuGetConfigs.ps1 [[-Directory] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +44,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: "$PWD"
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

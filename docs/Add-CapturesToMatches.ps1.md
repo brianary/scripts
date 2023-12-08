@@ -13,7 +13,7 @@ Adds named capture groups as note properties to Select-String's MatchInfo object
 ## SYNTAX
 
 ```
-Add-CapturesToMatches.ps1 [[-MatchInfo] <MatchInfo>] [<CommonParameters>]
+Add-CapturesToMatches.ps1 [[-MatchInfo] <MatchInfo>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,6 +45,21 @@ Required: False
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

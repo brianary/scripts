@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2438_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2423_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -39,15 +39,15 @@ PowerShell Scripts
 ### Command
 
 - **[Get-CommandParameters.ps1](Get-CommandParameters.ps1)**: Returns the parameters of the specified cmdlet.
-- :up: **[Get-CommandPath.ps1](Get-CommandPath.ps1)**: Locates a command.
+- **[Get-CommandPath.ps1](Get-CommandPath.ps1)**: Locates a command.
 - **[Hide-Command.ps1](Hide-Command.ps1)**: Make a command unavailable.
 - **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1)**: Execute a command by using matching dictionary entries as parameters.
-- :up: **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
+- **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 
 ### Configuration
 
 - **[Get-ConfigConnectionStringBuilders.ps1](Get-ConfigConnectionStringBuilders.ps1)**: Return named connection string builders for connection strings in a config file.
-- :up: **[Get-NuGetConfigs.ps1](Get-NuGetConfigs.ps1)**: Returns the available NuGet configuration files, in order of preference.
+- **[Get-NuGetConfigs.ps1](Get-NuGetConfigs.ps1)**: Returns the available NuGet configuration files, in order of preference.
 - **[Use-NetMailConfig.ps1](Use-NetMailConfig.ps1)**: Use .NET configuration to set defaults for Send-MailMessage.
 
 ### Console
@@ -80,7 +80,7 @@ PowerShell Scripts
 - **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1)**: Serializes complex content into PowerShell literals.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1)**: Escape URLs more aggressively.
 - **[New-Jwt.ps1](New-Jwt.ps1)**: Generates a JSON Web Token (JWT)
-- :new: **[Split-Uri.ps1](Split-Uri.ps1)**: Splits a URI into component parts.
+- **[Split-Uri.ps1](Split-Uri.ps1)**: Splits a URI into component parts.
 - **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1)**: Tests for a given common file type by magic number.
 - **[Test-Jwt.ps1](Test-Jwt.ps1)**: Determines whether a string is a valid JWT.
 - **[Test-MagicNumber.ps1](Test-MagicNumber.ps1)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
@@ -103,7 +103,7 @@ PowerShell Scripts
 - **[Repair-DatabaseConstraintNames.ps1](Repair-DatabaseConstraintNames.ps1)**: Finds database constraints with system-generated names and gives them deterministic names.
 - **[Repair-DatabaseUntrustedConstraints.ps1](Repair-DatabaseUntrustedConstraints.ps1)**: Finds database constraints that have been incompletely re-enabled.
 - **[Send-SqlReport.ps1](Send-SqlReport.ps1)**: Execute a SQL statement and email the results.
-- :new: **[Test-ConnectionString.ps1](Test-ConnectionString.ps1)**: Test a given connection string and provide details about the connection.
+- **[Test-ConnectionString.ps1](Test-ConnectionString.ps1)**: Test a given connection string and provide details about the connection.
 - **[Use-SqlcmdParams.ps1](Use-SqlcmdParams.ps1)**: Use the calling script parameters to set Invoke-Sqlcmd defaults.
 
 ### Date and time
@@ -143,16 +143,16 @@ PowerShell Scripts
 
 ### Files
 
-- :up: **[Backup-File.ps1](Backup-File.ps1)**: Create a backup as a sibling to a file, with date and time values in the name.
+- **[Backup-File.ps1](Backup-File.ps1)**: Create a backup as a sibling to a file, with date and time values in the name.
 - **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1)**: Removes duplicates from a list of files.
 - **[Find-NewestFile.ps1](Find-NewestFile.ps1)**: Finds the most recent file.
-- :up: **[Join-FileName.ps1](Join-FileName.ps1)**: Combines a filename with a string.
+- **[Join-FileName.ps1](Join-FileName.ps1)**: Combines a filename with a string.
 - **[Measure-Caches.ps1](Measure-Caches.ps1)**: Returns a list of matching cache directories, and their sizes, sorted.
-- :up: **[New-Shortcut.ps1](New-Shortcut.ps1)**: Create a Windows shortcut.
+- **[New-Shortcut.ps1](New-Shortcut.ps1)**: Create a Windows shortcut.
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1)**: Removes a file that may be prone to locking.
 - **[Test-LockedFile.ps1](Test-LockedFile.ps1)**: Returns true if the specified file is locked.
 - **[Test-NewerFile.ps1](Test-NewerFile.ps1)**: Returns true if the difference file is newer than the reference file.
-- :up: **[Update-Files.ps1](Update-Files.ps1)**: Copies specified source files that exist in the destination directory.
+- **[Update-Files.ps1](Update-Files.ps1)**: Copies specified source files that exist in the destination directory.
 
 ### Git and GitHub
 
@@ -160,7 +160,7 @@ PowerShell Scripts
 - **[Copy-GitHubLabels.ps1](Copy-GitHubLabels.ps1)**: Copies configured issue labels from one repo to another.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1)**: Gets the SHA-1 hash of the first commit of the current repo.
-- :up: **[Get-RepoName.ps1](Get-RepoName.ps1)**: Gets the name of the repo.
+- **[Get-RepoName.ps1](Get-RepoName.ps1)**: Gets the name of the repo.
 - **[Rename-GitHubLocalBranch.ps1](Rename-GitHubLocalBranch.ps1)**: Rename a git repository branch.
 - **[Trace-GitRepoTest.ps1](Trace-GitRepoTest.ps1)**: Uses git bisect to search for the point in the repo history that the test script starts returning true.
 
@@ -170,7 +170,7 @@ PowerShell Scripts
 - **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1)**: Creates multipart/form-data to send as a request body.
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1)**: Returns the content security policy at from the given URL.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
-- :up: **[Save-WebRequest.ps1](Save-WebRequest.ps1)**: Downloads a given URL to a file, automatically determining the filename.
+- **[Save-WebRequest.ps1](Save-WebRequest.ps1)**: Downloads a given URL to a file, automatically determining the filename.
 - **[Show-HttpStatus.ps1](Show-HttpStatus.ps1)**: Displays the HTTP status code info.
 
 ### Json
@@ -229,7 +229,7 @@ PowerShell Scripts
 
 ### Scheduled Tasks
 
-- :up: **[Backup-SchTasks.ps1](Backup-SchTasks.ps1)**: Exports the local list of Scheduled Tasks into a single XML file.
+- **[Backup-SchTasks.ps1](Backup-SchTasks.ps1)**: Exports the local list of Scheduled Tasks into a single XML file.
 - **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1)**: Convert a CimInstance object to a PSObject.
 - **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1)**: Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
 - **[Copy-SchTasks.ps1](Copy-SchTasks.ps1)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
@@ -240,13 +240,13 @@ PowerShell Scripts
 - :up: **[New-PesterTests.ps1](New-PesterTests.ps1)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-Script.ps1](New-Script.ps1)**: Creates a simple boilerplate script.
 - **[Optimize-Help.ps1](Optimize-Help.ps1)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
-- :up: **[Rename-Script.ps1](Rename-Script.ps1)**: Renames all instances of a script, and updates any usage of it.
+- **[Rename-Script.ps1](Rename-Script.ps1)**: Renames all instances of a script, and updates any usage of it.
 - **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
 
 ### Search and replace
 
 - **[Add-CapturesToMatches.ps1](Add-CapturesToMatches.ps1)**: Adds named capture group values as note properties to Select-String MatchInfo objects.
-- :up: **[Find-Lines.ps1](Find-Lines.ps1)**: Searches a specific subset of files for lines matching a pattern.
+- **[Find-Lines.ps1](Find-Lines.ps1)**: Searches a specific subset of files for lines matching a pattern.
 - **[Select-CapturesFromMatches.ps1](Select-CapturesFromMatches.ps1)**: Selects named capture group values as note properties from Select-String MatchInfo objects.
 - **[Set-RegexReplace.ps1](Set-RegexReplace.ps1)**: Updates text found with Select-String, using a regular expression replacement template.
 
@@ -265,32 +265,33 @@ PowerShell Scripts
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1)**: Collects some useful system hardware and operating system details via CIM.
 - **[Import-EdgeKeywords.ps1](Import-EdgeKeywords.ps1)**: Adds search keywords to an Edge SQLite profile configuration.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1)**: Retrieves the a summary from the Chocolatey log.
-- **[Update-Everything.ps1](Update-Everything.ps1)**: Updates everything it can on the system.
+- :up: **[Update-Everything.ps1](Update-Everything.ps1)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1)**: Switch the Java version for the current process by modifying environment variables.
 
 ### Unicode
 
-- :up: **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
+- **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 - **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-Unicode.ps1](Get-Unicode.ps1)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
-- **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
-- **[Get-UnicodeData.ps1](Get-UnicodeData.ps1)**: Returns the current (cached) Unicode character data.
-- **[Get-UnicodeName.ps1](Get-UnicodeName.ps1)**: Returns the name of a Unicode code point.
+- :up: **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
+- :up: **[Get-UnicodeData.ps1](Get-UnicodeData.ps1)**: Returns the current (cached) Unicode character data.
+- :up: **[Get-UnicodeName.ps1](Get-UnicodeName.ps1)**: Returns the name of a Unicode code point.
+- :new: **[Import-CharConstants.ps1](Import-CharConstants.ps1)**: Imports characters by name as constants into the current scope.
 
 ### VSCode
 
 - **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1)**: Adds a VS Code MSSQL database connection to the repo.
 - **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1)**: Sets a VSCode setting.
 - **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1)**: Gets the path of the VSCode settings.config file.
-- :up: **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1)**: Adds config XDT connection strings to VSCode settings.
+- **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1)**: Adds config XDT connection strings to VSCode settings.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1)**: Pushes the current VS Code editor workspace location to the location stack.
 - **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1)**: Sets a VSCode setting.
 
 ### XML
 
 - **[Compare-Xml.ps1](Compare-Xml.ps1)**: Compares two XML documents and returns the differences.
-- :up: **[Convert-Xml.ps1](Convert-Xml.ps1)**: Transform XML using an XSLT template.
-- :up: **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1)**: Parse escaped XML into XML and serialize it.
+- **[Convert-Xml.ps1](Convert-Xml.ps1)**: Transform XML using an XSLT template.
+- **[ConvertFrom-EscapedXml.ps1](ConvertFrom-EscapedXml.ps1)**: Parse escaped XML into XML and serialize it.
 - **[ConvertFrom-XmlElement.ps1](ConvertFrom-XmlElement.ps1)**: Converts named nodes of an element to properties of a PSObject, recursively.
 - **[ConvertTo-XmlElements.ps1](ConvertTo-XmlElements.ps1)**: Serializes complex content into XML elements.
 - **[Format-Xml.ps1](Format-Xml.ps1)**: Pretty-print XML.
@@ -309,7 +310,7 @@ PowerShell Scripts
 - **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1)**: Convert a number to a Roman numeral.
 - **[Copy-Html.ps1](Copy-Html.ps1)**: Copies objects as an HTML table.
 - **[Export-MermaidER.ps1](Export-MermaidER.ps1)**: Generates a Mermaid entity relation diagram for database tables.
-- :up: **[Export-Readme.ps1](Export-Readme.ps1)**: Generate README.md file for the scripts repo.
+- **[Export-Readme.ps1](Export-Readme.ps1)**: Generate README.md file for the scripts repo.
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Get-ADServiceAccountInfo.ps1](Get-ADServiceAccountInfo.ps1)**: Lists the Global Managed Service Accounts for the domain, including the computers they are bound to.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1)**: Parses ASP.NET errors from the event log on the given server.
@@ -327,7 +328,7 @@ PowerShell Scripts
 - **[Remove-PocketArticle.ps1](Remove-PocketArticle.ps1)**: Removes an article from a Pocket account.
 - **[Repair-AppxPackages.ps1](Repair-AppxPackages.ps1)**: Re-registers all installed Appx packages.
 - **[Restore-Workstation.ps1](Restore-Workstation.ps1)**: Restores various configuration files and exported settings from a ZIP file.
-- :up: **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1)**: Saves enclosures from a podcast feed.
+- **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1)**: Saves enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1)**: Scan sites using Mozilla's Observatory.
 - **[Write-VisibleString.ps1](Write-VisibleString.ps1)**: Displays a string, showing nonprintable characters.
@@ -344,4 +345,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 11/10/2023 12:20:04 -->
+<!-- generated 12/08/2023 10:21:03 -->

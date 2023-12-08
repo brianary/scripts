@@ -13,7 +13,8 @@ Generate README.md file for the scripts repo.
 ## SYNTAX
 
 ```
-Export-Readme.ps1 [[-DependenciesImage] <String>] [[-StatusAge] <String>] [-Commit] [<CommonParameters>]
+Export-Readme.ps1 [[-DependenciesImage] <String>] [[-StatusAge] <String>] [-Commit]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,6 +72,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

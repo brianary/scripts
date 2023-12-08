@@ -15,13 +15,13 @@ Provides sorted counts of SQL Server column values.
 ### Column
 ```
 Measure-DbColumnValues.ps1 [-Column] <Column> [-Condition <String>] [-MinimumCount <Int32>]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### ColumnName
 ```
 Measure-DbColumnValues.ps1 [-ColumnName] <String> [-Table] <Table> [-Condition <String>]
- [-MinimumCount <Int32>] [<CommonParameters>]
+ [-MinimumCount <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -110,6 +110,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -13,7 +13,8 @@ Returns a date and time converted to the French Republican Calendar.
 ## SYNTAX
 
 ```
-Get-FrenchRepublicanDate.ps1 [[-Date] <DateTime>] [-Method <String>] [<CommonParameters>]
+Get-FrenchRepublicanDate.ps1 [[-Date] <DateTime>] [-Method <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -70,6 +71,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 128Year
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

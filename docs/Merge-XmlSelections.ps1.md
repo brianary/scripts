@@ -15,13 +15,13 @@ Builds an object using the named XPath selections as properties.
 ### Xml
 ```
 Merge-XmlSelections.ps1 [-XPaths] <IDictionary> [-Xml] <XmlNode[]> [-Namespace <Hashtable>]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Path
 ```
 Merge-XmlSelections.ps1 [-XPaths] <IDictionary> [-Path] <String[]> [-Namespace <Hashtable>]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -97,6 +97,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: $PSDefaultParameterValues['Select-Xml:Namespace']
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

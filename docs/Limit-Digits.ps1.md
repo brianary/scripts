@@ -13,7 +13,8 @@ Rounds off a number to the requested number of digits.
 ## SYNTAX
 
 ```
-Limit-Digits.ps1 [[-Digits] <Int32>] [-InputObject] <Object> [-Mode <MidpointRounding>] [<CommonParameters>]
+Limit-Digits.ps1 [[-Digits] <Int32>] [-InputObject] <Object> [-Mode <MidpointRounding>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -79,6 +80,21 @@ Accepted values: ToEven, AwayFromZero, ToZero, ToNegativeInfinity, ToPositiveInf
 Required: False
 Position: Named
 Default value: ToEven
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

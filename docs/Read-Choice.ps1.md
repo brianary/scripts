@@ -15,13 +15,13 @@ Returns choice selected from a list of options.
 ### ChoicesArray
 ```
 Read-Choice.ps1 [-Choices] <String[]> [-Caption <String>] [-Message <String>] [-DefaultIndex <Int32>]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### ChoicesHash
 ```
 Read-Choice.ps1 [-ChoiceHash] <IDictionary> [-Caption <String>] [-Message <String>] [-DefaultIndex <Int32>]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -128,6 +128,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

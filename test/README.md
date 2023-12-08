@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='220'>220 &#x2030;</meter> Scripts repo (209) &#x1F4C5; 462 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='219'>219 &#x2030;</meter> Scripts repo (210) &#x1F4C5; 496 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> A (10) &#x1F4C5; 209 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> Add (10) &#x1F4C5; 209 days</summary>
 
@@ -25,7 +25,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='968'>968 &#x2030;</meter> C (31) &#x1F4C5; 462 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='968'>968 &#x2030;</meter> C (31) &#x1F4C5; 496 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (3) &#x1F4C5; 148 days</summary>
 
 - &#x2714;&#xFE0F; Compare-Keys.ps1
@@ -43,7 +43,7 @@ Script Tests
 - &#x2714;&#xFE0F; Connect-SshKey.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 462 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 496 days</summary>
 
 - &#x2714;&#xFE0F; Convert-ChocolateyToWinget.ps1
 - &#x2714;&#xFE0F; Convert-ClipboardTsvToHtml.ps1
@@ -63,7 +63,7 @@ Script Tests
 - &#x2714;&#xFE0F; ConvertFrom-XmlElement.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 421 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 496 days</summary>
 
 - &#x2714;&#xFE0F; ConvertTo-Base64.ps1
 - &#x2714;&#xFE0F; ConvertTo-BasicAuthentication.ps1
@@ -193,9 +193,10 @@ Script Tests
 - &#x2716;&#xFE0F; Hide-Command.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started I (7) </summary>
-<ul><li><details><summary>not started Import (5) </summary>
+<li><details><summary>not started I (8) </summary>
+<ul><li><details><summary>not started Import (6) </summary>
 
+- &#x2716;&#xFE0F; Import-CharConstants.ps1
 - &#x2716;&#xFE0F; Import-ClipboardTsv.ps1
 - &#x2716;&#xFE0F; Import-EdgeKeywords.ps1
 - &#x2716;&#xFE0F; Import-SecretVault.ps1

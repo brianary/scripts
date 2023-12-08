@@ -14,7 +14,8 @@ Execute a command by using matching dictionary entries as parameters.
 
 ```
 Invoke-CommandWithParams.ps1 [-Name] <String> [-ParameterSet <String>] -Dictionary <IDictionary>
- [-ExcludeKeys <String[]>] [-OnlyMatches] [-IncludeCommon] [<CommonParameters>]
+ [-ExcludeKeys <String[]>] [-OnlyMatches] [-IncludeCommon] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -126,6 +127,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

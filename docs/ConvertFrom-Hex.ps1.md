@@ -13,7 +13,7 @@ Convert a string of hexadecimal digits into a byte array.
 ## SYNTAX
 
 ```
-ConvertFrom-Hex.ps1 [-InputObject] <String> [<CommonParameters>]
+ConvertFrom-Hex.ps1 [-InputObject] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,6 +58,21 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

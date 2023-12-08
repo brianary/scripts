@@ -13,7 +13,8 @@ Copy scheduled jobs from another computer to this one, using a GUI list to choos
 ## SYNTAX
 
 ```
-Copy-SchTasks.ps1 [-ComputerName] <String> [[-DestinationComputerName] <String>] [<CommonParameters>]
+Copy-SchTasks.ps1 [-ComputerName] <String> [[-DestinationComputerName] <String>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,6 +57,21 @@ Aliases: To, Destination
 Required: False
 Position: 2
 Default value: $env:COMPUTERNAME
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

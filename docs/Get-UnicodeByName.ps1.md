@@ -14,12 +14,12 @@ Returns characters based on Unicode code point name, GitHub short code, or HTML 
 
 ### Name
 ```
-Get-UnicodeByName.ps1 [-Name] <String> [-AsEmoji] [<CommonParameters>]
+Get-UnicodeByName.ps1 [-Name] <String> [-AsEmoji] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Update
 ```
-Get-UnicodeByName.ps1 [-AsEmoji] [-Update] [<CommonParameters>]
+Get-UnicodeByName.ps1 [-AsEmoji] [-Update] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -106,6 +106,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

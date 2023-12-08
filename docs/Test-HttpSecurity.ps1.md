@@ -14,7 +14,7 @@ Scan sites using Mozilla's Observatory.
 
 ```
 Test-HttpSecurity.ps1 [-Hosts] <String[]> [-Force] [-Public] [-IncludeResults] [-PollingInterval <Int32>]
- [-Endpoint <Uri>] [<CommonParameters>]
+ [-Endpoint <Uri>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -162,6 +162,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: Https://http-observatory.security.mozilla.org/api/v1
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

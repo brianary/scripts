@@ -15,25 +15,29 @@ Serializes complex content into PowerShell literals.
 ### GenerateKey (Default)
 ```
 ConvertTo-PowerShell.ps1 [[-Value] <Object>] [-Indent <String>] [-IndentBy <String>] [-Newline <String>]
- [-SkipInitialIndent] [-Width <UInt16>] [-GenerateKey] [<CommonParameters>]
+ [-SkipInitialIndent] [-Width <UInt16>] [-GenerateKey] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### SecureKey
 ```
 ConvertTo-PowerShell.ps1 [[-Value] <Object>] [-Indent <String>] [-IndentBy <String>] [-Newline <String>]
- [-SkipInitialIndent] [-Width <UInt16>] -SecureKey <SecureString> [<CommonParameters>]
+ [-SkipInitialIndent] [-Width <UInt16>] -SecureKey <SecureString> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Credential
 ```
 ConvertTo-PowerShell.ps1 [[-Value] <Object>] [-Indent <String>] [-IndentBy <String>] [-Newline <String>]
- [-SkipInitialIndent] [-Width <UInt16>] -Credential <PSCredential> [<CommonParameters>]
+ [-SkipInitialIndent] [-Width <UInt16>] -Credential <PSCredential> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### KeyBytes
 ```
 ConvertTo-PowerShell.ps1 [[-Value] <Object>] [-Indent <String>] [-IndentBy <String>] [-Newline <String>]
- [-SkipInitialIndent] [-Width <UInt16>] -KeyBytes <Byte[]> [<CommonParameters>]
+ [-SkipInitialIndent] [-Width <UInt16>] -KeyBytes <Byte[]> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -216,6 +220,21 @@ Parameter Sets: KeyBytes
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

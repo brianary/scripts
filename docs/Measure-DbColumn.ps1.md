@@ -14,12 +14,14 @@ Provides statistics about SQL Server column data.
 
 ### Column
 ```
-Measure-DbColumn.ps1 [-Column] <Column> [-Condition <String>] [<CommonParameters>]
+Measure-DbColumn.ps1 [-Column] <Column> [-Condition <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### ColumnName
 ```
-Measure-DbColumn.ps1 [-ColumnName] <String> [-Table] <Table> [-Condition <String>] [<CommonParameters>]
+Measure-DbColumn.ps1 [-ColumnName] <String> [-Table] <Table> [-Condition <String>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -167,6 +169,21 @@ Useful for databases that implement "soft deletes" as specific field values.
 Type: String
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

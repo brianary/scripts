@@ -14,72 +14,75 @@ Checks for the existence of the given command, and adds if missing and a source 
 
 ### WindowsFeature
 ```
-Use-Command.ps1 [-Name] <String> [-Path] <String> [-WindowsFeature <String>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Use-Command.ps1 [-Name] <String> [-Path] <String> [-WindowsFeature <String>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ChocolateyPackage
 ```
-Use-Command.ps1 [-Name] <String> [-Path] <String> [-ChocolateyPackage <String>] [-Version <String>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+Use-Command.ps1 [-Name] <String> [-Path] <String> [-ChocolateyPackage <String>] [-Version <String>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### DotNetTool
 ```
-Use-Command.ps1 [-Name] <String> [-Path] <String> [-DotNetTool <String>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Use-Command.ps1 [-Name] <String> [-Path] <String> [-DotNetTool <String>] [-ProgressAction <ActionPreference>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### NugetPackage
 ```
 Use-Command.ps1 [-Name] <String> [-Path] <String> [-NugetPackage <String>] [-Version <String>]
- [-InstallDir <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-InstallDir <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### NodePackage
 ```
 Use-Command.ps1 [-Name] <String> [-Path] <String> [-NodePackage <String>] [-Version <String>]
- [-InstallDir <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-InstallDir <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### WindowsInstaller
 ```
-Use-Command.ps1 [-Name] <String> [-Path] <String> [-WindowsInstaller <Uri>] [-InstallLevel <Int32>] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+Use-Command.ps1 [-Name] <String> [-Path] <String> [-WindowsInstaller <Uri>] [-InstallLevel <Int32>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ExecutableInstaller
 ```
 Use-Command.ps1 [-Name] <String> [-Path] <String> [-ExecutableInstaller <Uri>]
- [-InstallerParameters <String[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-InstallerParameters <String[]>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### ExecutePS
 ```
-Use-Command.ps1 [-Name] <String> [-Path] <String> [-ExecutePowerShell <Uri>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Use-Command.ps1 [-Name] <String> [-Path] <String> [-ExecutePowerShell <Uri>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### DownloadZip
 ```
-Use-Command.ps1 [-Name] <String> [-Path] <String> [-DownloadZip <Uri>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Use-Command.ps1 [-Name] <String> [-Path] <String> [-DownloadZip <Uri>] [-ProgressAction <ActionPreference>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### DownloadUrl
 ```
-Use-Command.ps1 [-Name] <String> [-Path] <String> [-DownloadUrl <Uri>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Use-Command.ps1 [-Name] <String> [-Path] <String> [-DownloadUrl <Uri>] [-ProgressAction <ActionPreference>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### WarnOnly
 ```
-Use-Command.ps1 [-Name] <String> [-Path] <String> [-Message <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Use-Command.ps1 [-Name] <String> [-Path] <String> [-Message <String>] [-ProgressAction <ActionPreference>]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Fail
 ```
-Use-Command.ps1 [-Name] <String> [-Path] <String> [-Fail] [-WhatIf] [-Confirm] [<CommonParameters>]
+Use-Command.ps1 [-Name] <String> [-Path] <String> [-Fail] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -411,6 +414,21 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

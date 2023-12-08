@@ -18,7 +18,8 @@ New-Script.ps1 [-NameNoun] <String> [-Synopsis <String>] [-Parameters <RuntimeDe
  [-Example <String[]>] [-Begin <ScriptBlock>] [-Process <ScriptBlock>] [-End <ScriptBlock>]
  [-RequiresVersion <Decimal>] [-RequiresModule <String[]>] [-ConfirmImpact <String>]
  [-DefaultParameterSetName <String>] [-HelpUri <Uri>] [-Indent <String>] [-RequiresRunAsAdmin]
- [-SupportsPaging] [-SupportsShouldProcess] [-PositionalBinding] -NameVerb <String> [<CommonParameters>]
+ [-SupportsPaging] [-SupportsShouldProcess] [-PositionalBinding] [-ProgressAction <ActionPreference>]
+ -NameVerb <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -374,6 +375,21 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

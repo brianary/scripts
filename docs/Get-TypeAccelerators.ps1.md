@@ -13,7 +13,7 @@ Returns the list of PowerShell type accelerators.
 ## SYNTAX
 
 ```
-Get-TypeAccelerators.ps1 [[-DictionaryKey] <String>] [<CommonParameters>]
+Get-TypeAccelerators.ps1 [[-DictionaryKey] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -134,6 +134,21 @@ Aliases:
 
 Required: False
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

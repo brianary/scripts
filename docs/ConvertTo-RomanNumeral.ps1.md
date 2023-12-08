@@ -13,7 +13,8 @@ Convert a number to a Roman numeral.
 ## SYNTAX
 
 ```
-ConvertTo-RomanNumeral.ps1 [-Value] <Int32> [-Unicode] [<CommonParameters>]
+ConvertTo-RomanNumeral.ps1 [-Value] <Int32> [-Unicode] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -63,6 +64,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

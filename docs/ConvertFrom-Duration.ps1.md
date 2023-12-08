@@ -13,7 +13,8 @@ Parses a Timespan from a ISO8601 duration string.
 ## SYNTAX
 
 ```
-ConvertFrom-Duration.ps1 [[-InputObject] <String[]>] [-NoWarnings] [<CommonParameters>]
+ConvertFrom-Duration.ps1 [[-InputObject] <String[]>] [-NoWarnings] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -70,6 +71,21 @@ Aliases: Quiet
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

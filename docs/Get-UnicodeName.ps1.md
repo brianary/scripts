@@ -14,17 +14,17 @@ schema: 2.0.0
 
 ### CodePoint
 ```
-Get-UnicodeName.ps1 [-CodePoint] <Int32> [<CommonParameters>]
+Get-UnicodeName.ps1 [-CodePoint] <Int32> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Character
 ```
-Get-UnicodeName.ps1 [-Character] <String> [<CommonParameters>]
+Get-UnicodeName.ps1 [-Character] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Update
 ```
-Get-UnicodeName.ps1 [-Update] [<CommonParameters>]
+Get-UnicodeName.ps1 [-Update] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -82,6 +82,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

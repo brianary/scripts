@@ -14,7 +14,7 @@ Displays a formatted date using powerline font characters.
 
 ```
 Show-Time.ps1 [-Format] <String[]> [-Date <DateTime>] [-Separator <String>] [-ForegroundColor <ConsoleColor>]
- [-BackgroundColor <ConsoleColor>] [<CommonParameters>]
+ [-BackgroundColor <ConsoleColor>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -105,6 +105,21 @@ Accepted values: Black, DarkBlue, DarkGreen, DarkCyan, DarkRed, DarkMagenta, Dar
 Required: False
 Position: Named
 Default value: $host.UI.RawUI.ForegroundColor
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

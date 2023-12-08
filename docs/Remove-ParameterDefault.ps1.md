@@ -14,7 +14,7 @@ Removes a value that would have been used for a parameter if none was specified,
 
 ```
 Remove-ParameterDefault.ps1 [-CommandName] <String> [-ParameterName] <String> [-Scope <String>]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -80,6 +80,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: Local
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

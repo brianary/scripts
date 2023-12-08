@@ -14,7 +14,8 @@ Create a common database object.
 
 ```
 New-DbProviderObject.ps1 [-TypeName] <String> [[-InitialValue] <String>] [-Provider <String>]
- [[-ConnectionString] <String>] [-StoredProcedure] [-OpenConnection] [<CommonParameters>]
+ [[-ConnectionString] <String>] [-StoredProcedure] [-OpenConnection] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -138,6 +139,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

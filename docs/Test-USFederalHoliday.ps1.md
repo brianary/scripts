@@ -14,7 +14,8 @@ federal holiday.
 ## SYNTAX
 
 ```
-Test-USFederalHoliday.ps1 [-Date] <DateTime> [-AsHolidayName] [-SatToFri] [-SunToMon] [<CommonParameters>]
+Test-USFederalHoliday.ps1 [-Date] <DateTime> [-AsHolidayName] [-SatToFri] [-SunToMon]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -113,6 +114,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

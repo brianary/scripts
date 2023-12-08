@@ -14,12 +14,13 @@ Creates a new Pester testing script from a script's examples and parameter sets.
 
 ### Script
 ```
-New-PesterTests.ps1 [-Script] <String> [-Directory <String>] [-Force] [<CommonParameters>]
+New-PesterTests.ps1 [-Script] <String> [-Directory <String>] [-Force] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Next
 ```
-New-PesterTests.ps1 [-Directory <String>] [-Next] [<CommonParameters>]
+New-PesterTests.ps1 [-Directory <String>] [-Next] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -92,6 +93,21 @@ Aliases:
 Required: True
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

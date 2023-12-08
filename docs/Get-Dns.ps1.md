@@ -13,7 +13,8 @@ Looks up DNS info, given a hostname or address.
 ## SYNTAX
 
 ```
-Get-Dns.ps1 [-HostName] <String[]> [-OnlyAddresses <AddressFamily>] [<CommonParameters>]
+Get-Dns.ps1 [-HostName] <String[]> [-OnlyAddresses <AddressFamily>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,7 +56,22 @@ Indicates that only the string versions of addresses belonging to the specified 
 Type: AddressFamily
 Parameter Sets: (All)
 Aliases:
-Accepted values: Unspecified, Unix, InterNetwork, ImpLink, Pup, Chaos, NS, Ipx, Osi, Iso, Ecma, DataKit, Ccitt, Sna, DecNet, DataLink, Lat, HyperChannel, AppleTalk, NetBios, VoiceView, FireFox, Banyan, Atm, InterNetworkV6, Cluster, Ieee12844, Irda, NetworkDesigners, Max, Packet, ControllerAreaNetwork, Unknown
+Accepted values: Unspecified, Unix, InterNetwork, ImpLink, Pup, Chaos, NS, Ipx, Iso, Osi, Ecma, DataKit, Ccitt, Sna, DecNet, DataLink, Lat, HyperChannel, AppleTalk, NetBios, VoiceView, FireFox, Banyan, Atm, InterNetworkV6, Cluster, Ieee12844, Irda, NetworkDesigners, Max, Packet, ControllerAreaNetwork, Unknown
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

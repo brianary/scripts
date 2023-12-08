@@ -13,7 +13,8 @@ Uses OpenSSH to generate a key and connect it to an ssh server.
 ## SYNTAX
 
 ```
-Connect-SshKey.ps1 [-HostName] <String> [-UserName <String>] [<CommonParameters>]
+Connect-SshKey.ps1 [-HostName] <String> [-UserName <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,6 +55,21 @@ Aliases: AsUserName
 Required: False
 Position: Named
 Default value: $env:UserName
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

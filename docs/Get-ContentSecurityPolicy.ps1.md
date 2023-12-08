@@ -14,12 +14,13 @@ Returns the content security policy at from the given URL.
 
 ### Uri
 ```
-Get-ContentSecurityPolicy.ps1 [-Uri] <Uri> [<CommonParameters>]
+Get-ContentSecurityPolicy.ps1 [-Uri] <Uri> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Response
 ```
-Get-ContentSecurityPolicy.ps1 -Response <WebResponseObject> [<CommonParameters>]
+Get-ContentSecurityPolicy.ps1 -Response <WebResponseObject> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -66,6 +67,21 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

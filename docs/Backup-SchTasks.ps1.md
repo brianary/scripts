@@ -13,7 +13,8 @@ Exports the local list of Scheduled Tasks into a single XML file.
 ## SYNTAX
 
 ```
-Backup-SchTasks.ps1 [[-Path] <String>] [-Stylesheet <String>] [<CommonParameters>]
+Backup-SchTasks.ps1 [[-Path] <String>] [-Stylesheet <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,6 +53,21 @@ A CSS or XSLT stylesheet to use when viewing the scheduled tasks XML.
 Type: String
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

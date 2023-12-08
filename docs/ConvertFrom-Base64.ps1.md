@@ -13,7 +13,8 @@ Converts base64-encoded text to bytes or text.
 ## SYNTAX
 
 ```
-ConvertFrom-Base64.ps1 [-Data] <String> [[-Encoding] <String>] [-UriStyle] [<CommonParameters>]
+ConvertFrom-Base64.ps1 [-Data] <String> [[-Encoding] <String>] [-UriStyle] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -75,6 +76,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

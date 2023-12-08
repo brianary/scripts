@@ -14,7 +14,7 @@ Copies configured issue labels from one repo to another.
 
 ```
 Copy-GitHubLabels.ps1 [-OwnerName] <String> [-RepositoryName] <String> [-DestinationOwnerName <String>]
- -DestinationRepositoryName <String> [-Mode <String>] [<CommonParameters>]
+ -DestinationRepositoryName <String> [-Mode <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -107,6 +107,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: AddAndUpdate
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

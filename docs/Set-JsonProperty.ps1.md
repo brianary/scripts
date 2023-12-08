@@ -15,13 +15,13 @@ Sets a property of arbitrary depth in a JSON string.
 ### InputObject
 ```
 Set-JsonProperty.ps1 [-PropertyName] <String> [-PropertyValue] <PSObject> [-PathSeparator <Char>]
- [-WarnOverwrite] -InputObject <String> [<CommonParameters>]
+ [-WarnOverwrite] -InputObject <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Path
 ```
 Set-JsonProperty.ps1 [-PropertyName] <String> [-PropertyValue] <PSObject> [-PathSeparator <Char>]
- [-WarnOverwrite] -Path <String> [<CommonParameters>]
+ [-WarnOverwrite] -Path <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -145,6 +145,21 @@ Parameter Sets: Path
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

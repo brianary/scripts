@@ -16,7 +16,7 @@ Generates a JSON Web Token (JWT)
 New-Jwt.ps1 [[-Body] <IDictionary>] [[-Headers] <IDictionary>] [-Secret] <SecureString> [[-Algorithm] <String>]
  [[-NotBefore] <DateTime>] [[-IssuedAt] <DateTime>] [-IncludeIssuedAt] [[-ExpirationTime] <DateTime>]
  [[-ExpiresAfter] <TimeSpan>] [[-JwtId] <String>] [[-Issuer] <String>] [[-Subject] <String>]
- [[-Audience] <String[]>] [[-Claims] <Hashtable>] [<CommonParameters>]
+ [[-Audience] <String[]>] [[-Claims] <Hashtable>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -238,6 +238,21 @@ Aliases:
 
 Required: False
 Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

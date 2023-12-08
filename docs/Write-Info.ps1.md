@@ -14,7 +14,8 @@ Writes to the information stream, with color support and more.
 
 ```
 Write-Info.ps1 [-Message] <Object> [-ForegroundColor <ConsoleColor>] [-BackgroundColor <ConsoleColor>]
- [-LogFile <String>] [-NoNewLine] [-UseInformationPreference] [<CommonParameters>]
+ [-LogFile <String>] [-NoNewLine] [-UseInformationPreference] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -122,6 +123,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

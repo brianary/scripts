@@ -13,7 +13,8 @@ Determines whether a string is a valid URI.
 ## SYNTAX
 
 ```
-Test-Uri.ps1 [-InputObject] <String> [[-UriKind] <UriKind>] [<CommonParameters>]
+Test-Uri.ps1 [-InputObject] <String> [[-UriKind] <UriKind>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -64,6 +65,21 @@ Accepted values: RelativeOrAbsolute, Absolute, Relative
 Required: False
 Position: 2
 Default value: Absolute
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

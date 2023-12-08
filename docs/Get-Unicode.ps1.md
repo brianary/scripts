@@ -13,7 +13,8 @@ Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a s
 ## SYNTAX
 
 ```
-Get-Unicode.ps1 [-Codepoint] <Int32> [-AsEmoji] [-AsStringLiteral] [<CommonParameters>]
+Get-Unicode.ps1 [-Codepoint] <Int32> [-AsEmoji] [-AsStringLiteral] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -72,6 +73,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

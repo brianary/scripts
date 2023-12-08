@@ -15,13 +15,13 @@ Try parsing text as XML, and validating it if a schema is provided.
 ### Path
 ```
 Test-Xml.ps1 [-Path] <String> [-Schemata <Hashtable>] [-SkipValidation] [-Warnings] [-ErrorMessage]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Xml
 ```
 Test-Xml.ps1 -Xml <String> [-Schemata <Hashtable>] [-SkipValidation] [-Warnings] [-ErrorMessage]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -126,6 +126,21 @@ Aliases: NotSuccessful
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

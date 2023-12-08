@@ -15,42 +15,48 @@ Throws a better error than "throw".
 ### Detailed
 ```
 Stop-ThrowError.ps1 [-ExceptionType] <Type> [-ExceptionArguments] <Object[]> [-ErrorCategory] <ErrorCategory>
- [-TargetObject] <Object> [[-ErrorId] <String>] [<CommonParameters>]
+ [-TargetObject] <Object> [[-ErrorId] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### CatchBlock
 ```
-Stop-ThrowError.ps1 [[-ExceptionType] <Type>] [[-ExceptionArguments] <Object[]>] [<CommonParameters>]
+Stop-ThrowError.ps1 [[-ExceptionType] <Type>] [[-ExceptionArguments] <Object[]>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### NotImplemented
 ```
-Stop-ThrowError.ps1 [-Message] <String> [-NotImplemented] [<CommonParameters>]
+Stop-ThrowError.ps1 [-Message] <String> [-NotImplemented] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### ItemNotFound
 ```
-Stop-ThrowError.ps1 [-Message] <String> -SearchContext <Object> [<CommonParameters>]
+Stop-ThrowError.ps1 [-Message] <String> -SearchContext <Object> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### ObjectNotFound
 ```
-Stop-ThrowError.ps1 [-Message] <String> [<CommonParameters>]
+Stop-ThrowError.ps1 [-Message] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### InvalidOperation
 ```
-Stop-ThrowError.ps1 [-Message] <String> -OperationContext <Object> [<CommonParameters>]
+Stop-ThrowError.ps1 [-Message] <String> -OperationContext <Object> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### InvalidArgument
 ```
-Stop-ThrowError.ps1 [-Message] <String> -Argument <String> [<CommonParameters>]
+Stop-ThrowError.ps1 [-Message] <String> -Argument <String> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Format
 ```
-Stop-ThrowError.ps1 [-Message] <String> -Format <String> -InputString <String> [<CommonParameters>]
+Stop-ThrowError.ps1 [-Message] <String> -Format <String> -InputString <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -310,6 +316,21 @@ Aliases:
 Required: True
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -13,7 +13,8 @@ Set the default Server and ApiKey for Send-SeqEvent.ps1
 ## SYNTAX
 
 ```
-Use-SeqServer.ps1 [-Server] <Uri> [[-ApiKey] <String>] [<CommonParameters>]
+Use-SeqServer.ps1 [-Server] <Uri> [[-ApiKey] <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -53,6 +54,21 @@ Aliases:
 
 Required: False
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

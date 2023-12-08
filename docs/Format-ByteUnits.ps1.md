@@ -13,7 +13,8 @@ Converts bytes to largest possible units, to improve readability.
 ## SYNTAX
 
 ```
-Format-ByteUnits.ps1 [-Bytes] <BigInteger> [-Precision <Byte>] [-UseSI] [<CommonParameters>]
+Format-ByteUnits.ps1 [-Bytes] <BigInteger> [-Precision <Byte>] [-UseSI] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -86,6 +87,21 @@ Aliases: si
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

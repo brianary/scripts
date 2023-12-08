@@ -14,7 +14,7 @@ Pretty-print XML.
 
 ```
 Format-Xml.ps1 [-Xml] <XmlDocument> [-IndentChar <Char>] [-Indentation <Int32>] [-NewLineOnAttributes]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -147,6 +147,21 @@ Aliases: SplitAttributes, AttributesSeparated
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

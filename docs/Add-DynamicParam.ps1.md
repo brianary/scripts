@@ -17,7 +17,8 @@ Add-DynamicParam.ps1 [-Name] <String> [[-Type] <Type>] [-Position <Int32>] [-Par
  [-Alias <String[]>] [-ValidateCount <Int32[]>] [-ValidateDrive <String[]>] [-ValidateLength <Int32[]>]
  [-ValidatePattern <String>] [-ValidateRange <Int32[]>] [-ValidateScript <ScriptBlock>]
  [-ValidateSet <Object[]>] [-NotNull] [-NotNullOrEmpty] [-TrustedData] [-UserDrive] [-Mandatory]
- [-ValueFromPipeline] [-ValueFromPipelineByPropertyName] [-ValueFromRemainingArguments] [<CommonParameters>]
+ [-ValueFromPipeline] [-ValueFromPipelineByPropertyName] [-ValueFromRemainingArguments]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -333,6 +334,21 @@ Aliases: RemainingArgs
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

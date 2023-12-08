@@ -13,7 +13,8 @@ Determines whether a string is a valid JWT.
 ## SYNTAX
 
 ```
-Test-Jwt.ps1 [-InputObject] <String> [-Secret] <SecureString> [<CommonParameters>]
+Test-Jwt.ps1 [-InputObject] <String> [-Secret] <SecureString> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,6 +56,21 @@ Aliases:
 
 Required: True
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

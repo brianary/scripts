@@ -13,7 +13,8 @@ Determine which .NET Frameworks are installed on the requested system.
 ## SYNTAX
 
 ```
-Get-DotNetFrameworkVersions.ps1 [[-ComputerName] <String>] [<CommonParameters>]
+Get-DotNetFrameworkVersions.ps1 [[-ComputerName] <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,6 +47,21 @@ Aliases: CN, Server
 Required: False
 Position: 1
 Default value: $env:COMPUTERNAME
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

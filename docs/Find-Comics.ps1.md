@@ -14,27 +14,32 @@ Finds comics.
 
 ### Title
 ```
-Find-Comics.ps1 -Title <String[]> [-ReleaseWeek <String>] [<CommonParameters>]
+Find-Comics.ps1 -Title <String[]> [-ReleaseWeek <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Creator
 ```
-Find-Comics.ps1 -Creator <String[]> [-ReleaseWeek <String>] [<CommonParameters>]
+Find-Comics.ps1 -Creator <String[]> [-ReleaseWeek <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### TitleMatch
 ```
-Find-Comics.ps1 -TitleMatch <Regex> [-ReleaseWeek <String>] [<CommonParameters>]
+Find-Comics.ps1 -TitleMatch <Regex> [-ReleaseWeek <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### CreatorMatch
 ```
-Find-Comics.ps1 -CreatorMatch <Regex> [-ReleaseWeek <String>] [<CommonParameters>]
+Find-Comics.ps1 -CreatorMatch <Regex> [-ReleaseWeek <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Condition
 ```
-Find-Comics.ps1 [-Condition] <ScriptBlock> [-ReleaseWeek <String>] [<CommonParameters>]
+Find-Comics.ps1 [-Condition] <ScriptBlock> [-ReleaseWeek <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -156,6 +161,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: Upcoming
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

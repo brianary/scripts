@@ -13,7 +13,8 @@ Enumerates the SSL protocols that the client is able to successfully use to conn
 ## SYNTAX
 
 ```
-Get-SslDetails.ps1 [-ComputerName] <String> [[-Port] <Int32>] [<CommonParameters>]
+Get-SslDetails.ps1 [-ComputerName] <String> [[-Port] <Int32>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -67,6 +68,21 @@ Required: False
 Position: 2
 Default value: 443
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

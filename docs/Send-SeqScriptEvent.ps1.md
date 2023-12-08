@@ -14,7 +14,8 @@ Sends an event (often an error) from a script to a Seq server, including script 
 
 ```
 Send-SeqScriptEvent.ps1 [-Action] <String> [[-ErrorRecord] <ErrorRecord>] [[-Level] <String>]
- [-InvocationScope <String>] [-Server <Uri>] [-ApiKey <String>] [<CommonParameters>]
+ [-InvocationScope <String>] [-Server <Uri>] [-ApiKey <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -115,6 +116,21 @@ The Seq API key to use.
 Type: String
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

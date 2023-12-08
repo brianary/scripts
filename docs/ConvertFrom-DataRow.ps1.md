@@ -14,17 +14,19 @@ Converts a DataRow object to a PSObject, Hashtable, or single value.
 
 ### AsObject (Default)
 ```
-ConvertFrom-DataRow.ps1 [-DataRow] <DataRow> [<CommonParameters>]
+ConvertFrom-DataRow.ps1 [-DataRow] <DataRow> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### AsValues
 ```
-ConvertFrom-DataRow.ps1 [-DataRow] <DataRow> [-AsValues] [<CommonParameters>]
+ConvertFrom-DataRow.ps1 [-DataRow] <DataRow> [-AsValues] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### AsDictionary
 ```
-ConvertFrom-DataRow.ps1 [-DataRow] <DataRow> [-AsDictionary] [<CommonParameters>]
+ConvertFrom-DataRow.ps1 [-DataRow] <DataRow> [-AsDictionary] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -81,6 +83,21 @@ Aliases: AsOrderedDictionary, AsHashtable
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

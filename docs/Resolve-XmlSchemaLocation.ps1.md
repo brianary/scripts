@@ -14,12 +14,12 @@ Gets the namespaces and their URIs and URLs from a document.
 
 ### Xml
 ```
-Resolve-XmlSchemaLocation.ps1 [-Xml] <XmlDocument> [<CommonParameters>]
+Resolve-XmlSchemaLocation.ps1 [-Xml] <XmlDocument> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Path
 ```
-Resolve-XmlSchemaLocation.ps1 [-Path] <String> [<CommonParameters>]
+Resolve-XmlSchemaLocation.ps1 [-Path] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -73,6 +73,21 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

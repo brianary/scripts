@@ -13,7 +13,8 @@ Parse escaped XML into XML and serialize it.
 ## SYNTAX
 
 ```
-ConvertFrom-EscapedXml.ps1 [-EscapedXml] <String> [-Compress] [<CommonParameters>]
+ConvertFrom-EscapedXml.ps1 [-EscapedXml] <String> [-Compress] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,6 +57,21 @@ Aliases: NoIndent
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
