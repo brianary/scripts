@@ -22,6 +22,6 @@
     "markdown"
   ],
   "[markdown]": {
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+    "editor.defaultFormatter": "darkriszty.markdown-table-prettify"
   }
 }

@@ -4,16 +4,36 @@ Returns the current (cached) Unicode character data.
 
 .OUTPUTS
 System.Management.Automation.PSCustomObject for each character entry with these properties:
+* BidirectionalCategory
+* Catgory
+* CombiningClass
+* Comment
+* DecimalDigitValue
+* DecompositionMapping
+* DigitValue
+* Lower
+* Mirrored
+* Name
+* NumericValue
+* OldName
+* Title
+* Upper
+* Value
 
 .FUNCTIONALITY
 Unicode
 
 .LINK
 https://www.unicode.org/L2/L1999/UnicodeData.html
+
+.EXAMPLE
+Get-UnicodeData.ps1 |Export-Csv data/UnicodeData.csv
+
+Saves the current Unicode data as a CSV file.
 #>
 
 #Requires -Version 7
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([pscustomobject])] Param(
 # The location of the latest Unicode data.
 [uri] $Url = 'https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt',
 [string] $DataFile = (Join-Path $env:TEMP ($Url.Segments[-1]))

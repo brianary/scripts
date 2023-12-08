@@ -48,7 +48,7 @@ Begin
 			}
 		}
 	}
-	Set-Variable NL ([Environment]::NewLine) -Scope Script -Option Constant
+	Import-CharConstants.ps1 NL -Scope Script
 
 	filter Format-ExampleTest
 	{

@@ -57,10 +57,11 @@ for characters that support both a simple text presentation as well as a color e
 )
 Begin
 {
-	$cc = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'cc.txt')) -Raw)
-	$codepoint = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'txt')) -Raw)
-	$html = Get-Content ([io.path]::ChangeExtension($PSCommandPath,'html.json')) -Raw |ConvertFrom-Json -AsHashtable
-	$github = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'github.txt')) -Raw)
+	$basename = Join-Path -Path $PSScriptRoot -ChildPath data -AdditionalChildPath UnicodeByName
+	$cc = ConvertFrom-StringData (Get-Content "$basename.cc.txt" -Raw)
+	$codepoint = ConvertFrom-StringData (Get-Content "$basename.txt" -Raw)
+	$html = Get-Content "$basename.html.json" -Raw |ConvertFrom-Json -AsHashtable
+	$github = ConvertFrom-StringData (Get-Content "$basename.github.txt" -Raw)
 	filter ConvertTo-Char([Parameter(ValueFromPipeline)][string] $Value)
 	{
 		$result = (($Value -split '\W+') |
@@ -81,12 +82,12 @@ Process
 			ForEach-Object {
 				if($_.OldName -and $_.Value -notin $conflictingOldNames){$_.OldName+'='+$_.Value}
 				if($_.Name -ne '<control>'){$_.Name+'='+$_.Value}
-			} |Out-File ([io.path]::ChangeExtension($PSCommandPath,'txt')) -Encoding utf8
-		Invoke-WebRequest https://html.spec.whatwg.org/entities.json -OutFile ([io.path]::ChangeExtension($PSCommandPath,'html.json'))
+			} |Out-File "$basename.txt" -Encoding utf8
+		Invoke-WebRequest https://html.spec.whatwg.org/entities.json -OutFile "$basename.html.json"
 		(Invoke-RestMethod https://api.github.com/emojis).PSObject.Properties |
 			Where-Object {$_.Value -notlike "*/$($_.Name).png[?]v8"} |
 			ForEach-Object {':'+$_.Name+':='+(((([uri]$_.Value).Segments[-1]) -replace '\.png\z').ToUpper() -replace '-',',')} |
-			Out-File ([io.path]::ChangeExtension($PSCommandPath,'github.txt')) -Encoding utf8
+			Out-File "$basename.github.txt" -Encoding utf8
 		Write-Information 'Updated.'
 		return
 	}

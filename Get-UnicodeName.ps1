@@ -32,8 +32,9 @@ SPACE
 )
 Begin
 {
-	$cc = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'cc.txt')) -Raw)
-	$name = ConvertFrom-StringData (Get-Content ([io.path]::ChangeExtension($PSCommandPath,'txt')) -Raw)
+	$basename = Join-Path -Path $PSScriptRoot -ChildPath data -AdditionalChildPath UnicodeName
+	$cc = ConvertFrom-StringData (Get-Content "$basename.cc.txt" -Raw)
+	$name = ConvertFrom-StringData (Get-Content "$basename.txt" -Raw)
 }
 Process
 {
@@ -46,7 +47,7 @@ Process
 					$hex = '{0:X4}' -f $_.Value
 					$cc.ContainsKey($hex) ? $cc[$hex] : $_.Name
 				}} |
-				Export-Csv ([io.path]::ChangeExtension($PSCommandPath,'txt')) -Delimiter '='
+				Export-Csv "$basename.txt" -Delimiter '='
 			Write-Information 'Updated.'
 			return
 		}
