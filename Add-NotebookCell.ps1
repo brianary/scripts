@@ -24,8 +24,20 @@ using namespace Microsoft.DotNet.Interactive.Commands
 # The cell content.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][psobject] $InputObject
 )
-DynamicParam {[Kernel]::Root.ChildKernels.Name |Add-DynamicParam.ps1 Language string; $DynamicParams}
+DynamicParam
+{
+	try {[Kernel]::Root.ChildKernels.Name |Add-DynamicParam.ps1 Language string}
+	catch {'csharp','fsharp','html','http','javascript','kql','mermaid','pwsh','sql','value','vscode' |Add-DynamicParam.ps1 Language string}
+	$DynamicParams
+}
 End
 {
-	[Kernel]::Root.SendAsync((New-Object SendEditableCode $PSBoundParameters['Language'],($input |Out-String))) |Out-Null
+	if(!$PSBoundParameters.ContainsKey('Language'))
+	{
+		[Kernel]::Root.SendAsync((New-Object SendEditableCode 'vscode',($input |Out-String))) |Out-Null
+	}
+	else
+	{
+		[Kernel]::Root.SendAsync((New-Object SendEditableCode $PSBoundParameters['Language'],($input |Out-String))) |Out-Null
+	}
 }
