@@ -58,7 +58,7 @@ Process
 	if($UriStyle)
 	{
 		$Data = $Data -replace '-','+' -replace '_','/'
-		$Data += New-Object string '=',(3-(($Data.Length-1)% 4))
+		$Data += '='*(3-(($Data.Length-1)% 4))
 	}
 	$value = [Convert]::FromBase64String($Data)
 	if($Encoding -eq 'byte') {$value}
