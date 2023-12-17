@@ -10,8 +10,8 @@ System.Management.Automation.PSCustomObject containing a French Republican Calen
 date and time in these properties:
 
 * Year: the numeric year
-* Annee: the Roman numeral year
-* AnneeUnicode: the Unicode Roman numeral year
+* Année: the Roman numeral year
+* AnnéeUnicode: the Unicode Roman numeral year
 * Month: the numeric month
 * MonthName: the English month name
 * Mois: the French month name
@@ -56,8 +56,8 @@ Stop-ThrowError.ps1
 Get-FrenchRepublicanDate.ps1 2020-07-08
 
 Year          : 228
-Annee         : CCXXVIII
-AnneeUnicode  : ⅭⅭⅩⅩⅧ
+Année         : CCXXVIII
+AnnéeUnicode  : ⅭⅭⅩⅩⅧ
 Month         : 10
 MonthName     : Harvest
 Mois          : Messidor
@@ -216,8 +216,8 @@ Process
 	${jour de decade}++
 	[pscustomobject]@{
 		Year = ${l'année}
-		Annee = ConvertTo-RomanNumeral.ps1 ${l'année}
-		AnneeUnicode = ConvertTo-RomanNumeral.ps1 ${l'année} -Unicode
+		Année = ConvertTo-RomanNumeral.ps1 ${l'année}
+		AnnéeUnicode = ConvertTo-RomanNumeral.ps1 ${l'année} -Unicode
 		Month = $mois
 		MonthName = $months[$mois-1]
 		Mois = ${les mois}[$mois-1]
@@ -231,5 +231,5 @@ Process
 		DecimalTime = '{0:0:00:00}' -f [math]::Floor($Date.TimeOfDay.Ticks / 8640000)
 		GregorianDate = $Date
 	} |Add-Member ScriptMethod ToString -Force -PassThru `
-		{"$($this.Jour) ($($this.DayName)), $($this.Day) $($this.Mois) ($($this.MonthName)) $($this.AnneeUnicode)"}
+		{"$($this.Jour) ($($this.DayName)), $($this.Day) $($this.Mois) ($($this.MonthName)) $($this.AnnéeUnicode)"}
 }
