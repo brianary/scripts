@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2423_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2401_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -64,7 +64,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Data encoding
 
-- **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
+- &#x1F199; **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
 - **[ConvertFrom-Hex.ps1](ConvertFrom-Hex.ps1.md)**: Convert a string of hexadecimal digits into a byte array.
 - **[ConvertTo-Base64.ps1](ConvertTo-Base64.ps1.md)**: Converts bytes or text to base64-encoded text.
 
@@ -89,6 +89,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
 - **[Find-Indexes.ps1](Find-Indexes.ps1.md)**: Returns indexes using a column with the given name.
 - **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1.md)**: Reports text, ntext, and image datatypes found in a given database.
+- &#x1F195; **[Initialize-DatabaseNotebook.ps1](Initialize-DatabaseNotebook.ps1.md)**: Populates a new notebook with details about a database.
 - **[Measure-DbColumn.ps1](Measure-DbColumn.ps1.md)**: Provides statistics about SQL Server column data.
 - **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1.md)**: Provides sorted counts of SQL Server column values.
 - **[Measure-DbTable.ps1](Measure-DbTable.ps1.md)**: Provides frequency details about SQL Server table data.
@@ -108,7 +109,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1.md)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
 - **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1.md)**: Formats a datetime as a LogParser literal.
 - **[Format-Date.ps1](Format-Date.ps1.md)**: Returns a date/time as a named format.
-- **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1.md)**: Returns a date and time converted to the French Republican Calendar.
+- &#x1F199; **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1.md)**: Returns a date and time converted to the French Republican Calendar.
 - **[Show-Time.ps1](Show-Time.ps1.md)**: Displays a formatted date using powerline font characters.
 - **[Test-DateTime.ps1](Test-DateTime.ps1.md)**: Tests whether the given string can be parsed as a date.
 - **[Test-USFederalHoliday.ps1](Test-USFederalHoliday.ps1.md)**: Returns true if the given date is a U.S. federal holiday.
@@ -149,7 +150,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Git and GitHub
 
-- **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1.md)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
+- &#x1F199; **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1.md)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
 - **[Copy-GitHubLabels.ps1](Copy-GitHubLabels.ps1.md)**: Copies configured issue labels from one repo to another.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1.md)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1.md)**: Gets the SHA-1 hash of the first commit of the current repo.
@@ -173,7 +174,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Notebooks
 
-- **[Add-NotebookCell.ps1](Add-NotebookCell.ps1.md)**: When run within a Polyglot Notebook, appends a cell to it.
+- &#x1F199; **[Add-NotebookCell.ps1](Add-NotebookCell.ps1.md)**: When run within a Polyglot Notebook, appends a cell to it.
 
 ### Packages and libraries
 
@@ -192,7 +193,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Add-DynamicParam.ps1](Add-DynamicParam.ps1.md)**: Adds a dynamic parameter to a script, within a DynamicParam block.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1.md)**: Convert a scope level to account for another call stack level.
 - **[ForEach-Progress.ps1](ForEach-Progress.ps1.md)**: Performs an operation against each item in a collection of input objects, with a progress bar.
-- **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
+- &#x1F199; **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
 - **[Format-Permutations.ps1](Format-Permutations.ps1.md)**: Builds format strings using every combination of elements from multiple arrays.
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1.md)**: Returns the possible values of the specified enumeration.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.
@@ -265,7 +266,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1.md)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 - **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
-- **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
+- &#x1F199; **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
 - &#x1F199; **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
 - &#x1F199; **[Get-UnicodeData.ps1](Get-UnicodeData.ps1.md)**: Returns the current (cached) Unicode character data.
 - &#x1F199; **[Get-UnicodeName.ps1](Get-UnicodeName.ps1.md)**: Returns the name of a Unicode code point.
