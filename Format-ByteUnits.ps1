@@ -53,7 +53,7 @@ Process
         if($UseSI)       {[ordered]@{1073741824PB=' YiB'; 1048576PB=' ZiB'; 1024PB=' EiB';
                                     1PB=' PiB';1TB=' TiB';1GB=' GiB';1MB=' MiB';1KB=' KiB';1=' B'}}
         else             {[ordered]@{1PB= 'PB'; 1TB= 'TB'; 1GB= 'GB'; 1MB= 'MB'; 1KB= 'KB'}}
-    $pfmt = New-Object String '#',$Precision
+    $pfmt = '#'*$Precision
     foreach($magnitude in $units.Keys)
     {
         if($Bytes -ge $magnitude) {return "{0:0.$pfmt}{1}" -f ([double]$Bytes / $magnitude),$units.$magnitude}

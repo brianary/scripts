@@ -3,7 +3,7 @@
 Tests parsing TSV clipboard data into HTML table data which is copied back to the clipboard.
 #>
 
-$sixspaces = New-Object string ' ',6
+$sixspaces = ' '*6
 $basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
 $skip = !(Test-Path .changes -Type Leaf) ? $false :
 	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})

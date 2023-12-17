@@ -52,7 +52,7 @@ Process
 }
 End
 {
-	$s = New-Object string (,$c)
+	$s = New-Object string $c,0,$c.Length
 	if(!$AsStringLiteral) {$s}
 	else {$Local:OFS='';"`"$($s.GetEnumerator() |ForEach-Object {'$([char]0x{0:X4})' -f [int]$_})`""}
 }
