@@ -1,9 +1,9 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='218'>218 &#x2030;</meter> Scripts repo (211) &#x1F4C5; 505 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> A (10) &#x1F4C5; 209 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> Add (10) &#x1F4C5; 209 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='218'>218 &#x2030;</meter> Scripts repo (211) &#x1F4C5; 509 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> A (10) &#x1F4C5; 437 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> Add (10) &#x1F4C5; 437 days</summary>
 
 - &#x2714;&#xFE0F; Add-CapturesToMatches.ps1
 - &#x2714;&#xFE0F; Add-Counter.ps1

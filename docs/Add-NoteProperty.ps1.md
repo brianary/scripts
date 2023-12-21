@@ -12,9 +12,16 @@ Adds a NoteProperty to a PSObject, calculating the value with the object in cont
 
 ## SYNTAX
 
+### NameValue
 ```
 Add-NoteProperty.ps1 [-Name] <String> [-Value] <ScriptBlock> [-Properties <String[]>] -InputObject <PSObject>
  [-PassThru] [-Force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### NewProperties
+```
+Add-NoteProperty.ps1 [-NewProperties] <Hashtable> [-Properties <String[]>] -InputObject <PSObject> [-PassThru]
+ [-Force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -57,7 +64,7 @@ The name of the NoteProperty to add to the object.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: NameValue
 Aliases:
 
 Required: True
@@ -72,11 +79,26 @@ The expression to use to set the value of the NoteProperty.
 
 ```yaml
 Type: ScriptBlock
-Parameter Sets: (All)
+Parameter Sets: NameValue
 Aliases:
 
 Required: True
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NewProperties
+A hashtable mapping names of new properties to script blocks generating the values of those properties.
+
+```yaml
+Type: Hashtable
+Parameter Sets: NewProperties
+Aliases:
+
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

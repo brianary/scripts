@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2401_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2412_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -217,7 +217,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Properties
 
-- **[Add-NoteProperty.ps1](Add-NoteProperty.ps1.md)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
+- &#x1F199; **[Add-NoteProperty.ps1](Add-NoteProperty.ps1.md)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
 - **[Compare-Properties.ps1](Compare-Properties.ps1.md)**: Compares the properties of two objects.
 - **[Test-NoteProperty.ps1](Test-NoteProperty.ps1.md)**: Looks for any matching NoteProperties on an object.
 
