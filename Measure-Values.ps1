@@ -170,6 +170,16 @@ End
 			$stats = $values[$type] |Measure-Object -Minimum -Maximum
 			$lenstats = $values[$type] |Select-Object -ExpandProperty Length |Measure-Stats
 			$unique = @($values[$type] |Select-Object -Unique).Count
+			($minChar,$maxChar,$leadingZero,$leadingSpace,$trailingSpace) = ([int][char]::MaxValue,[int][char]::MinValue,0,0,0)
+			foreach($v in $values[$type])
+			{
+				$minmax = $v.GetEnumerator() |Measure-Object -Minimum -Maximum
+				if($minmax.Minimum -lt $minChar) {$minChar = [int]$minmax.Minimum}
+				if($minmax.Maximum -gt $maxChar) {$maxChar = [int]$minmax.Maximum}
+				if($v.StartsWith('0')) {$leadingZero++}
+				if($v.StartsWith(' ')) {$leadingSpace++}
+				if($v.EndsWith(' ')) {$trailingSpace++}
+			}
 			return [pscustomobject]@{
 				Type                = $type
 				Values              = $values[$type].Count
@@ -178,6 +188,11 @@ End
 				UniqueValues        = $unique
 				Minimum             = $stats.Minimum
 				Maximum             = $stats.Maximum
+				MinimumCharacter    = [char]$minChar
+				MaximumCharacter    = [char]$maxChar
+				HasLeadingZero      = $leadingZero
+				HasLeadingSpace     = $leadingSpace
+				HasTrailingSpace    = $trailingSpace
 				MinimumLength       = $lenstats.Minimum
 				MaximumLength       = $lenstats.Maximum
 				MeanAverageLength   = $lenstats.MeanAverage
