@@ -33,4 +33,10 @@ Get-Date |ConvertTo-EpochTime.ps1
 # Indicates the DateTime provided is local, and should be converted to UTC.
 [Alias('UTC','Z')][switch] $UniversalTime
 )
-Process{[int][double]::Parse((Get-Date $(if($UniversalTime){$DateTime.ToUniversalTime()}else{$DateTime}) -UFormat %s))}
+Process
+{
+    $value = [double]::Parse((Get-Date $(if($UniversalTime){$DateTime.ToUniversalTime()}else{$DateTime}) -UFormat %s))
+    if($value -le [int]::MaxValue -and $value -ge [int]::MinValue) {return [int]$value}
+    if($value -le [long]::MaxValue -and $value -ge [long]::MinValue) {return [long]$value}
+    return $value
+}
