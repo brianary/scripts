@@ -47,7 +47,7 @@ Process
 					$hex = '{0:X4}' -f $_.Value
 					$cc.ContainsKey($hex) ? $cc[$hex] : $_.Name
 				}} |
-				Export-Csv "$basename.txt" -Delimiter '='
+				Export-Csv "$basename.txt" -Delimiter '=' -UseQuotes AsNeeded
 			Write-Information 'Updated.'
 			return
 		}

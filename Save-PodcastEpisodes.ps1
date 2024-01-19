@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-Saves enclosures from a podcast feed.
+Downloads enclosures from a podcast feed.
 
 .LINK
 Save-WebRequest.ps1
@@ -8,7 +8,7 @@ Save-WebRequest.ps1
 .EXAMPLE
 Save-PodcastEpisodes.ps1 https://www.youlooknicetoday.com/rss -UseTitle
 
-Saves podcast episodes to the current directory.
+Downloads podcast episodes to the current directory.
 #>
 
 #Requires -Version 3
@@ -25,7 +25,7 @@ Saves podcast episodes to the current directory.
 [int] $Last,
 # Use episode titles for filenames.
 [switch] $UseTitle,
-# Saves the episodes into a folder with the podcast name.
+# Downloads the episodes into a folder with the podcast name.
 [switch] $CreateFolder
 )
 Begin
