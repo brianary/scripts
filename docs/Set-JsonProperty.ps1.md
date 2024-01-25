@@ -14,14 +14,14 @@ Sets a property of arbitrary depth in a JSON string.
 
 ### InputObject
 ```
-Set-JsonProperty.ps1 [-PropertyName] <String> [-PropertyValue] <PSObject> [-PathSeparator <Char>]
- [-WarnOverwrite] -InputObject <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Set-JsonProperty.ps1 [-PropertyName] <String> [-PropertyValue] <PSObject> [-WarnOverwrite]
+ -InputObject <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Path
 ```
-Set-JsonProperty.ps1 [-PropertyName] <String> [-PropertyValue] <PSObject> [-PathSeparator <Char>]
- [-WarnOverwrite] -Path <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Set-JsonProperty.ps1 [-PropertyName] <String> [-PropertyValue] <PSObject> [-WarnOverwrite] -Path <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -79,29 +79,6 @@ Aliases: Value
 Required: True
 Position: 2
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PathSeparator
-The character to use as a property name path separator (dot by default).
-
-With the default path separator of .
-for a name of powershell.codeFormatting.preset sets
-{ "powershell": { "codeFormatting": { "preset": "value" } } }
-this can be escaped to powershell\.codeFormatting\.preset to set
-{ "powershell.codeFormatting.preset": "value" }
-Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
-{ "powershell.codeFormatting.preset": "value" }
-
-```yaml
-Type: Char
-Parameter Sets: (All)
-Aliases: Separator, Delimiter
-
-Required: False
-Position: Named
-Default value: .
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

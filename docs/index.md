@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2412_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2413_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -64,7 +64,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Data encoding
 
-- &#x1F199; **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
+- **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
 - **[ConvertFrom-Hex.ps1](ConvertFrom-Hex.ps1.md)**: Convert a string of hexadecimal digits into a byte array.
 - **[ConvertTo-Base64.ps1](ConvertTo-Base64.ps1.md)**: Converts bytes or text to base64-encoded text.
 
@@ -89,7 +89,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
 - **[Find-Indexes.ps1](Find-Indexes.ps1.md)**: Returns indexes using a column with the given name.
 - **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1.md)**: Reports text, ntext, and image datatypes found in a given database.
-- &#x1F195; **[Initialize-DatabaseNotebook.ps1](Initialize-DatabaseNotebook.ps1.md)**: Populates a new notebook with details about a database.
+- **[Initialize-DatabaseNotebook.ps1](Initialize-DatabaseNotebook.ps1.md)**: Populates a new notebook with details about a database.
 - **[Measure-DbColumn.ps1](Measure-DbColumn.ps1.md)**: Provides statistics about SQL Server column data.
 - **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1.md)**: Provides sorted counts of SQL Server column values.
 - **[Measure-DbTable.ps1](Measure-DbTable.ps1.md)**: Provides frequency details about SQL Server table data.
@@ -109,7 +109,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1.md)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
 - **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1.md)**: Formats a datetime as a LogParser literal.
 - **[Format-Date.ps1](Format-Date.ps1.md)**: Returns a date/time as a named format.
-- &#x1F199; **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1.md)**: Returns a date and time converted to the French Republican Calendar.
+- **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1.md)**: Returns a date and time converted to the French Republican Calendar.
 - **[Show-Time.ps1](Show-Time.ps1.md)**: Displays a formatted date using powerline font characters.
 - **[Test-DateTime.ps1](Test-DateTime.ps1.md)**: Tests whether the given string can be parsed as a date.
 - **[Test-USFederalHoliday.ps1](Test-USFederalHoliday.ps1.md)**: Returns true if the given date is a U.S. federal holiday.
@@ -150,7 +150,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Git and GitHub
 
-- &#x1F199; **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1.md)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
+- **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1.md)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
 - **[Copy-GitHubLabels.ps1](Copy-GitHubLabels.ps1.md)**: Copies configured issue labels from one repo to another.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1.md)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1.md)**: Gets the SHA-1 hash of the first commit of the current repo.
@@ -170,11 +170,11 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Json
 
 - **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
-- **[Set-JsonProperty.ps1](Set-JsonProperty.ps1.md)**: Sets a property of arbitrary depth in a JSON string.
+- &#x1F199; **[Set-JsonProperty.ps1](Set-JsonProperty.ps1.md)**: Sets a property of arbitrary depth in a JSON string.
 
 ### Notebooks
 
-- &#x1F199; **[Add-NotebookCell.ps1](Add-NotebookCell.ps1.md)**: When run within a Polyglot Notebook, appends a cell to it.
+- **[Add-NotebookCell.ps1](Add-NotebookCell.ps1.md)**: When run within a Polyglot Notebook, appends a cell to it.
 
 ### Packages and libraries
 
@@ -193,7 +193,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Add-DynamicParam.ps1](Add-DynamicParam.ps1.md)**: Adds a dynamic parameter to a script, within a DynamicParam block.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1.md)**: Convert a scope level to account for another call stack level.
 - **[ForEach-Progress.ps1](ForEach-Progress.ps1.md)**: Performs an operation against each item in a collection of input objects, with a progress bar.
-- &#x1F199; **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
+- **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
 - **[Format-Permutations.ps1](Format-Permutations.ps1.md)**: Builds format strings using every combination of elements from multiple arrays.
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1.md)**: Returns the possible values of the specified enumeration.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.
@@ -217,7 +217,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Properties
 
-- &#x1F199; **[Add-NoteProperty.ps1](Add-NoteProperty.ps1.md)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
+- **[Add-NoteProperty.ps1](Add-NoteProperty.ps1.md)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
 - **[Compare-Properties.ps1](Compare-Properties.ps1.md)**: Compares the properties of two objects.
 - **[Test-NoteProperty.ps1](Test-NoteProperty.ps1.md)**: Looks for any matching NoteProperties on an object.
 
@@ -231,7 +231,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Scripts
 
-- &#x1F199; **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
+- **[New-PesterTests.ps1](New-PesterTests.ps1.md)**: Creates a new Pester testing script from a script's examples and parameter sets.
 - **[New-Script.ps1](New-Script.ps1.md)**: Creates a simple boilerplate script.
 - **[Optimize-Help.ps1](Optimize-Help.ps1.md)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
 - **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
@@ -259,18 +259,18 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
 - **[Import-EdgeKeywords.ps1](Import-EdgeKeywords.ps1.md)**: Adds search keywords to an Edge SQLite profile configuration.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1.md)**: Retrieves the a summary from the Chocolatey log.
-- &#x1F199; **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
+- **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1.md)**: Switch the Java version for the current process by modifying environment variables.
 
 ### Unicode
 
 - **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1.md)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 - **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
-- &#x1F199; **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
-- &#x1F199; **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
-- &#x1F199; **[Get-UnicodeData.ps1](Get-UnicodeData.ps1.md)**: Returns the current (cached) Unicode character data.
+- **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
+- **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
+- **[Get-UnicodeData.ps1](Get-UnicodeData.ps1.md)**: Returns the current (cached) Unicode character data.
 - &#x1F199; **[Get-UnicodeName.ps1](Get-UnicodeName.ps1.md)**: Returns the name of a Unicode code point.
-- &#x1F195; **[Import-CharConstants.ps1](Import-CharConstants.ps1.md)**: Imports characters by name as constants into the current scope.
+- **[Import-CharConstants.ps1](Import-CharConstants.ps1.md)**: Imports characters by name as constants into the current scope.
 
 ### VSCode
 
@@ -279,7 +279,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1.md)**: Gets the path of the VSCode settings.config file.
 - **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1.md)**: Adds config XDT connection strings to VSCode settings.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1.md)**: Pushes the current VS Code editor workspace location to the location stack.
-- **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
+- &#x1F199; **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 
 ### XML
 
@@ -322,7 +322,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Remove-PocketArticle.ps1](Remove-PocketArticle.ps1.md)**: Removes an article from a Pocket account.
 - **[Repair-AppxPackages.ps1](Repair-AppxPackages.ps1.md)**: Re-registers all installed Appx packages.
 - **[Restore-Workstation.ps1](Restore-Workstation.ps1.md)**: Restores various configuration files and exported settings from a ZIP file.
-- **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1.md)**: Saves enclosures from a podcast feed.
+- &#x1F199; **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1.md)**: Downloads enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1.md)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1.md)**: Scan sites using Mozilla's Observatory.
 - **[Write-VisibleString.ps1](Write-VisibleString.ps1.md)**: Displays a string, showing nonprintable characters.
