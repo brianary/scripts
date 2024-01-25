@@ -12,6 +12,9 @@ System.String containing updated JSON.
 Json
 
 .LINK
+https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-04
+
+.LINK
 ConvertFrom-Json
 
 .LINK
@@ -21,19 +24,19 @@ ConvertTo-Json
 Add-Member
 
 .EXAMPLE
-'{a:1}' |Set-JsonProperty.ps1 b.ZZ\.ZZ.thing 7
+'{a:1}' |Set-JsonProperty.ps1 /b/ZZ~1ZZ/thing 7
 
 {
   "a": 1,
   "b": {
-    "ZZ.ZZ": {
+    "ZZ/ZZ": {
       "thing": 7
     }
   }
 }
 
 .EXAMPLE
-Set-JsonProperty.ps1 powershell.codeFormatting.preset Allman -PathSeparator ~ -Path ./.vscode/settings.json
+Set-JsonProperty.ps1 /powershell.codeFormatting.preset Allman -Path ./.vscode/settings.json
 
 Sets "powershell.codeFormatting.preset": "Allman" within the ./.vscode/settings.json file.
 #>
@@ -41,30 +44,13 @@ Sets "powershell.codeFormatting.preset": "Allman" within the ./.vscode/settings.
 #Requires -Version 7
 [CmdletBinding()][OutputType([string])] Param(
 <#
-The full path name of the property to set.
-
-With the default path separator of . for a name of powershell.codeFormatting.preset sets
-{ "powershell": { "codeFormatting": { "preset": "value" } } }
-this can be escaped to powershell\.codeFormatting\.preset to set
-{ "powershell.codeFormatting.preset": "value" }
-Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
-{ "powershell.codeFormatting.preset": "value" }
+The full path name of the property to set, as a JSON Pointer, which separates each nested
+element name with a /, and literal / is escaped as ~1, and literal ~ is escaped as ~0.
 #>
 [Alias('Name')][Parameter(Position=0,Mandatory=$true)][string] $PropertyName,
 # The value to set the property to.
 [Parameter(Position=1,Mandatory=$true)][AllowEmptyString()][AllowEmptyCollection()][AllowNull()]
 [Alias('Value')][psobject] $PropertyValue,
-<#
-The character to use as a property name path separator (dot by default).
-
-With the default path separator of . for a name of powershell.codeFormatting.preset sets
-{ "powershell": { "codeFormatting": { "preset": "value" } } }
-this can be escaped to powershell\.codeFormatting\.preset to set
-{ "powershell.codeFormatting.preset": "value" }
-Changing the path separator to / for a name of powershell.codeFormatting.preset also sets
-{ "powershell.codeFormatting.preset": "value" }
-#>
-[Alias('Separator','Delimiter')][char] $PathSeparator = '.',
 # Indicates that overwriting values should generate a warning.
 [switch] $WarnOverwrite,
 # The JSON string to set the property in.
@@ -74,29 +60,33 @@ Changing the path separator to / for a name of powershell.codeFormatting.preset 
 )
 Begin
 {
-	$UnescapedPathSeparator = "(?<=(?:\A|[^\\])(?:\\\\)*)$([regex]::Escape($PathSeparator))"
-	[string[]] $jsonpath = ($PropertyName -split $UnescapedPathSeparator) -replace '(?s)\\(.)','$1'
+	[string[]] $jsonpath = switch($PropertyName)
+	{
+		'' {@()}
+		'/' {@('')}
+		default {$_ -replace '\A/' -split '/' -replace '~1','/' -replace '~0','~'}
+	}
 }
 Process
 {
-	$object = ($Path ? (Get-Content $Path -Raw) : $InputObject) |ConvertFrom-Json
+	$object = ($Path ? (Get-Content $Path -Raw) : $InputObject) |ConvertFrom-Json -AsHashtable
 	$property = $object
 	for($i = 0; $i -lt ($jsonpath.Length-1); $i++)
 	{
 		$nameSegment = $jsonpath[$i]
-		if(!$property.PSObject.Properties.Match($nameSegment,'NoteProperty').Count)
+		if(!$property.ContainsKey($nameSegment))
 		{
-			$property |Add-Member $nameSegment ([pscustomobject]@{})
+			$property[$nameSegment] = @{}
 		}
 		$property = $property.$nameSegment
 	}
 	$nameSegment = $jsonpath[-1]
-	if($property.PSObject.Properties.Match($nameSegment,'NoteProperty').Count)
+	if($property.ContainsKey($nameSegment))
 	{
 		if($WarnOverwrite) {Write-Warning "Property $PropertyName overwriting '$($property.$nameSegment)'."}
-		$property.$nameSegment = $PropertyValue
+		$property[$nameSegment] = $PropertyValue
 	}
-	else {$property |Add-Member ($jsonpath[-1]) $PropertyValue -Force}
+	else {$property[$jsonpath[-1]] = $PropertyValue}
 	$value = $object |ConvertTo-Json -Depth 100
 	if($Path) {$value |Out-File $Path utf8NoBOM}
 	else {return $value}
