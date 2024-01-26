@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='218'>218 &#x2030;</meter> Scripts repo (211) &#x1F4C5; 509 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='217'>217 &#x2030;</meter> Scripts repo (212) &#x1F4C5; 509 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> A (10) &#x1F4C5; 437 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> Add (10) &#x1F4C5; 437 days</summary>
 
@@ -320,16 +320,17 @@ Script Tests
 - &#x2716;&#xFE0F; Restore-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started S (18) </summary>
+<li><details><summary>not started S (19) </summary>
 <ul><li><details><summary>not started Save (2) </summary>
 
 - &#x2716;&#xFE0F; Save-PodcastEpisodes.ps1
 - &#x2716;&#xFE0F; Save-WebRequest.ps1
 
 </details></li>
-<li><details><summary>not started Select (1) </summary>
+<li><details><summary>not started Select (2) </summary>
 
 - &#x2716;&#xFE0F; Select-CapturesFromMatches.ps1
+- &#x2716;&#xFE0F; Select-Json.ps1
 
 </details></li>
 <li><details><summary>not started Send (4) </summary>
@@ -343,7 +344,7 @@ Script Tests
 <li><details><summary>not started Set (5) </summary>
 
 - &#x2716;&#xFE0F; Set-ConsoleColorTheme.ps1
-- &#x2716;&#xFE0F; Set-JsonProperty.ps1
+- &#x2716;&#xFE0F; Set-Json.ps1
 - &#x2716;&#xFE0F; Set-ParameterDefault.ps1
 - &#x2716;&#xFE0F; Set-RegexReplace.ps1
 - &#x2716;&#xFE0F; Set-VSCodeSetting.ps1
