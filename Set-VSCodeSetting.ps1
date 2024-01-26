@@ -12,7 +12,7 @@ https://code.visualstudio.com/docs/getstarted/settings
 Get-VSCodeSettingsFile.ps1
 
 .LINK
-Set-JsonProperty.ps1
+Set-Json.ps1
 
 .EXAMPLE
 Set-VSCodeSetting.ps1 git.autofetch $true -Workspace
@@ -49,4 +49,4 @@ if(!(${settings.json} |Split-Path |Test-Path -PathType Container)) {mkdir (${set
 if(!(Test-Path ${settings.json} -PathType Leaf)) {'{}' |Out-File ${settings.json} -Encoding utf8}
 
 $settings = Get-Content ${settings.json} -Raw
-$settings |Set-JsonProperty.ps1 $Name $Value -WarnOverwrite |Out-File ${settings.json} -Encoding utf8
+$settings |Set-Json.ps1 $Name $Value -WarnOverwrite |Out-File ${settings.json} -Encoding utf8

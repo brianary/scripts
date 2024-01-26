@@ -30,7 +30,7 @@ Downloads podcast episodes to the current directory.
 )
 Begin
 {
-	[regex] $invalidchars = "(?:$(([io.path]::GetInvalidFileNameChars() |ForEach-Object {'\x{0:X2}' -f [int]$_}) -join '|'))+"
+	[regex] $invalidchars = "(?:[$(([io.path]::GetInvalidFileNameChars() |ForEach-Object {'\x{0:X2}' -f [int]$_}) -join '')])+"
 }
 Process
 {
