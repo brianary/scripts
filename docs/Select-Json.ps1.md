@@ -5,22 +5,15 @@ online version: https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-po
 schema: 2.0.0
 ---
 
-# Select-Json.ps1
+# Select-CapturesFromMatches.ps1
 
 ## SYNOPSIS
-Returns a value from a JSON string or file.
+Selects named capture group values as note properties from Select-String MatchInfo objects.
 
 ## SYNTAX
 
-### InputObject
 ```
-Select-Json.ps1 [[-PropertyName] <String>] [-InputObject <Object>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
-```
-
-### Path
-```
-Select-Json.ps1 [[-PropertyName] <String>] -Path <String> [-ProgressAction <ActionPreference>]
+Select-CapturesFromMatches.ps1 [[-MatchInfo] <MatchInfo>] [-ValuesOnly] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
@@ -31,115 +24,42 @@ Select-Json.ps1 [[-PropertyName] <String>] -Path <String> [-ProgressAction <Acti
 
 ### EXAMPLE 1
 ```
-'true' |Select-Json.ps1  # default selection is entire parsed JSON document
+.*?\b)\s*(?<Email>\S+@\S+)$' addrbook.txt |Select-CapturesFromMatches.ps1
 ```
 
-True
-
-### EXAMPLE 2
-```
-'{"":3.14}' |Select-Json.ps1 /
-```
-
-3.14
-
-### EXAMPLE 3
-```
-'{a:1}' |Select-Json.ps1 /a
-```
-
-1
-
-### EXAMPLE 4
-```
-'{a:1}' |Select-Json.ps1 /b |Measure-Object |Select-Object -ExpandProperty Count  # nothing returned
-```
-
-0
-
-### EXAMPLE 5
-```
-Select-Json.ps1 /powershell.codeFormatting.preset -Path ./.vscode/settings.json
-```
-
-Allman
-
-### EXAMPLE 6
-```
-'{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |Select-Json.ps1 /b/ZZ~1ZZ/AD~0BC
-```
-
-7
-
-### EXAMPLE 7
-```
-'{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |Select-Json.ps1 /b/ZZ~1ZZ
-```
-
-Name  Value
-----  -----
-AD~BC 7
-
-### EXAMPLE 8
-```
-'{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |ConvertFrom-Json |Select-Json.ps1 /b/ZZ~1ZZ
-```
-
-AD~BC
------
-    7
-
-### EXAMPLE 9
-```
-'{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |Select-Json.ps1 /b/ZZ~1ZZ |ConvertTo-Json -Compress
-```
-
-{"AD~BC":7}
+Name            Email
+----            -----
+Arthur Dent     adent@example.org
+Tricia McMillan trillian@example.com
 
 ## PARAMETERS
 
-### -PropertyName
-The full path name of the property to get, as a JSON Pointer, which separates each nested
-element name with a /, and literal / is escaped as ~1, and literal ~ is escaped as ~0.
+### -MatchInfo
+The MatchInfo output from Select-String to select named capture group values from.
 
 ```yaml
-Type: String
+Type: MatchInfo
 Parameter Sets: (All)
-Aliases: Name
+Aliases: InputObject
 
 Required: False
 Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -InputObject
-The JSON (string or parsed object/hashtable) to get the value from.
-
-```yaml
-Type: Object
-Parameter Sets: InputObject
-Aliases:
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Path
-A JSON file to update.
+### -ValuesOnly
+Return the capture group values without building objects.
 
 ```yaml
-Type: String
-Parameter Sets: Path
+Type: SwitchParameter
+Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -164,19 +84,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.String containing JSON, or
-### System.Collections.Hashtable parsed from JSON, or
-### System.Management.Automation.PSObject parsed from JSON.
+### Microsoft.PowerShell.Commands.MatchInfo, output from Select-String that used a pattern
+### with named capture groups.
 ## OUTPUTS
 
-### System.Boolean, System.Int64, System.Double, System.String,
-### System.Management.Automation.PSObject, or
-### System.Management.Automation.OrderedHashtable (or null) selected from JSON.
+### System.Management.Automation.PSObject containing selected capture group values.
 ## NOTES
 
 ## RELATED LINKS
-
-[https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-04](https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-04)
-
-[ConvertFrom-Json]()
-
