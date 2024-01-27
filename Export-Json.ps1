@@ -20,11 +20,21 @@ http://jsonref.org/
 https://www.rfc-editor.org/rfc/rfc6901
 
 .EXAMPLE
-'{d:{a:{b:1,c:{"$ref":"#/d/z"}},z:2}}' |Export-Json.ps1 /d/a
+'{d:{a:{b:1,c:{"$ref":"#/d/two"}},two:2}}' |Export-Json.ps1 /d/a
 
 {
   "b": 1,
   "c": 2
+}
+
+.EXAMPLE
+'{d:{a:{b:1,c:{"$ref":"#/d/c"}},c:{d:{"$ref":"#/d/two"}},two:2}}' |Export-Json.ps1 /d/a
+
+{
+  "b": 1,
+  "c": {
+    "d": 2
+  }
 }
 #>
 
@@ -48,9 +58,13 @@ function Get-Reference
 	)
 	if($ReferenceUri.OriginalString -like '#*')
 	{
-		return $Root |Select-Json.ps1 ($ReferenceUri.OriginalString -replace '\A#')
+		return $Root |
+			Select-Json.ps1 ($ReferenceUri.OriginalString -replace '\A#') |
+			Import-Reference -Root $Root
 	}
-	return Invoke-RestMethod $ReferenceUri |Select-Json.ps1 ($ReferenceUri.Fragment -replace '\A#')
+	return Invoke-RestMethod $ReferenceUri |
+		Select-Json.ps1 ($ReferenceUri.Fragment -replace '\A#') |
+		Import-Reference -Root $Root
 }
 
 filter Import-Reference
