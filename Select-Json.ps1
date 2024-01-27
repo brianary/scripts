@@ -16,7 +16,7 @@ System.Management.Automation.OrderedHashtable (or null) selected from JSON.
 Json
 
 .LINK
-https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-04
+https://www.rfc-editor.org/rfc/rfc6901
 
 .LINK
 ConvertFrom-Json

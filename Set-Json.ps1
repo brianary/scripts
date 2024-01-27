@@ -12,7 +12,7 @@ System.String containing updated JSON (unless a file is specified, which is upda
 Json
 
 .LINK
-https://datatracker.ietf.org/doc/html/draft-ietf-appsawg-json-pointer-04
+https://www.rfc-editor.org/rfc/rfc6901
 
 .LINK
 ConvertFrom-Json
