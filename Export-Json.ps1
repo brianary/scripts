@@ -41,13 +41,15 @@ https://www.rfc-editor.org/rfc/rfc6901
 #Requires -Version 7
 [CmdletBinding()] Param(
 <#
-The full path name of the property to get, as a JSON Pointer, which separates each nested
-element name with a /, and literal / is escaped as ~1, and literal ~ is escaped as ~0.
+The full path name of the property to get, as a JSON Pointer, modified to support wildcards:
+~0 = ~  ~1 = /  ~2 = ?  ~3 = *  ~4 = [
 #>
-[Parameter(Position=0)][Alias('Name')][AllowEmptyString()][ValidatePattern('\A(?:|/(?:[^~]|~0|~1)*)\z')]
+[Parameter(Position=0)][Alias('Name')][AllowEmptyString()][ValidatePattern('\A(?:|/(?:[^~]|~[0-4])*)\z')]
 [string] $PropertyName = '',
 # The JSON (string or parsed object/hashtable) to get the value from.
-[Parameter(ParameterSetName='InputObject',ValueFromPipeline=$true)] $InputObject
+[Parameter(ParameterSetName='InputObject',ValueFromPipeline=$true)] $InputObject,
+# A JSON file to update.
+[Parameter(ParameterSetName='Path',Mandatory=$true)][string] $Path
 )
 
 function Get-Reference
@@ -101,6 +103,7 @@ filter Import-Reference
 	return $InputObject
 }
 
+if($Path) {$InputObject = Get-Content $Path -Raw}
 $root = $InputObject -is [string] ? ($InputObject |ConvertFrom-Json) : $InputObject
 $selection = $root |Select-Json.ps1 $PropertyName
 return $selection |Import-Reference -Root $root |ConvertTo-Json -Depth 100

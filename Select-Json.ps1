@@ -74,10 +74,10 @@ AD~BC
 #Requires -Version 7
 [CmdletBinding()][OutputType([bool],[long],[double],[string],[Management.Automation.OrderedHashtable])] Param(
 <#
-The full path name of the property to get, as a JSON Pointer, which separates each nested
-element name with a /, and literal / is escaped as ~1, and literal ~ is escaped as ~0.
+The full path name of the property to get, as a JSON Pointer, modified to support wildcards:
+~0 = ~  ~1 = /  ~2 = ?  ~3 = *  ~4 = [
 #>
-[Parameter(Position=0)][Alias('Name')][AllowEmptyString()][ValidatePattern('\A(?:|/(?:[^~]|~0|~1)*)\z')]
+[Parameter(Position=0)][Alias('Name')][AllowEmptyString()][ValidatePattern('\A(?:|/(?:[^~]|~[0-4])*)\z')]
 [string] $PropertyName = '',
 # The JSON (string or parsed object/hashtable) to get the value from.
 [Parameter(ParameterSetName='InputObject',ValueFromPipeline=$true)] $InputObject,
@@ -87,7 +87,55 @@ element name with a /, and literal / is escaped as ~1, and literal ~ is escaped 
 Begin
 {
 	[string[]] $jsonpath = switch($PropertyName) { '' {,@()} '/' {,@('')}
-		default {,@($_ -replace '\A/' -split '/' -replace '~1','/' -replace '~0','~')} }
+		default {,@($_ -replace '\A/' -replace '~4','[[]' -replace '~3','[*]' -replace '~2','[?]' -split '/' -replace '~1','/' -replace '~0','~')} }
+
+	filter Select-Next
+	{
+		[CmdletBinding()] Param(
+		[Parameter(ValueFromPipeline=$true)] $InputObject,
+		[string[]] $Segments
+		)
+		if(!$Segments.Count) {return $InputObject}
+		$segment,$Segments = $Segments
+		if($null -eq $Segments) {[string[]]$Segments = @()}
+		if($segment -match '[?*[]')
+		{
+			if($InputObject -is [array])
+			{
+				return 0..($InputObject.Length-1) -like $segment |ForEach-Object {$InputObject[$_]} |Select-Next -Segments $Segments
+			}
+			elseif($InputObject -is [Collections.IDictionary])
+			{
+				return $InputObject.Keys -like $segment |ForEach-Object {$InputObject[$_]} |Select-Next -Segments $Segments
+			}
+			else
+			{
+				return $InputObject.PSObject.Properties.Match($segment) |
+					Select-Object -ExpandProperty Value |
+					Select-Next -Segments $Segments
+			}
+		}
+		else
+		{
+			if($InputObject -is [array])
+			{
+				if(![int]::TryParse($segment,[ref]$segment)) {return}
+				elseif($InputObject.Length -le $segment) {return}
+				else {return Select-Next -InputObject ($InputObject[$segment]) -Segments $Segments}
+			}
+			elseif($InputObject -is [Collections.IDictionary])
+			{
+				if(!$InputObject.ContainsKey($segment)) {return}
+				else {return Select-Next -InputObject ($InputObject[$segment]) -Segments $Segments}
+			}
+			else
+			{
+				return $InputObject.PSObject.Properties.Match($segment) |
+					Select-Object -ExpandProperty Value |
+					Select-Next -Segments $Segments
+			}
+		}
+	}
 }
 Process
 {
@@ -95,12 +143,5 @@ Process
 	if($null -eq $InputObject) {return}
 	if($InputObject -is [string]) {return $InputObject |ConvertFrom-Json -AsHashtable |Select-Json.ps1 -PropertyName $PropertyName}
 	if(!$jsonpath.Length) {return $InputObject}
-	$selection,$hashmode = $InputObject,($InputObject -is [Collections.IDictionary])
-	foreach($segment in $jsonpath)
-	{
-		if($hashmode) {if(!$selection.ContainsKey($segment)) {return}}
-		elseif(!$selection.PSObject.Properties.Match($segment).Count) {return}
-		$selection = $selection.$segment
-	}
-	return $selection
+	return Select-Next -InputObject $InputObject -Segments $jsonpath
 }
