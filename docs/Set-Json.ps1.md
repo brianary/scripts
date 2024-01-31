@@ -14,13 +14,13 @@ Sets a property in a JSON string or file.
 
 ### InputObject
 ```
-Set-Json.ps1 [[-PropertyName] <String>] [-PropertyValue] <PSObject> [-WarnOverwrite] -InputObject <String>
+Set-Json.ps1 [[-JsonPointer] <String>] [-PropertyValue] <PSObject> [-WarnOverwrite] -InputObject <String>
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Path
 ```
-Set-Json.ps1 [[-PropertyName] <String>] [-PropertyValue] <PSObject> [-WarnOverwrite] -Path <String>
+Set-Json.ps1 [[-JsonPointer] <String>] [-PropertyValue] <PSObject> [-WarnOverwrite] -Path <String>
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -79,7 +79,7 @@ Sets "powershell.codeFormatting.preset": "Allman" within the ./.vscode/settings.
 
 ## PARAMETERS
 
-### -PropertyName
+### -JsonPointer
 The full path name of the property to set, as a JSON Pointer, which separates each nested
 element name with a /, and literal / is escaped as ~1, and literal ~ is escaped as ~0.
 

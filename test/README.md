@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='216'>216 &#x2030;</meter> Scripts repo (213) &#x1F4C5; 509 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='213'>213 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 509 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> A (10) &#x1F4C5; 437 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> Add (10) &#x1F4C5; 437 days</summary>
 
@@ -91,7 +91,7 @@ Script Tests
 - &#x2714;&#xFE0F; Disable-AnsiColor.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='200'>200 &#x2030;</meter> E (10) &#x1F4C5; 57 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='182'>182 &#x2030;</meter> E (11) &#x1F4C5; 57 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Enable (1) &#x1F4C5; 57 days</summary>
 
 - &#x2714;&#xFE0F; Enable-AnsiColor.ps1
@@ -102,13 +102,14 @@ Script Tests
 - &#x2714;&#xFE0F; Expand-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary>not started Export (8) </summary>
+<li><details><summary>not started Export (9) </summary>
 
 - &#x2716;&#xFE0F; Export-DatabaseScripts.ps1
 - &#x2716;&#xFE0F; Export-EdgeKeywords.ps1
 - &#x2716;&#xFE0F; Export-InstalledPackages.ps1
 - &#x2716;&#xFE0F; Export-Json.ps1
 - &#x2716;&#xFE0F; Export-MermaidER.ps1
+- &#x2716;&#xFE0F; Export-OpenApiSchema.ps1
 - &#x2716;&#xFE0F; Export-Readme.ps1
 - &#x2716;&#xFE0F; Export-SecretVault.ps1
 - &#x2716;&#xFE0F; Export-TableMerge.ps1
@@ -145,8 +146,8 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> G (38) &#x1F4C5; 198 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> Get (38) &#x1F4C5; 198 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> G (39) &#x1F4C5; 198 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> Get (39) &#x1F4C5; 198 days</summary>
 
 - &#x2716;&#xFE0F; Get-ADServiceAccountInfo.ps1
 - &#x2716;&#xFE0F; Get-ADUserStatus.ps1
@@ -172,6 +173,7 @@ Script Tests
 - &#x2714;&#xFE0F; Get-IisLog.ps1
 - &#x2716;&#xFE0F; Get-LibraryVulnerabilityInfo.ps1
 - &#x2716;&#xFE0F; Get-NuGetConfigs.ps1
+- &#x2716;&#xFE0F; Get-OpenApiInfo.ps1
 - &#x2716;&#xFE0F; Get-PocketArticles.ps1
 - &#x2716;&#xFE0F; Get-RandomBytes.ps1
 - &#x2716;&#xFE0F; Get-RepoName.ps1
@@ -279,7 +281,7 @@ Script Tests
 - &#x2716;&#xFE0F; Push-WorkspaceLocation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started R (17) </summary>
+<li><details><summary>not started R (18) </summary>
 <ul><li><details><summary>not started Read (2) </summary>
 
 - &#x2716;&#xFE0F; Read-ChocolateySummary.ps1
@@ -309,8 +311,9 @@ Script Tests
 - &#x2716;&#xFE0F; Repair-ScriptStyle.ps1
 
 </details></li>
-<li><details><summary>not started Resolve (2) </summary>
+<li><details><summary>not started Resolve (3) </summary>
 
+- &#x2716;&#xFE0F; Resolve-JsonPointer.ps1
 - &#x2716;&#xFE0F; Resolve-XmlSchemaLocation.ps1
 - &#x2716;&#xFE0F; Resolve-XPath.ps1
 

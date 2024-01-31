@@ -1,26 +1,26 @@
 ---
 external help file: -help.xml
 Module Name:
-online version: http://jsonref.org/
+online version: https://www.rfc-editor.org/rfc/rfc6901
 schema: 2.0.0
 ---
 
-# Export-Json.ps1
+# Resolve-JsonPointer.ps1
 
 ## SYNOPSIS
-Exports a portion of a JSON document, recursively importing references.
+Returns a value from a JSON string or file.
 
 ## SYNTAX
 
 ### InputObject
 ```
-Export-Json.ps1 [[-JsonPointer] <String>] [-InputObject <Object>] [-ProgressAction <ActionPreference>]
+Resolve-JsonPointer.ps1 [[-JsonPointer] <String>] [-InputObject <Object>] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
 ### Path
 ```
-Export-Json.ps1 [[-JsonPointer] <String>] -Path <String> [-ProgressAction <ActionPreference>]
+Resolve-JsonPointer.ps1 [[-JsonPointer] <String>] -Path <String> [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
@@ -31,31 +31,45 @@ Export-Json.ps1 [[-JsonPointer] <String>] -Path <String> [-ProgressAction <Actio
 
 ### EXAMPLE 1
 ```
-'{d:{a:{b:1,c:{"$ref":"#/d/two"}},two:2}}' |Export-Json.ps1 /d/a
+'{a:1}' |Resolve-JsonPointer.ps1 /*
 ```
 
-{
-  "b": 1,
-  "c": 2
-}
+/a
 
 ### EXAMPLE 2
 ```
-'{d:{a:{b:1,c:{"$ref":"#/d/c"}},c:{d:{"$ref":"#/d/two"}},two:2}}' |Export-Json.ps1 /d/a
+Resolve-JsonPointer.ps1 /powershell.*.preset -Path ./.vscode/settings.json
 ```
 
-{
-  "b": 1,
-  "c": {
-    "d": 2
-  }
-}
+/powershell.codeFormatting.preset
+
+### EXAMPLE 3
+```
+'{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |Resolve-JsonPointer.ps1 /*/ZZ?ZZ/AD?BC
+```
+
+/b/ZZ~1ZZ/AD~0BC
+
+### EXAMPLE 4
+```
+'{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |Resolve-JsonPointer.ps1 /[bc]/ZZ?ZZ
+```
+
+/b/ZZ~1ZZ
+
+### EXAMPLE 5
+```
+'{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |ConvertFrom-Json |Resolve-JsonPointer.ps1 /?/ZZ*/*BC
+```
+
+/b/ZZ~1ZZ/AD~0BC
 
 ## PARAMETERS
 
 ### -JsonPointer
 The full path name of the property to get, as a JSON Pointer, modified to support wildcards:
-~0 = ~  ~1 = /  ~2 = ?  ~3 = *  ~4 = [
+~0 = ~  ~1 = /  ~2 = ? 
+~3 = *  ~4 = \[
 
 ```yaml
 Type: String
@@ -124,12 +138,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### System.Management.Automation.PSObject parsed from JSON.
 ## OUTPUTS
 
-### System.String containing the extracted JSON.
+### System.String of the full JSON Pointer matched.
 ## NOTES
 
 ## RELATED LINKS
 
-[http://jsonref.org/](http://jsonref.org/)
-
 [https://www.rfc-editor.org/rfc/rfc6901](https://www.rfc-editor.org/rfc/rfc6901)
+
+[ConvertFrom-Json]()
 
