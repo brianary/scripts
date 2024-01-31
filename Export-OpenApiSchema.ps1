@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Extracts the JSON schema from an OpenAPI definition.
+Extracts a JSON schema from an OpenAPI definition.
 
 .OUTPUTS
 System.String of the extracted JSON schema.

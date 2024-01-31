@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Returns a value from a JSON string or file.
+Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
 
 .INPUTS
 System.String containing JSON, or
