@@ -69,7 +69,7 @@ The full path name of the property to set, as a JSON Pointer, which separates ea
 element name with a /, and literal / is escaped as ~1, and literal ~ is escaped as ~0.
 #>
 [Parameter(Position=0)][Alias('Name')][AllowEmptyString()][ValidatePattern('\A(?:|/(?:[^~]|~0|~1)*)\z')]
-[string] $PropertyName = '',
+[string] $JsonPointer = '',
 # The value to set the property to.
 [Parameter(Position=1,Mandatory=$true)][AllowEmptyString()][AllowEmptyCollection()][AllowNull()]
 [Alias('Value')][psobject] $PropertyValue,
@@ -82,7 +82,7 @@ element name with a /, and literal / is escaped as ~1, and literal ~ is escaped 
 )
 Begin
 {
-	[string[]] $jsonpath = switch($PropertyName) { '' {,@()} '/' {,@('')}
+	[string[]] $jsonpath = switch($JsonPointer) { '' {,@()}
 		default {,@($_ -replace '\A/' -split '/' -replace '~1','/' -replace '~0','~')} }
 }
 Process
@@ -104,7 +104,7 @@ Process
 	$segment = $jsonpath[-1]
 	if($property.ContainsKey($segment))
 	{
-		if($WarnOverwrite) {Write-Warning "Property $PropertyName overwriting '$($property.$segment)'."}
+		if($WarnOverwrite) {Write-Warning "Property $JsonPointer overwriting '$($property.$segment)'."}
 		$property[$segment] = $PropertyValue
 	}
 	else {$property[$jsonpath[-1]] = $PropertyValue}

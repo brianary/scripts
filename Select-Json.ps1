@@ -78,7 +78,7 @@ The full path name of the property to get, as a JSON Pointer, modified to suppor
 ~0 = ~  ~1 = /  ~2 = ?  ~3 = *  ~4 = [
 #>
 [Parameter(Position=0)][Alias('Name')][AllowEmptyString()][ValidatePattern('\A(?:|/(?:[^~]|~[0-4])*)\z')]
-[string] $PropertyName = '',
+[string] $JsonPointer = '',
 # The JSON (string or parsed object/hashtable) to get the value from.
 [Parameter(ParameterSetName='InputObject',ValueFromPipeline=$true)] $InputObject,
 # A JSON file to update.
@@ -86,7 +86,7 @@ The full path name of the property to get, as a JSON Pointer, modified to suppor
 )
 Begin
 {
-	[string[]] $jsonpath = switch($PropertyName) { '' {,@()} '/' {,@('')}
+	[string[]] $jsonpath = switch($JsonPointer) { '' {,@()}
 		default {,@($_ -replace '\A/' -replace '~4','[[]' -replace '~3','[*]' -replace '~2','[?]' -split '/' -replace '~1','/' -replace '~0','~')} }
 
 	filter Select-Next
@@ -139,9 +139,9 @@ Begin
 }
 Process
 {
-	if($Path) {return Get-Content -Path $Path -Raw |ConvertFrom-Json -AsHashtable |Select-Json.ps1 -PropertyName $PropertyName}
+	if($Path) {return Get-Content -Path $Path -Raw |ConvertFrom-Json -AsHashtable |Select-Json.ps1 -JsonPointer $JsonPointer}
 	if($null -eq $InputObject) {return}
-	if($InputObject -is [string]) {return $InputObject |ConvertFrom-Json -AsHashtable |Select-Json.ps1 -PropertyName $PropertyName}
+	if($InputObject -is [string]) {return $InputObject |ConvertFrom-Json -AsHashtable |Select-Json.ps1 -JsonPointer $JsonPointer}
 	if(!$jsonpath.Length) {return $InputObject}
 	return Select-Next -InputObject $InputObject -Segments $jsonpath
 }

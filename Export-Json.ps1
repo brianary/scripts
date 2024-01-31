@@ -19,6 +19,9 @@ http://jsonref.org/
 .LINK
 https://www.rfc-editor.org/rfc/rfc6901
 
+.LINK
+Select-Json.ps1
+
 .EXAMPLE
 '{d:{a:{b:1,c:{"$ref":"#/d/two"}},two:2}}' |Export-Json.ps1 /d/a
 
@@ -39,13 +42,13 @@ https://www.rfc-editor.org/rfc/rfc6901
 #>
 
 #Requires -Version 7
-[CmdletBinding()] Param(
+[CmdletBinding()][OutputType([string])] Param(
 <#
 The full path name of the property to get, as a JSON Pointer, modified to support wildcards:
 ~0 = ~  ~1 = /  ~2 = ?  ~3 = *  ~4 = [
 #>
 [Parameter(Position=0)][Alias('Name')][AllowEmptyString()][ValidatePattern('\A(?:|/(?:[^~]|~[0-4])*)\z')]
-[string] $PropertyName = '',
+[string] $JsonPointer = '',
 # The JSON (string or parsed object/hashtable) to get the value from.
 [Parameter(ParameterSetName='InputObject',ValueFromPipeline=$true)] $InputObject,
 # A JSON file to update.
@@ -105,5 +108,5 @@ filter Import-Reference
 
 if($Path) {$InputObject = Get-Content $Path -Raw}
 $root = $InputObject -is [string] ? ($InputObject |ConvertFrom-Json) : $InputObject
-$selection = $root |Select-Json.ps1 $PropertyName
+$selection = $root |Select-Json.ps1 $JsonPointer
 return $selection |Import-Reference -Root $root |ConvertTo-Json -Depth 100
