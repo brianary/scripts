@@ -170,10 +170,10 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Json
 
 - &#x1F195; **[Export-Json.ps1](Export-Json.ps1.md)**: Exports a portion of a JSON document, recursively importing references.
-- &#x1F195; **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1.md)**: Extracts the JSON schema from an OpenAPI definition.
+- &#x1F195; **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1.md)**: Extracts a JSON schema from an OpenAPI definition.
 - &#x1F195; **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1.md)**: Returns metadata from an OpenAPI definition.
 - **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
-- &#x1F195; **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1.md)**: Returns a value from a JSON string or file.
+- &#x1F195; **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1.md)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
 - &#x1F195; **[Select-Json.ps1](Select-Json.ps1.md)**: Returns a value from a JSON string or file.
 - &#x1F195; **[Set-Json.ps1](Set-Json.ps1.md)**: Sets a property in a JSON string or file.
 

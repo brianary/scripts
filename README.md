@@ -177,10 +177,10 @@ PowerShell Scripts
 ### Json
 
 - :new: **[Export-Json.ps1](Export-Json.ps1)**: Exports a portion of a JSON document, recursively importing references.
-- :new: **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1)**: Extracts the JSON schema from an OpenAPI definition.
+- :new: **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1)**: Extracts a JSON schema from an OpenAPI definition.
 - :new: **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1)**: Returns metadata from an OpenAPI definition.
 - **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
-- :new: **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1)**: Returns a value from a JSON string or file.
+- :new: **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
 - :new: **[Select-Json.ps1](Select-Json.ps1)**: Returns a value from a JSON string or file.
 - :new: **[Set-Json.ps1](Set-Json.ps1)**: Sets a property in a JSON string or file.
 
@@ -351,4 +351,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 01/30/2024 21:32:52 -->
+<!-- generated 02/01/2024 07:16:17 -->
