@@ -14,13 +14,13 @@ Exports a portion of a JSON document, recursively importing references.
 
 ### InputObject
 ```
-Export-Json.ps1 [[-JsonPointer] <String>] [-InputObject <Object>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Export-Json.ps1 [[-JsonPointer] <String>] [-InputObject <Object>] [-Compress]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Path
 ```
-Export-Json.ps1 [[-JsonPointer] <String>] -Path <String> [-ProgressAction <ActionPreference>]
+Export-Json.ps1 [[-JsonPointer] <String>] -Path <String> [-Compress] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
@@ -95,6 +95,21 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Compress
+Omits white space and indented formatting in the output string.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='213'>213 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 509 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='222'>222 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 553 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> A (10) &#x1F4C5; 437 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> Add (10) &#x1F4C5; 437 days</summary>
 
@@ -324,17 +324,17 @@ Script Tests
 - &#x2716;&#xFE0F; Restore-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started S (19) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='105'>105 &#x2030;</meter> S (19) &#x1F4C5; at once</summary>
 <ul><li><details><summary>not started Save (2) </summary>
 
 - &#x2716;&#xFE0F; Save-PodcastEpisodes.ps1
 - &#x2716;&#xFE0F; Save-WebRequest.ps1
 
 </details></li>
-<li><details><summary>not started Select (2) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Select (2) &#x1F4C5; at once</summary>
 
-- &#x2716;&#xFE0F; Select-CapturesFromMatches.ps1
-- &#x2716;&#xFE0F; Select-Json.ps1
+- &#x2714;&#xFE0F; Select-CapturesFromMatches.ps1
+- &#x2714;&#xFE0F; Select-Json.ps1
 
 </details></li>
 <li><details><summary>not started Send (4) </summary>
