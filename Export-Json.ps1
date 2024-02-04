@@ -31,14 +31,9 @@ Select-Json.ps1
 }
 
 .EXAMPLE
-'{d:{a:{b:1,c:{"$ref":"#/d/c"}},c:{d:{"$ref":"#/d/two"}},two:2}}' |Export-Json.ps1 /d/a
+'{d:{a:{b:1,c:{"$ref":"#/d/c"}},c:{d:{"$ref":"#/d/two"}},two:2}}' |Export-Json.ps1 /d/a -Compress
 
-{
-  "b": 1,
-  "c": {
-    "d": 2
-  }
-}
+{"b":1,"c":{"d":2}}
 #>
 
 #Requires -Version 7
@@ -52,32 +47,26 @@ The full path name of the property to get, as a JSON Pointer, modified to suppor
 # The JSON (string or parsed object/hashtable) to get the value from.
 [Parameter(ParameterSetName='InputObject',ValueFromPipeline=$true)] $InputObject,
 # A JSON file to update.
-[Parameter(ParameterSetName='Path',Mandatory=$true)][string] $Path
+[Parameter(ParameterSetName='Path',Mandatory=$true)][string] $Path,
+# Omits white space and indented formatting in the output string.
+[switch] $Compress
 )
 
 function Get-Reference
 {
-	[CmdletBinding()] Param(
-	[uri] $ReferenceUri,
-	$Root
-	)
-	if($ReferenceUri.OriginalString -like '#*')
+	[CmdletBinding()] Param([uri] $ReferenceUri, $Root)
+	$source,$pointer = switch($ReferenceUri)
 	{
-		return $Root |
-			Select-Json.ps1 ($ReferenceUri.OriginalString -replace '\A#') |
-			Import-Reference -Root $Root
+		{$_.OriginalString -like '#*'} {$Root,($_.OriginalString -replace '\A#')}
+		{$_.IsFile} {(Get-Content $_.LocalPath -Raw |ConvertFrom-Json -AsHashtable),($_.Fragment -replace '\A*')}
+		default {(Invoke-RestMethod $ReferenceUri),($_.Fragment -replace '\A#')}
 	}
-	return Invoke-RestMethod $ReferenceUri |
-		Select-Json.ps1 ($ReferenceUri.Fragment -replace '\A#') |
-		Import-Reference -Root $Root
+	return $source |Select-Json.ps1 $pointer |Import-Reference -Root $Root
 }
 
 filter Import-Reference
 {
-	[CmdletBinding()] Param(
-	$Root,
-	[Parameter(ValueFromPipeline=$true)] $InputObject
-	)
+	[CmdletBinding()] Param($Root, [Parameter(ValueFromPipeline=$true)] $InputObject)
 	if($null -eq $InputObject -or $InputObject -is [bool] -or $InputObject -is [long] -or
 		$InputObject -is [double] -or $InputObject -is [string]) {return $InputObject}
 	if(($InputObject |ConvertTo-Json -Depth 100) -notlike '*"$ref":*') {return $InputObject}
@@ -109,4 +98,4 @@ filter Import-Reference
 if($Path) {$InputObject = Get-Content $Path -Raw}
 $root = $InputObject -is [string] ? ($InputObject |ConvertFrom-Json) : $InputObject
 $selection = $root |Select-Json.ps1 $JsonPointer
-return $selection |Import-Reference -Root $root |ConvertTo-Json -Depth 100
+return $selection |Import-Reference -Root $root |ConvertTo-Json -Depth 100 -Compress:$Compress

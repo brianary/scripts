@@ -32,24 +32,9 @@ True
 3.14
 
 .EXAMPLE
-'{a:1}' |Select-Json.ps1 /a
-
-1
-
-.EXAMPLE
-'{a:1}' |Select-Json.ps1 /b |Measure-Object |Select-Object -ExpandProperty Count  # nothing returned
-
-0
-
-.EXAMPLE
 Select-Json.ps1 /powershell.codeFormatting.preset -Path ./.vscode/settings.json
 
 Allman
-
-.EXAMPLE
-'{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |Select-Json.ps1 /b/ZZ~1ZZ/AD~0BC
-
-7
 
 .EXAMPLE
 '{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |Select-Json.ps1 /b/ZZ~1ZZ
@@ -69,79 +54,125 @@ AD~BC
 '{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |Select-Json.ps1 /b/ZZ~1ZZ |ConvertTo-Json -Compress
 
 {"AD~BC":7}
+
+.EXAMPLE
+'{d:{a:{b:1,c:{"$ref":"#/d/c"}},c:{d:{"$ref":"#/d/two"}},two:2}}' |Select-Json.ps1 /*/a/c/* -FollowReferences
+
+2
 #>
 
 #Requires -Version 7
 [CmdletBinding()][OutputType([bool],[long],[double],[string],[Management.Automation.OrderedHashtable])] Param(
 <#
-The full path name of the property to get, as a JSON Pointer, modified to support wildcards:
-~0 = ~  ~1 = /  ~2 = ?  ~3 = *  ~4 = [
+The full path name of the property to get, as a JSON Pointer,
+modified to support wildcards: ~0 = ~  ~1 = /  ~2 = ?  ~3 = *  ~4 = [
 #>
 [Parameter(Position=0)][Alias('Name')][AllowEmptyString()][ValidatePattern('\A(?:|/(?:[^~]|~[0-4])*)\z')]
 [string] $JsonPointer = '',
 # The JSON (string or parsed object/hashtable) to get the value from.
 [Parameter(ParameterSetName='InputObject',ValueFromPipeline=$true)] $InputObject,
 # A JSON file to update.
-[Parameter(ParameterSetName='Path',Mandatory=$true)][string] $Path
+[Parameter(ParameterSetName='Path',Mandatory=$true)][string] $Path,
+# Indicates that references should be followed.
+[Alias('FollowRefs','References')][switch] $FollowReferences
 )
 Begin
 {
 	[string[]] $jsonpath = switch($JsonPointer) { '' {,@()}
 		default {,@($_ -replace '\A/' -replace '~4','[[]' -replace '~3','[*]' -replace '~2','[?]' -split '/' -replace '~1','/' -replace '~0','~')} }
 
-	filter Select-Next
+	function Get-ReferenceUri
+	{
+		[CmdletBinding()] Param($InputObject)
+		if($InputObject -is [array]) {return}
+		if($InputObject -is [Collections.IDictionary] -and $InputObject.ContainsKey('$ref')) {return $InputObject['$ref']}
+		if($InputObject.PSObject.Properties.Match('$ref').Count) {return $InputObject.'$ref'}
+	}
+
+	function Get-Reference
+	{
+		[CmdletBinding()] Param([uri] $ReferenceUri, $Root)
+		$source,$pointer = switch($ReferenceUri)
+		{
+			{$null -eq $_} {$Root,''; continue}
+			{$_.OriginalString -like '#*'} {$Root,($_.OriginalString -replace '\A#')}
+			{$_.IsFile} {(Get-Content $_.LocalPath -Raw |ConvertFrom-Json -AsHashtable),($_.Fragment -replace '\A*')}
+			default {(Invoke-RestMethod $ReferenceUri),($_.Fragment -replace '\A#')}
+		}
+		return $source |Select-Json.ps1 $pointer
+	}
+
+	function Select-Segment
+	{
+		[CmdletBinding()] Param([Parameter(Position=0)] $InputObject, [Parameter(Position=1)][string] $Segment)
+		if($InputObject -is [array])
+		{
+			if(![int]::TryParse($Segment,[ref]$Segment)) {return}
+			elseif($InputObject.Length -le $Segment) {return}
+			else {return $InputObject[$Segment]}
+		}
+		elseif($InputObject -is [Collections.IDictionary])
+		{
+			if(!$InputObject.ContainsKey($Segment)) {return}
+			else {return $InputObject[$Segment]}
+		}
+		else
+		{
+			return $InputObject.PSObject.Properties.Match($Segment) |
+				Select-Object -ExpandProperty Value
+		}
+	}
+
+	function Select-Wildcard
+	{
+		[CmdletBinding()] Param([Parameter(Position=0)] $InputObject, [Parameter(Position=1)][string] $Segment)
+		if($InputObject -is [array])
+		{
+			return 0..($InputObject.Length-1) -like $Segment |ForEach-Object {$InputObject[$_]}
+		}
+		elseif($InputObject -is [Collections.IDictionary])
+		{
+			return $InputObject.Keys -like $Segment |ForEach-Object {$InputObject[$_]}
+		}
+		else
+		{
+			return $InputObject.PSObject.Properties.Match($Segment) |
+				Select-Object -ExpandProperty Value
+		}
+	}
+
+	filter Select-Pointer
 	{
 		[CmdletBinding()] Param(
 		[Parameter(ValueFromPipeline=$true)] $InputObject,
 		[string[]] $Segments
 		)
+		if($FollowReferences)
+		{
+			$refUri = Get-ReferenceUri $InputObject
+			if($refUri) {return Get-Reference -ReferenceUri $refUri -Root $Script:Root |Select-Pointer -Segments $Segments}
+		}
 		if(!$Segments.Count) {return $InputObject}
 		$segment,$Segments = $Segments
 		if($null -eq $Segments) {[string[]]$Segments = @()}
-		if($segment -match '[?*[]')
-		{
-			if($InputObject -is [array])
-			{
-				return 0..($InputObject.Length-1) -like $segment |ForEach-Object {$InputObject[$_]} |Select-Next -Segments $Segments
-			}
-			elseif($InputObject -is [Collections.IDictionary])
-			{
-				return $InputObject.Keys -like $segment |ForEach-Object {$InputObject[$_]} |Select-Next -Segments $Segments
-			}
-			else
-			{
-				return $InputObject.PSObject.Properties.Match($segment) |
-					Select-Object -ExpandProperty Value |
-					Select-Next -Segments $Segments
-			}
-		}
-		else
-		{
-			if($InputObject -is [array])
-			{
-				if(![int]::TryParse($segment,[ref]$segment)) {return}
-				elseif($InputObject.Length -le $segment) {return}
-				else {return Select-Next -InputObject ($InputObject[$segment]) -Segments $Segments}
-			}
-			elseif($InputObject -is [Collections.IDictionary])
-			{
-				if(!$InputObject.ContainsKey($segment)) {return}
-				else {return Select-Next -InputObject ($InputObject[$segment]) -Segments $Segments}
-			}
-			else
-			{
-				return $InputObject.PSObject.Properties.Match($segment) |
-					Select-Object -ExpandProperty Value |
-					Select-Next -Segments $Segments
-			}
-		}
+		if($segment -match '[?*[]') {Select-Wildcard $InputObject $segment |Select-Pointer -Segments $Segments}
+		else {Select-Segment $InputObject $segment |Select-Pointer -Segments $Segments}
 	}
 }
 Process
 {
-	if($Path) {return Get-Content -Path $Path -Raw |ConvertFrom-Json -AsHashtable |Select-Json.ps1 -JsonPointer $JsonPointer}
+	if($Path)
+	{
+		return Get-Content -Path $Path -Raw |ConvertFrom-Json -AsHashtable |
+			Select-Json.ps1 -JsonPointer $JsonPointer -FollowReferences:$FollowReferences
+	}
 	if($null -eq $InputObject) {return}
-	if($InputObject -is [string]) {return $InputObject |ConvertFrom-Json -AsHashtable |Select-Json.ps1 -JsonPointer $JsonPointer}
+	if($InputObject -is [string])
+	{
+		return $InputObject |ConvertFrom-Json -AsHashtable |
+			Select-Json.ps1 -JsonPointer $JsonPointer -FollowReferences:$FollowReferences
+	}
 	if(!$jsonpath.Length) {return $InputObject}
-	return Select-Next -InputObject $InputObject -Segments $jsonpath
+	$Script:Root = $InputObject
+	return Select-Pointer -InputObject $InputObject -Segments $jsonpath
 }
