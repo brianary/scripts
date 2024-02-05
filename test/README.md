@@ -1,15 +1,15 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='222'>222 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 553 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> A (10) &#x1F4C5; 437 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> Add (10) &#x1F4C5; 437 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='231'>231 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 554 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 482 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 482 days</summary>
 
 - &#x2714;&#xFE0F; Add-CapturesToMatches.ps1
 - &#x2714;&#xFE0F; Add-Counter.ps1
 - &#x2714;&#xFE0F; Add-DynamicParam.ps1
 - &#x2714;&#xFE0F; Add-GitHubMetadata.ps1
-- &#x2716;&#xFE0F; Add-NotebookCell.ps1
+- &#x2714;&#xFE0F; Add-NotebookCell.ps1
 - &#x2714;&#xFE0F; Add-NoteProperty.ps1
 - &#x2714;&#xFE0F; Add-ParameterDefault.ps1
 - &#x2714;&#xFE0F; Add-ScopeLevel.ps1
@@ -25,7 +25,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='968'>968 &#x2030;</meter> C (31) &#x1F4C5; 505 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> C (31) &#x1F4C5; 554 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (3) &#x1F4C5; 148 days</summary>
 
 - &#x2714;&#xFE0F; Compare-Keys.ps1
@@ -43,20 +43,20 @@ Script Tests
 - &#x2714;&#xFE0F; Connect-SshKey.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 505 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 554 days</summary>
 
 - &#x2714;&#xFE0F; Convert-ChocolateyToWinget.ps1
 - &#x2714;&#xFE0F; Convert-ClipboardTsvToHtml.ps1
 - &#x2714;&#xFE0F; Convert-Xml.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='889'>889 &#x2030;</meter> ConvertFrom (9) &#x1F4C5; 290 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertFrom (9) &#x1F4C5; 382 days</summary>
 
 - &#x2714;&#xFE0F; ConvertFrom-Base64.ps1
 - &#x2714;&#xFE0F; ConvertFrom-CimInstance.ps1
 - &#x2714;&#xFE0F; ConvertFrom-DataRow.ps1
 - &#x2714;&#xFE0F; ConvertFrom-Duration.ps1
-- &#x2716;&#xFE0F; ConvertFrom-EpochTime.ps1
+- &#x2714;&#xFE0F; ConvertFrom-EpochTime.ps1
 - &#x2714;&#xFE0F; ConvertFrom-EscapedXml.ps1
 - &#x2714;&#xFE0F; ConvertFrom-Hex.ps1
 - &#x2714;&#xFE0F; ConvertFrom-IsoWeekDate.ps1
