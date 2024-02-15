@@ -69,15 +69,15 @@ filter Import-Reference
 	[CmdletBinding()] Param($Root, [Parameter(ValueFromPipeline=$true)] $InputObject)
 	if($null -eq $InputObject -or $InputObject -is [bool] -or $InputObject -is [long] -or
 		$InputObject -is [double] -or $InputObject -is [string]) {return $InputObject}
-	if(($InputObject |ConvertTo-Json -Depth 100) -notlike '*"$ref":*') {return $InputObject}
-	if($InputObject -is [Collections.IList]) {return ,@($InputObject |Import-References)}
+	if(($InputObject |ConvertTo-Json -Compress -Depth 100) -notlike '*"$ref":*') {return $InputObject}
+	if($InputObject -is [Collections.IList]) {return ,@($InputObject |Import-Reference -Root $Root)}
 	if($InputObject -is [Collections.IDictionary])
 	{
 		if($InputObject.ContainsKey('$ref'))
 		{
 			return Get-Reference -ReferenceUri $InputObject['$ref'] -Root $Root
 		}
-		foreach($name in $InputObject.Keys)
+		foreach($name in @($InputObject.Keys))
 		{
 			$InputObject[$name] = Import-Reference -Root $Root -InputObject $InputObject[$name]
 		}

@@ -169,6 +169,7 @@ Process
 	if($null -eq $InputObject) {return}
 	if($InputObject -is [string])
 	{
+		if($InputObject.StartsWith(([char]0xFEFF))) {$InputObject = $InputObject.Substring(1)}
 		return $InputObject |ConvertFrom-Json -AsHashtable |
 			Select-Json.ps1 -JsonPointer $JsonPointer -FollowReferences:$FollowReferences
 	}
