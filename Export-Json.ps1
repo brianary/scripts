@@ -61,7 +61,7 @@ function Get-Reference
 		{$_.IsFile} {(Get-Content $_.LocalPath -Raw |ConvertFrom-Json -AsHashtable),($_.Fragment -replace '\A*')}
 		default {(Invoke-RestMethod $ReferenceUri),($_.Fragment -replace '\A#')}
 	}
-	return $source |Select-Json.ps1 $pointer |Import-Reference -Root $Root
+	return $source |Select-Json.ps1 $pointer |Import-Reference -Root $source
 }
 
 filter Import-Reference
