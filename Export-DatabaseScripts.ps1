@@ -39,7 +39,7 @@ Begin
 	function ConvertTo-FileName($Name) { $Name -replace '[:<>\\/"|\t]+','_' }
 	filter Test-SystemObject
 	{
-		Param(
+		[CmdletBinding()] Param(
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
 		[Parameter(ValueFromPipelineByPropertyName=$true)][bool] $IsSystemObject = $false
 		)
