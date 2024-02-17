@@ -163,14 +163,17 @@ Process
 {
 	if($Path)
 	{
-		return Get-Content -Path $Path -Raw |ConvertFrom-Json -AsHashtable |
+		return Resolve-Path -Path $Path |
+			Get-Content -Raw |
+			ConvertFrom-Json -AsHashtable |
 			Select-Json.ps1 -JsonPointer $JsonPointer -FollowReferences:$FollowReferences
 	}
 	if($null -eq $InputObject) {return}
 	if($InputObject -is [string])
 	{
 		if($InputObject.StartsWith(([char]0xFEFF))) {$InputObject = $InputObject.Substring(1)}
-		return $InputObject |ConvertFrom-Json -AsHashtable |
+		return $InputObject |
+			ConvertFrom-Json -AsHashtable |
 			Select-Json.ps1 -JsonPointer $JsonPointer -FollowReferences:$FollowReferences
 	}
 	if(!$jsonpath.Length) {return $InputObject}

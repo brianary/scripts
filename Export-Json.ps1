@@ -95,7 +95,12 @@ filter Import-Reference
 	return $InputObject
 }
 
-if($Path) {$InputObject = Get-Content $Path -Raw}
+if($Path)
+{
+	return Resolve-Path -Path $Path |
+		Get-Content -Raw |
+		Export-Json.ps1 -JsonPointer $JsonPointer -Compress:$Compress
+}
 $root = $InputObject -is [string] ? ($InputObject |ConvertFrom-Json) : $InputObject
 $selection = $root |Select-Json.ps1 $JsonPointer
 return $selection |Import-Reference -Root $root |ConvertTo-Json -Depth 100 -Compress:$Compress
