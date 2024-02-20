@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2502_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2564_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -90,7 +90,7 @@ PowerShell Scripts
 ### Database
 
 - **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
-- **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
+- :up: **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-TableMerge.ps1](Export-TableMerge.ps1)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1)**: Searches an entire database for a field value.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1)**: Searches for database columns.
@@ -176,13 +176,13 @@ PowerShell Scripts
 
 ### Json
 
-- :new: **[Export-Json.ps1](Export-Json.ps1)**: Exports a portion of a JSON document, recursively importing references.
-- :new: **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1)**: Extracts a JSON schema from an OpenAPI definition.
-- :new: **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1)**: Returns metadata from an OpenAPI definition.
+- :up: **[Export-Json.ps1](Export-Json.ps1)**: Exports a portion of a JSON document, recursively importing references.
+- **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1)**: Extracts a JSON schema from an OpenAPI definition.
+- **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1)**: Returns metadata from an OpenAPI definition.
 - **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
-- :new: **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
-- :new: **[Select-Json.ps1](Select-Json.ps1)**: Returns a value from a JSON string or file.
-- :new: **[Set-Json.ps1](Set-Json.ps1)**: Sets a property in a JSON string or file.
+- **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
+- :up: **[Select-Json.ps1](Select-Json.ps1)**: Returns a value from a JSON string or file.
+- **[Set-Json.ps1](Set-Json.ps1)**: Sets a property in a JSON string or file.
 
 ### Notebooks
 
@@ -291,7 +291,7 @@ PowerShell Scripts
 - **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1)**: Gets the path of the VSCode settings.config file.
 - **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1)**: Adds config XDT connection strings to VSCode settings.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1)**: Pushes the current VS Code editor workspace location to the location stack.
-- :up: **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1)**: Sets a VSCode setting.
+- **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1)**: Sets a VSCode setting.
 
 ### XML
 
@@ -334,7 +334,7 @@ PowerShell Scripts
 - **[Remove-PocketArticle.ps1](Remove-PocketArticle.ps1)**: Removes an article from a Pocket account.
 - **[Repair-AppxPackages.ps1](Repair-AppxPackages.ps1)**: Re-registers all installed Appx packages.
 - **[Restore-Workstation.ps1](Restore-Workstation.ps1)**: Restores various configuration files and exported settings from a ZIP file.
-- :up: **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1)**: Downloads enclosures from a podcast feed.
+- **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1)**: Downloads enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1)**: Scan sites using Mozilla's Observatory.
 - **[Write-VisibleString.ps1](Write-VisibleString.ps1)**: Displays a string, showing nonprintable characters.
@@ -351,4 +351,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 02/04/2024 19:25:36 -->
+<!-- generated 02/19/2024 20:41:23 -->
