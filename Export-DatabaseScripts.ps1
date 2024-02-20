@@ -27,12 +27,12 @@ Outputs SQL scripts to files using the default options.
 
 #Requires -Version 3
 #Requires -Modules dbatools
+using namespace Microsoft.SqlServer.Management.Smo
 [CmdletBinding()][OutputType([void])] Param(
 # The database from which to export scripts.
-[Parameter(ValueFromPipeline=$true,Mandatory=$true)]
-[Microsoft.SqlServer.Management.Smo.Database] $Database,
+[Parameter(ValueFromPipeline=$true,Mandatory=$true)][Database] $Database,
 # Controls how the scripts are generated.
-[Microsoft.SqlServer.Management.Smo.ScriptingOptions] $Options = (New-DbaScriptingOption)
+[ScriptingOptions] $Options = (New-DbaScriptingOption)
 )
 Begin
 {
@@ -61,8 +61,7 @@ Begin
 	{
 		[CmdletBinding()] Param(
 		[Parameter(Position=0,Mandatory=$true)][string] $Subfolder,
-		[Parameter(Mandatory=$true,ValueFromPipeline=$true)]
-		[Microsoft.SqlServer.Management.Smo.ScriptNameObjectBase] $InputObject
+		[Parameter(Mandatory=$true,ValueFromPipeline=$true)][ScriptNameObjectBase] $InputObject
 		)
 		if(!$InputObject -or ($InputObject |Test-SystemObject)) {return}
 		$InputObject |Export-DbaScript -ScriptingOptionsObject $Options -FilePath ($InputObject |Get-ScriptName $Subfolder)
@@ -86,7 +85,7 @@ Begin
 		$Database.AsymmetricKeys |Export-DatabaseScript 'Security/Asymmetric Keys'
 		$Database.Certificates |Export-DatabaseScript 'Security/Certificates'
 		$Database.Roles |
-			Where-Object {$_ -isnot [Microsoft.SqlServer.Management.Smo.DatabaseRole] -or !$_.IsFixedRole} |
+			Where-Object {$_ -isnot [DatabaseRole] -or !$_.IsFixedRole} |
 			Export-DatabaseScript 'Security/Roles'
 		$Database.Schemas |Export-DatabaseScript 'Security/Schemas'
 		$Database.SymmetricKeys |Export-DatabaseScript 'Security/Symmetric Keys'
