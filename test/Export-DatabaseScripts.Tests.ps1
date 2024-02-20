@@ -9,6 +9,7 @@ $skip = !(Test-Path .changes -Type Leaf) ? $false :
 if($skip) {Write-Information "No changes to $basename" -infa Continue}
 Describe 'Export-DatabaseScripts' -Tag Export-DatabaseScripts -Skip:$skip {
 	BeforeAll {
+		if(!(Get-Module -List dbatools)) {Install-Module dbatools -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 		Mock Export-DbaScript {}
