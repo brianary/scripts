@@ -21,6 +21,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 			GitHubExtensions = 'gh'
 		}
 		@($installed.Keys) |Where-Object {!(Get-Command $_ -ErrorAction Ignore)} |ForEach-Object {$installed.Remove($_)}
+		function winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$env:temp\winget.json"}
 		function scoop {[pscustomobject]@{Name='Scoop'}}
 		Mock Get-Module {[pscustomobject]@{Name='PSModules'}}
 		Mock winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$env:temp\winget.json"} -ErrorAction Ignore
