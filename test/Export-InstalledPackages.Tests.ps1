@@ -15,7 +15,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 			PSModules = 'Get-Module'
 			WinGet = 'winget'
 			Chocolatey = 'choco'
-			#Scoop = 'scoop'
+			Scoop = 'scoop'
 			Npm = 'npm'
 			DotNetTools = 'dotnet'
 			GitHubExtensions = 'gh'
