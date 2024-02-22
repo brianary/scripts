@@ -38,8 +38,8 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 			$packages = Export-InstalledPackages.ps1
 			$installed.Values |ForEach-Object {Assert-MockCalled -CommandName $_ -Times 1}
 			$packages.Count |Should -BeGreaterThan 0
-			#if($packages.ContainsKey('ScoopBuckets')) {$packages.Remove('ScoopBuckets')}
-			#$packages.Keys |ForEach-Object {$packages[$_] |Should -BeExactly $_}
+			if($packages.ContainsKey('ScoopBuckets')) {$packages.Remove('ScoopBuckets')}
+			$packages.Keys |ForEach-Object {$packages[$_] |Should -BeExactly $_}
 		}
 	}
 }
