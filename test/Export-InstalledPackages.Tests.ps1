@@ -13,7 +13,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 		$installed = @{
 			PSModules = 'Get-Module'
-			#WinGet = 'winget'
+			WinGet = 'winget'
 			Chocolatey = 'choco'
 			#Scoop = 'scoop'
 			#Npm = 'npm'
@@ -21,10 +21,10 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 			#GitHubExtensions = 'gh'
 		}
 		@($installed.Keys) |Where-Object {!(Get-Command $_ -ErrorAction Ignore)} |ForEach-Object {$installed.Remove($_)}
-		#function winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$env:temp\winget.json"}
+		function winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$env:temp\winget.json"}
 		#function scoop {[pscustomobject]@{Name='Scoop'}}
 		Mock Get-Module {[pscustomobject]@{Name='PSModules'}}
-		#Mock winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$env:temp\winget.json"} -ErrorAction Ignore
+		Mock winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$env:temp\winget.json"} -ErrorAction Ignore
 		Mock choco {'','Chocolatey',''} -ErrorAction Ignore
 		#Mock scoop {[pscustomobject]@{Name='Scoop'}} -ErrorAction Ignore
 		#Mock npm {'{dependencies:{Npm:true}}'} -ErrorAction Ignore
