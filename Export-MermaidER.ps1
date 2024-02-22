@@ -6,7 +6,7 @@ Generates a Mermaid entity relation diagram for database tables.
 All tables in the pipeline must exist in the same database.
 
 .LINK
-https://learn.microsoft.com/dotnet/api/microsoft.sqlserver.management.smo.table
+https://learn.microsoft.com/dotnet/api/table
 
 .LINK
 https://dbatools.io/
@@ -113,22 +113,21 @@ PurchaseOrderHeader }|--|| Vendor : "VendorID: Foreign key constraint referencin
 #>
 
 #Requires -Version 3
+using namespace Microsoft.SqlServer.Management.Smo
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseProcessBlockForPipelineCommand','',
 Justification='This script uses $input within an End block.')]
 [CmdletBinding()][OutputType([string])] Param(
 # An SMO table object to include in the diagram.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)]
-[Microsoft.SqlServer.Management.Smo.Table] $Table
+[Table] $Table
 )
 Begin
 {
 	filter Format-ColumnAsMermaid
 	{
 		Param(
-		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-		[Microsoft.SqlServer.Management.Smo.DataType] $DataType,
-		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-		[Microsoft.SqlServer.Management.Smo.ExtendedPropertyCollection] $ExtendedProperties,
+		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][DataType] $DataType,
+		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ExtendedPropertyCollection] $ExtendedProperties,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][bool] $InPrimaryKey,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][bool] $IsForeignKey,
@@ -151,8 +150,7 @@ Begin
 	{
 		Param(
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
-		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-		[Microsoft.SqlServer.Management.Smo.ColumnCollection] $Columns
+		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ColumnCollection] $Columns
 		)
 		$Local:OFS = "$([Environment]::NewLine)`t"
 		return @"
@@ -165,18 +163,15 @@ $Name {
 	filter Format-ForeignKeyAsMermaid
 	{
 		Param(
-		[Parameter(Position=0,Mandatory=$true)][Microsoft.SqlServer.Management.Smo.TableCollection] $AllDatabaseTables,
+		[Parameter(Position=0,Mandatory=$true)][TableCollection] $AllDatabaseTables,
 		[Parameter(Position=1,Mandatory=$true)][string[]] $SelectedTableUrns,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $ReferencedTable,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $ReferencedTableSchema,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][bool] $IsEnabled,
-		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-		[Microsoft.SqlServer.Management.Smo.Table] $Parent,
-		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-		[Microsoft.SqlServer.Management.Smo.ForeignKeyColumnCollection] $Columns,
-		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)]
-		[Microsoft.SqlServer.Management.Smo.ExtendedPropertyCollection] $ExtendedProperties
+		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Table] $Parent,
+		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ForeignKeyColumnCollection] $Columns,
+		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ExtendedPropertyCollection] $ExtendedProperties
 		)
 		if(!$IsEnabled) {return}
 		if($AllDatabaseTables[$ReferencedTable,$ReferencedTableSchema].Urn.Value -notin $SelectedTableUrns) {return}
@@ -184,14 +179,16 @@ $Name {
 		if($ExtendedProperties['MS_Description']) {$description += ': {0}' -f ($ExtendedProperties['MS_Description'].Value -replace '"',"'")}
 		return "$($Parent.Name) }|--|| $ReferencedTable : `"$description`""
 	}
-
-	'erDiagram'
 }
 End
 {
-	[Microsoft.SqlServer.Management.Smo.Table[]] $tables = if($input) {$input} else {@($Table)}
-	$tables |Format-TableAsMermaid
-	$tables |
-		Select-Object -ExpandProperty ForeignKeys |
-		Format-ForeignKeyAsMermaid -AllDatabaseTables $input[0].Parent.Tables -SelectedTableUrns $input.Urn.Value
+	[Table[]] $tables = if($input) {$input} else {@($Table)}
+	$Local:OFS = [Environment]::NewLine
+	return @"
+erDiagram
+$($tables |Format-TableAsMermaid)
+$($tables |
+	Select-Object -ExpandProperty ForeignKeys |
+	Format-ForeignKeyAsMermaid -AllDatabaseTables $input[0].Parent.Tables -SelectedTableUrns $input.Urn.Value)
+"@
 }
