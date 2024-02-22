@@ -98,8 +98,9 @@ filter Import-Reference
 if($Path)
 {
 	return Resolve-Path -Path $Path |
-		Get-Content -Raw |
-		Export-Json.ps1 -JsonPointer $JsonPointer -Compress:$Compress
+		ForEach-Object {$_ |Get-Content -Raw |
+			Export-Json.ps1 -JsonPointer $JsonPointer -Compress:$Compress}
+
 }
 $root = $InputObject -is [string] ? ($InputObject |ConvertFrom-Json) : $InputObject
 $selection = $root |Select-Json.ps1 $JsonPointer

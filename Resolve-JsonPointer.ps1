@@ -121,9 +121,9 @@ Process
 {
 	if($Path)
 	{
-		return Get-Content -Path $Path -Raw |
-			ConvertFrom-Json -AsHashtable |
-			Resolve-Next -Segments $jsonpath
+		return Resolve-Path -Path $Path |
+			Get-Content -Raw |
+			ForEach-Object {$_ |ConvertFrom-Json -AsHashtable |Resolve-Next -Segments $jsonpath}
 	}
 	if($null -eq $InputObject) {return}
 	if($InputObject -is [string])

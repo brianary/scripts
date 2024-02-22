@@ -165,8 +165,8 @@ Process
 	{
 		return Resolve-Path -Path $Path |
 			Get-Content -Raw |
-			ConvertFrom-Json -AsHashtable |
-			Select-Json.ps1 -JsonPointer $JsonPointer -FollowReferences:$FollowReferences
+			ForEach-Object {$_ |ConvertFrom-Json -AsHashtable |
+				Select-Json.ps1 -JsonPointer $JsonPointer -FollowReferences:$FollowReferences}
 	}
 	if($null -eq $InputObject) {return}
 	if($InputObject -is [string])
