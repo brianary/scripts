@@ -12,7 +12,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 		$installed = @{
-			#PSModules = 'Get-Module'
+			PSModules = 'Get-Module'
 			#WinGet = 'winget'
 			Chocolatey = 'choco'
 			#Scoop = 'scoop'
@@ -23,7 +23,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 		@($installed.Keys) |Where-Object {!(Get-Command $_ -ErrorAction Ignore)} |ForEach-Object {$installed.Remove($_)}
 		#function winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$env:temp\winget.json"}
 		#function scoop {[pscustomobject]@{Name='Scoop'}}
-		#Mock Get-Module {[pscustomobject]@{Name='PSModules'}}
+		Mock Get-Module {[pscustomobject]@{Name='PSModules'}}
 		#Mock winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$env:temp\winget.json"} -ErrorAction Ignore
 		Mock choco {'','Chocolatey',''} -ErrorAction Ignore
 		#Mock scoop {[pscustomobject]@{Name='Scoop'}} -ErrorAction Ignore
@@ -34,9 +34,9 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 	Context 'Exports the list of packages installed by various tools' `
 		-Tag ExportInstalledPackages,Export,InstalledPackages,Packages {
 		It "Queries the installed packages" {
-			Export-InstalledPackages.ps1 |Out-Null
+			$packages = Export-InstalledPackages.ps1
 			$installed.Values |ForEach-Object {Assert-MockCalled -CommandName $_ -Times 1}
-			#$packages.Count |Should -BeGreaterThan 0
+			$packages.Count |Should -BeGreaterThan 0
 			#if($packages.ContainsKey('ScoopBuckets')) {$packages.Remove('ScoopBuckets')}
 			#$packages.Keys |ForEach-Object {$packages[$_] |Should -BeExactly $_}
 		}
