@@ -16,7 +16,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 			WinGet = 'winget'
 			Chocolatey = 'choco'
 			#Scoop = 'scoop'
-			#Npm = 'npm'
+			Npm = 'npm'
 			DotNetTools = 'dotnet'
 			GitHubExtensions = 'gh'
 		}
@@ -27,7 +27,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 		Mock winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$env:temp\winget.json"} -ErrorAction Ignore
 		Mock choco {'','Chocolatey',''} -ErrorAction Ignore
 		#Mock scoop {[pscustomobject]@{Name='Scoop'}} -ErrorAction Ignore
-		#Mock npm {'{dependencies:{Npm:true}}'} -ErrorAction Ignore
+		Mock npm {'{dependencies:{Npm:true}}'} -ErrorAction Ignore
 		Mock dotnet {'','','DotNetTools version'} -ErrorAction Ignore
 		Mock gh {'- - GitHubExtensions -'} -ErrorAction Ignore
 	}
