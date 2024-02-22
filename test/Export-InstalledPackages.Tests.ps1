@@ -18,7 +18,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 			#Scoop = 'scoop'
 			#Npm = 'npm'
 			DotNetTools = 'dotnet'
-			#GitHubExtensions = 'gh'
+			GitHubExtensions = 'gh'
 		}
 		@($installed.Keys) |Where-Object {!(Get-Command $_ -ErrorAction Ignore)} |ForEach-Object {$installed.Remove($_)}
 		function winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$env:temp\winget.json"}
@@ -29,7 +29,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 		#Mock scoop {[pscustomobject]@{Name='Scoop'}} -ErrorAction Ignore
 		#Mock npm {'{dependencies:{Npm:true}}'} -ErrorAction Ignore
 		Mock dotnet {'','','DotNetTools version'} -ErrorAction Ignore
-		#Mock gh {'- - GitHubExtensions -'} -ErrorAction Ignore
+		Mock gh {'- - GitHubExtensions -'} -ErrorAction Ignore
 	}
 	Context 'Exports the list of packages installed by various tools' `
 		-Tag ExportInstalledPackages,Export,InstalledPackages,Packages {
