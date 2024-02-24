@@ -1,9 +1,9 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='250'>250 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 571 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 497 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 497 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='255'>255 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 573 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
 
 - &#x2714;&#xFE0F; Add-CapturesToMatches.ps1
 - &#x2714;&#xFE0F; Add-Counter.ps1
@@ -25,7 +25,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> C (31) &#x1F4C5; 554 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> C (31) &#x1F4C5; 573 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (3) &#x1F4C5; 148 days</summary>
 
 - &#x2714;&#xFE0F; Compare-Keys.ps1
@@ -43,14 +43,14 @@ Script Tests
 - &#x2714;&#xFE0F; Connect-SshKey.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 554 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 573 days</summary>
 
 - &#x2714;&#xFE0F; Convert-ChocolateyToWinget.ps1
 - &#x2714;&#xFE0F; Convert-ClipboardTsvToHtml.ps1
 - &#x2714;&#xFE0F; Convert-Xml.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertFrom (9) &#x1F4C5; 382 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertFrom (9) &#x1F4C5; 401 days</summary>
 
 - &#x2714;&#xFE0F; ConvertFrom-Base64.ps1
 - &#x2714;&#xFE0F; ConvertFrom-CimInstance.ps1
@@ -63,7 +63,7 @@ Script Tests
 - &#x2714;&#xFE0F; ConvertFrom-XmlElement.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 496 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertTo (11) &#x1F4C5; 573 days</summary>
 
 - &#x2714;&#xFE0F; ConvertTo-Base64.ps1
 - &#x2714;&#xFE0F; ConvertTo-BasicAuthentication.ps1
@@ -91,7 +91,7 @@ Script Tests
 - &#x2714;&#xFE0F; Disable-AnsiColor.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='545'>545 &#x2030;</meter> E (11) &#x1F4C5; 348 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='636'>636 &#x2030;</meter> E (11) &#x1F4C5; 350 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Enable (1) &#x1F4C5; 57 days</summary>
 
 - &#x2714;&#xFE0F; Enable-AnsiColor.ps1
@@ -102,13 +102,13 @@ Script Tests
 - &#x2714;&#xFE0F; Expand-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='444'>444 &#x2030;</meter> Export (9) &#x1F4C5; 1 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='556'>556 &#x2030;</meter> Export (9) &#x1F4C5; 3 days</summary>
 
 - &#x2714;&#xFE0F; Export-DatabaseScripts.ps1
 - &#x2714;&#xFE0F; Export-EdgeKeywords.ps1
 - &#x2714;&#xFE0F; Export-InstalledPackages.ps1
 - &#x2714;&#xFE0F; Export-Json.ps1
-- &#x2716;&#xFE0F; Export-MermaidER.ps1
+- &#x2714;&#xFE0F; Export-MermaidER.ps1
 - &#x2716;&#xFE0F; Export-OpenApiSchema.ps1
 - &#x2716;&#xFE0F; Export-Readme.ps1
 - &#x2716;&#xFE0F; Export-SecretVault.ps1
@@ -146,8 +146,8 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> G (39) &#x1F4C5; 198 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> Get (39) &#x1F4C5; 198 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> G (39) &#x1F4C5; 490 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> Get (39) &#x1F4C5; 490 days</summary>
 
 - &#x2716;&#xFE0F; Get-ADServiceAccountInfo.ps1
 - &#x2716;&#xFE0F; Get-ADUserStatus.ps1
