@@ -1,0 +1,19 @@
+erDiagram
+Book {
+	int bookid PK "identity(1000000000,9); The book identity"
+	varchar(30) title "The book title"
+	varchar(max) description "nullable; A synopsis of the book"
+	int year "Year of publication"
+}
+Author {
+	int authorid PK "identity(1,1); The author identity"
+	varchar(30) name "The author's name"
+	date birthdate "nullable; The author's birthdate"
+	date deathdate "nullable; The author's death date"
+}
+BookAuthor {
+	int bookid PK "The book identity"
+	int authorid PK "The author identity"
+}
+Book }|--|| Book : "bookid: References book"
+Author }|--|| Author : "authorid: References author"

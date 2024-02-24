@@ -17,7 +17,7 @@ if($skip) {Write-Information "No changes to $basename" -infa Continue}
 Describe 'Get-IisLog' -Tag Get-IisLog -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$datadir = Join-Path $PSScriptRoot .. 'test','data'
+		$datadir = Join-Path $PSScriptRoot 'data'
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Query log directory' -Tag GetIisLog,Get,IisLog,IisLogDirectory,LogParser {

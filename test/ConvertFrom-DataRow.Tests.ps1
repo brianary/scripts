@@ -10,7 +10,7 @@ if($skip) {Write-Information "No changes to $basename" -infa Continue}
 Describe 'ConvertFrom-DataRow' -Tag ConvertFrom-DataRow -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$datadir = Join-Path $PSScriptRoot .. 'test','data'
+		$datadir = Join-Path $PSScriptRoot 'data'
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Converts a DataRow object to a PSObject, Hashtable, or single value' `

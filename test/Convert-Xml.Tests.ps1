@@ -11,7 +11,7 @@ Describe 'Convert-Xml' -Tag Convert-Xml -Skip:$skip {
 	BeforeAll {
 		if(!(Get-Module -List SelectXmlExtensions)) {Install-Module SelectXmlExtensions -Force}
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$datadir = Join-Path $PSScriptRoot .. 'test','data'
+		$datadir = Join-Path $PSScriptRoot 'data'
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Transform XML using an XSLT template' -Tag ConvertXml,Convert,Xml,Xslt {

@@ -11,20 +11,9 @@ Describe 'Add-NotebookCell' -Tag Add-NotebookCell -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
+		$mockfile = Join-Path $PSScriptRoot mock ([io.path]::ChangeExtension((Split-Path $PSCommandPath -Leaf), 'cs'))
 		try {[void][Kernel]}
-		catch {Add-Type -TypeDefinition @'
-using System.Collections.Generic;
-public record SendEditableCode(string Language, string Content);
-public static class Kernel
-{
-    public class RootMock
-    {
-        public SendEditableCode Sent = new SendEditableCode("", "");
-        public void SendAsync(SendEditableCode command) {Sent = command;}
-    }
-    public static RootMock Root = new RootMock();
-}
-'@}
+		catch {Add-Type -TypeDefinition (Get-Content $mockfile -Raw)}
 	}
 	Context 'When run within a Polyglot Notebook, appends a cell to it' -Tag AddNoteboodCell,Add,NotebookCell,Notebook {
 		It "Adding language '<Language>' code '<Code>' should happen" -TestCases @(

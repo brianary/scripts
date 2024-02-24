@@ -10,7 +10,7 @@ if($skip) {Write-Information "No changes to $basename" -infa Continue}
 Describe 'ConvertFrom-XmlElement' -Tag ConvertFrom-XmlElement -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		$datadir = Join-Path $PSScriptRoot .. 'test','data'
+		$datadir = Join-Path $PSScriptRoot 'data'
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
 	Context 'Converts named nodes of an element to properties of a PSObject, recursively' `

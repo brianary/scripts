@@ -189,6 +189,6 @@ erDiagram
 $($tables |Format-TableAsMermaid)
 $($tables |
 	Select-Object -ExpandProperty ForeignKeys |
-	Format-ForeignKeyAsMermaid -AllDatabaseTables $input[0].Parent.Tables -SelectedTableUrns $input.Urn.Value)
+	Format-ForeignKeyAsMermaid -AllDatabaseTables $tables[0].Parent.Tables -SelectedTableUrns $tables.Urn.Value)
 "@
 }
