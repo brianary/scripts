@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='259'>259 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 575 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='264'>264 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 575 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
 
@@ -91,7 +91,7 @@ Script Tests
 - &#x2714;&#xFE0F; Disable-AnsiColor.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='727'>727 &#x2030;</meter> E (11) &#x1F4C5; 352 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='818'>818 &#x2030;</meter> E (11) &#x1F4C5; 352 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Enable (1) &#x1F4C5; 57 days</summary>
 
 - &#x2714;&#xFE0F; Enable-AnsiColor.ps1
@@ -102,7 +102,7 @@ Script Tests
 - &#x2714;&#xFE0F; Expand-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='667'>667 &#x2030;</meter> Export (9) &#x1F4C5; 6 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='778'>778 &#x2030;</meter> Export (9) &#x1F4C5; 6 days</summary>
 
 - &#x2714;&#xFE0F; Export-DatabaseScripts.ps1
 - &#x2714;&#xFE0F; Export-EdgeKeywords.ps1
@@ -110,7 +110,7 @@ Script Tests
 - &#x2714;&#xFE0F; Export-Json.ps1
 - &#x2714;&#xFE0F; Export-MermaidER.ps1
 - &#x2714;&#xFE0F; Export-OpenApiSchema.ps1
-- &#x2716;&#xFE0F; Export-Readme.ps1
+- &#x2714;&#xFE0F; Export-Readme.ps1
 - &#x2716;&#xFE0F; Export-SecretVault.ps1
 - &#x2716;&#xFE0F; Export-TableMerge.ps1
 
