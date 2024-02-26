@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2758_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-2781_%E2%80%B1-red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
 [![GitHub watchers badge](https://badgen.net/github/watchers/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/watchers "Watchers")
@@ -170,7 +170,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Json
 
 - &#x1F199; **[Export-Json.ps1](Export-Json.ps1.md)**: Exports a portion of a JSON document, recursively importing references.
-- **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1.md)**: Extracts a JSON schema from an OpenAPI definition.
+- &#x1F199; **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1.md)**: Extracts a JSON schema from an OpenAPI definition.
 - **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1.md)**: Returns metadata from an OpenAPI definition.
 - **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - &#x1F199; **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1.md)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
