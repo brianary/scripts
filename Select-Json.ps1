@@ -109,17 +109,17 @@ Begin
 		{
 			if(![int]::TryParse($Segment,[ref]$Segment)) {return}
 			elseif($InputObject.Length -le $Segment) {return}
-			else {return $InputObject[$Segment]}
+			else {return,$InputObject[$Segment]}
 		}
 		elseif($InputObject -is [Collections.IDictionary])
 		{
 			if(!$InputObject.ContainsKey($Segment)) {return}
-			else {return $InputObject[$Segment]}
+			else {return,$InputObject[$Segment]}
 		}
 		else
 		{
-			return $InputObject.PSObject.Properties.Match($Segment) |
-				Select-Object -ExpandProperty Value
+			return,($InputObject.PSObject.Properties.Match($Segment) |
+				Select-Object -ExpandProperty Value)
 		}
 	}
 

@@ -1,0 +1,89 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "Sample REST API",
+    "description": "An example OpenAPI definition.",
+    "license": {
+      "url": "https://example.net/mit",
+      "name": "MIT"
+    },
+    "termsOfService": "https://example.net/tos",
+    "contact": {
+      "url": "https://example.net/support",
+      "name": "Support"
+    }
+  },
+  "paths": {
+    "/users/{userId}": {
+      "get": {
+        "summary": "Returns a user by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "format": "int64"
+            },
+            "required": true,
+            "name": "userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "Creates a new user.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 4
+          },
+          "name": {
+            "type": "string",
+            "example": "Arthur Dent"
+          }
+        },
+        "type": "object"
+      }
+    }
+  }
+}

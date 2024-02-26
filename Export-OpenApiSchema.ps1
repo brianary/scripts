@@ -46,6 +46,6 @@ Process
     $Method = $Method.ToLowerInvariant()
     return ($PSCmdlet.ParameterSetName -eq 'RequestSchema' `
         ? (Export-Json.ps1 "/paths/$EndpointPath/$Method/parameters/*/schema" -Path $Path)
-        : (Export-Json.ps1 "/paths/$EndpointPath/$Method/responses/$ResponseStatus/schema" -Path $Path) ) |
+        : (Export-Json.ps1 "/paths/$EndpointPath/$Method/responses/$ResponseStatus/content/*/schema" -Path $Path) ) |
         Set-Json.ps1 '/$schema' 'http://json-schema.org/draft-04/schema#'
 }

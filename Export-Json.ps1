@@ -102,6 +102,6 @@ if($Path)
 			Export-Json.ps1 -JsonPointer $JsonPointer -Compress:$Compress}
 
 }
-$root = $InputObject -is [string] ? ($InputObject |ConvertFrom-Json) : $InputObject
+$root = $InputObject -is [string] ? ($InputObject |ConvertFrom-Json -AsHashtable) : $InputObject
 $selection = $root |Select-Json.ps1 $JsonPointer
 return $selection |Import-Reference -Root $root |ConvertTo-Json -Depth 100 -Compress:$Compress
