@@ -13,7 +13,8 @@ Sets a VSCode setting.
 ## SYNTAX
 
 ```
-Get-VSCodeSetting.ps1 [-Name] <String> [-Workspace] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-VSCodeSetting.ps1 [-JsonPointer] <String> [-Workspace] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,13 +45,14 @@ PowerShell ISE
 
 ## PARAMETERS
 
-### -Name
-The name of the setting to set, use / as a path separator for deeper structures.
+### -JsonPointer
+The full path name of the property to set, as a JSON Pointer, which separates each nested
+element name with a /, and literal / is escaped as ~1, and literal ~ is escaped as ~0.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: Name
 
 Required: True
 Position: 1

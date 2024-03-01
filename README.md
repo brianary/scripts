@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3070_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3064_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -158,7 +158,7 @@ PowerShell Scripts
 
 ### Git and GitHub
 
-- **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
+- :up: **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
 - **[Copy-GitHubLabels.ps1](Copy-GitHubLabels.ps1)**: Copies configured issue labels from one repo to another.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1)**: Gets the SHA-1 hash of the first commit of the current repo.
@@ -183,7 +183,7 @@ PowerShell Scripts
 - **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - :up: **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
 - :up: **[Select-Json.ps1](Select-Json.ps1)**: Returns a value from a JSON string or file.
-- **[Set-Json.ps1](Set-Json.ps1)**: Sets a property in a JSON string or file.
+- :up: **[Set-Json.ps1](Set-Json.ps1)**: Sets a property in a JSON string or file.
 
 ### Notebooks
 
@@ -287,12 +287,12 @@ PowerShell Scripts
 
 ### VSCode
 
-- **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1)**: Adds a VS Code MSSQL database connection to the repo.
-- **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1)**: Sets a VSCode setting.
+- :up: **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1)**: Adds a VS Code MSSQL database connection to the repo.
+- :up: **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1)**: Sets a VSCode setting.
 - **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1)**: Gets the path of the VSCode settings.config file.
 - **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1)**: Adds config XDT connection strings to VSCode settings.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1)**: Pushes the current VS Code editor workspace location to the location stack.
-- **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1)**: Sets a VSCode setting.
+- :up: **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1)**: Sets a VSCode setting.
 
 ### XML
 
@@ -338,13 +338,14 @@ PowerShell Scripts
 - **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1)**: Downloads enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1)**: Scan sites using Mozilla's Observatory.
+- :new: **[Write-CallInfo.ps1](Write-CallInfo.ps1)**: Prints caller name and parameters to the host for debugging purposes.
 - **[Write-VisibleString.ps1](Write-VisibleString.ps1)**: Displays a string, showing nonprintable characters.
 
 F# Scripts
 ----------
-- **[NCrontab Schedule Test](https://webcoder.info/scripts/Test-NCrontab.html)**: Returns a sampling of the next several date & times scheduled by an NCrontab string.
-- **[Parse Unicode data](https://webcoder.info/scripts/UnicodeData.html)**: Experiment with CSV type provider to read Unicode data.
-- **[US Federal Holiday Detection](https://webcoder.info/scripts/USFederalHolidays.html)**: Here's how to determine whether a date is a US federal holiday using F#.
+- **[NCrontab Schedule Test](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/Test-NCrontab.html)**: Returns a sampling of the next several date & times scheduled by an NCrontab string.
+- **[Parse Unicode data](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/UnicodeData.html)**: Experiment with CSV type provider to read Unicode data.
+- **[US Federal Holiday Detection](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/USFederalHolidays.html)**: Here's how to determine whether a date is a US federal holiday using F#.
 
 Office VBA Scripts
 ------------------
@@ -352,4 +353,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 02/26/2024 20:53:06 -->
+<!-- generated 03/01/2024 13:37:53 -->

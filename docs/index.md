@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3070_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3064_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -151,7 +151,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Git and GitHub
 
-- **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1.md)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
+- &#x1F199; **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1.md)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
 - **[Copy-GitHubLabels.ps1](Copy-GitHubLabels.ps1.md)**: Copies configured issue labels from one repo to another.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1.md)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1.md)**: Gets the SHA-1 hash of the first commit of the current repo.
@@ -176,7 +176,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - &#x1F199; **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1.md)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
 - &#x1F199; **[Select-Json.ps1](Select-Json.ps1.md)**: Returns a value from a JSON string or file.
-- **[Set-Json.ps1](Set-Json.ps1.md)**: Sets a property in a JSON string or file.
+- &#x1F199; **[Set-Json.ps1](Set-Json.ps1.md)**: Sets a property in a JSON string or file.
 
 ### Notebooks
 
@@ -280,12 +280,12 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### VSCode
 
-- **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1.md)**: Adds a VS Code MSSQL database connection to the repo.
-- **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
+- &#x1F199; **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1.md)**: Adds a VS Code MSSQL database connection to the repo.
+- &#x1F199; **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 - **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1.md)**: Gets the path of the VSCode settings.config file.
 - **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1.md)**: Adds config XDT connection strings to VSCode settings.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1.md)**: Pushes the current VS Code editor workspace location to the location stack.
-- **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
+- &#x1F199; **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 
 ### XML
 
@@ -331,4 +331,5 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1.md)**: Downloads enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1.md)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1.md)**: Scan sites using Mozilla's Observatory.
+- &#x1F195; **[Write-CallInfo.ps1](Write-CallInfo.ps1.md)**: Prints caller name and parameters to the host for debugging purposes.
 - **[Write-VisibleString.ps1](Write-VisibleString.ps1.md)**: Displays a string, showing nonprintable characters.

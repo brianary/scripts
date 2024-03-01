@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='269'>269 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 576 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='267'>267 &#x2030;</meter> Scripts repo (217) &#x1F4C5; 580 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
 
@@ -25,8 +25,8 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> C (31) &#x1F4C5; 573 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (3) &#x1F4C5; 148 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> C (31) &#x1F4C5; 580 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (3) &#x1F4C5; 446 days</summary>
 
 - &#x2714;&#xFE0F; Compare-Keys.ps1
 - &#x2714;&#xFE0F; Compare-Properties.ps1
@@ -43,14 +43,14 @@ Script Tests
 - &#x2714;&#xFE0F; Connect-SshKey.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 573 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (3) &#x1F4C5; 580 days</summary>
 
 - &#x2714;&#xFE0F; Convert-ChocolateyToWinget.ps1
 - &#x2714;&#xFE0F; Convert-ClipboardTsvToHtml.ps1
 - &#x2714;&#xFE0F; Convert-Xml.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertFrom (9) &#x1F4C5; 401 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertFrom (9) &#x1F4C5; 408 days</summary>
 
 - &#x2714;&#xFE0F; ConvertFrom-Base64.ps1
 - &#x2714;&#xFE0F; ConvertFrom-CimInstance.ps1
@@ -423,9 +423,10 @@ Script Tests
 - &#x2716;&#xFE0F; Use-SqlcmdParams.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started W (2) </summary>
-<ul><li><details><summary>not started Write (2) </summary>
+<li><details><summary>not started W (3) </summary>
+<ul><li><details><summary>not started Write (3) </summary>
 
+- &#x2716;&#xFE0F; Write-CallInfo.ps1
 - &#x2716;&#xFE0F; Write-Info.ps1
 - &#x2716;&#xFE0F; Write-VisibleString.ps1
 
