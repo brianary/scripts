@@ -25,6 +25,11 @@ ConvertFrom-Json
 /a
 
 .EXAMPLE
+'[8, 7, 6]' |Resolve-JsonPointer.ps1 /-
+
+/3
+
+.EXAMPLE
 Resolve-JsonPointer.ps1 /powershell.*.preset -Path ./.vscode/settings.json
 
 /powershell.codeFormatting.preset
@@ -40,9 +45,9 @@ Resolve-JsonPointer.ps1 /powershell.*.preset -Path ./.vscode/settings.json
 /b/ZZ~1ZZ
 
 .EXAMPLE
-'{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}' |ConvertFrom-Json |Resolve-JsonPointer.ps1 /?/ZZ*/*BC
+'{"a":1, "b": {"ZZ/ZZ": {"AD~BC": [7, 8, 9]}}}' |ConvertFrom-Json |Resolve-JsonPointer.ps1 /?/ZZ*/*BC/-
 
-/b/ZZ~1ZZ/AD~0BC
+/b/ZZ~1ZZ/AD~0BC/3
 #>
 
 #Requires -Version 7
@@ -63,7 +68,64 @@ Begin
 	[string[]] $jsonpath = switch($JsonPointer) { '' {,@()}
 		default {,@($_ -replace '\A/' -replace '~4','[[]' -replace '~3','[*]' -replace '~2','[?]' -split '/' -replace '~1','/' -replace '~0','~')} }
 
-	filter Resolve-Next
+	function Resolve-Segment
+	{
+		[CmdletBinding()] Param(
+		[Parameter(Position=0)] $InputObject,
+		[Parameter(Position=1)][string] $Segment,
+		[Parameter(Position=2)][string[]] $Segments,
+		[Parameter(Position=3)][string] $JsonPointer
+		)
+		$pointer = "$JsonPointer/$($segment -replace '~','~0' -replace '/','~1')"
+		if($InputObject -is [array])
+		{
+			if($Segment -eq '-') {return Resolve-Pointer -InputObject $null -Segments $Segments -JsonPointer "$JsonPointer/$($InputObject.Count)"}
+			elseif(![int]::TryParse($Segment,[ref]$Segment)) {return}
+			elseif($InputObject.Length -le $Segment) {return}
+			else {return Resolve-Pointer -InputObject ($InputObject[$Segment]) -Segments $Segments -JsonPointer $pointer}
+		}
+		elseif($InputObject -is [Collections.IDictionary])
+		{
+			if(!$InputObject.ContainsKey($Segment)) {return}
+			else {return Resolve-Pointer -InputObject ($InputObject[$Segment]) -Segments $Segments -JsonPointer $pointer}
+		}
+		else
+		{
+			return $InputObject.PSObject.Properties.Match($Segment) |
+				Select-Object -ExpandProperty Value |
+				Resolve-Pointer -Segments $Segments -JsonPointer $pointer
+		}
+	}
+
+	function Resolve-Wildcard
+	{
+		[CmdletBinding()] Param(
+		[Parameter(Position=0)] $InputObject,
+		[Parameter(Position=1)][string] $Segment,
+		[Parameter(Position=2)][string[]] $Segments,
+		[Parameter(Position=3)][string] $JsonPointer
+		)
+		if($InputObject -is [array])
+		{
+			return 0..($InputObject.Length-1) -like $segment |ForEach-Object {
+				$pointer = "$JsonPointer/$_"
+				Resolve-Pointer -InputObject $InputObject[$_] -Segments $Segments -JsonPointer $pointer}
+		}
+		elseif($InputObject -is [Collections.IDictionary])
+		{
+			return $InputObject.Keys -like $segment |ForEach-Object {
+				$pointer = "$JsonPointer/$($_ -replace '~','~0' -replace '/','~1')"
+				Resolve-Pointer -InputObject $InputObject[$_] -Segments $Segments -JsonPointer $pointer}
+		}
+		else
+		{
+			return $InputObject.PSObject.Properties.Match($segment) |ForEach-Object {
+				$pointer = "$JsonPointer/$($_.Name -replace '~','~0' -replace '/','~1')"
+				Resolve-Pointer -InputObject $_.Value -Segments $Segments -JsonPointer $pointer}
+		}
+	}
+
+	filter Resolve-Pointer
 	{
 		[CmdletBinding()] Param(
 		[Parameter(ValueFromPipeline=$true)] $InputObject,
@@ -73,48 +135,8 @@ Begin
 		if(!$Segments.Count) {return $JsonPointer}
 		$segment,$Segments = $Segments
 		if($null -eq $Segments) {[string[]]$Segments = @()}
-		if($segment -match '[?*[]')
-		{
-			if($InputObject -is [array])
-			{
-				return 0..($InputObject.Length-1) -like $segment |ForEach-Object {
-					$pointer = "$JsonPointer/$($_ -replace '~','~0' -replace '/','~1')"
-					$InputObject[$_] |Resolve-Next -Segments $Segments -JsonPointer $pointer}
-			}
-			elseif($InputObject -is [Collections.IDictionary])
-			{
-				return $InputObject.Keys -like $segment |ForEach-Object {
-					$pointer = "$JsonPointer/$($_ -replace '~','~0' -replace '/','~1')"
-					$InputObject[$_] |Resolve-Next -Segments $Segments -JsonPointer $pointer}
-			}
-			else
-			{
-				return $InputObject.PSObject.Properties.Match($segment) |ForEach-Object {
-					$pointer = "$JsonPointer/$($_.Name -replace '~','~0' -replace '/','~1')"
-					$_.Value |Resolve-Next -Segments $Segments -JsonPointer $pointer}
-			}
-		}
-		else
-		{
-			$JsonPointer = "$JsonPointer/$($segment -replace '~','~0' -replace '/','~1')"
-			if($InputObject -is [array])
-			{
-				if(![int]::TryParse($segment,[ref]$segment)) {return}
-				elseif($InputObject.Length -le $segment) {return}
-				else {return Resolve-Next -InputObject ($InputObject[$segment]) -Segments $Segments -JsonPointer $JsonPointer}
-			}
-			elseif($InputObject -is [Collections.IDictionary])
-			{
-				if(!$InputObject.ContainsKey($segment)) {return}
-				else {return Resolve-Next -InputObject ($InputObject[$segment]) -Segments $Segments -JsonPointer $JsonPointer}
-			}
-			else
-			{
-				return $InputObject.PSObject.Properties.Match($segment) |
-					Select-Object -ExpandProperty Value |
-					Resolve-Next -Segments $Segments -JsonPointer $JsonPointer
-			}
-		}
+		if($segment -match '[?*[]') {Resolve-Wildcard -InputObject $InputObject -Segment $segment -Segments $Segments -JsonPointer $JsonPointer}
+		else {Resolve-Segment -InputObject $InputObject -Segment $segment -Segments $Segments -JsonPointer $JsonPointer}
 	}
 }
 Process
@@ -123,15 +145,13 @@ Process
 	{
 		return Resolve-Path -Path $Path |
 			Get-Content -Raw |
-			ForEach-Object {$_ |ConvertFrom-Json -AsHashtable |Resolve-Next -Segments $jsonpath}
+			ForEach-Object {Resolve-Pointer -InputObject ($_ |ConvertFrom-Json -AsHashtable) -Segments $jsonpath}
 	}
 	if($null -eq $InputObject) {return}
 	if($InputObject -is [string])
 	{
-		return $InputObject |
-			ConvertFrom-Json -AsHashtable |
-			Resolve-Next -Segments $jsonpath
+		return Resolve-Pointer -InputObject ($InputObject |ConvertFrom-Json -AsHashtable) -Segments $jsonpath
 	}
 	if(!$jsonpath.Length) {return $JsonPointer}
-	return Resolve-Next -InputObject $InputObject -Segments $jsonpath
+	return Resolve-Pointer -InputObject $InputObject -Segments $jsonpath
 }
