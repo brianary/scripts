@@ -45,6 +45,37 @@ true
 }
 
 .EXAMPLE
+'[1, 2, 3]' |Set-Json.ps1 /1 0
+
+[
+  1,
+  0,
+  3
+]
+
+.EXAMPLE
+'[1, 2]' |Set-Json.ps1 /- 3
+
+[
+  1,
+  2,
+  3
+]
+
+.EXAMPLE
+'{a:{b:[1,2]}}' |Set-Json.ps1 /a/b/- 3
+
+{
+  "a": {
+    "b": [
+      1,
+      2,
+      3
+    ]
+  }
+}
+
+.EXAMPLE
 '{a:1}' |Set-Json.ps1 /b/ZZ~1ZZ/AD~0BC 7
 
 {
@@ -94,20 +125,42 @@ Process
 	}
 	$object = ($Path ? (Get-Content $Path -Raw) : $InputObject) |ConvertFrom-Json -AsHashtable
 	if($null -eq $object) {return}
-	$property = $object
+	$property,$parent = $object,$null
 	for($i = 0; $i -lt ($jsonpath.Length-1); $i++)
 	{
 		$segment = $jsonpath[$i]
-		if(!$property.ContainsKey($segment)) {$property[$segment] = @{}}
-		$property = $property.$segment
+		if($property -is [array])
+		{
+			if($i -eq 0 -and $segment -eq '-') {$property = @{}; $object += $property; $segment = $object.Count}
+			if(![int]::TryParse($segment,[ref]$segment)) {Stop-ThrowError.ps1 "Could not use array index $segment" -Argument JsonPointer}
+			elseif($property.Count -le $segment) {$property = @{}; $object += $property; $segment = $object.Count}
+			else {$property,$parent = $property[$segment],$property}
+		}
+		else
+		{
+			if(!$property.ContainsKey($segment)) {$property[$segment] = @{}}
+			$property,$parent = $property.$segment,$property
+		}
+		if($property -is [array] -and $i -lt ($jsonpath.Length-2) -and $jsonpath[$i+1] -eq '-')
+		{ # RFC6091 uses '-' to append to an array
+			$property += @{}
+			$jsonpath[$i+1] = $property.Count
+			$parent.$segment = $property
+		}
 	}
 	$segment = $jsonpath[-1]
-	if($property.ContainsKey($segment))
+	if($property -is [array])
 	{
-		if($WarnOverwrite) {Write-Warning "Property $JsonPointer overwriting '$($property.$segment)'."}
+		if($segment -eq '-') {if($jsonpath.Length -eq 1) {$object += $PropertyValue} else {$parent.$($jsonpath[-2]) += $PropertyValue}}
+		elseif(![int]::TryParse($segment,[ref]$segment)) {Stop-ThrowError.ps1 "Could not use array index $segment" -Argument JsonPointer}
+		elseif($property.Count -le $segment) {if($jsonpath.Length -eq 1) {$object += $PropertyValue} else {$parent.$($jsonpath[-2]) += $PropertyValue}}
+		else {$property[$segment] = $PropertyValue}
+	}
+	else
+	{
+		if($property.ContainsKey($segment) -and $WarnOverwrite) {Write-Warning "Property $JsonPointer overwriting '$($property.$segment)'."}
 		$property[$segment] = $PropertyValue
 	}
-	else {$property[$jsonpath[-1]] = $PropertyValue}
 	$value = $object |ConvertTo-Json -Depth 100
 	if($Path) {$value |Out-File $Path utf8NoBOM}
 	else {return $value}
