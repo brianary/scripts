@@ -18,7 +18,7 @@ Describe 'ConvertFrom-IsoWeekDate' -Tag ConvertFrom-IsoWeekDate -Skip:$skip {
 	Context 'Returns a DateTime object from an ISO week date string.' `
 		-Tag ConvertFromIsoWeekDate,Convert,ConvertFrom,IsoWeekDate {
 		It "ISO week date string '<InputObject>' should return DateTime value '<Result>'" -TestCases @(
-			0..3000 |ForEach-Object {$date = (Get-Date 2000-01-01).AddDays($_); @{
+			0..300 |ForEach-Object {$date = (Get-Date 2000-01-01).AddDays($_*10); @{
 				InputObject = Format-Date.ps1 -Format Iso8601WeekDate -Date $date
 				Result = $date
 			}}

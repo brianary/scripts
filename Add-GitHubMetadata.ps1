@@ -31,6 +31,12 @@ http://editorconfig.org/
 https://github.com/brianary/Detextive/
 
 .LINK
+Get-VSCodeSetting.ps1
+
+.LINK
+Set-VSCodeSetting.ps1
+
+.LINK
 Add-CapturesToMatches.ps1
 
 .LINK
@@ -375,7 +381,7 @@ function Add-VsCodeExtensionRecommendations
 {
 	if(!(Test-Path .vscode -PathType Container)) {mkdir .vscode |Out-Null}
 	$recommendations = New-Object Collections.Generic.HashSet[string]
-	[string[]] $previous = Get-VSCodeSetting.ps1 recommendations -Workspace
+	[string[]] $previous = Get-VSCodeSetting.ps1 /recommendations -Workspace
 	if($previous) {$previous |ForEach-Object {[void]$recommendations.Add($_)}}
 	if((Test-Path .github -Type Container) -and (Test-Path .github/workflows -Type Container) -and
 		(Get-ChildItem .github/workflows -Filter *.yml |Select-Object -First 1))
@@ -405,7 +411,7 @@ function Add-VsCodeExtensionRecommendations
 	{
 		[void]$recommendations.Add('ms-mssql.mssql')
 	}
-	Set-VSCodeSetting.ps1 recommendations $recommendations -Workspace
+	Set-VSCodeSetting.ps1 /recommendations $recommendations -Workspace
 }
 
 function Add-DevContainerSettings
@@ -478,8 +484,8 @@ function Add-DevContainerSettings
 function Disable-VsCodePrettier
 {
 	if(!(Test-Path .vscode -PathType Container)) {mkdir .vscode |Out-Null}
-	Set-VSCodeSetting.ps1 prettier.disableLanguages @('markdown') -Workspace
-	Set-VSCodeSetting.ps1 '[markdown]' @{
+	Set-VSCodeSetting.ps1 /prettier.disableLanguages @('markdown') -Workspace
+	Set-VSCodeSetting.ps1 '/[markdown]' @{
 		'editor.defaultFormatter' = 'yzhang.markdown-all-in-one'
 	} -Workspace
 }

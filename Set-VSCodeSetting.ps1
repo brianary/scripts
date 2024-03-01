@@ -35,7 +35,8 @@ Sets {"workbench.colorTheme": "PowerShell ISE"} in the VSCode workspace settings
 The full path name of the property to set, as a JSON Pointer, which separates each nested
 element name with a /, and literal / is escaped as ~1, and literal ~ is escaped as ~0.
 #>
-[Parameter(Position=0,Mandatory=$true)][string] $Name,
+[Parameter(Position=0,Mandatory=$true)][Alias('Name')][AllowEmptyString()][ValidatePattern('\A(?:|/(?:[^~]|~0|~1)*)\z')]
+[string] $JsonPointer = '',
 # The value of the setting to set.
 [Parameter(Position=1,Mandatory=$true)][AllowEmptyString()][AllowEmptyCollection()][AllowNull()]
 [psobject] $Value,
@@ -49,4 +50,4 @@ if(!(${settings.json} |Split-Path |Test-Path -PathType Container)) {mkdir (${set
 if(!(Test-Path ${settings.json} -PathType Leaf)) {'{}' |Out-File ${settings.json} -Encoding utf8}
 
 $settings = Get-Content ${settings.json} -Raw
-$settings |Set-Json.ps1 $Name $Value -WarnOverwrite |Out-File ${settings.json} -Encoding utf8
+$settings |Set-Json.ps1 $JsonPointer $Value -WarnOverwrite |Out-File ${settings.json} -Encoding utf8

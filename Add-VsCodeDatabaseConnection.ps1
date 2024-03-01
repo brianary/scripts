@@ -54,7 +54,7 @@ If no username is given, a trusted connection will be created.
 )
 Begin
 {
-	[psobject[]]$connections = Get-VSCodeSetting.ps1 mssql.connections -Workspace
+	[psobject[]]$connections = Get-VSCodeSetting.ps1 /mssql.connections -Workspace
 	if(!$connections) {[psobject[]]$connections = @()}
 }
 Process
@@ -87,5 +87,5 @@ Process
 End
 {
 	$connections |ConvertTo-Json -Compress |Write-Verbose
-	Set-VSCodeSetting.ps1 mssql.connections $connections -Workspace
+	Set-VSCodeSetting.ps1 /mssql.connections $connections -Workspace
 }

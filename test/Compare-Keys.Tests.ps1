@@ -11,6 +11,10 @@ Describe 'Compare-Keys' -Tag Compare-Keys -Skip:$skip {
 	BeforeAll {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
+		$initialOutputRendering,$PSStyle.OutputRendering = $PSStyle.OutputRendering,'PlainText'
+	}
+	AfterAll {
+		$PSStyle.OutputRendering = $initialOutputRendering
 	}
 	Context 'Returns the differences between two dictionaries' -Tag CompareKeys,Compare,Keys {
 		$space = ' '

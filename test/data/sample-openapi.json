@@ -14,10 +14,38 @@
       "name": "Support"
     }
   },
+  "tags": [
+    {
+      "name": "emojis",
+      "description": "Emoji operations."
+    },
+    {
+      "name": "git",
+      "description": "Raw Git functionality."
+    },
+    {
+      "name": "markdown",
+      "description": "Perform CommonMark operations."
+    },
+    {
+      "name": "meta",
+      "description": "Endpoints that give information about the API."
+    },
+    {
+      "name": "search",
+      "description": "Look for stuff."
+    },
+    {
+      "name": "users",
+      "description": "Interact with and view information about users and also current user."
+    }
+  ],
   "paths": {
     "/users/{userId}": {
       "get": {
         "summary": "Returns a user by ID.",
+        "description": "Gets a user's details.",
+        "tags": ["users"],
         "parameters": [
           {
             "in": "path",
@@ -47,6 +75,8 @@
     "/users": {
       "post": {
         "summary": "Creates a new user.",
+        "description": "Adds a user account.",
+        "tags": ["users"],
         "requestBody": {
           "required": true,
           "content": {
