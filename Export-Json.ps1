@@ -20,6 +20,9 @@ http://jsonref.org/
 https://www.rfc-editor.org/rfc/rfc6901
 
 .LINK
+https://github.com/MicrosoftDocs/PowerShell-Docs/pull/9042
+
+.LINK
 Select-Json.ps1
 
 .EXAMPLE
@@ -51,57 +54,64 @@ The full path name of the property to get, as a JSON Pointer, modified to suppor
 # Omits white space and indented formatting in the output string.
 [switch] $Compress
 )
-
-function Get-Reference
+Begin
 {
-	[CmdletBinding()] Param([uri] $ReferenceUri, $Root)
-	$source,$pointer = switch($ReferenceUri)
-	{
-		{$_.OriginalString -like '#*'} {$Root,($_.OriginalString -replace '\A#')}
-		{$_.IsFile} {(Get-Content $_.LocalPath -Raw |ConvertFrom-Json -AsHashtable),($_.Fragment -replace '\A*')}
-		default {(Invoke-RestMethod $ReferenceUri),($_.Fragment -replace '\A#')}
-	}
-	return $source |Select-Json.ps1 $pointer |Import-Reference -Root $source
-}
+	if($PSVersionTable.PSVersion -lt 7.3) {Write-Warning "JSON property order may be changed in PowerShell < 7.3"}
 
-filter Import-Reference
-{
-	[CmdletBinding()] Param($Root, [Parameter(ValueFromPipeline=$true)] $InputObject)
-	if($null -eq $InputObject -or $InputObject -is [bool] -or $InputObject -is [long] -or
-		$InputObject -is [double] -or $InputObject -is [string]) {return $InputObject}
-	if(($InputObject |ConvertTo-Json -Compress -Depth 100) -notlike '*"$ref":*') {return $InputObject}
-	if($InputObject -is [Collections.IList]) {return ,@($InputObject |Import-Reference -Root $Root)}
-	if($InputObject -is [Collections.IDictionary])
+	function Get-Reference
 	{
-		if($InputObject.ContainsKey('$ref'))
+		[CmdletBinding()] Param([uri] $ReferenceUri, $Root)
+		$source,$pointer = switch($ReferenceUri)
 		{
-			return Get-Reference -ReferenceUri $InputObject['$ref'] -Root $Root
+			{$_.OriginalString -like '#*'} {$Root,($_.OriginalString -replace '\A#')}
+			{$_.IsFile} {(Get-Content $_.LocalPath -Raw |ConvertFrom-Json -AsHashtable),($_.Fragment -replace '\A*')}
+			default {(Invoke-RestMethod $ReferenceUri),($_.Fragment -replace '\A#')}
 		}
-		foreach($name in @($InputObject.Keys))
+		return $source |Select-Json.ps1 $pointer |Import-Reference -Root $source
+	}
+
+	filter Import-Reference
+	{
+		[CmdletBinding()] Param($Root, [Parameter(ValueFromPipeline=$true)] $InputObject)
+		if($null -eq $InputObject -or $InputObject -is [bool] -or $InputObject -is [long] -or
+			$InputObject -is [double] -or $InputObject -is [string]) {return $InputObject}
+		if(($InputObject |ConvertTo-Json -Compress -Depth 100) -notlike '*"$ref":*') {return $InputObject}
+		if($InputObject -is [Collections.IList]) {return ,@($InputObject |Import-Reference -Root $Root)}
+		if($InputObject -is [Collections.IDictionary])
 		{
-			$InputObject[$name] = Import-Reference -Root $Root -InputObject $InputObject[$name]
+			if($InputObject.ContainsKey('$ref'))
+			{
+				return Get-Reference -ReferenceUri $InputObject['$ref'] -Root $Root
+			}
+			foreach($name in @($InputObject.Keys))
+			{
+				$InputObject[$name] = Import-Reference -Root $Root -InputObject $InputObject[$name]
+			}
+			return $InputObject
+		}
+		if($InputObject.PSObject.Properties.Match('$ref').Count)
+		{
+			return Get-Reference -ReferenceUri ($InputObject.'$ref') -Root $Root
+		}
+		foreach($property in $InputObject.PSObject.Properties)
+		{
+			$name = $property.Name
+			$InputObject.$name = Import-Reference -Root $Root -InputObject ($InputObject.$name)
 		}
 		return $InputObject
 	}
-	if($InputObject.PSObject.Properties.Match('$ref').Count)
-	{
-		return Get-Reference -ReferenceUri ($InputObject.'$ref') -Root $Root
-	}
-	foreach($property in $InputObject.PSObject.Properties)
-	{
-		$name = $property.Name
-		$InputObject.$name = Import-Reference -Root $Root -InputObject ($InputObject.$name)
-	}
-	return $InputObject
-}
 
-if($Path)
+	if($Path)
+	{
+		return Resolve-Path -Path $Path |
+			ForEach-Object {$_ |Get-Content -Raw |
+				Export-Json.ps1 -JsonPointer $JsonPointer -Compress:$Compress}
+
+	}
+}
+End
 {
-	return Resolve-Path -Path $Path |
-		ForEach-Object {$_ |Get-Content -Raw |
-			Export-Json.ps1 -JsonPointer $JsonPointer -Compress:$Compress}
-
+	$root = $InputObject -is [string] ? ($InputObject |ConvertFrom-Json -AsHashtable) : $InputObject
+	$selection = $root |Select-Json.ps1 $JsonPointer
+	return $selection |Import-Reference -Root $root |ConvertTo-Json -Depth 100 -Compress:$Compress
 }
-$root = $InputObject -is [string] ? ($InputObject |ConvertFrom-Json -AsHashtable) : $InputObject
-$selection = $root |Select-Json.ps1 $JsonPointer
-return $selection |Import-Reference -Root $root |ConvertTo-Json -Depth 100 -Compress:$Compress
