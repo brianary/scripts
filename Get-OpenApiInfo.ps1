@@ -7,8 +7,20 @@ Json
 
 .LINK
 https://www.openapis.org/
+
+.EXAMPLE
+Get-OpenApiInfo.ps1 .\test\data\sample-openapi.json
+
+Source      : .\test\data\sample-openapi.json
+OpenApi     : 3.0.3
+Title       : Sample REST API
+Description : An example OpenAPI definition.
+Version     : 1.0.0
+Endpoints   : {@{Endpoint=GET /users/{userId}; Summary=Returns a user by ID.; Description=Gets a user's details.},
+|             @{Endpoint=POST /users; Summary=Creates a new user.; Description=Adds a user account.}}
 #>
 
+#Requires -Version 7
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path
 )
@@ -18,7 +30,8 @@ Process
 		ConvertFrom-Json -AsHashtable |
 		ForEach-Object {[pscustomobject]@{
 			Source      = $Path
-			Swagger     = $_.swagger
+			OpenApi     = $_.ContainsKey('openapi') ? $_.openapi :
+				$_.ContainsKey('swagger') ? $_.swagger : $null
 			Title       = $_.info.title
 			Description = $_.info.description
 			Version     = $_.info.version
