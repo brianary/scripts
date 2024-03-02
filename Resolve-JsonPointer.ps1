@@ -48,6 +48,17 @@ Resolve-JsonPointer.ps1 /powershell.*.preset -Path ./.vscode/settings.json
 '{"a":1, "b": {"ZZ/ZZ": {"AD~BC": [7, 8, 9]}}}' |ConvertFrom-Json |Resolve-JsonPointer.ps1 /?/ZZ*/*BC/-
 
 /b/ZZ~1ZZ/AD~0BC/3
+
+.EXAMPLE
+Resolve-JsonPointer.ps1 /* -Path .\test\data\sample-openapi.json -IncludePath
+
+Path                                     Pointer
+----                                     -------
+A:\Scripts\test\data\sample-openapi.json /openapi
+A:\Scripts\test\data\sample-openapi.json /info
+A:\Scripts\test\data\sample-openapi.json /tags
+A:\Scripts\test\data\sample-openapi.json /paths
+A:\Scripts\test\data\sample-openapi.json /components
 #>
 
 #Requires -Version 7
@@ -61,7 +72,9 @@ The full path name of the property to get, as a JSON Pointer, modified to suppor
 # The JSON (string or parsed object/hashtable) to get the value from.
 [Parameter(ParameterSetName='InputObject',ValueFromPipeline=$true)] $InputObject,
 # A JSON file to update.
-[Parameter(ParameterSetName='Path',Mandatory=$true)][string] $Path
+[Parameter(ParameterSetName='Path',Mandatory=$true)][string] $Path,
+# Indicates that the source file path should be included in the output, if available.
+[switch] $IncludePath
 )
 Begin
 {
@@ -143,9 +156,19 @@ Process
 {
 	if($Path)
 	{
-		return Resolve-Path -Path $Path |
-			Get-Content -Raw |
-			ForEach-Object {Resolve-Pointer -InputObject ($_ |ConvertFrom-Json -AsHashtable) -Segments $jsonpath}
+		if($IncludePath)
+		{
+			return Resolve-Path -Path $Path -PipelineVariable file |
+				Get-Content -Raw |
+				ForEach-Object {Resolve-Pointer -InputObject ($_ |ConvertFrom-Json -AsHashtable) -Segments $jsonpath} |
+				ForEach-Object {[pscustomobject]@{Path=$file.Path; Pointer=$_}}
+		}
+		else
+		{
+			return Resolve-Path -Path $Path |
+				Get-Content -Raw |
+				ForEach-Object {Resolve-Pointer -InputObject ($_ |ConvertFrom-Json -AsHashtable) -Segments $jsonpath}
+		}
 	}
 	if($null -eq $InputObject) {return}
 	if($InputObject -is [string])
