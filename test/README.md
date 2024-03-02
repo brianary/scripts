@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='267'>267 &#x2030;</meter> Scripts repo (217) &#x1F4C5; 580 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='266'>266 &#x2030;</meter> Scripts repo (218) &#x1F4C5; 580 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
 
@@ -324,7 +324,7 @@ Script Tests
 - &#x2716;&#xFE0F; Restore-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='105'>105 &#x2030;</meter> S (19) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='100'>100 &#x2030;</meter> S (20) &#x1F4C5; at once</summary>
 <ul><li><details><summary>not started Save (2) </summary>
 
 - &#x2716;&#xFE0F; Save-PodcastEpisodes.ps1
@@ -354,10 +354,11 @@ Script Tests
 - &#x2716;&#xFE0F; Set-VSCodeSetting.ps1
 
 </details></li>
-<li><details><summary>not started Show (3) </summary>
+<li><details><summary>not started Show (4) </summary>
 
 - &#x2716;&#xFE0F; Show-DataRef.ps1
 - &#x2716;&#xFE0F; Show-HttpStatus.ps1
+- &#x2716;&#xFE0F; Show-OpenApiInfo.ps1
 - &#x2716;&#xFE0F; Show-Time.ps1
 
 </details></li>

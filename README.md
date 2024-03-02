@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3064_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3052_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -179,11 +179,12 @@ PowerShell Scripts
 
 - :up: **[Export-Json.ps1](Export-Json.ps1)**: Exports a portion of a JSON document, recursively importing references.
 - :up: **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1)**: Extracts a JSON schema from an OpenAPI definition.
-- **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1)**: Returns metadata from an OpenAPI definition.
+- :up: **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1)**: Returns metadata from an OpenAPI definition.
 - **[Merge-Json.ps1](Merge-Json.ps1)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - :up: **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
 - :up: **[Select-Json.ps1](Select-Json.ps1)**: Returns a value from a JSON string or file.
 - :up: **[Set-Json.ps1](Set-Json.ps1)**: Sets a property in a JSON string or file.
+- :new: **[Show-OpenApiInfo.ps1](Show-OpenApiInfo.ps1)**: Displays metadata from an OpenAPI definition.
 
 ### Notebooks
 
@@ -343,9 +344,9 @@ PowerShell Scripts
 
 F# Scripts
 ----------
-- **[NCrontab Schedule Test](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/Test-NCrontab.html)**: Returns a sampling of the next several date & times scheduled by an NCrontab string.
-- **[Parse Unicode data](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/UnicodeData.html)**: Experiment with CSV type provider to read Unicode data.
-- **[US Federal Holiday Detection](https://webcoder.info/scripts/C:/Users/brian/GitHub/scripts/USFederalHolidays.html)**: Here's how to determine whether a date is a US federal holiday using F#.
+- **[NCrontab Schedule Test](https://webcoder.info/scripts/Test-NCrontab.html)**: Returns a sampling of the next several date & times scheduled by an NCrontab string.
+- **[Parse Unicode data](https://webcoder.info/scripts/UnicodeData.html)**: Experiment with CSV type provider to read Unicode data.
+- **[US Federal Holiday Detection](https://webcoder.info/scripts/USFederalHolidays.html)**: Here's how to determine whether a date is a US federal holiday using F#.
 
 Office VBA Scripts
 ------------------
@@ -353,4 +354,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 03/01/2024 13:37:53 -->
+<!-- generated 03/01/2024 20:13:04 -->

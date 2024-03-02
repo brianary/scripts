@@ -14,14 +14,14 @@ Returns a value from a JSON string or file.
 
 ### InputObject
 ```
-Resolve-JsonPointer.ps1 [[-JsonPointer] <String>] [-InputObject <Object>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Resolve-JsonPointer.ps1 [[-JsonPointer] <String>] [-InputObject <Object>] [-IncludePath]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Path
 ```
-Resolve-JsonPointer.ps1 [[-JsonPointer] <String>] -Path <String> [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Resolve-JsonPointer.ps1 [[-JsonPointer] <String>] -Path <String> [-IncludePath]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -109,6 +109,21 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludePath
+Indicates that the source file path should be included in the output, if available.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
