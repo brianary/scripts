@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='266'>266 &#x2030;</meter> Scripts repo (218) &#x1F4C5; 580 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='273'>273 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 585 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
 
@@ -91,7 +91,7 @@ Script Tests
 - &#x2714;&#xFE0F; Disable-AnsiColor.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='909'>909 &#x2030;</meter> E (11) &#x1F4C5; 353 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> E (11) &#x1F4C5; 362 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Enable (1) &#x1F4C5; 57 days</summary>
 
 - &#x2714;&#xFE0F; Enable-AnsiColor.ps1
@@ -102,7 +102,7 @@ Script Tests
 - &#x2714;&#xFE0F; Expand-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='889'>889 &#x2030;</meter> Export (9) &#x1F4C5; 7 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Export (9) &#x1F4C5; 16 days</summary>
 
 - &#x2714;&#xFE0F; Export-DatabaseScripts.ps1
 - &#x2714;&#xFE0F; Export-EdgeKeywords.ps1
@@ -112,13 +112,12 @@ Script Tests
 - &#x2714;&#xFE0F; Export-OpenApiSchema.ps1
 - &#x2714;&#xFE0F; Export-Readme.ps1
 - &#x2714;&#xFE0F; Export-SecretVault.ps1
-- &#x2716;&#xFE0F; Export-TableMerge.ps1
+- &#x2714;&#xFE0F; Export-TableMerge.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started F (18) </summary>
-<ul><li><details><summary>not started Find (11) </summary>
+<li><details><summary>not started F (17) </summary>
+<ul><li><details><summary>not started Find (10) </summary>
 
-- &#x2716;&#xFE0F; Find-Comics.ps1
 - &#x2716;&#xFE0F; Find-DatabaseValue.ps1
 - &#x2716;&#xFE0F; Find-DbColumn.ps1
 - &#x2716;&#xFE0F; Find-DotNetGlobalTools.ps1
@@ -146,8 +145,8 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> G (39) &#x1F4C5; 490 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> Get (39) &#x1F4C5; 490 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> G (38) &#x1F4C5; 490 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> Get (38) &#x1F4C5; 490 days</summary>
 
 - &#x2716;&#xFE0F; Get-ADServiceAccountInfo.ps1
 - &#x2716;&#xFE0F; Get-ADUserStatus.ps1
@@ -155,7 +154,6 @@ Script Tests
 - &#x2716;&#xFE0F; Get-AssemblyFramework.ps1
 - &#x2716;&#xFE0F; Get-CachedCredential.ps1
 - &#x2716;&#xFE0F; Get-CharacterDetails.ps1
-- &#x2716;&#xFE0F; Get-Comics.ps1
 - &#x2716;&#xFE0F; Get-CommandParameters.ps1
 - &#x2716;&#xFE0F; Get-CommandPath.ps1
 - &#x2716;&#xFE0F; Get-ConfigConnectionStringBuilders.ps1
