@@ -191,7 +191,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://api.shortboxed.com/](https://api.shortboxed.com/)
-
-[Get-Comics.ps1]()
-
