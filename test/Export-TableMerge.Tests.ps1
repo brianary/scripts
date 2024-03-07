@@ -29,7 +29,7 @@ Describe 'Export-TableMerge' -Tag Export-TableMerge -Skip:$skip {
 	Context 'Exports table data' -Tag ExportTableMerge,Export,TableMerge,Database {
 		It "Exports AdventureWorks Production.Product table data" -Skip:$skiplive {
 			Export-TableMerge -Server $server -Database $database -Schema Production -Table Product |Should -BeExactly @"
-TODO
+TODO: add merge data
 "@
 		}
 	}
