@@ -15,7 +15,7 @@ Describe 'Export-MermaidER' -Tag Export-MermaidER -Skip:$skip {
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 		$datadir = Join-Path $PSScriptRoot 'data'
 		$mockfile = Join-Path $PSScriptRoot mock ([io.path]::ChangeExtension((Split-Path $PSCommandPath -Leaf), 'cs'))
-		$server = Connect-DbaInstance $env:TestConnectionString
+		$server = if(!!$env:TestConnectionString) {Connect-DbaInstance -SqlInstance $env:TestConnectionString}
 	}
 	Context 'Generates a Mermaid entity relation diagram for database tables' -Tag ExportMermaidER,Export,MermaidER,Mermaid,Diagram,Database {
 		It "From the test database, the table '<Table>' generates the diagram in the '<ResultFile>' data file" -Skip:$(!$env:TestConnectionString) -TestCases @(
