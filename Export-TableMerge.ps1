@@ -137,7 +137,7 @@ select quotename(COLUMN_NAME) as COLUMN_NAME
 "@ |Select-Object -ExpandProperty COLUMN_NAME
 $dataupdates = ($columns |Where-Object {$_ -notin $pk} |ForEach-Object {"{0} = source.{0}" -f $_}) -join ",$([environment]::NewLine)"
 $dataupdates =
-    if($dataupdates) {"when matched then${EOL}update set $dataupdates"}
+    if($dataupdates) {"when matched then$([Environment]::NewLine)update set $dataupdates"}
     else {"-- skip 'matched' condition (no non-key columns to update)"}
 $targetlist = $columns -join ','
 $sourcelist = ($columns |ForEach-Object {"source.{0}" -f $_}) -join ','
