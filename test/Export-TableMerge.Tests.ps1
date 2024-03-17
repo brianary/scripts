@@ -16,10 +16,14 @@ Describe 'Export-TableMerge' -Tag Export-TableMerge -Skip:$skip {
 		$server = if(!!$env:TestConnectionString) {Connect-DbaInstance -SqlInstance $env:TestConnectionString}
 	}
 	Context 'Exports table data' -Tag ExportTableMerge,Export,TableMerge,Database {
-		It "Exports AdventureWorks HumanResources.Department table data" -Skip:$(!$env:TestConnectionString) {
-			$result = Join-Path $datadir HumanResources.Department.merge.sql |Get-Item |Get-Content -Raw
+		It "Exports AdventureWorks HumanResources.Department table data" -Skip:$(!$env:TestConnectionString) -TestCases @(
+			@{ Schema = 'HumanResources'; Table = 'Department' }
+			@{ Schema = 'Person'; Table = 'PhoneNumberType' }
+			@{ Schema = 'Production'; Table = 'ProductModelIllustration' }
+		) {
+			$result = Join-Path $datadir "${Schema}.${Table}.merge.sql" |Get-Item |Get-Content -Raw
 			$result = $result.TrimEnd()
-			Get-DbaDbTable -SqlInstance $server -Schema HumanResources -Table Department |
+			Get-DbaDbTable -SqlInstance $server -Schema $Schema -Table $Table |
 				Export-TableMerge.ps1 |
 				Should -BeExactly $result
 		}
