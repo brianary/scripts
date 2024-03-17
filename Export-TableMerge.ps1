@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 Exports table data as a T-SQL MERGE statement.
 
@@ -9,158 +9,114 @@ System.String of SQL MERGE script to replicate the table's data.
 Database
 
 .LINK
-Use-SqlcmdParams.ps1
+https://learn.microsoft.com/sql/t-sql/statements/merge-transact-sql
 
 .LINK
-Invoke-Sqlcmd
-
-.LINK
-https://msdn.microsoft.com/library/hh245198.aspx
+https://dbatools.io/
 
 .EXAMPLE
-Export-TableMerge $server pubs employee |Out-File employee.sql
+Get-DbaDbTable -SqlInstance $server -Schema HumanResources -Table Department |Export-TableMerge.ps1
 
-.EXAMPLE
-Export-TableMerge -Server "(localdb)\ProjectV12" -Database AdventureWorks2014 -Schema Production -Table Product |Out-File Data\Production.Product.sql utf8
+if exists (select * from information_schema.columns where table_schema = 'HumanResources' and table_name = 'Department'
+and columnproperty(object_id(table_name), column_name,'IsIdentity') = 1)
+set identity_insert [HumanResources].[Department] on;
+
+merge [HumanResources].[Department] as target
+using ( values
+(1, 'Engineering', 'Research and Development', '2008-04-30 00:00:00.00000'),
+(2, 'Tool Design', 'Research and Development', '2008-04-30 00:00:00.00000'),
+(3, 'Sales', 'Sales and Marketing', '2008-04-30 00:00:00.00000'),
+(4, 'Marketing', 'Sales and Marketing', '2008-04-30 00:00:00.00000'),
+(5, 'Purchasing', 'Inventory Management', '2008-04-30 00:00:00.00000'),
+(6, 'Research and Development', 'Research and Development', '2008-04-30 00:00:00.00000'),
+(7, 'Production', 'Manufacturing', '2008-04-30 00:00:00.00000'),
+(8, 'Production Control', 'Manufacturing', '2008-04-30 00:00:00.00000'),
+(9, 'Human Resources', 'Executive General and Administration', '2008-04-30 00:00:00.00000'),
+(10, 'Finance', 'Executive General and Administration', '2008-04-30 00:00:00.00000'),
+(11, 'Information Services', 'Executive General and Administration', '2008-04-30 00:00:00.00000'),
+(12, 'Document Control', 'Quality Assurance', '2008-04-30 00:00:00.00000'),
+(13, 'Quality Assurance', 'Quality Assurance', '2008-04-30 00:00:00.00000'),
+(14, 'Facilities and Maintenance', 'Executive General and Administration', '2008-04-30 00:00:00.00000'),
+(15, 'Shipping and Receiving', 'Inventory Management', '2008-04-30 00:00:00.00000'),
+(16, 'Executive', 'Executive General and Administration', '2008-04-30 00:00:00.00000')
+) as source ([DepartmentID], [Name], [GroupName], [ModifiedDate])
+on source.[DepartmentID] = target.[DepartmentID]
+when matched then
+update set [Name] = source.[Name],
+[GroupName] = source.[GroupName],
+[ModifiedDate] = source.[ModifiedDate]
+when not matched by target then
+insert ([DepartmentID], [Name], [GroupName], [ModifiedDate])
+values (source.[DepartmentID], source.[Name], source.[GroupName], source.[ModifiedDate])
+when not matched by source then delete ;
+
+if exists (select * from information_schema.columns where table_schema = 'HumanResources' and table_name = 'Department'
+and columnproperty(object_id(table_name), column_name,'IsIdentity') = 1)
+set identity_insert [HumanResources].[Department] off;
 #>
 
-#Requires -Version 3
-#Requires -Module SqlServer
+#Requires -Version 7
+#Requires -Modules dbatools
+using namespace Microsoft.SqlServer.Management.Smo
 [CmdletBinding()][OutputType([string])] Param(
-<#
-The name of a server (and optional instance) to connect and use for the query.
-May be used with optional Database, Credential, and ConnectionProperties parameters.
-#>
-[Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
-# The the database to connect to on the server.
-[Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
-# Specifies a connection string to connect to the server.
-[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string] $ConnectionString,
-# Specifies an SMO Database object to query.
-[Parameter(ParameterSetName='ByDatabase',Mandatory=$true)]
-[Microsoft.SqlServer.Management.Smo.Database] $SmoDatabase,
-# The connection string name from the ConfigurationManager to use.
-[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string] $ConnectionName,
-# The name of the table to export.
-[Parameter(Position=2,Mandatory=$true)][string] $Table,
-<#
-Optional name of the table's schema.
-By default, uses the user's default schema defined in the database (typically dbo).
-#>
-[Parameter(Position=3)][string] $Schema,
-<#
-Treat a non-key identity column as part of the key, since it can't be updated as a data column.
-
-Non-key identity columns are very rare, but if one is detected and this switch is not specified,
-a warning will be generated and the column will be ignored entirely for updates, and not used as
-either a key to match on or a data column to update.
-#>
-[switch] $UseIdentityInKey
+[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Table] $Table
 )
-
-Use-SqlcmdParams.ps1
-
-function Format-SqlValue($value)
+Begin
 {
-    if($value -is [DBNull]) {'null'}
-    elseif($value -is [string]) {"'{0}'" -f ($value -replace "'","''")}
-    elseif($value -is [datetime]) {"'{0}'" -f $value} # hmm… format? type?
-    elseif($value -is [bool]) {if($value){1}else{0}}
-    elseif($value -is [guid]) {"'{0}'" -f $value}
-    else {$value}
-}
-
-$tablename = Format-SqlValue $Table
-if(!$Schema){$Schema = Invoke-Sqlcmd "select object_schema_name(object_id($tablename)) as schema_name" |Select-Object -ExpandProperty schema_name}
-$schemaname = Format-SqlValue $Schema
-$fqtn = Invoke-Sqlcmd "select quotename($schemaname) + '.' + quotename($tablename) as fqtn" |Select-Object -ExpandProperty fqtn
-$rowcount = Invoke-Sqlcmd "select count(*) rows from $fqtn" |Select-Object -ExpandProperty rows
-if($rowcount -gt 10000) {Write-Warning "The table $fqtn contains $rowcount rows, which may not export well as a merge script."}
-else {Write-Verbose "Exporting $rowcount rows from table $fqtn."}
-
-$pk = Invoke-Sqlcmd @"
-select quotename(kcu.COLUMN_NAME) as COLUMN_NAME
-  from INFORMATION_SCHEMA.TABLE_CONSTRAINTS as tc
-  join INFORMATION_SCHEMA.KEY_COLUMN_USAGE as kcu
-    on kcu.CONSTRAINT_SCHEMA = tc.CONSTRAINT_SCHEMA
-   and kcu.CONSTRAINT_NAME = tc.CONSTRAINT_NAME
-   and kcu.TABLE_SCHEMA = tc.TABLE_SCHEMA
-   and kcu.TABLE_NAME = tc.TABLE_NAME
- where tc.TABLE_SCHEMA = $schemaname
-   and tc.TABLE_NAME = $tablename
-   and tc.CONSTRAINT_TYPE = 'PRIMARY KEY' -- UNIQUE?
- order by kcu.ORDINAL_POSITION;
-"@ |Select-Object -ExpandProperty COLUMN_NAME
-$nonkeyidentity = Invoke-Sqlcmd @"
-  with PrimaryKeyColumns as (
-select kcu.COLUMN_NAME
-  from INFORMATION_SCHEMA.TABLE_CONSTRAINTS as tc
-  join INFORMATION_SCHEMA.KEY_COLUMN_USAGE as kcu
-    on kcu.CONSTRAINT_SCHEMA = tc.CONSTRAINT_SCHEMA
-   and kcu.CONSTRAINT_NAME = tc.CONSTRAINT_NAME
-   and kcu.TABLE_SCHEMA = tc.TABLE_SCHEMA
-   and kcu.TABLE_NAME = tc.TABLE_NAME
- where tc.TABLE_SCHEMA = $schemaname
-   and tc.TABLE_NAME = $tablename
-   and tc.CONSTRAINT_TYPE = 'PRIMARY KEY'
-)
-select quotename(c.COLUMN_NAME) as COLUMN_NAME
-  from INFORMATION_SCHEMA.COLUMNS c
- where c.TABLE_SCHEMA = $schemaname
-   and c.TABLE_NAME = $tablename
-   and c.COLUMN_NAME not in (select COLUMN_NAME from PrimaryKeyColumns)
-   and columnproperty(object_id(c.TABLE_NAME), c.COLUMN_NAME,'IsIdentity') = 1;
-"@ |Select-Object -ExpandProperty COLUMN_NAME
-if($nonkeyidentity)
-{
-    Write-Verbose "Non-primary-key identity column detected: $nonkeyidentity"
-    if($UseIdentityInKey) {$pk += $nonkeyidentity}
-    else
+    filter ConvertTo-SqlName([Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][string] $Name)
     {
-        Write-Warning @"
-Non-key IDENTITY column $nonkeyidentity cannot be updated and will be ignored.
-Specify -UseIdentityInKey to include it in the primary key.
+        return [SqlSmoObject]::QuoteString($Name,'[',']')
+    }
+
+    filter ConvertTo-SqlLiteral([Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)] $Value)
+    {
+        switch($Value.GetType())
+        {
+            dbnull   {'null'}
+            string   {"'$($Value -replace "'","''")'"}
+            datetime {Get-Date $Value -f "\'yyyy-MM-dd HH:mm:ss.fffff\'"}
+            bool     {$Value ? 1 : 0}
+            guid     {"'$Value'"}
+            default  {$Value}
+        }
+    }
+
+    function Format-Merge([Table] $Table)
+    {
+        Import-CharConstants.ps1 NL
+        $identitytest = @"
+if exists (select * from information_schema.columns where table_schema = $(ConvertTo-SqlLiteral $Table.Schema) and table_name = $(ConvertTo-SqlLiteral $Table.Name)
+and columnproperty(object_id(table_name), column_name,'IsIdentity') = 1)
+"@
+        $columns = ($Table.Columns.Name |ConvertTo-SqlName) -join ', '
+        $fieldupdates = ($Table.Columns |Where-Object {!$_.InPrimaryKey} |Select-Object -ExpandProperty Name |
+            ConvertTo-SqlName |ForEach-Object {"$_ = source.$_"}) -join ",$NL"
+        $fieldupdates =
+            if($fieldupdates) {"when matched then${NL}update set $fieldupdates"}
+            else {"-- skip 'matched' condition (no non-key columns to update)"}
+        return @"
+$identitytest
+set identity_insert $Table on;
+
+merge $Table as target
+using ( values
+$((Invoke-DbaQuery -SqlInstance $Table.Parent.Parent -Database $Table.Parent.Name -Query "select * from $Table;" -As DataRow |
+    ForEach-Object {"($(($_.ItemArray |ConvertTo-SqlLiteral) -join ', '))"}) -join ",$NL")
+) as source ($columns)
+on $(($Table.Columns |Where-Object {$_.InPrimaryKey} |Select-Object -ExpandProperty Name |ConvertTo-SqlName |
+    ForEach-Object {"source.$_ = target.$_"}) -join "${NL}and ")
+$fieldupdates
+when not matched by target then
+insert ($columns)
+values ($(($Table.Columns.Name |ConvertTo-SqlName |ForEach-Object {"source.$_"}) -join ', '))
+when not matched by source then delete ;
+
+$identitytest
+set identity_insert $Table off;
 "@
     }
 }
-Write-Verbose "Primary key: $pk"
-$pkjoin = ($pk |ForEach-Object {"source.{0} = target.{0}" -f $_}) -join ' AND '
-
-$data = Invoke-Sqlcmd "select * from $fqtn"
-if(!$data) {throw "No data in table."}
-$columns = Invoke-Sqlcmd @"
-select quotename(COLUMN_NAME) as COLUMN_NAME
-  from INFORMATION_SCHEMA.COLUMNS
- where TABLE_SCHEMA = $schemaname
-   and TABLE_NAME = $tablename
- order by ORDINAL_POSITION;
-"@ |Select-Object -ExpandProperty COLUMN_NAME
-$dataupdates = ($columns |Where-Object {$_ -notin $pk} |ForEach-Object {"{0} = source.{0}" -f $_}) -join ",$([environment]::NewLine)"
-$dataupdates =
-    if($dataupdates) {"when matched then$([Environment]::NewLine)update set $dataupdates"}
-    else {"-- skip 'matched' condition (no non-key columns to update)"}
-$targetlist = $columns -join ','
-$sourcelist = ($columns |ForEach-Object {"source.{0}" -f $_}) -join ','
-
-$data = ($data |ForEach-Object {($_.ItemArray |ForEach-Object {Format-SqlValue $_}) -join ','} |ForEach-Object {"($_)"}) -join ",$([environment]::NewLine)"
-
-@"
-if exists (select * from information_schema.columns where table_schema = $schemaname and table_name = $tablename
-and columnproperty(object_id(table_name), column_name,'IsIdentity') = 1)
-set identity_insert $fqtn on;
-
-merge $fqtn as target
-using ( values
-$data
-) as source ($targetlist)
-on $pkjoin
-$dataupdates
-when not matched by target then
-insert ($targetlist)
-values ($sourcelist)
-when not matched by source then delete ;
-
-if exists (select * from information_schema.columns where table_schema = $schemaname and table_name = $tablename
-and columnproperty(object_id(table_name), column_name,'IsIdentity') = 1)
-set identity_insert $fqtn off;
-"@
+Process
+{
+    return Format-Merge $Table
+}
