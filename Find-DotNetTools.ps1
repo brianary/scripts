@@ -1,10 +1,17 @@
 ﻿<#
 .SYNOPSIS
-Returns a list of global dotnet tools.
+Returns a list of matching dotnet tools.
 
 .FUNCTIONALITY
 DotNet
 
+.EXAMPLE
+Find-DotNetTools.ps1 interactive |Format-Table -AutoSize
+
+PackageName                  Version     Authors                Downloads Verified
+-----------                  -------     -------                --------- --------
+microsoft.dotnet-interactive 1.0.516401  Microsoft              33682741      True
+dotnet-repl                  0.1.216     jonsequitur            117599       False
 #>
 
 #Requires -Version 3
@@ -22,7 +29,7 @@ foreach($line in dotnet tool search $Name |Where-Object {$_ -match '^\S+\s+\d+(?
 		PackageName = $package
 		Version     = try{[semver]$version}catch{try{[version]$version}catch{$version}};
 		Authors     = $authors
-		Downloads   = $downloads
+		Downloads   = [long]$downloads
 		Verified    = $verified.Trim() -eq 'x'
 	}
 }

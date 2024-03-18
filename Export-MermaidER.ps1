@@ -123,6 +123,8 @@ Justification='This script uses $input within an End block.')]
 )
 Begin
 {
+	Import-CharConstants.ps1 NL
+
 	filter Format-ColumnAsMermaid
 	{
 		Param(
@@ -152,7 +154,7 @@ Begin
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
 		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][ColumnCollection] $Columns
 		)
-		$Local:OFS = "$([Environment]::NewLine)`t"
+		$Local:OFS = "$NL`t"
 		return @"
 $Name {
 	$($Columns |Format-ColumnAsMermaid)
@@ -177,16 +179,16 @@ $Name {
 		if($AllDatabaseTables[$ReferencedTable,$ReferencedTableSchema].Urn.Value -notin $SelectedTableUrns) {return}
 		$description = $Columns.Name -join ', '
 		if($ExtendedProperties['MS_Description']) {$description += ': {0}' -f ($ExtendedProperties['MS_Description'].Value -replace '"',"'")}
-		return "$($Parent.Name) }|--|| $ReferencedTable : `"$description`""
+		return "$($Parent.Name) }|--|| $ReferencedTable : `"$description`"$NL"
 	}
 }
 End
 {
 	[Table[]] $tables = if($input) {$input} else {@($Table)}
-	$Local:OFS = [Environment]::NewLine
+	$Local:OFS = ''
 	return @"
 erDiagram
-$($tables |Format-TableAsMermaid)
+$(($tables |Format-TableAsMermaid) -join $NL)
 $($tables |
 	Select-Object -ExpandProperty ForeignKeys |
 	Format-ForeignKeyAsMermaid -AllDatabaseTables $tables[0].Parent.Tables -SelectedTableUrns $tables.Urn.Value)

@@ -27,7 +27,7 @@ ConvertFrom-DataRow.ps1
 https://docs.microsoft.com/sql/relational-databases/system-catalog-views/sys-index-columns-transact-sql
 
 .EXAMPLE
-Find-Indexes.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2014 -ColumnName ErrorLogID
+Find-DbIndexes.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2014 -ColumnName ErrorLogID
 
 SchemaName     : dbo
 TableName      : ErrorLog
