@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3151_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3433_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -23,10 +23,6 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[Convert-ClipboardTsvToHtml.ps1](Convert-ClipboardTsvToHtml.ps1.md)**: Parses TSV clipboard data into HTML table data which is copied back to the clipboard.
 - **[Import-ClipboardTsv.ps1](Import-ClipboardTsv.ps1.md)**: Parses TSV clipboard data into objects.
-
-### Comics
-
-- **[Open-Comic.ps1](Open-Comic.ps1.md)**: Opens a comic's PreviewsWorld page.
 
 ### Command
 
@@ -83,10 +79,10 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
-- **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
+- &#x1F199; **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
-- **[Find-Indexes.ps1](Find-Indexes.ps1.md)**: Returns indexes using a column with the given name.
+- **[Find-DbIndexes.ps1](Find-DbIndexes.ps1.md)**: Returns indexes using a column with the given name.
 - **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1.md)**: Reports text, ntext, and image datatypes found in a given database.
 - **[Initialize-DatabaseNotebook.ps1](Initialize-DatabaseNotebook.ps1.md)**: Populates a new notebook with details about a database.
 - **[Measure-DbColumn.ps1](Measure-DbColumn.ps1.md)**: Provides statistics about SQL Server column data.
@@ -123,7 +119,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### DotNet
 
-- **[Find-DotNetGlobalTools.ps1](Find-DotNetGlobalTools.ps1.md)**: Returns a list of global dotnet tools.
+- **[Find-DotNetTools.ps1](Find-DotNetTools.ps1.md)**: Returns a list of matching dotnet tools.
 - **[Get-AssemblyFramework.ps1](Get-AssemblyFramework.ps1.md)**: Gets the framework version an assembly was compiled for.
 - **[Get-DotNetFrameworkVersions.ps1](Get-DotNetFrameworkVersions.ps1.md)**: Determine which .NET Frameworks are installed on the requested system.
 - **[Get-DotNetGlobalTools.ps1](Get-DotNetGlobalTools.ps1.md)**: Returns a list of global dotnet tools.
@@ -137,7 +133,6 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Files
 
 - **[Backup-File.ps1](Backup-File.ps1.md)**: Create a backup as a sibling to a file, with date and time values in the name.
-- **[Find-DuplicateFiles.ps1](Find-DuplicateFiles.ps1.md)**: Removes duplicates from a list of files.
 - **[Find-NewestFile.ps1](Find-NewestFile.ps1.md)**: Finds the most recent file.
 - **[Join-FileName.ps1](Join-FileName.ps1.md)**: Combines a filename with a string.
 - **[Measure-Caches.ps1](Measure-Caches.ps1.md)**: Returns a list of matching cache directories, and their sizes, sorted.
@@ -149,7 +144,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Git and GitHub
 
-- &#x1F199; **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1.md)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
+- **[Add-GitHubMetadata.ps1](Add-GitHubMetadata.ps1.md)**: Adds GitHub Linguist overrides to a repo's .gitattributes.
 - **[Copy-GitHubLabels.ps1](Copy-GitHubLabels.ps1.md)**: Copies configured issue labels from one repo to another.
 - **[Get-GitFileMetadata.ps1](Get-GitFileMetadata.ps1.md)**: Returns the creation and last modification metadata for a file in a git repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1.md)**: Gets the SHA-1 hash of the first commit of the current repo.
@@ -168,14 +163,14 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Json
 
-- &#x1F199; **[Export-Json.ps1](Export-Json.ps1.md)**: Exports a portion of a JSON document, recursively importing references.
-- &#x1F199; **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1.md)**: Extracts a JSON schema from an OpenAPI definition.
-- &#x1F199; **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1.md)**: Returns metadata from an OpenAPI definition.
+- **[Export-Json.ps1](Export-Json.ps1.md)**: Exports a portion of a JSON document, recursively importing references.
+- **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1.md)**: Extracts a JSON schema from an OpenAPI definition.
+- **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1.md)**: Returns metadata from an OpenAPI definition.
 - **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
-- &#x1F199; **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1.md)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
-- &#x1F199; **[Select-Json.ps1](Select-Json.ps1.md)**: Returns a value from a JSON string or file.
-- &#x1F199; **[Set-Json.ps1](Set-Json.ps1.md)**: Sets a property in a JSON string or file.
-- &#x1F195; **[Show-OpenApiInfo.ps1](Show-OpenApiInfo.ps1.md)**: Displays metadata from an OpenAPI definition.
+- **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1.md)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
+- **[Select-Json.ps1](Select-Json.ps1.md)**: Returns a value from a JSON string or file.
+- **[Set-Json.ps1](Set-Json.ps1.md)**: Sets a property in a JSON string or file.
+- **[Show-OpenApiInfo.ps1](Show-OpenApiInfo.ps1.md)**: Displays metadata from an OpenAPI definition.
 
 ### Notebooks
 
@@ -279,12 +274,12 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### VSCode
 
-- &#x1F199; **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1.md)**: Adds a VS Code MSSQL database connection to the repo.
-- &#x1F199; **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
+- **[Add-VsCodeDatabaseConnection.ps1](Add-VsCodeDatabaseConnection.ps1.md)**: Adds a VS Code MSSQL database connection to the repo.
+- **[Get-VSCodeSetting.ps1](Get-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 - **[Get-VSCodeSettingsFile.ps1](Get-VSCodeSettingsFile.ps1.md)**: Gets the path of the VSCode settings.config file.
 - **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1.md)**: Adds config XDT connection strings to VSCode settings.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1.md)**: Pushes the current VS Code editor workspace location to the location stack.
-- &#x1F199; **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
+- **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
 
 ### XML
 
@@ -330,5 +325,5 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1.md)**: Downloads enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1.md)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1.md)**: Scan sites using Mozilla's Observatory.
-- &#x1F195; **[Write-CallInfo.ps1](Write-CallInfo.ps1.md)**: Prints caller name and parameters to the host for debugging purposes.
+- **[Write-CallInfo.ps1](Write-CallInfo.ps1.md)**: Prints caller name and parameters to the host for debugging purposes.
 - **[Write-VisibleString.ps1](Write-VisibleString.ps1.md)**: Displays a string, showing nonprintable characters.

@@ -14,4 +14,4 @@ or have dependencies that are no longer available in PowerShell 6+.
 - **[Enable-Certificate.ps1](Enable-Certificate.ps1)**: Unsets the Archived property on a certificate.
 - **[Export-Fake4TargetsGraph.ps1](Export-Fake4TargetsGraph.ps1)**: Exports a graph of a Fake4 build script's targets.
 
-<!-- generated 03/06/2024 21:32:53 -->
+<!-- generated 03/17/2024 20:41:43 -->

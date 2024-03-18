@@ -5,15 +5,15 @@ online version:
 schema: 2.0.0
 ---
 
-# Find-DuplicateFiles.ps1
+# Find-DotNetTools.ps1
 
 ## SYNOPSIS
-Removes duplicates from a list of files.
+Returns a list of matching dotnet tools.
 
 ## SYNTAX
 
 ```
-Find-DuplicateFiles.ps1 [[-Files] <FileInfo[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Find-DotNetTools.ps1 [-Name] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,25 +23,28 @@ Find-DuplicateFiles.ps1 [[-Files] <FileInfo[]>] [-ProgressAction <ActionPreferen
 
 ### EXAMPLE 1
 ```
-Get-ChildItem -Recurse -File |Find-DuplicateFiles.ps1 |Remove-Item
+Find-DotNetTools.ps1 interactive |Format-Table -AutoSize
 ```
 
-Removes all but the oldest file with the same size and hash value.
+PackageName                  Version     Authors                Downloads Verified
+-----------                  -------     -------                --------- --------
+microsoft.dotnet-interactive 1.0.516401  Microsoft              33682741      True
+dotnet-repl                  0.1.216     jonsequitur            117599       False
 
 ## PARAMETERS
 
-### -Files
-A list of files to search for duplicates.
+### -Name
+The name of the tool to search for.
 
 ```yaml
-Type: FileInfo[]
+Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -65,10 +68,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.IO.FileInfo list, typically piped from Get-ChildItem.
 ## OUTPUTS
 
-### System.String containing the full paths of the both matching files.
 ## NOTES
 
 ## RELATED LINKS
