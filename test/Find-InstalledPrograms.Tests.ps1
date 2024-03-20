@@ -12,7 +12,9 @@ Describe 'Find-InstalledPrograms' -Tag Find-InstalledPrograms -Skip:$skip {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 	}
-	Context 'Searches installed programs' -Tag FindInstalledPrograms,Find,InstalledPrograms,Programs {
+	Context 'Searches installed programs' -Tag FindInstalledPrograms,Find,InstalledPrograms,Programs `
+		-Skip:(!(([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).`
+			IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
 		It "Finds PowerShell installation" {
 			$found = Find-InstalledPrograms.ps1 %powershell%
 			$found.Name |Should -BeLike *PowerShell*
