@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='294'>294 &#x2030;</meter> Scripts repo (214) &#x1F4C5; 596 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='304'>304 &#x2030;</meter> Scripts repo (214) &#x1F4C5; 598 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
 
@@ -115,15 +115,15 @@ Script Tests
 - &#x2714;&#xFE0F; Export-TableMerge.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='250'>250 &#x2030;</meter> F (16) &#x1F4C5; at once</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='444'>444 &#x2030;</meter> Find (9) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='375'>375 &#x2030;</meter> F (16) &#x1F4C5; 2 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='667'>667 &#x2030;</meter> Find (9) &#x1F4C5; 2 days</summary>
 
 - &#x2714;&#xFE0F; Find-DatabaseValue.ps1
 - &#x2714;&#xFE0F; Find-DbColumn.ps1
 - &#x2714;&#xFE0F; Find-DbIndexes.ps1
 - &#x2714;&#xFE0F; Find-DotNetTools.ps1
-- &#x2716;&#xFE0F; Find-InstalledPrograms.ps1
-- &#x2716;&#xFE0F; Find-Lines.ps1
+- &#x2714;&#xFE0F; Find-InstalledPrograms.ps1
+- &#x2714;&#xFE0F; Find-Lines.ps1
 - &#x2716;&#xFE0F; Find-NewestFile.ps1
 - &#x2716;&#xFE0F; Find-ProjectPackages.ps1
 - &#x2716;&#xFE0F; Find-SqlDeprecatedLargeValueTypes.ps1
