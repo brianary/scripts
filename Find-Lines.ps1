@@ -72,6 +72,7 @@ function Get-LineBlameInfo([Parameter(Position=0)][string] $Path,[Parameter(Posi
     Split-Path $Path |Push-Location
     $lineinfo = [Collections.Generic.List[string]]@(git blame -l -p -L "$LineNumber,$LineNumber" -- $Path)
     Pop-Location
+    if(!$lineinfo.Count) {return}
     ($sha1,$linetext) = ($lineinfo[0],$lineinfo[$lineinfo.Count -1])
     $lineinfo.RemoveAt($lineinfo.Count -1)
     $lineinfo.RemoveAt(0)
