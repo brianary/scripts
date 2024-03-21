@@ -36,10 +36,10 @@ Update-Everything.cmd
 Uninstall-OldModules.ps1
 
 .LINK
-Get-DotNetGlobalTools.ps1
+Get-Find-DotNetTools.ps1
 
 .LINK
-Find-DotNetGlobalTools.ps1
+Find-Find-DotNetTools.ps1
 
 .LINK
 Get-Process
@@ -204,9 +204,9 @@ Begin
 		if(!(Get-Command dotnet -ErrorAction Ignore))
 		{Write-Verbose 'Dotnet not found, skipping'; return}
 		Write-Step "$UP Updating dotnet global tools"
-		& "$PSScriptRoot\Get-DotNetGlobalTools.ps1" |
+		& "$PSScriptRoot\Get-Find-DotNetTools.ps1" |
 			Where-Object {
-				$_.Version -lt (& "$PSScriptRoot\Find-DotNetGlobalTools.ps1" $_.PackageName |
+				$_.Version -lt (& "$PSScriptRoot\Find-Find-DotNetTools.ps1" $_.PackageName |
 					Where-Object PackageName -eq $_.PackageName).Version
 			} |
 			ForEach-Object {dotnet tool update -g $_.PackageName}
