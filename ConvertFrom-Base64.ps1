@@ -14,6 +14,9 @@ Data encoding
 .LINK
 https://docs.microsoft.com/dotnet/api/system.convert.frombase64string
 
+.LINK
+https://www.rfc-editor.org/rfc/rfc7515.html#appendix-C
+
 .EXAMPLE
 ConvertFrom-Base64.ps1 dXNlcm5hbWU6QmFkUEBzc3dvcmQ= -Encoding utf8
 
