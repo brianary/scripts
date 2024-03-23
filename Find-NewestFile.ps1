@@ -28,7 +28,7 @@ Mode                LastWriteTime         Length Name
 [CmdletBinding()][OutputType([IO.FileInfo])] Param(
 # The list of files to search.
 [Parameter(ValueFromPipeline=$true,ValueFromRemainingArguments=$true)]
-[IO.FileInfo[]]$Files
+[IO.FileInfo[]] $Files
 )
 Begin   { $NewestFile = $null }
 Process { $Files |ForEach-Object {if(Test-NewerFile.ps1 $NewestFile $_){$NewestFile=$_}} }

@@ -17,11 +17,11 @@ https://serverfault.com/questions/693264/with-powershell-get-exactly-the-same-ap
 .EXAMPLE
 Find-InstalledPrograms.ps1 %powershell%
 
-IdentifyingNumber : {65276649-728D-4AB9-AAEC-6EFF860B11EC}
-Name              : PowerShell 6-x64
+IdentifyingNumber : {B06D1894-3827-4E0C-A092-7DC50BE8B210}
+Name              : PowerShell 7-x64
 Vendor            : Microsoft Corporation
-Version           : 6.1.2.0
-Caption           : PowerShell 6-x64
+Version           : 7.4.1.0
+Caption           : PowerShell 7-x64
 #>
 
 #Requires -Version 3

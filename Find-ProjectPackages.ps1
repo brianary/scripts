@@ -81,13 +81,17 @@ Begin
     {
         Write-Verbose "Parsing $file"
         Write-Progress $action "Parsing *proj package files: found $($projFiles.Count)" -CurrentOperation $file -PercentComplete (10*$i++/$max+60)
-        $p = Select-Xml //msbuild:HintPath $file -Namespace @{'msbuild'='http://schemas.microsoft.com/developer/msbuild/2003'}
+        $p = (dotnet list $file package --format json |ConvertFrom-Json).projects |
+            Select-Object -ExpandProperty frameworks |
+            Where-Object {$_.PSObject.Properties.Match('topLevelPackages').Count} |
+            Select-Object -ExpandProperty topLevelPackages |
+            ForEach-Object {[pscustomobject]@{
+                name    = $_.id
+                version = $_.resolvedVersion
+                file    = $file
+            }}
         if(!$p) {Write-Verbose "No packages found in $file"; continue}
-        [void]$packages.AddRange([object[]]( $p |ForEach-Object {$dll = Join-Path (Split-Path $_.Path) $_.Node.InnerText; [pscustomobject]@{
-            name    = $_.Node.ParentNode.Attributes['Include'].Value
-            version = $(if(Test-Path $dll -PathType Leaf) {Get-ChildItem $dll |Select-Object -ExpandProperty VersionInfo |Select-Object -ExpandProperty ProductVersion})
-            file    = $file
-        }}))
+        [void]$packages.AddRange([object[]]$p)
     }
     foreach($file in $nugetFiles)
     {
