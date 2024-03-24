@@ -22,6 +22,11 @@ Describe 'Select-Json' -Tag Select-Json -Skip:$skip {
 			@{ Json = '{"a":1, "b": {"ZZ/ZZ": {"AD~BC": 7}}}'; Pointer = '/b/ZZ~1ZZ/AD~0BC'; Result = 7 }
 			@{ Json = '{"a":1, "b": {"[*?/]": {"AD~BC": 7}}}'; Pointer = '/b/~4~3~2~1]/AD~0BC'; Result = 7 }
 			@{ Json = '{a:1}'; Pointer = '/b'; Result = $null }
+			@{ Json = '{name: true, id: false, description: false}'; Pointer = '/name'; Result = $true }
+			@{ Json = '[{name: true, id: false, description: false}]'; Pointer = '/0/name'; Result = $true }
+			@{ Json = '[{name: true, id: false, description: false}]'; Pointer = '/*/name'; Result = $true }
+			@{ Json = '{list:[{name: true, id: false}]}'; Pointer = '/list/0/name'; Result = $true }
+			@{ Json = '{list:[{name: true, id: false}]}'; Pointer = '/list/*/name'; Result = $true }
 		) {
 			Param([string] $Json, [string] $Pointer, $Result)
 			$Json |Select-Json.ps1 -JsonPointer $Pointer |Should -BeExactly $Result -Because 'pipeline should work'
