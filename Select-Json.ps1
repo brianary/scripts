@@ -59,6 +59,21 @@ AD~BC
 '{d:{a:{b:1,c:{"$ref":"#/d/c"}},c:{d:{"$ref":"#/d/two"}},two:2}}' |Select-Json.ps1 /*/a/c/* -FollowReferences
 
 2
+
+.EXAMPLE
+Resolve-Path $env:LOCALAPPDATA/Packages/*WindowsTerminal*/LocalState/settings.json |Get-Item |Get-Content -Raw |Select-Json.ps1 /profiles/list/*/name
+
+PowerShell
+Windows PowerShell
+Ubuntu
+F# Interactive
+F# REPL
+C# REPL
+Command Prompt
+Media Server (ssh)
+Azure Cloud Shell
+Developer Command Prompt for VS 2022
+Developer PowerShell for VS 2022
 #>
 
 #Requires -Version 7
@@ -153,10 +168,10 @@ Begin
 			if($refUri) {return Get-Reference -ReferenceUri $refUri -Root $Script:Root |Select-Pointer -Segments $Segments}
 		}
 		if(!$Segments.Count) {return $InputObject}
-		$segment,$Segments = $Segments
-		if($null -eq $Segments) {[string[]]$Segments = @()}
-		if($segment -match '[?*[]') {Select-Wildcard $InputObject $segment |Select-Pointer -Segments $Segments}
-		else {Select-Segment $InputObject $segment |Select-Pointer -Segments $Segments}
+		$segment,$tail = $Segments
+		if($null -eq $tail) {[string[]]$tail = @()}
+		if($segment -match '[?*[]') {Select-Wildcard $InputObject $segment |Select-Pointer -Segments $tail}
+		else {Select-Segment $InputObject $segment |Select-Pointer -Segments $tail}
 	}
 }
 Process
@@ -172,9 +187,8 @@ Process
 	if($InputObject -is [string])
 	{
 		if($InputObject.StartsWith(([char]0xFEFF))) {$InputObject = $InputObject.Substring(1)}
-		return $InputObject |
-			ConvertFrom-Json -AsHashtable |
-			Select-Json.ps1 -JsonPointer $JsonPointer -FollowReferences:$FollowReferences
+		return Select-Json.ps1 -JsonPointer $JsonPointer -FollowReferences:$FollowReferences `
+			-InputObject ($InputObject |ConvertFrom-Json -AsHashtable -NoEnumerate)
 	}
 	if(!$jsonpath.Length) {return $InputObject}
 	$Script:Root = $InputObject
