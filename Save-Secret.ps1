@@ -14,17 +14,28 @@ Stores the token from the clipboard.
 #Requires -Version 7
 #Requires -Modules Microsoft.PowerShell.SecretManagement,Microsoft.PowerShell.SecretStore
 [CmdletBinding()] Param(
+# Specifies the name of the secret to add metadata to. Wildcard characters (`*`) are not permitted.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
+# Specifies the value of the secret.
 [Parameter(ParameterSetName='Secret',Position=1,Mandatory=$true)][securestring] $Secret,
+# Title metadata field.
 [string] $Title,
+# Description metadata field.
 [string] $Description,
+# Note metadata field.
 [string] $Note,
+# Uri metadata field.
 [uri] $Uri,
+# Created date/time metadata field.
 [datetime] $Created = (Get-Date),
+# Expiration date/time metadata field.
 [datetime] $Expires,
+# Specifies the type to interpret the text on the clipboard as for use as the secret value.
 [Parameter(ParameterSetName='Paste',Mandatory=$true)]
 [ValidateSet('string','securestring','bytes','hexbytes')][string] $Paste,
+# Specifies the username to combine with the clipboard text as a password to store as a credential secret.
 [Parameter(ParameterSetName='PasteForUser',Mandatory=$true)][string] $PasteForUser,
+# Specifies the encoding to read the clipboard as, into a byte array secret.
 [Parameter(ParameterSetName='PasteTextBytes',Mandatory=$true)][Text.Encoding] $PasteTextBytes
 )
 $clipboard = Get-Clipboard |Out-String
