@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='310'>310 &#x2030;</meter> Scripts repo (216) &#x1F4C5; 602 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='321'>321 &#x2030;</meter> Scripts repo (215) &#x1F4C5; 605 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
 
@@ -115,8 +115,8 @@ Script Tests
 - &#x2714;&#xFE0F; Export-TableMerge.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='500'>500 &#x2030;</meter> F (16) &#x1F4C5; 5 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='889'>889 &#x2030;</meter> Find (9) &#x1F4C5; 5 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='667'>667 &#x2030;</meter> F (15) &#x1F4C5; 9 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Find (8) &#x1F4C5; 5 days</summary>
 
 - &#x2714;&#xFE0F; Find-DatabaseValue.ps1
 - &#x2714;&#xFE0F; Find-DbColumn.ps1
@@ -126,17 +126,16 @@ Script Tests
 - &#x2714;&#xFE0F; Find-Lines.ps1
 - &#x2714;&#xFE0F; Find-NewestFile.ps1
 - &#x2714;&#xFE0F; Find-ProjectPackages.ps1
-- &#x2716;&#xFE0F; Find-SqlDeprecatedLargeValueTypes.ps1
 
 </details></li>
-<li><details><summary>not started ForEach (1) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ForEach (1) &#x1F4C5; at once</summary>
 
-- &#x2716;&#xFE0F; ForEach-Progress.ps1
+- &#x2714;&#xFE0F; ForEach-Progress.ps1
 
 </details></li>
-<li><details><summary>not started Format (6) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='167'>167 &#x2030;</meter> Format (6) &#x1F4C5; at once</summary>
 
-- &#x2716;&#xFE0F; Format-ByteUnits.ps1
+- &#x2714;&#xFE0F; Format-ByteUnits.ps1
 - &#x2716;&#xFE0F; Format-Date.ps1
 - &#x2716;&#xFE0F; Format-EscapedUrl.ps1
 - &#x2716;&#xFE0F; Format-HtmlDataTable.ps1

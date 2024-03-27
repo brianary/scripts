@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3590_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3679_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -83,7 +83,6 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1.md)**: Searches for database columns.
 - **[Find-DbIndexes.ps1](Find-DbIndexes.ps1.md)**: Returns indexes using a column with the given name.
-- &#x1F199; **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1.md)**: Reports text, ntext, and image datatypes found in a given database.
 - **[Initialize-DatabaseNotebook.ps1](Initialize-DatabaseNotebook.ps1.md)**: Populates a new notebook with details about a database.
 - **[Measure-DbColumn.ps1](Measure-DbColumn.ps1.md)**: Provides statistics about SQL Server column data.
 - **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1.md)**: Provides sorted counts of SQL Server column values.
@@ -194,7 +193,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Add-DynamicParam.ps1](Add-DynamicParam.ps1.md)**: Adds a dynamic parameter to a script, within a DynamicParam block.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1.md)**: Convert a scope level to account for another call stack level.
 - **[ForEach-Progress.ps1](ForEach-Progress.ps1.md)**: Performs an operation against each item in a collection of input objects, with a progress bar.
-- **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
+- &#x1F199; **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
 - **[Format-Permutations.ps1](Format-Permutations.ps1.md)**: Builds format strings using every combination of elements from multiple arrays.
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1.md)**: Returns the possible values of the specified enumeration.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.

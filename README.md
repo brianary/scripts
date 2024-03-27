@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3590_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3679_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -90,7 +90,6 @@ PowerShell Scripts
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1)**: Searches an entire database for a field value.
 - **[Find-DbColumn.ps1](Find-DbColumn.ps1)**: Searches for database columns.
 - **[Find-DbIndexes.ps1](Find-DbIndexes.ps1)**: Returns indexes using a column with the given name.
-- :up: **[Find-SqlDeprecatedLargeValueTypes.ps1](Find-SqlDeprecatedLargeValueTypes.ps1)**: Reports text, ntext, and image datatypes found in a given database.
 - **[Initialize-DatabaseNotebook.ps1](Initialize-DatabaseNotebook.ps1)**: Populates a new notebook with details about a database.
 - **[Measure-DbColumn.ps1](Measure-DbColumn.ps1)**: Provides statistics about SQL Server column data.
 - **[Measure-DbColumnValues.ps1](Measure-DbColumnValues.ps1)**: Provides sorted counts of SQL Server column values.
@@ -201,7 +200,7 @@ PowerShell Scripts
 - **[Add-DynamicParam.ps1](Add-DynamicParam.ps1)**: Adds a dynamic parameter to a script, within a DynamicParam block.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1)**: Convert a scope level to account for another call stack level.
 - **[ForEach-Progress.ps1](ForEach-Progress.ps1)**: Performs an operation against each item in a collection of input objects, with a progress bar.
-- **[Format-ByteUnits.ps1](Format-ByteUnits.ps1)**: Converts bytes to largest possible units, to improve readability.
+- :up: **[Format-ByteUnits.ps1](Format-ByteUnits.ps1)**: Converts bytes to largest possible units, to improve readability.
 - **[Format-Permutations.ps1](Format-Permutations.ps1)**: Builds format strings using every combination of elements from multiple arrays.
 - **[Get-EnumValues.ps1](Get-EnumValues.ps1)**: Returns the possible values of the specified enumeration.
 - **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1)**: Returns the list of PowerShell type accelerators.
@@ -349,4 +348,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 03/24/2024 16:59:26 -->
+<!-- generated 03/26/2024 21:02:15 -->
