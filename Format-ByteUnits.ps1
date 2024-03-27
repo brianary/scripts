@@ -19,14 +19,17 @@ http://physics.nist.gov/cuu/Units/binary.html
 
 .EXAMPLE
 Format-ByteUnits 65536
+
 64KB
 
 .EXAMPLE
 Format-ByteUnits 9685059 -dot 1 -si
+
 9.2 MiB
 
 .EXAMPLE
 ls *.log |measure -sum Length |select -exp Sum |Format-ByteUnits -dot 2 -si
+
 302.39 MiB
 #>
 
