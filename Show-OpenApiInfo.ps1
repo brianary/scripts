@@ -27,7 +27,7 @@ Process
 {
     $api = Get-OpenApiInfo.ps1 $Path
     Write-Host $api.Title -ForegroundColor Green -NoNewline
-    Write-Host " v$($api.Version) " -ForegroundColor DarkCyan -NoNewline
+    Write-Host " $($api.Version) " -ForegroundColor DarkCyan -NoNewline
     if($api.Description) {Write-Host $api.Description -ForegroundColor DarkGreen}
     Write-Host $api.Source -ForegroundColor Cyan -NoNewline
     Write-Host " OpenAPI v$($api.OpenApi)" -ForegroundColor DarkCyan
