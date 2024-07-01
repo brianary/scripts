@@ -120,21 +120,10 @@ Process
 						}
 					}
 				}
+				default {$false}
 			}
 		}
 	}
-	if($holiday)
-	{
-		if($ReturnName) {return $holiday}
-		else
-		{
-			Write-Verbose "$showdate is $holiday"
-			return $true
-		}
-	}
-	else
-	{
-		Write-Verbose "$showdate is not a US federal holiday"
-		return $false
-	}
+	if($holiday) {Write-Verbose "$showdate is $holiday"}
+	return [bool]$holiday
 }
