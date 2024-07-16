@@ -122,6 +122,7 @@
 :bathtub:=1F6C1
 :battery:=1F50B
 :beach_umbrella:=1F3D6
+:beans:=1FAD8
 :bear:=1F43B
 :bearded_person:=1F9D4
 :beaver:=1F9AB
@@ -152,6 +153,8 @@
 :bird:=1F426
 :birthday:=1F382
 :bison:=1F9AC
+:biting_lip:=1FAE6
+:black_bird:=1F426,2B1B
 :black_cat:=1F408,2B1B
 :black_circle:=26AB
 :black_flag:=1F3F4
@@ -220,6 +223,7 @@
 :brown_square:=1F7EB
 :brunei:=1F1E7,1F1F3
 :bubble_tea:=1F9CB
+:bubbles:=1FAE7
 :bucket:=1FAA3
 :bug:=1F41B
 :building_construction:=1F3D7
@@ -382,6 +386,7 @@
 :cool:=1F192
 :cop:=1F46E
 :copyright:=00A9
+:coral:=1FAB8
 :corn:=1F33D
 :costa_rica:=1F1E8,1F1F7
 :cote_divoire:=1F1E8,1F1EE
@@ -411,6 +416,7 @@
 :crossed_flags:=1F38C
 :crossed_swords:=2694
 :crown:=1F451
+:crutch:=1FA7C
 :cry:=1F622
 :crying_cat_face:=1F63F
 :crystal_ball:=1F52E
@@ -477,7 +483,9 @@
 :dolphin:=1F42C
 :dominica:=1F1E9,1F1F2
 :dominican_republic:=1F1E9,1F1F4
+:donkey:=1FACF
 :door:=1F6AA
+:dotted_line_face:=1FAE5
 :doughnut:=1F369
 :dove:=1F54A
 :dragon:=1F409
@@ -515,6 +523,7 @@
 :elf_man:=1F9DD,2642
 :elf_woman:=1F9DD,2640
 :email:=1F4E7
+:empty_nest:=1FAB9
 :end:=1F51A
 :england:=1F3F4,E0067,E0062,E0065,E006E,E0067,E007F
 :envelope:=2709
@@ -538,8 +547,12 @@
 :eyeglasses:=1F453
 :eyes:=1F440
 :face_exhaling:=1F62E,1F4A8
+:face_holding_back_tears:=1F979
 :face_in_clouds:=1F636,1F32B
+:face_with_diagonal_mouth:=1FAE4
 :face_with_head_bandage:=1F915
+:face_with_open_eyes_and_hand_over_mouth:=1FAE2
+:face_with_peeking_eye:=1FAE3
 :face_with_spiral_eyes:=1F635,1F4AB
 :face_with_thermometer:=1F912
 :facepalm:=1F926
@@ -625,11 +638,13 @@
 :floppy_disk:=1F4BE
 :flower_playing_cards:=1F3B4
 :flushed:=1F633
+:flute:=1FA88
 :fly:=1FAB0
 :flying_disc:=1F94F
 :flying_saucer:=1F6F8
 :fog:=1F32B
 :foggy:=1F301
+:folding_hand_fan:=1FAAD
 :fondue:=1FAD5
 :foot:=1F9B6
 :football:=1F3C8
@@ -678,6 +693,7 @@
 :gibraltar:=1F1EC,1F1EE
 :gift:=1F381
 :gift_heart:=1F49D
+:ginger_root:=1FADA
 :giraffe:=1F992
 :girl:=1F467
 :globe_with_meridians:=1F310
@@ -689,6 +705,7 @@
 :golfing:=1F3CC
 :golfing_man:=1F3CC,2642
 :golfing_woman:=1F3CC,2640
+:goose:=1FABF
 :gorilla:=1F98D
 :grapes:=1F347
 :greece:=1F1EC,1F1F7
@@ -701,6 +718,7 @@
 :greenland:=1F1EC,1F1F1
 :grenada:=1F1EC,1F1E9
 :grey_exclamation:=2755
+:grey_heart:=1FA76
 :grey_question:=2754
 :grimacing:=1F62C
 :grin:=1F601
@@ -718,6 +736,7 @@
 :guitar:=1F3B8
 :gun:=1F52B
 :guyana:=1F1EC,1F1FE
+:hair_pick:=1FAAE
 :haircut:=1F487
 :haircut_man:=1F487,2642
 :haircut_woman:=1F487,2640
@@ -726,9 +745,11 @@
 :hammer:=1F528
 :hammer_and_pick:=2692
 :hammer_and_wrench:=1F6E0
+:hamsa:=1FAAC
 :hamster:=1F439
 :hand:=270B
 :hand_over_mouth:=1F92D
+:hand_with_index_finger_and_thumb_crossed:=1FAF0
 :handbag:=1F45C
 :handball_person:=1F93E
 :handshake:=1F91D
@@ -745,6 +766,7 @@
 :heart_decoration:=1F49F
 :heart_eyes:=1F60D
 :heart_eyes_cat:=1F63B
+:heart_hands:=1FAF6
 :heart_on_fire:=2764,1F525
 :heartbeat:=1F493
 :heartpulse:=1F497
@@ -752,6 +774,7 @@
 :heavy_check_mark:=2714
 :heavy_division_sign:=2797
 :heavy_dollar_sign:=1F4B2
+:heavy_equals_sign:=1F7F0
 :heavy_exclamation_mark:=2757
 :heavy_heart_exclamation:=2763
 :heavy_minus_sign:=2796
@@ -790,6 +813,7 @@
 :hungary:=1F1ED,1F1FA
 :hushed:=1F62F
 :hut:=1F6D6
+:hyacinth:=1FABB
 :ice_cream:=1F368
 :ice_cube:=1F9CA
 :ice_hockey:=1F3D2
@@ -797,10 +821,12 @@
 :icecream:=1F366
 :iceland:=1F1EE,1F1F8
 :id:=1F194
+:identification_card:=1FAAA
 :ideograph_advantage:=1F250
 :imp:=1F47F
 :inbox_tray:=1F4E5
 :incoming_envelope:=1F4E8
+:index_pointing_at_the_viewer:=1FAF5
 :india:=1F1EE,1F1F3
 :indonesia:=1F1EE,1F1E9
 :infinity:=267E
@@ -822,7 +848,9 @@
 :japanese_castle:=1F3EF
 :japanese_goblin:=1F47A
 :japanese_ogre:=1F479
+:jar:=1FAD9
 :jeans:=1F456
+:jellyfish:=1FABC
 :jersey:=1F1EF,1F1EA
 :jigsaw:=1F9E9
 :jordan:=1F1EF,1F1F4
@@ -839,6 +867,7 @@
 :key:=1F511
 :keyboard:=2328
 :keycap_ten:=1F51F
+:khanda:=1FAAF
 :kick_scooter:=1F6F4
 :kimono:=1F458
 :kiribati:=1F1F0,1F1EE
@@ -884,6 +913,8 @@
 :left_right_arrow:=2194
 :left_speech_bubble:=1F5E8
 :leftwards_arrow_with_hook:=21A9
+:leftwards_hand:=1FAF2
+:leftwards_pushing_hand:=1FAF7
 :leg:=1F9B5
 :lemon:=1F34B
 :leo:=264C
@@ -894,6 +925,7 @@
 :libra:=264E
 :libya:=1F1F1,1F1FE
 :liechtenstein:=1F1F1,1F1EE
+:light_blue_heart:=1FA75
 :light_rail:=1F688
 :link:=1F517
 :lion:=1F981
@@ -909,6 +941,7 @@
 :long_drum:=1FA98
 :loop:=27BF
 :lotion_bottle:=1F9F4
+:lotus:=1FAB7
 :lotus_position:=1F9D8
 :lotus_position_man:=1F9D8,2642
 :lotus_position_woman:=1F9D8,2640
@@ -917,6 +950,7 @@
 :love_hotel:=1F3E9
 :love_letter:=1F48C
 :love_you_gesture:=1F91F
+:low_battery:=1FAAB
 :low_brightness:=1F505
 :luggage:=1F9F3
 :lungs:=1FAC1
@@ -985,6 +1019,7 @@
 :mantelpiece_clock:=1F570
 :manual_wheelchair:=1F9BD
 :maple_leaf:=1F341
+:maracas:=1FA87
 :marshall_islands:=1F1F2,1F1ED
 :martial_arts_uniform:=1F94B
 :martinique:=1F1F2,1F1F6
@@ -1005,6 +1040,7 @@
 :medical_symbol:=2695
 :mega:=1F4E3
 :melon:=1F348
+:melting_face:=1FAE0
 :memo:=1F4DD
 :men_wrestling:=1F93C,2642
 :mending_heart:=2764,1FA79
@@ -1027,6 +1063,7 @@
 :minibus:=1F690
 :minidisc:=1F4BD
 :mirror:=1FA9E
+:mirror_ball:=1FAA9
 :mobile_phone_off:=1F4F4
 :moldova:=1F1F2,1F1E9
 :monaco:=1F1F2,1F1E8
@@ -1042,6 +1079,7 @@
 :montserrat:=1F1F2,1F1F8
 :moon:=1F314
 :moon_cake:=1F96E
+:moose:=1FACE
 :morocco:=1F1F2,1F1E6
 :mortar_board:=1F393
 :mosque:=1F54C
@@ -1085,6 +1123,7 @@
 :negative_squared_cross_mark:=274E
 :nepal:=1F1F3,1F1F5
 :nerd_face:=1F913
+:nest_with_eggs:=1FABA
 :nesting_dolls:=1FA86
 :netherlands:=1F1F3,1F1F1
 :neutral_face:=1F610
@@ -1181,7 +1220,9 @@
 :pakistan:=1F1F5,1F1F0
 :palau:=1F1F5,1F1FC
 :palestinian_territories:=1F1F5,1F1F8
+:palm_down_hand:=1FAF3
 :palm_tree:=1F334
+:palm_up_hand:=1FAF4
 :palms_up_together:=1F932
 :panama:=1F1F5,1F1E6
 :pancakes:=1F95E
@@ -1201,6 +1242,7 @@
 :passport_control:=1F6C2
 :pause_button:=23F8
 :paw_prints:=1F43E
+:pea_pod:=1FADB
 :peace_symbol:=262E
 :peach:=1F351
 :peacock:=1F99A
@@ -1224,6 +1266,7 @@
 :person_in_tuxedo:=1F935
 :person_red_hair:=1F9D1,1F9B0
 :person_white_hair:=1F9D1,1F9B3
+:person_with_crown:=1FAC5
 :person_with_probing_cane:=1F9D1,1F9AF
 :person_with_turban:=1F473
 :person_with_veil:=1F470
@@ -1244,6 +1287,7 @@
 :pinching_hand:=1F90F
 :pineapple:=1F34D
 :ping_pong:=1F3D3
+:pink_heart:=1FA77
 :pirate_flag:=1F3F4,2620
 :pisces:=2653
 :pitcairn_islands:=1F1F5,1F1F3
@@ -1252,6 +1296,7 @@
 :place_of_worship:=1F6D0
 :plate_with_cutlery:=1F37D
 :play_or_pause_button:=23EF
+:playground_slide:=1F6DD
 :pleading_face:=1F97A
 :plunger:=1FAA0
 :point_down:=1F447
@@ -1278,6 +1323,7 @@
 :pouch:=1F45D
 :poultry_leg:=1F357
 :pound:=1F4B7
+:pouring_liquid:=1FAD7
 :pout:=1F621
 :pouting_cat:=1F63E
 :pouting_face:=1F64E
@@ -1285,6 +1331,8 @@
 :pouting_woman:=1F64E,2640
 :pray:=1F64F
 :prayer_beads:=1F4FF
+:pregnant_man:=1FAC3
+:pregnant_person:=1FAC4
 :pregnant_woman:=1F930
 :pretzel:=1F968
 :previous_track_button:=23EE
@@ -1354,7 +1402,10 @@
 :rice_cracker:=1F358
 :rice_scene:=1F391
 :right_anger_bubble:=1F5EF
+:rightwards_hand:=1FAF1
+:rightwards_pushing_hand:=1FAF8
 :ring:=1F48D
+:ring_buoy:=1F6DF
 :ringed_planet:=1FA90
 :robot:=1F916
 :rock:=1FAA8
@@ -1388,6 +1439,7 @@
 :sailboat:=26F5
 :sake:=1F376
 :salt:=1F9C2
+:saluting_face:=1FAE1
 :samoa:=1F1FC,1F1F8
 :san_marino:=1F1F8,1F1F2
 :sandal:=1F461
@@ -1429,6 +1481,7 @@
 :seven:=0037,20E3
 :sewing_needle:=1FAA1
 :seychelles:=1F1F8,1F1E8
+:shaking_face:=1FAE8
 :shallow_pan_of_food:=1F958
 :shamrock:=2618
 :shark:=1F988
@@ -1669,6 +1722,7 @@
 :trinidad_tobago:=1F1F9,1F1F9
 :tristan_da_cunha:=1F1F9,1F1E6
 :triumph:=1F624
+:troll:=1F9CC
 :trolleybus:=1F68E
 :trophy:=1F3C6
 :tropical_drink:=1F379
@@ -1765,6 +1819,7 @@
 :western_sahara:=1F1EA,1F1ED
 :whale:=1F433
 :whale2:=1F40B
+:wheel:=1F6DE
 :wheel_of_dharma:=2638
 :wheelchair:=267F
 :white_check_mark:=2705
@@ -1784,7 +1839,9 @@
 :wind_face:=1F32C
 :window:=1FA9F
 :wine_glass:=1F377
+:wing:=1FABD
 :wink:=1F609
+:wireless:=1F6DC
 :wolf:=1F43A
 :woman:=1F469
 :woman_artist:=1F469,1F3A8
@@ -1832,6 +1889,7 @@
 :wrestling:=1F93C
 :writing_hand:=270D
 :x:=274C
+:x_ray:=1FA7B
 :yarn:=1F9F6
 :yawning_face:=1F971
 :yellow_circle:=1F7E1
