@@ -43,7 +43,7 @@ Begin
 		$serialized =  'Q' |openssl s_client -servername $name -connect $serverPort 2>NUL |Out-String
 		$cert = New-Object X509Certificate2 (,[Text.Encoding]::UTF8.GetBytes($serialized))
 		$chain = New-Object X509Chain
-		$chain.Build($cert)
+		[void]$chain.Build($cert)
 		$ext = @{}
 		$cert.Extensions |ForEach-Object {$ext.Add($_.Oid.FriendlyName, (New-Object AsnEncodedData $_.Oid, $_.RawData).Format($true).Trim())}
 		return [pscustomobject]@{
