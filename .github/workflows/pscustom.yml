@@ -7,6 +7,8 @@
 # For more information on PSScriptAnalyzer in general, see
 # https://github.com/PowerShell/PSScriptAnalyzer
 
+# updated to establish repo activity that has otherwise been ignored
+
 name: PSScriptAnalyzer-CustomRules
 
 on:
