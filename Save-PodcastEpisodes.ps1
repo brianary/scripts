@@ -11,7 +11,7 @@ Save-PodcastEpisodes.ps1 https://www.youlooknicetoday.com/rss -UseTitle
 Downloads podcast episodes to the current directory.
 #>
 
-#Requires -Version 3
+#Requires -Version 7
 [CmdletBinding()] Param(
 # The URL of the podcast feed.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Alias('Url')][uri] $Uri,
@@ -30,7 +30,8 @@ Downloads podcast episodes to the current directory.
 )
 Begin
 {
-	[regex] $invalidchars = "(?:[$(([io.path]::GetInvalidFileNameChars() |ForEach-Object {'\x{0:X2}' -f [int]$_}) -join '')])+"
+	[regex] $invalidchars = $IsLinux ? "(?:[$((@(0x00..0x1F)+@(0x22,0x2F,0x3A,0x3C,0x3E,0x5C,0x7C) |ForEach-Object {'\x{0:X2}' -f [int]$_}) -join '')])+"
+		: "(?:[$(([io.path]::GetInvalidFileNameChars() |ForEach-Object {'\x{0:X2}' -f [int]$_}) -join '')])+"
 }
 Process
 {
