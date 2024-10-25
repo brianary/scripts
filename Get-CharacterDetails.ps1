@@ -260,7 +260,7 @@ IsWhiteSpace        : False
 IsWord              : True
 #>
 
-#Requires -Version 2
+#Requires -Version 7
 #TODO: finish documenting params
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','',
 Justification='The values are captured in function bodies.')]
@@ -343,7 +343,7 @@ Justification='The values are captured in function bodies.')]
 Begin
 {
 	try{[void][Web.HttpUtility]}catch{Add-Type -AN System.Web}
-	try{[void][PasswordCharacter]}catch{Add-Type -TypeDefinition @'
+	try{[void][PasswordCharacter]}catch{if($IsWindows){Add-Type -TypeDefinition @'
 using System;
 using System.Runtime.InteropServices;
 public class PasswordCharacter
@@ -364,7 +364,7 @@ public class PasswordCharacter
 		return CharacterType.Special;
 	}
 }
-'@}
+'@}}
 	# Only some blocks are supported: https://msdn.microsoft.com/library/20bw873z.aspx#SupportedNamedBlocks
 	function Find-UnicodeRangeBlock([int]$c)
 	{
@@ -777,7 +777,7 @@ VerticalForms
 			MatchesBlock        = ''
 			UnicodeCategory     = [char]::GetUnicodeCategory($c)
 			CategoryClasses     = Find-UnicodeCategoryClass($c)
-			PasswordCategory    = [PasswordCharacter]::GetCharacterType($c)
+			PasswordCategory    = $IsWindows ? [PasswordCharacter]::GetCharacterType($c) : $null
 			XmlEscape           = [Security.SecurityElement]::Escape($c)
 			HtmlAttributeEncode = [Web.HttpUtility]::HtmlAttributeEncode($c)
 			UrlEncode           = [Net.WebUtility]::UrlEncode($c)
