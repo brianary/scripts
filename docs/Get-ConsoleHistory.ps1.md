@@ -12,8 +12,24 @@ Returns the DOSKey-style console command history (up arrow or F8).
 
 ## SYNTAX
 
+### Id
 ```
-Get-ConsoleHistory.ps1 [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-ConsoleHistory.ps1 -Id <Int32> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### Like
+```
+Get-ConsoleHistory.ps1 -Like <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### Match
+```
+Get-ConsoleHistory.ps1 -Match <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### All
+```
+Get-ConsoleHistory.ps1 [-All] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,6 +48,66 @@ Id CommandLine
 56 gc .\README.md
 
 ## PARAMETERS
+
+### -Id
+{{ Fill Id Description }}
+
+```yaml
+Type: Int32
+Parameter Sets: Id
+Aliases:
+
+Required: True
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Like
+{{ Fill Like Description }}
+
+```yaml
+Type: String
+Parameter Sets: Like
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Match
+{{ Fill Match Description }}
+
+```yaml
+Type: String
+Parameter Sets: Match
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -All
+{{ Fill All Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: All
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -ProgressAction
 {{ Fill ProgressAction Description }}

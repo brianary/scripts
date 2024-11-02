@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='321'>321 &#x2030;</meter> Scripts repo (215) &#x1F4C5; 605 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='317'>317 &#x2030;</meter> Scripts repo (218) &#x1F4C5; 605 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
 
@@ -143,8 +143,8 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> G (39) &#x1F4C5; 490 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='26'>26 &#x2030;</meter> Get (39) &#x1F4C5; 490 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='25'>25 &#x2030;</meter> G (40) &#x1F4C5; 490 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='25'>25 &#x2030;</meter> Get (40) &#x1F4C5; 490 days</summary>
 
 - &#x2716;&#xFE0F; Get-ADServiceAccountInfo.ps1
 - &#x2716;&#xFE0F; Get-ADUserStatus.ps1
@@ -173,6 +173,7 @@ Script Tests
 - &#x2716;&#xFE0F; Get-PocketArticles.ps1
 - &#x2716;&#xFE0F; Get-RandomBytes.ps1
 - &#x2716;&#xFE0F; Get-RepoName.ps1
+- &#x2716;&#xFE0F; Get-ServerCertificate.ps1
 - &#x2716;&#xFE0F; Get-SslDetails.ps1
 - &#x2716;&#xFE0F; Get-SystemDetails.ps1
 - &#x2716;&#xFE0F; Get-Todos.ps1
@@ -273,16 +274,17 @@ Script Tests
 - &#x2716;&#xFE0F; Push-WorkspaceLocation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started R (18) </summary>
+<li><details><summary>not started R (19) </summary>
 <ul><li><details><summary>not started Read (2) </summary>
 
 - &#x2716;&#xFE0F; Read-ChocolateySummary.ps1
 - &#x2716;&#xFE0F; Read-Choice.ps1
 
 </details></li>
-<li><details><summary>not started Remove (5) </summary>
+<li><details><summary>not started Remove (6) </summary>
 
 - &#x2716;&#xFE0F; Remove-CachedCredential.ps1
+- &#x2716;&#xFE0F; Remove-ConsoleHistory.ps1
 - &#x2716;&#xFE0F; Remove-LockyFile.ps1
 - &#x2716;&#xFE0F; Remove-NullValues.ps1
 - &#x2716;&#xFE0F; Remove-ParameterDefault.ps1
@@ -393,14 +395,15 @@ Script Tests
 - &#x2716;&#xFE0F; Trace-GitRepoTest.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started U (11) </summary>
+<li><details><summary>not started U (12) </summary>
 <ul><li><details><summary>not started Uninstall (1) </summary>
 
 - &#x2716;&#xFE0F; Uninstall-OldModules.ps1
 
 </details></li>
-<li><details><summary>not started Update (3) </summary>
+<li><details><summary>not started Update (4) </summary>
 
+- &#x2716;&#xFE0F; Update-DotNetPackages.ps1
 - &#x2716;&#xFE0F; Update-Everything.ps1
 - &#x2716;&#xFE0F; Update-Files.ps1
 - &#x2716;&#xFE0F; Update-Modules.ps1
