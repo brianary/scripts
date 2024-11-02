@@ -35,7 +35,9 @@ Specifies that packages should only be upgraded based why they are outdated:
 * Deprecated: Only upgrade packages marked as discouraged for any reason.
 * Outdated: Upgrade all packages.
 #>
-[Parameter(Position=1)][ValidateSet('Vulnerable','Deprecated','Outdated')][string] $Reason = 'Vulnerable'
+[Parameter(Position=1)][ValidateSet('Vulnerable','Deprecated','Outdated')][string] $Reason = 'Vulnerable',
+# Packages to ignore when upgrading.
+[Parameter(Position=2,ValueFromRemainingArguments=$true)][string[]] $SkipPackages = @()
 )
 
 filter Write-Vulnerability
@@ -49,7 +51,7 @@ filter Write-Vulnerability
     Write-Info.ps1 "${Path}: $Id [$Severity] $AdvisoryUrl" -fg Magenta
 }
 
-filter Update-ProjectPackages
+filter Update-Package
 {
     [CmdletBinding()] Param(
     [Parameter(Position=0,Mandatory=$true)][string] $Path,
@@ -61,6 +63,7 @@ filter Update-ProjectPackages
     [Parameter(ValueFromPipelineByPropertyName=$true)][pscustomobject[]] $Vulnerabilities,
     [Parameter(ValueFromPipelineByPropertyName=$true)][string[]] $DeprecationReasons
     )
+    if($Id -in $SkipPackages) {Write-Info.ps1 "${Path}: Skipping '$Id' upgrade, keeping version $RequestedVersion" -fg Cyan; return}
     if($Vulnerabilities) {$Vulnerabilities |Write-Vulnerability -Path $Path -Id $Id}
     if($DeprecationReasons) {Write-Info.ps1 "${Path}: $Id [Deprecated] $DeprecationReasons" -fg DarkMagenta}
     if(!$LatestVersion)
@@ -89,10 +92,13 @@ filter Update-Project
     Write-Info.ps1 "${Path}: $($Frameworks.framework)" -fg Blue
     $Project = New-Object Xml.XmlDocument -Property @{PreserveWhitespace=$true}
     $Project.Load($Path)
-    $Frameworks.topLevelPackages |Update-ProjectPackages -Path $Path -Project $Project
+    $Frameworks.topLevelPackages |Update-Package -Path $Path -Project $Project
     $Project.Save($Path)
 }
 
 Use-Command.ps1 dotnet "$env:ProgramFiles\dotnet\dotnet.exe" -ChocolateyPackage dotnet-sdk
+dotnet restore $Path
 $updates = dotnet list $Path package "--$($Reason.ToLower())" --format json |Out-String |ConvertFrom-Json
 $updates.projects |Update-Project
+dotnet clean $Path
+dotnet restore $Path
