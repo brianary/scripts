@@ -74,7 +74,7 @@ Begin
 		{
 			return Get-FileName (New-Object uri $Uri,($response.Headers['Location'][0]))
 		}
-		if($response.Headers['Content-Disposition'].Count -gt 0)
+		if($response.Headers.ContainsKey('Content-Disposition') -and $response.Headers['Content-Disposition'].Count -gt 0)
 		{
 			[ContentDisposition] $disposition = $response.Headers['Content-Disposition'][0]
 			$suggestion = $disposition.FileName
