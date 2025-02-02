@@ -21,7 +21,12 @@ Write-Info.ps1
 Show-PSDriveUsage.ps1 C -AsAscii
 
 #################_______________________________________________________________________
-C:\ Windows (953GB, NTFS, Fixed) 762GB (79%) free, 191GB (20%) used
+C:\ Windows [NTFS] 953GB = 762GB (79%) free + 191GB (20%) used
+
+.EXAMPLE
+Show-PSDriveUsage.ps1 /home -AsAscii
+###################_____________________________________________________________________
+/home [ext3] 4TB = 3TB (73%) free + 792GB (21%) used
 #>
 
 #Requires -Version 7
@@ -41,7 +46,6 @@ Begin
         [Parameter(ValueFromPipelineByPropertyName=$true)][string] $Name,
         [Parameter(ValueFromPipelineByPropertyName=$true)][string] $VolumeLabel,
         [Parameter(ValueFromPipelineByPropertyName=$true)][string] $DriveFormat,
-        [Parameter(ValueFromPipelineByPropertyName=$true)][IO.DriveType] $DriveType,
         [Parameter(ValueFromPipelineByPropertyName=$true)][IO.DirectoryInfo] $RootDirectory,
         [Parameter(ValueFromPipelineByPropertyName=$true)][long] $TotalSize,
         [Parameter(ValueFromPipelineByPropertyName=$true)][long] $TotalFreeSpace,
@@ -64,11 +68,17 @@ Begin
         }
         Write-Info.ps1 $usedgraph -fg Cyan -NoNewLine
         Write-Info.ps1 $freegraph -fg DarkCyan
-        Write-Info.ps1 "$Name $VolumeLabel ($size, $DriveFormat, $DriveType) $free ($freepercent%) free, $used ($usedpercent%) used" -fg $color
+        $fqdn = $Name -ne $VolumeLabel ? "$Name $VolumeLabel [$DriveFormat]" : "$Name [$DriveFormat]"
+        Write-Info.ps1 "$fqdn $size = $free ($freepercent%) free + $used ($usedpercent%) used" -fg $color
     }
 }
 Process
 {
     if($Name) {$Name |ForEach-Object {[IO.DriveInfo] $_} |Show-DriveUsage}
-    else {[IO.DriveInfo]::GetDrives() |Where-Object {$_.DriveType -eq 'Fixed' -and $_.IsReady} |Show-DriveUsage}
+    else
+    {
+        [IO.DriveInfo]::GetDrives() |
+            Where-Object {$_.DriveType -eq 'Fixed' -and $_.IsReady -and $_.TotalSize -gt 0} |
+            Show-DriveUsage
+    }
 }
