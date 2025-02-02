@@ -6,7 +6,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Check out repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Get changes
       id: changes
       uses: jitterbit/get-changed-files@v1
