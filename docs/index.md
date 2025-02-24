@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3626_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3551_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -124,7 +124,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-DotNetFrameworkVersions.ps1](Get-DotNetFrameworkVersions.ps1.md)**: Determine which .NET Frameworks are installed on the requested system.
 - **[Get-DotNetGlobalTools.ps1](Get-DotNetGlobalTools.ps1.md)**: Returns a list of global dotnet tools.
 - **[Get-DotNetVersions.ps1](Get-DotNetVersions.ps1.md)**: Determine which .NET Core & Framework versions are installed.
-- &#x1F195; **[Update-DotNetPackages.ps1](Update-DotNetPackages.ps1.md)**: Updates NuGet packages for a .NET solution or project.
+- **[Update-DotNetPackages.ps1](Update-DotNetPackages.ps1.md)**: Updates NuGet packages for a .NET solution or project.
 
 ### EnvironmentVariables
 
@@ -139,6 +139,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Measure-Caches.ps1](Measure-Caches.ps1.md)**: Returns a list of matching cache directories, and their sizes, sorted.
 - **[New-Shortcut.ps1](New-Shortcut.ps1.md)**: Create a Windows shortcut.
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1.md)**: Removes a file that may be prone to locking.
+- **[Show-PSDriveUsage.ps1](Show-PSDriveUsage.ps1.md)**: Displays drive usage graphically, and with a human-readable summary.
 - **[Test-LockedFile.ps1](Test-LockedFile.ps1.md)**: Returns true if the specified file is locked.
 - **[Test-NewerFile.ps1](Test-NewerFile.ps1.md)**: Returns true if the difference file is newer than the reference file.
 - **[Update-Files.ps1](Update-Files.ps1.md)**: Copies specified source files that exist in the destination directory.
@@ -160,8 +161,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1.md)**: Creates multipart/form-data to send as a request body.
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1.md)**: Returns the content security policy at from the given URL.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1.md)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
-- **[Save-WebRequest.ps1](Save-WebRequest.ps1.md)**: Downloads a given URL to a file, automatically determining the filename.
+- &#x1F199; **[Save-WebRequest.ps1](Save-WebRequest.ps1.md)**: Downloads a given URL to a file, automatically determining the filename.
 - **[Show-HttpStatus.ps1](Show-HttpStatus.ps1.md)**: Displays the HTTP status code info.
+- **[Trace-WebRequest.ps1](Trace-WebRequest.ps1.md)**: Provides details about a retrieving a URI.
 
 ### Json
 
@@ -270,8 +272,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Unicode
 
+- &#x1F195; **[ConvertTo-FileName.ps1](ConvertTo-FileName.ps1.md)**: Returns a valid and safe filename from a given string.
 - **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1.md)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
-- &#x1F199; **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
+- **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
 - **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
 - **[Get-UnicodeData.ps1](Get-UnicodeData.ps1.md)**: Returns the current (cached) Unicode character data.

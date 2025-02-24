@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3626_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3551_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -131,7 +131,7 @@ PowerShell Scripts
 - **[Get-DotNetFrameworkVersions.ps1](Get-DotNetFrameworkVersions.ps1)**: Determine which .NET Frameworks are installed on the requested system.
 - **[Get-DotNetGlobalTools.ps1](Get-DotNetGlobalTools.ps1)**: Returns a list of global dotnet tools.
 - **[Get-DotNetVersions.ps1](Get-DotNetVersions.ps1)**: Determine which .NET Core & Framework versions are installed.
-- :new: **[Update-DotNetPackages.ps1](Update-DotNetPackages.ps1)**: Updates NuGet packages for a .NET solution or project.
+- **[Update-DotNetPackages.ps1](Update-DotNetPackages.ps1)**: Updates NuGet packages for a .NET solution or project.
 
 ### EnvironmentVariables
 
@@ -146,6 +146,7 @@ PowerShell Scripts
 - **[Measure-Caches.ps1](Measure-Caches.ps1)**: Returns a list of matching cache directories, and their sizes, sorted.
 - **[New-Shortcut.ps1](New-Shortcut.ps1)**: Create a Windows shortcut.
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1)**: Removes a file that may be prone to locking.
+- **[Show-PSDriveUsage.ps1](Show-PSDriveUsage.ps1)**: Displays drive usage graphically, and with a human-readable summary.
 - **[Test-LockedFile.ps1](Test-LockedFile.ps1)**: Returns true if the specified file is locked.
 - **[Test-NewerFile.ps1](Test-NewerFile.ps1)**: Returns true if the difference file is newer than the reference file.
 - **[Update-Files.ps1](Update-Files.ps1)**: Copies specified source files that exist in the destination directory.
@@ -167,8 +168,9 @@ PowerShell Scripts
 - **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1)**: Creates multipart/form-data to send as a request body.
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1)**: Returns the content security policy at from the given URL.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
-- **[Save-WebRequest.ps1](Save-WebRequest.ps1)**: Downloads a given URL to a file, automatically determining the filename.
+- :up: **[Save-WebRequest.ps1](Save-WebRequest.ps1)**: Downloads a given URL to a file, automatically determining the filename.
 - **[Show-HttpStatus.ps1](Show-HttpStatus.ps1)**: Displays the HTTP status code info.
+- **[Trace-WebRequest.ps1](Trace-WebRequest.ps1)**: Provides details about a retrieving a URI.
 
 ### Json
 
@@ -277,8 +279,9 @@ PowerShell Scripts
 
 ### Unicode
 
+- :new: **[ConvertTo-FileName.ps1](ConvertTo-FileName.ps1)**: Returns a valid and safe filename from a given string.
 - **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
-- :up: **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
+- **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-Unicode.ps1](Get-Unicode.ps1)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
 - **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
 - **[Get-UnicodeData.ps1](Get-UnicodeData.ps1)**: Returns the current (cached) Unicode character data.
@@ -354,4 +357,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 11/01/2024 19:48:52 -->
+<!-- generated 02/23/2025 21:05:28 -->
