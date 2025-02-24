@@ -28,11 +28,6 @@ Downloads podcast episodes to the current directory.
 # Downloads the episodes into a folder with the podcast name.
 [switch] $CreateFolder
 )
-Begin
-{
-	[regex] $invalidchars = $IsLinux ? "(?:[$((@(0x00..0x1F)+@(0x22,0x2F,0x3A,0x3C,0x3E,0x5C,0x7C) |ForEach-Object {'\x{0:X2}' -f [int]$_}) -join '')])+"
-		: "(?:[$(([io.path]::GetInvalidFileNameChars() |ForEach-Object {'\x{0:X2}' -f [int]$_}) -join '')])+"
-}
 Process
 {
 	$channel = ([xml]((Invoke-WebRequest $Uri).Content)).rss.channel
@@ -44,7 +39,7 @@ Process
 	if($PSBoundParameters.ContainsKey('Before')) {[object[]] $episodes = $episodes |Where-Object published -lt $Before}
 	if($PSBoundParameters.ContainsKey('First')) {[object[]] $episodes = $episodes |Sort-Object published |Select-Object -First $First}
 	if($PSBoundParameters.ContainsKey('Last')) {[object[]] $episodes = $episodes |Sort-Object published |Select-Object -Last $Last}
-	if($CreateFolder) {New-Item ($channel.title -replace $invalidchars,'_') -ItemType Directory |Push-Location}
+	if($CreateFolder) {New-Item ($channel.title |ConvertTo-FileName.ps1) -ItemType Directory |Push-Location}
 	$i,$max = 0,($episodes.Count/100)
 	foreach($episode in $episodes)
 	{
@@ -54,7 +49,7 @@ Process
 		if($UseTitle)
 		{
 			$filename = if($episode.PSObject.Properties.Match('episode')) {$episode.episode + ' '} else {''}
-			$filename += $title -replace $invalidchars,'_'
+			$filename += $title |ConvertTo-FileName.ps1
 			$filename += Split-Uri.ps1 $episode.enclosure.url -Extension
 			Invoke-WebRequest $episode.enclosure.url -OutFile $filename
 			(Get-Item $filename).CreationTime = $episode.published

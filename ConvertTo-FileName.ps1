@@ -12,17 +12,17 @@ System.String containing a filename without any invalid characters.
 Unicode
 
 .EXAMPLE
-'app*.log' |Format-FileName.ps1
+'app*.log' |ConvertTo-FileName.ps1
 
 app_.log
 
 .EXAMPLE
-'one|two-<three>' |Format-FileName.ps1 -CurrentPlatformOnly
+'one|two-<three>' |ConvertTo-FileName.ps1 -CurrentPlatformOnly
 
 one_two-_three_
 
 .EXAMPLE
-'app-${value}.config' |Format-FileName.ps1 Ascii -ExcludeChars '$','{','}'
+'app-${value}.config' |ConvertTo-FileName.ps1 Ascii -ExcludeChars '%','$','{','}','`'
 
 app-_value_.config
 #>
@@ -42,7 +42,8 @@ using namespace System.Text
 [ValidateNotNull()][rune[]] $IncludeRunes = @(),
 # Runes to exclude.
 [ValidateNotNull()][rune[]] $ExcludeRunes = @(),
-# Indicates that only characters invalid for the current platform should be excluded by default.
+# Indicates that only characters invalid for the current platform should be excluded by default,
+# otherwise invalid characters from any platform will be excluded by default (unless overridden).
 [switch] $CurrentPlatformOnly,
 # The string value to sanitize for use as a filename.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string] $InputObject

@@ -52,17 +52,6 @@ using namespace System.Net.Mime
 )
 Begin
 {
-	$Script:BadFileNameCharClass = $IsLinux ? "[\0\a\b\t\r\v\f\n\e\\/?*`"]" :
-		"[$(([IO.Path]::GetInvalidFileNameChars() |ForEach-Object {'\u{0:X4}' -f ([int]$_)}) -join '')]"
-
-	function Get-ValidFileName
-	{
-		[CmdletBinding()][OutputType([string])] Param(
-		[Parameter(Position=0)][string] $FileName
-		)
-		return ($FileName -replace '(\A.*[\\/])?') -replace $Script:BadFileNameCharClass
-	}
-
 	function Get-FileName
 	{
 		[CmdletBinding()][OutputType([string])] Param(
@@ -77,12 +66,12 @@ Begin
 		if($response.Headers.ContainsKey('Content-Disposition') -and $response.Headers['Content-Disposition'].Count -gt 0)
 		{
 			[ContentDisposition] $disposition = $response.Headers['Content-Disposition'][0]
-			$suggestion = $disposition.FileName
+			$suggestion = $disposition.FileName |Split-Path -Leaf
 		}
-		if($suggestion) {return Get-ValidFileName $suggestion}
-		elseif($null -ne $Uri.Segments -and $Uri.Segments.Count -gt 0) {return Get-ValidFileName ($Uri.Segments[-1])}
-		elseif($Uri.Host) {return Get-ValidFileName ('{0}.saved' -f $Uri.Host)}
-		else {return Get-ValidFileName "$Uri.saved"}
+		if($suggestion) {return $suggestion |ConvertTo-FileName.ps1}
+		elseif($null -ne $Uri.Segments -and $Uri.Segments.Count -gt 0) {return $Uri.Segments[-1] |ConvertTo-FileName.ps1}
+		elseif($Uri.Host) {return '{0}.saved' -f $Uri.Host |ConvertTo-FileName.ps1}
+		else {return "$Uri.saved" |Split-Path -Leaf |ConvertTo-FileName.ps1}
 	}
 }
 Process
