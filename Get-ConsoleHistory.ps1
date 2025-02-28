@@ -34,7 +34,7 @@ Id CommandLine
 [Parameter(ParameterSetName='Match',Mandatory=$true)][string] $Match,
 [Parameter(ParameterSetName='All')][switch] $All
 )
-$history = Join-Path $env:AppData Microsoft Windows PowerShell PSReadline ConsoleHost_history.txt
+$history = Get-PSReadLineOption |Select-Object -ExpandProperty HistorySavePath
 switch($PSCmdlet.ParameterSetName)
 {
 	Id
@@ -62,7 +62,6 @@ switch($PSCmdlet.ParameterSetName)
 	default
 	{
 		$id = 0
-		Get-Content (Join-Path $env:AppData Microsoft Windows PowerShell PSReadline ConsoleHost_history.txt) |
-			ForEach-Object {[pscustomobject]@{Id=++$id;CommandLine=$_}}
+		Get-Content $history |ForEach-Object {[pscustomobject]@{Id=++$id;CommandLine=$_}}
 	}
 }

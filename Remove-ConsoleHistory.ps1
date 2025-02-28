@@ -33,7 +33,7 @@ Deletes any commands that start with "winget" from the history.
 )
 Begin
 {
-	$history = Join-Path $env:AppData Microsoft Windows PowerShell PSReadline ConsoleHost_history.txt
+	$history = Get-PSReadLineOption |Select-Object -ExpandProperty HistorySavePath
 }
 Process
 {
