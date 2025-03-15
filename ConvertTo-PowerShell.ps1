@@ -116,17 +116,19 @@ Begin
 	function Format-PSString([string]$string)
 	{
 		$q,$string =
-			if($string -match '[\0\a\b\f\t\v]')
+			if($string -match '[\0-\x1F\x7F]')
 			{
 				'"'
-				$string -replace '$','`$' -replace '`','``' -replace '"','`"' -replace "`0",'`0' -replace "`a",'`a' -replace "`b",'`b' -replace "`f",'`f' -replace "`t",'`t' -replace "`v",'`v'
+				$string -replace '\$','`$' -replace '`','``' -replace '"','`"' -replace "`0",'`0' `
+					-replace "`a",'`a' -replace "`b",'`b' -replace "`f",'`f' -replace "`t",'`t' `
+					-replace "`v",'`v' -replace '[\0-\t\v\f\x0E-\x1F\x7F]',{'`u{{{0:X2}}}' -f ([int]$_.Value[0])}
 			}
 			else
 			{
 				"'"
 				$string -replace "'","''"
 			}
-		if($string -match '\n|\r') {"@$q$Newline$string$Newline$q@"}
+		if($string -match '[\n\r]') {"@$q$Newline$string$Newline$q@"}
 		else {"$itab$q$string$q"}
 	}
 
@@ -222,6 +224,23 @@ Process
 				}
 			}
 		"$itab$prefix$number$suffix$unit"
+	}
+	elseif($Value -is [char])
+	{
+		switch([int]$Value)
+		{
+			0 {'[char]"`0"'}
+			7 {'[char]"`a"'}
+			8 {'[char]"`b"'}
+			9 {'[char]"`t"'}
+			0xA {'[char]"`n"'}
+			0xB {'[char]"`v"'}
+			0xC {'[char]"`f"'}
+			0xD {'[char]"`r"'}
+			0x1B {'[char]"`e"'}
+			{[char]::IsControl($_)} {'[char]0x{0:X2}' -f $_}
+			default {"$itab[$($Value.GetType().Name)]'$Value'"}
+		}
 	}
 	elseif([guid],[timespan],[char] -contains $Value.GetType())
 	{ "$itab[$($Value.GetType().Name)]'$Value'" }
