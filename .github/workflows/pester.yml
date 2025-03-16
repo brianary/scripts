@@ -24,14 +24,20 @@ jobs:
         Invoke-Pester -Output Diagnostic -Path test -PassThru |Export-NUnitReport -Path TestResults.xml
     - name: Publish results (Ubuntu)
       uses: EnricoMi/publish-unit-test-result-action/linux@v2
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+      if: false
+      # matrix.os == 'ubuntu-latest'
       with:
         files: "TestResults.xml"
     - name: Publish results (Windows)
       uses: EnricoMi/publish-unit-test-result-action/windows@v2
-      if: ${{ matrix.os == 'windows-latest' }}
+      if: false
+      # matrix.os == 'windows-latest'
       with:
         files: "TestResults.xml"
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      id: test-results
+      if: always()
     - name: Set badge color
       if: ${{ matrix.os == 'windows-latest' }}
       shell: pwsh
