@@ -3,7 +3,10 @@ on: push
 jobs:
   test:
     name: Run Pester tests
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+          os: [ubuntu-latest, windows-latest]
     steps:
     - name: Check out repo
       uses: actions/checkout@v4
@@ -19,12 +22,16 @@ jobs:
         Write-Information "PSC $($PSVersionTable.PSVersion) running on CLR v$([Environment]::Version) on $($PSVersionTable.OS)" -infa Continue
         '${{ steps.changes.outputs.added_modified }}' -split ',' |Out-File .changes utf8
         Invoke-Pester -Output Diagnostic -Path test -PassThru |Export-NUnitReport -Path TestResults.xml
-    - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action/composite@v2
-      id: test-results
-      if: always()
+    - name: Publish results (Ubuntu)
+      uses: EnricoMi/publish-unit-test-result-action/linux@v2
+      if: ${{ matrix.os == 'ubuntu-latest' }}
       with:
-        nunit_files: "TestResults.xml"
+        files: "TestResults.xml"
+    - name: Publish results (Windows)
+      uses: EnricoMi/publish-unit-test-result-action/windows@v2
+      if: ${{ matrix.os == 'windows-latest' }}
+      with:
+        files: "TestResults.xml"
     - name: Set badge color
       shell: pwsh
       run: |
