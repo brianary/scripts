@@ -33,6 +33,7 @@ jobs:
       with:
         files: "TestResults.xml"
     - name: Set badge color
+      if: ${{ matrix.os == 'windows-latest' }}
       shell: pwsh
       run: |
         switch('${{ fromJSON( steps.test-results.outputs.json ).conclusion }}')
@@ -42,6 +43,7 @@ jobs:
             neutral {'BADGE_COLOR=696969' |Add-Content $env:GITHUB_ENV}
         }
     - name: Create badge
+      if: ${{ matrix.os == 'windows-latest' }}
       uses: emibcn/badge-action@d6f51ff11b5c3382b3b88689ae2d6db22d9737d1
       with:
         label: Tests
@@ -51,7 +53,7 @@ jobs:
     - name: Upload badge to Gist
       # Upload only for original fork and main branch
       if: >
-        github.repository == 'brianary/scripts' &&
+        matrix.os == 'windows-latest' && github.repository == 'brianary/scripts' &&
         ((github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main') ||
         (github.event_name != 'workflow_run' && github.ref == 'refs/heads/main'))
       uses: andymckay/append-gist-action@1fbfbbce708a39bd45846f0955ed5521f2099c6d
