@@ -36,6 +36,8 @@ jobs:
         run: |
           Install-Module SqlServer -Repository PSGallery -Scope CurrentUser -Force
           $env:Path += [io.path]::PathSeparator + "$PWD"
+          "Path:"
+          $env:Path -split [io.path]::PathSeparator
           ./Export-Readme.ps1
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
