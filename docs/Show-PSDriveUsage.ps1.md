@@ -5,15 +5,15 @@ online version:
 schema: 2.0.0
 ---
 
-# Show-PSDriveUsage.ps1
+# Show-OpenApiInfo.ps1
 
 ## SYNOPSIS
-Displays drive usage graphically, and with a human-readable summary.
+Displays metadata from an OpenAPI definition.
 
 ## SYNTAX
 
 ```
-Show-PSDriveUsage.ps1 [[-Name] <String[]>] [-AsAscii] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Show-OpenApiInfo.ps1 [-Path] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,49 +23,30 @@ Show-PSDriveUsage.ps1 [[-Name] <String[]>] [-AsAscii] [-ProgressAction <ActionPr
 
 ### EXAMPLE 1
 ```
-Show-PSDriveUsage.ps1 C -AsAscii
+Show-OpenApiInfo.ps1 .\test\data\sample-openapi.json
 ```
 
-#################_______________________________________________________________________
-C:\ Windows \[NTFS\] 953GB = 762GB (79%) free + 191GB (20%) used
-
-### EXAMPLE 2
-```
-Show-PSDriveUsage.ps1 /home -AsAscii
-###################_____________________________________________________________________
-/home [ext3] 4TB = 3TB (73%) free + 792GB (21%) used
-```
+Sample REST API v1.0.0 An example OpenAPI definition.
+.\test\data\sample-openapi.json openapi v3.0.3
+GET /users/{userId} Returns a user by ID.
+Gets a user's details.
+POST /users Creates a new user.
+Adds a user account.
 
 ## PARAMETERS
 
-### -Name
-A drive name to display the usage for.
-All ready fixed drives are displayed if none is specified.
+### -Path
+{{ Fill Path Description }}
 
 ```yaml
-Type: String[]
+Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: FullName
 
-Required: False
+Required: True
 Position: 1
-Default value: @()
+Default value: None
 Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -AsAscii
-Display the graph as ASCII.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -89,16 +70,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### An object with a Name property that corresponds to a drive name.
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
 
-[Import-CharConstants.ps1]()
-
-[Format-ByteUnits.ps1]()
-
-[Write-Info.ps1]()
+[https://www.openapis.org/](https://www.openapis.org/)
 

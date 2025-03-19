@@ -13,8 +13,7 @@ Generate README.md file for the scripts repo.
 ## SYNTAX
 
 ```
-Export-Readme.ps1 [[-DependenciesImage] <String>] [[-StatusAge] <String>] [-Commit]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Export-Readme.ps1 [[-StatusAge] <String>] [-Commit] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,21 +30,6 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -DependenciesImage
-{{ Fill DependenciesImage Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: Dependencies.svg
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -StatusAge
 {{ Fill StatusAge Description }}
 
@@ -55,7 +39,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 1
 Default value: 2 weeks ago
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -13,58 +13,11 @@ Justification='This script deals with lists, and this is a pretty questionable r
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','',
 Justification='ScriptAnalyzer does not recognize parameters used as global values.')]
 [CmdletBinding()][OutputType([void])] Param(
-# The dependency image filename.
-[string] $DependenciesImage = 'dependencies.svg',
 # The oldest change to mark as updated.
 [string] $StatusAge = '2 weeks ago',
 # Commit the update.
 [switch] $Commit
 )
-
-function Format-Dependencies
-{
-	Write-Progress 'Building dependency graph'
-	@'
-digraph ScriptDependencies
-{
-	rankdir=RL
-	node [shape=note style=filled fontname="Lucida Console" fontcolor=azure fillcolor=mediumblue color=azure]
-	edge [color=goldenrod]
-'@
-	$path = $env:Path
-	$env:Path = $PSScriptRoot
-	[pscustomobject[]] $scripthelp = Get-Help *.ps1
-	$i,$max = 0,($scripthelp.Count/100)
-	foreach($help in $scripthelp)
-	{
-		Write-Progress 'Building dependency graph' 'Parsing dependencies' -curr $help.Name -percent ($i++/$max)
-		Write-Verbose $help.Name
-		if($help.Name -notlike "$PSScriptRoot\*" -or
-			!(Get-Member relatedLinks -InputObject $help -MemberType Properties)) {continue}
-		$help.relatedLinks.navigationLink |
-			Where-Object {Get-Member linkText -InputObject $_ -MemberType Properties} |
-			ForEach-Object {$_.linkText} |
-			Where-Object {$_ -like '*.ps1'} |
-			ForEach-Object {"    `"$(Split-Path $help.Name -Leaf)`" -> `"$_`" "}
-	}
-	$env:Path = $path
-	@'
-}
-'@
-	Write-Progress 'Building dependency graph' -Completed
-}
-
-function Export-Dependencies($image)
-{
-	Use-Command.ps1 dot "$env:ChocolateyInstall\bin\dot.exe" -cinst graphviz
-	Write-Progress 'Creating dependency image'
-	$gv = Join-Path $PSScriptRoot ([IO.Path]::ChangeExtension($image,'gv'))
-	Format-Dependencies |Out-File $gv -Encoding ascii -Width ([int]::MaxValue)
-	$ext = (Split-Path $image -Extension).Trim('.')
-	dot "-T$ext" -o $PSScriptRoot\$image $gv
-	Remove-Item $gv
-	Write-Progress 'Creating dependency image' -Completed
-}
 
 function Get-StatusSymbol([string]$status,[switch]$entity)
 {
@@ -276,74 +229,6 @@ function Format-VBAScripts
 	Write-Progress 'Enumerating VisualBasic for Applications scripts' -Completed
 }
 
-function Format-SysCfgScripts
-{
-	Write-Progress 'Enumerating System Configuration PowerShell scripts'
-	[IO.FileInfo[]] $scripts = Get-Item $PSScriptRoot\syscfg\*.ps1
-	$i,$max = 0,($scripts.Count/100)
-	$scripts |
-		ForEach-Object {Get-Help $_.FullName} |
-		ForEach-Object {
-			Write-Progress 'Enumerating System Configuration PowerShell scripts' 'Writing list' -curr $_.Name -percent ($i++/$max)
-			$name = Split-Path $_.Name -Leaf
-			"- **[$name]($name)**: $($_.Synopsis)"
-		}
-	Write-Progress 'Enumerating System Configuration PowerShell scripts' -Completed
-}
-
-function Format-PS5Scripts
-{
-	Invoke-WindowsPowerShell.ps1 {
-		Param($repo)
-		Write-Progress 'Enumerating Windows PowerShell 5.x scripts'
-		Import-Module Microsoft.PowerShell.Utility
-		Import-Module SqlServer -ErrorAction Ignore
-		Import-Module dbatools -ErrorAction Ignore
-		Add-Type -AN System.Web
-		[IO.FileInfo[]] $scripts = Get-Item $repo\PS5\*.ps1
-		$i,$max = 0,($scripts.Count/100)
-		$scripts |
-			ForEach-Object {Get-Help $_.FullName} |
-			ForEach-Object {
-				Write-Progress 'Enumerating Windows PowerShell 5.x scripts' 'Writing list' `
-					-curr $_.Name -percent ($i++/$max)
-				'- **[{0}]({0})**: {1}' -f (Split-Path $_.Name -Leaf),$_.Synopsis
-			}
-		Write-Progress 'Enumerating Windows PowerShell 5.x scripts' -Completed
-	} $PSScriptRoot
-}
-
-function Format-SysCfgReadme
-{
-	$Local:OFS = [Environment]::NewLine
-	return @"
-PowerShell System Configuration Scripts
-=======================================
-
-A collection of scripts that only need to be run once to modify a system.
-
-$(Format-SysCfgScripts)
-
-<!-- generated $(Get-Date) -->
-"@
-}
-
-function Format-PS5Readme
-{
-	$Local:OFS = [Environment]::NewLine
-	return @"
-PowerShell 5.1 Scripts
-======================
-
-A collection of legacy scripts that have been supplanted by newer scripts or modules for PowerShell 6+,
-or have dependencies that are no longer available in PowerShell 6+.
-
-$(Format-PS5Scripts)
-
-<!-- generated $(Get-Date) -->
-"@
-}
-
 filter Format-TestsVerb
 {
 	Param(
@@ -398,7 +283,6 @@ Script Tests
 function Format-Readme
 {
 	Write-Progress 'Building readme' 'Exporting dependencies'
-	Export-Dependencies $DependenciesImage
 	Write-Progress 'Building readme' 'Writing readme.md'
 	$Local:OFS = [Environment]::NewLine
 	return @"
@@ -426,8 +310,6 @@ See [PS5](PS5) for legacy scripts, [syscfg](syscfg) for single-use system config
 
 PowerShell Scripts
 ------------------
-
-![script dependencies]($DependenciesImage)
 $(Format-PSScripts)
 
 F# Scripts
@@ -483,10 +365,7 @@ $(Format-PSScripts -Extension '.md' -entities)
 	Write-Progress 'Export PowerShell script help pages' -Completed
 }
 
-Add-Type -AN System.Web
 Format-Readme |Out-File $PSScriptRoot\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Format-TestsReadme |Out-File $PSScriptRoot\test\README.md -Encoding utf8 -Width ([int]::MaxValue)
-Format-SysCfgReadme |Out-File $PSScriptRoot\syscfg\README.md -Encoding utf8 -Width ([int]::MaxValue)
-Format-PS5Readme |Out-File $PSScriptRoot\PS5\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Export-PSScriptPages
 if($Commit) {git add -A ; git commit -m "$(Get-Unicode.ps1 0x1F4DD) Update readme"}
