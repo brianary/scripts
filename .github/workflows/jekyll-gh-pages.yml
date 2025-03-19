@@ -35,9 +35,8 @@ jobs:
         shell: pwsh
         run: |
           Install-Module SqlServer -Repository PSGallery -Scope CurrentUser -Force
-          $env:Path += [io.path]::PathSeparator + "$PWD"
-          "Path:"
-          $env:Path -split [io.path]::PathSeparator
+          $env:Path = "$PWD"
+          Get-Command Get-Unicode.ps1
           ./Export-Readme.ps1
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
