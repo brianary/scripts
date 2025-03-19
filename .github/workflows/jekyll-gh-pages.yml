@@ -33,7 +33,10 @@ jobs:
       - name: Update readme
         continue-on-error: true
         shell: pwsh
-        run: Install-Module SqlServer -Repository PSGallery -Scope CurrentUser -Force ; ./Export-Readme.ps1
+        run: |
+          Install-Module SqlServer -Repository PSGallery -Scope CurrentUser -Force
+          $env:Path += ";$PWD"
+          ./Export-Readme.ps1
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
