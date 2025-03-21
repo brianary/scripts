@@ -93,56 +93,69 @@ By default, the default vault is used.
 Set-ParameterDefault.ps1 Invoke-RestMethod Method Post
 Set-ParameterDefault.ps1 Invoke-RestMethod ContentType application/json
 Set-ParameterDefault.ps1 Invoke-RestMethod Headers @{'X-Accept'='application/json'}
-$consumerKey = ( $Vault ?
-	(Get-Secret PocketApiConsumerKey -Vault $Vault -ErrorAction Ignore) :
-	(Get-Secret PocketApiConsumerKey -ErrorAction Ignore) ) |
-	ConvertFrom-SecureString -AsPlainText -ErrorAction Ignore
-if(!$consumerKey)
+$VaultOrDefault = if($Vault) {@{Vault=$Vault}} else {@{}}
+if(!(Get-SecretInfo PocketApi @VaultOrDefault))
 {
-	$consumerKey = Get-Credential PocketApiConsumerKey -Message 'Pocket API consumer key'
-	$VaultOrDefault = if($Vault) {@{Vault=$Vault}} else {@{}}
-	Set-Secret PocketApiConsumerKey $consumerKey.Password @VaultOrDefault
-	$consumerKey = $consumerKey.Password |ConvertFrom-SecureString -AsPlainText
+	$oldtokenfile = Join-Path ~ .pocket
+	$secret =
+		if((Test-Path $oldtokenfile -Type Leaf) -and (Get-SecretInfo PocketApiConsumerKey @VaultOrDefault))
+		{
+			$key = Get-Secret PocketApiConsumerKey -AsPlainText @VaultOrDefault
+			Remove-Secret PocketApiConsumerKey -Vault ($Vault ? $Vault : (Get-SecretVault |Select-Object -ExpandProperty Name))
+			$token = Get-Content $oldtokenfile |ConvertTo-SecureString
+			Remove-Item $oldtokenfile
+			New-Object pscredential -ArgumentList $key,$token
+		}
+		else
+		{
+			$key = (Get-Credential PocketApiConsumerKey -Message 'Pocket API consumer key').GetNetworkCredential().Password
+			$redirectUri = 'https://webcoder.info/auth-success.html'
+			$code = @{
+				consumer_key = $key
+				redirect_uri = $redirectUri
+			} |
+				ConvertTo-Json -Compress |
+				Invoke-RestMethod https://getpocket.com/v3/oauth/request -Method Post -ContentType application/json |
+				Select-Object -ExpandProperty code
+			$code |ConvertTo-Json |Write-Info.ps1 -fg Cyan
+			Start-Process "https://getpocket.com/auth/authorize?request_token=$code&redirect_uri=$([uri]::EscapeDataString($redirectUri))" -Wait
+			if(!$PSCmdlet.ShouldContinue('Has the token been authorized?','Authorize')) {return}
+			$code = @{consumer_key=$key;code=$code} |
+				ConvertTo-Json -Compress |
+				Invoke-RestMethod https://getpocket.com/v3/oauth/authorize -Method Post -ContentType application/json
+			if(!${code}?.username) {Stop-ThrowError.ps1 'Could not get an access token.' -OperationContext $code}
+			Write-Verbose "Authenticated token for $($code.username)"
+			New-Object pscredential -ArgumentList $key,($code.access_token |ConvertTo-SecureString -AsPlainText -Force)
+		}
+	Set-Secret PocketApi -Secret $secret -Metadata @{
+		Title       = 'Pocket API consumer key and token'
+		Description = 'Contains the key as username and token as password.'
+		Note        = 'Used to access saved articles from Pocket'
+		Uri         = 'https://getpocket.com/developer/'
+		Created     = Get-Date
+	} @VaultOrDefault
 }
-$tokenfile = Join-Path ~ .pocket
-$token =
-	if(Test-Path $tokenfile -Type Leaf)
-	{
-		Get-Content $tokenfile |ConvertTo-SecureString |ConvertFrom-SecureString -AsPlainText
-	}
-	else
-	{
-		$redirectUri = 'https://webcoder.info/auth-success.html'
-		$code = @{consumer_key=$consumerKey;redirect_uri=$redirectUri} |
-			ConvertTo-Json -Compress |
-			Invoke-RestMethod https://getpocket.com/v3/oauth/request -ContentType application/json |
-			Select-Object -ExpandProperty code
-		Start-Process "https://getpocket.com/auth/authorize?request_token=$code&redirect_uri=$([uri]::EscapeDataString($redirectUri))" -Wait
-		if(!$PSCmdlet.ShouldContinue('Has the token been authorized?','Authorize')) {return}
-		$code = @{consumer_key=$consumerKey;code=$code} |
-			ConvertTo-Json -Compress |
-			Invoke-RestMethod https://getpocket.com/v3/oauth/authorize -Method Post -ContentType application/json
-		Write-Verbose "Authenticated token for $($code.username)"
-		$code.access_token |ConvertTo-SecureString -AsPlainText -Force |ConvertFrom-SecureString |Out-File $tokenfile
-		$code.access_token
-	}
-Write-Verbose "Using key $consumerKey and token $token"
+$apiCredential = Get-Secret PocketApi @VaultOrDefault
 $articles = @{
-	consumer_key = $consumerKey
-	access_token = $token
+	consumer_key = $apiCredential.UserName
+	access_token = $apiCredential.GetNetworkCredential().Password
 	state        = $State.ToLower()
 	favorite     = if($Favorite) {1} else {$null};
-	tag          = $Tag
+	tag          = ($Tag ? $Tag : $null)
 	contentType  = if($ContentType) {$ContentType.ToLower()};
 	sort         = if($Sort) {$Sort.ToLower()};
 	detailType   = 'complete'
-	search       = $Search
-	domain       = $Domain
+	search       = ($Search ? $Search : $null)
+	domain       = ($Domain ? $Domain : $null)
 	since        = ConvertTo-EpochTime.ps1 $After
 } |
 	Remove-NullValues.ps1 |
 	ConvertTo-Json -Compress |
-	Invoke-RestMethod https://getpocket.com/v3/get
+	Invoke-RestMethod https://getpocket.com/v3/get -SkipHttpErrorCheck
+if(${articles}?.error)
+{
+	Stop-ThrowError.ps1 $articles.error -OperationContext $articles
+}
 ${articles}?.{list}?.{PSObject}?.{Properties}?.Value |
 	ForEach-Object {[pscustomobject]@{
 		ItemId       = $_.item_id
