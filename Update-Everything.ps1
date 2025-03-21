@@ -86,13 +86,15 @@ Attempts to update packages, features, and system.
 #Requires -Version 3
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost','',
 Justification='This script is not intended for pipelining.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns','',
+Justification='Some of these functions may deal with multiple updates.')]
 [CmdletBinding()] Param(
 # The sources of updates to install, in order.
 [ValidateSet('Chocolatey','DellCommand','Dotnet','Essential','GitHubCli','Npm','ScriptsData',
-	'PSHelp','PSModule','Scoop','WindowsUpdate','WindowsStore','WinGet')]
+	'PSHelp','PSModule','Scoop','VSCodeExtenions','WindowsUpdate','WindowsStore','WinGet')]
 [Parameter(Position=0,ValueFromRemainingArguments=$true)][string[]] $Steps =
-	@('Essential','WindowsStore','Scoop','Chocolatey','WinGet','Npm','Dotnet',
-		'GitHubCli','ScriptsData','PSModule','PSHelp','DellCommand','WindowsUpdate')
+	@('Essential','WindowsStore','Scoop','Chocolatey','WinGet','Npm','Dotnet','GitHubCli',
+		'VSCodeExtensions','ScriptsData','PSModule','PSHelp','DellCommand','WindowsUpdate')
 )
 Begin
 {
@@ -218,6 +220,14 @@ Begin
 		{Write-Verbose 'gh not found, skipping'; return}
 		Write-Step "$UP Updating GitHub CLI extensions"
 		gh extension upgrade --all
+	}
+
+	function Update-VSCodeExtenions
+	{
+		if(!(Get-Command code -ErrorAction Ignore))
+		{Write-Verbose 'VSCode not found, skipping.'; return}
+		Write-Step "$UP Updating VSCode extensions"
+		code --update-extensions
 	}
 
 	function Update-PSModule
