@@ -222,7 +222,7 @@ Begin
 		gh extension upgrade --all
 	}
 
-	function Update-VSCodeExtenions
+	function Update-VSCodeExtensions
 	{
 		if(!(Get-Command code -ErrorAction Ignore))
 		{Write-Verbose 'VSCode not found, skipping.'; return}
