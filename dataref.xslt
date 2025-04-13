@@ -111,16 +111,16 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 </xsl:template>
 
 <xsl:template match="xs:simpleType" mode="root">
-	<h2 class="simpleType"><xsl:value-of select="@name"/></h2>
+	<h2 class="simpleType"><xsl:value-of select="concat(@name,' ',local-name())"/></h2>
 	<xsl:apply-templates select="xs:attribute,* except xs:attribute"/>
 </xsl:template>
 
 <xsl:template match="xs:complexType" mode="root">
-	<h2 class="complexType"><xsl:value-of select="@name"/></h2>
+	<h2 class="complexType"><xsl:value-of select="concat(@name,' ',local-name())"/></h2>
 	<table><caption><xsl:value-of select="@name"/></caption>
 		<thead><tr><th>Name</th><th title="Occurrances" class="occurs">#</th>
 			<th>Type</th><th class="notes" title="Notes">📝</th></tr></thead>
-		<tbody><xsl:apply-templates select="xs:attribute,* except xs:attribute"/></tbody>
+		<tbody><xsl:apply-templates select="xs:attribute,* except xs:attribute" mode="tr"/></tbody>
 	</table>
 </xsl:template>
 
@@ -129,7 +129,7 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 	<xsl:variable name="type" select="if (@type) then resolve-QName(@type,.) else ()" as="xs:QName?"/>
 	<xsl:variable name="complexType" select="if (xs:complexType) then xs:complexType
 		else if (exists($type)) then $schema/xs:complexType[QName($tns,@name) eq $type] else ()" as="element()*"/>
-	<h2 class="element-or-attribute"><xsl:value-of select="local-name()" /></h2>
+	<h2 class="element-or-attribute"><xsl:value-of select="if ($name) then concat($name,' ',local-name()) else local-name()" /></h2>
 	<table><caption><xsl:value-of select="local-name()"/></caption>
 	<thead><tr><th>Name</th><th title="Occurrances" class="occurs">#</th>
 		<th>Type</th><th class="notes" title="Notes">📝</th></tr></thead><tbody>
@@ -157,7 +157,9 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 				</td>
 				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
 					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
-			<xsl:apply-templates select="$schema/xs:element[QName($tns,@name) = $element]"/>
+			<xsl:apply-templates select="$schema/xs:element[QName($tns,@name) = $element]" mode="tr">
+				<xsl:with-param name="depth" select="2"/>
+			</xsl:apply-templates>
 		</xsl:when>
 		<xsl:when test="exists($type) and x:in-xs($type)">
 			<tr><td><xsl:value-of select="$name"/></td>
@@ -172,7 +174,9 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 				<td><xsl:value-of select="($type,@name)[1]"/></td>
 				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
 					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
-			<xsl:apply-templates select="xs:attribute,$complexType"/>
+			<xsl:apply-templates select="xs:attribute,$complexType" mode="tr">
+				<xsl:with-param name="depth" select="2"/>
+			</xsl:apply-templates>
 		</xsl:otherwise>
 	</xsl:choose>
 	</tbody>
@@ -261,12 +265,12 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 		<table class="{$name}"><caption><xsl:value-of select="$name"/></caption>
 			<thead><tr><th>Name</th><th title="Occurrances" class="occurs">#</th>
 				<th>Type</th><th class="notes" title="Notes">📝</th></tr></thead>
-			<xsl:apply-templates select="$part"/>
+			<xsl:apply-templates select="$part" mode="tbody"/>
 		</table>
 	</xsl:if>
 </xsl:template>
 
-<xsl:template match="wsdl:part">
+<xsl:template match="wsdl:part" mode="tbody">
 	<xsl:variable name="type" select="if (@type) then resolve-QName(@type,.) else ()" as="xs:QName?"/>
 	<xsl:choose>
 		<xsl:when test="exists($type)">
@@ -281,13 +285,13 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 						<td><xsl:value-of select="@type"/></td></tr></tbody>
 				</xsl:when>
 				<xsl:otherwise>
-					<tbody><xsl:apply-templates select="$complexType"/></tbody>
+					<tbody><xsl:apply-templates select="$complexType" mode="tr"/></tbody>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:when>
 		<xsl:otherwise>
 			<xsl:variable name="element" select="resolve-QName(@element,.)" as="xs:QName"/>
-			<tbody><xsl:apply-templates select="$schema/xs:element[QName($tns,@name) eq $element]"/></tbody>
+			<tbody><xsl:apply-templates select="$schema/xs:element[QName($tns,@name) eq $element]" mode="tr"/></tbody>
 		</xsl:otherwise>
 	</xsl:choose>
 </xsl:template>
@@ -296,8 +300,16 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 	<xsl:apply-templates select="x:ref-or-self(.)"/>
 </xsl:template>
 
-<xsl:template match="xs:element|xs:attribute">
-	<xsl:param name="depth" select="0" as="xs:integer" tunnel="yes"/>
+<xsl:template match="xs:element[@ref]|xs:attribute[@ref]|xs:group[@ref]" mode="tr">
+	<xsl:apply-templates select="x:ref-or-self(.)" mode="tr"/>
+</xsl:template>
+
+<xsl:template match="xs:complexType|xs:complexContent|xs:extension|xs:sequence" mode="tr">
+	<xsl:apply-templates mode="tr"/>
+</xsl:template>
+
+<xsl:template match="xs:element|xs:attribute" mode="tr">
+	<xsl:param name="depth" select="1" as="xs:integer" tunnel="yes"/>
 	<xsl:variable name="name" select="if (self::xs:attribute) then concat('@',@name) else @name" as="xs:string?"/>
 	<xsl:variable name="type" select="if (@type) then resolve-QName(@type,.) else ()" as="xs:QName?"/>
 	<xsl:variable name="complexType" select="if (xs:complexType) then xs:complexType
@@ -326,7 +338,7 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 				</td>
 				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
 					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
-			<xsl:apply-templates select="$schema/xs:element[QName($tns,@name) = $element]">
+			<xsl:apply-templates select="$schema/xs:element[QName($tns,@name) = $element]" mode="tr">
 				<xsl:with-param name="depth" select="$depth +1" as="xs:integer" tunnel="yes"/>
 			</xsl:apply-templates>
 		</xsl:when>
@@ -343,7 +355,7 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 				<td><xsl:value-of select="($type,@name)[1]"/></td>
 				<td class="notes"><xsl:if test="xs:annotation"><details><summary>📝</summary>
 					<xsl:apply-templates select="xs:annotation"/></details></xsl:if></td></tr>
-			<xsl:apply-templates select="xs:attribute,$complexType">
+			<xsl:apply-templates select="xs:attribute,$complexType" mode="tr">
 				<xsl:with-param name="depth" select="$depth +1" as="xs:integer" tunnel="yes"/>
 			</xsl:apply-templates>
 		</xsl:otherwise>
@@ -354,18 +366,17 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 	<xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="xs:schema/xs:*/xs:annotation/xs:documentation">
-	<tr><td colspan="4"><p class="notes">📝 <xsl:value-of select="." /></p></td></tr>
-</xsl:template>
+<xsl:template match="xs:schema/xs:*/xs:annotation" mode="tr"/>
+<xsl:template match="xs:schema/xs:*/xs:annotation/xs:documentation" mode="tr"/>
 
-<xsl:template match="xs:any">
+<xsl:template match="xs:any" mode="tr">
 	<xsl:param name="depth" select="0" as="xs:integer" tunnel="yes"/>
 	<tr><th class="direction" style="padding-left:{$depth}em">(anything)</th>
 		<td class="occurs"><xsl:call-template name="occurs"/></td>
 		<td><xsl:value-of select="@id"/></td></tr>
 </xsl:template>
 
-<xsl:template match="xs:choice">
+<xsl:template match="xs:choice" mode="tr">
 	<xsl:param name="depth" select="0" as="xs:integer" tunnel="yes"/>
 	<tr><th class="direction" style="padding-left:{$depth}em">Choose one:</th>
 		<td class="occurs"><xsl:call-template name="occurs"/></td>
@@ -376,7 +387,7 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 	<tr><th class="direction" style="padding-left:{$depth}em">end choice.</th></tr>
 </xsl:template>
 
-<xsl:template match="xs:group[(@minOccurs and @minOccurs ne '1') or (@maxOccurs and @maxOccurs ne '1')]">
+<xsl:template match="xs:group[(@minOccurs and @minOccurs ne '1') or (@maxOccurs and @maxOccurs ne '1')]" mode="tr">
 	<xsl:param name="depth" select="0" as="xs:integer" tunnel="yes"/>
 	<tr><th class="direction" style="padding-left:{$depth}em">Group:</th>
 		<td class="occurs"><xsl:call-template name="occurs"/></td>
@@ -387,7 +398,7 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 	<tr><th class="direction" style="padding-left:{$depth}em">end group.</th></tr>
 </xsl:template>
 
-<xsl:template match="xs:sequence[(@minOccurs and @minOccurs ne '1') or (@maxOccurs and @maxOccurs ne '1')]">
+<xsl:template match="xs:sequence[(@minOccurs and @minOccurs ne '1') or (@maxOccurs and @maxOccurs ne '1')]" mode="tr">
 	<xsl:param name="depth" select="0" as="xs:integer" tunnel="yes"/>
 	<tr><th class="direction" style="padding-left:{$depth}em">Choose one:</th>
 		<td class="occurs"><xsl:call-template name="occurs"/></td>
@@ -420,7 +431,7 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 			<xsl:otherwise><p>A <code><xsl:value-of select="@base" /></code>, with the following restrictions:</p></xsl:otherwise>
 		</xsl:choose>
 	</xsl:if>
-	<ul><xsl:if test="xs:enumeration and not(* except xs:enumeration)">
+	<ul><xsl:if test="xs:enumeration and not(* except xs:enumeration) and not(xs:enumeration/xs:annotation/xs:documentation)">
 			<xsl:attribute name="style">
 				<xsl:text>columns:</xsl:text>
 				<xsl:value-of select="max(for $enum in xs:enumeration/@value return string-length($enum))"/>
@@ -487,12 +498,17 @@ This stylesheet builds a list of all of the services, ports, and messages (for W
 </xsl:template>
 
 <xsl:template match="xs:enumeration">
-	<li><xsl:apply-templates select="xs:annotation/xs:documentation"/>
-		<xsl:value-of select="@value"/></li>
+	<li><code><xsl:value-of select="@value"/></code></li>
+</xsl:template>
+
+<xsl:template match="xs:enumeration[xs:annotation/xs:documentation]">
+	<li><details><summary><code><xsl:value-of select="@value"/></code></summary>
+		<xsl:apply-templates select="xs:annotation/xs:documentation"/>
+		</details></li>
 </xsl:template>
 
 <xsl:template match="xs:enumeration/xs:annotation/xs:documentation">
-	<xsl:attribute name="title"><xsl:value-of select="."/></xsl:attribute>
+	<p class="notes">📝 <xsl:value-of select="."/></p>
 </xsl:template>
 
 </xsl:transform>
