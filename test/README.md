@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='312'>312 &#x2030;</meter> Scripts repo (221) &#x1F4C5; 605 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='311'>311 &#x2030;</meter> Scripts repo (222) &#x1F4C5; 605 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
 
@@ -144,8 +144,8 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='25'>25 &#x2030;</meter> G (40) &#x1F4C5; 490 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='25'>25 &#x2030;</meter> Get (40) &#x1F4C5; 490 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='24'>24 &#x2030;</meter> G (41) &#x1F4C5; 490 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='24'>24 &#x2030;</meter> Get (41) &#x1F4C5; 490 days</summary>
 
 - &#x2716;&#xFE0F; Get-ADServiceAccountInfo.ps1
 - &#x2716;&#xFE0F; Get-ADUserStatus.ps1
@@ -174,6 +174,7 @@ Script Tests
 - &#x2716;&#xFE0F; Get-PocketArticles.ps1
 - &#x2716;&#xFE0F; Get-RandomBytes.ps1
 - &#x2716;&#xFE0F; Get-RepoName.ps1
+- &#x2716;&#xFE0F; Get-SecretDetails.ps1
 - &#x2716;&#xFE0F; Get-ServerCertificate.ps1
 - &#x2716;&#xFE0F; Get-SslDetails.ps1
 - &#x2716;&#xFE0F; Get-SystemDetails.ps1

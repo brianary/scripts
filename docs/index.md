@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3519_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3505_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -50,8 +50,10 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[Export-SecretVault.ps1](Export-SecretVault.ps1.md)**: Exports secret vault content.
 - **[Get-CachedCredential.ps1](Get-CachedCredential.ps1.md)**: Return a credential from secure storage, or prompt the user for it if not found.
+- &#x1F195; **[Get-SecretDetails.ps1](Get-SecretDetails.ps1.md)**: Returns secret info from the secret vaults, including metadata as properties.
 - **[Import-SecretVault.ps1](Import-SecretVault.ps1.md)**: Imports secrets into secret vaults.
 - **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1.md)**: Removes a credential from secure storage.
+- &#x1F199; **[Save-Secret.ps1](Save-Secret.ps1.md)**: Sets a secret in a secret vault with metadata.
 
 ### Data
 
@@ -66,7 +68,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Data formats
 
-- &#x1F199; **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1.md)**: Serializes complex content into PowerShell literals.
+- **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1.md)**: Serializes complex content into PowerShell literals.
 - **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1.md)**: Escape URLs more aggressively.
 - **[New-Jwt.ps1](New-Jwt.ps1.md)**: Generates a JSON Web Token (JWT)
 - **[Split-Uri.ps1](Split-Uri.ps1.md)**: Splits a URI into component parts.
@@ -152,7 +154,6 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-GitFirstCommit.ps1](Get-GitFirstCommit.ps1.md)**: Gets the SHA-1 hash of the first commit of the current repo.
 - **[Get-RepoName.ps1](Get-RepoName.ps1.md)**: Gets the name of the repo.
 - **[Rename-GitHubLocalBranch.ps1](Rename-GitHubLocalBranch.ps1.md)**: Rename a git repository branch.
-- **[Save-Secret.ps1](Save-Secret.ps1.md)**: Sets a secret in a secret vault with metadata.
 - **[Trace-GitRepoTest.ps1](Trace-GitRepoTest.ps1.md)**: Uses git bisect to search for the point in the repo history that the test script starts returning true.
 
 ### HTTP
@@ -314,7 +315,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1.md)**: Convert a number to a Roman numeral.
 - **[Copy-Html.ps1](Copy-Html.ps1.md)**: Copies objects as an HTML table.
 - **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
-- &#x1F199; **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
+- **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1.md)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Get-ADServiceAccountInfo.ps1](Get-ADServiceAccountInfo.ps1.md)**: Lists the Global Managed Service Accounts for the domain, including the computers they are bound to.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1.md)**: Parses ASP.NET errors from the event log on the given server.

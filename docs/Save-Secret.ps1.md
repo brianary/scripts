@@ -19,6 +19,13 @@ Save-Secret.ps1 [-Name] <String> [-Secret] <SecureString> [-Title <String>] [-De
  [<CommonParameters>]
 ```
 
+### Credential
+```
+Save-Secret.ps1 [-Name] <String> [-Credential] <PSCredential> [-Title <String>] [-Description <String>]
+ [-Note <String>] [-Uri <Uri>] [-Created <DateTime>] [-Expires <DateTime>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
+```
+
 ### Paste
 ```
 Save-Secret.ps1 [-Name] <String> [-Title <String>] [-Description <String>] [-Note <String>] [-Uri <Uri>]
@@ -75,6 +82,21 @@ Accept wildcard characters: False
 ```yaml
 Type: SecureString
 Parameter Sets: Secret
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Credential
+Specifies the value of the credential to store.
+
+```yaml
+Type: PSCredential
+Parameter Sets: Credential
 Aliases:
 
 Required: True
