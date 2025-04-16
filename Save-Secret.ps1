@@ -3,7 +3,7 @@
 Sets a secret in a secret vault with metadata.
 
 .FUNCTIONALITY
-Git and GitHub
+Credential
 
 .EXAMPLE
 Save-Secret.ps1 GitHubToken -Paste securestring -Title 'PowerShell token' -Description 'A GitHub classic token' -Url https://github.com/settings/tokens -Expires (Get-Date).AddDays(90)
@@ -18,6 +18,8 @@ Stores the token from the clipboard.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,
 # Specifies the value of the secret.
 [Parameter(ParameterSetName='Secret',Position=1,Mandatory=$true)][securestring] $Secret,
+# Specifies the value of the credential to store.
+[Parameter(ParameterSetName='Credential',Position=1,Mandatory=$true)][pscredential] $Credential,
 # Title metadata field.
 [string] $Title,
 # Description metadata field.
@@ -44,6 +46,7 @@ $value = switch($PSCmdlet.ParameterSetName)
     PasteForUser {New-Object pscredential $PasteForUser,($clipboard |ConvertTo-SecureString -AsPlainText -Force)}
     PasteTextBytes {$PasteTextBytes.GetBytes($clipboard)}
     Secret {$Secret}
+    Credential {$Credential}
     Paste 
     {
         switch($Paste)
