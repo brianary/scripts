@@ -123,6 +123,7 @@ Default is 32767
 [Parameter(ParameterSetName='Fail')]
 [switch] $Fail
 )
+
 function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Position=1)][string]$Path)
 {
 	Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |Select-Object -ExpandProperty Path |Find-NewestFile.ps1 |
@@ -130,6 +131,12 @@ function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Posit
 }
 if((Get-Command $Name -ErrorAction Ignore)) { Write-Verbose "$Name command found." ; return }
 if($Path -and (Test-Path $Path)) { Set-ResolvedAlias $Name $Path ; return }
+if((!$IsWindows) -and $IsLinux)
+{
+	if (Get-Command /usr/lib/command-not-found -Type Application) { /usr/lib/command-not-found $Name }
+	elseif (Get-Command apropos -Type Application) { apropos $Name }
+	Stop-ThrowError.ps1 "Command '$Name' not available!" -SearchContext $Name
+}
 
 switch($PSCmdlet.ParameterSetName)
 {
