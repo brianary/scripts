@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='311'>311 &#x2030;</meter> Scripts repo (222) &#x1F4C5; 605 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='308'>308 &#x2030;</meter> Scripts repo (224) &#x1F4C5; 605 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
 
@@ -144,8 +144,8 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='24'>24 &#x2030;</meter> G (41) &#x1F4C5; 490 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='24'>24 &#x2030;</meter> Get (41) &#x1F4C5; 490 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='24'>24 &#x2030;</meter> G (42) &#x1F4C5; 490 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='24'>24 &#x2030;</meter> Get (42) &#x1F4C5; 490 days</summary>
 
 - &#x2716;&#xFE0F; Get-ADServiceAccountInfo.ps1
 - &#x2716;&#xFE0F; Get-ADUserStatus.ps1
@@ -176,6 +176,7 @@ Script Tests
 - &#x2716;&#xFE0F; Get-RepoName.ps1
 - &#x2716;&#xFE0F; Get-SecretDetails.ps1
 - &#x2716;&#xFE0F; Get-ServerCertificate.ps1
+- &#x2716;&#xFE0F; Get-SimpleSchTasks.ps1
 - &#x2716;&#xFE0F; Get-SslDetails.ps1
 - &#x2716;&#xFE0F; Get-SystemDetails.ps1
 - &#x2716;&#xFE0F; Get-Todos.ps1
@@ -320,7 +321,7 @@ Script Tests
 - &#x2716;&#xFE0F; Restore-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='91'>91 &#x2030;</meter> S (22) &#x1F4C5; 48 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='87'>87 &#x2030;</meter> S (23) &#x1F4C5; 48 days</summary>
 <ul><li><details><summary>not started Save (3) </summary>
 
 - &#x2716;&#xFE0F; Save-PodcastEpisodes.ps1
@@ -328,10 +329,11 @@ Script Tests
 - &#x2716;&#xFE0F; Save-WebRequest.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Select (2) &#x1F4C5; 48 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='667'>667 &#x2030;</meter> Select (3) &#x1F4C5; 48 days</summary>
 
 - &#x2714;&#xFE0F; Select-CapturesFromMatches.ps1
 - &#x2714;&#xFE0F; Select-Json.ps1
+- &#x2716;&#xFE0F; Select-ScriptCommands.ps1
 
 </details></li>
 <li><details><summary>not started Send (4) </summary>
