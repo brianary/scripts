@@ -33,14 +33,15 @@ foreach($task in $tasks)
     $info = Get-ScheduledTaskInfo -TaskName $task.TaskName
     [pscustomobject]@{
         TaskName       = $task.TaskName
-        Enabled        = $task.Triggers.Enabled -and $task.Settings.Enabled
+        Enabled        = $task.Triggers -and $task.Triggers.Enabled -and `
+            $task.Settings -and $task.Settings.Enabled
         User           = $task.Principal.UserId
         LastRunTime    = $info.LastRunTime
         ListTaskResult = $info.LastTaskResult
         Run            = '{0}> {1} {2}' -f (($task.Actions.WorkingDirectory ?? "%SystemRoot%\system32"),
             ($task.Actions.Execute -replace '\A([^"].*\s.*)\z','"$1"'),
             $task.Actions.Arguments |ForEach-Object {[Environment]::ExpandEnvironmentVariables($_)})
-        Schedule       = switch($task.Triggers.CimClass.CimClassName)
+        Schedule       = switch($task.{Triggers}?.{CimClass}?.CimClassName)
         {
             MSFT_TaskTimeTrigger {'R/{0:yyyy-MM-ddTHH:mm:ss}/{1}' -f $task.Triggers.StartBoundary,$task.Triggers.Repetition.Interval}
             default {$_}
