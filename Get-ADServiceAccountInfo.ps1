@@ -19,7 +19,9 @@ serivce3 SERVERC       2023-08-25 17:19:49 Third MSA   {}
 Get-ADServiceAccount -Filter $Filter -Properties Description,LastLogonDate,HostComputers |
 	ForEach-Object {[pscustomobject]@{
 		Name          = $_.Name
-		HostComputers = $_.HostComputers -replace '\ACN=','' -split ',',2 |Select-Object -First 1
+		HostComputers = $_.HostComputers |
+			ForEach-Object {Get-ADComputer $_} |
+			Select-Object -ExpandProperty Name
 		LastLogonDate = $_.LastLogonDate
 		Description   = $_.Description
 		Account       = $_
