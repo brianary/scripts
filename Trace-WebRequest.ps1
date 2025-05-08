@@ -21,99 +21,19 @@ Write-Info.ps1
 Import-Variables.ps1
 
 .EXAMPLE
-Trace-WebRequest.ps1 g.co/p3phelp -SkipContent
+Trace-WebRequest.ps1 g.co/p3phelp -SkipHeaders -SkipContent
 
-📤️ GET g.co/p3phelp
-
-📥️ HTTP/1.1 301 MovedPermanently
-Cache-Control: no-store, must-revalidate, no-cache, max-age=0
-Pragma: no-cache
-Date: Thu, 26 Dec 2024 21:08:21 GMT
-Location: https://g.co/p3phelp
-Server: ESF
-X-XSS-Protection: 0
-X-Frame-Options: SAMEORIGIN
-X-Content-Type-Options: nosniff
-Content-Type: application/binary
-Expires: Mon, 01 Jan 1990 00:00:00 GMT
-Content-Length: 0
-ℹ️ Following redirect to https://g.co/p3phelp
-📤️ GET https://g.co/p3phelp
-
-📥️ HTTP/1.1 302 Found
-Vary: Sec-Fetch-Dest
-Vary: Sec-Fetch-Mode
-Vary: Sec-Fetch-Site
-Cache-Control: no-store, must-revalidate, no-cache, max-age=0
-Pragma: no-cache
-Date: Thu, 26 Dec 2024 21:08:22 GMT
-Location: https://support.google.com/accounts/answer/151657?hl=en
-Strict-Transport-Security: max-age=31536000
-Cross-Origin-Opener-Policy: unsafe-none
-Cross-Origin-Resource-Policy: same-site
-Server: ESF
-X-XSS-Protection: 0
-X-Frame-Options: SAMEORIGIN
-X-Content-Type-Options: nosniff
-Alt-Svc: h3=":443"; ma=2592000
-Alt-Svc: h3-29=":443"; ma=2592000
-Content-Type: application/binary
-Expires: Mon, 01 Jan 1990 00:00:00 GMT
-Content-Length: 0
-ℹ️ Following redirect to https://support.google.com/accounts/answer/151657?hl=en
-📤️ GET https://support.google.com/accounts/answer/151657?hl=en
-
-📥️ HTTP/1.1 301 MovedPermanently
-Location: https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638708441023370154-2201542783&rd=1
-X-Robots-Tag: follow,index
-Date: Thu, 26 Dec 2024 21:08:22 GMT
-Cache-Control: max-age=0, private
-X-Content-Type-Options: nosniff
-Server: support-content-ui
-X-XSS-Protection: 0
-X-Frame-Options: SAMEORIGIN
-Alt-Svc: h3=":443"; ma=2592000
-Alt-Svc: h3-29=":443"; ma=2592000
-Expires: Thu, 26 Dec 2024 21:08:22 GMT
-Content-Type: text/html; charset=UTF-8
-Content-Length: 304
-ℹ️ Following redirect to https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638708441023370154-2201542783&rd=1
-📤️ GET https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638708441023370154-2201542783&rd=1
-
-📥️ HTTP/1.1 301 MovedPermanently
-Location: https://support.google.com/accounts/?hl=en&visit_id=638708441023370154-2201542783&rd=2&topic=3382252
-X-Robots-Tag: follow,noindex
-Date: Thu, 26 Dec 2024 21:08:22 GMT
-Cache-Control: max-age=0, private
-X-Content-Type-Options: nosniff
-Server: support-content-ui
-X-XSS-Protection: 0
-X-Frame-Options: SAMEORIGIN
-Alt-Svc: h3=":443"; ma=2592000
-Alt-Svc: h3-29=":443"; ma=2592000
-Expires: Thu, 26 Dec 2024 21:08:22 GMT
-Content-Type: text/html; charset=UTF-8
-Content-Length: 309
-ℹ️ Following redirect to https://support.google.com/accounts/?hl=en&visit_id=638708441023370154-2201542783&rd=2&topic=3382252
-📤️ GET https://support.google.com/accounts/?hl=en&visit_id=638708441023370154-2201542783&rd=2&topic=3382252
-
-📥️ HTTP/1.1 200 OK
-P3P: CP="This is not a P3P policy! See g.co/p3phelp for more info."
-P3P: CP="This is not a P3P policy! See g.co/p3phelp for more info."
-P3P: CP="This is not a P3P policy! See g.co/p3phelp for more info."
-Strict-Transport-Security: max-age=31536000; includeSubdomains
-Date: Thu, 26 Dec 2024 21:08:23 GMT
-Cache-Control: max-age=0, private
-Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-69sNhX1vigTzFtuMUufk' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic' https: http: 'report-sample';report-uri https://csp.withgoogle.com/csp/scfe
-X-Content-Type-Options: nosniff
-Server: support-content-ui
-X-XSS-Protection: 0
-X-Frame-Options: SAMEORIGIN
-Alt-Svc: h3=":443"; ma=2592000
-Alt-Svc: h3-29=":443"; ma=2592000
-Transfer-Encoding: chunked
-Content-Type: text/html; charset=UTF-8
-Expires: Thu, 26 Dec 2024 21:08:23 GMT
+GET https://g.co/p3phelp
+HTTP/1.1 302 Found                                                                                                   
+Following redirect to https://support.google.com/accounts/answer/151657?hl=en
+GET https://support.google.com/accounts/answer/151657?hl=en
+HTTP/1.1 301 MovedPermanently                                                                                        
+Following redirect to https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638822697229889622-2656653887&rd=1
+GET https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638822697229889622-2656653887&rd=1
+HTTP/1.1 301 MovedPermanently                                                                                        
+Following redirect to https://support.google.com/accounts/?hl=en&visit_id=638822697229889622-2656653887&rd=2&topic=3382252
+GET https://support.google.com/accounts/?hl=en&visit_id=638822697229889622-2656653887&rd=2&topic=3382252
+HTTP/1.1 200 OK
 #>
 
 using namespace System.Net.Http
@@ -126,6 +46,8 @@ using namespace System.Net.Http
 [HttpMethod] $Method = 'GET',
 # A file to log the request to.
 [string] $LogFile,
+# Indicates headers shouldn't be output.
+[switch] $SkipHeaders,
 # Indicates content shouldn't be output.
 [switch] $SkipContent
 )
@@ -162,7 +84,7 @@ Begin
         Write-Verbose $requestLine
         Write-Verbose $requestRawHeaders
         Write-Info.ps1 "$outbox_tray $requestLine" -fg DarkGreen
-        Write-Info.ps1 $requestRawHeaders -fg DarkGray
+        #Write-Info.ps1 $requestRawHeaders -fg DarkGray
         if($LogFile)
         {@"
 ###
@@ -189,7 +111,7 @@ $requestRawHeaders
         Write-Verbose $statusLine
         Write-Verbose $rawHeaders
         Write-Info.ps1 "$inbox_tray $statusLine" -fg (Get-HttpStatusColor $StatusCode)
-        Write-Info.ps1 $rawHeaders -fg Gray
+        if(!$SkipHeaders) {Write-Info.ps1 $rawHeaders -fg Gray}
         if(!$SkipContent -and $Content) {Write-Info.ps1 $Content -fg White}
         if($LogFile)
         {@"
@@ -200,7 +122,7 @@ $RawContent
         }
         if([int]::DivRem($StatusCode, 100).Item1 -eq 3)
         {
-            foreach($location in $Headers.Location)
+            foreach($location in $Headers.Location |ForEach-Object {New-Object Uri $Uri,$_})
             {
                 Write-Info.ps1 "$information_source Following redirect to $location" -fg DarkBlue
                 Trace-Uri $location
@@ -210,5 +132,9 @@ $RawContent
 }
 Process
 {
+    if(!$Uri.IsAbsoluteUri -and [uri]::IsWellFormedUriString("https://$Uri", 'Absolute'))
+    {
+        [uri] $Uri = "https://$Uri"
+    }
     Trace-Uri -Uri $Uri -Method $Method
 }
