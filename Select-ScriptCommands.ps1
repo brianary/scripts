@@ -33,7 +33,9 @@ Filter       Get-ScriptCommands
 #Requires -Version 7
 [CmdletBinding()][OutputType([System.Management.Automation.CommandInfo])] Param(
 # A script file path (wildcards are accepted).
-[Parameter(Position=0,ValueFromPipeline=$true)][string] $Path
+[Parameter(Position=0,ValueFromPipeline=$true)][string] $Path,
+# Specifies the types of commands that this cmdlet gets.
+[Management.Automation.CommandTypes] $CommandType
 )
 Begin
 {
@@ -46,10 +48,11 @@ Begin
         )
         [Management.Automation.Language.Parser]::ParseFile($Path,
             [ref]$Script:tokens, [ref]$Script:parseErrors) |Out-Null
-        $Script:tokens |
+        $commands = $Script:tokens |
             Where-Object TokenFlags -eq 'CommandName' |
             Select-Object -Unique -ExpandProperty Value |
-            Get-Command
+            Get-Command -ErrorAction Ignore
+        return !$CommandType ? $commands : ($commands |Where-Object CommandType -eq $CommandType)
     }
 }
 Process
