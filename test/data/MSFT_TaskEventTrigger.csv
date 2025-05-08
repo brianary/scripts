@@ -1,0 +1,86 @@
+"TaskName","TaskPath","Subscription"
+"Office Performance Monitor","\Microsoft\Office\","<QueryList><Query Id=""0"" Path=""Application""><Select Path=""Application"">*[System[Provider[@Name='Microsoft Office 16'] and EventID=2050]]</Select></Query></QueryList>"
+"UserTask","\Microsoft\Windows\CertificateServicesClient\","<QueryList><Query Id=""0"" Path=""Microsoft-Windows-User Device Registration/Admin""><Select Path=""Microsoft-Windows-User Device Registration/Admin"">*[System[Provider[@Name='Microsoft-Windows-User Device Registration'] and EventID=300]]</Select></Query></QueryList>"
+"Passport for Work alert created by enrollment client","\Microsoft\Windows\EnterpriseMgmt\1BE350B7-D8CB-4FC9-A65A-B29E589393A3\","<QueryList><Query Id=""0"" Path=""Microsoft-Windows-User Device Registration/Admin""><Select Path=""Microsoft-Windows-User Device Registration/Admin"">*[System[Provider[@Name='Microsoft-Windows-User Device Registration'] and EventID=300]]</Select></Query></QueryList>"
+"Passport for Work alert created by enrollment client","\Microsoft\Windows\EnterpriseMgmt\E149441E-1BC2-4F0B-B875-01E14FD52638\","<QueryList><Query Id=""0"" Path=""Microsoft-Windows-User Device Registration/Admin""><Select Path=""Microsoft-Windows-User Device Registration/Admin"">*[System[Provider[@Name='Microsoft-Windows-User Device Registration'] and EventID=300]]</Select></Query></QueryList>"
+"ProcessMemoryDiagnosticEvents","\Microsoft\Windows\MemoryDiagnostic\","<QueryList><Query Id=""0"" Path=""System""><Select Path=""System"">*[System[Provider[@Name='Microsoft-Windows-WER-SystemErrorReporting'] and (EventID=1000 or EventID=1001 or EventID=1006)]]</Select></Query></QueryList>"
+"ProcessMemoryDiagnosticEvents","\Microsoft\Windows\MemoryDiagnostic\","<QueryList><Query Id=""0"" Path=""Application""><Select Path=""Application"">*[System[Provider[@Name='Application Error'] and EventID=1000]]</Select></Query></QueryList>"
+"ProcessMemoryDiagnosticEvents","\Microsoft\Windows\MemoryDiagnostic\","<QueryList><Query Id=""0"" Path=""System""><Select Path=""System"">*[System[Provider[@Name='Application Popup'] and EventID=1801]]</Select></Query></QueryList>"
+"ProcessMemoryDiagnosticEvents","\Microsoft\Windows\MemoryDiagnostic\","<QueryList><Query Id=""0"" Path=""Microsoft-Windows-Kernel-StoreMgr/Operational""><Select Path=""Microsoft-Windows-Kernel-StoreMgr/Operational"">*[System[Provider[@Name='Microsoft-Windows-Kernel-StoreMgr'] and EventID=6]]</Select></Query></QueryList>"
+"MNO Metadata Parser","\Microsoft\Windows\Mobile Broadband Accounts\","<QueryList>
+            <Query Id='1'>
+            <Select Path='Microsoft-Windows-DeviceSetupManager/Operational'>*[System/EventID=302] and *[EventData/Data[@Name='Prop_ServiceInfoNamespace']='http://schemas.microsoft.com/windows/2010/12/DeviceMetadata/MobileBroadBandInfo']</Select>
+            </Query>
+            </QueryList>"
+"MobilityManager","\Microsoft\Windows\Ras\","<QueryList>
+
+
+
+
+
+
+
+              <Query
+
+
+
+
+
+
+
+                  Id=""0""
+
+
+
+
+
+
+
+                  Path=""Application""
+
+
+
+
+
+
+
+                  >
+
+
+
+
+
+
+
+                <Select Path=""Application"">*[System[Provider[@Name='RasClient'] and (Level=4 or Level=0) and (EventID=20281)]]</Select>
+
+
+
+
+
+
+
+              </Query>
+
+
+
+
+
+
+
+            </QueryList>"
+"RemoteAssistanceTask","\Microsoft\Windows\RemoteAssistance\","<QueryList><Query Id=""0"" Path=""System""><Select Path=""System"">*[System[Provider[@Name='Microsoft-Windows-GroupPolicy'] and EventID=1502]]</Select></Query></QueryList>"
+"SvcRestartTaskNetwork","\Microsoft\Windows\SoftwareProtectionPlatform\","<QueryList><Query Id=""0"" Path=""Microsoft-Windows-NetworkProfile/Operational""><Select Path=""Microsoft-Windows-NetworkProfile/Operational"">*[System[EventID=10000]]</Select></Query></QueryList>"
+"EnableLicenseAcquisition","\Microsoft\Windows\Subscription\","<QueryList><Query Id=""0"" Path=""Microsoft-Windows-User Device Registration/Admin""><Select Path=""Microsoft-Windows-User Device Registration/Admin"">*[System[Provider[@Name='Microsoft-Windows-User Device Registration'] and EventID=105]]</Select></Query></QueryList>"
+"EnableLicenseAcquisition","\Microsoft\Windows\Subscription\","<QueryList><Query Id=""0"" Path=""Application""><Select Path=""Application"">*[System[Provider[@Name='Microsoft-Windows-Security-SPP'] and EventID=1061]]</Select></Query></QueryList>"
+"Schedule Scan Static Task","\Microsoft\Windows\UpdateOrchestrator\","<QueryList><Query Id=""0"" Path=""System""><Select Path=""System"">*[System[EventID=8202]]</Select></Query></QueryList>"
+"BfeOnServiceStartTypeChange","\Microsoft\Windows\Windows Filtering Platform\","<QueryList><Query Id=""0"" Path=""System""><Select Path=""System"">*/System/Provider[@Name='Service Control Manager'] and */System/EventID='7040' and */EventData/Data[@Name='param4']='BFE'</Select></Query></QueryList>"
+"UpdateLibrary","\Microsoft\Windows\Windows Media Sharing\","<QueryList>
+              <Query
+                  Id=""0""
+                  Path=""System""
+                  >
+                <Select Path=""System"">*[System[Provider[@Name='Microsoft-Windows-WMPNSS-Service'] and (EventID=14210)]]</Select>
+              </Query>
+            </QueryList>"
+"Automatic-Device-Join","\Microsoft\Windows\Workplace Join\","<QueryList><Query Id=""0"" Path=""Microsoft-Windows-User Device Registration/Admin""><Select Path=""Microsoft-Windows-User Device Registration/Admin"">*[System[Provider[@Name='Microsoft-Windows-User Device Registration'] and EventID=4096]]</Select></Query></QueryList>"
