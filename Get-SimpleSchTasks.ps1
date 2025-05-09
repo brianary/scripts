@@ -69,7 +69,35 @@ Begin
 		if($DaysOfWeek -band 0b100000) {[dayofweek]::Friday}
 		if($DaysOfWeek -band 0b1000000) {[dayofweek]::Saturday}
 	}
-	filter Get-StateChange
+	function Get-NextWeekday
+	{
+		[CmdletBinding()] Param(
+		[Parameter(Position=0,Mandatory=$true)][datetime] $FromDateTime,
+		[Parameter(Position=1,Mandatory=$true)][dayofweek] $DayOfWeek
+		)
+		$dow = $FromDateTime.DayOfWeek
+		return $FromDateTime.AddDays(($dow - $DayOfWeek) + ($dow -gt $DayOfWeek ? 0 : 7))
+	}
+	filter Get-Weekly
+	{
+		[CmdletBinding()] Param(
+		[Parameter(ValueFromPipelineByPropertyName=$true)][string] $StartBoundary,
+		[Parameter(ValueFromPipelineByPropertyName=$true)][ushort] $DaysOfWeek,
+		[Parameter(ValueFromPipelineByPropertyName=$true)][ushort] $WeeksInterval
+		)
+		Get-Weekdays $DaysOfWeek |
+			ForEach-Object {'R/{0:yyyy-MM-ddTHH:mm:ss}/P{1}W' -f (Get-NextWeekday $StartBoundary $_),$WeeksInterval}
+	}
+	filter Get-Timing
+	{
+		[CmdletBinding()] Param(
+		[Parameter(ValueFromPipelineByPropertyName=$true)][string] $StartBoundary,
+		[Parameter(ValueFromPipelineByPropertyName=$true)][Microsoft.Management.Infrastructure.CimInstance] $Repetition
+		)
+		if(!$Repetition.Interval) {$StartBoundary}
+		else {'R/{0:yyyy-MM-ddTHH:mm:ss}/{1}' -f $StartBoundary,$Repetition.Interval}
+	}
+filter Get-StateChange
 	{
 		[CmdletBinding()] Param(
 		[Parameter(ValueFromPipelineByPropertyName=$true)][string] $UserId,
@@ -78,12 +106,32 @@ Begin
 		$username = "$($UserId ? $UserId : 'any user')"
 		switch($StateChange)
 		{
+			1 {"On local connection to user session of $username"}
+			2 {"On local disconnect to user session of $username"}
 			3 {"On remote connection to user session of $username"}
 			4 {"On remote disconnect from user session of $username"}
 			7 {"On workstation lock of $username"}
 			8 {"On workstation unlock of $username"}
 			default {"On state change #$_ of $username"}
 		}
+	}
+	filter Format-EventQuery
+	{
+		[CmdletBinding()] Param(
+		[Parameter(ValueFromPipelineByPropertyName=$true)][string] $Path,
+		[Parameter(ValueFromPipelineByPropertyName=$true)][string] $InnerText
+		)
+		return "On event - Log: $Path, Source: $InnerText"
+	}
+	filter Get-EventQuery
+	{
+		[CmdletBinding()] Param(
+		[Parameter(ValueFromPipelineByPropertyName=$true)][xml] $Subscription
+		)
+		if(!$Subscription) {return}
+		Select-Xml -Xml $Subscription -XPath "/QueryList/Query/Select" |
+			Select-Object -ExpandProperty Node |
+			Format-EventQuery
 	}
 	filter Get-Schedule
 	{
@@ -93,29 +141,16 @@ Begin
 		if(!$Trigger -or !$Trigger.Enabled) {return}
 		switch($Trigger.CimClass.CimClassName)
 		{
-			MSFT_TaskTimeTrigger
-			{
-				if(!$Trigger.Repetition.Interval) {$Trigger.StartBoundary}
-				else {'R/{0:yyyy-MM-ddTHH:mm:ss}/{1}' -f $Trigger.StartBoundary,$Trigger.Repetition.Interval}
-			}
-			MSFT_TaskWeeklyTrigger
-			{
-				$start = Get-Date $Trigger.StartBoundary
-				foreach($day in Get-Weekdays $Trigger.DaysOfWeek)
-				{
-					'R/{0:yyyy-MM-ddTHH:mm:ss}/P{1}W' -f `
-						$start.AddDays(($start.DayOfWeek - $day) + ($start.DayOfWeek -ge $day ? 0 : 7)),
-						$Trigger.WeeksInterval
-				}
-			}
+			MSFT_TaskWeeklyTrigger {$Trigger |Get-Weekly}
+			MSFT_TaskTimeTrigger {$Trigger |Get-Timing}
 			MSFT_TaskDailyTrigger {'R/{0:yyyy-MM-ddTHH:mm:ss}/P1D' -f $Trigger.StartBoundary}
 			MSFT_TaskLogonTrigger {"At log on of $($Trigger.UserId ?? 'any user')"}
 			MSFT_TaskBootTrigger {'At startup'}
 			MSFT_TaskIdleTrigger {'On idle'}
-			MSFT_TaskTrigger {'At task creation/modification'}
-			MSFT_TaskSessionStateChangeTrigger {$Trigger |Get-Member -Type Properties |Write-Debug; $Trigger |Get-StateChange}
+			MSFT_TaskSessionStateChangeTrigger {$Trigger |Get-StateChange}
 			MSFT_TaskRegistrationTrigger {'When the task is created or modified'}
-			# MSFT_TaskEventTrigger {$Trigger.Subscription; "On event - Log: $log, Source: $source, Event ID: $eventid"}
+			MSFT_TaskEventTrigger {$Trigger |Get-EventQuery}
+			MSFT_TaskTrigger {'Monthly or task setting or custom (ambiguous)'}
 			default {$Trigger |Get-Member -Type Properties |Write-Debug; $_}
 		}
 	}
