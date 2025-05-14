@@ -13,6 +13,8 @@ Stores the token from the clipboard.
 
 #Requires -Version 7
 #Requires -Modules Microsoft.PowerShell.SecretManagement,Microsoft.PowerShell.SecretStore
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
+Justification='The data source is plaintext. SecureString benefits may be in dispute: <https://github.com/dotnet/platform-compat/blob/master/docs/DE0001.md>')]
 [CmdletBinding()] Param(
 # Specifies the name of the secret to add metadata to. Wildcard characters (`*`) are not permitted.
 [Parameter(Position=0,Mandatory=$true)][string] $Name,

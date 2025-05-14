@@ -47,6 +47,8 @@ LocalSMOVersion      : 17.100.0.0
 
 #Requires -Version 3
 #Requires -Modules dbatools
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
+Justification='The data source is plaintext. SecureString benefits may be in dispute: <https://github.com/dotnet/platform-compat/blob/master/docs/DE0001.md>')]
 [CmdletBinding()][OutputType([psobject])] Param(
 [Parameter(Position=0,Mandatory=$true)][string] $ConnectionString,
 [switch] $Details

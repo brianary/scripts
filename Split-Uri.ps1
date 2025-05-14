@@ -65,6 +65,8 @@ two   second
 [OutputType([hashtable],ParameterSetName='QueryAsDictionary')]
 [OutputType([string],ParameterSetName='Scheme')]
 [OutputType([string],ParameterSetName='Segment')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText','',
+Justification='The data source is plaintext. SecureString benefits may be in dispute: <https://github.com/dotnet/platform-compat/blob/master/docs/DE0001.md>')]
 [CmdletBinding()] Param(
 # Specifies the URI to split.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
