@@ -69,7 +69,7 @@ Justification='This value has to be converted to text to be sent in a text body.
 # Return articles newer than this time.
 [Parameter(Position=1,Mandatory=$true)][datetime] $After,
 # Return articles older than this time.
-[Parameter(Position=2,Mandatory=$true)][datetime] $Before,
+[Parameter(Position=2)][datetime] $Before = (Get-Date),
 # Return articles containing this search term.
 [Parameter(Position=3)][string] $Search,
 # Return articles from this domain.
@@ -148,6 +148,7 @@ $articles = @{
 	search       = ($Search ? $Search : $null)
 	domain       = ($Domain ? $Domain : $null)
 	since        = ConvertTo-EpochTime.ps1 $After
+	count        = '1000'
 } |
 	Remove-NullValues.ps1 |
 	ConvertTo-Json -Compress |
