@@ -159,10 +159,11 @@ filter Get-StateChange
 		[CmdletBinding()] Param(
 		[Parameter(ValueFromPipeline=$true)][Microsoft.Management.Infrastructure.CimInstance] $Task
 		)
-        $info = Get-ScheduledTaskInfo -TaskName $Task.TaskName -TaskPath $task.TaskPath
+		$info = Get-ScheduledTaskInfo -TaskName $Task.TaskName -TaskPath $task.TaskPath
 		return [pscustomobject]@{
 			TaskName       = $Task.TaskName
-            Enabled        = $Task.{Settings}?.Enabled
+			Enabled        = $Task.{Settings}?.Enabled
+			State          = $Task.State
 			User           = $Task.Principal.UserId
 			LastRunTime    = $info.LastRunTime
 			LastTaskResult = $info.LastTaskResult
