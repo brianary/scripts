@@ -79,9 +79,10 @@ Process
 	$filename = Get-FileName $Uri
 	if($OutDirectory) {$filename = Join-Path $OutDirectory $filename}
 	$response = Invoke-WebRequest $Uri -OutFile $filename -PassThru
+	Write-Info.ps1 "Saved to '$filename'" -fg Green
 	if($PSBoundParameters.ContainsKey('CreationTime')) {(Get-Item $filename).CreationTime = $CreationTime}
 	if($PSBoundParameters.ContainsKey('LastWriteTime')) {(Get-Item $filename).LastWriteTime = $LastWriteTime}
-	elseif($response.Headers['Last-Modified'].Count -gt 0)
+	elseif($response.Headers['Last-Modified'] -is [string[]] -and $response.Headers['Last-Modified'].Count -gt 0)
 	{
 		(Get-Item $filename).LastWriteTime = [datetimeoffset]::Parse(($response.Headers['Last-Modified'][0])).LocalDateTime
 	}
