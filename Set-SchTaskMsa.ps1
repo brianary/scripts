@@ -30,5 +30,8 @@ Sets the tasks running user to the "automation" managed service account.
 [Parameter(Position=1,Mandatory=$true)][Alias('MSA','gMSA','UserId')][string] $ServiceAccount,
 [switch] $HighestRunLevel
 )
-Set-ScheduledTask -TaskName $TaskName -Principal (New-ScheduledTaskPrincipal -UserID $ServiceAccount `
-    -LogonType Password -RunLevel:($HighestRunLevel ? 'Highest' : 'Normal'))
+Process
+{
+    Set-ScheduledTask -TaskName $TaskName -Principal (New-ScheduledTaskPrincipal -UserID $ServiceAccount `
+        -LogonType Password -RunLevel:($HighestRunLevel ? 'Highest' : 'Normal'))
+}
