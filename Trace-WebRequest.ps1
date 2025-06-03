@@ -23,16 +23,20 @@ Import-Variables.ps1
 .EXAMPLE
 Trace-WebRequest.ps1 g.co/p3phelp -SkipHeaders -SkipContent
 
+g.co is CN=*.google.com from CN=WR2, O=Google Trust Services, C=US
+Valid 05/12/2025 01:42:58 to 08/04/2025 01:42:57
 GET https://g.co/p3phelp
-HTTP/1.1 302 Found                                                                                                   
+HTTP/1.1 302 Found
 Following redirect to https://support.google.com/accounts/answer/151657?hl=en
+support.google.com is CN=*.google.com from CN=WR2, O=Google Trust Services, C=US
+Valid 05/12/2025 01:42:58 to 08/04/2025 01:42:57
 GET https://support.google.com/accounts/answer/151657?hl=en
-HTTP/1.1 301 MovedPermanently                                                                                        
-Following redirect to https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638822697229889622-2656653887&rd=1
-GET https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638822697229889622-2656653887&rd=1
-HTTP/1.1 301 MovedPermanently                                                                                        
-Following redirect to https://support.google.com/accounts/?hl=en&visit_id=638822697229889622-2656653887&rd=2&topic=3382252
-GET https://support.google.com/accounts/?hl=en&visit_id=638822697229889622-2656653887&rd=2&topic=3382252
+HTTP/1.1 301 MovedPermanently
+Following redirect to https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638845176026805186-2907418293&rd=1
+GET https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638845176026805186-2907418293&rd=1
+HTTP/1.1 301 MovedPermanently
+Following redirect to https://support.google.com/accounts/?hl=en&visit_id=638845176026805186-2907418293&rd=2&topic=3382252
+GET https://support.google.com/accounts/?hl=en&visit_id=638845176026805186-2907418293&rd=2&topic=3382252
 HTTP/1.1 200 OK
 #>
 
@@ -53,7 +57,8 @@ using namespace System.Net.Http
 )
 Begin
 {
-    Import-CharConstants.ps1 :outbox_tray: :inbox_tray: :information_source: -AsEmoji
+    $certhost = @{}
+    Import-CharConstants.ps1 :lock: :outbox_tray: :inbox_tray: :information_source: 'timer clock' -AsEmoji
 
     filter Get-HttpStatusColor
     {
@@ -79,6 +84,13 @@ Begin
         # The HTTP method verb to use.
         [HttpMethod] $Method = 'GET'
         )
+        if(!$certhost.Contains($Uri.Host))
+        {
+            $certinfo = Get-ServerCertificate.ps1 $Uri.Host
+            $certhost[$Uri.Host] = $certinfo
+            Write-Info.ps1 "$lock $($Uri.Host) is $($certinfo.Subject) from $($certinfo.Issuer)" -fg Magenta
+            Write-Info.ps1 "${timer clock} Valid $($certinfo.Issued) to $($certinfo.Expires)" -fg DarkMagenta
+        }
         $request = New-Object Net.Http.HttpRequestMessage -ArgumentList $Method, $Uri
         $requestLine, $requestRawHeaders = "$Method $Uri", ($request.Headers.ToString())
         Write-Verbose $requestLine
