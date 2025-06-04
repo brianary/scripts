@@ -169,6 +169,7 @@ filter Get-StateChange
 			LastTaskResult = $info.LastTaskResult
 			Run            = $Task.Actions |Get-Run
 			Schedule       = $Task.Triggers |Get-Schedule
+			ComputerName   = $env:COMPUTERNAME
 		}
 	}
 }
