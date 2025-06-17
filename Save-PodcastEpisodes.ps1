@@ -39,13 +39,18 @@ Process
 	if($PSBoundParameters.ContainsKey('Before')) {[object[]] $episodes = $episodes |Where-Object published -lt $Before}
 	if($PSBoundParameters.ContainsKey('First')) {[object[]] $episodes = $episodes |Sort-Object published |Select-Object -First $First}
 	if($PSBoundParameters.ContainsKey('Last')) {[object[]] $episodes = $episodes |Sort-Object published |Select-Object -Last $Last}
-	if($CreateFolder) {New-Item ($channel.title |ConvertTo-FileName.ps1) -ItemType Directory |Push-Location}
+	if($CreateFolder) {New-Item ($channel.title |ConvertTo-FileName.ps1) -ItemType Directory -EA Ignore |Push-Location}
 	$i,$max = 0,($episodes.Count/100)
 	foreach($episode in $episodes)
 	{
 		$episode |Format-List |Out-String |Write-Verbose
 		$title = $episode.title |Select-Object -First 1
-		Write-Progress $activity $title -curr $episode.enclosure.url -percent ($i++/$max)
+		Write-Progress $activity $title -curr $episode.pubDate -percent ($i++/$max)
+		if(!$episode.PSObject.Properties.Match('enclosure').Count)
+		{
+			Write-Warning "No enclosure found for '$title', $($episode.pubDate)"
+			continue
+		}
 		if($UseTitle)
 		{
 			$filename = if($episode.PSObject.Properties.Match('episode')) {$episode.episode + ' '} else {''}
