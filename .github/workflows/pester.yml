@@ -1,5 +1,9 @@
 name: Pester tests
-on: push
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 jobs:
   test:
     name: Run Pester tests
