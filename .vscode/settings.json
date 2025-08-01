@@ -23,5 +23,10 @@
   ],
   "[markdown]": {
     "editor.defaultFormatter": "darkriszty.markdown-table-prettify"
+  },
+  "rest-client.environmentVariables": {
+    "production": {
+      "instapaper-api-base": "https://www.instapaper.com/api"
+    }
   }
 }
