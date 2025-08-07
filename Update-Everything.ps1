@@ -93,36 +93,45 @@ Justification='Some of these functions may deal with multiple updates.')]
 [ValidateSet('Chocolatey','DellCommand','Dotnet','Essential','GitHubCli','Npm','ScriptsData',
 	'PSHelp','PSModule','Scoop','VSCodeExtenions','WindowsUpdate','WindowsStore','WinGet')]
 [Parameter(Position=0,ValueFromRemainingArguments=$true)][string[]] $Steps =
-	@('Essential','WindowsStore','Scoop','Chocolatey','WinGet','Npm','Dotnet','GitHubCli',
-		'VSCodeExtensions','ScriptsData','PSModule','PSHelp','DellCommand','WindowsUpdate')
+	@('Essential','WindowsStore','PSModule','Scoop','Chocolatey','WinGet','Npm','Dotnet',
+		'GitHubCli','VSCodeExtensions','ScriptsData','PSHelp','DellCommand','WindowsUpdate')
 )
 Begin
 {
+	$Script:IsNotAdministrator = !(Test-Administrator.ps1)
 	Import-CharConstants.ps1 ':UP:' -Scope Script
 
-	function Test-EmptyDesktop([switch] $Shared)
+	function Test-EmptyDesktop
 	{
-		if($Shared -and !(Test-Administrator.ps1)) {return $false}
+		[CmdletBinding()][OutputType([bool])] Param(
+		[switch] $Shared
+		)
+		if($Shared -and $Script:IsNotAdministrator) {return $false}
 		$dir = [environment]::GetFolderPath(($Shared ? 'CommonDesktopDirectory' : 'Desktop' ))
 		return !(Join-Path $dir *.lnk |Get-Item)
 	}
 
-	function Clear-Desktop([switch] $Shared)
+	function Clear-Desktop
 	{
-		if($Shared -and !(Test-Administrator.ps1)) {return}
+		[CmdletBinding()] Param(
+		[switch] $Shared
+		)
+		if($Shared -and $Script:IsNotAdministrator) {return}
 		$dir = [environment]::GetFolderPath(($Shared ? 'CommonDesktopDirectory' : 'Desktop' ))
 		Remove-Item (Join-Path $dir *.lnk)
 	}
 
-	Set-Variable 'UP!' "$([char]0xD83C)$([char]0xDD99)" -Option Constant -Scope Script -Description 'UP! symbol'
-
-	function Write-Step([string]$Message)
+	function Write-Step
 	{
+		[CmdletBinding()] Param(
+		[string]$Message
+		)
 		Write-Info.ps1 $Message -ForegroundColor White -BackgroundColor DarkGray
 	}
 
 	function Invoke-EssentialUpdate
 	{
+		[CmdletBinding()] Param()
 		Write-Step "$UP Updating PowerShell & Windows Terminal"
 		Get-Process powershell -ErrorAction Ignore |Where-Object Id -ne $PID |Stop-Process -Force
 		Get-Process pwsh -ErrorAction Ignore |Where-Object Id -ne $PID |Stop-Process -Force
@@ -133,7 +142,8 @@ Begin
 
 	function Update-Essential
 	{
-		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Essential."; return}
+		[CmdletBinding()] Param()
+		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping Essential."; return}
 		Write-Step "$([char]0xD83D)$([char]0xDD1C) Checking for essential updates"
 		if(Get-Command choco -ErrorAction Ignore)
 		{
@@ -160,7 +170,8 @@ Begin
 
 	function Update-WindowsStore
 	{
-		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping WindowsStore."; return}
+		[CmdletBinding()] Param()
+		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping WindowsStore."; return}
 		if(!(Get-Command Get-CimInstance -ErrorAction Ignore))
 		{Write-Verbose 'Get-CimInstance not found, skipping WindowsStore updates'; return}
 		Write-Step "$UP Updating Windows Store apps (asynchronously)"
@@ -168,70 +179,74 @@ Begin
 			Invoke-CimMethod -MethodName UpdateScanMethod
 	}
 
-	function Update-Scoop
+	function Test-NoProfileMode
 	{
-		if(!(Get-Command scoop -ErrorAction Ignore))
-		{Write-Verbose 'Scoop not found, skipping'; return}
-		Write-Step "$UP Updating Scoop packages"
-		scoop update *
+		[CmdletBinding()][OutputType([bool])] Param()
+		return [bool]([Environment]::GetCommandLineArgs() |Where-Object {$_ -ilike '-NoP*'})
 	}
 
-	function Update-Chocolatey
+	function Restart-UpdateWithoutProfile
 	{
-		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Chocolatey."; return}
-		if(!(Get-Command choco -ErrorAction Ignore))
-		{Write-Verbose 'Chocolatey not found, skipping'; return}
-		Write-Step "$UP Updating Chocolatey packages"
-		choco upgrade all -y
+		[CmdletBinding()] Param()
+		Get-Process powershell -ErrorAction Ignore |Where-Object Id -ne $PID |Stop-Process -Force
+		Get-Process pwsh -ErrorAction Ignore |Where-Object Id -ne $PID |Stop-Process -Force
+		Start-Process pwsh -ArgumentList '-NoProfile','-File',$PSCommandPath
+		[Environment]::Exit(0)
 	}
 
-	function Update-WinGet
+	function Restart-UpdateWithProfile
 	{
-		if(!(Get-Command winget -ErrorAction Ignore))
-		{Write-Verbose 'WinGet not found, skipping'; return}
-		Write-Step "$UP Updating WinGet packages"
-		winget upgrade --all
+		[CmdletBinding()] Param()
+		Start-Process pwsh
+		[Environment]::Exit(0)
 	}
 
-	function Update-Npm
+	function Test-AzModulesHasUpdate
 	{
-		if(!(Get-Command npm -ErrorAction Ignore))
-		{Write-Verbose 'Npm not found, skipping'; return}
-		Write-Step "$UP Updating npm packages"
-		npm update -g
+		[CmdletBinding()][OutputType([bool])] Param()
+		$version = @(Get-Module Az -ListAvailable |Measure-Object Version -Maximum)
+		if($version.Count -eq 0) {return}
+		if($version.Maximum -ge (Find-Module Az -Repository PSGallery).Version) {return}
+		$allUsers = (Get-ModuleScope.ps1 Az).Scope -eq 'AllUsers'
+		if($allUsers -and $Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping AzModules."; return}
+		return $true
 	}
 
-	function Update-Dotnet
+	function Update-AzModules
 	{
-		if(!(Get-Command dotnet -ErrorAction Ignore))
-		{Write-Verbose 'Dotnet not found, skipping'; return}
-		Write-Step "$UP Updating dotnet global tools"
-		& "$PSScriptRoot\Get-DotNetGlobalTools.ps1" |
-			Where-Object {
-				$_.Version -lt (& "$PSScriptRoot\Find-DotNetTools.ps1" $_.PackageName |
-					Where-Object PackageName -eq $_.PackageName).Version
-			} |
-			ForEach-Object {dotnet tool update -g $_.PackageName}
+		[CmdletBinding()] Param()
+		if(!(Test-AzModulesHasUpdate)) {return}
+		if(Get-Module Az) {Restart-UpdateWithoutProfile}
+		Write-Step "$UP Updating PowerShell Az modules"
+		Update-Module Az* -Scope AllUsers -Confirm:$false
 	}
 
-	function Update-GitHubCli
+	function Test-DbatoolsHasUpdate
 	{
-		if(!(Get-Command gh -ErrorAction Ignore))
-		{Write-Verbose 'gh not found, skipping'; return}
-		Write-Step "$UP Updating GitHub CLI extensions"
-		gh extension upgrade --all
+		[CmdletBinding()][OutputType([bool])] Param()
+		$version = Get-Module dbatools -ListAvailable |Measure-Object Version -Maximum
+		if($version.Count -eq 0) {return}
+		if($version.Maximum -ge (Find-Module dbatools -Repository PSGallery).Version) {return}
+		$allUsers = (Get-ModuleScope.ps1 dbatools).Scope -eq 'AllUsers'
+		if($allUsers -and $Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping Dbatools."; return}
+		return $true
 	}
 
-	function Update-VSCodeExtensions
+	function Update-Dbatools
 	{
-		if(!(Get-Command code -ErrorAction Ignore))
-		{Write-Verbose 'VSCode not found, skipping.'; return}
-		Write-Step "$UP Updating VSCode extensions"
-		code --update-extensions
+		[CmdletBinding()] Param()
+		if(!(Test-DbatoolsHasUpdate)) {return}
+		if(Get-Module dbatools) {Restart-UpdateWithoutProfile}
+		Write-Step "$UP Upgrading PowerShell dbatools module"
+		Uninstall-Module dbatools.library,dbatools -Force
+		Install-Module dbatools -Scope AllUsers -Force
 	}
 
 	function Update-PSModule
 	{
+		[CmdletBinding()] Param()
+		Update-Dbatools
+		Update-AzModules
 		Write-Step "$UP Updating PowerShell modules"
 		Get-Module -ListAvailable |
 			Group-Object Name |
@@ -248,14 +263,85 @@ Begin
 		}
 	}
 
+	function Update-Scoop
+	{
+		[CmdletBinding()] Param()
+		if(!(Get-Command scoop -ErrorAction Ignore))
+		{Write-Verbose 'Scoop not found, skipping'; return}
+		Write-Step "$UP Updating Scoop packages"
+		scoop update *
+	}
+
+	function Update-Chocolatey
+	{
+		[CmdletBinding()] Param()
+		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping Chocolatey."; return}
+		if(!(Get-Command choco -ErrorAction Ignore))
+		{Write-Verbose 'Chocolatey not found, skipping'; return}
+		Write-Step "$UP Updating Chocolatey packages"
+		choco upgrade all -y
+	}
+
+	function Update-WinGet
+	{
+		[CmdletBinding()] Param()
+		if(!(Get-Command winget -ErrorAction Ignore))
+		{Write-Verbose 'WinGet not found, skipping'; return}
+		Write-Step "$UP Updating WinGet packages"
+		winget upgrade --all
+	}
+
+	function Update-Npm
+	{
+		[CmdletBinding()] Param()
+		if(!(Get-Command npm -ErrorAction Ignore))
+		{Write-Verbose 'Npm not found, skipping'; return}
+		Write-Step "$UP Updating npm packages"
+		npm update -g
+	}
+
+	function Update-Dotnet
+	{
+		[CmdletBinding()] Param()
+		if(!(Get-Command dotnet -ErrorAction Ignore))
+		{Write-Verbose 'Dotnet not found, skipping'; return}
+		Write-Step "$UP Updating dotnet global tools"
+		& "$PSScriptRoot\Get-DotNetGlobalTools.ps1" |
+			Where-Object {
+				$_.Version -lt (& "$PSScriptRoot\Find-DotNetTools.ps1" $_.PackageName |
+					Where-Object PackageName -eq $_.PackageName).Version
+			} |
+			ForEach-Object {dotnet tool update -g $_.PackageName}
+	}
+
+	function Update-GitHubCli
+	{
+		[CmdletBinding()] Param()
+		if(!(Get-Command gh -ErrorAction Ignore))
+		{Write-Verbose 'gh not found, skipping'; return}
+		Write-Step "$UP Updating GitHub CLI extensions"
+		gh extension upgrade --all
+	}
+
+	function Update-VSCodeExtensions
+	{
+		[CmdletBinding()] Param()
+		if(!(Get-Command code -ErrorAction Ignore))
+		{Write-Verbose 'VSCode not found, skipping.'; return}
+		Write-Step "$UP Updating VSCode extensions"
+		code --update-extensions
+	}
+
 	function Update-PSHelp
 	{
+		[CmdletBinding()] Param()
 		Write-Step "$UP Updating PowerShell help"
 		Update-Help
 	}
 
 	function Update-ScriptsData
 	{
+		[CmdletBinding()] Param()
 		Write-Step "$UP Updating scripts data"
 		Get-UnicodeName.ps1 -Update
 		Get-UnicodeByName.ps1 -Update
@@ -263,7 +349,8 @@ Begin
 
 	function Update-DellCommand
 	{
-		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping DellCommand."; return}
+		[CmdletBinding()] Param()
+		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping DellCommand."; return}
 		if(!(Resolve-Path "C:\Program Files*\Dell\CommandUpdate\dcu-cli.exe"))
 		{Write-Verbose 'Dell Command not found, skipping'; return}
 		Write-Step "$UP Updating Dell firmware & system software"
@@ -275,7 +362,8 @@ Begin
 
 	function Update-WindowsUpdate
 	{
-		if(!(Test-Administrator.ps1)) {Write-Warning "Not running as admin; skipping Windows."; return}
+		[CmdletBinding()] Param()
+		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping Windows."; return}
 		if(!(Get-Module PSWindowsUpdate -ListAvailable))
 		{Write-Verbose 'PSWindowsUpdate module not found, skipping Windows Updates'; return}
 		Write-Step "$UP Updating Windows"
@@ -283,7 +371,6 @@ Begin
 		Install-WindowsUpdate |Format-Table X,Result,KB,Size,Title
 	}
 }
-
 Process
 {
 	$emptyShared = Test-EmptyDesktop -Shared
@@ -293,5 +380,6 @@ Process
 	{
 		if($emptyShared) {Clear-Desktop -Shared}
 		if($empty) {Clear-Desktop}
+		if(Test-NoProfileMode) {Restart-UpdateWithProfile}
 	}
 }
