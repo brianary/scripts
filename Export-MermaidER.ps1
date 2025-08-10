@@ -2,8 +2,14 @@
 .SYNOPSIS
 Generates a Mermaid entity relation diagram for database tables.
 
+.FUNCTIONALITY
+Mermaid Diagrams
+
 .NOTES
 All tables in the pipeline must exist in the same database.
+
+.LINK
+https://mermaid.js.org/syntax/entityRelationshipDiagram.html
 
 .LINK
 https://learn.microsoft.com/dotnet/api/table
