@@ -6,7 +6,7 @@ Caches the output of a command for recall if called again.
 Command
 
 .EXAMPLE
-Get-CachedCommand.ps1 {Invoke-RestMethod https://example.org/endpoint} -Session
+Invoke-CachedCommand.ps1 {Invoke-RestMethod https://example.org/endpoint} -Session
 
 Returns the result of executing the script block, or the previous cached output if available.
 #>
@@ -68,21 +68,21 @@ Begin
         [datetime] $Expires
         )
         $now = Get-Date
-        $cacheFileName = Join-Path $Script:CacheDir "$(Get-ScriptBlockHash $ScriptBlock).xml"
+        $cacheFileName = Join-Path $Script:CacheDir "$(Get-ScriptBlockHash $ScriptBlock -BlockArgs $BlockArgs).xml"
         if(Test-Path $cacheFileName -Type Leaf)
         {
             $cacheFile = Get-Item $cacheFileName
             if($now -gt $cacheFile.LastWriteTime)
             {
-                $ScriptBlock.InvokeReturnAsIs($BlockArgs) |Export-Clixml $cacheFileName -Force
+                $ScriptBlock.InvokeReturnAsIs(@($BlockArgs)) |Export-Clixml $cacheFileName -Force
             }
         }
         else
         {
-            $ScriptBlock.InvokeReturnAsIs($BlockArgs) |Export-Clixml $cacheFileName
+            $ScriptBlock.InvokeReturnAsIs(@($BlockArgs)) |Export-Clixml $cacheFileName
             $cacheFile = Get-Item $cacheFileName
         }
-        $cacheFile.LastWriteTime = $now
+        $cacheFile.LastWriteTime = $Expires
         Import-Clixml $cacheFileName
     }
 }
@@ -91,13 +91,13 @@ Process
     switch($PSCmdlet.ParameterSetName)
     {
         ExpiresAfter {Get-CachedOutput $Expression -BlockArgs $BlockArgs -Expires (Get-Date).Add($ExpiresAfter)}
-        ExpiresAfter {Get-CachedOutput $Expression -BlockArgs $BlockArgs -Expires $Expires}
+        Expires {Get-CachedOutput $Expression -BlockArgs $BlockArgs -Expires $Expires}
         Session
         {
             $key = Get-ScriptBlockHash $Expression -BlockArgs $BlockArgs
             if(!$Script:SessionCache.Value.ContainsKey($key))
             {
-                $Script:SessionCache.Value[$key] = $Expression.InvokeReturnAsIs($BlockArgs)
+                $Script:SessionCache.Value[$key] = $Expression.InvokeReturnAsIs(@($BlockArgs))
             }
             return $Script:SessionCache.Value[$key]
         }
