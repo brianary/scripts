@@ -248,14 +248,29 @@ Begin
 		Update-Dbatools
 		Update-AzModules
 		Write-Step "$UP Updating PowerShell modules"
+		$isAllUsers = @{}
 		Get-Module -ListAvailable |
 			Group-Object Name |
 			Where-Object {
 				$found = Find-Module $_.Name -ErrorAction Ignore
 				if(!$found) {return $false}
+				$isAllUsers[$_.Name] = ($_ |Get-ModuleScope.ps1) -eq 'AllUsers'
+				if($Script:IsNotAdministrator -and $isAllUsers[$_.Name])
+				{
+					Write-Warning "Skipping module '$($_.Name)' with scope 'AllUsers'"
+					return $false
+				}
 				($_.Group |Measure-Object Version -Maximum).Maximum -lt [version]$found.Version
 			} |
-			Update-Module -Force
+			ForEach-Object {
+				$module = $_
+				try {$module |Update-Module -Scope:( $isAllUsers[$_.Name] ? 'AllUsers' : 'CurrentUser') -Force -ErrorAction Stop}
+				catch
+				{
+					if($_.Exception.Message -notlike "Module '*' was not installed by using Install-Module, so it cannot be updated.") {throw}
+					Write-Warning "Unable to automatically update module '$($module.Name)'"
+				}
+			}
 		if(Get-Command Uninstall-OldModules.ps1 -ErrorAction Ignore)
 		{
 			Write-Step "$UP Uninstalling old PowerShell modules"
