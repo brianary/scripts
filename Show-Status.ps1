@@ -3,6 +3,9 @@
 Displays requested system status values using powerline font characters.
 
 .LINK
+https://www.nerdfonts.com/cheat-sheet
+
+.LINK
 Get-Unicode.ps1
 
 .FUNCTIONALITY
@@ -20,7 +23,7 @@ Show-Status.ps1 UserName HomeDirectory -Separator ' * '
 # The format to serialize the date as.
 [Parameter(Position=0,Mandatory=$true,ValueFromRemainingArguments=$true)]
 [ValidateSet('AdminIndicator','ComputerName','DotNetVersion','DriveUsage','ExplorerUser','GitUser','HomeDirectory',
-'OSVersion','PowerShellCommand','PowerShellVersion','Uptime','UserName')]
+'OSVersion','PowerShellCommand','PowerShellVersion','Updates','Uptime','UserName')]
 [string[]] $Status,
 # The separator to use between formatted dates.
 [string] $Separator = " $(Get-Unicode.ps1 0x2022) ",
@@ -31,8 +34,17 @@ Show-Status.ps1 UserName HomeDirectory -Separator ' * '
 )
 Begin
 {
-    Import-CharConstants.ps1 'BUST IN SILHOUETTE' 'HOUSE BUILDING' 'SQUARED ID' 'PERSONAL COMPUTER' `
-        'POWER SYMBOL' 'NEW MOON SYMBOL' 'HARD DISK' 'POLICE CARS REVOLVING LIGHT' -AsEmoji
+    Import-CharConstants.ps1 -Alias @{
+        USER       = 'BUST IN SILHOUETTE'
+        HOUSE      = 'HOUSE BUILDING'
+        COMPUTER   = 'PERSONAL COMPUTER'
+        REDCIRCLE  = 'LARGE RED CIRCLE'
+        BLUECIRCLE = 'LARGE BLUE CIRCLE'
+        POWER      = 'POWER SYMBOL'
+        HARDDISK   = 'HARD DISK'
+        OVERLAP    = 'OVERLAP'
+        'UP!'      = 'SQUARED UP WITH EXCLAMATION MARK'
+    } -AsEmoji
     filter Format-Status
     {
         [CmdletBinding()][OutputType([string])] Param(
@@ -40,12 +52,12 @@ Begin
         )
         switch($Status)
         {
-            AdminIndicator { (Test-Administrator.ps1) ? ${POLICE CARS REVOLVING LIGHT} : '' }
-            ComputerName {"${PERSONAL COMPUTER}$([Environment]::MachineName)"}
-            DotNetVersion {"$(Get-Unicode.ps1 0xE77F).NET $([Environment]::Version)"}
+            AdminIndicator { (Test-Administrator.ps1) ? $REDCIRCLE : $BLUECIRCLE }
+            ComputerName {"$COMPUTER $([Environment]::MachineName)"}
+            DotNetVersion {"$(Get-Unicode.ps1 0xE77F) .NET $([Environment]::Version)"}
             DriveUsage
             {
-                ${HARD DISK} + ' ' + ((Get-PSDrive -PSProvider FileSystem |
+                $HARDDISK + ' ' + ((Get-PSDrive -PSProvider FileSystem |Where-Object {$null -ne $_.Free} |
                     ForEach-Object {"$(Get-Unicode.ps1 (0x1F311 + [math]::Round((5*$_.Used)/($_.Used+$_.Free)) ))$($_.Name)"}) -join ' ')
             }
             ExplorerUser
@@ -55,22 +67,29 @@ Begin
                     ForEach-Object {$_.Get()} |
                     ForEach-Object {$_.GetOwner()} |
                     Select-Object -ExpandProperty User
-                "${SQUARED ID} $euser"
+                "$OVERLAP $euser"
             }
-            GitUser {"$(Get-Unicode.ps1 0xF1D2)$(git config user.name) <$(git config user.email)>"}
-            HomeDirectory {"${HOUSE BUILDING}$HOME"}
+            GitUser {"$(Get-Unicode.ps1 0xF1D2) $(git config user.name) <$(git config user.email)>"}
+            HomeDirectory {"$HOUSE $HOME"}
             OSVersion
             {
                 $icon =
                     if($IsWindows) {Get-Unicode.ps1 0xF17A}
                     elseif($IsLinux) {Get-Unicode.ps1 0xF17C}
                     elseif($IsMacOS) {Get-Unicode.ps1 0xF179}
-                "$icon$([Environment]::OSVersion.VersionString) $($PSVersionTable.OS)"
+                "$icon $([Environment]::OSVersion.VersionString) $($PSVersionTable.OS)"
             }
-            PowerShellCommand {"$(Get-Unicode.ps1 0xE86C)$([Environment]::ProcessPath) $([Environment]::CommandLine)"}
-            PowerShellVersion {"$(Get-Unicode.ps1 0xE86C)PS $($PSVersionTable.PSVersion) $($PSVersionTable.PSEdition)"}
-            Uptime {"${POWER SYMBOL} $(Get-Uptime)"}
-            UserName {"${BUST IN SILHOUETTE}$env:USERNAME"}
+            PowerShellCommand {"$(Get-Unicode.ps1 0xE86C) $([Environment]::ProcessPath) $([Environment]::CommandLine)"}
+            PowerShellVersion {"$(Get-Unicode.ps1 0xE86C) PS $($PSVersionTable.PSVersion) $($PSVersionTable.PSEdition)"}
+            Updates
+            {
+                ${UP!} + ' ' + (@(
+                    ((Get-Command choco -ErrorAction Ignore) -and $(choco outdated -r)) ? 'choco' : $null
+                    ((Get-Command winget -ErrorAction Ignore) -and $(winget list --upgrade-available)) ? 'winget' : $null
+                ) |Where-Object {$_}) -join ' '
+            }
+            Uptime {"$POWER$(Get-Uptime)"}
+            UserName {"$USER $env:USERNAME"}
             default {$_}
         }
     }

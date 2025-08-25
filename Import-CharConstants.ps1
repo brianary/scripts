@@ -24,7 +24,10 @@ Creates constants in the context of the current script for the named characters.
 [CmdletBinding()] Param(
 # The control code abbreviation, Unicode name, HTML entity, or GitHub name of the character to create a constant for.
 # "NL" will use the newline appropriate to the environment.
-[Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)][string[]] $CharacterName,
+[Parameter(ParameterSetName='UseNames',Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromRemainingArguments=$true)][string[]] $CharacterName,
+# A dictionary that maps character variable name aliases to control code abbreviations, Unicode names, HTML entities,
+# or GitHub names of characters.
+[Parameter(ParameterSetName='UseAliases',Mandatory=$true)][hashtable] $Alias,
 # The scope of the constant.
 [string] $Scope = 'Local',
 <#
@@ -33,13 +36,25 @@ for characters that support both a simple text presentation as well as a color e
 #>
 [switch] $AsEmoji
 )
-Begin {$level = Add-ScopeLevel.ps1 -Scope $Scope}
+Begin
+{
+    $level = $Scope |Add-ScopeLevel.ps1 |Add-ScopeLevel.ps1
+
+    filter Add-CharacterConstant
+    {
+        [CmdletBinding()] Param(
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][Alias('Key')][string] $Alias,
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][Alias('Value')][string] $CharacterName
+        )
+        $char = $CharacterName -eq 'NL' ? [Environment]::NewLine : (Get-UnicodeByName.ps1 -Name $CharacterName -AsEmoji:$AsEmoji)
+        Set-Variable -Name ($Alias.Trim(':')) -Value $char -Scope $level -Option Constant -Description $CharacterName
+    }
+}
 Process
 {
-    foreach($name in $CharacterName)
+    switch($PSCmdlet.ParameterSetName)
     {
-        $cname = $name -replace ':'
-        $value = $name -ceq 'NL' ? [Environment]::NewLine : (Get-UnicodeByName.ps1 -Name $name -AsEmoji:$AsEmoji)
-        Set-Variable -Name $cname -Value $value -Scope $level -Option Constant -Description $name
+        UseNames {$CharacterName |Add-CharacterConstant}
+        UseAliases {$Alias.GetEnumerator() |Add-CharacterConstant}
     }
 }
