@@ -54,7 +54,7 @@ Begin
         {
             AdminIndicator { (Test-Administrator.ps1) ? $REDCIRCLE : $BLUECIRCLE }
             ComputerName {"$COMPUTER $([Environment]::MachineName)"}
-            DotNetVersion {"$(Get-Unicode.ps1 0xE77F) .NET $([Environment]::Version)"}
+            DotNetVersion {"$([char]0xE77F) .NET $([Environment]::Version)"}
             DriveUsage
             {
                 $HARDDISK + ' ' + ((Get-PSDrive -PSProvider FileSystem |Where-Object {$null -ne $_.Free} |
@@ -69,23 +69,21 @@ Begin
                     Select-Object -ExpandProperty User
                 "$OVERLAP $euser"
             }
-            GitUser {"$(Get-Unicode.ps1 0xF1D2) $(git config user.name) <$(git config user.email)>"}
+            GitUser {"$([char]0xF1D2) $(git config user.name) <$(git config user.email)>"}
             HomeDirectory {"$HOUSE $HOME"}
             OSVersion
             {
-                $icon =
-                    if($IsWindows) {Get-Unicode.ps1 0xF17A}
-                    elseif($IsLinux) {Get-Unicode.ps1 0xF17C}
-                    elseif($IsMacOS) {Get-Unicode.ps1 0xF179}
-                "$icon $([Environment]::OSVersion.VersionString) $($PSVersionTable.OS)"
+                if($IsWindows) {"$([char]0xF17A) $([Environment]::OSVersion.VersionString)"}
+                elseif($IsLinux) {"$([char]0xF17C) $([Environment]::OSVersion.VersionString) $($PSVersionTable.OS)"}
+                elseif($IsMacOS) {"$([char]0xF179) $([Environment]::OSVersion.VersionString) $($PSVersionTable.OS)"}
             }
-            PowerShellCommand {"$(Get-Unicode.ps1 0xE86C) $([Environment]::ProcessPath) $([Environment]::CommandLine)"}
-            PowerShellVersion {"$(Get-Unicode.ps1 0xE86C) PS $($PSVersionTable.PSVersion) $($PSVersionTable.PSEdition)"}
+            PowerShellCommand {"$([char]0xE86C) $([Environment]::ProcessPath) $([Environment]::CommandLine)"}
+            PowerShellVersion {"$([char]0xE86C) PS $($PSVersionTable.PSVersion) $($PSVersionTable.PSEdition)"}
             Updates
             {
                 ${UP!} + ' ' + (@(
-                    ((Get-Command choco -ErrorAction Ignore) -and $(choco outdated -r)) ? 'choco' : $null
-                    ((Get-Command winget -ErrorAction Ignore) -and $(winget list --upgrade-available)) ? 'winget' : $null
+                    ((Get-Command choco -ErrorAction Ignore) -and $(Invoke-CachedCommand.ps1 { choco outdated -r } -ExpiresAfter 20:00)) ? 'choco' : $null
+                    ((Get-Command winget -ErrorAction Ignore) -and $(Invoke-CachedCommand.ps1 { winget list --upgrade-available } -ExpiresAfter 20:00)) ? 'winget' : $null
                 ) |Where-Object {$_}) -join ' '
             }
             Uptime {"$POWER$(Get-Uptime)"}
