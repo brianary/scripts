@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3485_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3334_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -11,7 +11,7 @@ red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub issues badge](https://badgen.net/github/open-issues/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/issues "Issues")
 [![GitHub commits badge](https://badgen.net/github/commits/brianary/Scripts/main?icon=git)](https://github.com/brianary/scripts/commits/main "Commits")
 [![GitHub last commit badge](https://badgen.net/github/last-commit/brianary/Scripts/main?icon=git)](https://github.com/brianary/scripts/commits/main "Last commit")
-[![Mastodon: @dataelemental@tilde.zone](https://badgen.net/badge/@dataelemental/@tilde.zone/blue?icon=mastodon)](https://tilde.zone/@dataelemental "DataElemental Mastodon profile")
+[![Mastodon: @dataelemental@mastodon.social](https://badgen.net/badge/@dataelemental/@mastodon.social/blue?icon=mastodon)](https://mastodon.social/@dataelemental "DataElemental Mastodon profile")
 [![Mastodon: @brianary@mastodon.spotek.io](https://badgen.net/mastodon/follow/brianary@mastodon.spotek.io?icon=mastodon)](https://mastodon.spotek.io/@brianary "brianary Mastodon profile")
 
 [pester.yml]: https://github.com/brianary/scripts/actions/workflows/pester.yml "Pester test run history"
@@ -29,8 +29,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-CommandParameters.ps1](Get-CommandParameters.ps1.md)**: Returns the parameters of the specified cmdlet.
 - **[Get-CommandPath.ps1](Get-CommandPath.ps1.md)**: Locates a command.
 - **[Hide-Command.ps1](Hide-Command.ps1.md)**: Make a command unavailable.
+- **[Invoke-CachedCommand.ps1](Invoke-CachedCommand.ps1.md)**: Caches the output of a command for recall if called again.
 - **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1.md)**: Execute a command by using matching dictionary entries as parameters.
-- &#x1F199; **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
+- **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 
 ### Configuration
 
@@ -58,6 +59,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### Data
 
 - **[Limit-Digits.ps1](Limit-Digits.ps1.md)**: Rounds off a number to the requested number of digits.
+- **[Measure-Properties.ps1](Measure-Properties.ps1.md)**: Provides frequency details about the properties across objects in the pipeline.
 - **[Measure-Values.ps1](Measure-Values.ps1.md)**: Provides analysis of supplied values.
 
 ### Data encoding
@@ -177,6 +179,15 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Set-Json.ps1](Set-Json.ps1.md)**: Sets a property in a JSON string or file.
 - **[Show-OpenApiInfo.ps1](Show-OpenApiInfo.ps1.md)**: Displays metadata from an OpenAPI definition.
 
+### Markdown
+
+- **[Repair-MarkdownHeaders.ps1](Repair-MarkdownHeaders.ps1.md)**: Updates markdown content to replace level 1 & 2 ATX headers to Setext headers.
+
+### Mermaid Diagrams
+
+- **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
+- **[Export-MermaidXY.ps1](Export-MermaidXY.ps1.md)**: Generates a Mermaid XY bar/line chart for the values of a series of properties.
+
 ### Notebooks
 
 - **[Add-NotebookCell.ps1](Add-NotebookCell.ps1.md)**: When run within a Polyglot Notebook, appends a cell to it.
@@ -196,6 +207,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[Add-Counter.ps1](Add-Counter.ps1.md)**: Adds an incrementing integer property to each pipeline object.
 - **[Add-DynamicParam.ps1](Add-DynamicParam.ps1.md)**: Adds a dynamic parameter to a script, within a DynamicParam block.
+- &#x1F199; **[Add-NugetPackage.ps1](Add-NugetPackage.ps1.md)**: Loads a NuGet package DLL, downloading as needed.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1.md)**: Convert a scope level to account for another call stack level.
 - **[ForEach-Progress.ps1](ForEach-Progress.ps1.md)**: Performs an operation against each item in a collection of input objects, with a progress bar.
 - **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
@@ -207,7 +219,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1.md)**: Create a new PSObject by recursively combining the properties of PSObjects.
 - **[Read-Choice.ps1](Read-Choice.ps1.md)**: Returns choice selected from a list of options.
 - **[Stop-ThrowError.ps1](Stop-ThrowError.ps1.md)**: Throws a better error than "throw".
-- **[Test-Administrator.ps1](Test-Administrator.ps1.md)**: Checks whether the current session has administrator privileges.
+- &#x1F199; **[Test-Administrator.ps1](Test-Administrator.ps1.md)**: Checks whether the current session has administrator privileges.
 - **[Test-Interactive.ps1](Test-Interactive.ps1.md)**: Determines whether both the user and process are interactive.
 - **[Test-Range.ps1](Test-Range.ps1.md)**: Returns true from an initial condition until a terminating condition; a latching test.
 - **[Test-Variable.ps1](Test-Variable.ps1.md)**: Indicates whether a variable has been defined.
@@ -217,6 +229,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### PowerShell Modules
 
+- **[Get-ModuleScope.ps1](Get-ModuleScope.ps1.md)**: Returns the scope of an installed module.
 - **[Uninstall-OldModules.ps1](Uninstall-OldModules.ps1.md)**: Uninstalls old module versions.
 - **[Update-Modules.ps1](Update-Modules.ps1.md)**: Cleans up old modules.
 
@@ -232,8 +245,9 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1.md)**: Convert a CimInstance object to a PSObject.
 - **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1.md)**: Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
 - **[Copy-SchTasks.ps1](Copy-SchTasks.ps1.md)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
-- &#x1F195; **[Get-SimpleSchTasks.ps1](Get-SimpleSchTasks.ps1.md)**: Returns simple scheduled task info.
+- **[Get-SimpleSchTasks.ps1](Get-SimpleSchTasks.ps1.md)**: Returns simple scheduled task info.
 - **[Restore-SchTasks.ps1](Restore-SchTasks.ps1.md)**: Imports from a single XML file into the local Scheduled Tasks.
+- **[Set-SchTaskMsa.ps1](Set-SchTaskMsa.ps1.md)**: Sets a Scheduled Task's runtime user as the given gMSA/MSA.
 
 ### Scripts
 
@@ -242,7 +256,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Optimize-Help.ps1](Optimize-Help.ps1.md)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
 - **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
 - **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1.md)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
-- &#x1F195; **[Select-ScriptCommands.ps1](Select-ScriptCommands.ps1.md)**: Returns the commands used by the specified script.
+- **[Select-ScriptCommands.ps1](Select-ScriptCommands.ps1.md)**: Returns the commands used by the specified script.
 
 ### Search and replace
 
@@ -266,7 +280,8 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
 - **[Import-EdgeKeywords.ps1](Import-EdgeKeywords.ps1.md)**: Adds search keywords to an Edge SQLite profile configuration.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1.md)**: Retrieves the a summary from the Chocolatey log.
-- **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
+- &#x1F195; **[Show-Status.ps1](Show-Status.ps1.md)**: Displays requested system status values using powerline font characters.
+- &#x1F199; **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1.md)**: Switch the Java version for the current process by modifying environment variables.
 
 ### TLS/SSL
@@ -282,7 +297,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
 - **[Get-UnicodeData.ps1](Get-UnicodeData.ps1.md)**: Returns the current (cached) Unicode character data.
 - **[Get-UnicodeName.ps1](Get-UnicodeName.ps1.md)**: Returns the name of a Unicode code point.
-- **[Import-CharConstants.ps1](Import-CharConstants.ps1.md)**: Imports characters by name as constants into the current scope.
+- &#x1F199; **[Import-CharConstants.ps1](Import-CharConstants.ps1.md)**: Imports characters by name as constants into the current scope.
 
 ### VSCode
 
@@ -316,14 +331,14 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Connect-SshKey.ps1](Connect-SshKey.ps1.md)**: Uses OpenSSH to generate a key and connect it to an ssh server.
 - **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1.md)**: Convert a number to a Roman numeral.
 - **[Copy-Html.ps1](Copy-Html.ps1.md)**: Copies objects as an HTML table.
-- **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
-- **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
+- &#x1F199; **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1.md)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Get-ADServiceAccountInfo.ps1](Get-ADServiceAccountInfo.ps1.md)**: Lists the Global Managed Service Accounts for the domain, including the computers they are bound to.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1.md)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-Dns.ps1](Get-Dns.ps1.md)**: Looks up DNS info, given a hostname or address.
 - **[Get-GitHubRepoChildItem.ps1](Get-GitHubRepoChildItem.ps1.md)**: Gets the items and child items in one or more specified locations.
 - **[Get-IisLog.ps1](Get-IisLog.ps1.md)**: Easily query IIS logs.
+- **[Get-PathUsage.ps1](Get-PathUsage.ps1.md)**: Returns the list of directories in the path, and the commands found in each.
 - **[Get-PocketArticles.ps1](Get-PocketArticles.ps1.md)**: Retrieves a list of saved articles from a Pocket account.
 - **[Get-RandomBytes.ps1](Get-RandomBytes.ps1.md)**: Returns random bytes.
 - **[Get-Todos.ps1](Get-Todos.ps1.md)**: Returns the TODOs for the current git repo, which can help document technical debt.
@@ -338,5 +353,5 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1.md)**: Downloads enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1.md)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1.md)**: Scan sites using Mozilla's Observatory.
-- **[Write-CallInfo.ps1](Write-CallInfo.ps1.md)**: Prints caller name and parameters to the host for debugging purposes.
+- &#x1F199; **[Write-CallInfo.ps1](Write-CallInfo.ps1.md)**: Prints caller name and parameters to the host for debugging purposes.
 - **[Write-VisibleString.ps1](Write-VisibleString.ps1.md)**: Displays a string, showing nonprintable characters.

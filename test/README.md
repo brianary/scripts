@@ -1,9 +1,9 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='308'>308 &#x2030;</meter> Scripts repo (224) &#x1F4C5; 605 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> A (10) &#x1F4C5; 501 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Add (10) &#x1F4C5; 501 days</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='296'>296 &#x2030;</meter> Scripts repo (233) &#x1F4C5; 605 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='909'>909 &#x2030;</meter> A (11) &#x1F4C5; 501 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='909'>909 &#x2030;</meter> Add (11) &#x1F4C5; 501 days</summary>
 
 - &#x2714;&#xFE0F; Add-CapturesToMatches.ps1
 - &#x2714;&#xFE0F; Add-Counter.ps1
@@ -11,6 +11,7 @@ Script Tests
 - &#x2714;&#xFE0F; Add-GitHubMetadata.ps1
 - &#x2714;&#xFE0F; Add-NotebookCell.ps1
 - &#x2714;&#xFE0F; Add-NoteProperty.ps1
+- &#x2716;&#xFE0F; Add-NugetPackage.ps1
 - &#x2714;&#xFE0F; Add-ParameterDefault.ps1
 - &#x2714;&#xFE0F; Add-ScopeLevel.ps1
 - &#x2714;&#xFE0F; Add-TimeSpan.ps1
@@ -92,7 +93,7 @@ Script Tests
 - &#x2714;&#xFE0F; Disable-AnsiColor.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> E (11) &#x1F4C5; 372 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='917'>917 &#x2030;</meter> E (12) &#x1F4C5; 372 days</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Enable (1) &#x1F4C5; 57 days</summary>
 
 - &#x2714;&#xFE0F; Enable-AnsiColor.ps1
@@ -103,13 +104,14 @@ Script Tests
 - &#x2714;&#xFE0F; Expand-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Export (9) &#x1F4C5; 26 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='900'>900 &#x2030;</meter> Export (10) &#x1F4C5; 26 days</summary>
 
 - &#x2714;&#xFE0F; Export-DatabaseScripts.ps1
 - &#x2714;&#xFE0F; Export-EdgeKeywords.ps1
 - &#x2714;&#xFE0F; Export-InstalledPackages.ps1
 - &#x2714;&#xFE0F; Export-Json.ps1
 - &#x2714;&#xFE0F; Export-MermaidER.ps1
+- &#x2716;&#xFE0F; Export-MermaidXY.ps1
 - &#x2714;&#xFE0F; Export-OpenApiSchema.ps1
 - &#x2714;&#xFE0F; Export-Readme.ps1
 - &#x2714;&#xFE0F; Export-SecretVault.ps1
@@ -144,8 +146,8 @@ Script Tests
 - &#x2716;&#xFE0F; Format-Xml.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='24'>24 &#x2030;</meter> G (42) &#x1F4C5; 490 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='24'>24 &#x2030;</meter> Get (42) &#x1F4C5; 490 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='23'>23 &#x2030;</meter> G (44) &#x1F4C5; 490 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='23'>23 &#x2030;</meter> Get (44) &#x1F4C5; 490 days</summary>
 
 - &#x2716;&#xFE0F; Get-ADServiceAccountInfo.ps1
 - &#x2716;&#xFE0F; Get-ADUserStatus.ps1
@@ -169,8 +171,10 @@ Script Tests
 - &#x2716;&#xFE0F; Get-GitHubRepoChildItem.ps1
 - &#x2714;&#xFE0F; Get-IisLog.ps1
 - &#x2716;&#xFE0F; Get-LibraryVulnerabilityInfo.ps1
+- &#x2716;&#xFE0F; Get-ModuleScope.ps1
 - &#x2716;&#xFE0F; Get-NuGetConfigs.ps1
 - &#x2716;&#xFE0F; Get-OpenApiInfo.ps1
+- &#x2716;&#xFE0F; Get-PathUsage.ps1
 - &#x2716;&#xFE0F; Get-PocketArticles.ps1
 - &#x2716;&#xFE0F; Get-RandomBytes.ps1
 - &#x2716;&#xFE0F; Get-RepoName.ps1
@@ -197,7 +201,7 @@ Script Tests
 - &#x2716;&#xFE0F; Hide-Command.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started I (9) </summary>
+<li><details><summary>not started I (10) </summary>
 <ul><li><details><summary>not started Import (6) </summary>
 
 - &#x2716;&#xFE0F; Import-CharConstants.ps1
@@ -213,8 +217,9 @@ Script Tests
 - &#x2716;&#xFE0F; Initialize-DatabaseNotebook.ps1
 
 </details></li>
-<li><details><summary>not started Invoke (2) </summary>
+<li><details><summary>not started Invoke (3) </summary>
 
+- &#x2716;&#xFE0F; Invoke-CachedCommand.ps1
 - &#x2716;&#xFE0F; Invoke-CommandWithParams.ps1
 - &#x2716;&#xFE0F; Invoke-WindowsPowerShell.ps1
 
@@ -232,14 +237,15 @@ Script Tests
 - &#x2716;&#xFE0F; Limit-Digits.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started M (11) </summary>
-<ul><li><details><summary>not started Measure (8) </summary>
+<li><details><summary>not started M (12) </summary>
+<ul><li><details><summary>not started Measure (9) </summary>
 
 - &#x2716;&#xFE0F; Measure-Caches.ps1
 - &#x2716;&#xFE0F; Measure-DbColumn.ps1
 - &#x2716;&#xFE0F; Measure-DbColumnValues.ps1
 - &#x2716;&#xFE0F; Measure-DbTable.ps1
 - &#x2716;&#xFE0F; Measure-Indents.ps1
+- &#x2716;&#xFE0F; Measure-Properties.ps1
 - &#x2716;&#xFE0F; Measure-StandardDeviation.ps1
 - &#x2716;&#xFE0F; Measure-TextFile.ps1
 - &#x2716;&#xFE0F; Measure-Values.ps1
@@ -277,7 +283,7 @@ Script Tests
 - &#x2716;&#xFE0F; Push-WorkspaceLocation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started R (19) </summary>
+<li><details><summary>not started R (20) </summary>
 <ul><li><details><summary>not started Read (2) </summary>
 
 - &#x2716;&#xFE0F; Read-ChocolateySummary.ps1
@@ -300,11 +306,12 @@ Script Tests
 - &#x2716;&#xFE0F; Rename-Script.ps1
 
 </details></li>
-<li><details><summary>not started Repair (4) </summary>
+<li><details><summary>not started Repair (5) </summary>
 
 - &#x2716;&#xFE0F; Repair-AppxPackages.ps1
 - &#x2716;&#xFE0F; Repair-DatabaseConstraintNames.ps1
 - &#x2716;&#xFE0F; Repair-DatabaseUntrustedConstraints.ps1
+- &#x2716;&#xFE0F; Repair-MarkdownHeaders.ps1
 - &#x2716;&#xFE0F; Repair-ScriptStyle.ps1
 
 </details></li>
@@ -321,7 +328,7 @@ Script Tests
 - &#x2716;&#xFE0F; Restore-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='87'>87 &#x2030;</meter> S (23) &#x1F4C5; 48 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='80'>80 &#x2030;</meter> S (25) &#x1F4C5; 48 days</summary>
 <ul><li><details><summary>not started Save (3) </summary>
 
 - &#x2716;&#xFE0F; Save-PodcastEpisodes.ps1
@@ -344,21 +351,23 @@ Script Tests
 - &#x2716;&#xFE0F; Send-SqlReport.ps1
 
 </details></li>
-<li><details><summary>not started Set (5) </summary>
+<li><details><summary>not started Set (6) </summary>
 
 - &#x2716;&#xFE0F; Set-ConsoleColorTheme.ps1
 - &#x2716;&#xFE0F; Set-Json.ps1
 - &#x2716;&#xFE0F; Set-ParameterDefault.ps1
 - &#x2716;&#xFE0F; Set-RegexReplace.ps1
+- &#x2716;&#xFE0F; Set-SchTaskMsa.ps1
 - &#x2716;&#xFE0F; Set-VSCodeSetting.ps1
 
 </details></li>
-<li><details><summary>not started Show (5) </summary>
+<li><details><summary>not started Show (6) </summary>
 
 - &#x2716;&#xFE0F; Show-DataRef.ps1
 - &#x2716;&#xFE0F; Show-HttpStatus.ps1
 - &#x2716;&#xFE0F; Show-OpenApiInfo.ps1
 - &#x2716;&#xFE0F; Show-PSDriveUsage.ps1
+- &#x2716;&#xFE0F; Show-Status.ps1
 - &#x2716;&#xFE0F; Show-Time.ps1
 
 </details></li>

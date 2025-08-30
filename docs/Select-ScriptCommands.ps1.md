@@ -13,7 +13,8 @@ Returns the commands used by the specified script.
 ## SYNTAX
 
 ```
-Select-ScriptCommands.ps1 [[-Path] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Select-ScriptCommands.ps1 [[-Path] <String>] [-CommandType <CommandTypes>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -49,6 +50,22 @@ Required: False
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -CommandType
+Specifies the types of commands that this cmdlet gets.
+
+```yaml
+Type: CommandTypes
+Parameter Sets: (All)
+Aliases:
+Accepted values: Alias, Function, Filter, Cmdlet, ExternalScript, Application, Script, Configuration, All
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -299,7 +299,7 @@ Useful General-Purpose Scripts
 [![GitHub issues badge](https://badgen.net/github/open-issues/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/issues "Issues")
 [![GitHub commits badge](https://badgen.net/github/commits/brianary/Scripts/main?icon=git)](https://github.com/brianary/scripts/commits/main "Commits")
 [![GitHub last commit badge](https://badgen.net/github/last-commit/brianary/Scripts/main?icon=git)](https://github.com/brianary/scripts/commits/main "Last commit")
-[![Mastodon: @dataelemental@tilde.zone](https://badgen.net/badge/@dataelemental/@tilde.zone/blue?icon=mastodon)](https://tilde.zone/@dataelemental "DataElemental Mastodon profile")
+[![Mastodon: @dataelemental@mastodon.social](https://badgen.net/badge/@dataelemental/@mastodon.social/blue?icon=mastodon)](https://mastodon.social/@dataelemental "DataElemental Mastodon profile")
 [![Mastodon: @brianary@mastodon.spotek.io](https://badgen.net/mastodon/follow/brianary@mastodon.spotek.io?icon=mastodon)](https://mastodon.spotek.io/@brianary "Mastodon profile")
 
 [pester.yml]: https://github.com/brianary/scripts/actions/workflows/pester.yml "Pester test run history"
@@ -353,7 +353,7 @@ function Export-PSScriptPages
 [![GitHub issues badge](https://badgen.net/github/open-issues/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/issues "Issues")
 [![GitHub commits badge](https://badgen.net/github/commits/brianary/Scripts/main?icon=git)](https://github.com/brianary/scripts/commits/main "Commits")
 [![GitHub last commit badge](https://badgen.net/github/last-commit/brianary/Scripts/main?icon=git)](https://github.com/brianary/scripts/commits/main "Last commit")
-[![Mastodon: @dataelemental@tilde.zone](https://badgen.net/badge/@dataelemental/@tilde.zone/blue?icon=mastodon)](https://tilde.zone/@dataelemental "DataElemental Mastodon profile")
+[![Mastodon: @dataelemental@mastodon.social](https://badgen.net/badge/@dataelemental/@mastodon.social/blue?icon=mastodon)](https://mastodon.social/@dataelemental "DataElemental Mastodon profile")
 [![Mastodon: @brianary@mastodon.spotek.io](https://badgen.net/mastodon/follow/brianary@mastodon.spotek.io?icon=mastodon)](https://mastodon.spotek.io/@brianary "brianary Mastodon profile")
 
 [pester.yml]: https://github.com/brianary/scripts/actions/workflows/pester.yml "Pester test run history"

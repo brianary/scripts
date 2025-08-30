@@ -5,23 +5,29 @@ online version:
 schema: 2.0.0
 ---
 
-# Import-CharConstants.ps1
+# Invoke-CachedCommand.ps1
 
 ## SYNOPSIS
-Imports characters by name as constants into the current scope.
+Caches the output of a command for recall if called again.
 
 ## SYNTAX
 
-### UseNames
+### ExpiresAfter
 ```
-Import-CharConstants.ps1 [-CharacterName] <String[]> [-Scope <String>] [-AsEmoji]
+Invoke-CachedCommand.ps1 [-Expression] <ScriptBlock> [[-BlockArgs] <PSObject[]>] [-ExpiresAfter <TimeSpan>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
-### UseAliases
+### Expires
 ```
-Import-CharConstants.ps1 -Alias <Hashtable> [-Scope <String>] [-AsEmoji] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Invoke-CachedCommand.ps1 [-Expression] <ScriptBlock> [[-BlockArgs] <PSObject[]>] [-Expires <DateTime>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### Session
+```
+Invoke-CachedCommand.ps1 [-Expression] <ScriptBlock> [[-BlockArgs] <PSObject[]>] [-Session]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,67 +37,79 @@ Import-CharConstants.ps1 -Alias <Hashtable> [-Scope <String>] [-AsEmoji] [-Progr
 
 ### EXAMPLE 1
 ```
-Import-CharConstants.ps1 NL :UP: HYPHEN-MINUS 'EN DASH' '&mdash;' '&copy;' -Scope Script
+Invoke-CachedCommand.ps1 {Invoke-RestMethod https://example.org/endpoint} -Session
 ```
 
-Creates constants in the context of the current script for the named characters.
+Returns the result of executing the script block, or the previous cached output if available.
 
 ## PARAMETERS
 
-### -CharacterName
-The control code abbreviation, Unicode name, HTML entity, or GitHub name of the character to create a constant for.
-"NL" will use the newline appropriate to the environment.
+### -Expression
+Specifies the expression to cache the output of.
 
 ```yaml
-Type: String[]
-Parameter Sets: UseNames
+Type: ScriptBlock
+Parameter Sets: (All)
 Aliases:
 
 Required: True
 Position: 1
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Alias
-A dictionary that maps character variable name aliases to control code abbreviations, Unicode names, HTML entities,
-or GitHub names of characters.
+### -BlockArgs
+Parameters to the script block.
 
 ```yaml
-Type: Hashtable
-Parameter Sets: UseAliases
+Type: PSObject[]
+Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
+Position: 2
+Default value: @()
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExpiresAfter
+The rolling duration to cache the output for (updated with each call).
+
+```yaml
+Type: TimeSpan
+Parameter Sets: ExpiresAfter
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Scope
-The scope of the constant.
+### -Expires
+Point in time to cache the output until.
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: DateTime
+Parameter Sets: Expires
 Aliases:
 
 Required: False
 Position: Named
-Default value: Local
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AsEmoji
-Appends a U+FE0F VARIATION SELECTOR-16 suffix to the character, which suggests an emoji presentation
-for characters that support both a simple text presentation as well as a color emoji-style one.
+### -Session
+Caches the output for this session.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Session
 Aliases:
 
 Required: False
@@ -121,14 +139,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.String containing a character name.
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-
-[Add-ScopeLevel.ps1]()
-
-[Get-UnicodeByName.ps1]()
-

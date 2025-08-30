@@ -13,7 +13,7 @@ Provides details about a retrieving a URI.
 ## SYNTAX
 
 ```
-Trace-WebRequest.ps1 [-Uri] <Uri> [-Method <HttpMethod>] [-LogFile <String>] [-SkipContent]
+Trace-WebRequest.ps1 [-Uri] <Uri> [-Method <HttpMethod>] [-LogFile <String>] [-SkipHeaders] [-SkipContent]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -165,6 +165,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SkipHeaders
+Indicates headers shouldn't be output.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

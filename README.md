@@ -3,7 +3,7 @@ Useful General-Purpose Scripts
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3485_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3334_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -12,7 +12,7 @@ red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub issues badge](https://badgen.net/github/open-issues/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/issues "Issues")
 [![GitHub commits badge](https://badgen.net/github/commits/brianary/Scripts/main?icon=git)](https://github.com/brianary/scripts/commits/main "Commits")
 [![GitHub last commit badge](https://badgen.net/github/last-commit/brianary/Scripts/main?icon=git)](https://github.com/brianary/scripts/commits/main "Last commit")
-[![Mastodon: @dataelemental@tilde.zone](https://badgen.net/badge/@dataelemental/@tilde.zone/blue?icon=mastodon)](https://tilde.zone/@dataelemental "DataElemental Mastodon profile")
+[![Mastodon: @dataelemental@mastodon.social](https://badgen.net/badge/@dataelemental/@mastodon.social/blue?icon=mastodon)](https://mastodon.social/@dataelemental "DataElemental Mastodon profile")
 [![Mastodon: @brianary@mastodon.spotek.io](https://badgen.net/mastodon/follow/brianary@mastodon.spotek.io?icon=mastodon)](https://mastodon.spotek.io/@brianary "Mastodon profile")
 
 [pester.yml]: https://github.com/brianary/scripts/actions/workflows/pester.yml "Pester test run history"
@@ -34,8 +34,9 @@ PowerShell Scripts
 - **[Get-CommandParameters.ps1](Get-CommandParameters.ps1)**: Returns the parameters of the specified cmdlet.
 - **[Get-CommandPath.ps1](Get-CommandPath.ps1)**: Locates a command.
 - **[Hide-Command.ps1](Hide-Command.ps1)**: Make a command unavailable.
+- **[Invoke-CachedCommand.ps1](Invoke-CachedCommand.ps1)**: Caches the output of a command for recall if called again.
 - **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1)**: Execute a command by using matching dictionary entries as parameters.
-- :up: **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
+- **[Use-Command.ps1](Use-Command.ps1)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 
 ### Configuration
 
@@ -63,6 +64,7 @@ PowerShell Scripts
 ### Data
 
 - **[Limit-Digits.ps1](Limit-Digits.ps1)**: Rounds off a number to the requested number of digits.
+- **[Measure-Properties.ps1](Measure-Properties.ps1)**: Provides frequency details about the properties across objects in the pipeline.
 - **[Measure-Values.ps1](Measure-Values.ps1)**: Provides analysis of supplied values.
 
 ### Data encoding
@@ -182,6 +184,15 @@ PowerShell Scripts
 - **[Set-Json.ps1](Set-Json.ps1)**: Sets a property in a JSON string or file.
 - **[Show-OpenApiInfo.ps1](Show-OpenApiInfo.ps1)**: Displays metadata from an OpenAPI definition.
 
+### Markdown
+
+- **[Repair-MarkdownHeaders.ps1](Repair-MarkdownHeaders.ps1)**: Updates markdown content to replace level 1 & 2 ATX headers to Setext headers.
+
+### Mermaid Diagrams
+
+- **[Export-MermaidER.ps1](Export-MermaidER.ps1)**: Generates a Mermaid entity relation diagram for database tables.
+- **[Export-MermaidXY.ps1](Export-MermaidXY.ps1)**: Generates a Mermaid XY bar/line chart for the values of a series of properties.
+
 ### Notebooks
 
 - **[Add-NotebookCell.ps1](Add-NotebookCell.ps1)**: When run within a Polyglot Notebook, appends a cell to it.
@@ -201,6 +212,7 @@ PowerShell Scripts
 
 - **[Add-Counter.ps1](Add-Counter.ps1)**: Adds an incrementing integer property to each pipeline object.
 - **[Add-DynamicParam.ps1](Add-DynamicParam.ps1)**: Adds a dynamic parameter to a script, within a DynamicParam block.
+- :up: **[Add-NugetPackage.ps1](Add-NugetPackage.ps1)**: Loads a NuGet package DLL, downloading as needed.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1)**: Convert a scope level to account for another call stack level.
 - **[ForEach-Progress.ps1](ForEach-Progress.ps1)**: Performs an operation against each item in a collection of input objects, with a progress bar.
 - **[Format-ByteUnits.ps1](Format-ByteUnits.ps1)**: Converts bytes to largest possible units, to improve readability.
@@ -212,7 +224,7 @@ PowerShell Scripts
 - **[Merge-PSObject.ps1](Merge-PSObject.ps1)**: Create a new PSObject by recursively combining the properties of PSObjects.
 - **[Read-Choice.ps1](Read-Choice.ps1)**: Returns choice selected from a list of options.
 - **[Stop-ThrowError.ps1](Stop-ThrowError.ps1)**: Throws a better error than "throw".
-- **[Test-Administrator.ps1](Test-Administrator.ps1)**: Checks whether the current session has administrator privileges.
+- :up: **[Test-Administrator.ps1](Test-Administrator.ps1)**: Checks whether the current session has administrator privileges.
 - **[Test-Interactive.ps1](Test-Interactive.ps1)**: Determines whether both the user and process are interactive.
 - **[Test-Range.ps1](Test-Range.ps1)**: Returns true from an initial condition until a terminating condition; a latching test.
 - **[Test-Variable.ps1](Test-Variable.ps1)**: Indicates whether a variable has been defined.
@@ -222,6 +234,7 @@ PowerShell Scripts
 
 ### PowerShell Modules
 
+- **[Get-ModuleScope.ps1](Get-ModuleScope.ps1)**: Returns the scope of an installed module.
 - **[Uninstall-OldModules.ps1](Uninstall-OldModules.ps1)**: Uninstalls old module versions.
 - **[Update-Modules.ps1](Update-Modules.ps1)**: Cleans up old modules.
 
@@ -237,8 +250,9 @@ PowerShell Scripts
 - **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1)**: Convert a CimInstance object to a PSObject.
 - **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1)**: Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
 - **[Copy-SchTasks.ps1](Copy-SchTasks.ps1)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
-- :new: **[Get-SimpleSchTasks.ps1](Get-SimpleSchTasks.ps1)**: Returns simple scheduled task info.
+- **[Get-SimpleSchTasks.ps1](Get-SimpleSchTasks.ps1)**: Returns simple scheduled task info.
 - **[Restore-SchTasks.ps1](Restore-SchTasks.ps1)**: Imports from a single XML file into the local Scheduled Tasks.
+- **[Set-SchTaskMsa.ps1](Set-SchTaskMsa.ps1)**: Sets a Scheduled Task's runtime user as the given gMSA/MSA.
 
 ### Scripts
 
@@ -247,7 +261,7 @@ PowerShell Scripts
 - **[Optimize-Help.ps1](Optimize-Help.ps1)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
 - **[Rename-Script.ps1](Rename-Script.ps1)**: Renames all instances of a script, and updates any usage of it.
 - **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
-- :new: **[Select-ScriptCommands.ps1](Select-ScriptCommands.ps1)**: Returns the commands used by the specified script.
+- **[Select-ScriptCommands.ps1](Select-ScriptCommands.ps1)**: Returns the commands used by the specified script.
 
 ### Search and replace
 
@@ -271,7 +285,8 @@ PowerShell Scripts
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1)**: Collects some useful system hardware and operating system details via CIM.
 - **[Import-EdgeKeywords.ps1](Import-EdgeKeywords.ps1)**: Adds search keywords to an Edge SQLite profile configuration.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1)**: Retrieves the a summary from the Chocolatey log.
-- **[Update-Everything.ps1](Update-Everything.ps1)**: Updates everything it can on the system.
+- :new: **[Show-Status.ps1](Show-Status.ps1)**: Displays requested system status values using powerline font characters.
+- :up: **[Update-Everything.ps1](Update-Everything.ps1)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1)**: Switch the Java version for the current process by modifying environment variables.
 
 ### TLS/SSL
@@ -287,7 +302,7 @@ PowerShell Scripts
 - **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
 - **[Get-UnicodeData.ps1](Get-UnicodeData.ps1)**: Returns the current (cached) Unicode character data.
 - **[Get-UnicodeName.ps1](Get-UnicodeName.ps1)**: Returns the name of a Unicode code point.
-- **[Import-CharConstants.ps1](Import-CharConstants.ps1)**: Imports characters by name as constants into the current scope.
+- :up: **[Import-CharConstants.ps1](Import-CharConstants.ps1)**: Imports characters by name as constants into the current scope.
 
 ### VSCode
 
@@ -321,14 +336,14 @@ PowerShell Scripts
 - **[Connect-SshKey.ps1](Connect-SshKey.ps1)**: Uses OpenSSH to generate a key and connect it to an ssh server.
 - **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1)**: Convert a number to a Roman numeral.
 - **[Copy-Html.ps1](Copy-Html.ps1)**: Copies objects as an HTML table.
-- **[Export-MermaidER.ps1](Export-MermaidER.ps1)**: Generates a Mermaid entity relation diagram for database tables.
-- **[Export-Readme.ps1](Export-Readme.ps1)**: Generate README.md file for the scripts repo.
+- :up: **[Export-Readme.ps1](Export-Readme.ps1)**: Generate README.md file for the scripts repo.
 - **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Get-ADServiceAccountInfo.ps1](Get-ADServiceAccountInfo.ps1)**: Lists the Global Managed Service Accounts for the domain, including the computers they are bound to.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-Dns.ps1](Get-Dns.ps1)**: Looks up DNS info, given a hostname or address.
 - **[Get-GitHubRepoChildItem.ps1](Get-GitHubRepoChildItem.ps1)**: Gets the items and child items in one or more specified locations.
 - **[Get-IisLog.ps1](Get-IisLog.ps1)**: Easily query IIS logs.
+- **[Get-PathUsage.ps1](Get-PathUsage.ps1)**: Returns the list of directories in the path, and the commands found in each.
 - **[Get-PocketArticles.ps1](Get-PocketArticles.ps1)**: Retrieves a list of saved articles from a Pocket account.
 - **[Get-RandomBytes.ps1](Get-RandomBytes.ps1)**: Returns random bytes.
 - **[Get-Todos.ps1](Get-Todos.ps1)**: Returns the TODOs for the current git repo, which can help document technical debt.
@@ -343,7 +358,7 @@ PowerShell Scripts
 - **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1)**: Downloads enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1)**: Scan sites using Mozilla's Observatory.
-- **[Write-CallInfo.ps1](Write-CallInfo.ps1)**: Prints caller name and parameters to the host for debugging purposes.
+- :up: **[Write-CallInfo.ps1](Write-CallInfo.ps1)**: Prints caller name and parameters to the host for debugging purposes.
 - **[Write-VisibleString.ps1](Write-VisibleString.ps1)**: Displays a string, showing nonprintable characters.
 
 F# Scripts
@@ -358,4 +373,4 @@ Office VBA Scripts
 - **[OutlookPasteFormattedIndented.vba](OutlookPasteFormattedIndented.vba)**: Outlook will strip single-space indents when displaying emails. If you've got, for example, syntax highlighted source code that employs any indentation of only one space, you'll want to add two spaces to the each line (adding one will not appear for text that isn't indented). This Outlook script will paste formatted text, and indent it. Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 - **[OutlookPasteTsvTable.vba](OutlookPasteTsvTable.vba)**: This Outlook VBA Sub can be connected to a toolbar button for pasting TSV data as an attractive, formatted table. -BL Requires Tools -> References -> Microsoft Word 14.0 Object Library (later versions may also work) 
 
-<!-- generated 04/29/2025 21:45:00 -->
+<!-- generated 08/29/2025 21:45:51 -->

@@ -13,7 +13,7 @@ Retrieves a list of saved articles from a Pocket account.
 ## SYNTAX
 
 ```
-Get-PocketArticles.ps1 [-After] <DateTime> [-Before] <DateTime> [[-Search] <String>] [-Domain <String>]
+Get-PocketArticles.ps1 [-After] <DateTime> [[-Before] <DateTime>] [[-Search] <String>] [-Domain <String>]
  [-State <String>] [-Tag <String>] [-Sort <String>] [-ContentType <String>] [-Vault <String>] [-Favorite]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
@@ -67,7 +67,7 @@ Type: DateTime
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 3
 Default value: None
 Accept pipeline input: False
