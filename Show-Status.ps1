@@ -30,7 +30,9 @@ Show-Status.ps1 UserName HomeDirectory -Separator ' * '
 # The foreground console color to use.
 [consolecolor] $ForegroundColor = $host.UI.RawUI.BackgroundColor,
 # The background console color to use.
-[consolecolor] $BackgroundColor = $host.UI.RawUI.ForegroundColor
+[consolecolor] $BackgroundColor = $host.UI.RawUI.ForegroundColor,
+# Forces rerunning the command to update the cache.
+[switch] $Force
 )
 Begin
 {
@@ -81,9 +83,14 @@ Begin
             PowerShellVersion {"$([char]0xE86C) PS $($PSVersionTable.PSVersion) $($PSVersionTable.PSEdition)"}
             Updates
             {
+                $winget = (Get-Module Microsoft.WinGet.Client -ListAvailable) ?
+                    { Get-WinGetPackage |Where-Object IsUpdateAvailable }:
+                    { winget list --upgrade-available --disable-interactivity |Select-String '^\d+ upgrades? available.$' }
                 ${UP!} + ' ' + (@(
-                    ((Get-Command choco -ErrorAction Ignore) -and $(Invoke-CachedCommand.ps1 { choco outdated -r } -ExpiresAfter 20:00)) ? 'choco' : $null
-                    ((Get-Command winget -ErrorAction Ignore) -and $(Invoke-CachedCommand.ps1 { winget list --upgrade-available } -ExpiresAfter 20:00)) ? 'winget' : $null
+                    ((Get-Command choco -ErrorAction Ignore) -and
+                        (Invoke-CachedCommand.ps1 { choco outdated -r } -ExpiresAfter 20:00 -Force:$Force)) ? 'choco' : $null
+                    ((Get-Command winget -ErrorAction Ignore) -and
+                        (Invoke-CachedCommand.ps1 $winget -ExpiresAfter 20:00 -Force:$Force)) ? 'winget' : $null
                 ) |Where-Object {$_}) -join ' '
             }
             Uptime {"$POWER$(Get-Uptime)"}
