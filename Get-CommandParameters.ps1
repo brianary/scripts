@@ -14,13 +14,17 @@ Get-Command
 .EXAMPLE
 Get-CommandParameters.ps1 Write-Verbose
 
-Name            : Message
-ParameterType   : System.String
-ParameterSets   : {[__AllParameterSets, System.Management.Automation.ParameterSetMetadata]}
-IsDynamic       : False
-Aliases         : {Msg}
-Attributes      : {, System.Management.Automation.AllowEmptyStringAttribute, System.Management.Automation.AliasAttribute}
-SwitchParameter : False
+CommandName                     : Write-Verbose
+ParameterName                   : Message
+ParameterType                   : System.String
+TypeAlias                       : string
+ParameterSets                   : {__AllParameterSets}
+Mandatory                       : True
+Position                        : 0
+ValueFromPipelineByPropertyName : False
+ValueFromPipeline               : True
+SwitchParameter                 : False
+IsDynamic                       : False
 
 .EXAMPLE
 Get-CommandParameters.ps1 Out-Default -NamesOnly
@@ -34,7 +38,7 @@ InputObject
 [OutputType([string])]
 Param(
 # The name of a cmdlet.
-[Parameter(Position=0,Mandatory=$true)][string] $CommandName,
+[Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('Name')][string] $CommandName,
 # The name of a parameter set defined by the cmdlet.
 [string] $ParameterSet,
 # Return only the parameter names (otherwise)
@@ -51,6 +55,40 @@ Begin
 			[string[]][System.Management.Automation.PSCmdlet]::CommonParameters +
 				[string[]][System.Management.Automation.PSCmdlet]::OptionalCommonParameters
 		}
+	$typeAlias = @{}
+	Get-TypeAccelerators.ps1 |
+		Where-Object Alias -NotMatch '\d\d\z' |
+		ForEach-Object {$typeAlias[$_.Type.FullName] = $_.Alias}
+
+	filter ConvertFrom-ParameterMetadata
+	{
+		[CmdletBinding()] Param(
+		[Parameter(Position=0,Mandatory=$true)][string] $CommandName,
+		[Parameter(ValueFromPipelineByPropertyName=$true,Mandatory=$true)][string] $Name,
+		[Parameter(ValueFromPipelineByPropertyName=$true,Mandatory=$true)][type] $ParameterType,
+		[Parameter(ValueFromPipelineByPropertyName=$true,Mandatory=$true)]
+		[Collections.Generic.Dictionary[string,Management.Automation.ParameterSetMetadata]] $ParameterSets,
+		[Parameter(ValueFromPipelineByPropertyName=$true,Mandatory=$true)][bool] $IsDynamic,
+		[Parameter(ValueFromPipelineByPropertyName=$true)][string[]] $Aliases,
+		[Parameter(ValueFromPipelineByPropertyName=$true,Mandatory=$true)][attribute[]] $Attributes,
+		[Parameter(ValueFromPipelineByPropertyName=$true,Mandatory=$true)][bool] $SwitchParameter
+		)
+		$paramAtts = $Attributes |Where-Object {$_ -is [Management.Automation.ParameterAttribute]}
+		return [pscustomobject]@{
+			CommandName                     = $CommandName
+			ParameterName                   = $Name
+			ParameterType                   = $ParameterType
+			TypeAlias                       = $ParameterType.FullName -replace '(\A\w+(?:\.\w+)*)(\W+)?',
+				{$typeAlias.ContainsKey($_.Groups[1].Value) ? ($typeAlias[$_.Groups[1].Value]+$_.Groups[2].Value) : $_.Value}
+			ParameterSets                   = $ParameterSets.Keys
+			Mandatory                       = $paramAtts.Mandatory
+			Position                        = $paramAtts.Position
+			ValueFromPipelineByPropertyName = $paramAtts.ValueFromPipelineByPropertyName
+			ValueFromPipeline               = $paramAtts.ValueFromPipeline
+			SwitchParameter                 = $SwitchParameter
+			IsDynamic                       = $IsDynamic
+		}
+	}
 }
 Process
 {
@@ -63,7 +101,7 @@ Process
 			Select-Object -ExpandProperty Parameters |
 			Where-Object Name -notin $excludeParams
 		if($NamesOnly) {return $params |Select-Object -ExpandProperty Name}
-		else {return $params}
+		else {return $params |ConvertFrom-ParameterMetadata $CommandName}
 	}
 	else
 	{
@@ -72,7 +110,7 @@ Process
 		{
 			return $cmd.Parameters.Keys |
 				Where-Object {$_ -notin $excludeParams} |
-				ForEach-Object {$cmd.Parameters[$_]}
+				ForEach-Object {$cmd.Parameters[$_] |ConvertFrom-ParameterMetadata $CommandName}
 		}
 	}
 }
