@@ -45,6 +45,8 @@ Begin
         POWER      = 'POWER SYMBOL'
         HARDDISK   = 'HARD DISK'
         OVERLAP    = 'OVERLAP'
+        REDX       = 'CROSS MARK'
+        OK         = 'SQUARED OK'
         'UP!'      = 'SQUARED UP WITH EXCLAMATION MARK'
     } -AsEmoji
     filter Format-Status
@@ -71,7 +73,9 @@ Begin
                     Select-Object -ExpandProperty User
                 "$OVERLAP $euser"
             }
-            GitUser {"$([char]0xF1D2) $(git config user.name) <$(git config user.email)>"}
+            GitUser {(git config user.name) ?
+                "$([char]0xF1D2) $(git config user.name) <$(git config user.email)>" :
+                "$([char]0xF1D2) $REDX"}
             HomeDirectory {"$HOUSE $HOME"}
             OSVersion
             {
@@ -86,12 +90,13 @@ Begin
                 $winget = (Get-Module Microsoft.WinGet.Client -ListAvailable) ?
                     { Get-WinGetPackage |Where-Object IsUpdateAvailable }:
                     { winget list --upgrade-available --disable-interactivity |Select-String '^\d+ upgrades? available.$' }
-                ${UP!} + ' ' + (@(
+                $updates = @(
                     ((Get-Command choco -ErrorAction Ignore) -and
                         (Invoke-CachedCommand.ps1 { choco outdated -r } -ExpiresAfter 20:00 -Force:$Force)) ? 'choco' : $null
                     ((Get-Command winget -ErrorAction Ignore) -and
                         (Invoke-CachedCommand.ps1 $winget -ExpiresAfter 20:00 -Force:$Force)) ? 'winget' : $null
-                ) |Where-Object {$_}) -join ' '
+                ) |Where-Object {$_}
+                $updates ? "${UP!} $updates" : $OK
             }
             Uptime {"$POWER$(Get-Uptime)"}
             UserName {"$USER $env:USERNAME"}
