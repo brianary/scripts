@@ -46,8 +46,11 @@ Begin
         [Parameter(Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][Alias('Key')][string] $Alias,
         [Parameter(Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][Alias('Value')][string] $CharacterName
         )
+        $name = $Alias.Trim(':')
         $char = $CharacterName -eq 'NL' ? [Environment]::NewLine : (Get-UnicodeByName.ps1 -Name $CharacterName -AsEmoji:$AsEmoji)
-        Set-Variable -Name ($Alias.Trim(':')) -Value $char -Scope $level -Option Constant -Description $CharacterName
+        $existing = Get-Variable -Name $name -Scope $level -ErrorAction Ignore
+        if($existing -and ($existing.Options -eq 'Constant') -and ($existing.Value -eq $char)) {return}
+        Set-Variable -Name $name -Value $char -Scope $level -Option Constant -Description $CharacterName
     }
 }
 Process
