@@ -49,6 +49,43 @@ Begin
         OK         = 'SQUARED OK'
         'UP!'      = 'SQUARED UP WITH EXCLAMATION MARK'
     } -AsEmoji
+
+    function Get-WinGetTest
+    {
+        if(Get-Module Microsoft.WinGet.Client -ListAvailable)
+        {{
+            if(Get-WinGetPackage |
+                Where-Object IsUpdateAvailable |
+                Select-Object -First 1) {'winget'}
+        }}
+        elseif(Get-Command winget -CommandType Application -ErrorAction Ignore)
+        {{
+            if(winget list --upgrade-available --disable-interactivity |
+                Select-String '^\d+ upgrades? available.$' |
+                Select-Object -First 1) {'winget'}
+        }}
+        else
+        {{$null}}
+    }
+
+    function Get-ChocoTest
+    {{
+        if(Get-Command choco -CommandType Application -ErrorAction Ignore)
+        {
+            if(choco outdated -r |Select-Object -First 1) {'choco'}
+        }
+    }}
+
+    function Get-PSModulesTest
+    {{
+        if(Get-Module -ListAvailable |
+            ForEach-Object -Parallel {
+                Find-Module $_.Name -EA Ignore |
+                Where-Object Version -gt $_.Version
+            } -ThrottleLimit 6 |
+            Select-Object -First 1) {'psmodules'}
+    }}
+
     filter Format-Status
     {
         [CmdletBinding()][OutputType([string])] Param(
@@ -87,14 +124,10 @@ Begin
             PowerShellVersion {"$([char]0xE86C) PS $($PSVersionTable.PSVersion) $($PSVersionTable.PSEdition)"}
             Updates
             {
-                $winget = (Get-Module Microsoft.WinGet.Client -ListAvailable) ?
-                    { Get-WinGetPackage |Where-Object IsUpdateAvailable }:
-                    { winget list --upgrade-available --disable-interactivity |Select-String '^\d+ upgrades? available.$' }
                 $updates = @(
-                    ((Get-Command choco -ErrorAction Ignore) -and
-                        (Invoke-CachedCommand.ps1 { choco outdated -r } -ExpiresAfter 20:00 -Force:$Force)) ? 'choco' : $null
-                    ((Get-Command winget -ErrorAction Ignore) -and
-                        (Invoke-CachedCommand.ps1 $winget -ExpiresAfter 20:00 -Force:$Force)) ? 'winget' : $null
+                    (Invoke-CachedCommand.ps1 (Get-ChocoTest) -ExpiresAfter 20:00 -Force:$Force)
+                    (Invoke-CachedCommand.ps1 (Get-WingetTest) -ExpiresAfter 20:00 -Force:$Force)
+                    (Invoke-CachedCommand.ps1 (Get-PSModulesTest) -ExpiresAfter 20:00 -Force:$Force)
                 ) |Where-Object {$_}
                 $updates ? "${UP!} $updates" : $OK
             }
