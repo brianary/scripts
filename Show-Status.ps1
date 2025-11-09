@@ -76,6 +76,14 @@ Begin
         }
     }}
 
+    function Get-NpmTest
+    {{
+        if(Get-Command npm -CommandType Application -ErrorAction Ignore)
+        {
+            if(npm outdated -g -parseable |Select-Object -First 1) {'npm'}
+        }
+    }}
+
     function Get-PSModulesTest
     {{
         if(Get-Module -ListAvailable |
@@ -127,6 +135,7 @@ Begin
                 $updates = @(
                     (Invoke-CachedCommand.ps1 (Get-ChocoTest) -ExpiresAfter 20:00 -Force:$Force)
                     (Invoke-CachedCommand.ps1 (Get-WingetTest) -ExpiresAfter 20:00 -Force:$Force)
+                    (Invoke-CachedCommand.ps1 (Get-NpmTest) -ExpiresAfter 20:00 -Force:$Force)
                     (Invoke-CachedCommand.ps1 (Get-PSModulesTest) -ExpiresAfter 20:00 -Force:$Force)
                 ) |Where-Object {$_}
                 $updates ? "${UP!} $updates" : $OK
