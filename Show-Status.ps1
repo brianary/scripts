@@ -86,12 +86,7 @@ Begin
 
     function Get-PSModulesTest
     {{
-        if(Get-Module -ListAvailable |
-            ForEach-Object -Parallel {
-                Find-Module $_.Name -EA Ignore |
-                Where-Object Version -gt $_.Version
-            } -ThrottleLimit 6 |
-            Select-Object -First 1) {'psmodules'}
+        if(Get-OutdatedModules.ps1 |Select-Object -First 1) {'psmodules'}
     }}
 
     filter Format-Status

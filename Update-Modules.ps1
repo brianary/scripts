@@ -4,17 +4,17 @@ Cleans up old modules.
 
 .FUNCTIONALITY
 PowerShell Modules
+
+.LINK
+Uninstall-OldModules.ps1
+
+.EXAMPLE
+Update-Modules.ps1
+
+Updates installed modules and purges old versions.
 #>
 
 #Requires -Version 3
-[CmdletBinding()][OutputType([void])] Param()
-
+[CmdletBinding()] Param()
 Update-Module -Force
-foreach($module in Get-Module -List |Group-Object Name |Where-Object Count -gt 1)
-{
-	$newestversion = $module.Group.Version |Sort-Object -Descending |Select-Object -First 1
-	foreach($oldmodule in $module.Group |Where-Object Version -lt $newestversion)
-	{
-		Uninstall-Module $oldmodule.Name -RequiredVersion $oldmodule.Version
-	}
-}
+Uninstall-OldModules.ps1
