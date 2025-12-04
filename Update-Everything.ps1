@@ -21,10 +21,19 @@ https://powershellgallery.com/
 https://chocolatey.org/
 
 .LINK
+https://scoop.sh/
+
+.LINK
 https://npmjs.com/
 
 .LINK
 https://docs.microsoft.com/dotnet/core/tools/global-tools
+
+.LINK
+https://cli.github.com/
+
+.LINK
+https://code.visualstudio.com/
 
 .LINK
 https://www.dell.com/support/kbdoc/000177325/dell-command-update
