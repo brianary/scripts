@@ -50,6 +50,38 @@ Begin
         WAIT       = 'HOURGLASS WITH FLOWING SAND'
         'UP!'      = 'SQUARED UP WITH EXCLAMATION MARK'
     } -AsEmoji
+    if(Test-WindowsTerminal.ps1)
+    {
+        Set-Variable -Name LEFTEND -Value (Get-Unicode.ps1 0xE0B6) -Scope Script -Option Constant -EA Ignore `
+            -Description 'nf-ple-left_half_circle_thick (wt)'
+        Set-Variable -Name RIGHTEND -Value (Get-Unicode.ps1 0xE0B4) -Scope Script -Option Constant -EA Ignore `
+            -Description 'nf-ple-right_half_circle_thick (wt)'
+        Set-Variable -Name DOTNET -Value (Get-Unicode.ps1 0xE77F) -Scope Script -Option Constant -EA Ignore `
+            -Description 'nf-dev-dotnet (wt)'
+        Set-Variable -Name GIT -Value (Get-Unicode.ps1 0xF1D2) -Scope Script -Option Constant -EA Ignore `
+            -Description 'nf-fa-git_square (wt)'
+        Set-Variable -Name WINDOWS -Value (Get-Unicode.ps1 0xF17A) -Scope Script -Option Constant -EA Ignore `
+            -Description 'nf-fa-windows (wt)'
+        Set-Variable -Name LINUX -Value (Get-Unicode.ps1 0xF17C) -Scope Script -Option Constant -EA Ignore `
+            -Description 'nf-fa-linux (wt)'
+        Set-Variable -Name MAC -Value (Get-Unicode.ps1 0xF179) -Scope Script -Option Constant -EA Ignore `
+            -Description 'nf-fa-apple (wt)'
+        Set-Variable -Name POWERSHELL -Value (Get-Unicode.ps1 0xE86C) -Scope Script -Option Constant -EA Ignore `
+            -Description 'nf-dev-powershell (wt)'
+    }
+    else
+    {
+        Import-CharConstants.ps1 -Alias @{
+            LEFTEND    = 'BLACK MEDIUM LEFT-POINTING TRIANGLE'
+            RIGHTEND   = 'BLACK MEDIUM RIGHT-POINTING TRIANGLE'
+            DOTNET     = 'SINE WAVE'
+            GIT        = 'CIRCLED LATIN SMALL LETTER G'
+            WINDOWS    = 'WINDOW'
+            LINUX      = 'PENGUIN'
+            MAC        = 'RED APPLE'
+            POWERSHELL = 'SUPERHERO'
+        } -AsEmoji
+    }
 
     function Get-WinGetTest
     {
@@ -99,7 +131,7 @@ Begin
         {
             AdminIndicator { (Test-Administrator.ps1) ? $REDCIRCLE : $BLUECIRCLE }
             ComputerName {"$COMPUTER $([Environment]::MachineName)"}
-            DotNetVersion {"$([char]0xE77F) .NET $([Environment]::Version)"}
+            DotNetVersion {"$DOTNET .NET $([Environment]::Version)"}
             DriveUsage
             {
                 $HARDDISK + ' ' + ((Get-PSDrive -PSProvider FileSystem |Where-Object {$null -ne $_.Free} |
@@ -115,17 +147,17 @@ Begin
                 "$OVERLAP $euser"
             }
             GitUser {(git config user.name) ?
-                "$([char]0xF1D2) $(git config user.name) <$(git config user.email)>" :
-                "$([char]0xF1D2) $REDX"}
+                "$GIT $(git config user.name) <$(git config user.email)>" :
+                "$GIT $REDX"}
             HomeDirectory {"$HOUSE $HOME"}
             OSVersion
             {
-                if($IsWindows) {"$([char]0xF17A) $([Environment]::OSVersion.VersionString)"}
-                elseif($IsLinux) {"$([char]0xF17C) $([Environment]::OSVersion.VersionString) $($PSVersionTable.OS)"}
-                elseif($IsMacOS) {"$([char]0xF179) $([Environment]::OSVersion.VersionString) $($PSVersionTable.OS)"}
+                if($IsWindows) {"$WINDOWS $([Environment]::OSVersion.VersionString)"}
+                elseif($IsLinux) {"$LINUX $([Environment]::OSVersion.VersionString) $($PSVersionTable.OS)"}
+                elseif($IsMacOS) {"$MAC $([Environment]::OSVersion.VersionString) $($PSVersionTable.OS)"}
             }
-            PowerShellCommand {"$([char]0xE86C) $([Environment]::ProcessPath) $([Environment]::CommandLine)"}
-            PowerShellVersion {"$([char]0xE86C) PS $($PSVersionTable.PSVersion) $($PSVersionTable.PSEdition)"}
+            PowerShellCommand {"$POWERSHELL $([Environment]::ProcessPath) $([Environment]::CommandLine)"}
+            PowerShellVersion {"$POWERSHELL PS $($PSVersionTable.PSVersion) $($PSVersionTable.PSEdition)"}
             Updates
             {
                 $updates = @(
@@ -144,12 +176,12 @@ Begin
 }
 Process
 {
-	Write-Info.ps1 (Get-Unicode.ps1 0xE0B6) -ForegroundColor $BackgroundColor -NoNewline
+	Write-Info.ps1 $LEFTEND -ForegroundColor $BackgroundColor -NoNewLine
 	Write-Info.ps1 " $WAIT " -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
-	Write-Info.ps1 (Get-Unicode.ps1 0xE0B4) -fore $BackgroundColor -NoNewLine
-	Write-Info.ps1 "`b`b`b`b" -NoNewline
+	Write-Info.ps1 $RIGHTEND -ForegroundColor $BackgroundColor -NoNewLine
+	Write-Info.ps1 (New-Object string "`b",($RIGHTEND.Length+2)) -NoNewline
 	Write-Info.ps1 (($Status |Format-Status) -join $Separator) `
 		-ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
 	Write-Info.ps1 ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
-	Write-Info.ps1 (Get-Unicode.ps1 0xE0B4) -fore $BackgroundColor
+	Write-Info.ps1 $RIGHTEND -ForegroundColor $BackgroundColor
 }
