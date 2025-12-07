@@ -47,6 +47,7 @@ Begin
         OVERLAP    = 'OVERLAP'
         REDX       = 'CROSS MARK'
         OK         = 'SQUARED OK'
+        WAIT       = 'HOURGLASS WITH FLOWING SAND'
         'UP!'      = 'SQUARED UP WITH EXCLAMATION MARK'
     } -AsEmoji
 
@@ -144,7 +145,9 @@ Begin
 Process
 {
 	Write-Info.ps1 (Get-Unicode.ps1 0xE0B6) -ForegroundColor $BackgroundColor -NoNewline
-	Write-Info.ps1 ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
+	Write-Info.ps1 " $WAIT " -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
+	Write-Info.ps1 (Get-Unicode.ps1 0xE0B4) -fore $BackgroundColor -NoNewLine
+	Write-Info.ps1 "`b`b`b" -NoNewline
 	Write-Info.ps1 (($Status |Format-Status) -join $Separator) `
 		-ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
 	Write-Info.ps1 ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
