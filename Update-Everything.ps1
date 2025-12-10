@@ -154,21 +154,21 @@ Begin
 		[CmdletBinding()] Param()
 		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping Essential."; return}
 		Write-Step "$([char]0xD83D)$([char]0xDD1C) Checking for essential updates"
-		if(Get-Command choco -ErrorAction Ignore)
+		if(Get-Command winget -ErrorAction Ignore)
+		{
+			if(@(winget list -e --id Microsoft.WindowsTerminal -s winget --upgrade-available --disable-interactivity --nowarn |
+				Select-Object -Skip 2 -First 1 |
+				Select-String Available &&
+				winget list -e --id Microsoft.PowerShell -s winget --upgrade-available --disable-interactivity --nowarn |
+				Select-Object -Skip 2 -First 1 |
+				Select-String Available).Count -gt 0)
+			{Invoke-EssentialUpdate}
+		}
+		elseif(Get-Command choco -ErrorAction Ignore)
 		{
 			if(choco outdated -r |
 				ConvertFrom-Csv -Delimiter '|' -Header PackageName,LocalVersion,AvailableVersion |
 				Where-Object PackageName -in powershell,powershell-core,microsoft-windows-terminal)
-			{Invoke-EssentialUpdate}
-		}
-		elseif(Get-Command winget -ErrorAction Ignore)
-		{
-			if(@(winget list Microsoft.WindowsTerminal |
-				Select-Object -Skip 2 -First 1 |
-				Select-String Available &&
-				winget list Microsoft.PowerShell |
-				Select-Object -Skip 2 -First 1 |
-				Select-String Available).Count -gt 0)
 			{Invoke-EssentialUpdate}
 		}
 		else
