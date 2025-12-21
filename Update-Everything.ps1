@@ -99,11 +99,11 @@ Justification='This script is not intended for pipelining.')]
 Justification='Some of these functions may deal with multiple updates.')]
 [CmdletBinding()] Param(
 # The sources of updates to install, in order.
-[ValidateSet('Chocolatey','DellCommand','Dotnet','Essential','GitHubCli','Npm','ScriptsData',
+[ValidateSet('Apt','Chocolatey','DellCommand','Dotnet','Essential','Flatpak','GitHubCli','Npm','ScriptsData',
 	'PSHelp','PSModule','Scoop','VSCodeExtenions','WindowsUpdate','WindowsStore','WinGet')]
 [Parameter(Position=0,ValueFromRemainingArguments=$true)][string[]] $Steps =
 	@('Essential','WindowsStore','PSModule','Scoop','Chocolatey','WinGet','Npm','Dotnet',
-		'GitHubCli','VSCodeExtensions','ScriptsData','PSHelp','DellCommand','WindowsUpdate')
+		'GitHubCli','VSCodeExtensions','ScriptsData','PSHelp','DellCommand','WindowsUpdate','Apt','Flatpak')
 )
 Begin
 {
@@ -115,6 +115,7 @@ Begin
 		[CmdletBinding()][OutputType([bool])] Param(
 		[switch] $Shared
 		)
+		if(!$IsWindows) {return}
 		if($Shared -and $Script:IsNotAdministrator) {return $false}
 		$dir = [environment]::GetFolderPath(($Shared ? 'CommonDesktopDirectory' : 'Desktop' ))
 		return !(Join-Path $dir *.lnk |Get-Item)
@@ -125,6 +126,7 @@ Begin
 		[CmdletBinding()] Param(
 		[switch] $Shared
 		)
+		if(!$IsWindows) {return}
 		if($Shared -and $Script:IsNotAdministrator) {return}
 		$dir = [environment]::GetFolderPath(($Shared ? 'CommonDesktopDirectory' : 'Desktop' ))
 		Remove-Item (Join-Path $dir *.lnk)
@@ -233,7 +235,7 @@ Begin
 	function Test-DbatoolsHasUpdate
 	{
 		[CmdletBinding()][OutputType([bool])] Param()
-		$version = Get-Module dbatools -ListAvailable |Measure-Object Version -Maximum
+		$version = @(Get-Module dbatools -ListAvailable |Measure-Object Version -Maximum)
 		if($version.Count -eq 0) {return}
 		if($version.Maximum -ge (Find-Module dbatools -Repository PSGallery).Version) {return}
 		$allUsers = (Get-ModuleScope.ps1 dbatools).Scope -eq 'AllUsers'
@@ -393,6 +395,31 @@ Begin
 		Write-Step "$UP Updating Windows"
 		Get-WindowsUpdate
 		Install-WindowsUpdate |Format-Table X,Result,KB,Size,Title
+	}
+
+	function Update-Apt
+	{
+		[CmdletBinding()] Param()
+		if(!$IsLinux) {return}
+		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping apt."; return}
+		if(!(Get-Command apt -Type Application -ErrorAction Ignore))
+		{Write-Verbose 'apt not found, skipping'; return}
+		Write-Step "$UP Updating apt packages"
+		apt update
+		#apt dist-upgrade -y
+		apt autoremove -y
+		apt autoclean -y
+	}
+
+	function Update-Flatpak
+	{
+		[CmdletBinding()] Param()
+		if(!$IsLinux) {return}
+		#if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping flatpak."; return}
+		if(!(Get-Command flatpak -Type Application -ErrorAction Ignore))
+		{Write-Verbose 'flatpak not found, skipping'; return}
+		Write-Step "$UP Updating flatpak packages"
+		flatpak update -y --noninteractive
 	}
 }
 Process
