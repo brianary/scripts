@@ -34,6 +34,9 @@ https://dbatools.io/
 .LINK
 https://wikipedia.org/wiki/Windows1252
 
+.LINK
+Invoke-DbaQuery
+
 .EXAMPLE
 $table = Get-DbaDbTable SqlServerName -Database DbName -Table TableName; Measure-DbColumn.ps1 $table.Columns['record_id']
 
@@ -114,17 +117,18 @@ November        : 2716
 December        : 2656
 #>
 
-#Requires -Version 3
-#Requires -Module SqlServer
+#Requires -Version 7
+using module dbatools
+using namespace Microsoft.SqlServer.Management.Smo
 [CmdletBinding(ConfirmImpact='Medium')][OutputType([Management.Automation.PSCustomObject])] Param(
 # An SMO column object associated to the database column to examine.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ParameterSetName='Column')]
-[Microsoft.SqlServer.Management.Smo.Column] $Column,
+[Column] $Column,
 # The name of the column to examine in the table associated with the SMO Table object.
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='ColumnName')][string] $ColumnName,
 # An SMO table object associated to the database to examine.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true,ParameterSetName='ColumnName')]
-[Microsoft.SqlServer.Management.Smo.Table] $Table,
+[Table] $Table,
 <#
 Conditions to be provided as a SQL WHERE clause to filter the column values to examine.
 Useful for databases that implement "soft deletes" as specific field values.
@@ -133,13 +137,13 @@ Useful for databases that implement "soft deletes" as specific field values.
 )
 Begin
 {
-    $SOQ = @'
+	$SOQ = @'
 select '{2}' ColumnName,
        '{3}' SqlType,
 '@
-    $EOQ = if(!$Condition) {' from [{0}].[{1}];'} else {" from [{0}].[{1}] where $Condition ;"}
-    $query = @{
-        Numeric = @"
+	$EOQ = if(!$Condition) {' from [{0}].[{1}];'} else {" from [{0}].[{1}] where $Condition ;"}
+	$query = @{
+		Numeric = @"
   with TopValues as (
 select top 1 with ties [{2}] value, count(*) #
   from [{0}].[{1}]
@@ -166,7 +170,7 @@ $SOQ
        stdev([{2}]) StandardDeviation
 $EOQ
 "@
-        DateTime = @"
+		DateTime = @"
   with TopValues as (
 select top 1 [{2}] value, count(*) #
   from [{0}].[{1}]
@@ -245,7 +249,7 @@ $SOQ
        sum(case datepart(m,[{2}]) when 12 then 1 end) December
 $EOQ
 "@
-        Temporal = @"
+		Temporal = @"
   with TopValues as (
 select top 1 [{2}] value, count(*) #
   from [{0}].[{1}]
@@ -262,7 +266,7 @@ $SOQ
        max([{2}]) MaximumValue
 $EOQ
 "@
-        String = @"
+		String = @"
   with TopValues as (
 select top 1 [{2}] value, count(*) #
   from [{0}].[{1}]
@@ -293,7 +297,7 @@ $SOQ
        cast(case when exists (select top 1 * from [{0}].[{1}] where ltrim(rtrim([{2}])) like '%[^0-9A-Za-z_]%') then 1 else 0 end as bit) HasNonAlphanumeric
 $EOQ
 "@
-        VariableLength = @"
+		VariableLength = @"
 $SOQ
        count([{2}]) [Values],
        sum(case when [{2}] is null then 1 else 0 end) NullValues,
@@ -303,50 +307,50 @@ $SOQ
        max(len([{2}])) MaximumLength
 $EOQ
 "@
-        Other = @"
+		Other = @"
 $SOQ
        count([{2}]) Values,
        sum(case when [{2}] is null then 1 else 0 end) NullValues
 $EOQ
 "@
-    }
-    $typeinfo = @{
-        bigint           = @('Numeric','{0}')
-        binary           = @('VariableLength','{0}({1})')
-        bit              = @('Other','{0}')
-        char             = @('String','{0}({1})')
-        cursor           = @('Other','{0}')
-        date             = @('Temporal','{0}')
-        datetime         = @('DateTime','{0}')
-        datetime2        = @('DateTime','{0}({3})')
-        datetimeoffset   = @('DateTime','{0}({3})')
-        decimal          = @('Numeric','{0}({2},{3})')
-        float            = @('Numeric','{0}')
-        geography        = @('Other','{0}')
-        geometry         = @('Other','{0}')
-        hierarchyid      = @('Other','{0}')
-        image            = @('Other','{0}')
-        int              = @('Numeric','{0}')
-        money            = @('Numeric','{0}')
-        nchar            = @('String','{0}({1})')
-        ntext            = @('Other','{0}')
-        numeric          = @('Numeric','{0}({2},{3})')
-        nvarchar         = @('String','{0}({1:0;max})')
-        real             = @('Numeric','{0}')
-        rowversion       = @('Other','{0}')
-        smalldatetime    = @('DateTime','{0}')
-        smallint         = @('Numeric','{0}')
-        smallmoney       = @('Numeric','{0}')
-        sql_variant      = @('VariableLength','{0}')
-        table            = @('Other','{0}')
-        text             = @('Other','{0}')
-        time             = @('Temporal','{0}')
-        tinyint          = @('Numeric','{0}')
-        uniqueidentifier = @('Other','{0}')
-        varbinary        = @('VariableLength','{0}({1:0;max})')
-        varchar          = @('String','{0}({1:0;max})')
-        xml              = @('VariableLength','{0}')
-    }
+	}
+	$typeinfo = @{
+		bigint           = @('Numeric','{0}')
+		binary           = @('VariableLength','{0}({1})')
+		bit              = @('Other','{0}')
+		char             = @('String','{0}({1})')
+		cursor           = @('Other','{0}')
+		date             = @('Temporal','{0}')
+		datetime         = @('DateTime','{0}')
+		datetime2        = @('DateTime','{0}({3})')
+		datetimeoffset   = @('DateTime','{0}({3})')
+		decimal          = @('Numeric','{0}({2},{3})')
+		float            = @('Numeric','{0}')
+		geography        = @('Other','{0}')
+		geometry         = @('Other','{0}')
+		hierarchyid      = @('Other','{0}')
+		image            = @('Other','{0}')
+		int              = @('Numeric','{0}')
+		money            = @('Numeric','{0}')
+		nchar            = @('String','{0}({1})')
+		ntext            = @('Other','{0}')
+		numeric          = @('Numeric','{0}({2},{3})')
+		nvarchar         = @('String','{0}({1:0;max})')
+		real             = @('Numeric','{0}')
+		rowversion       = @('Other','{0}')
+		smalldatetime    = @('DateTime','{0}')
+		smallint         = @('Numeric','{0}')
+		smallmoney       = @('Numeric','{0}')
+		sql_variant      = @('VariableLength','{0}')
+		table            = @('Other','{0}')
+		text             = @('Other','{0}')
+		time             = @('Temporal','{0}')
+		tinyint          = @('Numeric','{0}')
+		uniqueidentifier = @('Other','{0}')
+		varbinary        = @('VariableLength','{0}({1:0;max})')
+		varchar          = @('String','{0}({1:0;max})')
+		xml              = @('VariableLength','{0}')
+	}
 }
 Process
 {
@@ -356,19 +360,27 @@ Process
 		$Column = $Table.Columns[$ColumnName]
 		if(!$Column) {Stop-ThrowError.ps1 "Column '$ColumnName' not found in table '$($Table.Name)'" -Argument ColumnName}
 	}
-    $datatype = $Column.DataType
-    $querytype,$typefmt = $typeinfo[$datatype.Name]
-    $table = $Column.Parent
+	$table = $Column.Parent
 	$fqtn = "$($table.Parent.Parent.Name).$($table.Parent.Name).$($table.Name)"
-	$sql = $query[$querytype] -f $table.Schema,$table.Name,$ColumnName,
-		($typefmt -f $datatype.Name,$datatype.MaximumLength,$datatype.NumericPrecision,$datatype.NumericScale)
+	$datatype = $Column.DataType
+  if($datatype.SqlDataType -eq [Microsoft.SqlServer.Management.Smo.SqlDataType]::UserDefinedDataType)
+  {
+    $systemtype = $table.Parent.UserDefinedDataTypes[$datatype.Name].SystemType
+    $querytype,$typefmt = $typeinfo[$systemtype]
+    $typefmt = "$($datatype.Name) = $typefmt"
+    $sql = $query[$querytype] -f $table.Schema,$table.Name,$ColumnName,
+      ($typefmt -f $systemtype,$datatype.MaximumLength,$datatype.NumericPrecision,$datatype.NumericScale)
+  }
+  else
+  {
+    $querytype,$typefmt = $typeinfo[$datatype.Name]
+    $sql = $query[$querytype] -f $table.Schema,$table.Name,$ColumnName,
+      ($typefmt -f $datatype.Name,$datatype.MaximumLength,$datatype.NumericPrecision,$datatype.NumericScale)
+  }
 	Write-Verbose "SQL: $sql"
-    @{
-        Query = $sql
-        Database = $table.Parent.Name
-        ServerInstance = $table.Parent.Parent.Name
-	} |
-        Where-Object {$PSCmdlet.ShouldProcess("column $fqtn.$ColumnName","query $($table.RowCount) rows")} |
-        ForEach-Object {Invoke-Sqlcmd @_} |
-        ConvertFrom-DataRow.ps1
+	if($PSCmdlet.ShouldProcess("column $fqtn.$ColumnName","query $($table.RowCount) rows"))
+	{
+		Invoke-DbaQuery -Query $sql -As PSObject -Database $table.Parent.Name `
+			-SqlInstance (Connect-DbaInstance -Connstring $table.Parent.Parent.ConnectionContext.ToString())
+	}
 }

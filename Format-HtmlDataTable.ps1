@@ -18,7 +18,7 @@ ConvertTo-Html
 https://www.w3.org/Bugs/Public/show_bug.cgi?id=18026
 
 .EXAMPLE
-Invoke-Sqlcmd "..." |ConvertFrom-DataRow.ps1 |ConvertTo-Html |Format-HtmlDataTable.ps1
+Import-Csv file.csv |ConvertTo-Html |Format-HtmlDataTable.ps1
 
 Runs the query, parses each row into an HTML row, then fixes the alignment of numeric cells.
 

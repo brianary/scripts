@@ -15,44 +15,32 @@ System.Management.Automation.PSCustomObject for each found column:
 .FUNCTIONALITY
 Database
 
-.COMPONENT
-System.Configuration
+.LINK
+https://dbatools.io/
 
 .LINK
-ConvertFrom-DataRow.ps1
+Invoke-DbaQuery
 
 .LINK
 Stop-ThrowError.ps1
 
-.LINK
-Invoke-Sqlcmd
-
 .EXAMPLE
-Find-DbColumn.ps1 -ServerInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016 -IncludeColumns %price% |Format-Table -AutoSize
+Find-DbColumn.ps1 -SqlInstance '(localdb)\ProjectsV13' -Database AdventureWorks2016 -IncludeColumns %price% |Format-Table -AutoSize
 
-TableSchema TableName               ColumnName        DataType Nullable DefaultValue
------------ ---------               ----------        -------- -------- ------------
-Production  Product                 ListPrice         money       False
-Production  ProductListPriceHistory ListPrice         money       False
-Purchasing  ProductVendor           StandardPrice     money       False
-Purchasing  PurchaseOrderDetail     UnitPrice         money       False
-Sales       SalesOrderDetail        UnitPrice         money       False
-Sales       SalesOrderDetail        UnitPriceDiscount money       False ((0.0))
+TableSchema TableName        ColumnName        DataType Nullable DefaultValue
+----------- ---------        ----------        -------- -------- ------------
+SalesLT     Product          ListPrice         money       False
+SalesLT     SalesOrderDetail UnitPrice         money       False
+SalesLT     SalesOrderDetail UnitPriceDiscount money       False ((0.0))
 #>
 
-#Requires -Version 3
+#Requires -Version 7
+using module dbatools
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
-# The server and instance to connect to.
-[Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string] $ServerInstance,
-# The database to use.
-[Parameter(ParameterSetName='ByConnectionParameters',Mandatory=$true)][string] $Database,
-# Specifies a connection string to connect to the server.
-[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string] $ConnectionString,
-# Specifies an SMO Database object to query.
-[Parameter(ParameterSetName='ByDatabase',Mandatory=$true)]
-[Microsoft.SqlServer.Management.Smo.Database] $SmoDatabase,
-# The connection string name from the ConfigurationManager to use.
-[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string] $ConnectionName,
+# The server to use, by name or constructed via Connect-DbaInstance.
+[Parameter(Position=0,Mandatory=$true)][Alias('Parent','ServerInstance')][DbaInstanceParameter] $SqlInstance,
+# The the database to connect to on the server.
+[Parameter(Position=1)][Alias('Name')][string] $Database,
 # A like-pattern of database schemata to include (will only include these).
 [string[]] $IncludeSchemata,
 # A like-pattern of database schemata to exclude.
@@ -73,7 +61,7 @@ Sales       SalesOrderDetail        UnitPriceDiscount money       False ((0.0))
 # The maximum character column length.
 [int] $MaxLength
 )
-try{[void][Configuration.ConfigurationManager]}catch{Add-Type -AssemblyName System.Configuration}
+Use-DbInstance.ps1 -As PSObject
 function Format-LikeCondition([string]$column,[string[]]$patterns,[switch]$not)
 {
 	$like,$andOr = if($not){'not like','and'}else{'like','or'}
@@ -83,8 +71,6 @@ function Format-LikeCondition([string]$column,[string[]]$patterns,[switch]$not)
 
 "@
 }
-
-Use-SqlcmdParams.ps1 -QueryTimeout 300
 
 $colssql = @"
 select TABLE_SCHEMA TableSchema,
@@ -150,4 +136,4 @@ if($ExcludeColumns) { $colssql += Format-LikeCondition COLUMN_NAME $ExcludeColum
 $colssql += ' order by TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION;'
 
 Write-Debug "Schema Query:`n$colssql"
-Invoke-Sqlcmd $colssql |ConvertFrom-DataRow.ps1
+Invoke-DbaQuery -Query $colssql

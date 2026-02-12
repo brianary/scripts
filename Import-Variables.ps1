@@ -18,7 +18,7 @@ if($line -match '\AProject\("(?<TypeGuid>[^"]+)"\)') {Import-Variables.ps1 $Matc
 Copies $Matches.TypeGuid to $TypeGuid if a match is found.
 
 .EXAMPLE
-Invoke-Sqlcmd "select ProductID, Name, ListPrice from Production.Product where ProductID = 1;" -Server 'Server\instance' -Database AdventureWorks |Import-Variables.ps1
+Import-Csv |ForEach-Object {$_ |Import-Variables.ps1; Write-Host "Properties: $Name $Id $Description"}
 
 Copies field values into $ProductID, $Name, and $ListPrice.
 

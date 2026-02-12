@@ -17,19 +17,23 @@ https://www.powershellgallery.com/packages/SqlServer/
 
 .LINK
 https://dbatools.io/
+
+.LINK
+Invoke-DbaQuery
 #>
 
-#Requires -Version 3
-#Requires -Module SqlServer
+#Requires -Version 7
+using module dbatools
+using namespace Microsoft.SqlServer.Management.Smo
 [CmdletBinding(ConfirmImpact='Medium')][OutputType([Management.Automation.PSCustomObject])] Param(
 # An SMO column object associated to the database column to examine.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ParameterSetName='Column')]
-[Microsoft.SqlServer.Management.Smo.Column] $Column,
+[Column] $Column,
 # The name of the column to examine in the table associated with the SMO Table object.
 [Parameter(Position=0,Mandatory=$true,ParameterSetName='ColumnName')][string] $ColumnName,
 # An SMO table object associated to the database to examine.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true,ParameterSetName='ColumnName')]
-[Microsoft.SqlServer.Management.Smo.Table] $Table,
+[Table] $Table,
 <#
 Conditions to be provided as a SQL WHERE clause to filter the column values to examine.
 Useful for databases that implement "soft deletes" as specific field values.
@@ -61,12 +65,9 @@ Process
 	$fqtn = "$($table.Parent.Parent.Name).$($table.Parent.Name).$($table.Name)"
 	$sql = $query -f $table.Schema,$table.Name,$ColumnName
 	Write-Verbose "SQL: $sql"
-	@{
-		Query = $sql
-		Database = $table.Parent.Name
-		ServerInstance = $table.Parent.Parent.Name
-	} |
-		Where-Object {$PSCmdlet.ShouldProcess("column $fqtn.$ColumnName","query $($table.RowCount) rows")} |
-		ForEach-Object {Invoke-Sqlcmd @_} |
-		ConvertFrom-DataRow.ps1
+	if($PSCmdlet.ShouldProcess("column $fqtn.$ColumnName","query $($table.RowCount) rows"))
+	{
+		Invoke-DbaQuery -Query $sql -As PSObject -Database $table.Parent.Name `
+			-SqlInstance (Connect-DbaInstance -Connstring $table.Parent.Parent.ConnectionContext.ToString())
+	}
 }
