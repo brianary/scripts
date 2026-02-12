@@ -17,6 +17,9 @@ https://www.powershellgallery.com/packages/SqlServer/
 .LINK
 https://dbatools.io/
 
+.LINK
+Invoke-DbaQuery
+
 .EXAMPLE
 Get-DbaDbTable -sqli '(localdb)\ProjectsV13' -dat AdventureWorks2016 -tab Production.Product |Measure-DbTable.ps1
 
@@ -49,12 +52,13 @@ rowguid               : unique, 0 nulls, 504 values: 7A927632-99A4-4F24-ADCE-006
 ModifiedDate          : 0 nulls, 2 values: Feb  8 2014 10:01AM .. Feb  8 2014 10:03AM
 #>
 
-#Requires -Version 3
-#Requires -Module SqlServer
+#Requires -Version 7
+using module dbatools
+using namespace Microsoft.SqlServer.Management.Smo
 [CmdletBinding(ConfirmImpact='Medium')][OutputType([Management.Automation.PSCustomObject])] Param(
 # An SMO table object associated to the database to examine.
 [Parameter(Position=1,Mandatory=$true,ValueFromPipeline=$true)]
-[Microsoft.SqlServer.Management.Smo.Table] $Table,
+[Table] $Table,
 <#
 Conditions to be provided as a SQL WHERE clause to filter the record values to examine.
 Useful for databases that implement "soft deletes" as specific field values.
@@ -122,12 +126,9 @@ Process
 {
 	$sql = "$SOQ $($Table.Columns |Format-ColumnCount) $EOQ" -f $Table.Schema,$Table.Name
 	Write-Verbose "SQL: $sql"
-	@{
-		Query = $sql
-		Database = $Table.Parent.Name
-		ServerInstance = $Table.Parent.Parent.Name
-	} |
-		Where-Object {$PSCmdlet.ShouldProcess("column $Table","query $($Table.RowCount) rows")} |
-		ForEach-Object {Invoke-Sqlcmd @_} |
-		ConvertFrom-DataRow.ps1
+	if($PSCmdlet.ShouldProcess("table $Table","query $($Table.RowCount) rows"))
+	{
+		Invoke-DbaQuery -Query $sql -As PSObject -Database $table.Parent.Name `
+			-SqlInstance (Connect-DbaInstance -Connstring $table.Parent.Parent.ConnectionContext.ToString())
+	}
 }

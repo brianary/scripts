@@ -6,10 +6,10 @@ Finds database constraints with system-generated names and gives them determinis
 Database
 
 .LINK
-Use-SqlcmdParams.ps1
+https://dbatools.io/
 
 .LINK
-Invoke-Sqlcmd
+Invoke-DbaQuery
 
 .LINK
 https://www.databasejournal.com/features/mssql/article.php/1570801/Beware-of-the-System-Generated-Constraint-Name.htm
@@ -20,26 +20,18 @@ Repair-DatabaseConstraintNames.ps1 SqlServerName DatabaseName -Update
 WARNING: Renamed 10 defaults
 #>
 
-#Requires -Version 3
-#Requires -Module SqlServer
+#Requires -Version 7
+using module dbatools
+using namespace Microsoft.SqlServer.Management.Smo
 [CmdletBinding(SupportsShouldProcess=$true)][OutputType([void])] Param(
-# The name of a server (and optional instance) to connect to.
-[Parameter(ParameterSetName='ByConnectionParameters',Position=0,Mandatory=$true)][string] $ServerInstance,
+# The server to use, by name or constructed via Connect-DbaInstance.
+[Parameter(Position=0,Mandatory=$true)][Alias('Parent','ServerInstance')][DbaInstanceParameter] $SqlInstance,
 # The the database to connect to on the server.
-[Parameter(ParameterSetName='ByConnectionParameters',Position=1,Mandatory=$true)][string] $Database,
-# Specifies a connection string to connect to the server.
-[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][Alias('ConnStr','CS')][string]$ConnectionString,
-# Specifies an SMO Database object to query.
-[Parameter(ParameterSetName='ByDatabase',Mandatory=$true)]
-[Microsoft.SqlServer.Management.Smo.Database] $SmoDatabase,
-# The connection string name from the ConfigurationManager to use.
-[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,
+[Parameter(Position=1)][Alias('Name')][string] $Database,
 # Update the database when present, otherwise simply outputs the changes as script.
 [switch] $Update
 )
-
-Use-SqlcmdParams.ps1
-
+Use-DbInstance.ps1 -As PSObject
 function Resolve-SqlcmdResult
 {
 <#
@@ -57,7 +49,7 @@ executable SQL.
 #>
 	[CmdletBinding(SupportsShouldProcess=$true)] Param([string]$Action,[string]$Query)
 	$count,$i = 0,0
-	[string[]]$commands = Invoke-Sqlcmd $Query |Select-Object -ExpandProperty command
+	[string[]]$commands = Invoke-DbaQuery -Query $Query -As SingleValue
 	if(!$commands){return}
 	$max,$act = ($commands.Count/100),($Action -f -1,$commands.Count)
 	Write-Verbose ($Action -f 1,$commands.Count)
@@ -65,7 +57,7 @@ executable SQL.
 	{
 		Write-Progress $act "Execute command #$i" -CurrentOperation $command -PercentComplete ($i++/$max)
 		if(!$Update) {$command}
-		elseif($PSCmdlet.ShouldProcess($command,'execute')) {Invoke-Sqlcmd $command; $count++}
+		elseif($PSCmdlet.ShouldProcess($command,'execute')) {Invoke-DbaQuery -Query $command -As PSObject; $count++}
 	}
 	Write-Progress ($action -f 0,$i) -Completed
 	if($count) {Write-Warning ($Action -f 0,$count)}

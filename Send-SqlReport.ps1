@@ -6,17 +6,18 @@ Execute a SQL statement and email the results.
 Database
 
 .LINK
-Use-SqlcmdParams.ps1
+https://dbatools.io/
+
+.LINK
+Invoke-DbaQuery
 
 .LINK
 Send-MailMessage
-
-.LINK
-Invoke-Sqlcmd
 #>
 
-#Requires -Version 3
-#Requires -Module SqlServer
+#Requires -Version 7
+using module dbatools
+using namespace Microsoft.SqlServer.Management.Smo
 [CmdletBinding(SupportsShouldProcess=$true,ConfirmImpact='None')][OutputType([void])] Param(
 # The email subject.
 [Parameter(Position=0,Mandatory=$true)][string]$Subject,
@@ -24,17 +25,10 @@ Invoke-Sqlcmd
 [Parameter(Position=1,Mandatory=$true)][string[]]$To,
 # The SQL statement to execute.
 [Parameter(Position=2,Mandatory=$true)][string]$Sql,
-# The name of a server (and optional instance) to connect and use for the query.
-[Parameter(ParameterSetName='ByConnectionParameters',Position=3)][string]$ServerInstance,
+# The server to use, by name or constructed via Connect-DbaInstance.
+[Parameter(Position=0,Mandatory=$true)][Alias('Parent','ServerInstance')][DbaInstanceParameter] $SqlInstance,
 # The the database to connect to on the server.
-[Parameter(ParameterSetName='ByConnectionParameters',Position=4)][string]$Database,
-# Specifies a connection string to connect to the server.
-[Parameter(ParameterSetName='ByConnectionString',Mandatory=$true)][string]$ConnectionString,
-# Specifies an SMO Database object to query.
-[Parameter(ParameterSetName='ByDatabase',Mandatory=$true)]
-[Microsoft.SqlServer.Management.Smo.Database] $SmoDatabase,
-# The connection string name from the ConfigurationManager to use when executing the query.
-[Parameter(ParameterSetName='ByConnectionName',Mandatory=$true)][string]$ConnectionName,
+[Parameter(Position=1)][Alias('Name')][string] $Database,
 # The subject line for the email when no data is returned.
 [string]$EmptySubject,
 <#
@@ -86,7 +80,7 @@ Indicates that SSL should be used when sending the message.
 )
 
 Use-NetMailConfig.ps1
-Use-SqlcmdParams.ps1
+Use-DbInstance.ps1 -As PSObject
 if($SeqUrl){Use-SeqServer.ps1 $SeqUrl}
 
 # use the default From host for emails without a host
@@ -112,8 +106,7 @@ if($UseSsl)   { $Msg.UseSsl = $true }
 
 try
 {
-    $query = @{ Query = $Sql }
-    [psobject[]]$data = Invoke-Sqlcmd @query -ErrorAction Stop |ConvertFrom-DataRow.ps1
+    [psobject[]]$data = Invoke-DbaQuery -Query $Sql -As PSObject -ErrorAction Stop
     $data |Format-Table |Out-String |Write-Verbose
     if(!$data -or $data.Length -eq 0) # no rows
     {
