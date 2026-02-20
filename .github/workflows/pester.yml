@@ -45,32 +45,3 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
       id: test-results
       if: always()
-    - name: Set badge color
-      if: ${{ matrix.os == 'windows-latest' }}
-      shell: pwsh
-      run: |
-        switch('${{ fromJSON( steps.test-results.outputs.json ).conclusion }}')
-        {
-            success {'BADGE_COLOR=31C653' |Add-Content $env:GITHUB_ENV}
-            failure {'BADGE_COLOR=800000' |Add-Content $env:GITHUB_ENV}
-            neutral {'BADGE_COLOR=696969' |Add-Content $env:GITHUB_ENV}
-        }
-    - name: Create badge
-      if: ${{ matrix.os == 'windows-latest' }}
-      uses: emibcn/badge-action@d6f51ff11b5c3382b3b88689ae2d6db22d9737d1
-      with:
-        label: Tests
-        status: '${{ fromJSON( steps.test-results.outputs.json ).formatted.stats.tests }} tests, ${{ fromJSON( steps.test-results.outputs.json ).formatted.stats.runs }} runs: ${{ fromJSON( steps.test-results.outputs.json ).conclusion }}'
-        color: ${{ env.BADGE_COLOR }}
-        path: badge.svg
-    - name: Upload badge to Gist
-      # Upload only for original fork and main branch
-      if: >
-        matrix.os == 'windows-latest' && github.repository == 'brianary/scripts' &&
-        ((github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main') ||
-        (github.event_name != 'workflow_run' && github.ref == 'refs/heads/main'))
-      uses: andymckay/append-gist-action@1fbfbbce708a39bd45846f0955ed5521f2099c6d
-      with:
-        token: ${{ secrets.GIST_TOKEN }}
-        gistURL: https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a
-        file: badge.svg
