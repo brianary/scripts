@@ -178,8 +178,7 @@ Process
 {
 	Write-Info.ps1 $LEFTEND -ForegroundColor $BackgroundColor -NoNewLine
 	Write-Info.ps1 " $WAIT " -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
-	Write-Info.ps1 $RIGHTEND -ForegroundColor $BackgroundColor -NoNewLine
-	Write-Info.ps1 (New-Object string "`b",($RIGHTEND.Length+2)) -NoNewline
+	Write-Info.ps1 "$RIGHTEND`r$LEFTEND" -ForegroundColor $BackgroundColor -NoNewLine
 	Write-Info.ps1 (($Status |Format-Status) -join $Separator) `
 		-ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
 	Write-Info.ps1 ' ' -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor -NoNewline
