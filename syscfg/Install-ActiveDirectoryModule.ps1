@@ -45,7 +45,7 @@ if([Environment]::OSVersion.Version -gt [version]'9.0')
 {
     Write-Verbose "Installing RSAT for Windows 10 by downloading .msu file"
     [uri]$msuUrl = "https://download.microsoft.com/download/1/D/8/1D8B5022-5477-4B9A-8104-6A71FF9D98AB/WindowsTH-RSAT_WS2016-$($env:PROCESSOR_ARCHITECTURE -replace '\A\D+','x').msu"
-    $msuFile = Join-Path $env:TEMP $msuUrl.Segments[-1]
+    $msuFile = Join-Path ([io.path]::GetTempPath()) $msuUrl.Segments[-1]
     Invoke-WebRequest $msuUrl -UseBasicParsing -OutFile $msuFile
     Start-Process wusa $msuFile,'/quiet' -Wait -NoNewWindow
     return

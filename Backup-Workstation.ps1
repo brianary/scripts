@@ -59,7 +59,7 @@ function Copy-ContentToBackup
 
 function Backup-Workstation
 {
-	$dir = Join-Path "$env:Temp" "$(New-Guid)"
+	$dir = Join-Path ([io.path]::GetTempPath()) "$(New-Guid)"
 	New-Item $dir -ItemType Directory |Out-Null
 	@(
 		Join-Path ~ .ssh

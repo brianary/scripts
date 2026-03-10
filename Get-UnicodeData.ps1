@@ -36,7 +36,7 @@ Saves the current Unicode data as a CSV file.
 [CmdletBinding()][OutputType([pscustomobject])] Param(
 # The location of the latest Unicode data.
 [uri] $Url = 'https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt',
-[string] $DataFile = (Join-Path $env:TEMP ($Url.Segments[-1]))
+[string] $DataFile = (Join-Path ([io.path]::GetTempPath()) ($Url.Segments[-1]))
 )
 
 function Save-Data

@@ -31,7 +31,7 @@ href="{/link/@href}"><xsl:value-of select="/link/@title"/></a>
 				Should -BeExactly '<a href="https://example.com/">Example</a>'
 		}
 		It "Should perform a text transform to a file" {
-			$outfile = Join-Path $env:temp temp.txt
+			$outfile = Join-Path ([io.path]::GetTempPath()) temp.txt
 			Convert-Xml.ps1 `
 				-TransformFile (Join-Path $datadir xslt-test.xslt) `
 				-Path (Join-Path $datadir xslt-test.xml) `

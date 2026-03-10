@@ -61,8 +61,8 @@ if(Test-Command pacman)
 }
 if(Test-Command winget)
 {
-	winget export -o "$env:temp\winget.json" |Out-Null
-	$winget = Get-Content "$env:temp\winget.json" |ConvertFrom-Json
+	winget export -o "$([io.path]::GetTempPath())\winget.json" |Out-Null
+	$winget = Get-Content "$([io.path]::GetTempPath())\winget.json" |ConvertFrom-Json
 	$installed['winget'] = @($winget.Sources.Packages.PackageIdentifier)
 }
 if(Test-Command choco)

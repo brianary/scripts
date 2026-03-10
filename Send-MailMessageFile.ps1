@@ -69,7 +69,7 @@ Process
 		if($eml.HTMLBody) {[void]$msg.Add('Body',$eml.HTMLBody);[void]$msg.Add('BodyAsHtml',$true)}
 		else {[void]$msg.Add('Body',$eml.TextBody)}
 		[string[]]$atts =
-			if($eml.Attachments.Count) {$eml.Attachments |ForEach-Object {$f = "$env:TEMP\$([guid]::NewGuid())"; $_.SaveToFile($f); $f}}
+			if($eml.Attachments.Count) {$eml.Attachments |ForEach-Object {$f = "$([io.path]::GetTempPath())\$([guid]::NewGuid())"; $_.SaveToFile($f); $f}}
 			else {@()}
 		if($atts) {[void]$msg.Add('Attachments',$atts)}
 		if($PSCmdlet.ShouldProcess("email $file ($($eml.Subject))",'Send')) {Send-MailMessage @msg}

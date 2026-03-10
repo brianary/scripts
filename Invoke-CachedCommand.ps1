@@ -49,7 +49,7 @@ Begin
         }
         else
         {
-            Join-Path $env:TEMP (Split-Path $PSCommandPath -LeafBase)
+            Join-Path ([io.path]::GetTempPath()) (Split-Path $PSCommandPath -LeafBase)
         }
         New-Item $Script:CacheDir -Type Directory -ErrorAction Ignore |Out-Null
         Get-ChildItem $Script:CacheDir |

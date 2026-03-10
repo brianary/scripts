@@ -108,7 +108,7 @@ Justification='Some of these functions may deal with multiple updates.')]
 Begin
 {
 	$Script:IsNotAdministrator = !(Test-Administrator.ps1)
-	Import-CharConstants.ps1 ':UP:' -Scope Script
+	Import-CharConstants.ps1 ':UP:' ':TOP:' -Scope Script
 
 	function Test-EmptyDesktop
 	{
@@ -154,8 +154,9 @@ Begin
 	function Update-Essential
 	{
 		[CmdletBinding()] Param()
+		if(!$IsWindows) {return}
 		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping Essential."; return}
-		Write-Step "$([char]0xD83D)$([char]0xDD1C) Checking for essential updates"
+		Write-Step "$TOP Checking for essential updates"
 		if(Get-Command winget -ErrorAction Ignore)
 		{
 			if(@(winget list -e --id Microsoft.WindowsTerminal -s winget --upgrade-available --disable-interactivity --nowarn |
@@ -182,9 +183,9 @@ Begin
 	function Update-WindowsStore
 	{
 		[CmdletBinding()] Param()
+		if(!$IsWindows) {return}
 		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping WindowsStore."; return}
-		if(!(Get-Command Get-CimInstance -ErrorAction Ignore))
-		{Write-Verbose 'Get-CimInstance not found, skipping WindowsStore updates'; return}
+		if(!(Get-Command Get-CimInstance -ErrorAction Ignore)) {Write-Verbose 'Get-CimInstance not found, skipping WindowsStore updates'; return}
 		Write-Step "$UP Updating Windows Store apps (asynchronously)"
 		Get-CimInstance MDM_EnterpriseModernAppManagement_AppManagement01 -Namespace root\cimv2\mdm\dmmap |
 			Invoke-CimMethod -MethodName UpdateScanMethod
@@ -292,8 +293,8 @@ Begin
 	function Update-Scoop
 	{
 		[CmdletBinding()] Param()
-		if(!(Get-Command scoop -ErrorAction Ignore))
-		{Write-Verbose 'Scoop not found, skipping'; return}
+		if(!$IsWindows) {return}
+		if(!(Get-Command scoop -ErrorAction Ignore)) {Write-Verbose 'Scoop not found, skipping'; return}
 		Write-Step "$UP Updating Scoop packages"
 		scoop update *
 	}
@@ -301,6 +302,7 @@ Begin
 	function Update-Chocolatey
 	{
 		[CmdletBinding()] Param()
+		if(!$IsWindows) {return}
 		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping Chocolatey."; return}
 		if(!(Get-Command choco -ErrorAction Ignore))
 		{Write-Verbose 'Chocolatey not found, skipping'; return}
@@ -311,8 +313,8 @@ Begin
 	function Update-WinGet
 	{
 		[CmdletBinding()] Param()
-		if(!(Get-Command winget -ErrorAction Ignore))
-		{Write-Verbose 'WinGet not found, skipping'; return}
+		if(!$IsWindows) {return}
+		if(!(Get-Command winget -ErrorAction Ignore)) {Write-Verbose 'WinGet not found, skipping'; return}
 		Write-Step "$UP Updating WinGet packages"
 		winget upgrade --all
 	}
@@ -376,6 +378,7 @@ Begin
 	function Update-DellCommand
 	{
 		[CmdletBinding()] Param()
+		if(!$IsWindows) {return}
 		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping DellCommand."; return}
 		if(!(Resolve-Path "C:\Program Files*\Dell\CommandUpdate\dcu-cli.exe"))
 		{Write-Verbose 'Dell Command not found, skipping'; return}
@@ -389,6 +392,7 @@ Begin
 	function Update-WindowsUpdate
 	{
 		[CmdletBinding()] Param()
+		if(!$IsWindows) {return}
 		if($Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping Windows."; return}
 		if(!(Get-Module PSWindowsUpdate -ListAvailable))
 		{Write-Verbose 'PSWindowsUpdate module not found, skipping Windows Updates'; return}

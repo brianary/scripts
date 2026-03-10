@@ -129,6 +129,7 @@ function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Posit
 	Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |Select-Object -ExpandProperty Path |Find-NewestFile.ps1 |
 		Select-Object -ExpandProperty FullName) -Scope Global
 }
+$TEMP = [io.path]::GetTempPath()
 if((Get-Command $Name -ErrorAction Ignore)) { Write-Verbose "$Name command found." ; return }
 if($Path -and (Test-Path $Path)) { Set-ResolvedAlias $Name $Path ; return }
 if((!$IsWindows) -and $IsLinux)
@@ -215,11 +216,11 @@ switch($PSCmdlet.ParameterSetName)
 		{
 			$msi =
 				if($WindowsInstaller.IsUnc)
-				{ Copy-Item $WindowsInstaller $env:TEMP; "$env:TEMP\$file" }
+				{ Copy-Item $WindowsInstaller $TEMP; "$TEMP\$file" }
 				elseif($WindowsInstaller.IsFile)
 				{ [string]$WindowsInstaller }
 				else
-				{ (New-Object System.Net.WebClient).DownloadFile($WindowsInstaller,"$env:TEMP\$file"); "$env:TEMP\$file" }
+				{ (New-Object System.Net.WebClient).DownloadFile($WindowsInstaller,"$TEMP\$file"); "$TEMP\$file" }
 			msiexec /i $msi /passive /qb INSTALLLEVEL=$InstallLevel
 			while(!(Test-Path $Path) -and $PSCmdlet.ShouldContinue(
 				"The file $Path was still not found. Continue waiting for installation?","Await Installation")) { Start-Sleep 5 }
@@ -235,11 +236,11 @@ switch($PSCmdlet.ParameterSetName)
 		{
 			$exe =
 				if($ExecutableInstaller.IsUnc)
-				{ Copy-Item $ExecutableInstaller.OriginalString $env:TEMP; "$env:TEMP\$file" }
+				{ Copy-Item $ExecutableInstaller.OriginalString $TEMP; "$TEMP\$file" }
 				elseif($ExecutableInstaller.IsFile)
 				{ [string]$ExecutableInstaller }
 				else
-				{ (New-Object System.Net.WebClient).DownloadFile($ExecutableInstaller,"$env:TEMP\$file"); "$env:TEMP\$file" }
+				{ (New-Object System.Net.WebClient).DownloadFile($ExecutableInstaller,"$TEMP\$file"); "$TEMP\$file" }
 			Start-Process $exe $InstallerParameters -NoNewWindow -Wait
 			while(!(Test-Path $Path) -and $PSCmdlet.ShouldContinue(
 				"The file $Path was still not found. Continue waiting for installation?","Await Installation")) { Start-Sleep 5 }
@@ -268,7 +269,7 @@ switch($PSCmdlet.ParameterSetName)
 		{
 			$filename = Split-Uri.ps1 $DownloadZip.LocalPath -Leaf
 			if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
-			$zippath = Join-Path $env:TEMP $filename
+			$zippath = Join-Path $TEMP $filename
 			Write-Verbose "Downloading $DownloadZip to $path"
 			Invoke-WebRequest $DownloadZip -OutFile $zippath
 			try{[void][IO.Compression.ZipFile]}catch{Add-Type -AN System.IO.Compression.FileSystem}

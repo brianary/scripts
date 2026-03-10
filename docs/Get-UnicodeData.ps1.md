@@ -56,7 +56,7 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: (Join-Path $env:TEMP ($Url.Segments[-1]))
+Default value: (Join-Path ([io.path]::GetTempPath()) ($Url.Segments[-1]))
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
