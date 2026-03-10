@@ -21,16 +21,16 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 			'gh-extensions' = 'gh'
 		}
 		@($installed.Keys) |Where-Object {!(Get-Command $_ -ErrorAction Ignore)} |ForEach-Object {$installed.Remove($_)}
-		function winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$([io.path]::GetTempPath())\winget.json"}
-		function scoop {[pscustomobject]@{Name='Scoop'}}
+		function winget {'{Sources:{Packages:{PackageIdentifier:["winget"]}}}' |Out-File "$([io.path]::GetTempPath())\winget.json"}
+		function scoop {[pscustomobject]@{Name='scoop'}}
 		function npm {'{dependencies:{npm:true}}'}
-		Mock Get-Module {[pscustomobject]@{Name='PSModules'}}
-		Mock winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$([io.path]::GetTempPath())\winget.json"} -ErrorAction Ignore
-		Mock choco {'','Chocolatey',''} -ErrorAction Ignore
-		Mock scoop {[pscustomobject]@{Name='Scoop'}} -ErrorAction Ignore
+		Mock Get-Module {[pscustomobject]@{Name='psmodules'}}
+		Mock winget {'{Sources:{Packages:{PackageIdentifier:["winget"]}}}' |Out-File "$([io.path]::GetTempPath())\winget.json"} -ErrorAction Ignore
+		Mock choco {'','choco',''} -ErrorAction Ignore
+		Mock scoop {[pscustomobject]@{Name='scoop'}} -ErrorAction Ignore
 		Mock npm {'{dependencies:{npm:true}}'} -ErrorAction Ignore
-		Mock dotnet {'','','DotNetTools version'} -ErrorAction Ignore
-		Mock gh {'- - GitHubExtensions -'} -ErrorAction Ignore
+		Mock dotnet {'','','dotnet-tools version'} -ErrorAction Ignore
+		Mock gh {'- - gh-extensions -'} -ErrorAction Ignore
 	}
 	Context 'Exports the list of packages installed by various tools' `
 		-Tag ExportInstalledPackages,Export,InstalledPackages,Packages {
@@ -38,7 +38,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 			$packages = Export-InstalledPackages.ps1
 			$installed.Values |ForEach-Object {Assert-MockCalled -CommandName $_ -Times 1}
 			$packages.Count |Should -BeGreaterThan 0
-			if($packages.ContainsKey('ScoopBuckets')) {$packages.Remove('ScoopBuckets')}
+			if($packages.ContainsKey('scoopBuckets')) {$packages.Remove('scoopBuckets')}
 			$packages.Keys |ForEach-Object {$packages[$_] |Should -BeExactly $_}
 		}
 	}
