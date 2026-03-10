@@ -17,7 +17,7 @@ Describe 'Compress-EnvironmentVariables' -Tag Compress-EnvironmentVariables -Ski
 		It "For '<Value>', should return '<Result>'" -TestCases @(
 			@{ Value ="[$env:APPDATA]"; Result = '[%APPDATA%]' }
 			@{ Value ="[$env:COMPUTERNAME]"; Result = '[%COMPUTERNAME%]' }
-			@{ Value ="$([io.path]::GetTempPath())\tempdata"; Result = '%TEMP%\tempdata' }
+			@{ Value ="$env:TEMP\tempdata"; Result = '%TEMP%\tempdata' }
 		) {
 			Param([string] $Value, [string] $Result)
 			Compress-EnvironmentVariables.ps1 $Value |Should -Be $Result
