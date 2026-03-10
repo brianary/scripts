@@ -12,13 +12,13 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
 		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
 		$installed = @{
-			PSModules = 'Get-Module'
-			WinGet = 'winget'
-			Chocolatey = 'choco'
-			Scoop = 'scoop'
-			Npm = 'npm'
-			DotNetTools = 'dotnet'
-			GitHubExtensions = 'gh'
+			psmodules       = 'Get-Module'
+			winget          = 'winget'
+			choco           = 'choco'
+			scoop           = 'scoop'
+			npm             = 'npm'
+			'dotnet-tools'  = 'dotnet'
+			'gh-extensions' = 'gh'
 		}
 		@($installed.Keys) |Where-Object {!(Get-Command $_ -ErrorAction Ignore)} |ForEach-Object {$installed.Remove($_)}
 		function winget {'{Sources:{Packages:{PackageIdentifier:["WinGet"]}}}' |Out-File "$([io.path]::GetTempPath())\winget.json"}
@@ -39,7 +39,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 			$installed.Values |ForEach-Object {Assert-MockCalled -CommandName $_ -Times 1}
 			$packages.Count |Should -BeGreaterThan 0
 			if($packages.ContainsKey('ScoopBuckets')) {$packages.Remove('ScoopBuckets')}
-			$packages.Keys |ForEach-Object {$packages[$_] |Should -Be $_}
+			$packages.Keys |ForEach-Object {$packages[$_] |Should -BeExactly $_}
 		}
 	}
 }
