@@ -26,6 +26,7 @@ Describe 'Export-InstalledPackages' -Tag Export-InstalledPackages -Skip:$skip {
 		function scoop { Param([Parameter(Position=0,Mandatory=$true)][string]$Command,[Parameter(Position=1)][string]$Param)
 			switch($Command) { list {return [pscustomobject]@{Name='scoop'}} bucket {return [pscustomobject]@{Name='scoop-buckets'}} }}
 		function npm {'{dependencies:{npm:true}}'}
+		function code {'vscode-extensions'}
 		Mock Get-Module {[pscustomobject]@{Name='psmodules'}}
 		Mock winget {'{Sources:{Packages:{PackageIdentifier:["winget"]}}}' |Out-File "$([io.path]::GetTempPath())\winget.json"} -ErrorAction Ignore
 		Mock choco {'','choco',''} -ErrorAction Ignore
