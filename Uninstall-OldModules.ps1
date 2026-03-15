@@ -16,11 +16,32 @@ Cleans up redundant old modules.
 # Indicates the modules should be forced to uninstall.
 [switch] $Force
 )
-
-Get-Module -ListAvailable |
-	Where-Object {$PSVersionTable.PSVersion -lt [version]'6.0' -or $_.ModuleBase -notlike '*\WindowsPowerShell\*'} |
-	Group-Object Name |
-	Where-Object Count -gt 1 |
-	ForEach-Object {$_.Group |Sort-Object Version -Descending |Select-Object -Skip 1} |
-	Where-Object {$Force -or $PSCmdlet.ShouldProcess("$($_.Name) v$($_.Version)",'Uninstall-Module')} |
-	ForEach-Object {Uninstall-Module $_.Name -RequiredVersion $_.Version -Force:$Force}
+if(Get-Command Uninstall-PSResource -ErrorAction Ignore)
+{
+	Get-Module -ListAvailable |
+		Where-Object {$_.ModuleBase -notlike '*\WindowsPowerShell\*'} |
+		Group-Object Name |
+		Where-Object Count -gt 1 |
+		ForEach-Object {$_.Group |Sort-Object Version -Descending |Select-Object -Skip 1} |
+		Where-Object {$Force -or $PSCmdlet.ShouldProcess("$($_.Name) v$($_.Version)",'Uninstall-PSResource')} |
+		ForEach-Object {Uninstall-PSResource $_.Name -Version $_.Version -Confirm:$false}
+}
+elseif($PSVersionTable.PSVersion -lt [version]'6.0')
+{
+	Get-Module -ListAvailable |
+		Group-Object Name |
+		Where-Object Count -gt 1 |
+		ForEach-Object {$_.Group |Sort-Object Version -Descending |Select-Object -Skip 1} |
+		Where-Object {$Force -or $PSCmdlet.ShouldProcess("$($_.Name) v$($_.Version)",'Uninstall-Module')} |
+		ForEach-Object {Uninstall-Module $_.Name -RequiredVersion $_.Version -Force:$Force}
+}
+else
+{
+	Get-Module -ListAvailable |
+		Where-Object {$_.ModuleBase -notlike '*\WindowsPowerShell\*'} |
+		Group-Object Name |
+		Where-Object Count -gt 1 |
+		ForEach-Object {$_.Group |Sort-Object Version -Descending |Select-Object -Skip 1} |
+		Where-Object {$Force -or $PSCmdlet.ShouldProcess("$($_.Name) v$($_.Version)",'Uninstall-Module')} |
+		ForEach-Object {Uninstall-Module $_.Name -RequiredVersion $_.Version -Force:$Force}
+}

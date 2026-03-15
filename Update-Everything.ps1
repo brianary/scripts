@@ -6,6 +6,9 @@ Updates everything it can on the system.
 System and updates
 
 .LINK
+https://www.ehmiiz.se/blog/ps_resourceget/
+
+.LINK
 https://docs.microsoft.com/windows/package-manager/winget/
 
 .LINK
@@ -92,7 +95,8 @@ Update-Everything.ps1
 Attempts to update packages, features, and system.
 #>
 
-#Requires -Version 3
+#Requires -Version 7
+using module Microsoft.PowerShell.PSResourceGet
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost','',
 Justification='This script is not intended for pipelining.')]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns','',
@@ -216,9 +220,9 @@ Begin
 	function Test-AzModulesHasUpdate
 	{
 		[CmdletBinding()][OutputType([bool])] Param()
-		$version = @(Get-Module Az -ListAvailable |Measure-Object Version -Maximum)
+		$version = @(Get-PSResource Az -ErrorAction Ignore |Measure-Object Version -Maximum)
 		if($version.Count -eq 0) {return}
-		if($version.Maximum -ge (Find-Module Az -Repository PSGallery).Version) {return}
+		if($version.Maximum -ge (Find-PSResource Az -Repository PSGallery).Version) {return}
 		$allUsers = (Get-ModuleScope.ps1 Az).Scope -eq 'AllUsers'
 		if($allUsers -and $Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping AzModules."; return}
 		return $true
@@ -230,15 +234,15 @@ Begin
 		if(!(Test-AzModulesHasUpdate)) {return}
 		if(Get-Module Az) {Restart-UpdateWithoutProfile}
 		Write-Step "$UP Updating PowerShell Az modules"
-		Update-Module Az* -Scope AllUsers -Confirm:$false
+		Update-PSResource Az -Scope AllUsers -Confirm:$false
 	}
 
 	function Test-DbatoolsHasUpdate
 	{
 		[CmdletBinding()][OutputType([bool])] Param()
-		$version = @(Get-Module dbatools -ListAvailable |Measure-Object Version -Maximum)
+		$version = @(Get-PSResource dbatools -ErrorAction Ignore |Measure-Object Version -Maximum)
 		if($version.Count -eq 0) {return}
-		if($version.Maximum -ge (Find-Module dbatools -Repository PSGallery).Version) {return}
+		if($version.Maximum -ge (Find-PSResource dbatools -Repository PSGallery).Version) {return}
 		$allUsers = (Get-ModuleScope.ps1 dbatools).Scope -eq 'AllUsers'
 		if($allUsers -and $Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping Dbatools."; return}
 		return $true
@@ -250,8 +254,8 @@ Begin
 		if(!(Test-DbatoolsHasUpdate)) {return}
 		if(Get-Module dbatools) {Restart-UpdateWithoutProfile}
 		Write-Step "$UP Upgrading PowerShell dbatools module"
-		Uninstall-Module dbatools.library,dbatools -Force
-		Install-Module dbatools -Scope AllUsers -Force
+		Uninstall-PSResource dbatools.library,dbatools
+		Install-PSResource dbatools -Scope AllUsers -Repository PSGallery -TrustRepository
 	}
 
 	function Update-PSModule
@@ -261,10 +265,10 @@ Begin
 		Update-AzModules
 		Write-Step "$UP Updating PowerShell modules"
 		$isAllUsers = @{}
-		Get-Module -ListAvailable |
+		Get-PSResource -ErrorAction Ignore |
 			Group-Object Name |
 			Where-Object {
-				$found = Find-Module $_.Name -ErrorAction Ignore
+				$found = Find-PSResource $_.Name -ErrorAction Ignore
 				if(!$found) {return $false}
 				$isAllUsers[$_.Name] = ($_ |Get-ModuleScope.ps1) -eq 'AllUsers'
 				if($Script:IsNotAdministrator -and $isAllUsers[$_.Name])
@@ -276,10 +280,10 @@ Begin
 			} |
 			ForEach-Object {
 				$module = $_
-				try {$module |Update-Module -Scope:( $isAllUsers[$_.Name] ? 'AllUsers' : 'CurrentUser') -Force -ErrorAction Stop}
+				try {$module |Update-PSResource -Scope:( $isAllUsers[$_.Name] ? 'AllUsers' : 'CurrentUser') -TrustRepository -ErrorAction Stop}
 				catch
 				{
-					if($_.Exception.Message -notlike "Module '*' was not installed by using Install-Module, so it cannot be updated.") {throw}
+					if($_.Exception.Message -notlike "Module '*' was not installed by using Install-PSResource, so it cannot be updated.") {throw}
 					Write-Warning "Unable to automatically update module '$($module.Name)'"
 				}
 			}
