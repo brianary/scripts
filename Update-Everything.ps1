@@ -254,7 +254,7 @@ Begin
 		if(!(Test-DbatoolsHasUpdate)) {return}
 		if(Get-Module dbatools) {Restart-UpdateWithoutProfile}
 		Write-Step "$UP Upgrading PowerShell dbatools module"
-		Uninstall-PSResource dbatools.library,dbatools
+		Uninstall-PSResource dbatools,dbatools.library -SkipDependencyCheck
 		Install-PSResource dbatools -Scope AllUsers -Repository PSGallery -TrustRepository
 	}
 
