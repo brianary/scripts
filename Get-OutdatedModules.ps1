@@ -28,7 +28,8 @@ Get-Module -ListAvailable |
             Name             = $name
             Scope            = Get-ModuleScope.ps1 $name |Select-Object -ExpandProperty Scope
             CurrentVersion   = $group |Measure-Object Version -Maximum |Select-Object -ExpandProperty Maximum
-            AvailableVersion = Find-Module $name -ErrorAction Stop |Select-Object -ExpandProperty Version
+            AvailableVersion = Find-Module $name -infa SilentlyContinue -ErrorAction Stop |
+                Select-Object -ExpandProperty Version
         }}
         catch{}
     } |
