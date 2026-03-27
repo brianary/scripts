@@ -41,19 +41,33 @@ Uses only the SVG namespace for Select-Xml when none are given explicitly.
 # The value to assign as a default.
 [Parameter(Position=2,Mandatory=$true,ValueFromPipeline=$true)] $Value,
 # The scope of this default.
-[string] $Scope = 'Local'
+[string] $Scope = 'Local',
+# Fails silently if the command or parameter are not found.
+[switch] $SkipMissing
 )
 Begin
 {
+	$Script:Skip = $false
 	$Scope = Add-ScopeLevel.ps1 $Scope
 	$cmd = Get-Command $CommandName -ErrorAction Ignore
-	if(!$cmd) {Stop-ThrowError.ps1 "Could not find command '$CommandName'" -Argument CommandName}
+	if(!$cmd)
+	{
+		if($SkipMissing) {$Script:Skip = $true; return}
+		else {Stop-ThrowError.ps1 "Could not find command '$CommandName'" -Argument CommandName}
+	}
 	if($cmd.CommandType -eq 'Alias') {$cmd = Get-Command $cmd.ResolvedCommandName}
 	if($cmd.CommandType -notin 'Cmdlet','ExternalScript','Function','Script')
-	{Stop-ThrowError.ps1 "Command '$CommandName' ($($cmd.CommandType)) not supported" -Argument CommandName}
+	{
+		if($SkipMissing) {$Script:Skip = $true; return}
+		else {Stop-ThrowError.ps1 "Command '$CommandName' ($($cmd.CommandType)) not supported" -Argument CommandName}
+	}
 	$name =
 		try {"$($cmd.Name):$($cmd.ResolveParameter($ParameterName).Name)"}
-		catch {Stop-ThrowError.ps1 "Could not find parameter '$ParameterName' for cmdlet '$CommandName'" -Argument ParameterName}
+		catch
+		{
+			if($SkipMissing) {$Script:Skip = $true; return}
+			else {Stop-ThrowError.ps1 "Could not find parameter '$ParameterName' for cmdlet '$CommandName'" -Argument ParameterName}
+		}
 	$defaults = Get-Variable PSDefaultParameterValues -Scope $Scope -ErrorAction Ignore
 	if(!$defaults)
 	{
@@ -63,6 +77,7 @@ Begin
 }
 Process
 {
+	if($Script:Skip) {return}
 	Write-Verbose "Setting default parameter '$name' to '$Value'"
 	$defaults.Value[$name] = $Value
 }
