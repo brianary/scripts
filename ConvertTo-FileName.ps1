@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Returns a valid and safe filename from a given string.
 
@@ -89,5 +89,5 @@ Process
         elseif($OutputBlock -eq 'Bmp') {Skip-Rune}
         else {Copy-Rune $rune}
     }
-    return $value.ToString()
+    return $value.ToString().Trim()
 }

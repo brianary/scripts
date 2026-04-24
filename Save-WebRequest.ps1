@@ -48,7 +48,9 @@ using namespace System.Net.Mime
 # Sets the creation time on the file to the given value.
 [datetime] $LastWriteTime,
 # When present, invokes the file after it is downloaded.
-[switch] $Open
+[switch] $Open,
+# Downloads even if the file already exists.
+[switch] $Force
 )
 Begin
 {
@@ -77,6 +79,11 @@ Begin
 Process
 {
 	$filename = Get-FileName $Uri
+	if(!$Force -and (Test-Path $filename -Type Leaf))
+	{
+		Write-Information "File '$filename' already exists. Use -Force to overwrite."
+		return
+	}
 	if($OutDirectory) {$filename = Join-Path $OutDirectory $filename}
 	$response = Invoke-WebRequest $Uri -OutFile $filename -PassThru
 	Write-Info.ps1 "Saved to '$filename'" -fg Green
