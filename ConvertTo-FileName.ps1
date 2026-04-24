@@ -11,6 +11,12 @@ System.String containing a filename without any invalid characters.
 .FUNCTIONALITY
 Unicode
 
+.LINK
+https://dwheeler.com/essays/fixing-unix-linux-filenames.html
+
+.LINK
+https://en.wikipedia.org/wiki/Filename
+
 .EXAMPLE
 'app*.log' |ConvertTo-FileName.ps1
 
