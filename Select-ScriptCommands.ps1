@@ -35,27 +35,28 @@ Filter       Get-ScriptCommands
 # A script file path (wildcards are accepted).
 [Parameter(Position=0,ValueFromPipeline=$true)][string] $Path,
 # Specifies the types of commands that this cmdlet gets.
-[Management.Automation.CommandTypes] $CommandType
+[Alias('Type')][Management.Automation.CommandTypes] $CommandType
 )
 Begin
 {
-    $Script:parseErrors = [Management.Automation.Language.ParseError[]]@()
-    $Script:tokens = [Management.Automation.Language.Token[]]@()
-    filter Get-ScriptCommands
-    {
-        [CmdletBinding()] Param(
-        [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Path
-        )
-        [Management.Automation.Language.Parser]::ParseFile($Path,
-            [ref]$Script:tokens, [ref]$Script:parseErrors) |Out-Null
-        $commands = $Script:tokens |
-            Where-Object TokenFlags -eq 'CommandName' |
-            Select-Object -Unique -ExpandProperty Value |
-            Get-Command -ErrorAction Ignore
-        return !$CommandType ? $commands : ($commands |Where-Object CommandType -eq $CommandType)
-    }
+	$Script:parseErrors = [Management.Automation.Language.ParseError[]]@()
+	$Script:tokens = [Management.Automation.Language.Token[]]@()
+	filter Get-ScriptCommands
+	{
+		[CmdletBinding()] Param(
+		[Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true)][string] $Path
+		)
+		[Management.Automation.Language.Parser]::ParseFile($Path,
+			[ref]$Script:tokens, [ref]$Script:parseErrors) |Out-Null
+		$commands = $Script:tokens |
+			Where-Object TokenFlags -eq 'CommandName' -pv token |
+			Select-Object -Unique -ExpandProperty Value -ErrorAction Ignore |
+			Get-Command -ErrorAction Ignore |
+			ForEach-Object {$_ |Add-Member -NotePropertyName ScriptName -NotePropertyValue $token.Extent.File -Force -PassThru}
+		return !$CommandType ? $commands : ($commands |Where-Object CommandType -eq $CommandType)
+	}
 }
 Process
 {
-    Resolve-Path $Path |Get-ScriptCommands
+	Resolve-Path $Path |Get-ScriptCommands
 }
