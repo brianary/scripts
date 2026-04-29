@@ -11,7 +11,6 @@ Save-PodcastEpisodes.ps1 https://www.youlooknicetoday.com/rss -UseTitle
 Downloads podcast episodes to the current directory.
 #>
 
-#Requires -Version 7
 [CmdletBinding()] Param(
 # The URL of the podcast feed.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Alias('Url')][uri] $Uri,

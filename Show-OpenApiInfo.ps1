@@ -9,7 +9,7 @@ Json
 https://www.openapis.org/
 
 .EXAMPLE
-Show-OpenApiInfo.ps1 .\test\data\sample-openapi.json
+Show-OpenApiInfo .\test\data\sample-openapi.json
 
 Sample REST API v1.0.0 An example OpenAPI definition.
 .\test\data\sample-openapi.json openapi v3.0.3
@@ -19,13 +19,12 @@ POST /users Creates a new user.
 Adds a user account.
 #>
 
-#Requires -Version 7
 [CmdletBinding()] Param(
 [Parameter(Position=0,Mandatory=$true,ValueFromPipelineByPropertyName=$true)][Alias('FullName')][string] $Path
 )
 Process
 {
-    $api = Get-OpenApiInfo.ps1 $Path
+    $api = Get-OpenApiInfo $Path
     Write-Host $api.Title -ForegroundColor Green -NoNewline
     Write-Host " $($api.Version) " -ForegroundColor DarkCyan -NoNewline
     if($api.Description) {Write-Host $api.Description -ForegroundColor DarkGreen}

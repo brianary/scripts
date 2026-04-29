@@ -13,8 +13,7 @@ Returns secret info from the secret vaults, including metadata as properties.
 ## SYNTAX
 
 ```
-Get-SecretDetails.ps1 [-ProgressAction <ActionPreference>] [-Name <String>] [-Vault <String>]
- [<CommonParameters>]
+Get-SecretDetails.ps1 [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -39,21 +38,6 @@ Expires     : 2036-01-01 00:00:00
 
 ## PARAMETERS
 
-### -Name
-{{ Fill Name Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ProgressAction
 {{ Fill ProgressAction Description }}
 
@@ -61,21 +45,6 @@ Accept wildcard characters: False
 Type: ActionPreference
 Parameter Sets: (All)
 Aliases: proga
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Vault
-{{ Fill Vault Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
