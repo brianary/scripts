@@ -1,19 +1,19 @@
 ---
 external help file: -help.xml
 Module Name:
-online version:
+online version: https://aka.ms/terminal-documentation
 schema: 2.0.0
 ---
 
-# Test-Interactive.ps1
+# Test-WindowsTerminal.ps1
 
 ## SYNOPSIS
-Determines whether both the user and process are interactive.
+Returns true if PowerShell is running within Windows Terminal.
 
 ## SYNTAX
 
 ```
-Test-Interactive.ps1 [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Test-WindowsTerminal.ps1 [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -23,7 +23,7 @@ Test-Interactive.ps1 [-ProgressAction <ActionPreference>] [<CommonParameters>]
 
 ### EXAMPLE 1
 ```
-Test-Interactive.ps1
+Test-WindowsTerminal.ps1
 ```
 
 True
@@ -52,7 +52,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Boolean indicating whether the session is interactive.
+### System.Boolean
 ## NOTES
 
 ## RELATED LINKS
+
+[https://aka.ms/terminal-documentation](https://aka.ms/terminal-documentation)
+

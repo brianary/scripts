@@ -1,6 +1,6 @@
 {
   "markdownlint.config": {
-    "header-style": {
+    "heading-style": {
       "style": "setext_with_atx"
     }
   },

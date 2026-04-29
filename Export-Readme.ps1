@@ -303,6 +303,13 @@ Useful General-Purpose Scripts
 
 [pester.yml]: https://github.com/brianary/scripts/actions/workflows/pester.yml "Pester test run history"
 
+> [!NOTE]
+> Many scripts have been moved into modules to improve their usability!
+> See **[ModernConveniences][]** and the [scripts-to-modules.json roadmap][].
+
+[ModernConveniences]: https://github.com/brianary/ModernConveniences/ "A collection of general-purpose functions for objects, properties, and more."
+[scripts-to-modules.json roadmap]: scripts-to-modules.json "The plan to divide the scripts into modules by purpose."
+
 This repo contains a collection of generally useful scripts (mostly Windows PowerShell).
 
 See [PS5](PS5) for legacy scripts, [syscfg](syscfg) for single-use system config scripts.

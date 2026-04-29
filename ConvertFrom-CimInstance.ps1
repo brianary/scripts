@@ -12,12 +12,11 @@ PSObject converted from the CimInstance entered.
 Scheduled Tasks
 
 .EXAMPLE
-$tasks = Get-ScheduledTask |ConvertFrom-CimInstance.ps1
+$tasks = Get-ScheduledTask |ConvertFrom-CimInstance
 
 Gets the scheduled tasks as PSObjects that support tab completion and can be serialized and exported.
 #>
 
-#Requires -Version 3
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 # The CimInstance object to convert to a PSObject.
 [Parameter(Position=0,ValueFromPipeline=$true)]
@@ -31,8 +30,8 @@ Process
 		if($null -eq $InputObject.$name) {continue}
 		switch($InputObject.CimInstanceProperties[$name].CimType)
 		{
-			Instance      {$value[$name] = $InputObject.$name |ConvertFrom-CimInstance.ps1}
-			InstanceArray {$value[$name] = [psobject[]]@($InputObject.$name |ConvertFrom-CimInstance.ps1)}
+			Instance      {$value[$name] = $InputObject.$name |ConvertFrom-CimInstance}
+			InstanceArray {$value[$name] = [psobject[]]@($InputObject.$name |ConvertFrom-CimInstance)}
 			default       {$value[$name] = $InputObject.$name}
 		}
 	}
