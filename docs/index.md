@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3334_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3471_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -19,17 +19,9 @@ red)](https://github.com/brianary/scripts/tree/main/test)
 Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 
-### Clipboard
-
-- **[Convert-ClipboardTsvToHtml.ps1](Convert-ClipboardTsvToHtml.ps1.md)**: Parses TSV clipboard data into HTML table data which is copied back to the clipboard.
-- **[Import-ClipboardTsv.ps1](Import-ClipboardTsv.ps1.md)**: Parses TSV clipboard data into objects.
-
 ### Command
 
-- **[Get-CommandParameters.ps1](Get-CommandParameters.ps1.md)**: Returns the parameters of the specified cmdlet.
-- **[Get-CommandPath.ps1](Get-CommandPath.ps1.md)**: Locates a command.
 - **[Hide-Command.ps1](Hide-Command.ps1.md)**: Make a command unavailable.
-- **[Invoke-CachedCommand.ps1](Invoke-CachedCommand.ps1.md)**: Caches the output of a command for recall if called again.
 - **[Invoke-CommandWithParams.ps1](Invoke-CommandWithParams.ps1.md)**: Execute a command by using matching dictionary entries as parameters.
 - **[Use-Command.ps1](Use-Command.ps1.md)**: Checks for the existence of the given command, and adds if missing and a source is defined.
 
@@ -41,10 +33,6 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Console
 
-- **[Disable-AnsiColor.ps1](Disable-AnsiColor.ps1.md)**: Disables ANSI terminal colors.
-- **[Enable-AnsiColor.ps1](Enable-AnsiColor.ps1.md)**: Enables ANSI terminal colors.
-- **[Get-ConsoleHistory.ps1](Get-ConsoleHistory.ps1.md)**: Returns the DOSKey-style console command history (up arrow or F8).
-- **[Remove-ConsoleHistory.ps1](Remove-ConsoleHistory.ps1.md)**: Removes an entry from the DOSKey-style console command history (up arrow or F8).
 - **[Set-ConsoleColorTheme.ps1](Set-ConsoleColorTheme.ps1.md)**: Overrides ConsoleClass window color palette entries with a preset color theme.
 
 ### Credential
@@ -56,33 +44,14 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Remove-CachedCredential.ps1](Remove-CachedCredential.ps1.md)**: Removes a credential from secure storage.
 - **[Save-Secret.ps1](Save-Secret.ps1.md)**: Sets a secret in a secret vault with metadata.
 
-### Data
-
-- **[Limit-Digits.ps1](Limit-Digits.ps1.md)**: Rounds off a number to the requested number of digits.
-- **[Measure-Properties.ps1](Measure-Properties.ps1.md)**: Provides frequency details about the properties across objects in the pipeline.
-- **[Measure-Values.ps1](Measure-Values.ps1.md)**: Provides analysis of supplied values.
-
-### Data encoding
-
-- **[ConvertFrom-Base64.ps1](ConvertFrom-Base64.ps1.md)**: Converts base64-encoded text to bytes or text.
-- **[ConvertFrom-Hex.ps1](ConvertFrom-Hex.ps1.md)**: Convert a string of hexadecimal digits into a byte array.
-- **[ConvertTo-Base64.ps1](ConvertTo-Base64.ps1.md)**: Converts bytes or text to base64-encoded text.
-
 ### Data formats
 
-- **[ConvertTo-PowerShell.ps1](ConvertTo-PowerShell.ps1.md)**: Serializes complex content into PowerShell literals.
-- **[Format-EscapedUrl.ps1](Format-EscapedUrl.ps1.md)**: Escape URLs more aggressively.
 - **[New-Jwt.ps1](New-Jwt.ps1.md)**: Generates a JSON Web Token (JWT)
-- **[Split-Uri.ps1](Split-Uri.ps1.md)**: Splits a URI into component parts.
-- **[Test-FileTypeMagicNumber.ps1](Test-FileTypeMagicNumber.ps1.md)**: Tests for a given common file type by magic number.
 - **[Test-Jwt.ps1](Test-Jwt.ps1.md)**: Determines whether a string is a valid JWT.
-- **[Test-MagicNumber.ps1](Test-MagicNumber.ps1.md)**: Tests a file for a "magic number" (identifying sequence of bytes) at a given location.
-- **[Test-Uri.ps1](Test-Uri.ps1.md)**: Determines whether a string is a valid URI.
 - **[Test-Windows1252.ps1](Test-Windows1252.ps1.md)**: Determines whether a file contains Windows-1252 bytes that are invalid UTF-8 bytes.
 
 ### Database
 
-- **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
@@ -101,25 +70,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Date and time
 
-- **[Add-TimeSpan.ps1](Add-TimeSpan.ps1.md)**: Adds a timespan to DateTime values.
-- **[ConvertFrom-Duration.ps1](ConvertFrom-Duration.ps1.md)**: Parses a Timespan from a ISO8601 duration string.
-- **[ConvertFrom-EpochTime.ps1](ConvertFrom-EpochTime.ps1.md)**: Converts an integer Unix (POSIX) time (seconds since Jan 1, 1970) into a DateTime value.
-- **[ConvertFrom-IsoWeekDate.ps1](ConvertFrom-IsoWeekDate.ps1.md)**: Returns a DateTime object from an ISO week date string.
-- **[ConvertTo-EpochTime.ps1](ConvertTo-EpochTime.ps1.md)**: Converts a DateTime value into an integer Unix (POSIX) time, seconds since Jan 1, 1970.
 - **[ConvertTo-LogParserTimestamp.ps1](ConvertTo-LogParserTimestamp.ps1.md)**: Formats a datetime as a LogParser literal.
-- **[Format-Date.ps1](Format-Date.ps1.md)**: Returns a date/time as a named format.
-- **[Get-FrenchRepublicanDate.ps1](Get-FrenchRepublicanDate.ps1.md)**: Returns a date and time converted to the French Republican Calendar.
-- **[Show-Time.ps1](Show-Time.ps1.md)**: Displays a formatted date using powerline font characters.
-- **[Test-DateTime.ps1](Test-DateTime.ps1.md)**: Tests whether the given string can be parsed as a date.
-- **[Test-USFederalHoliday.ps1](Test-USFederalHoliday.ps1.md)**: Returns true if the given date is a U.S. federal holiday.
-
-### Dictionary
-
-- **[Compare-Keys.ps1](Compare-Keys.ps1.md)**: Returns the differences between two dictionaries.
-- **[ConvertTo-OrderedDictionary.ps1](ConvertTo-OrderedDictionary.ps1.md)**: Converts an object to an ordered dictionary of properties and values.
-- **[Join-Keys.ps1](Join-Keys.ps1.md)**: Combines dictionaries together into a single dictionary.
-- **[Remove-NullValues.ps1](Remove-NullValues.ps1.md)**: Removes dictionary entries with null vaules.
-- **[Split-Keys.ps1](Split-Keys.ps1.md)**: Clones a dictionary keeping only the specified keys.
 
 ### DotNet
 
@@ -133,20 +84,15 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### EnvironmentVariables
 
 - **[Compress-EnvironmentVariables.ps1](Compress-EnvironmentVariables.ps1.md)**: Replaces each of the longest matching parts of a string with an embedded environment variable with that value.
-- **[Expand-EnvironmentVariables.ps1](Expand-EnvironmentVariables.ps1.md)**: Replaces the name of each environment variable embedded in the specified string with the string equivalent of the value of the variable, then returns the resulting string.
 
 ### Files
 
 - **[Backup-File.ps1](Backup-File.ps1.md)**: Create a backup as a sibling to a file, with date and time values in the name.
-- **[Find-NewestFile.ps1](Find-NewestFile.ps1.md)**: Finds the most recent file.
 - **[Join-FileName.ps1](Join-FileName.ps1.md)**: Combines a filename with a string.
 - **[Measure-Caches.ps1](Measure-Caches.ps1.md)**: Returns a list of matching cache directories, and their sizes, sorted.
 - **[New-Shortcut.ps1](New-Shortcut.ps1.md)**: Create a Windows shortcut.
 - **[Remove-LockyFile.ps1](Remove-LockyFile.ps1.md)**: Removes a file that may be prone to locking.
-- **[Show-PSDriveUsage.ps1](Show-PSDriveUsage.ps1.md)**: Displays drive usage graphically, and with a human-readable summary.
 - **[Test-LockedFile.ps1](Test-LockedFile.ps1.md)**: Returns true if the specified file is locked.
-- **[Test-NewerFile.ps1](Test-NewerFile.ps1.md)**: Returns true if the difference file is newer than the reference file.
-- **[Update-Files.ps1](Update-Files.ps1.md)**: Copies specified source files that exist in the destination directory.
 
 ### Git and GitHub
 
@@ -164,29 +110,20 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1.md)**: Creates multipart/form-data to send as a request body.
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1.md)**: Returns the content security policy at from the given URL.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1.md)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
-- **[Save-WebRequest.ps1](Save-WebRequest.ps1.md)**: Downloads a given URL to a file, automatically determining the filename.
 - **[Show-HttpStatus.ps1](Show-HttpStatus.ps1.md)**: Displays the HTTP status code info.
-- **[Trace-WebRequest.ps1](Trace-WebRequest.ps1.md)**: Provides details about a retrieving a URI.
 
 ### Json
 
 - **[Export-Json.ps1](Export-Json.ps1.md)**: Exports a portion of a JSON document, recursively importing references.
-- **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1.md)**: Extracts a JSON schema from an OpenAPI definition.
 - **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1.md)**: Returns metadata from an OpenAPI definition.
 - **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1.md)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
 - **[Select-Json.ps1](Select-Json.ps1.md)**: Returns a value from a JSON string or file.
 - **[Set-Json.ps1](Set-Json.ps1.md)**: Sets a property in a JSON string or file.
-- **[Show-OpenApiInfo.ps1](Show-OpenApiInfo.ps1.md)**: Displays metadata from an OpenAPI definition.
-
-### Markdown
-
-- **[Repair-MarkdownHeaders.ps1](Repair-MarkdownHeaders.ps1.md)**: Updates markdown content to replace level 1 & 2 ATX headers to Setext headers.
 
 ### Mermaid Diagrams
 
 - **[Export-MermaidER.ps1](Export-MermaidER.ps1.md)**: Generates a Mermaid entity relation diagram for database tables.
-- **[Export-MermaidXY.ps1](Export-MermaidXY.ps1.md)**: Generates a Mermaid XY bar/line chart for the values of a series of properties.
 
 ### Notebooks
 
@@ -197,52 +134,13 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Find-ProjectPackages.ps1](Find-ProjectPackages.ps1.md)**: Find modules used in projects.
 - **[Get-LibraryVulnerabilityInfo.ps1](Get-LibraryVulnerabilityInfo.ps1.md)**: Get the list of module/package/library vulnerabilities from the RetireJS or SafeNuGet projects.
 
-### Parameters
-
-- **[Add-ParameterDefault.ps1](Add-ParameterDefault.ps1.md)**: Appends or creates a value to use for the specified cmdlet parameter to use when one is not specified.
-- **[Remove-ParameterDefault.ps1](Remove-ParameterDefault.ps1.md)**: Removes a value that would have been used for a parameter if none was specified, if one existed.
-- **[Set-ParameterDefault.ps1](Set-ParameterDefault.ps1.md)**: Assigns a value to use for the specified cmdlet parameter to use when one is not specified.
-
 ### PowerShell
 
-- **[Add-Counter.ps1](Add-Counter.ps1.md)**: Adds an incrementing integer property to each pipeline object.
-- **[Add-DynamicParam.ps1](Add-DynamicParam.ps1.md)**: Adds a dynamic parameter to a script, within a DynamicParam block.
-- &#x1F199; **[Add-NugetPackage.ps1](Add-NugetPackage.ps1.md)**: Loads a NuGet package DLL, downloading as needed.
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1.md)**: Convert a scope level to account for another call stack level.
-- **[ForEach-Progress.ps1](ForEach-Progress.ps1.md)**: Performs an operation against each item in a collection of input objects, with a progress bar.
-- **[Format-ByteUnits.ps1](Format-ByteUnits.ps1.md)**: Converts bytes to largest possible units, to improve readability.
-- **[Format-Permutations.ps1](Format-Permutations.ps1.md)**: Builds format strings using every combination of elements from multiple arrays.
-- **[Get-EnumValues.ps1](Get-EnumValues.ps1.md)**: Returns the possible values of the specified enumeration.
-- **[Get-TypeAccelerators.ps1](Get-TypeAccelerators.ps1.md)**: Returns the list of PowerShell type accelerators.
-- **[Import-Variables.ps1](Import-Variables.ps1.md)**: Creates local variables from a data row or dictionary (hashtable).
-- **[Invoke-WindowsPowerShell.ps1](Invoke-WindowsPowerShell.ps1.md)**: Runs commands in Windows PowerShell (typically from PowerShell Core).
-- **[Merge-PSObject.ps1](Merge-PSObject.ps1.md)**: Create a new PSObject by recursively combining the properties of PSObjects.
-- **[Read-Choice.ps1](Read-Choice.ps1.md)**: Returns choice selected from a list of options.
-- **[Stop-ThrowError.ps1](Stop-ThrowError.ps1.md)**: Throws a better error than "throw".
-- &#x1F199; **[Test-Administrator.ps1](Test-Administrator.ps1.md)**: Checks whether the current session has administrator privileges.
-- **[Test-Interactive.ps1](Test-Interactive.ps1.md)**: Determines whether both the user and process are interactive.
-- **[Test-Range.ps1](Test-Range.ps1.md)**: Returns true from an initial condition until a terminating condition; a latching test.
-- **[Test-Variable.ps1](Test-Variable.ps1.md)**: Indicates whether a variable has been defined.
-- **[Use-ProgressView.ps1](Use-ProgressView.ps1.md)**: Sets the progress bar display view.
-- **[Use-ReasonableDefaults.ps1](Use-ReasonableDefaults.ps1.md)**: Sets certain cmdlet parameter defaults to rational, useful values.
-- **[Write-Info.ps1](Write-Info.ps1.md)**: Writes to the information stream, with color support and more.
-
-### PowerShell Modules
-
-- **[Get-ModuleScope.ps1](Get-ModuleScope.ps1.md)**: Returns the scope of an installed module.
-- **[Uninstall-OldModules.ps1](Uninstall-OldModules.ps1.md)**: Uninstalls old module versions.
-- **[Update-Modules.ps1](Update-Modules.ps1.md)**: Cleans up old modules.
-
-### Properties
-
-- **[Add-NoteProperty.ps1](Add-NoteProperty.ps1.md)**: Adds a NoteProperty to a PSObject, calculating the value with the object in context.
-- **[Compare-Properties.ps1](Compare-Properties.ps1.md)**: Compares the properties of two objects.
-- **[Test-NoteProperty.ps1](Test-NoteProperty.ps1.md)**: Looks for any matching NoteProperties on an object.
 
 ### Scheduled Tasks
 
 - **[Backup-SchTasks.ps1](Backup-SchTasks.ps1.md)**: Exports the local list of Scheduled Tasks into a single XML file.
-- **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1.md)**: Convert a CimInstance object to a PSObject.
 - **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1.md)**: Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
 - **[Copy-SchTasks.ps1](Copy-SchTasks.ps1.md)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
 - **[Get-SimpleSchTasks.ps1](Get-SimpleSchTasks.ps1.md)**: Returns simple scheduled task info.
@@ -256,14 +154,10 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Optimize-Help.ps1](Optimize-Help.ps1.md)**: Cleans up comment-based help blocks by fully unindenting and capitalizing dot keywords.
 - **[Rename-Script.ps1](Rename-Script.ps1.md)**: Renames all instances of a script, and updates any usage of it.
 - **[Repair-ScriptStyle.ps1](Repair-ScriptStyle.ps1.md)**: Accepts justifications for script analysis rule violations, fixing the rest using Invoke-ScriptAnalysis.
-- **[Select-ScriptCommands.ps1](Select-ScriptCommands.ps1.md)**: Returns the commands used by the specified script.
 
 ### Search and replace
 
-- **[Add-CapturesToMatches.ps1](Add-CapturesToMatches.ps1.md)**: Adds named capture group values as note properties to Select-String MatchInfo objects.
 - **[Find-Lines.ps1](Find-Lines.ps1.md)**: Searches a specific subset of files for lines matching a pattern.
-- **[Select-CapturesFromMatches.ps1](Select-CapturesFromMatches.ps1.md)**: Selects named capture group values as note properties from Select-String MatchInfo objects.
-- **[Set-RegexReplace.ps1](Set-RegexReplace.ps1.md)**: Updates text found with Select-String, using a regular expression replacement template.
 
 ### Seq
 
@@ -280,8 +174,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-SystemDetails.ps1](Get-SystemDetails.ps1.md)**: Collects some useful system hardware and operating system details via CIM.
 - **[Import-EdgeKeywords.ps1](Import-EdgeKeywords.ps1.md)**: Adds search keywords to an Edge SQLite profile configuration.
 - **[Read-ChocolateySummary.ps1](Read-ChocolateySummary.ps1.md)**: Retrieves the a summary from the Chocolatey log.
-- &#x1F195; **[Show-Status.ps1](Show-Status.ps1.md)**: Displays requested system status values using powerline font characters.
-- &#x1F199; **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
+- **[Update-Everything.ps1](Update-Everything.ps1.md)**: Updates everything it can on the system.
 - **[Use-Java.ps1](Use-Java.ps1.md)**: Switch the Java version for the current process by modifying environment variables.
 
 ### TLS/SSL
@@ -290,14 +183,12 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Unicode
 
-- **[ConvertTo-FileName.ps1](ConvertTo-FileName.ps1.md)**: Returns a valid and safe filename from a given string.
-- **[ConvertTo-SafeEntities.ps1](ConvertTo-SafeEntities.ps1.md)**: Encode text as XML/HTML, escaping all characters outside 7-bit ASCII.
 - **[Get-CharacterDetails.ps1](Get-CharacterDetails.ps1.md)**: Returns filterable categorical information about characters in the Unicode Basic Multilingual Plane.
 - **[Get-Unicode.ps1](Get-Unicode.ps1.md)**: Returns the (UTF-16) .NET string for a given Unicode codepoint, which may be a surrogate pair.
 - **[Get-UnicodeByName.ps1](Get-UnicodeByName.ps1.md)**: Returns characters based on Unicode code point name, GitHub short code, or HTML entity.
 - **[Get-UnicodeData.ps1](Get-UnicodeData.ps1.md)**: Returns the current (cached) Unicode character data.
 - **[Get-UnicodeName.ps1](Get-UnicodeName.ps1.md)**: Returns the name of a Unicode code point.
-- &#x1F199; **[Import-CharConstants.ps1](Import-CharConstants.ps1.md)**: Imports characters by name as constants into the current scope.
+- **[Import-CharConstants.ps1](Import-CharConstants.ps1.md)**: Imports characters by name as constants into the current scope.
 
 ### VSCode
 
@@ -308,6 +199,11 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Import-VsCodeDatabaseConnections.ps1](Import-VsCodeDatabaseConnections.ps1.md)**: Adds config XDT connection strings to VSCode settings.
 - **[Push-WorkspaceLocation.ps1](Push-WorkspaceLocation.ps1.md)**: Pushes the current VS Code editor workspace location to the location stack.
 - **[Set-VSCodeSetting.ps1](Set-VSCodeSetting.ps1.md)**: Sets a VSCode setting.
+
+### Windows Terminal
+
+- **[Set-TerminalProfile.ps1](Set-TerminalProfile.ps1.md)**: Adds or updates a Windows Terminal command profile.
+- **[Test-WindowsTerminal.ps1](Test-WindowsTerminal.ps1.md)**: Returns true if PowerShell is running within Windows Terminal.
 
 ### XML
 
@@ -329,10 +225,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 - **[Backup-Workstation.ps1](Backup-Workstation.ps1.md)**: Adds various configuration files and exported settings to a ZIP file.
 - **[Connect-SshKey.ps1](Connect-SshKey.ps1.md)**: Uses OpenSSH to generate a key and connect it to an ssh server.
-- **[ConvertTo-RomanNumeral.ps1](ConvertTo-RomanNumeral.ps1.md)**: Convert a number to a Roman numeral.
-- **[Copy-Html.ps1](Copy-Html.ps1.md)**: Copies objects as an HTML table.
 - &#x1F199; **[Export-Readme.ps1](Export-Readme.ps1.md)**: Generate README.md file for the scripts repo.
-- **[Format-HtmlDataTable.ps1](Format-HtmlDataTable.ps1.md)**: Right-aligns numeric data in an HTML table for emailing, and optionally zebra-stripes &c.
 - **[Get-ADServiceAccountInfo.ps1](Get-ADServiceAccountInfo.ps1.md)**: Lists the Global Managed Service Accounts for the domain, including the computers they are bound to.
 - **[Get-AspNetEvents.ps1](Get-AspNetEvents.ps1.md)**: Parses ASP.NET errors from the event log on the given server.
 - **[Get-Dns.ps1](Get-Dns.ps1.md)**: Looks up DNS info, given a hostname or address.
@@ -340,7 +233,6 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Get-IisLog.ps1](Get-IisLog.ps1.md)**: Easily query IIS logs.
 - **[Get-PathUsage.ps1](Get-PathUsage.ps1.md)**: Returns the list of directories in the path, and the commands found in each.
 - **[Get-PocketArticles.ps1](Get-PocketArticles.ps1.md)**: Retrieves a list of saved articles from a Pocket account.
-- **[Get-RandomBytes.ps1](Get-RandomBytes.ps1.md)**: Returns random bytes.
 - **[Get-Todos.ps1](Get-Todos.ps1.md)**: Returns the TODOs for the current git repo, which can help document technical debt.
 - **[Measure-Indents.ps1](Measure-Indents.ps1.md)**: Measures the indentation characters used in a text file.
 - **[Measure-StandardDeviation.ps1](Measure-StandardDeviation.ps1.md)**: Calculate the standard deviation of numeric values.
@@ -350,8 +242,5 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Remove-PocketArticle.ps1](Remove-PocketArticle.ps1.md)**: Removes an article from a Pocket account.
 - **[Repair-AppxPackages.ps1](Repair-AppxPackages.ps1.md)**: Re-registers all installed Appx packages.
 - **[Restore-Workstation.ps1](Restore-Workstation.ps1.md)**: Restores various configuration files and exported settings from a ZIP file.
-- **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1.md)**: Downloads enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1.md)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1.md)**: Scan sites using Mozilla's Observatory.
-- &#x1F199; **[Write-CallInfo.ps1](Write-CallInfo.ps1.md)**: Prints caller name and parameters to the host for debugging purposes.
-- **[Write-VisibleString.ps1](Write-VisibleString.ps1.md)**: Displays a string, showing nonprintable characters.

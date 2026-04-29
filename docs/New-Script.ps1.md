@@ -19,7 +19,7 @@ New-Script.ps1 [-NameNoun] <String> [-Synopsis <String>] [-Parameters <RuntimeDe
  [-RequiresVersion <Decimal>] [-RequiresModule <String[]>] [-ConfirmImpact <String>]
  [-DefaultParameterSetName <String>] [-HelpUri <Uri>] [-Indent <String>] [-RequiresRunAsAdmin]
  [-SupportsPaging] [-SupportsShouldProcess] [-PositionalBinding] [-ProgressAction <ActionPreference>]
- -NameVerb <String> [<CommonParameters>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -362,21 +362,6 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NameVerb
-{{ Fill NameVerb Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

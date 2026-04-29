@@ -3,17 +3,17 @@
 Tests converting a CimInstance object to a PSObject.
 #>
 
-$basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
-$skip = !(Test-Path .changes -Type Leaf) ? $false :
-	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
-if($skip) {Write-Information "No changes to $basename" -infa Continue}
-Describe 'ConvertFrom-CimInstance' -Tag ConvertFrom-CimInstance -Skip:$skip {
-	BeforeAll {
-		$scriptsdir,$sep = (Split-Path $PSScriptRoot),[io.path]::PathSeparator
-		if($scriptsdir -notin ($env:Path -split $sep)) {$env:Path += "$sep$scriptsdir"}
-	}
+if((Test-Path .changes -Type Leaf) -and
+	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |
+		Where-Object {$_.StartsWith("$(($MyInvocation.MyCommand.Name -split '\.',2)[0]).")})) {return}
+BeforeAll {
+	Set-StrictMode -Version Latest
+	$module = Get-Item "$PSScriptRoot/../src/.publish/*.psd1"
+	Import-Module $module -Force
+}
+Describe 'ConvertFrom-CimInstance' -Tag ConvertFrom-CimInstance {
 	Context 'Convert a CimInstance object to a PSObject' `
-		-Tag ConvertFromCimInstance,Convert,ConvertFrom,CimInstance {
+		-Tag ConvertFromCimInstance,Convert,ConvertFrom,CimInstance -Skip:$(!$IsWindows) {
 		BeforeAll {
 			Register-ScheduledTask -TaskName x -Description 'This is a test.' `
 				-Action (New-ScheduledTaskAction -Execute pwsh -Argument 1) `
@@ -24,7 +24,7 @@ Describe 'ConvertFrom-CimInstance' -Tag ConvertFrom-CimInstance -Skip:$skip {
 			catch { Write-Warning "$_" }
 		}
 		It "Should convert a Scheduled Task CIM instance into a PSCustomObject" {
-			$task = Get-ScheduledTask -TaskName x |ConvertFrom-CimInstance.ps1
+			$task = Get-ScheduledTask -TaskName x |ConvertFrom-CimInstance
 			$task |Should -BeOfType pscustomobject
 			$task.'#CimClassName' |Should -BeExactly MSFT_ScheduledTask
 			$task.TaskName |Should -BeExactly x
@@ -45,4 +45,7 @@ Describe 'ConvertFrom-CimInstance' -Tag ConvertFrom-CimInstance -Skip:$skip {
 			$schedule.'#CimClassName' |Should -BeExactly MSFT_TaskRepetitionPattern
 		}
 	}
+}
+AfterAll {
+	Remove-Module $module.BaseName -Force
 }

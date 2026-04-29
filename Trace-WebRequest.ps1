@@ -41,7 +41,6 @@ HTTP/1.1 200 OK
 #>
 
 using namespace System.Net.Http
-#Requires -Version 7
 [CmdletBinding()] Param(
 # The URL to retrieve.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]

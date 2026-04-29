@@ -14,19 +14,19 @@ Converts named nodes of an element to properties of a PSObject, recursively.
 
 ### Document
 ```
-ConvertFrom-XmlElement.ps1 [-Document] <XmlDocument> [-OnlyAttributes] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+ConvertFrom-XmlElement.ps1 [-Document] <XmlDocument> [-OnlyAttributes] [-SimpleSuccession]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Element
 ```
-ConvertFrom-XmlElement.ps1 [-Element] <XmlElement> [-OnlyAttributes] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+ConvertFrom-XmlElement.ps1 [-Element] <XmlElement> [-OnlyAttributes] [-SimpleSuccession]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### SelectXmlInfo
 ```
-ConvertFrom-XmlElement.ps1 [-SelectXmlInfo] <SelectXmlInfo> [-OnlyAttributes]
+ConvertFrom-XmlElement.ps1 [-SelectXmlInfo] <SelectXmlInfo> [-OnlyAttributes] [-SimpleSuccession]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -98,6 +98,21 @@ Only include attributes, ignore other child nodes.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: Attributes, Atts
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SimpleSuccession
+Replace any simple element that only contains one other element with its child.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: CollapseSimple
 
 Required: False
 Position: Named

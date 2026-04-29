@@ -18,7 +18,6 @@ Database
 Invoke-Sqlcmd "select top 3 ProductID, Name from Production.Product" -ServerInstance ServerName -Database AdventureWorks |ConvertFrom-DataRow.ps1 |ConvertTo-Html
 #>
 
-#Requires -Version 3
 [CmdletBinding(DefaultParameterSetName='AsObject')]
 [OutputType([Management.Automation.PSCustomObject],ParameterSetName='AsObject')]
 [OutputType([object[]],ParameterSetName='AsValues')]

@@ -36,7 +36,6 @@ Saves f1040.pdf (or else a filename specified in the Content-Disposition header)
 #>
 
 using namespace System.Net.Mime
-#Requires -Version 7
 [CmdletBinding()][OutputType([void])] Param(
 # The URL to download.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
