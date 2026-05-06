@@ -43,7 +43,7 @@ Begin
 			$start,$end = $_.StartOffset,$_.EndOffset
 			$script = $script.Remove($start, $end - $start).Insert($start, (Split-Path $_.Text -LeafBase))
 		}
-		$script.Insert($usingOffset, "using module $ModuleName`r`n") |
+		$script.Insert($usingOffset, "using module $ModuleName`r`n").Trim() |
 			Out-File $ps1 -Encoding $encoding
 	}
 
