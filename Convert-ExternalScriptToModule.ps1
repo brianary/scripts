@@ -31,15 +31,13 @@ Begin
 		)
 		if($Values.Count -ne 1) {throw "Unexpected grouping of $($Values.Count) files."}
 		$ps1,$cmd = $Values.FullName,$Values.BaseName
-		$ext = New-Object Stack[IScriptExtent] $Group.Count
-		$Group |ForEach-Object {$ext.Push($_)}
 		[int] $usingOffset = Get-ScriptTokens $ps1 |
 			Where-Object Kind -notin 'Comment','NewLine' |
 			Select-Object -First 1 |
 			ForEach-Object {$_.Extent.StartOffset}
 		$encoding = Get-FileEncoding $ps1
 		$script = Get-Content $ps1 -Raw
-		$ext |ForEach-Object {
+		$Group |Sort-Object StartOffset -Descending |ForEach-Object {
 			$start,$end = $_.StartOffset,$_.EndOffset
 			$script = $script.Remove($start, $end - $start).Insert($start, (Split-Path $_.Text -LeafBase))
 		}
