@@ -306,6 +306,7 @@ Useful General-Purpose Scripts
 > [!NOTE]
 > Many scripts have been moved into modules to improve their usability!
 > See **[ModernConveniences][]** and the [scripts-to-modules.json roadmap][].
+> Use **[Convert-ExternalScriptToModule.ps1](Convert-ExternalScriptToModule.ps1)** to convert your scripts!
 
 [ModernConveniences]: https://github.com/brianary/ModernConveniences/ "A collection of general-purpose functions for objects, properties, and more."
 [scripts-to-modules.json roadmap]: scripts-to-modules.json "The plan to divide the scripts into modules by purpose."

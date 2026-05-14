@@ -1,7 +1,7 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='257'>257 &#x2030;</meter> Scripts repo (144) &#x1F4C5; at once</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='263'>263 &#x2030;</meter> Scripts repo (152) &#x1F4C5; at once</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='750'>750 &#x2030;</meter> A (4) &#x1F4C5; at once</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='750'>750 &#x2030;</meter> Add (4) &#x1F4C5; at once</summary>
 
@@ -19,7 +19,7 @@ Script Tests
 - &#x2714;&#xFE0F; Backup-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> C (14) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='941'>941 &#x2030;</meter> C (17) &#x1F4C5; at once</summary>
 <ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (1) &#x1F4C5; 147 days</summary>
 
 - &#x2714;&#xFE0F; Compare-Xml.ps1
@@ -35,14 +35,17 @@ Script Tests
 - &#x2714;&#xFE0F; Connect-SshKey.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Convert (2) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='667'>667 &#x2030;</meter> Convert (3) &#x1F4C5; at once</summary>
 
 - &#x2714;&#xFE0F; Convert-ChocolateyToWinget.ps1
+- &#x2716;&#xFE0F; Convert-ExternalScriptToModule.ps1
 - &#x2714;&#xFE0F; Convert-Xml.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertFrom (2) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertFrom (4) &#x1F4C5; at once</summary>
 
+- &#x2714;&#xFE0F; ConvertFrom-CimInstance.ps1
+- &#x2714;&#xFE0F; ConvertFrom-DataRow.ps1
 - &#x2714;&#xFE0F; ConvertFrom-EscapedXml.ps1
 - &#x2714;&#xFE0F; ConvertFrom-XmlElement.ps1
 
@@ -62,14 +65,15 @@ Script Tests
 - &#x2714;&#xFE0F; Copy-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> E (8) &#x1F4C5; at once</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Export (8) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> E (9) &#x1F4C5; at once</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Export (9) &#x1F4C5; at once</summary>
 
 - &#x2714;&#xFE0F; Export-DatabaseScripts.ps1
 - &#x2714;&#xFE0F; Export-EdgeKeywords.ps1
 - &#x2714;&#xFE0F; Export-InstalledPackages.ps1
 - &#x2714;&#xFE0F; Export-Json.ps1
 - &#x2714;&#xFE0F; Export-MermaidER.ps1
+- &#x2714;&#xFE0F; Export-OpenApiSchema.ps1
 - &#x2714;&#xFE0F; Export-Readme.ps1
 - &#x2714;&#xFE0F; Export-SecretVault.ps1
 - &#x2714;&#xFE0F; Export-TableMerge.ps1
@@ -247,10 +251,12 @@ Script Tests
 - &#x2716;&#xFE0F; Restore-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='77'>77 &#x2030;</meter> S (13) &#x1F4C5; 48 days</summary>
-<ul><li><details><summary>not started Save (1) </summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='62'>62 &#x2030;</meter> S (16) &#x1F4C5; 48 days</summary>
+<ul><li><details><summary>not started Save (3) </summary>
 
+- &#x2716;&#xFE0F; Save-PodcastEpisodes.ps1
 - &#x2716;&#xFE0F; Save-Secret.ps1
+- &#x2716;&#xFE0F; Save-WebRequest.ps1
 
 </details></li>
 <li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Select (1) &#x1F4C5; 48 days</summary>
@@ -275,13 +281,14 @@ Script Tests
 - &#x2716;&#xFE0F; Set-VSCodeSetting.ps1
 
 </details></li>
-<li><details><summary>not started Show (2) </summary>
+<li><details><summary>not started Show (3) </summary>
 
 - &#x2716;&#xFE0F; Show-DataRef.ps1
 - &#x2716;&#xFE0F; Show-HttpStatus.ps1
+- &#x2716;&#xFE0F; Show-OpenApiInfo.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started T (8) </summary>
+<li><details><summary>not started T (9) </summary>
 <ul><li><details><summary>not started Test (7) </summary>
 
 - &#x2716;&#xFE0F; Test-ConnectionString.ps1
@@ -293,9 +300,10 @@ Script Tests
 - &#x2716;&#xFE0F; Test-Xml.ps1
 
 </details></li>
-<li><details><summary>not started Trace (1) </summary>
+<li><details><summary>not started Trace (2) </summary>
 
 - &#x2716;&#xFE0F; Trace-GitRepoTest.ps1
+- &#x2716;&#xFE0F; Trace-WebRequest.ps1
 
 </details></li></ul></details></li>
 <li><details><summary>not started U (8) </summary>
