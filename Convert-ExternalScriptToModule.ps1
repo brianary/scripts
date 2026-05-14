@@ -57,8 +57,18 @@ Begin
 			ForEach-Object {$_.Tokens.Extent} |
 			Group-Object {Get-Item $_.File}
 	}
+
+	function Write-OutstandingWarning
+	{
+		[CmdletBinding()] Param(
+		[Parameter(Position=0,Mandatory=$true)][string] $Path
+		)
+		[string[]] $cmdlets = Get-Command -Module $ModuleName |Select-Object -ExpandProperty Name
+		Select-String -Pattern "\b(?:$($cmdlets -join '|'))\.ps1\b" -Path $Path |Write-Warning
+	}
 }
 Process
 {
 	Find-ExternalScriptUsage $Path |Update-ScriptFile
+	Write-OutstandingWarning $Path
 }

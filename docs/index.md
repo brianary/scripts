@@ -2,7 +2,7 @@
 
 [![Pester tests status](https://github.com/brianary/scripts/actions/workflows/pester.yml/badge.svg)][pester.yml]
 [![Pester tests results](https://gist.githubusercontent.com/brianary/4642e5c804aa1b40738def5a7c03607a/raw/badge.svg)][pester.yml]
-[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3471_%E2%80%B1-orange
+[![Pester tests coverage](https://img.shields.io/badge/Pester_coverage-3426_%E2%80%B1-orange
 red)](https://github.com/brianary/scripts/tree/main/test)
 [![GitHub license badge](https://badgen.net/github/license/brianary/Scripts?icon=github)](https://mit-license.org/ "MIT License")
 [![GitHub stars badge](https://badgen.net/github/stars/brianary/Scripts?icon=github)](https://github.com/brianary/scripts/stargazers "Stars")
@@ -52,6 +52,7 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 
 ### Database
 
+- &#x1F199; **[ConvertFrom-DataRow.ps1](ConvertFrom-DataRow.ps1.md)**: Converts a DataRow object to a PSObject, Hashtable, or single value.
 - **[Export-DatabaseScripts.ps1](Export-DatabaseScripts.ps1.md)**: Exports MS SQL database objects from the given server and database as files, into a consistent folder structure.
 - **[Export-TableMerge.ps1](Export-TableMerge.ps1.md)**: Exports table data as a T-SQL MERGE statement.
 - **[Find-DatabaseValue.ps1](Find-DatabaseValue.ps1.md)**: Searches an entire database for a field value.
@@ -110,16 +111,20 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[ConvertTo-MultipartFormData.ps1](ConvertTo-MultipartFormData.ps1.md)**: Creates multipart/form-data to send as a request body.
 - **[Get-ContentSecurityPolicy.ps1](Get-ContentSecurityPolicy.ps1.md)**: Returns the content security policy at from the given URL.
 - **[Get-SslDetails.ps1](Get-SslDetails.ps1.md)**: Enumerates the SSL protocols that the client is able to successfully use to connect to a server.
+- &#x1F199; **[Save-WebRequest.ps1](Save-WebRequest.ps1.md)**: Downloads a given URL to a file, automatically determining the filename.
 - **[Show-HttpStatus.ps1](Show-HttpStatus.ps1.md)**: Displays the HTTP status code info.
+- &#x1F199; **[Trace-WebRequest.ps1](Trace-WebRequest.ps1.md)**: Provides details about a retrieving a URI.
 
 ### Json
 
 - **[Export-Json.ps1](Export-Json.ps1.md)**: Exports a portion of a JSON document, recursively importing references.
+- &#x1F199; **[Export-OpenApiSchema.ps1](Export-OpenApiSchema.ps1.md)**: Extracts a JSON schema from an OpenAPI definition.
 - **[Get-OpenApiInfo.ps1](Get-OpenApiInfo.ps1.md)**: Returns metadata from an OpenAPI definition.
 - **[Merge-Json.ps1](Merge-Json.ps1.md)**: Create a new JSON string by recursively combining the properties of JSON strings.
 - **[Resolve-JsonPointer.ps1](Resolve-JsonPointer.ps1.md)**: Returns matching JSON Pointer paths, given a JSON Pointer path with wildcards.
 - **[Select-Json.ps1](Select-Json.ps1.md)**: Returns a value from a JSON string or file.
 - **[Set-Json.ps1](Set-Json.ps1.md)**: Sets a property in a JSON string or file.
+- &#x1F199; **[Show-OpenApiInfo.ps1](Show-OpenApiInfo.ps1.md)**: Displays metadata from an OpenAPI definition.
 
 ### Mermaid Diagrams
 
@@ -137,10 +142,12 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 ### PowerShell
 
 - **[Add-ScopeLevel.ps1](Add-ScopeLevel.ps1.md)**: Convert a scope level to account for another call stack level.
+- &#x1F195; **[Convert-ExternalScriptToModule.ps1](Convert-ExternalScriptToModule.ps1.md)**: Convert a script from external script usage to module cmdlet usage.
 
 ### Scheduled Tasks
 
 - **[Backup-SchTasks.ps1](Backup-SchTasks.ps1.md)**: Exports the local list of Scheduled Tasks into a single XML file.
+- &#x1F199; **[ConvertFrom-CimInstance.ps1](ConvertFrom-CimInstance.ps1.md)**: Convert a CimInstance object to a PSObject.
 - **[ConvertTo-ICalendar.ps1](ConvertTo-ICalendar.ps1.md)**: Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
 - **[Copy-SchTasks.ps1](Copy-SchTasks.ps1.md)**: Copy scheduled jobs from another computer to this one, using a GUI list to choose jobs.
 - **[Get-SimpleSchTasks.ps1](Get-SimpleSchTasks.ps1.md)**: Returns simple scheduled task info.
@@ -242,5 +249,6 @@ Scripts from the [Scripts](https://github.com/brianary/Scripts/) repo.
 - **[Remove-PocketArticle.ps1](Remove-PocketArticle.ps1.md)**: Removes an article from a Pocket account.
 - **[Repair-AppxPackages.ps1](Repair-AppxPackages.ps1.md)**: Re-registers all installed Appx packages.
 - **[Restore-Workstation.ps1](Restore-Workstation.ps1.md)**: Restores various configuration files and exported settings from a ZIP file.
+- &#x1F199; **[Save-PodcastEpisodes.ps1](Save-PodcastEpisodes.ps1.md)**: Downloads enclosures from a podcast feed.
 - **[Send-MailMessageFile.ps1](Send-MailMessageFile.ps1.md)**: Sends emails from a drop folder using .NET config defaults.
 - **[Test-HttpSecurity.ps1](Test-HttpSecurity.ps1.md)**: Scan sites using Mozilla's Observatory.
