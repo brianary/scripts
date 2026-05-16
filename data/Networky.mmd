@@ -1,0 +1,13 @@
+﻿---
+config:
+  theme: forest
+---
+flowchart RL
+subgraph https
+from@{ shape: sm-circ, rank: source }
+to@{ shape: framed-circle, rank: sink }
+from a@-.-> to
+end
+status@{ shape: comment, label: "test/trace<br>lookup/connect<br>security<br>download" }
+status:::aside ~~~ https
+classDef aside color:#0F7
