@@ -1,159 +1,159 @@
 ﻿[
-    {
-        "module": "Networky",
-        "cmdlets": [
-            "Connect-SshKey",
-            "ConvertTo-BasicAuthentication",
-            "ConvertTo-MultipartFormData",
-            "Get-ContentSecurityPolicy",
-            "Get-Dns",
-            "Get-ServerCertificate",
-            "Get-SslDetails",
+	{
+		"module": "Networky",
+		"cmdlets": [
+			"Connect-SshKey",
+			"ConvertTo-BasicAuthentication",
+			"ConvertTo-MultipartFormData",
+			"Get-ContentSecurityPolicy",
+			"Get-Dns",
+			"Get-ServerCertificate",
+			"Get-SslDetails",
 			"Save-PodcastEpisodes",
 			"Save-WebRequest",
-            "Show-HttpStatus",
-            "Test-HttpSecurity",
+			"Show-HttpStatus",
+			"Test-HttpSecurity",
 			"Trace-WebRequest"
-        ]
-    },
-    {
-        "module": "XML",
-        "cmdlets": [
-            "Compare-Xml",
-            "Convert-Xml",
-            "ConvertFrom-EscapedXml",
-            "ConvertFrom-XmlElement",
-            "ConvertTo-XmlElements",
-            "Format-Xml",
-            "Get-XmlNamespaces",
-            "Merge-XmlSelections",
-            "New-NamespaceManager",
-            "Resolve-XmlSchemaLocation",
-            "Resolve-XPath",
-            "Test-Xml"
-        ]
-    },
-    {
-        "module": "JSON",
-        "cmdlets": [
-            "Export-Json",
-            "Merge-Json",
-            "Resolve-JsonPointer",
-            "Select-Json",
-            "Set-Json"
-        ]
-    },
-    {
-        "module": "Development",
-        "cmdlets": [
-            "Add-GitHubMetadata",
-            "Add-NotebookCell",
-            "Add-VsCodeDatabaseConnection",
-            "Copy-GitHubLabels",
-            "Export-OpenApiSchema",
-            "Find-DotNetTools",
-            "Get-AssemblyFramework",
-            "Get-GitFileMetadata",
-            "Get-GitFirstCommit",
-            "Get-GitHubRepoChildItem",
-            "Get-LibraryVulnerabilityInfo",
-            "Get-NuGetConfigs",
-            "Get-OpenApiInfo",
-            "Get-RepoName",
-            "Get-Todos",
-            "Get-VSCCurrentFile",
-            "Get-VSCodeSetting",
-            "Get-VSCodeSettingsFile",
-            "Import-VsCodeDatabaseConnections",
-            "Initialize-DatabaseNotebook",
-            "New-Jwt",
-            "Push-WorkspaceLocation",
-            "Rename-GitHubLocalBranch",
-            "Repair-ScriptStyle",
-            "Set-VSCodeSetting",
-            "Show-DataRef",
-            "Show-OpenApiInfo",
-            "Test-Jwt",
-            "Trace-GitRepoTest"
-        ]
-    },
-    {
-        "module": "Windows/Servers",
-        "cmdlets": [
-            "Backup-File",
-            "Backup-SchTasks",
-            "Backup-Workstation",
-            "Convert-ChocolateyToWinget",
-            "ConvertFrom-CimInstance",
-            "ConvertTo-LogParserTimestamp",
-            "Copy-SchTasks",
-            "Find-ProjectPackages",
-            "Get-ADServiceAccountInfo",
-            "Get-ADUserStatus",
-            "Get-AspNetEvents",
-            "Get-DotNetFrameworkVersions",
-            "Get-DotNetVersions",
-            "Get-IisLog",
-            "Get-SimpleSchTasks",
-            "Get-SystemDetails",
-            "Measure-Caches",
-            "Remove-LockyFile",
-            "Repair-AppxPackages",
-            "Restore-SchTasks",
-            "Restore-Workstation",
-            "Set-SchTaskMsa",
-            "Set-TerminalProfile",
-            "Test-LockedFile",
-            "Test-WindowsTerminal"
-        ]
-    },
-    {
-        "module": "Database",
-        "cmdlets": [
-            "Export-DatabaseScripts",
-            "Export-MermaidER",
-            "Export-TableMerge",
-            "Find-DatabaseValue",
-            "Find-DbColumn",
-            "Find-DbIndexes",
-            "Measure-DbColumn",
-            "Measure-DbColumnValues",
-            "Measure-DbTable",
-            "New-DbProviderObject",
-            "Repair-DatabaseConstraintNames",
-            "Repair-DatabaseUntrustedConstraints",
-            "Send-SqlReport",
-            "Test-ConnectionString",
-            "Use-DbInstance",
-            "Use-SqlcmdParams"
-        ]
-    },
-    {
-        "module": "Unicode",
-        "cmdlets": [
-            "Get-CharacterDetails",
-            "Get-Unicode",
-            "Get-UnicodeByName",
-            "Get-UnicodeData",
-            "Get-UnicodeName",
-            "Import-CharConstants"
-        ]
-    },
-    {
-        "module": "Secrets",
-        "cmdlets": [
-            "Export-SecretVault",
-            "Get-SecretDetails",
-            "Import-SecretVault",
-            "Save-Secret"
-        ]
-    },
-    {
-        "module": "Seq",
-        "cmdlets": [
-            "Send-SeqEvent",
-            "Send-SeqScriptEvent",
-            "Use-SeqServer"
-        ]
-    }
+		]
+	},
+	{
+		"module": "XML",
+		"cmdlets": [
+			"Compare-Xml",
+			"Convert-Xml",
+			"ConvertFrom-EscapedXml",
+			"ConvertFrom-XmlElement",
+			"ConvertTo-XmlElements",
+			"Format-Xml",
+			"Get-XmlNamespaces",
+			"Merge-XmlSelections",
+			"New-NamespaceManager",
+			"Resolve-XmlSchemaLocation",
+			"Resolve-XPath",
+			"Test-Xml"
+		]
+	},
+	{
+		"module": "JSON",
+		"cmdlets": [
+			"Export-Json",
+			"Merge-Json",
+			"Resolve-JsonPointer",
+			"Select-Json",
+			"Set-Json"
+		]
+	},
+	{
+		"module": "Development",
+		"cmdlets": [
+			"Add-GitHubMetadata",
+			"Add-NotebookCell",
+			"Add-VsCodeDatabaseConnection",
+			"Copy-GitHubLabels",
+			"Export-OpenApiSchema",
+			"Find-DotNetTools",
+			"Get-AssemblyFramework",
+			"Get-GitFileMetadata",
+			"Get-GitFirstCommit",
+			"Get-GitHubRepoChildItem",
+			"Get-LibraryVulnerabilityInfo",
+			"Get-NuGetConfigs",
+			"Get-OpenApiInfo",
+			"Get-RepoName",
+			"Get-Todos",
+			"Get-VSCCurrentFile",
+			"Get-VSCodeSetting",
+			"Get-VSCodeSettingsFile",
+			"Import-VsCodeDatabaseConnections",
+			"Initialize-DatabaseNotebook",
+			"New-Jwt",
+			"Push-WorkspaceLocation",
+			"Rename-GitHubLocalBranch",
+			"Repair-ScriptStyle",
+			"Set-VSCodeSetting",
+			"Show-DataRef",
+			"Show-OpenApiInfo",
+			"Test-Jwt",
+			"Trace-GitRepoTest"
+		]
+	},
+	{
+		"module": "Windows/Servers",
+		"cmdlets": [
+			"Backup-File",
+			"Backup-SchTasks",
+			"Backup-Workstation",
+			"Convert-ChocolateyToWinget",
+			"ConvertFrom-CimInstance",
+			"ConvertTo-LogParserTimestamp",
+			"Copy-SchTasks",
+			"Find-ProjectPackages",
+			"Get-ADServiceAccountInfo",
+			"Get-ADUserStatus",
+			"Get-AspNetEvents",
+			"Get-DotNetFrameworkVersions",
+			"Get-DotNetVersions",
+			"Get-IisLog",
+			"Get-SimpleSchTasks",
+			"Get-SystemDetails",
+			"Measure-Caches",
+			"Remove-LockyFile",
+			"Repair-AppxPackages",
+			"Restore-SchTasks",
+			"Restore-Workstation",
+			"Set-SchTaskMsa",
+			"Set-TerminalProfile",
+			"Test-LockedFile",
+			"Test-WindowsTerminal"
+		]
+	},
+	{
+		"module": "Database",
+		"cmdlets": [
+			"Export-DatabaseScripts",
+			"Export-MermaidER",
+			"Export-TableMerge",
+			"Find-DatabaseValue",
+			"Find-DbColumn",
+			"Find-DbIndexes",
+			"Measure-DbColumn",
+			"Measure-DbColumnValues",
+			"Measure-DbTable",
+			"New-DbProviderObject",
+			"Repair-DatabaseConstraintNames",
+			"Repair-DatabaseUntrustedConstraints",
+			"Send-SqlReport",
+			"Test-ConnectionString",
+			"Use-DbInstance",
+			"Use-SqlcmdParams"
+		]
+	},
+	{
+		"module": "Unicode",
+		"cmdlets": [
+			"Get-CharacterDetails",
+			"Get-Unicode",
+			"Get-UnicodeByName",
+			"Get-UnicodeData",
+			"Get-UnicodeName",
+			"Import-CharConstants"
+		]
+	},
+	{
+		"module": "Secrets",
+		"cmdlets": [
+			"Export-SecretVault",
+			"Get-SecretDetails",
+			"Import-SecretVault",
+			"Save-Secret"
+		]
+	},
+	{
+		"module": "Seq",
+		"cmdlets": [
+			"Send-SeqEvent",
+			"Send-SeqScriptEvent",
+			"Use-SeqServer"
+		]
+	}
 ]
