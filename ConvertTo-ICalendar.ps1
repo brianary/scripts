@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Converts supported objects (Scheduled Tasks) to the RFC 5545 iCalendar format.
 
@@ -55,6 +55,9 @@ Creates file tasks.ics to import into Google Calendar, iCalendar, or Outlook to 
 
 #Requires -Version 7
 #Requires -Modules ScheduledTasks
+#Requires -Modules ModernConveniences
+using module ScheduledTasks
+using module ModernConveniences
 [CmdletBinding()][OutputType([string])] Param(
 # A CimInstance of MSFT_ScheduledTask, as output by Get-ScheduledTask.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
@@ -195,7 +198,7 @@ Begin
 		$pos = @(switch($Weeks.Week){Last{-1}default{$_}})
 		$days = $DaysOfWeek.PSObject.Properties.Match('*').Name |
 			ForEach-Object {$_.Substring(0,3).ToUpperInvariant()}
-		$posdays = "BYDAY=$((Format-Permutations.ps1 -Format '{0}{1}' -InputObject $pos,$days) -join ',')"
+		$posdays = "BYDAY=$((ModernConveniences\Format-Permutations -Format '{0}{1}' -InputObject $pos,$days) -join ',')"
 		if($posdays -eq 'BYDAY=Last') {$posdays = 'BYSETPOS=-1'}
 		if($monthNums.Count -eq 12)
 		{

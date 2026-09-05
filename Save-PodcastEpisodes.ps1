@@ -11,6 +11,9 @@ Save-PodcastEpisodes.ps1 https://www.youlooknicetoday.com/rss -UseTitle
 Downloads podcast episodes to the current directory.
 #>
 
+#Requires -Version 7.3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()] Param(
 # The URL of the podcast feed.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true)][Alias('Url')][uri] $Uri,
@@ -38,7 +41,7 @@ Process
 	if($PSBoundParameters.ContainsKey('Before')) {[object[]] $episodes = $episodes |Where-Object published -lt $Before}
 	if($PSBoundParameters.ContainsKey('First')) {[object[]] $episodes = $episodes |Sort-Object published |Select-Object -First $First}
 	if($PSBoundParameters.ContainsKey('Last')) {[object[]] $episodes = $episodes |Sort-Object published |Select-Object -Last $Last}
-	if($CreateFolder) {New-Item ($channel.title |ConvertTo-FileName.ps1) -ItemType Directory -EA Ignore |Push-Location}
+	if($CreateFolder) {New-Item ($channel.title |ModernConveniences\ConvertTo-FileName) -ItemType Directory -EA Ignore |Push-Location}
 	$i,$max = 0,($episodes.Count/100)
 	foreach($episode in $episodes)
 	{
@@ -53,8 +56,8 @@ Process
 		if($UseTitle)
 		{
 			$filename = if($episode.PSObject.Properties.Match('episode')) {$episode.episode + ' '} else {''}
-			$filename += $title |ConvertTo-FileName.ps1
-			$filename += Split-Uri.ps1 $episode.enclosure.url -Extension
+			$filename += $title |ModernConveniences\ConvertTo-FileName
+			$filename += ModernConveniences\Split-Uri $episode.enclosure.url -Extension
 			Invoke-WebRequest $episode.enclosure.url -OutFile $filename
 			(Get-Item $filename).CreationTime = $episode.published
 		}

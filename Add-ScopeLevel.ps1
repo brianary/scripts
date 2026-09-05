@@ -14,9 +14,6 @@ System.String containing the desired level.
 System.String containing the calculated level (Global or an integer).
 
 .LINK
-Stop-ThrowError.ps1
-
-.LINK
 Get-PSCallStack
 
 .LINK
@@ -42,6 +39,8 @@ Global
 #>
 
 #Requires -Version 3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()][OutputType([string])] Param(
 # The requested scope from the caller of the caller of this script.
 # Global, Local, Private, Script, or a positive integer.
@@ -62,7 +61,7 @@ Process
 			{
 				if($stack[$i].Command -and $stack[$i].FunctionName -like '<ScriptBlock>*') {return "$($i-1)"}
 			}
-			Stop-ThrowError.ps1 'Unable to find Script scope' -Argument Scope
+			ModernConveniences\Stop-ThrowError 'Unable to find Script scope' -Argument Scope
 		}
 	}
 }

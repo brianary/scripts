@@ -12,9 +12,6 @@ System and updates
 .LINK
 https://chocolatey.org/
 
-.LINK
-Import-Variables.ps1
-
 .EXAMPLE
 Read-ChocolateySummary.ps1 |Format-Table -AutoSize -Wrap
 
@@ -53,6 +50,8 @@ LogTime               Level Text
 #>
 
 #Requires -Version 5.1
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 using namespace System.Diagnostics
 [CmdletBinding()][OutputType([Management.Automation.PSCustomObject])] Param(
 <#
@@ -85,7 +84,7 @@ foreach($line in ((Get-Content $env:ChocolateyInstall\logs\choco.summary.log -Ra
 	'\r*\n(?=^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3} \d+ \[(?:INFO |WARN |ERROR)\] - )',0,'Multiline')
 {
 	if($line -notmatch $linepattern) {Write-Warning "Could not parse: $line"; continue}
-	Import-Variables.ps1 $Matches
+	ModernConveniences\Import-Variables $Matches
 	[SourceLevels] $LogLevel = switch($LevelMark)
 	{
 		'[INFO ] - VERBOSE: ' {'Verbose'}

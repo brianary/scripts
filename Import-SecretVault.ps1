@@ -57,7 +57,7 @@ Process
 	{
 		Register-SecretVault -Name $Vault -ModuleName Microsoft.PowerShell.SecretStore
 	}
-	$meta = @($Metadata.PSObject.Properties).Count ? @{Metadata=ConvertTo-OrderedDictionary.ps1 $Metadata} : @{}
+	$meta = @($Metadata.PSObject.Properties).Count ? @{Metadata=ModernConveniences\ConvertTo-OrderedDictionary $Metadata} : @{}
 	foreach($k in $meta.Keys) {if($meta[$k] -is [long]){$meta[$k] = [int]$meta[$k]}}
 	switch($Type)
 	{
@@ -65,7 +65,7 @@ Process
 		String {Set-Secret $Name $Value -Vault $Vault @meta}
 		SecureString {Set-Secret $Name (ConvertTo-SecureString $Value -AsPlainText -Force) -Vault $Vault @meta}
 		PSCredential {Set-Secret $Name ($Value |ConvertTo-Credential) -Vault $Vault @meta}
-		Hashtable {Set-Secret $Name (ConvertTo-OrderedDictionary.ps1 $Value) -Vault $Vault @meta} # not yet supported
+		Hashtable {Set-Secret $Name (ModernConveniences\ConvertTo-OrderedDictionary $Value) -Vault $Vault @meta} # not yet supported
 		default {Set-Secret $Name $Value -Vault $Vault @meta}
 	}
 }

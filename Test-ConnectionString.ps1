@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Test a given connection string and provide details about the connection.
 
@@ -27,7 +27,7 @@ Workstation ID       : SERVERNAME
 AuthScheme           : NTLM
 ComputerName         : SERVERNAME
 Encrypt              : True
-LocalCLR             : 
+LocalCLR             :
 TcpPort              : 1433
 LocalPowerShell      : 7.3.9
 NetBiosName          : SERVERNAME
@@ -61,8 +61,8 @@ Process
         {
             $csb = New-DbaConnectionStringBuilder -ConnectionString $ConnectionString
             $server = Connect-DbaInstance -ConnectionString $ConnectionString
-            $conn = Join-Keys.ps1 -ReferenceObject (New-Object Collections.Hashtable $csb) `
-                -InputObject (Test-DbaConnection $csb.DataSource -SkipPSRemoting |ConvertTo-OrderedDictionary.ps1)
+            $conn = ModernConveniences\Join-Keys -ReferenceObject (New-Object Collections.Hashtable $csb) `
+                -InputObject (Test-DbaConnection $csb.DataSource -SkipPSRemoting |ModernConveniences\ConvertTo-OrderedDictionary)
             $info = Invoke-DbaQuery -SqlInstance $server -As PSObject -Query @'
 select @@ServerName [ServerName], db_name() [DatabaseName],
        serverproperty('ComputerNamePhysicalNetBIOS') [ComputerName],
@@ -71,9 +71,9 @@ select @@ServerName [ServerName], db_name() [DatabaseName],
        current_timestamp [ServerTime],
        serverproperty('Edition') [Edition],
        app_name() [AppName];
-'@ |ConvertTo-OrderedDictionary.ps1
+'@ |ModernConveniences\ConvertTo-OrderedDictionary
             [void] $info.Add('Server', $server)
-            $connInfo = Join-Keys.ps1 $conn $info
+            $connInfo = ModernConveniences\Join-Keys $conn $info
             if($connInfo.Contains('Password')) {$connInfo['Password'] = ConvertTo-SecureString $connInfo['Password'] -AsPlainText -Force}
             return [pscustomobject]$connInfo
         }

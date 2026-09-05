@@ -17,7 +17,9 @@ Writes schema.html by applying the xsd2html.xslt transformation to schema.xsd.
 #>
 
 #Requires -Version 3
-#Requires -Modules SelectXmlExtensions
+#Requires -Modules ModernConveniences,SelectXmlExtensions
+using module ModernConveniences
+using module SelectXmlExtensions
 [CmdletBinding(SupportsShouldProcess=$true)]
 [OutputType(ParameterSetName='Xml',[void])][OutputType(ParameterSetName='File',[void])] Param(
 # An XML document containing an XSLT transform.
@@ -46,7 +48,7 @@ Begin
 	[version] $xsltversion = Select-Xml '/*/@version' $TransformXslt -Namespace @{
 			xsl='http://www.w3.org/1999/XSL/Transform'} |Get-XmlValue
 	if($xsltversion -gt '1.0')
-	{ Stop-ThrowError.ps1 "XSLT version $xsltversion is not supported by the CLR." -Argument TransformFile }
+	{ ModernConveniences\Stop-ThrowError "XSLT version $xsltversion is not supported by the CLR." -Argument TransformFile }
 	$xslt = New-Object Xml.Xsl.XslCompiledTransform
 	try
 	{

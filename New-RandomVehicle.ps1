@@ -7,6 +7,8 @@ https://vingenerator.org
 #>
 
 #Requires -Version 3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()] Param()
 
 [regex] $detailpattern = '^VIN Description: (?<Year>\d{4}) (?<MakeModel>.*)$'
@@ -17,7 +19,7 @@ $vinpage = Invoke-WebRequest https://vingenerator.org -UseBasicParsing:$false
 	Select-Object -ExpandProperty InnerText
 if($details -match $detailpattern)
 {
-	Import-Variables.ps1 $Matches
+	ModernConveniences\Import-Variables $Matches
 	[pscustomobject]@{
 		Vin       = $vin
 		Year      = $Year

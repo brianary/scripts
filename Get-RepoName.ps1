@@ -23,12 +23,12 @@ Get-RepoName.ps1
 Begin { Use-Command.ps1 git "$env:ProgramFiles\Git\cmd\git.exe" -cinst git }
 Process
 {
-    if(!(Test-Path $Path -Type Container)) {Stop-ThrowError.ps1 "The path $Path was not found." -Argument Path}
+    if(!(Test-Path $Path -Type Container)) {ModernConveniences\Stop-ThrowError "The path $Path was not found." -Argument Path}
     try
     {
         Push-Location $Path
         git status |Out-Null
-        if(!$?) {Stop-ThrowError.ps1 "The path $Path is not a git repo."-Argument Path}
+        if(!$?) {ModernConveniences\Stop-ThrowError "The path $Path is not a git repo."-Argument Path}
         $remote = git remote |Select-Object -First 1
         if($remote) {return ([uri](git remote get-url $remote)).Segments[-1] -replace '\.git\z',''}
         else {return Split-Path $Path -Leaf}

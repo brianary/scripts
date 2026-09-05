@@ -5,9 +5,6 @@ Creates a new Pester testing script from a script's examples and parameter sets.
 .FUNCTIONALITY
 Scripts
 
-.LINK
-Stop-ThrowError.ps1
-
 .EXAMPLE
 New-PesterTests.ps1 New-PesterTests.ps1
 
@@ -15,6 +12,8 @@ Creates .\test\New-PesterTests.Tests.ps1 with some boilerplate Pester code.
 #>
 
 #Requires -Version 3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()] Param(
 # The script to generate tests for.
 [Parameter(ParameterSetName='Script',Position=0,Mandatory=$true,ValueFromPipeline=$true)]
@@ -38,12 +37,12 @@ Begin
 				Select-Object -First 1
 			if(!$nextScript)
 			{
-				Write-Info.ps1 'Congratulations, all of the scripts in this directory have test files.' -ForegroundColor Green
+				ModernConveniences\Write-Info 'Congratulations, all of the scripts in this directory have test files.' -ForegroundColor Green
 				return
 			}
 			else
 			{
-				Write-Info.ps1 "Creating new tests script for $nextScript" -ForegroundColor Green
+				ModernConveniences\Write-Info "Creating new tests script for $nextScript" -ForegroundColor Green
 				return &$PSCommandPath -Script $nextScript -Directory $Directory
 			}
 		}
@@ -125,7 +124,7 @@ Process
 	$testfile = Join-Path $Directory ([io.path]::ChangeExtension($name,'Tests.ps1'))
 	if((Test-Path $testfile -Type Leaf) -and !$Force)
 	{
-		Stop-ThrowError.ps1 "File '$testfile' already exists" -Argument Script
+		ModernConveniences\Stop-ThrowError "File '$testfile' already exists" -Argument Script
 	}
 	Get-Help (Resolve-Path $Script) |
 		Format-ScriptPesterTest -Name $name -CmdInfo $cmd |

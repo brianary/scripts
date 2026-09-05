@@ -18,12 +18,6 @@ Credential
 .LINK
 https://devblogs.microsoft.com/powershell/secretmanagement-and-secretstore-are-generally-available/
 
-.LINK
-ConvertTo-Base64.ps1
-
-.LINK
-Stop-ThrowError.ps1
-
 .EXAMPLE
 $cred = Get-CachedCredential.ps1 exampleuser 'OpenTV API login'
 
@@ -31,6 +25,8 @@ $cred now contains the login information entered, either this time or from a pre
 #>
 
 #Requires -Version 3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()][OutputType([pscredential])] Param(
 # Specifies a user or account name for the authentication prompt to request a password for.
 [Parameter(Position=0,Mandatory=$true)][string] $UserName,
@@ -51,13 +47,13 @@ if($UseFile)
 	$credcache = Join-Path $env:LOCALAPPDATA .credcache
 	if(!(Test-Path $credcache -Type Container)) {mkdir $credcache |Out-Null}
 	$hashalg = New-Object Security.Cryptography.SHA256Managed
-	$entry = ConvertTo-Base64.ps1 -Data $hashalg.ComputeHash([Text.Encoding]::UTF8.GetBytes("$UserName@$Message")) -UriStyle
+	$entry = ModernConveniences\ConvertTo-Base64 -Data $hashalg.ComputeHash([Text.Encoding]::UTF8.GetBytes("$UserName@$Message")) -UriStyle
 	$file = Join-Path $credcache $entry
 	if($Force -or !(Test-Path $file -Type Leaf))
 	{
-		if(!(Test-Interactive.ps1)) {Throw-StopError.ps1 'Credential has not been cached.' -OperationContext $PSBoundParameters}
+		if(!(ModernConveniences\Test-Interactive)) {Throw-StopError.ps1 'Credential has not been cached.' -OperationContext $PSBoundParameters}
 		$cred = Get-Credential $UserName -Message $Message
-		if($cred.UserName -ne $UserName) {Stop-ThrowError.ps1 "Credential is only valid for username $UserName" -OperationContext $cred}
+		if($cred.UserName -ne $UserName) {ModernConveniences\Stop-ThrowError "Credential is only valid for username $UserName" -OperationContext $cred}
 		ConvertFrom-SecureString $cred.Password |Out-File $file
 		return $cred
 	}

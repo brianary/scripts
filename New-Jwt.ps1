@@ -9,12 +9,6 @@ System.String of an encoded, signed JWT
 Data formats
 
 .LINK
-ConvertTo-Base64.ps1
-
-.LINK
-Test-Uri.ps1
-
-.LINK
 https://tools.ietf.org/html/rfc7519
 
 .LINK
@@ -52,17 +46,17 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM
 # A unique (at least within a given issuer) identifier for the JWT.
 [ValidateNotNullOrEmpty()][string] $JwtId,
 # A string or URI (if it contains a colon) indicating the entity that issued the JWT.
-[ValidateNotNullOrEmpty()][ValidateScript({if($_.Contains(':')){return Test-Uri.ps1 $_}else{$true}})][string] $Issuer,
+[ValidateNotNullOrEmpty()][ValidateScript({if($_.Contains(':')){return ModernConveniences\Test-Uri $_}else{$true}})][string] $Issuer,
 # The principal (user) of the JWT as a string or URI (if it contains a colon).
-[ValidateNotNullOrEmpty()][ValidateScript({if($_.Contains(':')){return Test-Uri.ps1 $_}else{$true}})][string] $Subject,
+[ValidateNotNullOrEmpty()][ValidateScript({if($_.Contains(':')){return ModernConveniences\Test-Uri $_}else{$true}})][string] $Subject,
 # A string or URI (if it contains a colon), or a list of string or URIs that indicates who the JWT is intended for.
-[ValidateScript({foreach($s in $_){if($s.Contains(':') -and !(Test-Uri.ps1 $s)){return $false}};return $true})]
+[ValidateScript({foreach($s in $_){if($s.Contains(':') -and !(ModernConveniences\Test-Uri $s)){return $false}};return $true})]
 [ValidateCount(1,2147483647)][System.String[]] $Audience,
 # Additional claims to add to the body of the JWT.
 [hashtable] $Claims = @{}
 )
 
-function ConvertTo-JSON64($o) {ConvertTo-Base64.ps1 ([Text.Encoding]::UTF8.GetBytes((ConvertTo-Json $o -Compress))) -UriStyle}
+function ConvertTo-JSON64($o) {ModernConveniences\ConvertTo-Base64 ([Text.Encoding]::UTF8.GetBytes((ConvertTo-Json $o -Compress))) -UriStyle}
 function ConvertTo-NumericDate([datetime]$d)
 {
 	if($d.Kind -eq 'Utc') {[int](Get-Date $d -UFormat %s)}
@@ -97,6 +91,6 @@ $secred = New-Object pscredential 'secret',$Secret
 $hash = New-Object "Security.Cryptography.$($Algorithm -replace '\AHS','HMACSHA')" (,$secbytes)
 $secbytes = $null
 Write-Verbose "Signing JWT with $($hash.GetType().Name)"
-$jwt = "$jwt.$(ConvertTo-Base64.ps1 ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($jwt))) -UriStyle)"
+$jwt = "$jwt.$(ModernConveniences\ConvertTo-Base64 ($hash.ComputeHash([Text.Encoding]::UTF8.GetBytes($jwt))) -UriStyle)"
 $hash.Dispose()
 $jwt

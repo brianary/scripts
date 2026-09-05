@@ -22,9 +22,6 @@ System.Configuration
 ConvertFrom-DataRow.ps1
 
 .LINK
-Stop-ThrowError.ps1
-
-.LINK
 Invoke-Sqlcmd
 
 .EXAMPLE

@@ -45,9 +45,6 @@ https://www.dell.com/support/kbdoc/000177325/dell-command-update
 Update-Everything.cmd
 
 .LINK
-Uninstall-OldModules.ps1
-
-.LINK
 Get-DotNetGlobalTools.ps1
 
 .LINK
@@ -96,6 +93,8 @@ Attempts to update packages, features, and system.
 #>
 
 #Requires -Version 7
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 using module Microsoft.PowerShell.PSResourceGet
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost','',
 Justification='This script is not intended for pipelining.')]
@@ -111,7 +110,7 @@ Justification='Some of these functions may deal with multiple updates.')]
 )
 Begin
 {
-	$Script:IsNotAdministrator = !(Test-Administrator.ps1)
+	$Script:IsNotAdministrator = !(ModernConveniences\Test-Administrator)
 	Import-CharConstants.ps1 ':UP:' ':TOP:' -Scope Script
 
 	function Test-EmptyDesktop
@@ -141,7 +140,7 @@ Begin
 		[CmdletBinding()] Param(
 		[string]$Message
 		)
-		Write-Info.ps1 $Message -ForegroundColor White -BackgroundColor DarkGray
+		ModernConveniences\Write-Info $Message -ForegroundColor White -BackgroundColor DarkGray
 	}
 
 	function Invoke-EssentialUpdate
@@ -223,7 +222,7 @@ Begin
 		$version = @(Get-PSResource Az -ErrorAction Ignore |Measure-Object Version -Maximum)
 		if($version.Count -eq 0) {return}
 		if($version.Maximum -ge (Find-PSResource Az -Repository PSGallery).Version) {return}
-		$allUsers = (Get-ModuleScope.ps1 Az).Scope -eq 'AllUsers'
+		$allUsers = (ModernConveniences\Get-ModuleScope Az).Scope -eq 'AllUsers'
 		if($allUsers -and $Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping AzModules."; return}
 		return $true
 	}
@@ -243,7 +242,7 @@ Begin
 		$version = @(Get-PSResource dbatools -ErrorAction Ignore |Measure-Object Version -Maximum)
 		if($version.Count -eq 0) {return}
 		if($version.Maximum -ge (Find-PSResource dbatools -Repository PSGallery).Version) {return}
-		$allUsers = (Get-ModuleScope.ps1 dbatools).Scope -eq 'AllUsers'
+		$allUsers = (ModernConveniences\Get-ModuleScope dbatools).Scope -eq 'AllUsers'
 		if($allUsers -and $Script:IsNotAdministrator) {Write-Warning "Not running as admin; skipping Dbatools."; return}
 		return $true
 	}
@@ -270,7 +269,7 @@ Begin
 			Where-Object {
 				$found = Find-PSResource $_.Name -ErrorAction Ignore
 				if(!$found) {return $false}
-				$isAllUsers[$_.Name] = ($_ |Get-ModuleScope.ps1) -eq 'AllUsers'
+				$isAllUsers[$_.Name] = ($_ |ModernConveniences\Get-ModuleScope) -eq 'AllUsers'
 				if($Script:IsNotAdministrator -and $isAllUsers[$_.Name])
 				{
 					Write-Warning "Skipping module '$($_.Name)' with scope 'AllUsers'"
@@ -287,10 +286,10 @@ Begin
 					Write-Warning "Unable to automatically update module '$($module.Name)'"
 				}
 			}
-		if(Get-Command Uninstall-OldModules.ps1 -ErrorAction Ignore)
+		if(Get-Command ModernConveniences\Uninstall-OldModules -ErrorAction Ignore)
 		{
 			Write-Step "$UP Uninstalling old PowerShell modules"
-			Uninstall-OldModules.ps1 -Force
+			ModernConveniences\Uninstall-OldModules -Force
 		}
 	}
 
@@ -390,7 +389,7 @@ Begin
 		Set-Alias dcu-cli "$(Resolve-Path "C:\Program Files*\Dell\CommandUpdate\dcu-cli.exe")"
 		dcu-cli /scan
 		if($LASTEXITCODE -ne 500) {dcu-cli /applyUpdates -reboot=enable}
-		Write-Info.ps1 ''
+		ModernConveniences\Write-Info ''
 	}
 
 	function Update-WindowsUpdate

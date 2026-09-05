@@ -23,9 +23,6 @@ Join-Path
 .LINK
 Get-Command
 
-.LINK
-Stop-ThrowError.ps1
-
 .EXAMPLE
 Get-VSCodeSettingsFile.ps1
 
@@ -83,7 +80,7 @@ ${settings.json} =
 		}
 		else
 		{
-			Stop-ThrowError.ps1 'Unable to determine location of VSCode settings.json' `
+			ModernConveniences\Stop-ThrowError 'Unable to determine location of VSCode settings.json' `
 				-OperationContext "$([environment]::OSVersion)"
 		}
 	}

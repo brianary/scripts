@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Provides details about a retrieving a URI.
 
@@ -13,12 +13,6 @@ HTTP
 
 .LINK
 Import-CharConstants.ps1
-
-.LINK
-Write-Info.ps1
-
-.LINK
-Import-Variables.ps1
 
 .EXAMPLE
 Trace-WebRequest.ps1 g.co/p3phelp -SkipHeaders -SkipContent
@@ -87,15 +81,15 @@ Begin
         {
             $certinfo = Get-ServerCertificate.ps1 $Uri.Host
             $certhost[$Uri.Host] = $certinfo
-            Write-Info.ps1 "$lock $($Uri.Host) is $($certinfo.Subject) from $($certinfo.Issuer)" -fg Magenta
-            Write-Info.ps1 "${timer clock} Valid $($certinfo.Issued) to $($certinfo.Expires)" -fg DarkMagenta
+            ModernConveniences\Write-Info "$lock $($Uri.Host) is $($certinfo.Subject) from $($certinfo.Issuer)" -fg Magenta
+            ModernConveniences\Write-Info "${timer clock} Valid $($certinfo.Issued) to $($certinfo.Expires)" -fg DarkMagenta
         }
         $request = New-Object Net.Http.HttpRequestMessage -ArgumentList $Method, $Uri
         $requestLine, $requestRawHeaders = "$Method $Uri", ($request.Headers.ToString())
         Write-Verbose $requestLine
         Write-Verbose $requestRawHeaders
-        Write-Info.ps1 "$outbox_tray $requestLine" -fg DarkGreen
-        #Write-Info.ps1 $requestRawHeaders -fg DarkGray
+        ModernConveniences\Write-Info "$outbox_tray $requestLine" -fg DarkGreen
+        #ModernConveniences\Write-Info $requestRawHeaders -fg DarkGray
         if($LogFile)
         {@"
 ###
@@ -106,7 +100,7 @@ $requestRawHeaders
         Write-Debug $requestLine
         $StatusCode = 0
         Invoke-WebRequest -Uri $Uri -SkipHttpErrorCheck -MaximumRedirection 0 -AllowInsecureRedirect -EA Ignore |
-            Import-Variables.ps1
+            ModernConveniences\Import-Variables
         if(!$StatusCode)
         {
             if($LogFile)
@@ -121,9 +115,9 @@ $requestRawHeaders
         if($null -eq $rawHeaders) {$rawHeaders = ''}
         Write-Verbose $statusLine
         Write-Verbose $rawHeaders
-        Write-Info.ps1 "$inbox_tray $statusLine" -fg (Get-HttpStatusColor $StatusCode)
-        if(!$SkipHeaders) {Write-Info.ps1 $rawHeaders -fg Gray}
-        if(!$SkipContent -and $Content) {Write-Info.ps1 $Content -fg White}
+        ModernConveniences\Write-Info "$inbox_tray $statusLine" -fg (Get-HttpStatusColor $StatusCode)
+        if(!$SkipHeaders) {ModernConveniences\Write-Info $rawHeaders -fg Gray}
+        if(!$SkipContent -and $Content) {ModernConveniences\Write-Info $Content -fg White}
         if($LogFile)
         {@"
 ###
@@ -135,7 +129,7 @@ $RawContent
         {
             foreach($location in $Headers.Location |ForEach-Object {New-Object Uri $Uri,$_})
             {
-                Write-Info.ps1 "$information_source Following redirect to $location" -fg DarkBlue
+                ModernConveniences\Write-Info "$information_source Following redirect to $location" -fg DarkBlue
                 Trace-Uri $location
             }
         }

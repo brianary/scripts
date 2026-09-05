@@ -16,9 +16,6 @@ System.Configuration
 ConvertFrom-DataRow.ps1
 
 .LINK
-Stop-ThrowError.ps1
-
-.LINK
 Invoke-Sqlcmd
 
 .EXAMPLE
@@ -255,12 +252,12 @@ $colssql += ' order by TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION;'
 
 Write-Debug "Schema Query:`n$colssql"
 $corpus = Invoke-Sqlcmd $colssql |ConvertFrom-DataRow.ps1
-if(!$corpus) {Stop-ThrowError.ps1 'No columns left to search.' -SearchContext $PSBoundParameters}
+if(!$corpus) {ModernConveniences\Stop-ThrowError 'No columns left to search.' -SearchContext $PSBoundParameters}
 Write-Verbose "Searching $($corpus.Length) tables"
 $count,$p,$rows,$lasttable = 0,0,0,''
 foreach($row in $corpus)
 {
-    Import-Variables.ps1 $row
+    ModernConveniences\Import-Variables $row
     if($lasttable -ne "$TABLE_SCHEMA.$TABLE_NAME")
     {
         [int]$rows = Invoke-Sqlcmd "select count(*) rows from $TABLE_SCHEMA.$TABLE_NAME" |ConvertFrom-DataRow.ps1 -AsValues

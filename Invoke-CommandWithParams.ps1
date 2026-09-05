@@ -9,12 +9,6 @@ System.Collections.IDictionary, the parameters to supply to the command.
 Command
 
 .LINK
-Split-Keys.ps1
-
-.LINK
-ConvertTo-PowerShell.ps1
-
-.LINK
 Get-Command
 
 .EXAMPLE
@@ -35,6 +29,9 @@ $PSBoundParameters |Invoke-CommandWithParams.ps1 Send-MailMessage -OnlyMatches
 Uses any of the calling script's parameters matching those found in the Send-MailMessage param list to call the command.
 #>
 
+#Requires -Version 3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()] Param(
 # The name of a command to run using the parameter dictionary.
 [Parameter(Position=0,Mandatory=$true)][Alias('CommandName')][string] $Name,
@@ -58,15 +55,15 @@ Begin
 	{
 		$paramsSpec = @{ CommandName = $Name; IncludeCommon = $IncludeCommon }
 		if($ParameterSet) {$paramsSpec['ParameterSet'] = $ParameterSet}
-		[string[]] $params = Get-CommandParameters.ps1 @paramsSpec -NamesOnly |Where-Object {$_ -notin $ExcludeKeys}
+		[string[]] $params = ModernConveniences\Get-CommandParameters @paramsSpec -NamesOnly |Where-Object {$_ -notin $ExcludeKeys}
 	}
 }
 Process
 {
 	$selectedParams =
-		if($OnlyMatches) {$Dictionary |Split-Keys.ps1 -Keys $params -SkipNullValues}
+		if($OnlyMatches) {$Dictionary |ModernConveniences\Split-Keys -Keys $params -SkipNullValues}
 		else {$Dictionary}
 	Write-Debug "$Name $($selectedParams.Keys |
-		ForEach-Object {"-$_ $(ConvertTo-PowerShell.ps1 $selectedParams.$_ -IndentBy '')"})"
+		ForEach-Object {"-$_ $(ModernConveniences\ConvertTo-PowerShell $selectedParams.$_ -IndentBy '')"})"
 	return &$Name @selectedParams
 }

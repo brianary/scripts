@@ -132,7 +132,7 @@ Process
 		if($property -is [array])
 		{
 			if($i -eq 0 -and $segment -eq '-') {$property = @{}; $object += $property; $segment = $object.Count}
-			if(![int]::TryParse($segment,[ref]$segment)) {Stop-ThrowError.ps1 "Could not use array index $segment" -Argument JsonPointer}
+			if(![int]::TryParse($segment,[ref]$segment)) {ModernConveniences\Stop-ThrowError "Could not use array index $segment" -Argument JsonPointer}
 			elseif($property.Count -le $segment) {$property = @{}; $object += $property; $segment = $object.Count}
 			else {$property,$parent = $property[$segment],$property}
 		}
@@ -152,7 +152,7 @@ Process
 	if($property -is [array])
 	{
 		if($segment -eq '-') {if($jsonpath.Length -eq 1) {$object += $PropertyValue} else {$parent.$($jsonpath[-2]) += $PropertyValue}}
-		elseif(![int]::TryParse($segment,[ref]$segment)) {Stop-ThrowError.ps1 "Could not use array index $segment" -Argument JsonPointer}
+		elseif(![int]::TryParse($segment,[ref]$segment)) {ModernConveniences\Stop-ThrowError "Could not use array index $segment" -Argument JsonPointer}
 		elseif($property.Count -le $segment) {if($jsonpath.Length -eq 1) {$object += $PropertyValue} else {$parent.$($jsonpath[-2]) += $PropertyValue}}
 		else {$property[$segment] = $PropertyValue}
 	}

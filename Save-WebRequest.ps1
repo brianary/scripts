@@ -67,10 +67,10 @@ Begin
 			[ContentDisposition] $disposition = $response.Headers['Content-Disposition'][0]
 			$suggestion = $disposition.FileName |Split-Path -Leaf
 		}
-		if($suggestion) {return $suggestion |ConvertTo-FileName.ps1}
-		elseif($null -ne $Uri.Segments -and $Uri.Segments.Count -gt 0) {return $Uri.Segments[-1] |ConvertTo-FileName.ps1}
-		elseif($Uri.Host) {return '{0}.saved' -f $Uri.Host |ConvertTo-FileName.ps1}
-		else {return "$Uri.saved" |Split-Path -Leaf |ConvertTo-FileName.ps1}
+		if($suggestion) {return $suggestion |ModernConveniences\ConvertTo-FileName}
+		elseif($null -ne $Uri.Segments -and $Uri.Segments.Count -gt 0) {return $Uri.Segments[-1] |ModernConveniences\ConvertTo-FileName}
+		elseif($Uri.Host) {return '{0}.saved' -f $Uri.Host |ModernConveniences\ConvertTo-FileName}
+		else {return "$Uri.saved" |Split-Path -Leaf |ModernConveniences\ConvertTo-FileName}
 	}
 }
 Process
@@ -78,7 +78,7 @@ Process
 	$filename = Get-FileName $Uri
 	if($OutDirectory) {$filename = Join-Path $OutDirectory $filename}
 	$response = Invoke-WebRequest $Uri -OutFile $filename -PassThru
-	Write-Info.ps1 "Saved to '$filename'" -fg Green
+	ModernConveniences\Write-Info "Saved to '$filename'" -fg Green
 	if($PSBoundParameters.ContainsKey('CreationTime')) {(Get-Item $filename).CreationTime = $CreationTime}
 	if($PSBoundParameters.ContainsKey('LastWriteTime')) {(Get-Item $filename).LastWriteTime = $LastWriteTime}
 	elseif($response.Headers['Last-Modified'] -is [string[]] -and $response.Headers['Last-Modified'].Count -gt 0)

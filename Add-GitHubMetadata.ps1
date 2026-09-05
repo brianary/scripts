@@ -28,6 +28,9 @@ https://help.github.com/articles/adding-a-license-to-a-repository/
 http://editorconfig.org/
 
 .LINK
+https://github.com/brianary/ModernConveniences/
+
+.LINK
 https://github.com/brianary/Detextive/
 
 .LINK
@@ -37,13 +40,7 @@ Get-VSCodeSetting.ps1
 Set-VSCodeSetting.ps1
 
 .LINK
-Add-CapturesToMatches.ps1
-
-.LINK
 Measure-StandardDeviation.ps1
-
-.LINK
-Test-FileTypeMagicNumber.ps1
 
 .LINK
 Use-Command.ps1
@@ -55,7 +52,9 @@ Sets up the CODEOWNERS file and assigns a user, and sets the indent default.
 #>
 
 #Requires -Version 3
-#Requires -Modules Detextive
+#Requires -Modules Detextive,ModernConveniences
+using module Detextive
+using module ModernConveniences
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns','',
 Justification='These plural nouns work with groups.')]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','',
@@ -246,7 +245,7 @@ function Add-CodeOwners
 	)
 	if(Test-KeepFile .github/CODEOWNERS -Keep:(!$DefaultOwner -and !$Owners))
 	{
-		if(Test-FileTypeMagicNumber.ps1 utf8 .github/CODEOWNERS){Remove-Utf8Signature .github/CODEOWNERS}
+		if(ModernConveniences\Test-FileTypeMagicNumber utf8 .github/CODEOWNERS){Remove-Utf8Signature .github/CODEOWNERS}
 		return
 	}
 	if(!$DefaultOwner)
@@ -254,7 +253,7 @@ function Add-CodeOwners
 		Write-Verbose 'Determining default code owner(s).'
 		$authors = git shortlog -nes HEAD |
 			Select-String '^\s*(?<Commits>\d+)\s+(?<Name>\b[^>]+\b)\s+<(?<Email>[^>]+)>$' |
-			Add-CapturesToMatches.ps1
+			ModernConveniences\Add-CapturesToMatches
 		$authors |Out-String |Write-Verbose
 		[int] $max = ($authors |Measure-Object Commits -Maximum).Maximum
 		[int] $oneSigmaFromTop = $max - ($authors.Commits |Measure-StandardDeviation.ps1)
@@ -290,7 +289,7 @@ function Add-LinguistOverrides
 	}
 	else
 	{
-		if(Test-FileTypeMagicNumber.ps1 utf8 .gitattributes){Remove-Utf8Signature .gitattributes}
+		if(ModernConveniences\Test-FileTypeMagicNumber utf8 .gitattributes){Remove-Utf8Signature .gitattributes}
 		if(Select-String '^# Linguist overrides' .gitattributes)
 		{
 			Select-String '^# Linguist overrides|\blinguist-\w+' .gitattributes |Out-String |Write-Verbose

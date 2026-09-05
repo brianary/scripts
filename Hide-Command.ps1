@@ -10,7 +10,7 @@ and maybe a specific CommandType.
 Command
 
 .LINK
-Stop-ThrowError.ps1
+ModernConveniences\Stop-ThrowError
 
 .LINK
 Get-Command
@@ -27,6 +27,8 @@ Removes the mkdir function.
 #>
 
 #Requires -Version 3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()] Param(
 # The name of command to hide.
 [Parameter(Position=0,Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)][string] $Name,
@@ -41,13 +43,13 @@ Process
 	{
 		Alias {Remove-Item "alias:$Name"}
 		Function {Remove-Item "function:$Name"}
-		Filter {Stop-ThrowError.ps1 "Filter $Name cannot be hidden" -OperationContext $cmd}
+		Filter {ModernConveniences\Stop-ThrowError "Filter $Name cannot be hidden" -OperationContext $cmd}
 		Cmdlet {Remove-Module $cmd.Module}
 		ExternalScript {Rename-Item $cmd.Source ([io.path]::ChangeExtension($cmd.Source,'ps1~'))}
 		Application {Rename-Item $cmd.Source ([io.path]::ChangeExtension($cmd.Source,'ps1~'))}
 		Script {Rename-Item $cmd.Source ([io.path]::ChangeExtension($cmd.Source,'ps1~'))}
-		Configuration {Stop-ThrowError.ps1 "Configuration $Name cannot be hidden" -OperationContext $cmd}
-		All {Stop-ThrowError.ps1 "Command $Name type 'All' cannot be hidden" -OperationContext $cmd}
-		default {Stop-ThrowError.ps1 "Command $Name of unknown type cannot be hidden" -OperationContext $cmd}
+		Configuration {ModernConveniences\Stop-ThrowError "Configuration $Name cannot be hidden" -OperationContext $cmd}
+		All {ModernConveniences\Stop-ThrowError "Command $Name type 'All' cannot be hidden" -OperationContext $cmd}
+		default {ModernConveniences\Stop-ThrowError "Command $Name of unknown type cannot be hidden" -OperationContext $cmd}
 	}
 }

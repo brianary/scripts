@@ -16,9 +16,6 @@ Command
 System.IO.Compression.FileSystem
 
 .LINK
-Find-NewestFile.ps1
-
-.LINK
 Resolve-Path
 
 .LINK
@@ -55,8 +52,10 @@ Use-Command.ps1 Get-ADUser $null -WindowsFeature RSAT-AD-PowerShell
 This example downloads and installs the RSAT-AD-PowerShell module if missing.
 #>
 
-#requires -Version 2
-#requires -Modules Microsoft.PowerShell.Utility
+#Requires -Version 2
+#Requires -Modules Microsoft.PowerShell.Utility,ModernConveniences
+using module Microsoft.PowerShell.Utility
+using module ModernConveniences
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingInvokeExpression','',
 Justification='Some functionality currently requires executing script code.')]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter','',
@@ -126,7 +125,7 @@ Default is 32767
 
 function Set-ResolvedAlias([Parameter(Position=0)][string]$Name,[Parameter(Position=1)][string]$Path)
 {
-	Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |Select-Object -ExpandProperty Path |Find-NewestFile.ps1 |
+	Set-Alias $Name (Resolve-Path $Path -EA SilentlyContinue |Select-Object -ExpandProperty Path |ModernConveniences\Find-NewestFile |
 		Select-Object -ExpandProperty FullName) -Scope Global
 }
 $TEMP = [io.path]::GetTempPath()
@@ -136,7 +135,7 @@ if((!$IsWindows) -and $IsLinux)
 {
 	if (Get-Command /usr/lib/command-not-found -Type Application) { /usr/lib/command-not-found $Name }
 	elseif (Get-Command apropos -Type Application) { apropos $Name }
-	Stop-ThrowError.ps1 "Command '$Name' not available!" -SearchContext $Name
+	ModernConveniences\Stop-ThrowError "Command '$Name' not available!" -SearchContext $Name
 }
 
 switch($PSCmdlet.ParameterSetName)
@@ -267,7 +266,7 @@ switch($PSCmdlet.ParameterSetName)
 		$dir = Split-Path $Path
 		if($PSCmdlet.ShouldProcess("$DownloadZip to $dir",'download/unzip'))
 		{
-			$filename = Split-Uri.ps1 $DownloadZip.LocalPath -Leaf
+			$filename = ModernConveniences\Split-Uri $DownloadZip.LocalPath -Leaf
 			if (!(Test-Path $dir -PathType Container)) { mkdir $dir |Out-Null }
 			$zippath = Join-Path $TEMP $filename
 			Write-Verbose "Downloading $DownloadZip to $path"
