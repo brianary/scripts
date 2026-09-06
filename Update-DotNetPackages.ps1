@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Updates NuGet packages for a .NET solution or project.
 
@@ -7,9 +7,6 @@ DotNet
 
 .LINK
 Use-Command.ps1
-
-.LINK
-Write-Info.ps1
 
 .EXAMPLE
 Update-DotNetPackages.ps1 src Deprecated
@@ -48,7 +45,7 @@ filter Write-Vulnerability
     [Parameter(ValueFromPipelineByPropertyName=$true,Mandatory=$true)][string] $Severity,
     [Parameter(ValueFromPipelineByPropertyName=$true,Mandatory=$true)][uri] $AdvisoryUrl
     )
-    Write-Info.ps1 "${Path}: $Id [$Severity] $AdvisoryUrl" -fg Magenta
+    ModernConveniences\Write-Info "${Path}: $Id [$Severity] $AdvisoryUrl" -fg Magenta
 }
 
 filter Update-Package
@@ -63,9 +60,9 @@ filter Update-Package
     [Parameter(ValueFromPipelineByPropertyName=$true)][pscustomobject[]] $Vulnerabilities,
     [Parameter(ValueFromPipelineByPropertyName=$true)][string[]] $DeprecationReasons
     )
-    if($Id -in $SkipPackages) {Write-Info.ps1 "${Path}: Skipping '$Id' upgrade, keeping version $RequestedVersion" -fg Cyan; return}
+    if($Id -in $SkipPackages) {ModernConveniences\Write-Info "${Path}: Skipping '$Id' upgrade, keeping version $RequestedVersion" -fg Cyan; return}
     if($Vulnerabilities) {$Vulnerabilities |Write-Vulnerability -Path $Path -Id $Id}
-    if($DeprecationReasons) {Write-Info.ps1 "${Path}: $Id [Deprecated] $DeprecationReasons" -fg DarkMagenta}
+    if($DeprecationReasons) {ModernConveniences\Write-Info "${Path}: $Id [Deprecated] $DeprecationReasons" -fg DarkMagenta}
     if(!$LatestVersion)
     {
         $LatestVersion = @((dotnet package search $Id --exact-match --format json |
@@ -73,7 +70,7 @@ filter Update-Package
     }
     [Xml.XmlElement] $first, [Xml.XmlElement[]] $extras = @($Project.SelectNodes("/Project/ItemGroup/PackageReference[@Include='$Id']"))
     if(!$first) {throw "Could not find '$Id' in $Path"}
-    Write-Info.ps1 "${Path}: Upgrading '$Id' from $RequestedVersion to $LatestVersion" -fg Gray
+    ModernConveniences\Write-Info "${Path}: Upgrading '$Id' from $RequestedVersion to $LatestVersion" -fg Gray
     $first.SetAttribute('Version', $LatestVersion)
     if($extras)
     {
@@ -88,8 +85,8 @@ filter Update-Project
     [Parameter(ValueFromPipelineByPropertyName=$true,Mandatory=$true)][string] $Path,
     [Parameter(ValueFromPipelineByPropertyName=$true)][pscustomobject[]] $Frameworks
     )
-    if(!$Frameworks) {Write-Info.ps1 "${Path}: up to date" -fg Green; return}
-    Write-Info.ps1 "${Path}: $($Frameworks.framework)" -fg Blue
+    if(!$Frameworks) {ModernConveniences\Write-Info "${Path}: up to date" -fg Green; return}
+    ModernConveniences\Write-Info "${Path}: $($Frameworks.framework)" -fg Blue
     $Project = New-Object Xml.XmlDocument -Property @{PreserveWhitespace=$true}
     $Project.Load($Path)
     $Frameworks.topLevelPackages |Update-Package -Path $Path -Project $Project

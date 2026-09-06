@@ -79,8 +79,6 @@ function Get-PathDetail([Parameter(Position=0,Mandatory=$true)][EnvironmentVaria
 function Resolve-PathConflict([Parameter(Position=0,Mandatory=$true)][EnvironmentVariableTarget]$Target,
 							   [Parameter(Position=1,Mandatory=$true)][Collections.Generic.List[psobject]]$PathDetails)
 {
-	# examine conflicts
-	if(!(Get-Command -Verb Test -Noun NewerFile)) {Set-Alias Test-NewerFile "$PSScriptRoot\Test-NewerFile.ps1"}
 	foreach($c in $app.Keys |Where-Object {$app.$_.Count -gt 1})
 	{
 		$newest,$rest = $app[$c]

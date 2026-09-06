@@ -1,5 +1,5 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+﻿# Sample workflow for building and deploying a Jekyll site to GitHub Pages
+name: 📰 Deploy Jekyll with GitHub Pages dependencies preinstalled
 
 on:
   # Runs on pushes targeting the default branch
@@ -21,16 +21,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Build job
   build:
+    name: 📃 Build documentation
     runs-on: ubuntu-latest
     if: github.repository == 'brianary/scripts'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Update readme
+      - name: 📥 Check out repo
+        uses: actions/checkout@v7
+      - name: ⚙️ Setup Pages
+        uses: actions/configure-pages@v6
+      - name: 📝 Update readme
         continue-on-error: true
         shell: pwsh
         run: |
@@ -38,16 +38,15 @@ jobs:
           $env:Path = "$PWD"
           Get-Command Get-Unicode.ps1
           ./Export-Readme.ps1
-      - name: Build with Jekyll
+      - name: 📰 Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./docs
           destination: ./_site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-
-  # Deployment job
+      - name: 📤️ Upload artifact
+        uses: actions/upload-pages-artifact@v5
   deploy:
+    name: 📰 Publish site
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -55,6 +54,6 @@ jobs:
     if: github.repository == 'brianary/scripts'
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 📤️ Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

@@ -5,17 +5,16 @@ Renames all instances of a script, and updates any usage of it.
 .FUNCTIONALITY
 Scripts
 
-.LINK
-Set-RegexReplace.ps1
-
 .EXAMPLE
-Rename-Script.ps1 Get-RomanNumeral.ps1 ConvertTo-RomanNumeral.ps1
+Rename-Script.ps1 Get-RomanNumeral.ps1 ModernConveniences\ConvertTo-RomanNumeral
 
 Renames the script file, and searches other script files for references to it,
 and updates them.
 #>
 
 #Requires -Version 3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding(ConfirmImpact='High',SupportsShouldProcess=$true)] Param(
 # The current name of the script to change.
 [Parameter(Position=0,Mandatory=$true)][ValidateNotNullOrEmpty()][Alias('From')][string] $OldName,
@@ -55,7 +54,7 @@ else
 		Write-Progress "Updating uses of $OldName to $NewName" "Updating script $($use.Path)" -curr $use.Line `
 			-Percent ($i++/$max)
 		if(!$PSCmdlet.ShouldProcess("$use","Update to $NewName")) {continue}
-		$use |Set-RegexReplace.ps1 $NewName
+		$use |ModernConveniences\Set-RegexReplace $NewName
 	}
 }
 Write-Progress "Updating uses of $OldName to $NewName" -Completed

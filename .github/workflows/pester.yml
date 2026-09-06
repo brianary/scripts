@@ -1,47 +1,39 @@
-name: Pester tests
+﻿name: ⚗️ Pester tests
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+defaults:
+  run:
+    shell: pwsh -noninteractive -command ". '{0}'"
 jobs:
   test:
-    name: Run Pester tests
+    name: 🧪 Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
           os: [ubuntu-latest, windows-latest]
     steps:
-    - name: Check out repo
-      uses: actions/checkout@v4
+    - name: Get version info
+      run: Write-Information "PSC $($PSVersionTable.PSVersion) running on CLR v$([Environment]::Version) on $($PSVersionTable.OS)" -infa Continue
+    - name: 📥 Check out script source
+      uses: actions/checkout@v7
       with:
         fetch-depth: 2
-    - name: Get changes
+    - name: 📑 Get changes
       id: changes
       continue-on-error: true
       uses: jitterbit/get-changed-files@v1
       with:
         format: csv
-    - name: Pester test
-      shell: pwsh -noninteractive -command ". '{0}'"
-      run: |
-        Install-Module Pester -Force
-        Write-Information "PSC $($PSVersionTable.PSVersion) running on CLR v$([Environment]::Version) on $($PSVersionTable.OS)" -infa Continue
-        '${{ steps.changes.outputs.added_modified }}' -split ',' |Out-File .changes utf8
-        Invoke-Pester -Output Diagnostic -Path test -PassThru |Export-NUnitReport -Path TestResults.xml
-    - name: Publish results (Ubuntu)
-      uses: EnricoMi/publish-unit-test-result-action/linux@v2
-      if: false
-      # matrix.os == 'ubuntu-latest'
-      with:
-        files: "TestResults.xml"
-    - name: Publish results (Windows)
-      uses: EnricoMi/publish-unit-test-result-action/windows@v2
-      if: false
-      # matrix.os == 'windows-latest'
-      with:
-        files: "TestResults.xml"
-    - name: Publish Test Results
+    - name: 💾 Save changes
+      run: "'${{ steps.changes.outputs.added_modified }}' -split ',' |Out-File .changes utf8"
+    - name: 🧩 Install dependencies
+      run: Install-PSResource -TrustRepository -RequiredResourceFile ./test/dependencies.psd1
+    - name: ⚗️ Pester test
+      run: Invoke-Pester -Output Diagnostic -Path test -PassThru |Export-NUnitReport -Path TestResults.xml
+    - name: 📤️ Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
       id: test-results
       if: always()

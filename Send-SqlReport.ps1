@@ -149,7 +149,7 @@ $PostContent
         if($Caption){$tableFormat.Add('Caption',$Caption)}
         $Msg.Add('Body',($data |
             ConvertTo-Html -PreContent $PreContent -PostContent $PostContent -Head '<style type="text/css">th,td {padding:2px 1ex 0 2px}</style>' |
-            Format-HtmlDataTable.ps1 @tableFormat |
+            ModernConveniences\Format-HtmlDataTable @tableFormat |
             Out-String))
     }
     if($PSCmdlet.ShouldProcess("Message:`n$(New-Object PSObject -Property $Msg|Format-List|Out-String)`n",'Send message'))
@@ -171,5 +171,5 @@ catch # report problems
     if($Priority) { $Msg.Priority= $Priority }
     if($PSCmdlet.ShouldProcess("Message:`n$(New-Object PSObject -Property $Msg|Format-List|Out-String)`n",'Send message'))
     { Send-MailMessage @Msg }
-    Stop-ThrowError.ps1 "$_" -OperationContext $_
+    ModernConveniences\Stop-ThrowError "$_" -OperationContext $_
 }

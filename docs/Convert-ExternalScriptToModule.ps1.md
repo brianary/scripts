@@ -1,19 +1,20 @@
 ---
 external help file: -help.xml
 Module Name:
-online version: https://www.openapis.org/
+online version:
 schema: 2.0.0
 ---
 
-# Show-OpenApiInfo.ps1
+# Convert-ExternalScriptToModule.ps1
 
 ## SYNOPSIS
-Displays metadata from an OpenAPI definition.
+Convert a script from external script usage to module cmdlet usage.
 
 ## SYNTAX
 
 ```
-Show-OpenApiInfo.ps1 [-Path] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Convert-ExternalScriptToModule.ps1 [[-ModuleName] <String>] [[-Path] <String>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,31 +22,41 @@ Show-OpenApiInfo.ps1 [-Path] <String> [-ProgressAction <ActionPreference>] [<Com
 
 ## EXAMPLES
 
-### EXAMPLE 1
-```
-Show-OpenApiInfo .\test\data\sample-openapi.json
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Sample REST API v1.0.0 An example OpenAPI definition.
-.\test\data\sample-openapi.json openapi v3.0.3
-GET /users/{userId} Returns a user by ID.
-Gets a user's details.
-POST /users Creates a new user.
-Adds a user account.
+{{ Add example description here }}
 
 ## PARAMETERS
 
+### -ModuleName
+The module to use instead of external scripts.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: ModernConveniences
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Path
-{{ Fill Path Description }}
+The script to update to module usage.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: FullName
 
-Required: True
-Position: 1
-Default value: None
+Required: False
+Position: 2
+Default value: *.ps1
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -70,11 +81,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### System.String containing the path of the script to update.
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-
-[https://www.openapis.org/](https://www.openapis.org/)
-

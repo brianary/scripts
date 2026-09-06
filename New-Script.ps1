@@ -15,12 +15,14 @@ Creates a basic script.
 #>
 
 #Requires -Version 3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()][OutputType([void])] Param(
 # The noun part of the name of the script.
 [Parameter(Position=1,Mandatory=$true)][string] $NameNoun,
 # A one-line description of the purpose of the script.
 [string] $Synopsis,
-# A runtime parameter dictionary $DynamicParams created via Add-DynamicParam.ps1
+# A runtime parameter dictionary $DynamicParams created via ModernConveniences\Add-DynamicParam
 [Management.Automation.RuntimeDefinedParameterDictionary] $Parameters,
 # Documentation about the datatype accepted as pipeline input by the script.
 [string] $Inputs,
@@ -63,12 +65,12 @@ Creates a basic script.
 )
 DynamicParam
 {
-    Get-Verb |Select-Object -ExpandProperty Verb |Add-DynamicParam.ps1 NameVerb string -Position 0 -Mandatory
+    Get-Verb |Select-Object -ExpandProperty Verb |ModernConveniences\Add-DynamicParam NameVerb string -Position 0 -Mandatory
     $DynamicParams
 }
 Process
 {
-    Import-Variables.ps1 $PSBoundParameters
+    ModernConveniences\Import-Variables $PSBoundParameters
     $OFS = @'
 
 
@@ -94,7 +96,7 @@ Process
     if($SupportsShouldProcess) {$cmdletbinding += "SupportsShouldProcess=$SupportsShouldProcess"}
     if($PositionalBinding) {$cmdletbinding += "PositionalBinding=$PositionalBinding"}
     $outtype = if($OutputType) {"[OutputType([$OutputType])]"} else {''}
-    if($Parameters -and $Parameters.Count) {$params = $Parameters |ConvertTo-PowerShell.ps1}
+    if($Parameters -and $Parameters.Count) {$params = $Parameters |ModernConveniences\ConvertTo-PowerShell}
     $blocks = @()
     if($DynamicParam) {$blocks += 'DynamicParam','{',"$Indent$DynamicParam",'}'}
     if($Begin) {$blocks += 'Begin','{',"$Indent$Begin",'}'}

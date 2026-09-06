@@ -24,7 +24,7 @@ ConvertFrom-CimInstance.ps1 [[-InputObject] <CimInstance>] [-ProgressAction <Act
 
 ### EXAMPLE 1
 ```
-$tasks = Get-ScheduledTask |ConvertFrom-CimInstance.ps1
+$tasks = Get-ScheduledTask |ConvertFrom-CimInstance
 ```
 
 Gets the scheduled tasks as PSObjects that support tab completion and can be serialized and exported.

@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Returns a list of matching cache directories, and their sizes, sorted.
 
@@ -16,9 +16,6 @@ Files
 .LINK
 Use-Command.ps1
 
-.LINK
-Format-ByteUnits.ps1
-
 .EXAMPLE
 Measure-Caches.ps1 |Format-Table -AutoSize
 
@@ -35,6 +32,8 @@ c:\users\usernam\appdata\roaming\code\cacheddata                    172.6MB     
 #>
 
 #Requires -Version 3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()] Param(
 # The root directory to search from.
 [string] $Path = $env:APPDATA,
@@ -54,7 +53,7 @@ Process
 		ConvertFrom-Csv -Delimiter "`t" -Header Path,CurrentFileCount,CurrentFileSize,FileCount,DirectoryCount,DirectorySize,DirectorySizeOnDisk |
 		ForEach-Object {[pscustomobject]@{
 			Path                = $_.Path
-			Size                = [long] $_.DirectorySize |Format-ByteUnits.ps1 -Precision 1
+			Size                = [long] $_.DirectorySize |ModernConveniences\Format-ByteUnits -Precision 1
 			DirectorySize       = [long] $_.DirectorySize
 			DirectorySizeOnDisk = [long] $_.DirectorySizeOnDisk
 		}} |

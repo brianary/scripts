@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Adds or updates a Windows Terminal command profile.
 
@@ -46,13 +46,15 @@ Adds an ssh profile named "servername", using the specified command line.
 #>
 
 #Requires -Version 7
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()] Param()
 DynamicParam
 {
     $Script:data = Get-Content ([io.path]::ChangeExtension($PSCommandPath, 'json')) -Raw |ConvertFrom-Json -AsHashtable
-    $data.Keys |Add-DynamicParam.ps1 -Name Type -Type string -Position 0 -Mandatory
-    Add-DynamicParam.ps1 -Name Name -Type string -Position 1
-    Add-DynamicParam.ps1 -Name CommandLine -Type string -Position 2
+    $data.Keys |ModernConveniences\Add-DynamicParam -Name Type -Type string -Position 0 -Mandatory
+    ModernConveniences\Add-DynamicParam -Name Name -Type string -Position 1
+    ModernConveniences\Add-DynamicParam -Name CommandLine -Type string -Position 2
     $DynamicParams
 }
 Begin
@@ -149,13 +151,13 @@ Begin
         )
         Initialize-Variables
         $termprofile = Get-TerminalProfile $Type $Name |Initialize-TerminalProfile $Name $CommandLine
-        Write-Info.ps1 'Found profile:' -fg DarkGray
-        $termprofile |Format-Table -AutoSize |Out-String |Write-Info.ps1 -fg Gray
+        ModernConveniences\Write-Info 'Found profile:' -fg DarkGray
+        $termprofile |Format-Table -AutoSize |Out-String |ModernConveniences\Write-Info -fg Gray
         for($position = 0; $position -lt $Script:profiles.Count; $position++)
         {
             if($Script:profiles[$position]['guid'] -eq $termprofile['guid']) {break}
         }
-        Write-Info.ps1 "Setting position $position"
+        ModernConveniences\Write-Info "Setting position $position"
         Copy-Item $Script:settings ([io.path]::ChangeExtension($Script:settings, (Get-Date -Format yyyyMMdd\THHmmss)))
         Set-Json.ps1 -JsonPointer "/profiles/list/$position" -PropertyValue $termprofile -Path $Script:settings
     }

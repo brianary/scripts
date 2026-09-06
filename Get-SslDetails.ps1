@@ -19,9 +19,6 @@ https://msdn.microsoft.com/library/system.security.authentication.sslprotocols.a
 .LINK
 https://msdn.microsoft.com/library/system.net.security.sslstream.authenticateasclient.aspx
 
-.LINK
-Get-EnumValues.ps1
-
 .EXAMPLE
 Get-SslDetails.ps1 -ComputerName www.google.com
 
@@ -46,7 +43,7 @@ Tls12              : Aes128
 # The remote port to connect to.
 [Parameter(ValueFromPipelineByPropertyName=$true)][int]$Port = 443
 )
-Begin {$protocols = Get-EnumValues.ps1 Security.Authentication.SslProtocols |Where-Object Name -notin 'None','Default' |Select-Object -ExpandProperty Name}
+Begin {$protocols = ModernConveniences\Get-EnumValues Security.Authentication.SslProtocols |Where-Object Name -notin 'None','Default' |Select-Object -ExpandProperty Name}
 Process
 {
     $result = [ordered]@{

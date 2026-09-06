@@ -29,17 +29,17 @@ Process
     if(!$InputObject) {Write-Verbose 'No JWT input'; return $false}
     if(!$InputObject.Contains([char]'.')) {Write-Verbose 'JWT is missing a dot'; return $false}
     $head64,$body64,$sign64 = $InputObject -split '\.'
-    $head = ConvertFrom-Base64.ps1 $head64 utf8 -UriStyle
+    $head = ModernConveniences\ConvertFrom-Base64 $head64 utf8 -UriStyle
     Write-Verbose "JWT head: $head"
     if(!(Test-Json $head)) {Write-Verbose 'JWT header does not decode to valid JSON'; return $false}
     $head = ConvertFrom-Json $head
     if($head.typ -ne 'JWT') {Write-Verbose "JWT type is $($head.typ)"; return $false}
     if($head.alg -notin 'HS256','HS384','HS512') {Write-Verbose "Unsupported algorithm: $($head.alg)"; return $false}
-    $body = ConvertFrom-Base64.ps1 $body64 utf8 -UriStyle
+    $body = ModernConveniences\ConvertFrom-Base64 $body64 utf8 -UriStyle
     Write-Verbose "JWT body: $body"
     if(!(Test-Json $body)) {Write-Verbose 'JWT body does not decode to valid JSON'; return $false}
     $body = ConvertFrom-Json $body
-    [byte[]]$sign = ConvertFrom-Base64.ps1 $sign64 -UriStyle
+    [byte[]]$sign = ModernConveniences\ConvertFrom-Base64 $sign64 -UriStyle
     $secred = New-Object pscredential 'secret',$Secret
     [byte[]]$secbytes = [Text.Encoding]::UTF8.GetBytes(($secred.Password |ConvertFrom-SecureString -AsPlainText))
     $hash = New-Object "Security.Cryptography.$($head.alg -replace '\AHS','HMACSHA')" (,$secbytes)

@@ -27,9 +27,6 @@ System.Configuration
 Add-ScopeLevel.ps1
 
 .LINK
-Set-ParameterDefault.ps1
-
-.LINK
 Send-MailMessage
 
 .EXAMPLE
@@ -40,6 +37,8 @@ values from the ConfigurationManager.
 #>
 
 #Requires -Version 3
+#Requires -Modules ModernConveniences
+using module ModernConveniences
 [CmdletBinding()][OutputType([void])] Param(
 # The scope to create the defaults in.
 [string] $Scope = 'Local',
@@ -52,8 +51,8 @@ $sv = if($Private) {@{Scope=$Scope;Option='Private'}} else {@{Scope=$Scope}}
 
 if($PSVersionTable.PSEdition -eq 'Core')
 { # from .NET (Core), run from .NET Framework, which has a machine.config to parse
-	$values = Invoke-WindowsPowerShell.ps1 { Use-NetMailConfig.ps1; $PSDefaultParameterValues }
-	$values.Keys |ForEach-Object {Set-ParameterDefault.ps1 Send-MailMessage `
+	$values = ModernConveniences\Invoke-WindowsPowerShell { Use-NetMailConfig.ps1; $PSDefaultParameterValues }
+	$values.Keys |ForEach-Object {ModernConveniences\Set-ParameterDefault Send-MailMessage `
 		($_ -replace '\ASend-MailMessage:') ($values[$_]) @sv}
 	Set-Variable PSEmailServer ($values['Send-MailMessage:SmtpServer']) @sv
 }
@@ -61,11 +60,11 @@ else
 {
 	try{[void][Configuration.ConfigurationManager]}catch{Add-Type -as System.Configuration}
 	$smtp = [Configuration.ConfigurationManager]::GetSection('system.net/mailSettings/smtp')
-	if($smtp.From) { Set-ParameterDefault.ps1 Send-MailMessage From $smtp.From @sv }
+	if($smtp.From) { ModernConveniences\Set-ParameterDefault Send-MailMessage From $smtp.From @sv }
 	if($smtp.DeliveryMethod -eq 'Network' -and $smtp.Network)
 	{
-		if($smtp.Network.Host) {Set-ParameterDefault.ps1 Send-MailMessage SmtpServer $smtp.Network.Host @sv}
-		if($smtp.Network.EnableSsl) {Set-ParameterDefault.ps1 Send-MailMessage UseSsl $smtp.Network.EnableSsl @sv}
+		if($smtp.Network.Host) {ModernConveniences\Set-ParameterDefault Send-MailMessage SmtpServer $smtp.Network.Host @sv}
+		if($smtp.Network.EnableSsl) {ModernConveniences\Set-ParameterDefault Send-MailMessage UseSsl $smtp.Network.EnableSsl @sv}
 	}
 	else
 	{

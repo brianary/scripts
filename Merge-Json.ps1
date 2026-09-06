@@ -12,9 +12,6 @@ System.String of JSON combining the inputs.
 Json
 
 .LINK
-Merge-PSObject.ps1
-
-.LINK
 ConvertFrom-Json
 
 .LINK
@@ -46,5 +43,5 @@ Primitive values are overwritten by any matching ones in the new JSON string.
 [switch]$Compress
 )
 Begin {$value = [pscustomobject]@{}}
-Process {$value = $value,($InputObject |ConvertFrom-Json) |Merge-PSObject.ps1}
+Process {$value = $value,($InputObject |ConvertFrom-Json) |ModernConveniences\Merge-PSObject}
 End {$value  |ConvertTo-Json -Compress:$Compress}

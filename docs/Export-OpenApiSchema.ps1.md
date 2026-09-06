@@ -8,7 +8,7 @@ schema: 2.0.0
 # Export-OpenApiSchema.ps1
 
 ## SYNOPSIS
-Extracts the JSON schema from an OpenAPI definition.
+Extracts a JSON schema from an OpenAPI definition.
 
 ## SYNTAX
 
@@ -31,14 +31,14 @@ Export-OpenApiSchema.ps1 [[-Path] <String>] [[-Method] <String>] [[-EndpointPath
 
 ### EXAMPLE 1
 ```
-Export-OpenApiSchema.ps1 api.json
+Export-OpenApiSchema api.json
 ```
 
 Returns the schema of the 200 response of any defined endpoint is returned.
 
 ### EXAMPLE 2
 ```
-Export-OpenApiSchema.ps1 api.json POST /hello -RequestSchema
+Export-OpenApiSchema api.json POST /hello -RequestSchema
 ```
 
 Returns the schema of the request body of the POST /hello endpoint.
@@ -149,7 +149,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 [https://www.openapis.org/](https://www.openapis.org/)
 
-[Export-Json.ps1]()
+[Export-Json]()
 
-[Set-Json.ps1]()
+[Set-Json]()
 

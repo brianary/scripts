@@ -5,12 +5,6 @@ Removes a credential from secure storage.
 .FUNCTIONALITY
 Credential
 
-.LINK
-ConvertTo-Base64.ps1
-
-.LINK
-Stop-ThrowError.ps1
-
 .EXAMPLE
 Remove-CachedCredential.ps1 exampleuser 'OpenTV API login'
 
@@ -27,6 +21,6 @@ The credential is removed from secure storage.
 $credcache = Join-Path $env:LOCALAPPDATA .credcache
 if(!(Test-Path $credcache -Type Container)) {return}
 $hashalg = New-Object Security.Cryptography.SHA256Managed
-$entry = ConvertTo-Base64.ps1 -Data $hashalg.ComputeHash([Text.Encoding]::UTF8.GetBytes("$UserName@$Message")) -UriStyle
+$entry = ModernConveniences\ConvertTo-Base64 -Data $hashalg.ComputeHash([Text.Encoding]::UTF8.GetBytes("$UserName@$Message")) -UriStyle
 $file = Join-Path $credcache $entry
 if(Test-Path $file -Type Leaf) {Remove-Item $file -Force}

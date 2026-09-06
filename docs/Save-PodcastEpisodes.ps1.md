@@ -8,7 +8,7 @@ schema: 2.0.0
 # Save-PodcastEpisodes.ps1
 
 ## SYNOPSIS
-Saves enclosures from a podcast feed.
+Downloads enclosures from a podcast feed.
 
 ## SYNTAX
 
@@ -27,7 +27,7 @@ Save-PodcastEpisodes.ps1 [-Uri] <Uri> [-After <DateTime>] [-Before <DateTime>] [
 Save-PodcastEpisodes.ps1 https://www.youlooknicetoday.com/rss -UseTitle
 ```
 
-Saves podcast episodes to the current directory.
+Downloads podcast episodes to the current directory.
 
 ## PARAMETERS
 
@@ -122,7 +122,7 @@ Accept wildcard characters: False
 ```
 
 ### -CreateFolder
-Saves the episodes into a folder with the podcast name.
+Downloads the episodes into a folder with the podcast name.
 
 ```yaml
 Type: SwitchParameter

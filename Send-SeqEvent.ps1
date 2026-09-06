@@ -56,7 +56,7 @@ Process
     if($Properties -is [hashtable]) {}
     elseif($Properties -is [Collections.Specialized.OrderedDictionary]) {}
     elseif($Properties -is [Data.DataRow]) {$Properties = ConvertFrom-DataRow.ps1 $Properties -AsHashtable}
-    else {$Properties = ConvertTo-OrderedDictionary.ps1 $Properties}
+    else {$Properties = ModernConveniences\ConvertTo-OrderedDictionary $Properties}
 
     if($LiteralMessage) { $Properties += @{Message=$Message}; $Message = "{Message}" }
 

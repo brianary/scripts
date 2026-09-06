@@ -24,103 +24,24 @@ Trace-WebRequest.ps1 [-Uri] <Uri> [-Method <HttpMethod>] [-LogFile <String>] [-S
 
 ### EXAMPLE 1
 ```
-Trace-WebRequest.ps1 g.co/p3phelp -SkipContent
+Trace-WebRequest.ps1 g.co/p3phelp -SkipHeaders -SkipContent
 ```
 
-📤️ GET g.co/p3phelp
-
-📥️ HTTP/1.1 301 MovedPermanently
-Cache-Control: no-store, must-revalidate, no-cache, max-age=0
-Pragma: no-cache
-Date: Thu, 26 Dec 2024 21:08:21 GMT
-Location: https://g.co/p3phelp
-Server: ESF
-X-XSS-Protection: 0
-X-Frame-Options: SAMEORIGIN
-X-Content-Type-Options: nosniff
-Content-Type: application/binary
-Expires: Mon, 01 Jan 1990 00:00:00 GMT
-Content-Length: 0
-ℹ️ Following redirect to https://g.co/p3phelp
-📤️ GET https://g.co/p3phelp
-
-📥️ HTTP/1.1 302 Found
-Vary: Sec-Fetch-Dest
-Vary: Sec-Fetch-Mode
-Vary: Sec-Fetch-Site
-Cache-Control: no-store, must-revalidate, no-cache, max-age=0
-Pragma: no-cache
-Date: Thu, 26 Dec 2024 21:08:22 GMT
-Location: https://support.google.com/accounts/answer/151657?hl=en
-Strict-Transport-Security: max-age=31536000
-Cross-Origin-Opener-Policy: unsafe-none
-Cross-Origin-Resource-Policy: same-site
-Server: ESF
-X-XSS-Protection: 0
-X-Frame-Options: SAMEORIGIN
-X-Content-Type-Options: nosniff
-Alt-Svc: h3=":443"; ma=2592000
-Alt-Svc: h3-29=":443"; ma=2592000
-Content-Type: application/binary
-Expires: Mon, 01 Jan 1990 00:00:00 GMT
-Content-Length: 0
-ℹ️ Following redirect to https://support.google.com/accounts/answer/151657?hl=en
-📤️ GET https://support.google.com/accounts/answer/151657?hl=en
-
-📥️ HTTP/1.1 301 MovedPermanently
-Location: https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638708441023370154-2201542783&rd=1
-X-Robots-Tag: follow,index
-Date: Thu, 26 Dec 2024 21:08:22 GMT
-Cache-Control: max-age=0, private
-X-Content-Type-Options: nosniff
-Server: support-content-ui
-X-XSS-Protection: 0
-X-Frame-Options: SAMEORIGIN
-Alt-Svc: h3=":443"; ma=2592000
-Alt-Svc: h3-29=":443"; ma=2592000
-Expires: Thu, 26 Dec 2024 21:08:22 GMT
-Content-Type: text/html; charset=UTF-8
-Content-Length: 304
-ℹ️ Following redirect to https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638708441023370154-2201542783&rd=1
-📤️ GET https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638708441023370154-2201542783&rd=1
-
-📥️ HTTP/1.1 301 MovedPermanently
-Location: https://support.google.com/accounts/?hl=en&visit_id=638708441023370154-2201542783&rd=2&topic=3382252
-X-Robots-Tag: follow,noindex
-Date: Thu, 26 Dec 2024 21:08:22 GMT
-Cache-Control: max-age=0, private
-X-Content-Type-Options: nosniff
-Server: support-content-ui
-X-XSS-Protection: 0
-X-Frame-Options: SAMEORIGIN
-Alt-Svc: h3=":443"; ma=2592000
-Alt-Svc: h3-29=":443"; ma=2592000
-Expires: Thu, 26 Dec 2024 21:08:22 GMT
-Content-Type: text/html; charset=UTF-8
-Content-Length: 309
-ℹ️ Following redirect to https://support.google.com/accounts/?hl=en&visit_id=638708441023370154-2201542783&rd=2&topic=3382252
-📤️ GET https://support.google.com/accounts/?hl=en&visit_id=638708441023370154-2201542783&rd=2&topic=3382252
-
-📥️ HTTP/1.1 200 OK
-P3P: CP="This is not a P3P policy!
-See g.co/p3phelp for more info."
-P3P: CP="This is not a P3P policy!
-See g.co/p3phelp for more info."
-P3P: CP="This is not a P3P policy!
-See g.co/p3phelp for more info."
-Strict-Transport-Security: max-age=31536000; includeSubdomains
-Date: Thu, 26 Dec 2024 21:08:23 GMT
-Cache-Control: max-age=0, private
-Content-Security-Policy-Report-Only: object-src 'none';base-uri 'self';script-src 'nonce-69sNhX1vigTzFtuMUufk' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic' https: http: 'report-sample';report-uri https://csp.withgoogle.com/csp/scfe
-X-Content-Type-Options: nosniff
-Server: support-content-ui
-X-XSS-Protection: 0
-X-Frame-Options: SAMEORIGIN
-Alt-Svc: h3=":443"; ma=2592000
-Alt-Svc: h3-29=":443"; ma=2592000
-Transfer-Encoding: chunked
-Content-Type: text/html; charset=UTF-8
-Expires: Thu, 26 Dec 2024 21:08:23 GMT
+g.co is CN=*.google.com from CN=WR2, O=Google Trust Services, C=US
+Valid 05/12/2025 01:42:58 to 08/04/2025 01:42:57
+GET https://g.co/p3phelp
+HTTP/1.1 302 Found
+Following redirect to https://support.google.com/accounts/answer/151657?hl=en
+support.google.com is CN=*.google.com from CN=WR2, O=Google Trust Services, C=US
+Valid 05/12/2025 01:42:58 to 08/04/2025 01:42:57
+GET https://support.google.com/accounts/answer/151657?hl=en
+HTTP/1.1 301 MovedPermanently
+Following redirect to https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638845176026805186-2907418293&rd=1
+GET https://support.google.com/accounts/topic/3382252?hl=en&visit_id=638845176026805186-2907418293&rd=1
+HTTP/1.1 301 MovedPermanently
+Following redirect to https://support.google.com/accounts/?hl=en&visit_id=638845176026805186-2907418293&rd=2&topic=3382252
+GET https://support.google.com/accounts/?hl=en&visit_id=638845176026805186-2907418293&rd=2&topic=3382252
+HTTP/1.1 200 OK
 
 ## PARAMETERS
 

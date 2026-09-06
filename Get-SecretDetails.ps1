@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Returns secret info from the secret vaults, including metadata as properties.
 
@@ -32,8 +32,8 @@ Expires     : 2036-01-01 00:00:00
 [CmdletBinding()] Param()
 DynamicParam
 {
-    Get-SecretInfo |Select-Object -ExpandProperty Name |Add-DynamicParam.ps1 Name string -Position 0
-    Get-SecretVault |Select-Object -ExpandProperty Name |Add-DynamicParam.ps1 Vault string -Position 0
+    Get-SecretInfo |Select-Object -ExpandProperty Name |ModernConveniences\Add-DynamicParam Name string -Position 0
+    Get-SecretVault |Select-Object -ExpandProperty Name |ModernConveniences\Add-DynamicParam Vault string -Position 0
     $DynamicParams
 }
 Process

@@ -49,9 +49,6 @@ Database
 
 .COMPONENT
 System.Configuration
-
-.LINK
-Import-Variables.ps1
 #>
 
 #Requires -Version 3
@@ -91,7 +88,7 @@ function Get-SqlcmdParameterSet($ParameterSetName)
 	}
 }
 
-Get-Variable -Scope 1 -Name PSBoundParameters -ValueOnly -EA SilentlyContinue |Import-Variables.ps1
+Get-Variable -Scope 1 -Name PSBoundParameters -ValueOnly -EA SilentlyContinue |ModernConveniences\Import-Variables
 $caller = Get-Variable -Scope 1 -Name PSCmdlet -ValueOnly -EA SilentlyContinue
 if(!$caller){throw 'Calling script must start with [CmdletBinding()] Param( <# connection params #> ). See help.'}
 $value = Get-SqlcmdParameterSet $caller.ParameterSetName

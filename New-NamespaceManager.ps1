@@ -12,7 +12,7 @@ XML
 https://docs.microsoft.com/dotnet/api/system.xml.xmlnamespacemanager
 
 .EXAMPLE
-Use-ReasonableDefaults.ps1; $n = New-NamespaceManager.ps1; (Select-Xml //xhtml:td dataref.xslt).Node.SelectSingleNode('xhtml:var',$n).OuterXml
+ModernConveniences\Use-ReasonableDefaults; $n = New-NamespaceManager.ps1; (Select-Xml //xhtml:td dataref.xslt).Node.SelectSingleNode('xhtml:var',$n).OuterXml
 
 <var xmlns="http://www.w3.org/1999/xhtml">ANY</var>
 <var xmlns="http://www.w3.org/1999/xhtml">ANY</var>

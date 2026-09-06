@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Sets a default dbatools connection, using a caller script's parameter values when available.
 
@@ -18,6 +18,6 @@ using module dbatools
 # Sets a default output type for Invoke-DbaQuery.
 [ValidateSet('DataSet','DataTable','DataRow','PSObject','PSObjectArray','SingleValue')][string] $As
 )
-Set-ParameterDefault.ps1 Invoke-DbaQuery SqlInstance $SqlInstance -Scope 1
-if($Database) {Set-ParameterDefault.ps1 Invoke-DbaQuery Database $Database -Scope 1}
-if($As) {Set-ParameterDefault.ps1 Invoke-DbaQuery As $As -Scope 1}
+ModernConveniences\Set-ParameterDefault Invoke-DbaQuery SqlInstance $SqlInstance -Scope 1
+if($Database) {ModernConveniences\Set-ParameterDefault Invoke-DbaQuery Database $Database -Scope 1}
+if($As) {ModernConveniences\Set-ParameterDefault Invoke-DbaQuery As $As -Scope 1}

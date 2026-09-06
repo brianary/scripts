@@ -15,9 +15,9 @@ Push-Location $(git rev-parse --show-toplevel)
 Find-Lines.ps1 -Pattern '\bTODO\b' -Filters * -Path ((Test-Path src -Type Container) ? 'src' : '.') -CaseSensitive |
 	ForEach-Object {
 		[string[]] $blame = git blame -p -L "$($_.LineNumber),$($_.LineNumber)" -- $_.Path
-		$author = $blame |Select-String '^author (?<Author>.*)$' |Select-CapturesFromMatches.ps1 -ValuesOnly
-		$Time = $blame |Select-String '^author-time (?<Time>.*)$' |Select-CapturesFromMatches.ps1 -ValuesOnly |
-			ConvertFrom-EpochTime.ps1
+		$author = $blame |Select-String '^author (?<Author>.*)$' |ModernConveniences\Select-CapturesFromMatches -ValuesOnly
+		$Time = $blame |Select-String '^author-time (?<Time>.*)$' |ModernConveniences\Select-CapturesFromMatches -ValuesOnly |
+			ModernConveniences\ConvertFrom-EpochTime
 		[pscustomobject]@{
 			Author = $author
 			Time = $time
