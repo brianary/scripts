@@ -7,4 +7,5 @@
     Pester = @{ repository = 'PSGallery' }
     Secrecy = @{ repository = 'PSGallery' }
     SelectXmlExtensions = @{ repository = 'PSGallery' }
+    SeqLogger = @{ repository = 'PSGallery' }
 }

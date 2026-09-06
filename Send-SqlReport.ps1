@@ -82,12 +82,12 @@ Indicates that SSL should be used when sending the message.
 #>
 [switch]$UseSsl,
 # The URL of the Seq server to log to.
-[uri]$SeqUrl = $PSDefaultParameterValues['Send-SeqEvent.ps1:Server']
+[uri]$SeqUrl = $PSDefaultParameterValues['SeqLogger\Send-SeqEvent:Server']
 )
 
 Use-NetMailConfig.ps1
 Use-SqlcmdParams.ps1
-if($SeqUrl){Use-SeqServer.ps1 $SeqUrl}
+if($SeqUrl){SeqLogger\Use-SeqServer $SeqUrl}
 
 # use the default From host for emails without a host
 $mailhost = ([Net.Mail.MailAddress]$PSDefaultParameterValues['Send-MailMessage:From']).Host |Out-String
@@ -118,7 +118,7 @@ try
     if(!$data -or $data.Length -eq 0) # no rows
     {
         Write-Verbose "No rows returned."
-        if($SeqUrl) { Send-SeqEvent.ps1 'No rows returned for {Subject}' @{Subject=$Subject} -Level Information }
+        if($SeqUrl) { SeqLogger\Send-SeqEvent 'No rows returned for {Subject}' @{Subject=$Subject} -Level Information }
         if($EmptySubject) { $Msg.Subject = $EmptySubject; Send-MailMessage @Msg  }
         return
     }
@@ -158,7 +158,7 @@ $PostContent
 catch # report problems
 {
     Write-Warning $_
-    if($SeqUrl) { Send-SeqScriptEvent.ps1 'Reporting' -InvocationScope 2 }
+    if($SeqUrl) { SeqLogger\Send-SeqScriptEvent 'Reporting' -InvocationScope 2 }
     # consciously omitting Cc & Bcc
     $Msg = @{
         To         = $To
