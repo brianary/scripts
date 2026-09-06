@@ -46,7 +46,8 @@ Adds an ssh profile named "servername", using the specified command line.
 #>
 
 #Requires -Version 7
-#Requires -Modules ModernConveniences
+#Requires -Modules JSONLab,ModernConveniences
+using module JSONLab
 using module ModernConveniences
 [CmdletBinding()] Param()
 DynamicParam
@@ -63,7 +64,7 @@ Begin
     {
         $Script:settings = Join-Path $env:LOCALAPPDATA Packages Microsoft.WindowsTerminal_8wekyb3d8bbwe LocalState settings.json
         if(!(Test-Path $Script:settings -Type Leaf)) {throw "Could not find $Script:settings"}
-        $Script:profiles = Select-Json.ps1 -JsonPointer /profiles/list -Path $Script:settings
+        $Script:profiles = JSONLab\Select-Json -JsonPointer /profiles/list -Path $Script:settings
     }
 
     function Get-TerminalProfileByGuid
@@ -159,7 +160,7 @@ Begin
         }
         ModernConveniences\Write-Info "Setting position $position"
         Copy-Item $Script:settings ([io.path]::ChangeExtension($Script:settings, (Get-Date -Format yyyyMMdd\THHmmss)))
-        Set-Json.ps1 -JsonPointer "/profiles/list/$position" -PropertyValue $termprofile -Path $Script:settings
+        JSONLab\Set-Json -JsonPointer "/profiles/list/$position" -PropertyValue $termprofile -Path $Script:settings
     }
 }
 Process { Update-TerminalProfile @PSBoundParameters }

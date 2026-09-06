@@ -11,9 +11,6 @@ https://code.visualstudio.com/docs/getstarted/settings
 .LINK
 Get-VSCodeSettingsFile.ps1
 
-.LINK
-Set-Json.ps1
-
 .EXAMPLE
 Set-VSCodeSetting.ps1 git.autofetch $true -Workspace
 
@@ -50,4 +47,4 @@ if(!(${settings.json} |Split-Path |Test-Path -PathType Container)) {mkdir (${set
 if(!(Test-Path ${settings.json} -PathType Leaf)) {'{}' |Out-File ${settings.json} -Encoding utf8}
 
 $settings = Get-Content ${settings.json} -Raw
-$settings |Set-Json.ps1 $JsonPointer $Value -WarnOverwrite |Out-File ${settings.json} -Encoding utf8
+$settings |JSONLab\Set-Json $JsonPointer $Value -WarnOverwrite |Out-File ${settings.json} -Encoding utf8
