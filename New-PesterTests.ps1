@@ -47,7 +47,7 @@ Begin
 			}
 		}
 	}
-	Import-CharConstants.ps1 NL -Scope Script
+	$Script:NL = [Environment]::NewLine
 
 	filter Format-ExampleTest
 	{

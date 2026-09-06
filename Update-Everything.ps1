@@ -111,7 +111,8 @@ Justification='Some of these functions may deal with multiple updates.')]
 Begin
 {
 	$Script:IsNotAdministrator = !(ModernConveniences\Test-Administrator)
-	Import-CharConstants.ps1 ':UP:' ':TOP:' -Scope Script
+	$Script:UP = [char]::ConvertFromUtf32(0x1F199)
+	$Script:TOP = [char]::ConvertFromUtf32(0x1F51D)
 
 	function Test-EmptyDesktop
 	{
@@ -263,34 +264,9 @@ Begin
 		Update-Dbatools
 		Update-AzModules
 		Write-Step "$UP Updating PowerShell modules"
-		$isAllUsers = @{}
-		Get-PSResource -ErrorAction Ignore |
-			Group-Object Name |
-			Where-Object {
-				$found = Find-PSResource $_.Name -ErrorAction Ignore
-				if(!$found) {return $false}
-				$isAllUsers[$_.Name] = ($_ |ModernConveniences\Get-ModuleScope) -eq 'AllUsers'
-				if($Script:IsNotAdministrator -and $isAllUsers[$_.Name])
-				{
-					Write-Warning "Skipping module '$($_.Name)' with scope 'AllUsers'"
-					return $false
-				}
-				($_.Group |Measure-Object Version -Maximum).Maximum -lt [version]$found.Version
-			} |
-			ForEach-Object {
-				$module = $_
-				try {$module |Update-PSResource -Scope:( $isAllUsers[$_.Name] ? 'AllUsers' : 'CurrentUser') -TrustRepository -ErrorAction Stop}
-				catch
-				{
-					if($_.Exception.Message -notlike "Module '*' was not installed by using Install-PSResource, so it cannot be updated.") {throw}
-					Write-Warning "Unable to automatically update module '$($module.Name)'"
-				}
-			}
-		if(Get-Command ModernConveniences\Uninstall-OldModules -ErrorAction Ignore)
-		{
-			Write-Step "$UP Uninstalling old PowerShell modules"
-			ModernConveniences\Uninstall-OldModules -Force
-		}
+		ModernConveniences\Update-OutdatedModules
+		Write-Step "$UP Uninstalling old PowerShell modules"
+		ModernConveniences\Uninstall-OldModules -Confirm:$false
 	}
 
 	function Update-Scoop
