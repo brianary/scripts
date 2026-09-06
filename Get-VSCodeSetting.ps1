@@ -50,4 +50,4 @@ element name with a /, and literal / is escaped as ~1, and literal ~ is escaped 
 
 ${settings.json} = Get-VSCodeSettingsFile.ps1 -Workspace:$Workspace
 if(!(Test-Path ${settings.json} -Type Leaf)) {return $null}
-return Select-Json.ps1 $JsonPointer -Path ${settings.json}
+return JSONLab\Select-Json $JsonPointer -Path ${settings.json}

@@ -3,7 +3,7 @@
 Tests serializing complex content into XML elements.
 #>
 
-Import-CharConstants.ps1 NL
+$Script:NL = [Environment]::NewLine
 $basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
 $skip = !(Test-Path .changes -Type Leaf) ? $false :
 	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
