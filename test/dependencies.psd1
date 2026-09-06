@@ -1,0 +1,3 @@
+@{
+    ModernConveniences = @{ repository = 'PSGallery' }
+}
