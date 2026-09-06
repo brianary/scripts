@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Adds various configuration files and exported settings to a ZIP file.
 
@@ -8,9 +8,6 @@ Export-InstalledPackages.ps1
 .LINK
 Export-EdgeKeywords.ps1
 
-.LINK
-Export-SecretVault.ps1
-
 .EXAMPLE
 Backup-Workstation.ps1
 
@@ -18,6 +15,8 @@ Saves various config data to COMPUTERNAME-20230304T125000.zip.
 #>
 
 #Requires -Version 7
+#Requires -Modules Secrecy
+using module Secrecy
 [CmdletBinding()] Param(
 [Parameter(Position=0)][string] $Path =
 	(Join-Path ~ ('{0}-{1:yyyyMMdd\THHmmss}.zip' -f $env:COMPUTERNAME,(Get-Date)))
@@ -77,7 +76,7 @@ function Backup-Workstation
 	{
 		Export-EdgeKeywords.ps1 |Copy-ContentToBackup $dir edge-keywords.json
 	}
-	Export-SecretVault.ps1 -Confirm:$false |Copy-ContentToBackup $dir secret-vault.json
+	Secrecy\Export-SecretVault -Confirm:$false |Copy-ContentToBackup $dir secret-vault.json
 	Export-InstalledPackages.ps1 |Copy-ContentToBackup $dir packages.json
 	Get-ChildItem $dir |Compress-Archive -DestinationPath $Path
 	Remove-Item $dir -Recurse -Force
