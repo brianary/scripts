@@ -3,6 +3,8 @@
     Detextive = @{ repository = 'PSGallery' }
     JSONLab = @{ repository = 'PSGallery' }
     ModernConveniences = @{ repository = 'PSGallery' }
+    Networkhorse = @{ repository = 'PSGallery' }
     Pester = @{ repository = 'PSGallery' }
+    Secrecy = @{ repository = 'PSGallery' }
     SelectXmlExtensions = @{ repository = 'PSGallery' }
 }

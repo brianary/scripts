@@ -1,12 +1,9 @@
-<#
+﻿<#
 .SYNOPSIS
 Restores various configuration files and exported settings from a ZIP file.
 
 .LINK
 Import-EdgeKeywords.ps1
-
-.LINK
-Import-SecretVault.ps1
 
 .EXAMPLE
 Restore-Workstation.ps1 COMPUTERNAME-20230304T125000.zip
@@ -24,7 +21,7 @@ function Restore-Workstation
 	Expand-Archive -Path $Path -DestinationPath ~ -Force
 	Join-Path ~ edge-keywords.json -OutVariable file |Get-Content |ConvertFrom-Json |Import-EdgeKeywords.ps1
 	Remove-Item $file
-	Join-Path ~ secret-vault.json -OutVariable file |Get-Content |ConvertFrom-Json |Import-SecretVault.ps1
+	Join-Path ~ secret-vault.json -OutVariable file |Get-Content |ConvertFrom-Json |Secrecy\Import-SecretVault
 	Remove-Item $file
 }
 
