@@ -9,4 +9,5 @@
     SelectXmlExtensions = @{ repository = 'PSGallery' }
     SeqLogger = @{ repository = 'PSGallery' }
     Unicodery = @{ repository = 'PSGallery' }
+    XMLLab = @{ repository = 'PSGallery' }
 }
