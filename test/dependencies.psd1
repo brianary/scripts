@@ -8,4 +8,5 @@
     Secrecy = @{ repository = 'PSGallery' }
     SelectXmlExtensions = @{ repository = 'PSGallery' }
     SeqLogger = @{ repository = 'PSGallery' }
+    Unicodery = @{ repository = 'PSGallery' }
 }
