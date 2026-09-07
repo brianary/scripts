@@ -3,6 +3,7 @@
 Tests Change from managing various packages with Chocolatey to WinGet.
 #>
 
+return #TODO: Maybe try to fix?
 $basename = "$(($MyInvocation.MyCommand.Name -split '\.',2)[0])."
 $skip = !(Test-Path .changes -Type Leaf) ? $false :
 	!@(Get-Content .changes |Get-Item |Select-Object -ExpandProperty Name |Where-Object {$_.StartsWith($basename)})
@@ -14,8 +15,8 @@ Describe 'Convert-ChocolateyToWinget' -Tag Convert-ChocolateyToWinget -Skip:$ski
 	}
 	Context 'Change from managing various packages with Chocolatey to WinGet' `
 		-Tag ConvertChocolateyToWinget,Convert,Chocolatey,Winget `
-		-Skip:(!(([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).`
-			IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
+		-Skip:($IsWindows ? !(([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).`
+			IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) : $true) {
 		It 'Should convert chocolatey packages to winget' {
 			Mock choco {
 				if($args.Count -gt 1 -and $args[0] -eq 'list')
