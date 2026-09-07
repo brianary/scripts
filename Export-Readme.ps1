@@ -100,7 +100,7 @@ function Get-PesterCoverageBadge([switch]$UseLines)
 {
 	if($UseLines)
 	{
-		$unit = [uri]::EscapeUriString((Get-Unicode.ps1 0x2031)) # PER TEN THOUSAND SIGN (permyriad)
+		$unit = [char]::ConvertFromUtf32(0x2031) # PER TEN THOUSAND SIGN (permyriad)
 		[int] $coverage = 10000 * (Get-Item $PSScriptRoot\*.ps1 |
 			Where-Object {Test-HasTest $_} |
 			Get-Content |
@@ -118,7 +118,7 @@ function Get-PesterCoverageBadge([switch]$UseLines)
 	}
 	else
 	{
-		$unit = [uri]::EscapeUriString((Get-Unicode.ps1 0x2030)) # PER MILLE SIGN (permil)
+		$unit = [char]::ConvertFromUtf32(0x2030) # PER MILLE SIGN (permil)
 		[int] $coverage = 1000 * (Get-Item $PSScriptRoot\test\*.ps1 |Measure-Object).Count /
 			(Get-Item $PSScriptRoot\*.ps1 |Measure-Object).Count
 		$color = switch($coverage)
@@ -375,4 +375,4 @@ $(Format-PSScripts -Extension '.md' -entities)
 Format-Readme |Out-File $PSScriptRoot\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Format-TestsReadme |Out-File $PSScriptRoot\test\README.md -Encoding utf8 -Width ([int]::MaxValue)
 Export-PSScriptPages
-if($Commit) {git add -A ; git commit -m "$(Get-Unicode.ps1 0x1F4DD) Update readme"}
+if($Commit) {git add -A ; git commit -m "$([char]::ConvertFromUtf32(0x1F4DD)) Update readme"}

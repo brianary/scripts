@@ -102,11 +102,11 @@ Justification='This script is not intended for pipelining.')]
 Justification='Some of these functions may deal with multiple updates.')]
 [CmdletBinding()] Param(
 # The sources of updates to install, in order.
-[ValidateSet('Apt','Chocolatey','DellCommand','Dotnet','Essential','Flatpak','GitHubCli','Npm','ScriptsData',
+[ValidateSet('Apt','Chocolatey','DellCommand','Dotnet','Essential','Flatpak','GitHubCli','Npm',
 	'PSHelp','PSModule','Scoop','VSCodeExtenions','WindowsUpdate','WindowsStore','WinGet')]
 [Parameter(Position=0,ValueFromRemainingArguments=$true)][string[]] $Steps =
 	@('Essential','WindowsStore','PSModule','Scoop','Chocolatey','WinGet','Npm','Dotnet',
-		'GitHubCli','VSCodeExtensions','ScriptsData','PSHelp','DellCommand','WindowsUpdate','Apt','Flatpak')
+		'GitHubCli','VSCodeExtensions','PSHelp','DellCommand','WindowsUpdate','Apt','Flatpak')
 )
 Begin
 {
@@ -344,14 +344,6 @@ Begin
 		[CmdletBinding()] Param()
 		Write-Step "$UP Updating PowerShell help"
 		Update-Help
-	}
-
-	function Update-ScriptsData
-	{
-		[CmdletBinding()] Param()
-		Write-Step "$UP Updating scripts data"
-		Get-UnicodeName.ps1 -Update
-		Get-UnicodeByName.ps1 -Update
 	}
 
 	function Update-DellCommand

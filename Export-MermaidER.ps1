@@ -129,7 +129,7 @@ Justification='This script uses $input within an End block.')]
 )
 Begin
 {
-	Import-CharConstants.ps1 NL
+	Unicodery\Import-CharConstants NL
 
 	filter Format-ColumnAsMermaid
 	{
