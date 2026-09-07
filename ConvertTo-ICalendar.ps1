@@ -39,9 +39,6 @@ Use-Command.ps1
 ConvertFrom-CimInstance.ps1
 
 .LINK
-ConvertFrom-XmlElement.ps1
-
-.LINK
 New-ScheduledTaskTrigger
 
 .LINK
@@ -54,10 +51,10 @@ Creates file tasks.ics to import into Google Calendar, iCalendar, or Outlook to 
 #>
 
 #Requires -Version 7
-#Requires -Modules ScheduledTasks
-#Requires -Modules ModernConveniences
+#Requires -Modules ModernConveniences,ScheduledTasks,XMLLab
 using module ScheduledTasks
 using module ModernConveniences
+using module XMLLab
 [CmdletBinding()][OutputType([string])] Param(
 # A CimInstance of MSFT_ScheduledTask, as output by Get-ScheduledTask.
 [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
@@ -239,7 +236,7 @@ DTEND;$(ConvertTo-DateTimeWithZone -Value $end -TimeZone $TimeZone)
 			MSFT_TaskTrigger
 			{
 				Write-Verbose "CIM object contains no useful scheduling data; reading via schtasks XML"
-				$task = [xml](schtasks /query /xml /tn $TaskName) |ConvertFrom-XmlElement.ps1
+				$task = [xml](schtasks /query /xml /tn $TaskName) |XMLLab\ConvertFrom-XmlElement
 				$task.Triggers |
 					Where-Object {$_.PSObject.Properties.Match('CalendarTrigger').Count -eq 0} |
 					ConvertTo-Json -Compress -Depth 5 |
