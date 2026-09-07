@@ -1,4 +1,5 @@
 ﻿@{
+    Codesmithy = @{ repository = 'PSGallery' }
     dbatools = @{ repository = 'PSGallery' }
     Detextive = @{ repository = 'PSGallery' }
     JSONLab = @{ repository = 'PSGallery' }

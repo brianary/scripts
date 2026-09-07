@@ -48,9 +48,6 @@ Update-Everything.cmd
 Get-DotNetGlobalTools.ps1
 
 .LINK
-Find-DotNetTools.ps1
-
-.LINK
 Get-Process
 
 .LINK
@@ -315,8 +312,10 @@ Begin
 		Write-Step "$UP Updating dotnet global tools"
 		& "$PSScriptRoot\Get-DotNetGlobalTools.ps1" |
 			Where-Object {
-				$_.Version -lt (& "$PSScriptRoot\Find-DotNetTools.ps1" $_.PackageName |
-					Where-Object PackageName -eq $_.PackageName).Version
+				$availableVersion = dotnet tool search microsoft.dotnet-interactive |
+					ForEach-Object {$_ -match "\A$([regex]::Escape('microsoft.dotnet-interactive'))\s\s+(\S+)\s\s" ?
+						([version]$Matches[1]) : $null}
+				$_.Version -lt $availableVersion
 			} |
 			ForEach-Object {dotnet tool update -g $_.PackageName}
 	}
