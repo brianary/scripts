@@ -1,140 +1,80 @@
 Script Tests
 ============
 
-<details><summary><meter low='300' max='1000' optimum='1000' value='263'>263 &#x2030;</meter> Scripts repo (152) &#x1F4C5; at once</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='750'>750 &#x2030;</meter> A (4) &#x1F4C5; at once</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='750'>750 &#x2030;</meter> Add (4) &#x1F4C5; at once</summary>
+<details><summary><meter low='300' max='1000' optimum='1000' value='250'>250 &#x2030;</meter> Scripts repo (64) &#x1F4C5; at once</summary>
+<ul><li><details><summary>not started A (1) </summary>
+<ul><li><details><summary>not started Add (1) </summary>
 
-- &#x2714;&#xFE0F; Add-GitHubMetadata.ps1
-- &#x2714;&#xFE0F; Add-NotebookCell.ps1
 - &#x2716;&#xFE0F; Add-ScopeLevel.ps1
-- &#x2714;&#xFE0F; Add-VsCodeDatabaseConnection.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> B (3) &#x1F4C5; at once</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Backup (3) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> B (2) &#x1F4C5; at once</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Backup (2) &#x1F4C5; at once</summary>
 
-- &#x2714;&#xFE0F; Backup-File.ps1
 - &#x2714;&#xFE0F; Backup-SchTasks.ps1
 - &#x2714;&#xFE0F; Backup-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='941'>941 &#x2030;</meter> C (17) &#x1F4C5; at once</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compare (1) &#x1F4C5; 147 days</summary>
-
-- &#x2714;&#xFE0F; Compare-Xml.ps1
-
-</details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compress (1) &#x1F4C5; 1241 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='875'>875 &#x2030;</meter> C (8) &#x1F4C5; at once</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Compress (1) &#x1F4C5; 1241 days</summary>
 
 - &#x2714;&#xFE0F; Compress-EnvironmentVariables.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Connect (1) &#x1F4C5; 150 days</summary>
-
-- &#x2714;&#xFE0F; Connect-SshKey.ps1
-
-</details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='667'>667 &#x2030;</meter> Convert (3) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='500'>500 &#x2030;</meter> Convert (2) &#x1F4C5; at once</summary>
 
 - &#x2714;&#xFE0F; Convert-ChocolateyToWinget.ps1
 - &#x2716;&#xFE0F; Convert-ExternalScriptToModule.ps1
-- &#x2714;&#xFE0F; Convert-Xml.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertFrom (4) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertFrom (2) &#x1F4C5; at once</summary>
 
 - &#x2714;&#xFE0F; ConvertFrom-CimInstance.ps1
 - &#x2714;&#xFE0F; ConvertFrom-DataRow.ps1
-- &#x2714;&#xFE0F; ConvertFrom-EscapedXml.ps1
-- &#x2714;&#xFE0F; ConvertFrom-XmlElement.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertTo (5) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> ConvertTo (2) &#x1F4C5; at once</summary>
 
-- &#x2714;&#xFE0F; ConvertTo-BasicAuthentication.ps1
 - &#x2714;&#xFE0F; ConvertTo-ICalendar.ps1
 - &#x2714;&#xFE0F; ConvertTo-LogParserTimestamp.ps1
-- &#x2714;&#xFE0F; ConvertTo-MultipartFormData.ps1
-- &#x2714;&#xFE0F; ConvertTo-XmlElements.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Copy (2) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Copy (1) &#x1F4C5; 60 days</summary>
 
-- &#x2714;&#xFE0F; Copy-GitHubLabels.ps1
 - &#x2714;&#xFE0F; Copy-SchTasks.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> E (9) &#x1F4C5; at once</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Export (9) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> E (3) &#x1F4C5; at once</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Export (3) &#x1F4C5; at once</summary>
 
-- &#x2714;&#xFE0F; Export-DatabaseScripts.ps1
 - &#x2714;&#xFE0F; Export-EdgeKeywords.ps1
 - &#x2714;&#xFE0F; Export-InstalledPackages.ps1
-- &#x2714;&#xFE0F; Export-Json.ps1
-- &#x2714;&#xFE0F; Export-MermaidER.ps1
-- &#x2714;&#xFE0F; Export-OpenApiSchema.ps1
 - &#x2714;&#xFE0F; Export-Readme.ps1
-- &#x2714;&#xFE0F; Export-SecretVault.ps1
-- &#x2714;&#xFE0F; Export-TableMerge.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='875'>875 &#x2030;</meter> F (8) &#x1F4C5; at once</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Find (7) &#x1F4C5; at once</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> F (3) &#x1F4C5; at once</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Find (3) &#x1F4C5; at once</summary>
 
-- &#x2714;&#xFE0F; Find-DatabaseValue.ps1
-- &#x2714;&#xFE0F; Find-DbColumn.ps1
-- &#x2714;&#xFE0F; Find-DbIndexes.ps1
-- &#x2714;&#xFE0F; Find-DotNetTools.ps1
 - &#x2714;&#xFE0F; Find-InstalledPrograms.ps1
 - &#x2714;&#xFE0F; Find-Lines.ps1
 - &#x2714;&#xFE0F; Find-ProjectPackages.ps1
 
-</details></li>
-<li><details><summary>not started Format (1) </summary>
-
-- &#x2716;&#xFE0F; Format-Xml.ps1
-
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='28'>28 &#x2030;</meter> G (36) &#x1F4C5; 490 days</summary>
-<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='28'>28 &#x2030;</meter> Get (36) &#x1F4C5; 490 days</summary>
+<li><details><summary><meter low='300' max='1000' optimum='1000' value='83'>83 &#x2030;</meter> G (12) &#x1F4C5; 490 days</summary>
+<ul><li><details><summary><meter low='300' max='1000' optimum='1000' value='83'>83 &#x2030;</meter> Get (12) &#x1F4C5; 490 days</summary>
 
 - &#x2716;&#xFE0F; Get-ADServiceAccountInfo.ps1
 - &#x2716;&#xFE0F; Get-ADUserStatus.ps1
 - &#x2716;&#xFE0F; Get-AspNetEvents.ps1
-- &#x2716;&#xFE0F; Get-AssemblyFramework.ps1
 - &#x2716;&#xFE0F; Get-CachedCredential.ps1
-- &#x2716;&#xFE0F; Get-CharacterDetails.ps1
-- &#x2716;&#xFE0F; Get-ConfigConnectionStringBuilders.ps1
-- &#x2716;&#xFE0F; Get-ContentSecurityPolicy.ps1
-- &#x2716;&#xFE0F; Get-Dns.ps1
 - &#x2716;&#xFE0F; Get-DotNetFrameworkVersions.ps1
 - &#x2716;&#xFE0F; Get-DotNetGlobalTools.ps1
 - &#x2716;&#xFE0F; Get-DotNetVersions.ps1
-- &#x2716;&#xFE0F; Get-GitFileMetadata.ps1
-- &#x2716;&#xFE0F; Get-GitFirstCommit.ps1
-- &#x2716;&#xFE0F; Get-GitHubRepoChildItem.ps1
 - &#x2714;&#xFE0F; Get-IisLog.ps1
-- &#x2716;&#xFE0F; Get-LibraryVulnerabilityInfo.ps1
-- &#x2716;&#xFE0F; Get-NuGetConfigs.ps1
-- &#x2716;&#xFE0F; Get-OpenApiInfo.ps1
 - &#x2716;&#xFE0F; Get-PathUsage.ps1
-- &#x2716;&#xFE0F; Get-PocketArticles.ps1
-- &#x2716;&#xFE0F; Get-RepoName.ps1
-- &#x2716;&#xFE0F; Get-SecretDetails.ps1
-- &#x2716;&#xFE0F; Get-ServerCertificate.ps1
 - &#x2716;&#xFE0F; Get-SimpleSchTasks.ps1
-- &#x2716;&#xFE0F; Get-SslDetails.ps1
 - &#x2716;&#xFE0F; Get-SystemDetails.ps1
-- &#x2716;&#xFE0F; Get-Todos.ps1
-- &#x2716;&#xFE0F; Get-Unicode.ps1
-- &#x2716;&#xFE0F; Get-UnicodeByName.ps1
 - &#x2716;&#xFE0F; Get-UnicodeData.ps1
-- &#x2716;&#xFE0F; Get-UnicodeName.ps1
-- &#x2716;&#xFE0F; Get-VSCCurrentFile.ps1
-- &#x2716;&#xFE0F; Get-VSCodeSetting.ps1
-- &#x2716;&#xFE0F; Get-VSCodeSettingsFile.ps1
-- &#x2716;&#xFE0F; Get-XmlNamespaces.ps1
 
 </details></li></ul></details></li>
 <li><details><summary>not started H (1) </summary>
@@ -143,18 +83,10 @@ Script Tests
 - &#x2716;&#xFE0F; Hide-Command.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started I (6) </summary>
-<ul><li><details><summary>not started Import (4) </summary>
+<li><details><summary>not started I (2) </summary>
+<ul><li><details><summary>not started Import (1) </summary>
 
-- &#x2716;&#xFE0F; Import-CharConstants.ps1
 - &#x2716;&#xFE0F; Import-EdgeKeywords.ps1
-- &#x2716;&#xFE0F; Import-SecretVault.ps1
-- &#x2716;&#xFE0F; Import-VsCodeDatabaseConnections.ps1
-
-</details></li>
-<li><details><summary>not started Initialize (1) </summary>
-
-- &#x2716;&#xFE0F; Initialize-DatabaseNotebook.ps1
 
 </details></li>
 <li><details><summary>not started Invoke (1) </summary>
@@ -168,30 +100,18 @@ Script Tests
 - &#x2716;&#xFE0F; Join-FileName.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started M (9) </summary>
-<ul><li><details><summary>not started Measure (7) </summary>
+<li><details><summary>not started M (4) </summary>
+<ul><li><details><summary>not started Measure (4) </summary>
 
 - &#x2716;&#xFE0F; Measure-Caches.ps1
-- &#x2716;&#xFE0F; Measure-DbColumn.ps1
-- &#x2716;&#xFE0F; Measure-DbColumnValues.ps1
-- &#x2716;&#xFE0F; Measure-DbTable.ps1
 - &#x2716;&#xFE0F; Measure-Indents.ps1
 - &#x2716;&#xFE0F; Measure-StandardDeviation.ps1
 - &#x2716;&#xFE0F; Measure-TextFile.ps1
 
-</details></li>
-<li><details><summary>not started Merge (2) </summary>
-
-- &#x2716;&#xFE0F; Merge-Json.ps1
-- &#x2716;&#xFE0F; Merge-XmlSelections.ps1
-
 </details></li></ul></details></li>
-<li><details><summary>not started N (7) </summary>
-<ul><li><details><summary>not started New (7) </summary>
+<li><details><summary>not started N (4) </summary>
+<ul><li><details><summary>not started New (4) </summary>
 
-- &#x2716;&#xFE0F; New-DbProviderObject.ps1
-- &#x2716;&#xFE0F; New-Jwt.ps1
-- &#x2716;&#xFE0F; New-NamespaceManager.ps1
 - &#x2716;&#xFE0F; New-PesterTests.ps1
 - &#x2716;&#xFE0F; New-RandomVehicle.ps1
 - &#x2716;&#xFE0F; New-Script.ps1
@@ -205,44 +125,26 @@ Script Tests
 - &#x2716;&#xFE0F; Optimize-Path.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started P (1) </summary>
-<ul><li><details><summary>not started Push (1) </summary>
-
-- &#x2716;&#xFE0F; Push-WorkspaceLocation.ps1
-
-</details></li></ul></details></li>
-<li><details><summary>not started R (15) </summary>
+<li><details><summary>not started R (7) </summary>
 <ul><li><details><summary>not started Read (1) </summary>
 
 - &#x2716;&#xFE0F; Read-ChocolateySummary.ps1
 
 </details></li>
-<li><details><summary>not started Remove (3) </summary>
+<li><details><summary>not started Remove (2) </summary>
 
 - &#x2716;&#xFE0F; Remove-CachedCredential.ps1
 - &#x2716;&#xFE0F; Remove-LockyFile.ps1
-- &#x2716;&#xFE0F; Remove-PocketArticle.ps1
 
 </details></li>
-<li><details><summary>not started Rename (2) </summary>
+<li><details><summary>not started Rename (1) </summary>
 
-- &#x2716;&#xFE0F; Rename-GitHubLocalBranch.ps1
 - &#x2716;&#xFE0F; Rename-Script.ps1
 
 </details></li>
-<li><details><summary>not started Repair (4) </summary>
+<li><details><summary>not started Repair (1) </summary>
 
 - &#x2716;&#xFE0F; Repair-AppxPackages.ps1
-- &#x2716;&#xFE0F; Repair-DatabaseConstraintNames.ps1
-- &#x2716;&#xFE0F; Repair-DatabaseUntrustedConstraints.ps1
-- &#x2716;&#xFE0F; Repair-ScriptStyle.ps1
-
-</details></li>
-<li><details><summary>not started Resolve (3) </summary>
-
-- &#x2716;&#xFE0F; Resolve-JsonPointer.ps1
-- &#x2716;&#xFE0F; Resolve-XmlSchemaLocation.ps1
-- &#x2716;&#xFE0F; Resolve-XPath.ps1
 
 </details></li>
 <li><details><summary>not started Restore (2) </summary>
@@ -251,75 +153,44 @@ Script Tests
 - &#x2716;&#xFE0F; Restore-Workstation.ps1
 
 </details></li></ul></details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='62'>62 &#x2030;</meter> S (16) &#x1F4C5; 48 days</summary>
-<ul><li><details><summary>not started Save (3) </summary>
+<li><details><summary>not started S (5) </summary>
+<ul><li><details><summary>not started Save (1) </summary>
 
-- &#x2716;&#xFE0F; Save-PodcastEpisodes.ps1
 - &#x2716;&#xFE0F; Save-Secret.ps1
-- &#x2716;&#xFE0F; Save-WebRequest.ps1
 
 </details></li>
-<li><details><summary><meter low='300' max='1000' optimum='1000' value='1000'>1000 &#x2030;</meter> Select (1) &#x1F4C5; 48 days</summary>
-
-- &#x2714;&#xFE0F; Select-Json.ps1
-
-</details></li>
-<li><details><summary>not started Send (4) </summary>
+<li><details><summary>not started Send (1) </summary>
 
 - &#x2716;&#xFE0F; Send-MailMessageFile.ps1
-- &#x2716;&#xFE0F; Send-SeqEvent.ps1
-- &#x2716;&#xFE0F; Send-SeqScriptEvent.ps1
-- &#x2716;&#xFE0F; Send-SqlReport.ps1
 
 </details></li>
-<li><details><summary>not started Set (5) </summary>
+<li><details><summary>not started Set (3) </summary>
 
 - &#x2716;&#xFE0F; Set-ConsoleColorTheme.ps1
-- &#x2716;&#xFE0F; Set-Json.ps1
 - &#x2716;&#xFE0F; Set-SchTaskMsa.ps1
 - &#x2716;&#xFE0F; Set-TerminalProfile.ps1
-- &#x2716;&#xFE0F; Set-VSCodeSetting.ps1
-
-</details></li>
-<li><details><summary>not started Show (3) </summary>
-
-- &#x2716;&#xFE0F; Show-DataRef.ps1
-- &#x2716;&#xFE0F; Show-HttpStatus.ps1
-- &#x2716;&#xFE0F; Show-OpenApiInfo.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started T (9) </summary>
-<ul><li><details><summary>not started Test (7) </summary>
+<li><details><summary>not started T (3) </summary>
+<ul><li><details><summary>not started Test (3) </summary>
 
-- &#x2716;&#xFE0F; Test-ConnectionString.ps1
-- &#x2716;&#xFE0F; Test-HttpSecurity.ps1
-- &#x2716;&#xFE0F; Test-Jwt.ps1
 - &#x2716;&#xFE0F; Test-LockedFile.ps1
 - &#x2716;&#xFE0F; Test-Windows1252.ps1
 - &#x2716;&#xFE0F; Test-WindowsTerminal.ps1
-- &#x2716;&#xFE0F; Test-Xml.ps1
-
-</details></li>
-<li><details><summary>not started Trace (2) </summary>
-
-- &#x2716;&#xFE0F; Trace-GitRepoTest.ps1
-- &#x2716;&#xFE0F; Trace-WebRequest.ps1
 
 </details></li></ul></details></li>
-<li><details><summary>not started U (8) </summary>
+<li><details><summary>not started U (6) </summary>
 <ul><li><details><summary>not started Update (2) </summary>
 
 - &#x2716;&#xFE0F; Update-DotNetPackages.ps1
 - &#x2716;&#xFE0F; Update-Everything.ps1
 
 </details></li>
-<li><details><summary>not started Use (6) </summary>
+<li><details><summary>not started Use (4) </summary>
 
 - &#x2716;&#xFE0F; Use-Command.ps1
-- &#x2716;&#xFE0F; Use-DbInstance.ps1
 - &#x2716;&#xFE0F; Use-Java.ps1
 - &#x2716;&#xFE0F; Use-NetMailConfig.ps1
-- &#x2716;&#xFE0F; Use-SeqServer.ps1
 - &#x2716;&#xFE0F; Use-SqlcmdParams.ps1
 
 </details></li></ul></details></li></ul></details>
