@@ -312,9 +312,9 @@ Begin
 		Write-Step "$UP Updating dotnet global tools"
 		& "$PSScriptRoot\Get-DotNetGlobalTools.ps1" |
 			Where-Object {
-				$availableVersion = dotnet tool search $_.PackageName |
-					ForEach-Object {$_ -match "\A$([regex]::Escape($_.PackageName))\s\s+(\S+)\s\s" ?
-						([version]$Matches[1]) : $null}
+				[version] $availableVersion = dotnet tool search $_.PackageName |
+					Select-String "\A$([regex]::Escape($_.PackageName))\s\s+(\S+)\s\s" |
+					ForEach-Object {$_.Matches.Groups[1].Value}
 				$_.Version -lt $availableVersion
 			} |
 			ForEach-Object {dotnet tool update -g $_.PackageName}
