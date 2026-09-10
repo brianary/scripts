@@ -312,8 +312,8 @@ Begin
 		Write-Step "$UP Updating dotnet global tools"
 		& "$PSScriptRoot\Get-DotNetGlobalTools.ps1" |
 			Where-Object {
-				$availableVersion = dotnet tool search microsoft.dotnet-interactive |
-					ForEach-Object {$_ -match "\A$([regex]::Escape('microsoft.dotnet-interactive'))\s\s+(\S+)\s\s" ?
+				$availableVersion = dotnet tool search $PackageName |
+					ForEach-Object {$_ -match "\A$([regex]::Escape($PackageName))\s\s+(\S+)\s\s" ?
 						([version]$Matches[1]) : $null}
 				$_.Version -lt $availableVersion
 			} |
