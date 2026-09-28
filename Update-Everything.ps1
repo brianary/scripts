@@ -405,6 +405,7 @@ Process
 	{
 		if($emptyShared) {Clear-Desktop -Shared}
 		if($empty) {Clear-Desktop}
+		if(Get-Command Show-Status -Type Function -EA Ignore) {Show-Status Updates -Force}
 		if(Test-NoProfileMode) {Restart-UpdateWithProfile}
 	}
 }
