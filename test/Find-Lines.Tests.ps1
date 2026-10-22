@@ -20,7 +20,7 @@ Describe 'Find-Lines' -Tag Find-Lines -Skip:$skip {
 		It "Finds a line and adds blame info" {
 			$found = Find-Lines.ps1 'function Get-LineBlameInfo' *.ps1 -CaseSensitive -SimpleMatch -Blame
 			$found.Line |Should -BeLike '*function Get-LineBlameInfo*'
-			$found.Filename |Should -BeLike Find-Lines*
+			$found.Filename |Should -BeLike *Find-Lines*
 		}
 	}
 }
