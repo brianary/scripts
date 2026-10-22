@@ -33,10 +33,10 @@ The default location is the current directory (.).
 [string[]] $Include,
 # Wildcard patterns files must not match any of.
 [string[]] $Exclude = @('*.dll','*.exe','*.pdb','*.bin','*.cache','*.png','*.gif','*.jpg','*.ico','*.psd','*.obj','*.iso',
+'*.docx','*.xls','*.xlsx','*.pdf','*.rtf','*.swf','*.chm','*.ttf','*.woff','*.eot','*.otf','*.mdf','*.ldf','*.pack',
+'*.zip','*.gz','*.tgz','*.jar','*.nupkg','*.vspscc','*.vsmdi','*.vssscc','*.vsd','*.vscontent','*.vssettings','*.suo',
+'*.dbmdl','*.tdf','*.optdata','*.sigdata','*.lib'),
 # Makes matches case-sensitive. By default, matches are not case-sensitive.
-	'*.docx','*.xls','*.xlsx','*.pdf','*.rtf','*.swf','*.chm','*.ttf','*.woff','*.eot','*.otf','*.mdf','*.ldf','*.pack',
-	'*.zip','*.gz','*.tgz','*.jar','*.nupkg','*.vspscc','*.vsmdi','*.vssscc','*.vsd','*.vscontent','*.vssettings','*.suo',
-	'*.dbmdl','*.tdf','*.optdata','*.sigdata','*.lib'),
 [switch] $CaseSensitive,
 <#
 Returns only the first match in each input file.
